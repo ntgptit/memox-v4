@@ -43,4 +43,18 @@ node tool/prompt_gen/run.mjs "<task title>" [WBS-ID] [--type screen|usecase|repo
 Prints a ready-to-paste task envelope (required reading + acceptance slot + workflow
 + verify + report). Fill the blanks, hand to Claude Code.
 
-<!-- FILL: document any project-specific tools you add here. -->
+## Chuẩn tài liệu nghiệp vụ (BA)
+
+Đặc tả nghiệp vụ trong `docs/business/**` viết theo chuẩn BA: mỗi tính năng dùng 11 mục
+của `docs/business/_feature-template.md` — thông tin tài liệu · mục đích & bối cảnh ·
+phạm vi · tác nhân & bên liên quan · user stories · use case flows (tiền điều kiện /
+luồng chính / thay thế-ngoại lệ / hậu điều kiện) · business rules **kèm lý do** ·
+acceptance criteria (Given/When/Then) · NFR · RAID · truy vết.
+
+Quy tắc nghiệp vụ (BR) và tiêu chí chấp nhận (AC) đều truy vết về dòng quyết định `D-xxx`
+trong `docs/decision-tables/core-decision-table.md` và về gói `W-x` trong
+`docs/project-management/wbs.md`. `doc_guard` kiểm tra tham chiếu/đường dẫn; `prompt_gen`
+trỏ agent vào đúng reading-list này.
+
+Tài liệu khung sản phẩm: `docs/business/index.md` (tóm tắt yêu cầu, BRD-lite) và
+`docs/business/system/overview.md` (bối cảnh nghiệp vụ).

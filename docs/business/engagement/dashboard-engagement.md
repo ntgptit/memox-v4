@@ -1,38 +1,78 @@
-# Tính năng: Dashboard, hoạt động ngày & streak
+# ENGAGEMENT — Hoạt động ngày, mục tiêu & streak — Đặc tả nghiệp vụ
 
-**Status:** Specified
-**Phụ trách:** TBD
-**Liên quan:** dòng quyết định D-010, D-021 · WBS TBD
+## 0. Thông tin tài liệu
 
-## Mục đích
+| Trường | Giá trị |
+| --- | --- |
+| Mã tính năng | `engagement/dashboard-engagement` |
+| Gói công việc (WBS) | W12 |
+| Trạng thái | Specified |
+| Người phụ trách | TBD |
+| Dòng quyết định liên quan | D-010, D-021 |
+| Phiên bản | 1.0 |
 
-Theo dõi nỗ lực học theo ngày và duy trì động lực bằng **mục tiêu ngày + chuỗi streak**.
+## 1. Mục đích & bối cảnh nghiệp vụ
 
-## Khái niệm
+Học ngôn ngữ thành công phụ thuộc vào sự đều đặn hơn là cường độ. Để nuôi thói quen, MemoX
+theo dõi nỗ lực học theo ngày và khuyến khích người học bằng mục tiêu hằng ngày cùng chuỗi
+ngày liên tiếp đạt mục tiêu (streak).
 
-- **Hoạt động hôm nay** (`DailyActivity`): số giây học + số từ học trong ngày — chỉ
-  DueReview/NewLearn cộng (Review/Game/Player không). (D-010)
-- **DailyGoal**: mục tiêu mỗi ngày — số phút và/hoặc số từ (`daily_goal_minutes`,
-  `daily_goal_words`).
-- **Streak**: số ngày **liên tiếp** đạt DailyGoal.
+## 2. Phạm vi
 
-## Hành vi người dùng thấy
+**Trong phạm vi:** đo hoạt động trong ngày; mục tiêu ngày; tính và reset streak.
+**Ngoài phạm vi (v1):** cơ chế "đóng băng" (freeze) hay cứu streak.
 
-1. Hiển thị hoạt động hôm nay (thời gian + số từ).
-2. **Đạt** = đạt **ít nhất một** trong hai mục tiêu (phút HOẶC từ). Ngày đạt → `streak +1`;
-   ngày không đạt → streak reset 0. Mốc reset ngày: **nửa đêm giờ máy**. (D-021)
-3. (Dashboard) tổng quan tiến độ — chi tiết màn TBD (cần ảnh).
+## 3. Tác nhân & các bên liên quan
 
-## Ngoài phạm vi (v1)
+| Tác nhân | Vai trò |
+| --- | --- |
+| Người học | Đặt mục tiêu; học để duy trì streak. |
 
-- Cơ chế freeze / streak-saver — chưa làm.
+## 4. Câu chuyện người dùng (User stories)
 
-## File mã nguồn
+- **US-1** — Là người học, tôi muốn thấy hôm nay đã học bao lâu / bao nhiêu từ, để biết
+  mình đã đạt mục tiêu chưa.
+- **US-2** — Là người học, tôi muốn duy trì chuỗi ngày học liên tiếp, để có động lực đều đặn.
 
-TBD (chưa hiện thực).
+## 5. Khái niệm
 
-## Liên quan
+- **Hoạt động hôm nay:** số phút học + số từ học trong ngày, chỉ tính từ "Lặp lại" và "Học".
+- **Mục tiêu ngày (DailyGoal):** số phút và/hoặc số từ.
+- **Streak:** số ngày liên tiếp đạt mục tiêu.
 
-- `docs/business/study/study-flow.md` — nguồn của `DailyActivity`
-- `docs/database/schema-contract.md` — `daily_activity` + settings mục tiêu
-- `docs/decision-tables/core-decision-table.md`
+## 6. Luồng nghiệp vụ (Use cases)
+
+### UC-1: Ghi nhận và chốt ngày
+- **Luồng chính:** trong ngày, hệ thống cộng dồn phút và số từ từ các phiên "Lặp lại"/"Học";
+  vào nửa đêm (giờ máy), hệ thống chốt ngày: nếu **đạt ≥ một** trong hai mục tiêu thì tăng
+  streak; nếu không đạt thì reset streak về 0.
+
+## 7. Quy tắc nghiệp vụ (Business rules)
+
+| Mã | Quy tắc | Lý do | Truy vết |
+| --- | --- | --- | --- |
+| BR-1 | Hoạt động ngày chỉ cộng từ "Lặp lại" và "Học" (không từ luyện tập). | Đo nỗ lực học thực sự. | D-010 |
+| BR-2 | "Đạt mục tiêu" = đạt **ít nhất một** trong hai (phút **hoặc** từ). | Linh hoạt với nhiều kiểu học. | D-021 |
+| BR-3 | Đạt mục tiêu → streak +1; không đạt → streak reset 0. Mốc reset: nửa đêm giờ máy. | Khuyến khích đều đặn. | D-021 |
+
+## 8. Tiêu chí chấp nhận (Acceptance criteria)
+
+- **AC-1** — *Cho* một ngày đạt ít nhất một mục tiêu, *khi* chốt ngày, *thì* streak tăng 1. ↔ D-021
+- **AC-2** — *Cho* một ngày không đạt mục tiêu nào, *khi* chốt ngày, *thì* streak về 0. ↔ D-021
+- **AC-3** — *Cho* một phiên luyện tập (trò chơi/xem lại/trình phát), *khi* kết thúc, *thì*
+  hoạt động ngày không tăng. ↔ D-010
+
+## 9. Giả định · Ràng buộc · Phụ thuộc (RAID)
+
+- **Ràng buộc:** không có cơ chế cứu streak ở v1.
+- **Phụ thuộc:** hoạt động do luồng học ghi nhận; cài đặt mục tiêu.
+
+## 10. Câu hỏi mở
+
+- Không.
+
+## 11. Truy vết & liên quan
+
+- **Quyết định:** `docs/decision-tables/core-decision-table.md` — D-010, D-021.
+- **Spec liên quan:** `docs/business/study/study-flow.md`, `docs/business/statistics/statistics.md`.
+- **Dữ liệu:** `docs/database/schema-contract.md` — bảng `daily_activity`.

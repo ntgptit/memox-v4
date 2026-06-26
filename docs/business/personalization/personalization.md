@@ -1,33 +1,71 @@
-# Tính năng: Cá nhân hoá giao diện (Personalization / Theme)
+# PERSONALIZATION — Cá nhân hoá giao diện — Đặc tả nghiệp vụ
 
-**Status:** Specified
-**Phụ trách:** TBD
-**Liên quan:** WBS TBD
+## 0. Thông tin tài liệu
 
-## Mục đích
+| Trường | Giá trị |
+| --- | --- |
+| Mã tính năng | `personalization/personalization` |
+| Gói công việc (WBS) | W14 |
+| Trạng thái | Specified |
+| Người phụ trách | TBD |
+| Dòng quyết định liên quan | — |
+| Phiên bản | 1.0 |
 
-Cho người dùng tuỳ biến giao diện. *(Tôi quyết bộ tối thiểu hợp lý.)*
+## 1. Mục đích & bối cảnh nghiệp vụ
 
-## Hành vi người dùng thấy
+Người học sử dụng ứng dụng trong nhiều điều kiện ánh sáng và có sở thích thị giác khác
+nhau. Cá nhân hoá giao diện giúp việc học thoải mái hơn và giảm mỏi mắt, qua đó hỗ trợ học
+lâu dài.
 
-1. **Chế độ màu:** Sáng / Tối / Theo hệ thống.
-2. **Màu nhấn (accent):** chọn từ một bảng màu định sẵn.
-3. **Cỡ chữ:** nhỏ / vừa / lớn (ảnh hưởng thẻ học & danh sách).
+## 2. Phạm vi
 
-## Luật & ca biên
+**Trong phạm vi:** chế độ màu, màu nhấn, cỡ chữ.
+**Ngoài phạm vi (v1):** theme tải về; tuỳ biến theo từng màn; phông chữ tuỳ ý.
 
-- Lưu vào `settings`; áp ngay không cần khởi động lại.
-- Tôn trọng cài đặt hệ thống khi chọn "Theo hệ thống".
+## 3. Tác nhân & các bên liên quan
 
-## Out of scope (v1)
+| Tác nhân | Vai trò |
+| --- | --- |
+| Người học | Chọn theme phù hợp sở thích/điều kiện. |
 
-- Theme tải về / tuỳ biến từng màn; phông chữ tuỳ ý.
+## 4. Câu chuyện người dùng (User stories)
 
-## File mã nguồn
+- **US-1** — Là người học, tôi muốn chọn chế độ sáng/tối/theo hệ thống, để học dễ chịu mọi lúc.
+- **US-2** — Là người học, tôi muốn chỉnh cỡ chữ, để đọc thoải mái.
 
-TBD (chưa hiện thực).
+## 5. Luồng nghiệp vụ (Use cases)
 
-## Liên quan
+### UC-1: Đổi theme
+- **Luồng chính:** người học chọn chế độ màu, màu nhấn hoặc cỡ chữ; hệ thống áp dụng ngay,
+  không cần khởi động lại, và lưu lại.
 
-- `docs/ui-ux/ui-ux-contract.md` — token thiết kế
-- `docs/database/schema-contract.md` — `settings`
+## 6. Quy tắc nghiệp vụ (Business rules)
+
+| Mã | Quy tắc | Lý do | Truy vết |
+| --- | --- | --- | --- |
+| BR-1 | Hỗ trợ chế độ màu Sáng / Tối / Theo hệ thống. | Phù hợp điều kiện ánh sáng. | — |
+| BR-2 | Cho chọn màu nhấn từ bảng màu định sẵn và cỡ chữ (nhỏ/vừa/lớn). | Cá nhân hoá vừa đủ, giữ nhất quán thiết kế. | — |
+| BR-3 | Thay đổi áp dụng ngay và được lưu vào cài đặt. | Phản hồi tức thì, bền vững. | — |
+
+## 7. Tiêu chí chấp nhận (Acceptance criteria)
+
+- **AC-1** — *Cho* người học chọn chế độ Tối, *khi* áp dụng, *thì* giao diện chuyển sang
+  tối ngay mà không khởi động lại. ↔ BR-3
+- **AC-2** — *Cho* chế độ "Theo hệ thống", *khi* hệ thống đổi sáng/tối, *thì* ứng dụng đổi theo. ↔ BR-1
+
+## 8. Yêu cầu phi chức năng
+
+- Cả chế độ sáng và tối đều đạt độ tương phản đọc được (xem `docs/ui-ux/ui-ux-contract.md`).
+
+## 9. Giả định · Ràng buộc · Phụ thuộc (RAID)
+
+- **Phụ thuộc:** token thiết kế (`docs/design/design-language.md`); lưu trong cài đặt.
+
+## 10. Câu hỏi mở
+
+- Không.
+
+## 11. Truy vết & liên quan
+
+- **Spec liên quan:** `docs/business/settings/settings.md`.
+- **Thiết kế:** `docs/ui-ux/ui-ux-contract.md`, `docs/design/design-language.md`.

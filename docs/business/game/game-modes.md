@@ -1,58 +1,95 @@
-# Tính năng: 4 game luyện tập & picker "Một trò chơi"
+# GAME — Bốn trò chơi luyện tập — Đặc tả nghiệp vụ
 
-**Status:** Specified
-**Phụ trách:** TBD
-**Liên quan:** dòng quyết định D-008, D-013 · WBS TBD
+## 0. Thông tin tài liệu
 
-## Mục đích
+| Trường | Giá trị |
+| --- | --- |
+| Mã tính năng | `game/game-modes` |
+| Gói công việc (WBS) | W5 |
+| Trạng thái | Specified |
+| Người phụ trách | TBD |
+| Dòng quyết định liên quan | D-008, D-013, D-015 |
+| Phiên bản | 1.0 |
 
-Có **4 loại game** luyện từ vựng. Chúng được dùng ở **hai nơi**:
+## 1. Mục đích & bối cảnh nghiệp vụ
 
-1. Là **chặng 2–5** của chuỗi học thẻ mới (NewLearn) — xem `docs/business/study/study-flow.md`.
-2. Chọn **chạy riêng** qua menu "Một trò chơi" (picker).
+Lặp lại đơn điệu khiến người học mất hứng và ghi nhớ kém. MemoX cung cấp **bốn trò chơi**
+luyện từ vựng với mức độ chủ động tăng dần (nhận diện → gợi nhớ → tái tạo), giúp người
+học củng cố cùng một tập thẻ qua nhiều góc độ.
 
-Khi chơi riêng qua "Một trò chơi", game **không đổi SRS** (chỉ luyện tập). Khi là chặng
-của NewLearn, game cũng **không map riêng** vào SRS — chỉ hoàn thành đủ 5 chặng mới đưa
-thẻ vào ô 1 (D-002).
+Bốn trò chơi này được dùng ở **hai bối cảnh**: là các chặng 2–5 trong lộ trình học thẻ
+mới, và được chọn chạy riêng qua mục "Một trò chơi". Khi chạy riêng, chúng là luyện tập
+thuần, không ảnh hưởng lịch ôn.
 
-## 4 loại game
+## 2. Phạm vi
 
-| Loại (UI) | Canonical | Cách chơi | Chiều |
+**Trong phạm vi:** bốn loại trò chơi và cách chơi; bộ chọn "Một trò chơi"; tuỳ chọn
+phạm vi lấy từ; quy tắc học-lại-khi-sai trong ván.
+
+**Ngoài phạm vi:** chuỗi 5 chặng học mới (xem `docs/business/study/study-flow.md`); tính
+điểm/xếp hạng; biến thể trò chơi nghe/nói.
+
+## 3. Tác nhân & các bên liên quan
+
+| Tác nhân | Vai trò |
+| --- | --- |
+| Người học | Chọn và chơi trò chơi; tự chấm trong các trò có yếu tố gợi nhớ. |
+
+## 4. Câu chuyện người dùng (User stories)
+
+- **US-1** — Là người học, tôi muốn luyện từ qua trò chơi đa dạng, để học đỡ nhàm.
+- **US-2** — Là người học, tôi muốn chọn riêng một trò chơi, để tập trung vào kiểu luyện
+  mình thích.
+- **US-3** — Là người học, tôi muốn trò chơi ưu tiên những thẻ đang đến hạn hoặc còn
+  yếu, để luyện đúng chỗ cần.
+
+## 5. Luồng nghiệp vụ (Use cases)
+
+### UC-1: Chọn và chơi một trò chơi
+- **Luồng chính:** người học chọn "Một trò chơi" tại một nút; hệ thống mở bộ chọn 1
+  trong 4 trò chơi, kèm tuỳ chọn "Chế độ lặp lại giãn cách"; hệ thống lấy một tập thẻ
+  (mặc định 5) và chạy trò chơi đã chọn.
+- **Hậu điều kiện:** kết thúc ván; lịch ôn và hoạt động ngày **không** đổi.
+
+### UC-2: Trả lời trong ván
+- **Luồng chính:** với mỗi thẻ, người học thao tác theo kiểu trò chơi.
+- **Luồng ngoại lệ (sai):** trả lời sai đưa thẻ quay lại hàng đợi của ván; ván chỉ kết
+  thúc khi mọi thẻ đã đúng.
+
+## 6. Bốn loại trò chơi
+
+| Trò chơi | Cách chơi | Chiều kiểm tra |
+| --- | --- | --- |
+| Ghép đôi | Ghép cặp term ↔ nghĩa ở hai cột; cặp đúng biến mất. | cả hai |
+| Đoán | Hiện một term, chọn nghĩa đúng trong N lựa chọn. | term → nghĩa |
+| Nhớ lại | Hiện term, bấm "Hiển thị" lộ nghĩa, rồi tự chấm "Đã quên"/"Nhớ được". | term → nghĩa |
+| Điền | Hiện nghĩa, gõ lại term; có "Kiểm tra"/"Trợ giúp", chấp nhận dung sai. | nghĩa → term |
+
+## 7. Quy tắc nghiệp vụ (Business rules)
+
+| Mã | Quy tắc | Lý do | Truy vết |
 | --- | --- | --- | --- |
-| Ghép đôi | MatchingGame | 2 cột (term ↔ nghĩa); ghép đúng cặp, cặp ghép biến mất | cả hai |
-| Đoán | MultipleChoiceGame | 1 prompt (term) + N lựa chọn nghĩa; chọn đúng | term→nghĩa |
-| Nhớ lại | RecallGame | hiện term → "Hiển thị" lộ nghĩa → tự chấm: "Đã quên" → **lặp lại thẻ trong ván**, "Nhớ được" → qua thẻ | term→nghĩa |
-| Điền | TypingGame | hiện nghĩa → gõ term; "Kiểm tra" chấm, "Trợ giúp" gợi ý; sai thì "Thử lại", tự nhận "Đúng" | nghĩa→term |
+| BR-1 | "Một trò chơi" mở bộ chọn 1 trong 4 trò chơi để chạy riêng. | Người học chủ động chọn kiểu luyện. | D-013 |
+| BR-2 | Mỗi ván dùng `game_words_per_round` thẻ (mặc định 5). | Giữ ván ngắn, tập trung. | D-008 |
+| BR-3 | Trả lời sai trong bất kỳ trò chơi nào → thẻ lặp lại trong ván cho đến khi đúng. | Đảm bảo nắm được mọi thẻ trong ván. | D-015 |
+| BR-4 | Trò chơi chạy riêng **không** đổi lịch ôn, **không** cộng hoạt động ngày. | Đây là luyện tập, không phải ôn theo lịch. | — |
+| BR-5 | Tuỳ chọn "Chế độ lặp lại giãn cách": *Theo giãn cách* (ưu tiên đến hạn + mới), *Tất cả*, *Chỉ thẻ chưa thuộc*. | Cho người học hướng việc luyện vào nhóm thẻ mong muốn. | — |
 
-## "Một trò chơi" (picker)
+## 8. Yêu cầu phi chức năng
 
-1. Bấm "Một trò chơi" tại một nút → mở menu chọn **1 trong 4 game** ở trên.
-2. Kèm dropdown **"Chế độ lặp lại giãn cách"** — chọn cách lấy từ cho ván (tôi quyết):
-   - **Theo giãn cách** (mặc định): ưu tiên thẻ đến hạn + thẻ mới theo lịch 8-box.
-   - **Tất cả**: mọi thẻ trong nút, ngẫu nhiên.
-   - **Chỉ thẻ chưa thuộc**: loại thẻ đã ở ô 8.
-3. Chạy game đã chọn trên tập (mặc định `game_words_per_round` = 5; ngẫu nhiên khi
-   `game_random`). (D-008)
-4. **Không** đổi `SrsState`, **không** cộng `DailyActivity`.
+- Phản hồi thao tác trong ván tức thì (cảm giác mượt).
 
-## Luật & ca biên
+## 9. Giả định · Ràng buộc · Phụ thuộc (RAID)
 
-- **Sai thì học lại (mọi chế độ):** trả lời sai ở **bất kỳ** game/chặng (không chỉ
-  Nhớ lại/Điền) → thẻ **quay lại hàng đợi**, học lại; ván/phiên chỉ xong khi MỌI thẻ
-  đã đúng. (D-015)
-- "Điền" có gợi ý ("Trợ giúp") và cho người dùng **tự nhận đúng** ("Đúng") khi gõ lệch
-  nhẹ — chấp nhận dung sai.
+- **Giả định:** trong "Nhớ lại", người học tự chấm trung thực.
+- **Ràng buộc:** chỉ bốn trò chơi; không có biến thể nghe/nói ở v1.
+- **Phụ thuộc:** nội dung thẻ (term, nghĩa, audio).
 
-## Ngoài phạm vi (nói rõ)
+## 10. Câu hỏi mở
 
-- Tính điểm/xếp hạng (leaderboard) — không mô hình ở v1.
+- Không còn câu hỏi mở ở mức nghiệp vụ.
 
-## File mã nguồn
+## 11. Truy vết & liên quan
 
-TBD (chưa hiện thực).
-
-## Liên quan
-
-- `docs/business/study/study-flow.md` — 5 lối vào; chuỗi 5 chặng của NewLearn
-- `docs/business/settings/settings.md` — cụm cài đặt Trò chơi
-- `docs/decision-tables/core-decision-table.md` — D-008, D-013
+- **Quyết định:** `docs/decision-tables/core-decision-table.md` — D-008, D-013, D-015.
+- **Spec liên quan:** `docs/business/study/study-flow.md`, `docs/business/flashcard/flashcard-management.md`.

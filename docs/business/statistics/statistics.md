@@ -1,36 +1,80 @@
-# Tính năng: Thống kê học tập (Statistics)
+# STATISTICS — Thống kê học tập — Đặc tả nghiệp vụ
 
-**Status:** Specified
-**Phụ trách:** TBD
-**Liên quan:** dòng quyết định D-010, D-021 · WBS TBD
+## 0. Thông tin tài liệu
 
-## Mục đích
+| Trường | Giá trị |
+| --- | --- |
+| Mã tính năng | `statistics/statistics` |
+| Gói công việc (WBS) | W10 |
+| Trạng thái | Specified |
+| Người phụ trách | TBD |
+| Dòng quyết định liên quan | D-010, D-021 |
+| Phiên bản | 1.0 |
 
-Cho người học thấy tiến độ & thói quen học bằng các chỉ số trực quan, hiện đại.
-*(Spec định nghĩa CHỈ SỐ; bố cục/đồ thị do thiết kế UI quyết định.)*
+## 1. Mục đích & bối cảnh nghiệp vụ
 
-## Chỉ số đề xuất (tôi quyết)
+Để duy trì động lực và điều chỉnh kế hoạch học, người học cần thấy tiến độ và thói quen
+học của mình một cách trực quan. Thống kê tổng hợp dữ liệu học thành các chỉ số dễ đọc,
+hiện đại. Tài liệu này định nghĩa **các chỉ số nghiệp vụ**; bố cục và kiểu đồ thị do thiết
+kế giao diện quyết định.
 
-- **Lịch học (heatmap)** kiểu đóng góp: mức độ học theo từng ngày.
-- **Streak** hiện tại & dài nhất (xem `docs/business/engagement/dashboard-engagement.md`).
-- **Thời gian học** theo ngày / tuần / tháng (từ `daily_activity.seconds`).
-- **Số từ đã học** theo thời gian.
-- **Phân bố theo ô Leitner** (bao nhiêu thẻ ở ô 1..8) → đo độ thành thạo.
-- **Dự báo đến hạn** (forecast): số thẻ sẽ đến hạn ôn trong N ngày tới.
-- **Độ chính xác** (accuracy): tỉ lệ Đúng khi ôn/học.
-- **Tổng quan thư viện:** số cặp ngôn ngữ, thư mục, bộ thẻ, thẻ; % đã thuộc.
+## 2. Phạm vi
 
-## Luật & ca biên
+**Trong phạm vi:** danh mục chỉ số và ý nghĩa; phạm vi tính (cặp đang chọn hoặc toàn app).
+**Ngoài phạm vi:** bố cục màn hình và lựa chọn biểu đồ cụ thể.
 
-- Có bộ chọn phạm vi: **cặp đang chọn (mặc định)** hoặc toàn app.
-- Heatmap/forecast tính theo giờ máy.
+## 3. Tác nhân & các bên liên quan
 
-## File mã nguồn
+| Tác nhân | Vai trò |
+| --- | --- |
+| Người học | Xem thống kê để theo dõi tiến độ. |
 
-TBD (chưa hiện thực).
+## 4. Câu chuyện người dùng (User stories)
 
-## Liên quan
+- **US-1** — Là người học, tôi muốn thấy mình đã học bao nhiêu và đều đặn ra sao, để giữ
+  động lực.
+- **US-2** — Là người học, tôi muốn biết số thẻ sắp đến hạn, để chuẩn bị thời gian ôn.
 
-- `docs/business/engagement/dashboard-engagement.md` — hoạt động ngày & streak
-- `docs/database/schema-contract.md` — `daily_activity`, `srs_state`
-- `docs/decision-tables/core-decision-table.md`
+## 5. Danh mục chỉ số
+
+| Chỉ số | Ý nghĩa nghiệp vụ |
+| --- | --- |
+| Lịch học (heatmap) | Mức độ học theo từng ngày, cho thấy sự đều đặn. |
+| Chuỗi streak | Streak hiện tại và dài nhất (xem `docs/business/engagement/dashboard-engagement.md`). |
+| Thời gian học | Theo ngày/tuần/tháng, từ hoạt động đã ghi. |
+| Số từ đã học | Tích luỹ theo thời gian. |
+| Phân bố theo ô Leitner | Số thẻ ở mỗi ô 1..8, phản ánh độ thành thạo. |
+| Dự báo đến hạn | Số thẻ sẽ đến hạn ôn trong N ngày tới. |
+| Độ chính xác | Tỉ lệ trả lời đúng khi học/ôn. |
+| Tổng quan thư viện | Số cặp ngôn ngữ, thư mục, bộ thẻ, thẻ; tỉ lệ đã thuộc. |
+
+## 6. Quy tắc nghiệp vụ (Business rules)
+
+| Mã | Quy tắc | Lý do | Truy vết |
+| --- | --- | --- | --- |
+| BR-1 | Thống kê có bộ chọn phạm vi: **cặp đang chọn (mặc định)** hoặc toàn app. | Người học thường quan tâm một ngôn ngữ tại một thời điểm. | — |
+| BR-2 | Thời gian/số từ lấy từ hoạt động do "Lặp lại" và "Học" ghi nhận. | Chỉ tính nỗ lực học thực sự, không tính luyện tập. | D-010 |
+| BR-3 | Heatmap và dự báo tính theo giờ máy. | Phản ánh đúng "ngày" của người học. | — |
+
+## 7. Tiêu chí chấp nhận (Acceptance criteria)
+
+- **AC-1** — *Cho* một ngày có hoạt động học, *khi* xem heatmap, *thì* ngày đó hiển thị
+  mức độ tương ứng. ↔ D-010
+- **AC-2** — *Cho* phạm vi "cặp đang chọn", *khi* xem, *thì* chỉ số chỉ tính trong cặp đó. ↔ BR-1
+
+## 8. Yêu cầu phi chức năng
+
+- Tính toán thống kê không làm chậm các luồng học chính.
+
+## 9. Giả định · Ràng buộc · Phụ thuộc (RAID)
+
+- **Phụ thuộc:** hoạt động ngày (`daily_activity`), trạng thái SRS (`srs_state`).
+
+## 10. Câu hỏi mở
+
+- Không.
+
+## 11. Truy vết & liên quan
+
+- **Quyết định:** `docs/decision-tables/core-decision-table.md` — D-010, D-021.
+- **Spec liên quan:** `docs/business/engagement/dashboard-engagement.md`, `docs/business/srs/srs-review.md`.

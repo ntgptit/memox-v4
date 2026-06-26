@@ -1,59 +1,52 @@
-# Bảng thuật ngữ — MemoX V4
+# Bảng thuật ngữ nghiệp vụ — MemoX V4
 
-Tên canonical cho mọi khái niệm miền. Định nghĩa một lần ở đây; dùng đúng từ đó ở
-mọi nơi (code, docs, UI). Đổi tên một thuật ngữ = phải cập nhật mọi tham chiếu —
-tìm bằng `node tool/doc_guard/run.mjs terms <old>`.
+Ngôn ngữ chung giữa người dùng, BA và kỹ thuật. Mỗi thuật ngữ được định nghĩa một lần ở
+đây và dùng nhất quán trong toàn bộ tài liệu. Cột "Tên kỹ thuật" giữ định danh dùng trong
+mã nguồn để truy vết; đổi tên một thuật ngữ phải cập nhật mọi nơi
+(`node tool/doc_guard/run.mjs terms <cũ>`).
 
-Tên canonical để **tiếng Anh** (khớp code); nhãn UI và định nghĩa tiếng Việt ở các cột bên.
+## Nội dung & cấu trúc
 
-## Cấu trúc nội dung
-
-| Tên (canonical) | Định nghĩa | Ghi chú |
+| Thuật ngữ | Định nghĩa nghiệp vụ | Tên kỹ thuật |
 | --- | --- | --- |
-| LanguagePair | Ngữ cảnh học: một ngôn ngữ nguồn (đang học) + một ngôn ngữ đích (của người học). Mọi nội dung thuộc về đúng một cặp. | UI: "Cặp ngôn ngữ". Đảo chiều được (KO→VI / VI→KO). |
-| NativeLanguage | Tiếng mẹ đẻ của người học, đặt ở mức toàn cục; mặc định là mặt nghĩa. | UI: "Tiếng mẹ đẻ". Khác với ngôn ngữ giao diện và khác ngôn ngữ đang học. |
-| Folder | Nút chứa, gồm thư mục con và/hoặc bộ thẻ; lồng được nhiều cấp. | UI: "Thư mục". Tổng hợp số liệu/tiến độ của toàn bộ cây con. |
-| Deck | Nút trực tiếp chứa các thẻ. | UI: "Bộ thẻ". Folder và Deck đều là *nút học được*. |
-| StudyableNode | Bất kỳ Folder hay Deck nào; có thể bắt đầu học/luyện tại bất kỳ nút (một deck, hoặc cả một cây thư mục). | Không phải kiểu lưu trữ — chỉ là một vai trò. |
-| Card | Một mục từ vựng: một `term` + một hoặc nhiều `CardMeaning`, kèm audio, giới tính, cờ ẩn (tuỳ chọn). | UI: "Thẻ" / "Từ". **Đa trường**, KHÔNG phải cặp mặt trước/mặt sau. |
-| CardMeaning | Phần nghĩa theo một ngôn ngữ — **một ô văn bản tự do** (dịch + giải thích + từ nguyên gõ chung). | Một thẻ có thể có nhiều ngôn ngữ (vd VI mẹ đẻ + EN trung gian). |
-| Term | Mặt ngôn ngữ-đang-học của thẻ (mặt hỏi/đề bài). | vd `폐강`. |
-| SrsState | Trạng thái lập lịch của một thẻ (một chiều duy nhất): ô Leitner, hạn ôn, kết quả gần nhất. | Một dòng cho mỗi thẻ. |
-| LeitnerBox | Ô (1..N) mà thẻ đang nằm; ô càng cao thì khoảng cách ôn càng dài. | UI: "Ô". **MemoX dùng 8 ô** (thuật toán 8-box); app gốc mặc định 7. |
-| CardStatus | Vòng đời suy ra: `new` → `learning` → `due` → `mastered`, cộng `hidden`. | `hidden` bị loại khỏi hàng đợi và khỏi số đến hạn. |
-| DueCount | Số thẻ không ẩn có `due_at <= now` của một nút. | Badge đỏ; UI giới hạn "99+". |
-| Progress | Tỉ lệ thành thạo của một nút = số thẻ mastered / tổng số thẻ. | Chỉ số `%` mỗi nút; cộng dồn lên cây. |
+| Cặp ngôn ngữ | Ngữ cảnh học gồm ngôn ngữ đang học và ngôn ngữ của người học; mọi nội dung thuộc về một cặp. Đảo chiều hiển thị được. | `LanguagePair` |
+| Tiếng mẹ đẻ | Ngôn ngữ của người học, đặt ở mức toàn cục; mặt nghĩa mặc định. | `NativeLanguage` |
+| Thư mục | Nút chứa thư mục con và/hoặc bộ thẻ; lồng nhiều cấp. | `Folder` |
+| Bộ thẻ | Nút chứa trực tiếp các thẻ học. | `Deck` |
+| Thẻ học | Đơn vị từ vựng: một term cùng một/nhiều khối nghĩa, kèm âm thanh và các cờ. | `Card` |
+| Nghĩa | Khối nghĩa theo một ngôn ngữ — một ô văn bản tự do. | `CardMeaning` |
+| Term | Mặt ngôn ngữ đang học của thẻ (mặt hỏi). | `term` |
+| Trạng thái ôn | Tình trạng lập lịch của một thẻ: ô Leitner, hạn ôn, kết quả gần nhất. | `SrsState` |
+| Ô Leitner | Ô (0..8) quyết định khoảng cách ôn; ô càng cao, ôn càng thưa. | `LeitnerBox` |
+| Trạng thái thẻ | Vòng đời: mới → đang học → đến hạn → đã thuộc, cộng "ẩn". | `CardStatus` |
+| Số đến hạn | Số thẻ không ẩn đã đến hạn ôn của một nút (badge đỏ). | `DueCount` |
+| Tiến độ | Tỉ lệ thẻ đã thuộc trên tổng số thẻ của một nút. | `Progress` |
 
-## Hoạt động
+## Hoạt động học
 
-| Tên (canonical) | Định nghĩa | Ghi chú |
+| Thuật ngữ | Định nghĩa nghiệp vụ | Tên kỹ thuật |
 | --- | --- | --- |
-| StudySession | Một lượt học SRS làm đổi `SrsState` + `DailyActivity`. Có **hai lối** tách biệt. | Gồm `DueReview` và `NewLearn`. |
-| DueReview | Lối học SRS ôn các thẻ **đến hạn** (`due`). | UI: mục **"Lặp lại"** trong menu (mở bằng nút Play); chỉ hiện khi due>0; nhãn "Lặp lại N từ". |
-| NewLearn | Lối học SRS học thẻ **mới** qua **chuỗi 5 chặng khó dần** (Xem lại → Ghép đôi → Đoán → Nhớ lại → Điền). | Vào bằng menu "Học" ("X từ mới"). |
-| ReviewMode | Duyệt thẻ (term + nghĩa đầy đủ), sửa inline; không đổi SRS. | UI: "Xem lại". Vừa chạy riêng (menu "Xem lại các từ"), vừa là **chặng 1 của NewLearn**. |
-| Game | "Một trò chơi" = **picker** chọn 1 trong 4 game (`MatchingGame`, `MultipleChoiceGame`, `RecallGame`, `TypingGame`) để luyện riêng; không đổi SRS. | 4 game này cũng là chặng 2–5 của `NewLearn`. Kèm dropdown "Chế độ lặp lại giãn cách". |
-| MatchingGame | Mini-game ghép cặp term ↔ nghĩa ở 2 cột; cặp ghép đúng biến mất. | UI: "Ghép đôi". |
-| MultipleChoiceGame | Mini-game hiện 1 prompt (term) + N lựa chọn nghĩa, chọn đúng. | UI: "Đoán". |
-| RecallGame | Mini-game hiện term → lộ nghĩa ("Hiển thị") → tự chấm: "Đã quên" làm thẻ lặp lại trong ván, "Nhớ được" cho qua. | UI: "Nhớ lại". |
-| TypingGame | Mini-game hiện nghĩa → gõ term; "Kiểm tra"/"Trợ giúp", "Đúng"/"Thử lại" (dung sai). | UI: "Điền". |
-| Player | **Phát tự động (auto-play)** lần lượt các thẻ (term + nghĩa) + audio, rảnh tay; tiến độ dạng chấm; không đổi SRS. | UI: "Trình phát". |
-| DailyActivity | Bộ đếm theo ngày, theo cặp: số giây học + số từ học. | UI: "Hoạt động hôm nay". Nuôi mục tiêu/streak. |
-| Reminder | Lịch nhắc học: một giờ-trong-ngày + tập các thứ trong tuần. | UI: "Lời nhắc" (vd 13:00, T2–CN). |
-| Search | Tìm thẻ theo **term + nghĩa**, toàn cục hoặc trong một nút. | UI: ô tìm kiếm. |
-| DailyGoal | Mục tiêu học mỗi ngày (số phút và/hoặc số từ). | Gắn với "Hoạt động hôm nay". |
-| Streak | Số ngày liên tiếp đạt DailyGoal. | Reset khi một ngày không đạt. |
+| Ôn thẻ đến hạn | Hình thức học theo lịch SRS, ôn các thẻ đã đến hạn. Mở qua "Lặp lại" (chỉ hiện khi có thẻ đến hạn). | `DueReview` |
+| Học thẻ mới | Hình thức học SRS đưa thẻ mới vào lịch qua chuỗi 5 chặng khó dần. Mở qua "Học". | `NewLearn` |
+| Xem lại | Duyệt thẻ (term + nghĩa); không ảnh hưởng lịch ôn. | `ReviewMode` |
+| Trò chơi | Bốn trò luyện (Ghép đôi, Đoán, Nhớ lại, Điền); không ảnh hưởng lịch ôn. | `Game` |
+| Trình phát | Phát tự động các thẻ kèm âm thanh; không ảnh hưởng lịch ôn. | `Player` |
+| Hoạt động hôm nay | Số phút và số từ học trong ngày (chỉ từ Ôn/Học). | `DailyActivity` |
+| Mục tiêu ngày | Mục tiêu học mỗi ngày: số phút và/hoặc số từ. | `DailyGoal` |
+| Streak | Số ngày liên tiếp đạt mục tiêu ngày. | `Streak` |
+| Nhắc học | Lịch nhắc gồm giờ trong ngày và tập thứ trong tuần. | `Reminder` |
+| Tìm kiếm | Tìm thẻ theo term và nghĩa, toàn cục hoặc trong một nút. | `Search` |
 
 ## Hệ thống
 
-| Tên (canonical) | Định nghĩa | Ghi chú |
+| Thuật ngữ | Định nghĩa nghiệp vụ | Tên kỹ thuật |
 | --- | --- | --- |
-| Backup | Bản chụp file cục bộ của toàn bộ dữ liệu, khôi phục được trên máy; hỗ trợ tự động. | UI: "Sao lưu/Khôi phục". **Khác** với Sync. |
-| CloudSync | Đồng bộ đa thiết bị qua tài khoản đám mây. | UI: "Đồng bộ đám mây". Đang ở mức *alpha*. |
-| Premium | Gói trả phí (thuê bao hằng năm) khoá một phần tính năng. | UI: "Gói Premium". **Hoãn — chưa phát triển ở v1.** |
-| Theme | Cá nhân hoá giao diện: chế độ màu, màu nhấn, cỡ chữ. | UI: "Chủ đề". |
+| Sao lưu | Bản chụp file cục bộ, khôi phục được trên máy. Khác đồng bộ. | `Backup` |
+| Đồng bộ | Đồng bộ dữ liệu đa thiết bị qua tài khoản Google (alpha). | `CloudSync` |
+| Theme | Cá nhân hoá giao diện: chế độ màu, màu nhấn, cỡ chữ. | `Theme` |
+| Premium | Gói trả phí — **hoãn ở v1**. | `Premium` |
 
 ## Liên quan
 
-- `docs/business/index.md` — nơi các thuật ngữ này được dùng
-- `docs/database/schema-contract.md` — cách Card/CardMeaning/SrsState lưu trữ
+- `docs/business/index.md` — danh mục yêu cầu
+- `docs/database/schema-contract.md` — cách các khái niệm này được lưu trữ

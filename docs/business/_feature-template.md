@@ -1,49 +1,69 @@
-# Feature: <name>
+# <Mã> <Tên tính năng> — Đặc tả nghiệp vụ
 
-> Copy this file to `docs/business/<area>/<feature>.md`. Delete this line.
+> Sao chép file này sang `docs/business/<area>/<feature>.md`. Xoá dòng này.
+> Chuẩn viết: văn phong BA — câu hoàn chỉnh, nêu rõ "vì sao", hướng người đọc nghiệp vụ.
 
-**Status:** Specified <!-- Specified | Implemented (only flip to Implemented with code + tests) -->
-**Owner:** <who>
-**Related:** decision rows <ids> · `docs/contracts/usecase-contracts/<entity>.md` · WBS <id>
+## 0. Thông tin tài liệu
 
-## Purpose
+| Trường | Giá trị |
+| --- | --- |
+| Mã tính năng | `<area>/<feature>` |
+| Gói công việc (WBS) | W-? |
+| Trạng thái | Specified |
+| Người phụ trách | TBD |
+| Phiên bản | 1.0 |
 
-<!-- FILL: one paragraph — what user problem this solves. -->
+## 1. Mục đích & bối cảnh nghiệp vụ
 
-## User-visible behavior
+<!-- Vấn đề của người học, giá trị tính năng mang lại, lý do tồn tại. 1–2 đoạn. -->
 
-<!-- FILL: the happy path as numbered steps. Be concrete about copy, order, transitions. -->
+## 2. Phạm vi
 
-1. ...
+**Trong phạm vi:** <!-- ... -->
+**Ngoài phạm vi (v1):** <!-- để không ai mở lại tranh luận. -->
 
-## States
+## 3. Tác nhân & các bên liên quan
 
-| State | Trigger | What the user sees |
-| --- | --- | --- |
-| loading | | |
-| loaded (empty) | | |
-| loaded (data) | | |
-| error | | |
+| Tác nhân | Vai trò trong tính năng |
+| --- | --- |
+| Người học | <!-- ... --> |
 
-## Rules & edge cases
+## 4. Câu chuyện người dùng (User stories)
 
-<!-- FILL: validation, limits, ordering, conflicts. Each rule that can branch -> a decision-table row. -->
+- **US-1** — Là <vai trò>, tôi muốn <mục tiêu> để <giá trị>.
 
-- ...
+## 5. Luồng nghiệp vụ (Use cases)
 
-## Out of scope (explicitly)
+### UC-1: <tên>
+- **Tiền điều kiện:** <!-- ... -->
+- **Luồng chính:** 1. … 2. …
+- **Luồng thay thế / ngoại lệ:** <!-- ... -->
+- **Hậu điều kiện:** <!-- ... -->
 
-<!-- FILL: what this feature intentionally does NOT do, so nobody re-litigates it. -->
+## 6. Quy tắc nghiệp vụ (Business rules)
 
-- ...
+| Mã | Quy tắc | Lý do | Truy vết |
+| --- | --- | --- | --- |
+| BR-1 | <!-- phát biểu rõ ràng, kiểm thử được --> | <!-- vì sao --> | D-? |
 
-## Source files
+## 7. Tiêu chí chấp nhận (Acceptance criteria)
 
-<!-- FILL: the lib/... files that implement this, once they exist. -->
+- **AC-1** — *Cho* <bối cảnh>, *khi* <hành động>, *thì* <kết quả>. ↔ D-?
 
-## Related
+## 8. Yêu cầu phi chức năng
 
-- `docs/contracts/usecase-contracts/_template.md` — the use case contract
-- `docs/decision-tables/core-decision-table.md` — add the testable branches
-- `docs/acceptance-criteria/_template.md` — acceptance criteria
-- `docs/design/_screen-template.md` — the screen spec
+<!-- hiệu năng, khả dụng, a11y… nếu có. -->
+
+## 9. Giả định · Ràng buộc · Phụ thuộc (RAID)
+
+- **Giả định:** … · **Ràng buộc:** … · **Phụ thuộc:** …
+
+## 10. Câu hỏi mở
+
+- <!-- điều cần chốt; gỡ khi đã quyết. -->
+
+## 11. Truy vết & liên quan
+
+- **Dữ liệu:** `docs/database/schema-contract.md`
+- **Quy tắc/quyết định:** `docs/decision-tables/core-decision-table.md`
+- **Spec liên quan:** <!-- ... -->
