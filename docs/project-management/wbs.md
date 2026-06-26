@@ -46,7 +46,7 @@ Status ∈ Planned / In-progress / Blocked / Done. Tất cả đang **Planned** 
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
-- TBD · 2026-06-27 · W1–W14 · populate WBS; fill contract/architecture/index stubs (AI-agent readiness)
+- adfb86aa · 2026-06-27 · W1–W14 · populate WBS; fill contract/architecture/index stubs (AI-agent readiness)
 - 4879608 · 2026-06-26 · — · initial business specs + skeleton import
 
 ## Related
