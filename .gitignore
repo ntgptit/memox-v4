@@ -11,6 +11,10 @@ __pycache__/
 *.pyc
 .venv/
 
+# nested independent repo — has its own git/remote (code-verification-guard-v2),
+# committed separately; memox-v4 must not track it.
+code-verification-guard/
+
 # editor / OS
 .idea/
 .DS_Store
