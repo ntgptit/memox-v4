@@ -5,16 +5,22 @@ orchestrate use cases, they don't hold business logic or the only copy of data.
 
 ## Choice
 
-<!-- FILL: the state solution for Flutter / Dart 3 and the standard pattern (e.g. one
-     notifier per screen, async state for loads). -->
+**Riverpod (annotation / codegen)** — khai báo provider bằng `@riverpod`. Trạng thái
+bất đồng bộ dùng `AsyncValue<T>`: `AsyncNotifier` cho màn có hành động (study/game/editor),
+`FutureProvider`/`StreamProvider` cho đọc thuần (danh sách, watch DB). Một notifier cho
+một mối-quan-tâm cấp màn; mặc định `autoDispose`, `keepAlive` cho state xuyên màn. State
+chỉ **điều phối use case** — không chứa business logic, không giữ bản sao dữ liệu duy nhất.
 
 ## Per-store contract
 
 | Store / notifier | Owns | Reads (use cases) | Lifetime |
 | --- | --- | --- | --- |
-| <name> | <screen state> | <use cases> | autoDispose / kept-alive |
-
-<!-- FILL: one row per stateful unit. -->
+| `LibraryNotifier` | cây thư viện (đếm, sort, cặp đang chọn) | watchLibrary, sortNodes | autoDispose |
+| `DeckDetailNotifier` | danh sách thẻ của một deck | watchDeck | autoDispose |
+| `StudySessionNotifier` | hàng đợi + thẻ hiện tại + tiến độ | buildQueue, gradeCard | autoDispose |
+| `GameSessionNotifier` | ván game (5 thẻ, tiến độ) | buildGameRound | autoDispose |
+| `SettingsNotifier` | cài đặt (theme, SRS, game, nhắc) | readSettings, updateSetting | keepAlive |
+| `EngagementNotifier` | hoạt động ngày + streak | watchDailyActivity | keepAlive |
 
 ## Rules
 

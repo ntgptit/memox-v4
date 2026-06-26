@@ -4,8 +4,8 @@ Every user-facing string is a defined key — never hardcoded in features (hard 
 
 ## Where strings live
 
-<!-- FILL: the i18n mechanism for Flutter / Dart 3 (resource files, ARB, JSON catalogs)
-     and where new keys are added. -->
+ARB ở `lib/l10n/` (`app_en.arb`, `app_vi.arb`); sinh accessor bằng `gen_l10n`
+(`flutter gen-l10n`), dùng `AppLocalizations.of(context)`. Thêm key vào **cả hai** ARB.
 
 ## Rules
 
@@ -17,7 +17,8 @@ Every user-facing string is a defined key — never hardcoded in features (hard 
 
 ## Voice
 
-<!-- FILL: tone (concise, plain, no jargon), capitalization, terminology aligned to glossary. -->
+Ngắn gọn, đời thường, không jargon. Dùng đúng thuật ngữ ở `docs/business/glossary.md`.
+Ngôn ngữ chính: Tiếng Việt (+ English).
 
 ## Related
 

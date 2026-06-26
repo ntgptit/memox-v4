@@ -18,7 +18,8 @@ Where and how to log, so logs are useful and never leak. Read before adding a lo
 - Messages are actionable: what failed + enough context to locate it.
 - No logging in tight loops / hot paths (see `docs/quality/performance-contract.md`).
 
-<!-- FILL: the logging API/util for Flutter / Dart 3 and any structured-logging fields. -->
+API log: package `logging` qua wrapper ở `lib/core/util/` (logger.dart); trường có cấu trúc:
+`feature`, `op`, `failure`, `ms`. `debug` tắt ở release (`kReleaseMode`).
 
 ## Related
 

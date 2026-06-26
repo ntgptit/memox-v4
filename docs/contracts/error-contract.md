@@ -14,7 +14,10 @@ every error into one of these — no ad-hoc strings.
 | NetworkFailure | remote unreachable | offline/error state | yes |
 | UnexpectedFailure | unhandled | generic error + log | no |
 
-<!-- FILL: adjust to your domain. Add the actual type/enum names you use. -->
+Tên kiểu: lớp gốc **`Failure`** (sealed); các nhánh trên là subtype. Thêm domain-specific:
+`ImportFailure` (parse CSV/Excel sai → ValidationFailure mức dòng), `SyncFailure`
+(xung đột/đăng nhập Google → Network/Conflict). Use case trả `Result<T, Failure>`
+(xem `docs/contracts/code-style.md`).
 
 ## Rules
 

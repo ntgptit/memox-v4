@@ -5,8 +5,9 @@ into a prompt when handing a UI task to an agent.
 
 ## Tokens (single source)
 
-<!-- FILL: where tokens live (colors, spacing, radius, typography) and their names.
-     UI must use tokens, never raw values (hard rule). -->
+Token sống ở `lib/app/theme/` (Material 3 `ThemeData` + `ThemeExtension`): bảng màu
+(`ColorScheme` + accent từ personalization), spacing scale (4/8/12/16/24), radius,
+typography (`TextTheme`). UI dùng `Theme.of(context)` — không giá trị thô.
 
 ## Principles
 
@@ -17,12 +18,17 @@ into a prompt when handing a UI task to an agent.
 
 ## Shared components
 
+Widget dùng chung đặt tiền tố `Mx` (planned):
+
 | Component | Use for | Don't use raw |
 | --- | --- | --- |
-| <Card component> | grouped content | raw card |
-| <Button component> | actions | raw button |
-
-<!-- FILL: list the shared components so agents reach for them first. -->
+| `MxNodeTile` | dòng thư mục/bộ thẻ (đếm + % + due) | `ListTile` thô |
+| `MxFlashcard` | mặt thẻ (term/nghĩa + audio) | `Card` thô |
+| `MxPrimaryButton` | hành động chính | `ElevatedButton` thô |
+| `MxActionSheet` | menu hành động (Play) | `showModalBottomSheet` thô |
+| `MxConfirmDialog` | xác nhận xoá | `AlertDialog` thô |
+| `MxProgressRing` | vòng tiến độ + badge due | — |
+| `MxEmptyState` | trạng thái rỗng | — |
 
 ## Anti-patterns
 

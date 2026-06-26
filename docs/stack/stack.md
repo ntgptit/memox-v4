@@ -2,18 +2,19 @@
 
 Detected/seeded stack: **Flutter / Dart 3** (id: `flutter`, source root: `lib/`).
 
-<!-- FILL: pin exact technologies + versions. Adding a dependency requires approval (CLAUDE.md hard rule). -->
+Thêm dependency cần **duyệt** (CLAUDE.md hard rule). Phiên bản chính xác chốt khi
+hoàn thiện `pubspec.yaml`.
 
 | Concern | Choice | Version | Notes |
 | --- | --- | --- | --- |
-| Language / runtime | | | |
-| Framework | | | |
-| State management | | | |
-| Persistence | | | |
-| Routing | | | |
-| i18n | | | |
-| Testing | | | |
-| Lint / format | | | |
+| Language / runtime | Dart | 3.x | null-safety, sealed/pattern |
+| Framework | Flutter | stable | Material 3 |
+| State management | Riverpod (annotation) | ^2 | `riverpod_generator` |
+| Persistence | Drift (SQLite) | ^2 | DB cục bộ |
+| Routing | go_router | ^14 | hằng ở `route_paths.dart` |
+| i18n | flutter_localizations + ARB | — | `gen_l10n` |
+| Testing | flutter_test + mocktail | — | Drift in-memory |
+| Lint / format | flutter_lints + `dart format` | — | `analysis_options.yaml` |
 
 ## Verification chain
 

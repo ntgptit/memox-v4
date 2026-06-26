@@ -12,7 +12,9 @@ add the cheapest automatic gate that covers the whole class.
 | UI / widget | screen states + key actions | `--full` |
 | visual / golden | one per state (if a golden gate exists) | `--full` |
 
-<!-- FILL: adjust names to Flutter / Dart 3. -->
+Flutter cụ thể: `flutter_test` cho unit/widget; mock bằng `mocktail`; Drift chạy
+**in-memory** cho test data layer/migration; golden bằng widget test (nếu bật). Mọi test
+chạy qua `node tool/verify/run.mjs --full` (analyze + format + `flutter test`).
 
 ## Bug-class gate map
 

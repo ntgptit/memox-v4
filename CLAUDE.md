@@ -27,7 +27,7 @@ Before finishing a task, answer in order:
    path, encoding)
    → update `docs/database/schema-contract.md` + `docs/database/migration-contract.md` + `docs/database/storage-boundaries.md`.
 3. **Route / navigation change?** → update `docs/business/navigation/navigation-flow.md` + the route constants.
-4. **Core-domain rule change?** <!-- FILL: name your project's algorithmic core, e.g. pricing, scoring, scheduling. -->
+4. **Core-domain rule change?** (lập lịch SRS 8-box Leitner — `docs/business/srs/srs-review.md`)
    → update the matching `docs/business/**` spec + decision table.
 5. **Rule / edge case / validation change?** → update the matching doc. NEVER quietly relax/tighten a documented rule.
 6. **New testable branch?** → add/update a row in `docs/decision-tables/core-decision-table.md` and write the test.
@@ -126,13 +126,13 @@ Backtick refs to another file MUST be **repo-root absolute, no leading slash**:
 
 - NO committing code without running the Pre-commit parity check.
 - NO implementing from assumptions when a doc contract exists.
-- NO editing generated files. <!-- FILL: list your generated globs, e.g. *.g.dart, generated/** -->
+- NO editing generated files (`*.g.dart`, `*.freezed.dart`, `lib/l10n/generated/**`, `docs/_generated/**`).
 - NO hardcoding routes, colors, text styles, durations, or user-facing strings.
 - NO new shared widget/component when an existing one fits.
 - NO schema/persistence change without migration + schema docs + migration docs + test in the same commit.
 - NO marking a doc item Implemented before the code is really implemented and tested.
 - NO keeping persistent data only in memory.
-- NO bypassing the layering: <!-- FILL: e.g. UseCase → Repository → DAO -->.
+- NO bypassing the layering: UseCase → Repository (interface) → DataSource (DAO/remote).
 - NO inward→outward imports: domain imports nothing outward; presentation never imports data directly.
 - NO new route without updating route constants AND `docs/business/navigation/navigation-flow.md` in the same commit.
 - NO leaving a doc referencing an old term/route/field after a rename.

@@ -6,11 +6,12 @@ Read before a perf-sensitive change. Budgets are explicit so "fast enough" is te
 
 | Operation | Budget | Measured how |
 | --- | --- | --- |
-| <screen first paint> | <ms> | |
-| <list scroll> | 60fps / no jank | |
-| <query> | <ms / bounded rows> | |
+| Mở màn (first paint) | < 300 ms | DevTools timeline |
+| Cuộn danh sách thẻ/nút | 60fps, không jank | profile mode |
+| Truy vấn thư viện / hàng đợi | < 50 ms, có giới hạn (paginate) | log `ms` + test |
+| Dựng hàng đợi due/new (deck lớn) | < 100 ms | benchmark |
 
-<!-- FILL: set real numbers for your hot paths. -->
+Số là **mục tiêu ban đầu**, tinh chỉnh khi đo trên máy thật.
 
 ## Rules
 

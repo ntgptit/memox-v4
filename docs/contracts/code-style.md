@@ -5,7 +5,13 @@ Naming and structure rules the reviewer enforces. Keep this short and absolute.
 ## Naming
 
 - Semantic names; one responsibility per class/file.
-- <!-- FILL: casing per layer, file naming, test naming for Flutter / Dart 3. -->
+- File: `snake_case.dart` (vd `create_flashcard.dart`, `flashcard_repository_impl.dart`).
+- Kiểu/lớp/enum: `UpperCamelCase`; thành viên/biến/hằng: `lowerCamelCase`.
+- Use case: 1 lớp / 1 file, hậu tố `UseCase` (vd `CreateFlashcardUseCase`).
+- Repository: interface `XxxRepository`, impl `XxxRepositoryImpl`; DAO `XxxDao`.
+- Provider (Riverpod annotation): khai báo `@riverpod`, dùng `xxxProvider` sinh ra.
+- Màn hình `XxxScreen`; route đặt trong `RoutePaths` (không hardcode chuỗi).
+- Test: `*_test.dart`; tên test **trích mã quyết định** (vd `'D-004: sai → lùi 1 ô'`).
 
 ## Structure
 
@@ -17,7 +23,9 @@ Naming and structure rules the reviewer enforces. Keep this short and absolute.
 ## Errors & results
 
 - Return/propagate failures via the taxonomy in `docs/contracts/error-contract.md`.
-- <!-- FILL: your result/error idiom, e.g. Result<T,E> / exceptions / Either. -->
+- Use case & repository trả `Future<Result<T, Failure>>` — `Result` là **sealed** Dart 3
+  (`Ok<T>` / `Err<Failure>`). Data layer bắt exception thô và **ánh xạ thành `Failure`**
+  ở ranh giới repository; KHÔNG ném exception thô lên presentation.
 
 ## Imports
 
