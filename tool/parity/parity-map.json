@@ -1,0 +1,8 @@
+{
+  "$comment": "Machine-readable parity contract for tool/parity/report.mjs. One entry per screen/state: golden = repo-root path WITHOUT the __<theme>.png suffix; the shot is <shotsDir>/<screen.id>--<state.kit>--<theme>.png, where shotsDir comes from tool/tool.config.json (derived from designSystemDir). scope per state: current | deferred | behavior | needs-schema | needs-token | shared. Add screens as they are built; keep in sync when a screen/state changes.",
+  "minSsim": 0.8,
+  "$minSsimNote": "Visual-fidelity floor for report.mjs: a `current` state whose golden↔shot SSIM is below this is DIVERGED. Lower to stage rollout, raise as screens are built up to the design; `--min-ssim <v>` overrides per run.",
+  "tokenLintAllow": [],
+  "$tokenLintAllowNote": "spec ids where a bare #rrggbb is legitimate content (e.g. a screen that DISPLAYS color swatches). token_lint skips these for --check. Add ids as needed; remove once the screen uses real tokens.",
+  "screens": []
+}

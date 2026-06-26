@@ -1,0 +1,14 @@
+{
+  "$comment": "Documented-exception ledger for the parity closed loop. SOURCE OF TRUTH = the shots + specs generated from the design; any visual divergence is a BUG to fix by default. This holds ONLY narrow, documented exceptions, each governed by a doc. `exceptions` (FE-side): the FE intentionally does NOT match the mock — match by screen == entry.screen AND (entry.node == '*' OR node startsWith entry.node) AND (entry.kind == '*' OR entry.kind == finding kind); each needs a `source` citing a doc/owner ruling. `coverageExempt` (kit-side): kit nodes intentionally exempt from data-mx-node coverage. Keep MINIMAL — when in doubt, fix the FE to match the design.",
+  "$example": {
+    "screen": "<screen-id>",
+    "node": "<node-id>",
+    "kind": "*",
+    "verdict": "exception",
+    "exceptionKind": "behavior",
+    "reason": "<why the FE intentionally diverges>",
+    "source": "<doc path that authorizes it>"
+  },
+  "exceptions": [],
+  "coverageExempt": []
+}

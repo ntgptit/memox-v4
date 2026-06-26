@@ -1,0 +1,34 @@
+{
+  "$schema": "see tool/verify/run.mjs",
+  "stack": "flutter",
+  "src": "lib",
+  "steps": {
+    "analyze": {
+      "cmd": "flutter analyze"
+    },
+    "format": {
+      "cmd": "dart format --output=none --set-exit-if-changed ."
+    },
+    "test": {
+      "cmd": "flutter test"
+    }
+  },
+  "chains": {
+    "quick": [
+      "analyze"
+    ],
+    "code": [
+      "analyze",
+      "format"
+    ],
+    "full": [
+      "analyze",
+      "format",
+      "test"
+    ],
+    "docs": [
+      "doc_guard"
+    ]
+  },
+  "docGuard": "node tool/doc_guard/run.mjs check"
+}

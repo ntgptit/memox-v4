@@ -1,0 +1,17 @@
+{
+  "$comment": "SINGLE source of project-specific paths for everything under tool/. Edit these to retarget the toolchain to a new project layout. All paths are repo-root-relative with forward slashes. The loader (tool/_config.mjs) derives the rest (theme dir, token css, ui-kit shots/specs/index.html) from these — so to move the design system you usually only change `designSystemDir`, and to move source you only change `srcDir`.",
+  "srcDir": "lib",
+  "docsDir": "docs",
+  "designSystemDir": "docs/design-system",
+  "themeSubdir": "core/theme",
+  "uiKitSubdir": "ui_kits/mobile",
+  "$derived": {
+    "themeDir": "<srcDir>/<themeSubdir>",
+    "colorsDart": "<themeDir>/mx_colors.dart",
+    "tokensCss": "<designSystemDir>/colors_and_type.css",
+    "uiKitDir": "<designSystemDir>/<uiKitSubdir>",
+    "kitHtml": "<uiKitDir>/index.html",
+    "shotsDir": "<uiKitDir>/shots",
+    "specsDir": "<uiKitDir>/specs"
+  }
+}

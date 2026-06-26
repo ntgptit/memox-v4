@@ -1,0 +1,17 @@
+#!/bin/sh
+# pre-commit — refuse commits whose tree state has no valid verify pass-marker.
+#
+# Enforces the rule in CLAUDE.md: every verification goes through
+# `node tool/verify/run.mjs`, which writes a marker bound to the exact content
+# state of the tree. A loose `flutter test` / `npm test` / `pytest` produces no
+# marker, so it cannot be committed — that is what keeps "verified" honest.
+#
+# Bypass for a genuine emergency only: git commit --no-verify
+set -e
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-commit: node not found; skipping verify-marker check." >&2
+  exit 0
+fi
+
+node tool/verify/run.mjs --check-marker
