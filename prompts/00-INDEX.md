@@ -39,6 +39,8 @@ Do **not** run two steps in one session (context bleed). One file → one fresh 
 | 13 | `13-W13-personalization.md` | W13 | theme picker | W12 |
 
 ## Conventions every file enforces (so the loop never drifts)
+- **Every step delivers BOTH BE and FE** — a step is done only when its data/domain layer AND its
+  screen(s) are implemented and `verify --full` is green. Never ship a step with only one side.
 - **Architecture:** Clean — domain imports nothing outward, presentation→domain (never data),
   data implements domain. Layer order: entity → contract → use case → `@riverpod` state → UI.
 - **Stack:** Riverpod annotation + go_router + Drift (`docs/stack/stack.md`). A new dependency

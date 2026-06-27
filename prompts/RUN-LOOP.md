@@ -10,6 +10,43 @@ then stops. Open another fresh session and paste the **same** prompt for the nex
 
 ---
 
+## 🌙 Overnight / unattended — run through the night (NEVER asks)
+
+Use this when you're away/asleep. It runs steps back-to-back, develops **both BE and FE**
+each step, and **never asks**: any problem is appended to `prompts/NIGHT-LOG.md` and the
+loop continues. Only steps whose `verify --full` is **GREEN** get committed/pushed — a step
+that can't go green (or needs an unapproved dependency) is parked with `git stash` and logged,
+so **`main` stays green** all night. Review `prompts/NIGHT-LOG.md` in the morning.
+
+Copy this into a fresh session before sleeping:
+
+```text
+Run the MemoX V4 build pack in prompts/ UNATTENDED, step after step, until no eligible step remains. This is an overnight run — DO NOT ask me anything. If anything is uncertain, blocked, fails, or needs a decision, append a dated entry to prompts/NIGHT-LOG.md and KEEP GOING.
+
+0. FIRST, before changing anything: run `git status`. If the tree is NOT clean it holds my uncommitted work — append a note to prompts/NIGHT-LOG.md listing the dirty files and STOP immediately; do not stage, stash, discard, or commit anything. A clean baseline is required (I'll commit my work and relaunch). Only proceed when the tree is clean.
+
+Per iteration, pick the next eligible step = lowest-numbered file in prompts/00-INDEX.md whose dependencies' WBS are Done (01-S0 counts as done once the Drift app_database + language_pair repo + app shell exist in lib/). Then:
+
+1. Develop BOTH the BE and the FE scope of that step's prompts/NN-*.md. Read only the docs it lists -> drift check -> implement by layer (BE: entity->repo->DAO/Drift->use case; FE: @riverpod viewmodel->screen/widgets->route) -> node tool/verify/run.mjs --full. A step is "done" ONLY when BOTH BE and FE are implemented AND verify --full is GREEN.
+
+2. GREEN -> update docs + WBS in the same commit (CLAUDE.md parity), commit with the file's message, push origin main. Append a one-line DONE entry to prompts/NIGHT-LOG.md. Continue.
+
+3. NOT green / blocked -> never ask, never push broken code. Append to prompts/NIGHT-LOG.md: timestamp, step id, BLOCKED, what failed, key error excerpt, suggested fix. Park the attempt with `git stash push -u -m "BLOCKED:<step>"` so the tree returns to the last green commit, then commit+push just the NIGHT-LOG entry (node tool/verify/run.mjs --docs to get its marker). Skip to the next eligible step.
+
+4. NEVER add a dependency that is not already in docs/stack/stack.md (W8 file_picker/csv/excel, W10 google_sign_in/googleapis/secure-storage, W12 flutter_local_notifications/timezone are NOT in it). If a step needs one, log BLOCKED(dep: <names>) and skip it -- do not add it.
+
+5. Triggers that mean "log + skip", NOT "ask": DRIFT DETECTED, ambiguous spec, gated dependency, or verify still red after 2 fix attempts.
+
+6. Stop only when every step is either merged or BLOCKED. Then write a final summary to prompts/NIGHT-LOG.md: steps merged (with commit hashes) and steps BLOCKED (with reasons). Leave main clean and green.
+
+Guardrails still apply at all times: CLAUDE.md parity + hard rules, verify ONLY via tool/verify, no hardcoded routes/colors/strings/durations, reuse Mx* components + tokens, generated files via build_runner (never hand-edit). main must stay green -- the only commits pushed are steps that passed verify --full.
+```
+
+> Want it to self-pace with scheduled wake-ups instead of one long session? Prefix the
+> block above with `/loop ` (the loop skill will re-enter each iteration). Same rules apply.
+
+---
+
 ## ▶ Driver prompt — copy this, run once per fresh session (auto-advances)
 
 ```text
