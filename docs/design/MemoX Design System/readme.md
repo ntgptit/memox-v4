@@ -77,7 +77,7 @@ How MemoX writes copy:
   - `navigation/` — **MxBottomNav** (`bottom-nav`), **MxFab** (`fab`), **MxSearchDock** (`search-dock`), **MxIconButton** (`icon-btn`)
   - `core/` — **MxButton** (`btn` + primary/secondary/outline/ghost), **MxChip** (`chip`), **MxBadge** (`badge`), **MxSwitch** (`switch`), **MxSegmentedControl** (`segmented`), **MxAvatar** (`avatar`)
 - **`guidelines/`** — foundation specimen cards (Colors / Type / Spacing) shown on the Design System tab.
-- **`ui_kits/memox-app/`** — the screen gallery (23 screens × states × light/dark).
+- **`ui_kits/memox-app/`** — the screen gallery (22 screens × states × light/dark).
 - **`fonts/`** — Plus Jakarta Sans variable TTF.
 - **`SKILL.md`** — Agent-Skill manifest for use in Claude Code.
 

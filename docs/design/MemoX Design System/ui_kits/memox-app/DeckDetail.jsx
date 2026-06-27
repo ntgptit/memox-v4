@@ -1,9 +1,15 @@
-/* MemoX — Deck detail (card list). States: loaded · search · no-results · empty · card-actions · delete-confirm · reset-confirm · loading · error */
+/* MemoX — Deck detail (tree node: sub-decks + cards). States: loaded · search · no-results · empty · add-menu · card-actions · delete-confirm · reset-confirm · deck-menu · deck-delete-confirm · move · loading · error */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxCard, MxButton, MxIconButton, MxSearchDock, MxChip, MxFab, MxBadge } = NS;
 
 const FILTERS = ['All', 'New', 'Due', 'Mastered'];
+
+// A deck is a tree node: it may hold sub-decks AND cards at the same time.
+const SUBDECKS = [
+  { icon: 'stacks', tone: 'accent', name: 'Beginner Grammar', meta: '3 decks · 412 words', due: 28, progress: 64 },
+  { icon: 'style', tone: null, name: 'Topic: Family', meta: '180 words · mastered', due: 0, progress: 100 },
+];
 
 const CARDS = [
   { term: '안녕하세요', meaning: 'Hello (formal)', status: 'due' },
@@ -19,6 +25,10 @@ const STATUS = {
   due: { label: 'Due', tone: 'error' },
   mastered: { label: 'Mastered', tone: 'success' },
 };
+
+function SectionLabel({ children }) {
+  return <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-2) 0 0 var(--memox-space-1)' }}>{children}</div>;
+}
 
 function CardRow({ term, meaning, status, hidden, node, onClick }) {
   const s = STATUS[status];
@@ -38,7 +48,7 @@ function CardRow({ term, meaning, status, hidden, node, onClick }) {
 
 function Bar() {
   return (
-    <MxAppBar title="TOPIK I — Vocabulary" node="deck-detail/appbar"
+    <MxAppBar title="Korean Basics" node="deck-detail/appbar"
       leading={<MxIconButton icon="arrow_back" node="deck-detail/back" />}
       trailing={<React.Fragment>
         <MxIconButton icon="volume_up" node="deck-detail/play-audio" />
@@ -48,15 +58,16 @@ function Bar() {
 }
 
 function DeckDetail({ state = 'loaded' }) {
-  const fab = <MxFab icon="add" label="Add word" node="deck-detail/add-card" />;
+  const fab = <MxFab icon="add" label="Add" node="deck-detail/add" />;
 
   if (state === 'empty') {
     return (
       <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
-        <window.EmptyState node="deck-detail/empty" icon="playing_cards" title="No cards yet"
-          text="Add words manually or import in bulk from a CSV / Excel file."
+        <window.EmptyState node="deck-detail/empty" icon="playing_cards" title="Empty deck"
+          text="Add words, import in bulk, or create a sub-deck to organize this topic."
           action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
             <MxButton variant="primary" icon="add" block node="deck-detail/empty-add">Add words</MxButton>
+            <MxButton variant="ghost" icon="library_add" block node="deck-detail/empty-subdeck">New sub-deck</MxButton>
             <MxButton variant="ghost" icon="upload_file" block node="deck-detail/empty-import">Import from file</MxButton>
           </div>} />
       </MxScaffold>
@@ -118,11 +129,31 @@ function DeckDetail({ state = 'loaded' }) {
     <MxScaffold node="deck-detail/screen" appBar={<Bar />} fab={fab}>
       <MxSearchDock placeholder="Search in deck" node="deck-detail/search-dock"
         trailing={<MxIconButton icon="swap_vert" size="sm" node="deck-detail/sort" />} />
+      <SectionLabel>SUB-DECKS</SectionLabel>
+      {SUBDECKS.map((d, i) => (
+        <MxCard key={'s' + i} padding="sm" interactive node={'deck-detail/subdeck-' + i}><window.DeckRow {...d} /></MxCard>
+      ))}
+      <SectionLabel>CARDS</SectionLabel>
       {CARDS.map((c, i) => (
         <MxCard key={i} padding="sm" interactive node={'deck-detail/card-' + i}><CardRow {...c} /></MxCard>
       ))}
     </MxScaffold>
   );
+
+  if (state === 'add-menu') {
+    return (
+      <React.Fragment>
+        {base}
+        <window.Scrim node="deck-detail/add-scrim">
+          <window.Sheet title="Add to Korean Basics" node="deck-detail/add-sheet">
+            <window.MenuItem icon="add" label="Add word" node="deck-detail/add-word" />
+            <window.MenuItem icon="library_add" label="New sub-deck" node="deck-detail/add-subdeck" />
+            <window.MenuItem icon="upload_file" label="Import cards" node="deck-detail/add-import" />
+          </window.Sheet>
+        </window.Scrim>
+      </React.Fragment>
+    );
+  }
 
   if (state === 'card-actions') {
     return (
@@ -168,6 +199,62 @@ function DeckDetail({ state = 'loaded' }) {
               <MxButton variant="ghost" block node="deck-detail/reset-cancel">Cancel</MxButton>
               <MxButton variant="primary" block node="deck-detail/reset-ok">Reset</MxButton>
             </React.Fragment>} />
+        </window.Scrim>
+      </React.Fragment>
+    );
+  }
+
+  if (state === 'deck-menu') {
+    return (
+      <React.Fragment>
+        {base}
+        <window.Scrim node="deck-detail/deck-scrim">
+          <window.Sheet title="Korean Basics" node="deck-detail/deck-sheet">
+            <window.MenuItem icon="edit" label="Rename" node="deck-detail/deck-rename" />
+            <window.MenuItem icon="drive_file_move" label="Move" node="deck-detail/deck-move" />
+            <window.MenuItem icon="restart_alt" label="Reset progress" node="deck-detail/deck-reset" />
+            <window.MenuItem icon="delete" label="Delete deck" danger node="deck-detail/deck-delete" />
+          </window.Sheet>
+        </window.Scrim>
+      </React.Fragment>
+    );
+  }
+
+  if (state === 'deck-delete-confirm') {
+    return (
+      <React.Fragment>
+        {base}
+        <window.Scrim align="center" node="deck-detail/deck-delete-scrim">
+          <window.Dialog icon="delete" tone="error" title="Delete this deck?"
+            text="Deleting removes all sub-decks, cards and review state inside. This can't be undone."
+            node="deck-detail/deck-delete-dialog"
+            actions={<React.Fragment>
+              <MxButton variant="ghost" block node="deck-detail/deck-delete-cancel">Cancel</MxButton>
+              <MxButton variant="primary" danger block node="deck-detail/deck-delete-ok">Delete</MxButton>
+            </React.Fragment>} />
+        </window.Scrim>
+      </React.Fragment>
+    );
+  }
+
+  if (state === 'move') {
+    const DEST = [
+      { icon: 'home', name: 'Library (root)', node: 'deck-detail/move-root' },
+      { icon: 'stacks', name: 'TOPIK Prep', node: 'deck-detail/move-1' },
+      { icon: 'stacks', name: 'Korean Basics (current)', muted: true, node: 'deck-detail/move-self' },
+      { icon: 'style', name: '— Beginner Grammar (sub-deck)', muted: true, node: 'deck-detail/move-child' },
+    ];
+    return (
+      <React.Fragment>
+        {base}
+        <window.Scrim node="deck-detail/move-scrim">
+          <window.Sheet title="Move to" node="deck-detail/move-sheet">
+            {DEST.map((d) => (
+              <window.ListRow key={d.node} icon={d.icon} title={d.name} muted={d.muted} node={d.node}
+                trailing={d.muted ? null : <MxIconButton icon="radio_button_unchecked" node={d.node + '-pick'} />} />
+            ))}
+            <div style={{ marginTop: 'var(--memox-space-2)' }}><MxButton variant="primary" block node="deck-detail/move-apply">Move</MxButton></div>
+          </window.Sheet>
         </window.Scrim>
       </React.Fragment>
     );

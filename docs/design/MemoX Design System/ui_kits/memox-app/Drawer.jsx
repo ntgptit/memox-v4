@@ -89,7 +89,7 @@ function Drawer({ state = 'open' }) {
       </MxScaffold>
       <window.Scrim align="center" node="drawer/remove-scrim">
         <window.Dialog icon="delete" tone="error" title="Remove 한국어 → English?"
-          text="All folders, decks and cards for this pair will be deleted. This can't be undone."
+          text="All decks and cards for this pair will be deleted. This can't be undone."
           node="drawer/remove-dialog"
           actions={<React.Fragment>
             <MxButton variant="ghost" block node="drawer/remove-cancel">Cancel</MxButton>

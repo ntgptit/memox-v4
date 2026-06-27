@@ -12,8 +12,8 @@ const NAV = [
 ];
 
 const TREE = [
-  { icon: 'folder', tone: 'accent', name: 'Korean Basics', meta: '3 folders · 412 words', due: 28, progress: 64 },
-  { icon: 'folder', tone: null, name: 'TOPIK Prep', meta: '5 decks · 980 words', due: 120, progress: 42 },
+  { icon: 'stacks', tone: 'accent', name: 'Korean Basics', meta: '3 decks · 412 words', due: 28, progress: 64 },
+  { icon: 'stacks', tone: null, name: 'TOPIK Prep', meta: '5 decks · 980 words', due: 120, progress: 42 },
   { icon: 'style', tone: 'success', name: 'TOPIK I — Vocabulary', meta: '320 words · 48 due', due: 48, progress: 72 },
   { icon: 'style', tone: 'warning', name: 'Irregular Verbs', meta: '64 words · 41 hidden', due: 12, progress: 38 },
   { icon: 'style', tone: null, name: 'Daily Conversation', meta: '150 words · mastered', due: 0, progress: 100 },

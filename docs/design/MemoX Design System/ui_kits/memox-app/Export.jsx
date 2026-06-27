@@ -47,7 +47,7 @@ function Export({ state = 'config' }) {
     <MxScaffold node="export/screen" appBar={bar}>
       <SectionLabel>SCOPE</SectionLabel>
       <MxSegmentedControl value="deck" onChange={() => {}} block node="export/scope"
-        segments={[{ value: 'deck', label: 'This deck' }, { value: 'folder', label: 'Whole folder' }]} />
+        segments={[{ value: 'deck', label: 'This deck' }, { value: 'subtree', label: 'Incl. sub-decks' }]} />
 
       <SectionLabel>FORMAT</SectionLabel>
       <MxCard padding="sm">
