@@ -21,6 +21,18 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W4 (06-W4-study) · DONE · b63ec88c · five study entries + NewLearn/DueReview/review/player/result, verify --full GREEN
+
+- What: BE — StudyEntry, PlayMenu, DailyActivity entity+repo (Drift, cumulative), deckRepository.subtreeCardIds (D-009 recursive), use cases buildPlayMenu (D-001/D-016 gating), buildStudyQueue (reuses W3 due/new queues), finalizeStudySession (D-010 activity only for due/new). StudySessionNotifier: NewLearn 5 stages → scheduleNewCard box1 only on completion (D-002), quit→new (D-017), DueReview grades SRS (W3), wrong→re-queue (D-015). FE — play menu sheet (from deck-detail ⋮ Play), StudySessionScreen (stages + exit dialog + inline result), ReviewScreen, PlayerScreen (auto-play timer, no SRS). Routes study/review/player.
+- Where: lib/domain/{entities,models,types,usecases/study}, lib/data/{...daily_activity}, lib/presentation/features/study, lib/app/router, deck_detail_screen (Play action).
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 116 tests). Pushed origin main.
+
+## 2026-06-28 · W4 · NOTE · NewLearn game-stages simplified; audio deferred
+
+- What: the 4 NewLearn game stages (Ghép đôi/Đoán/Nhớ lại/Điền, stages 2-5) currently render a unified SELF-GRADE flow (show term → reveal → Đã quên/Nhớ được) rather than embedding the actual W5 game widgets. Reason: the W5 widgets (MatchingGame etc.) bind to GameSessionNotifier(GameRequest); reusing them inside a NewLearn stage needs a shared "round provider" abstraction so a widget can be driven by either the game or study notifier. The 5-stage progression + completion→box1 + wrong→relearn logic IS correct and tested (D-002/D-015/D-017); only the per-stage UI variety is simplified.
+- Suggested fix: extract a `RoundController` interface (pending/current/markCorrect/markWrong) that both GameSessionNotifier and StudySessionNotifier implement, and parameterise the 4 game widgets by it; then NewLearn stages 2-5 reuse them directly. Player audio/TTS still deferred (dep outside stack).
+- Next eligible: W7 (07-W7-search.md), dep W2 (Done).
+
 ## 2026-06-28 · W5 (05-W5-game) · DONE · 41c0f0f5 · four practice games + picker, verify --full GREEN
 
 - What: BE — GameType/GameScope types, GameCard, BuildGameRoundUseCase (scope filter + count cap D-008 + deterministic shuffle), EvaluateTypingUseCase (1-typo tolerant). FE — GamePickerScreen (/game/:nodeId, D-013) + GameScreen (/game/:nodeId/play) + 4 game widgets (matching/multiple-choice/recall/typing); GameSessionNotifier (family) with wrong→re-queue and round-complete-when-all-correct (D-015). Games NEVER touch srs_state (D-007).

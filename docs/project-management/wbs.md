@@ -60,6 +60,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- b63ec88c · 2026-06-28 · W4 · 5 lối vào học (Play menu + NewLearn 5 chặng + DueReview + Review + Player + result); tích hợp SRS(W3)+game(W5)+deck subtree(W6) + daily_activity; D-001/009/010/016/017/002/007 có test; chặng game NewLearn dùng self-grade gộp (follow-up)
 - 41c0f0f5 · 2026-06-28 · W5 · 4 game (Ghép đôi/Đoán/Nhớ lại/Điền) + picker; luyện thuần KHÔNG đổi SrsState (D-007); round ≤5 thẻ (D-008), sai→học lại (D-015), picker 4 game (D-013) có test; không bảng mới
 - 9412f488 · 2026-06-28 · W3 · engine SRS 8 ô Leitner (scheduler + grade + due/new queue + cap D-018); D-002..D-005/D-011/D-018 có test; `srs_state` đã có ở v1 (không migration); BE-only (UI học = W4)
 - 1f891c7e · 2026-06-28 · W6 · cây bộ thẻ tự lồng + library home + deck detail; tổng hợp đệ quy (words/hidden/due/mastered/%); D-023/D-024/BR-3 có test; `deck` + index đã có ở v1 (không migration); sort created/last-studied dùng proxy (id / max ngày-học cây con)
