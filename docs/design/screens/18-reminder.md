@@ -11,6 +11,8 @@ tuần** dạng chip chọn nhiều: T2 · T3 · T4 · T5 · T6 · T7 · CN.
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Bật** — công tắc bật; giờ đã chọn (vd 13:00); các thứ đã chọn được tô (vd cả tuần).
 2. **Tắt** — công tắc tắt; phần giờ + thứ mờ/vô hiệu.
 3. **Đang chọn giờ** — time picker mở.

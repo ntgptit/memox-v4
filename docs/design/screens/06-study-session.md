@@ -29,3 +29,5 @@ luỹ 0→100%**; thân nhúng màn chặng hiện tại.
 8. **Dialog thoát giữa chừng**: "Thoát? Thẻ chưa hoàn thành 5 chặng sẽ vẫn là Mới."
 
 Mỗi frame một bố cục riêng; thanh tiến độ luôn ở trên.
+
+> Gồm cả **trạng thái tương tác** của mọi control (menu ⋮, chỉnh cỡ chữ, loa, dialog thoát) — đừng để control nào ở dạng tĩnh chưa nối hành vi.

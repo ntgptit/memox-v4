@@ -14,6 +14,8 @@ tục học" · "Thẻ đến hạn (N)". Mini-stat: % đã thuộc của thư v
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Loading** — skeleton 3 khối card.
 2. **Rỗng (hôm nay chưa học)** — Hoạt động = 0 phút / 0 từ; mục tiêu 0%; CTA chính "Bắt
    đầu học"; copy "Hôm nay chưa học — bắt đầu để giữ streak!".

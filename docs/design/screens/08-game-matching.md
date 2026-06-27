@@ -11,6 +11,8 @@ cột thẻ — cột trái = nghĩa, cột phải = term (~5 cặp).
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Đang chơi (chưa ghép)** — các thẻ hai cột ở trạng thái trung tính.
 2. **Chọn một thẻ** — thẻ được chọn nổi bật (viền màu nhấn), chờ chọn thẻ đối diện.
 3. **Ghép đúng** — cặp khớp lóe xanh rồi biến mất; tiến độ tăng.

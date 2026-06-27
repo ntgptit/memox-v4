@@ -12,6 +12,8 @@ swatch) · chọn **cỡ chữ** (Nhỏ / Vừa / Lớn). Kèm **xem trước tr
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Chế độ Sáng** — thẻ mẫu sáng; lựa chọn hiện tại được tô.
 2. **Chế độ Tối** — thẻ mẫu tối.
 3. **Đổi màu nhấn / cỡ chữ** — xem trước cập nhật ngay theo lựa chọn.

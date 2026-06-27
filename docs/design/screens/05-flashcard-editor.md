@@ -14,6 +14,8 @@ tắc **Ẩn**.
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Tạo mới (form rỗng)** — trường có placeholder; nút Lưu mờ tới khi đủ trường bắt buộc;
    placeholder: Term "Nhập từ…", Nghĩa "Nhập nghĩa, có thể kèm ví dụ/ghi chú…".
 2. **Sửa (đã điền)** — trường đã có dữ liệu; nút Lưu sáng.

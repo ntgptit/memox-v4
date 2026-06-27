@@ -13,6 +13,8 @@ Leitner 1..8** (cột) · **dự báo đến hạn N ngày** (đường) · **đ
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Loading** — skeleton các khối biểu đồ.
 2. **Có dữ liệu** — mọi khối có dữ liệu thực; biểu đồ rõ ràng, có nhãn/giá trị.
 3. **Chưa đủ dữ liệu** — khối hiển thị placeholder + gợi ý "Học thêm để xem thống kê".

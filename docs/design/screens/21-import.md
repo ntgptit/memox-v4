@@ -12,6 +12,8 @@ trước** bảng thẻ sẽ nhập · nút "Nhập".
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Chọn nguồn** — ba lựa chọn nguồn; nếu dán văn bản thì có ô dán lớn.
 2. **Cấu hình tách cột** — chọn dấu phân tách + ánh xạ cột; bảng mẫu cập nhật theo.
 3. **Xem trước** — bảng các thẻ sẽ nhập (term | nghĩa), số lượng; nút "Nhập".

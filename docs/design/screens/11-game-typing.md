@@ -12,6 +12,8 @@ Nút: "Trợ giúp" (gợi ý) · "Kiểm tra" (chính); sau kiểm tra: "Đúng
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Chờ gõ** — nghĩa + ô nhập rỗng + nút "Trợ giúp" / "Kiểm tra".
 2. **Đang gõ** — ký tự người dùng nhập; nút "Kiểm tra" sáng.
 3. **Dùng "Trợ giúp"** — lộ một phần gợi ý (vd ký tự đầu / số ký tự).

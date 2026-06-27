@@ -13,6 +13,8 @@ quên" / "Nhớ được".
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Trước khi hiển thị** — term + vùng nghĩa mờ/ẩn + nút "Hiển thị" lớn ở đáy.
 2. **Sau khi hiển thị (chờ tự chấm)** — nghĩa đầy đủ hiện ra; đáy đổi thành 2 nút "Đã
    quên" (trung tính) / "Nhớ được" (chính).

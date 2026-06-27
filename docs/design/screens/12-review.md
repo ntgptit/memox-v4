@@ -13,6 +13,8 @@ có loa). Vuốt ngang hoặc nút để qua thẻ kế/trước.
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Đang duyệt** — nghĩa đầy đủ + term; tiến độ phản ánh vị trí.
 2. **Đang sửa inline** (chạm bút chì) — vùng nghĩa/term thành ô nhập + nút Lưu/Huỷ; không
    rời màn.

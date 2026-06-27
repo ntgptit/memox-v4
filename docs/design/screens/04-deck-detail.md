@@ -14,6 +14,8 @@ badge trạng thái (mới / đến hạn / đã thuộc). Đáy: thanh hành đ
 
 **Thiết kế các state sau — mỗi state một frame:**
 
+> Gồm cả **trạng thái tương tác** của mọi control trên màn (ô nhập/tìm khi đang gõ, dropdown · bộ chọn · menu ⋮ khi mở, mục đang chọn, bottom sheet · drawer khi mở) — mỗi cái một frame; đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
 1. **Loading** — skeleton danh sách thẻ.
 2. **Rỗng (chưa có thẻ)** — "Chưa có thẻ" + CTA "Thêm từ" và "Nhập từ file".
 3. **Có dữ liệu** — danh sách thẻ; badge trạng thái phân biệt màu (mới / đến hạn đỏ / đã
