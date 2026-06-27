@@ -112,10 +112,30 @@ const SCREENS = [
   { id: 'settings', title: 'Settings', Comp: () => window.Settings, states: ['loaded', 'group-expanded', 'value-picker'] },
 ];
 
+// A single screen failing (compile error, runtime throw, or not loaded — e.g.
+// opened over file:// where Babel can't fetch the .jsx) must NOT blank the whole
+// gallery. Each frame is isolated and degrades to a visible message instead.
+class ErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { err: null }; }
+  static getDerivedStateFromError(err) { return { err }; }
+  render() {
+    if (this.state.err) {
+      return <div style={{ padding: '16px', color: 'var(--memox-error)', fontSize: '13px', fontWeight: 600 }}>⚠ {String(this.state.err && this.state.err.message || this.state.err)}</div>;
+    }
+    return this.props.children;
+  }
+}
+
 function Frame({ theme, Comp, state }) {
   return (
     <div className="mxg-frame-wrap">
-      <div className="mxg-frame" data-theme={theme}><Comp state={state} /></div>
+      <div className="mxg-frame" data-theme={theme}>
+        <ErrorBoundary>
+          {typeof Comp === 'function'
+            ? <Comp state={state} />
+            : <div style={{ padding: '16px', color: 'var(--memox-text-tertiary)', fontSize: '13px' }}>Screen not loaded — serve over http:// (e.g. <code>node tool/preview/kit-server.mjs</code>), not file://.</div>}
+        </ErrorBoundary>
+      </div>
       <div className="mxg-cap" data-theme={theme}>{theme}</div>
     </div>
   );
