@@ -96,11 +96,11 @@ abstract final class AppTheme {
           horizontal: MxSpacing.space4,
           vertical: MxSpacing.space3,
         ),
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderRadius: MxRadius.fieldRadius,
           borderSide: BorderSide.none,
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: MxRadius.fieldRadius,
           borderSide: BorderSide.none,
         ),
@@ -131,9 +131,9 @@ abstract final class AppTheme {
           ),
         ),
       ),
-      snackBarTheme: SnackBarThemeData(
+      snackBarTheme: const SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(MxRadius.md)),
         ),
       ),
@@ -141,33 +141,32 @@ abstract final class AppTheme {
   }
 
   // ── ColorScheme: seed for full M3 coverage, brand tokens for key roles ──────
-  static ColorScheme _scheme(Brightness brightness, MxColors c) {
-    return ColorScheme.fromSeed(
-      seedColor: MxColors.seed,
-      brightness: brightness,
-    ).copyWith(
-      primary: c.primary,
-      onPrimary: c.onPrimary,
-      primaryContainer: c.primarySoft,
-      onPrimaryContainer: c.onPrimarySoft,
-      secondary: c.accent,
-      onSecondary: c.onAccent,
-      secondaryContainer: c.accentSoft,
-      tertiary: c.info,
-      onTertiary: c.onInfo,
-      error: c.error,
-      onError: c.onError,
-      errorContainer: c.errorSoft,
-      onErrorContainer: c.onErrorSoft,
-      surface: c.surface,
-      onSurface: c.text,
-      onSurfaceVariant: c.textSecondary,
-      outline: c.borderStrong,
-      outlineVariant: c.border,
-      scrim: c.overlay,
-      surfaceTint: c.primary,
-    );
-  }
+  static ColorScheme _scheme(Brightness brightness, MxColors c) =>
+      ColorScheme.fromSeed(
+        seedColor: MxColors.seed,
+        brightness: brightness,
+      ).copyWith(
+        primary: c.primary,
+        onPrimary: c.onPrimary,
+        primaryContainer: c.primarySoft,
+        onPrimaryContainer: c.onPrimarySoft,
+        secondary: c.accent,
+        onSecondary: c.onAccent,
+        secondaryContainer: c.accentSoft,
+        tertiary: c.info,
+        onTertiary: c.onInfo,
+        error: c.error,
+        onError: c.onError,
+        errorContainer: c.errorSoft,
+        onErrorContainer: c.onErrorSoft,
+        surface: c.surface,
+        onSurface: c.text,
+        onSurfaceVariant: c.textSecondary,
+        outline: c.borderStrong,
+        outlineVariant: c.border,
+        scrim: c.overlay,
+        surfaceTint: c.primary,
+      );
 
   // ── TextTheme from the type scale ───────────────────────────────────────────
   static TextTheme _textTheme(Color onSurface) {
@@ -176,16 +175,14 @@ abstract final class AppTheme {
       FontWeight weight,
       double lineHeight,
       double tracking,
-    ) {
-      return TextStyle(
-        fontFamily: MxTypography.fontFamily,
-        fontSize: size,
-        fontWeight: weight,
-        height: lineHeight,
-        letterSpacing: size * tracking,
-        color: onSurface,
-      );
-    }
+    ) => TextStyle(
+      fontFamily: MxTypography.fontFamily,
+      fontSize: size,
+      fontWeight: weight,
+      height: lineHeight,
+      letterSpacing: size * tracking,
+      color: onSurface,
+    );
 
     return TextTheme(
       displayLarge: s(
@@ -282,21 +279,19 @@ abstract final class AppTheme {
   }
 
   // ── shared button shape (pill + token padding + min touch target) ───────────
-  static ButtonStyle _pillButton(TextTheme text) {
-    return ButtonStyle(
-      textStyle: WidgetStatePropertyAll<TextStyle?>(text.labelLarge),
-      padding: const WidgetStatePropertyAll<EdgeInsets>(
-        EdgeInsets.symmetric(
-          horizontal: MxSpacing.space6,
-          vertical: MxSpacing.space3,
-        ),
+  static ButtonStyle _pillButton(TextTheme text) => ButtonStyle(
+    textStyle: WidgetStatePropertyAll<TextStyle?>(text.labelLarge),
+    padding: const WidgetStatePropertyAll<EdgeInsets>(
+      EdgeInsets.symmetric(
+        horizontal: MxSpacing.space6,
+        vertical: MxSpacing.space3,
       ),
-      minimumSize: const WidgetStatePropertyAll<Size>(
-        Size(0, MxSpacing.minTouchTarget),
-      ),
-      shape: const WidgetStatePropertyAll<OutlinedBorder>(
-        RoundedRectangleBorder(borderRadius: MxRadius.pillRadius),
-      ),
-    );
-  }
+    ),
+    minimumSize: const WidgetStatePropertyAll<Size>(
+      Size(0, MxSpacing.minTouchTarget),
+    ),
+    shape: const WidgetStatePropertyAll<OutlinedBorder>(
+      RoundedRectangleBorder(borderRadius: MxRadius.pillRadius),
+    ),
+  );
 }

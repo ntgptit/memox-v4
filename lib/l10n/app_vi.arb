@@ -1,0 +1,46 @@
+{
+  "@@locale": "vi",
+
+  "tabToday": "Hôm nay",
+  "tabLibrary": "Thư viện",
+  "tabStats": "Thống kê",
+  "tabProfile": "Cá nhân",
+
+  "addTooltip": "Thêm",
+  "comingSoon": "Sắp ra mắt",
+
+  "drawerActivityTitle": "Hoạt động hôm nay",
+  "activityMinutes": "{count} phút",
+  "activityWords": "{count} từ",
+
+  "drawerLanguagesTitle": "Cặp ngôn ngữ",
+  "drawerLanguagesEmpty": "Thêm một cặp ngôn ngữ để bắt đầu",
+  "drawerAddLanguage": "Thêm ngôn ngữ",
+  "drawerRemoveLanguage": "Xóa ngôn ngữ",
+  "drawerImport": "Nhập",
+  "drawerExport": "Xuất",
+  "drawerStatistics": "Thống kê",
+  "drawerTheme": "Chủ đề",
+  "drawerSettings": "Cài đặt",
+  "drawerFaq": "Câu hỏi thường gặp",
+  "drawerSendEmail": "Gửi email",
+  "drawerSync": "Đồng bộ (alpha)",
+
+  "swapDirectionTooltip": "Đảo chiều hiển thị",
+
+  "addLanguageTitle": "Thêm cặp ngôn ngữ",
+  "addLanguageLearning": "Ngôn ngữ đang học",
+  "addLanguageNative": "Tiếng mẹ đẻ",
+  "addLanguageSubmit": "Thêm",
+  "addLanguageErrorSame": "Hai ngôn ngữ phải khác nhau",
+  "addLanguageErrorEmpty": "Hãy chọn cả hai ngôn ngữ",
+
+  "removeLanguageTitle": "Xóa cặp ngôn ngữ",
+  "removeLanguageEmpty": "Chưa có cặp ngôn ngữ nào",
+  "removeLanguageConfirmTitle": "Xóa cặp này?",
+  "removeLanguageConfirmBody": "Toàn bộ bộ thẻ và thẻ của cặp này sẽ bị xóa.",
+
+  "commonBack": "Quay lại",
+  "commonCancel": "Hủy",
+  "commonDelete": "Xóa"
+}

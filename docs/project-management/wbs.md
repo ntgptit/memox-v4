@@ -27,6 +27,11 @@ the same commit (CLAUDE.md WBS rule).
 Status ∈ Planned / In-progress / Blocked / Done. **W1 Done** (nền kiến trúc + core:
 error/types/router/theme/DI đã code & test); **W2–W13 Planned** (spec xong, chưa code).
 
+**S0 (nền tiếp theo, tiền đề mọi feature) Done:** app shell (`StatefulShellRoute` +
+bottom nav 4 tab + Drawer cặp ngôn ngữ) + Drift `language_pair` (DAO/repo/usecases:
+list·create·remove·setActive·swapDisplay) + ngữ cảnh cặp keepAlive + l10n (vi/en) +
+DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
+
 > **Pivot v1 (2026-06-28):** bỏ khái niệm **Thư mục** — bộ thẻ **tự lồng nhau** (cây) đảm
 > nhiệm việc tổ chức. W6 (Thư mục) cũ bị xoá; **W7–W14 cũ dồn xuống W6–W13**. Phụ thuộc đã
 > remap. Chi tiết: `docs/business/deck/deck-management.md`.

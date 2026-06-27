@@ -12,6 +12,10 @@ mutate persisted shape without a forward migration.
 Mỗi dòng = một lần tăng `schema_version` trong `docs/database/schema-contract.md`.
 Hiện ở **v1** — chưa có migration nào sau khi tạo mới (append-only khi v2+).
 
+> **Khoá `settings` mới không cần migration:** store `settings` là key-value; thêm một
+> khoá (vd `active_pair_id`, `display_swapped` ở S0) chỉ là dữ liệu, không đổi hình dạng
+> bảng → không tăng `schema_version`. Khoá vắng mặt mặc định null và repository tự xử lý.
+
 ## Rules
 
 - Forward-only; migrations are idempotent where the platform allows.

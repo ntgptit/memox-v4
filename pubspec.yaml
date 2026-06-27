@@ -28,34 +28,36 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  # Cupertino Icons font (iOS-style glyphs).
+  cupertino_icons: ^1.0.8
+  # Persistence — Drift (SQLite). stack.md pins ^2.
+  drift: ^2.34.0
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
-
-  # State management — Riverpod (annotation), stack.md pins ^2.
+  # i18n — gen_l10n delegates (stack.md: flutter_localizations + ARB).
+  flutter_localizations:
+    sdk: flutter
+  # State management — Riverpod, stack.md pins ^2. Hand-written AsyncNotifier
+  # (no riverpod_generator): its source_gen/analyzer pins conflict with
+  # drift_dev — see docs/stack/stack.md. Codegen revisited with the drift bump.
   flutter_riverpod: ^2.6.1
   # Routing — go_router, stack.md pins ^14. Route constants in lib/app/router/.
   go_router: ^14.6.0
-  drift: ^2.34.0
-  sqlite3_flutter_libs: ^0.6.0+eol
-  path_provider: ^2.1.6
+  # intl — pulled by gen_l10n; version resolved from flutter_localizations.
+  intl: any
   path: ^1.9.1
+  path_provider: ^2.1.6
+  sqlite3_flutter_libs: ^0.6.0+eol
 
 dev_dependencies:
+  # Codegen runner for Drift + Riverpod generators.
+  build_runner: ^2.15.0
+  # Drift schema/query codegen.
+  drift_dev: ^2.34.0
+  # Recommended lint set, activated via analysis_options.yaml.
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^6.0.0
-  drift_dev: ^2.34.0
-  build_runner: ^2.15.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -67,6 +69,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Generate localizations (gen_l10n) from lib/l10n/*.arb per l10n.yaml.
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -1,0 +1,52 @@
+{
+  "@@locale": "en",
+
+  "tabToday": "Today",
+  "tabLibrary": "Library",
+  "tabStats": "Stats",
+  "tabProfile": "Profile",
+
+  "addTooltip": "Add",
+  "comingSoon": "Coming soon",
+
+  "drawerActivityTitle": "Today's activity",
+  "activityMinutes": "{count} min",
+  "@activityMinutes": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "activityWords": "{count} words",
+  "@activityWords": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "drawerLanguagesTitle": "Language pairs",
+  "drawerLanguagesEmpty": "Add a language pair to get started",
+  "drawerAddLanguage": "Add language",
+  "drawerRemoveLanguage": "Remove language",
+  "drawerImport": "Import",
+  "drawerExport": "Export",
+  "drawerStatistics": "Statistics",
+  "drawerTheme": "Theme",
+  "drawerSettings": "Settings",
+  "drawerFaq": "FAQ",
+  "drawerSendEmail": "Send email",
+  "drawerSync": "Sync (alpha)",
+
+  "swapDirectionTooltip": "Swap display direction",
+
+  "addLanguageTitle": "Add language pair",
+  "addLanguageLearning": "Learning language",
+  "addLanguageNative": "Native language",
+  "addLanguageSubmit": "Add",
+  "addLanguageErrorSame": "The two languages must differ",
+  "addLanguageErrorEmpty": "Pick both languages",
+
+  "removeLanguageTitle": "Remove language pair",
+  "removeLanguageEmpty": "No language pairs yet",
+  "removeLanguageConfirmTitle": "Remove this pair?",
+  "removeLanguageConfirmBody": "All decks and cards in this pair will be deleted.",
+
+  "commonBack": "Back",
+  "commonCancel": "Cancel",
+  "commonDelete": "Delete"
+}

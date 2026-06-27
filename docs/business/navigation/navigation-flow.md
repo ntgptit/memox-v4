@@ -7,7 +7,10 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 
 | Name | Path | Params | Push / replace | Notes |
 | --- | --- | --- | --- | --- |
-| `library` | `/` | — | root | màn chính (cây bộ thẻ gốc) |
+| `today` | `/today` | — | tab (shell) | Hôm nay — dashboard gắn kết (W11); placeholder ở S0 |
+| `library` | `/` | — | tab · root (shell) | màn chính (cây bộ thẻ gốc); placeholder ở S0, W6 thay |
+| `statistics` (tab) | `/statistics` | — | tab (shell) | Thống kê (W9); cùng route mở từ drawer |
+| `profile` | `/profile` | — | tab (shell) | Cá nhân — tài khoản & cài đặt (W10/W12); placeholder ở S0 |
 | `deckDetail` | `/deck/:id` | deckId | push | node cây: bộ thẻ con + thẻ |
 | `flashcardEditor` | `/deck/:id/card` | deckId, cardId? | push | tạo/sửa thẻ |
 | `study` | `/study/:nodeId` | nodeId, entry | push | entry = newLearn / dueReview |
@@ -17,12 +20,13 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | `search` | `/search` | query? | push | |
 | `settings` | `/settings` | — | push | |
 | `account` | `/settings/account` | — | push | Google sync |
-| `statistics` | `/statistics` | — | push | |
 
-Hằng route đặt ở `lib/app/router/` (`route_paths.dart` / `app_router.dart`). W1 đã dựng
-router với route gốc `RoutePaths.root` (`/`) trỏ vào một **foundation placeholder**
-(`FoundationScreen`); màn `library` thật thay placeholder ở W6. Các route còn lại là dự
-kiến, thêm cùng feature (route + doc cập nhật chung commit).
+Hằng route đặt ở `lib/app/router/` (`route_paths.dart` / `app_router.dart`). S0 dựng
+**app shell** bằng `StatefulShellRoute.indexedStack`: 4 tab (Today · Library · Stats ·
+Profile) + nút **Add** ở giữa (action, chưa phải route) + **Drawer** quản lý cặp ngôn ngữ
+(`docs/design/screens/23-drawer.md`). Route gốc `RoutePaths.root` (`/`) là tab Library,
+hiện hiển thị placeholder (`MxPlaceholder`); W6 thay bằng cây thật. Các route push còn lại
+là dự kiến, thêm cùng feature (route + doc cập nhật chung commit).
 
 ## Flow
 

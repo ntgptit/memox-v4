@@ -43,12 +43,8 @@ class MxTheme extends ThemeExtension<MxTheme> {
   }
 
   @override
-  MxTheme copyWith({MxColors? colors, MxShadows? shadows}) {
-    return MxTheme(
-      colors: colors ?? this.colors,
-      shadows: shadows ?? this.shadows,
-    );
-  }
+  MxTheme copyWith({MxColors? colors, MxShadows? shadows}) =>
+      MxTheme(colors: colors ?? this.colors, shadows: shadows ?? this.shadows);
 
   @override
   MxTheme lerp(covariant ThemeExtension<MxTheme>? other, double t) {

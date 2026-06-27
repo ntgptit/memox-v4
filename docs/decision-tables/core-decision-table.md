@@ -34,6 +34,7 @@ dòng nên có một test, và mỗi test hành vi nên truy ngược về một
 | D-027 | sync gặp xung đột | hợp nhất | last-write-wins theo `updated_at` mức bản ghi | `docs/business/account-sync/account-sync.md` | TBD |
 | D-028 | tìm kiếm | hiển thị kết quả | khớp term+nghĩa; **gồm cả thẻ ẩn**; có bộ lọc trạng thái (mới/đến hạn/đã thuộc) | `docs/business/search/global-search.md` | TBD |
 | D-029 | kết thúc một mode trong DueReview | chốt mode | hiện "học lại" đúng mode vừa chạy (DueReview không có UI riêng) | `docs/business/study/study-flow.md` | TBD |
+| D-030 | tạo cặp ngôn ngữ với source == target hoặc mã rỗng | tạo cặp | trả `ValidationFailure`, không tạo cặp | `docs/business/glossary.md` | `test/domain/usecases/language_pair/create_language_pair_test.dart` |
 
 <!-- FILL: thêm một dòng mỗi khi thêm/đổi một nhánh (CLAUDE.md parity bước 6).
      Giữ ID ổn định và chỉ thêm mới để test trích dẫn được. -->

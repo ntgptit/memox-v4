@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/app_router.dart';
 import 'package:memox_v4/core/constants/app_constants.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
+import 'package:memox_v4/l10n/generated/app_localizations.dart';
 
 /// Root application widget.
 ///
@@ -19,14 +20,14 @@ class _MemoXAppState extends State<MemoXApp> {
   final GoRouter _router = AppRouter.create();
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: AppConstants.appName,
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
-      routerConfig: _router,
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp.router(
+    title: AppConstants.appName,
+    debugShowCheckedModeBanner: false,
+    theme: AppTheme.light(),
+    darkTheme: AppTheme.dark(),
+    themeMode: ThemeMode.system,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    routerConfig: _router,
+  );
 }

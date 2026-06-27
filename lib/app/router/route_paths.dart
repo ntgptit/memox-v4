@@ -5,7 +5,17 @@
 abstract final class RoutePaths {
   const RoutePaths._();
 
-  /// Application root. The navigation contract designates `/` as the library
-  /// tree (W6); until then W1 mounts a foundation placeholder here.
+  /// Application root and the Library tab — the deck tree (`library` in
+  /// `docs/business/navigation/navigation-flow.md`). W6 replaces its placeholder
+  /// body with the real tree.
   static const String root = '/';
+
+  /// Today tab — engagement dashboard (W11).
+  static const String today = '/today';
+
+  /// Stats tab — learning statistics (W9).
+  static const String statistics = '/statistics';
+
+  /// Profile tab — account & settings entry (W10/W12).
+  static const String profile = '/profile';
 }

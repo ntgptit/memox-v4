@@ -103,6 +103,8 @@ Một thẻ có **một** dòng (một chiều duy nhất) — lập lịch Leit
 | new_cards_per_day | int | 20 | NewLearn: hạn mức thẻ mới/ngày (chỉnh được) |
 | daily_goal_minutes | int | null | mục tiêu thời gian học/ngày |
 | daily_goal_words | int | null | mục tiêu số từ học/ngày |
+| active_pair_id | int | null | cặp ngôn ngữ đang chọn (ngữ cảnh app); null = chưa chọn → suy ra cặp đầu |
+| display_swapped | bool | false | đảo chiều hiển thị của cặp đang chọn (mặt hỏi target↔source) |
 
 ## Index
 

@@ -3,12 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/core/theme/mx_breakpoints.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
 
-Widget _sized(Size size, Widget child) {
-  return MediaQuery(
-    data: MediaQueryData(size: size),
-    child: Directionality(textDirection: TextDirection.ltr, child: child),
-  );
-}
+Widget _sized(Size size, Widget child) => MediaQuery(
+  data: MediaQueryData(size: size),
+  child: Directionality(textDirection: TextDirection.ltr, child: child),
+);
 
 void main() {
   testWidgets('context.mxScreenSize + responsive() read the window width', (

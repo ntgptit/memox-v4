@@ -16,14 +16,13 @@ extension MxResponsiveContext on BuildContext {
 
   /// Pick a value by current size class, falling back to the nearest smaller
   /// one provided — so callers only specify what differs from [compact].
-  T responsive<T>({required T compact, T? medium, T? expanded, T? large}) {
-    return switch (mxScreenSize) {
-      MxScreenSize.compact => compact,
-      MxScreenSize.medium => medium ?? compact,
-      MxScreenSize.expanded => expanded ?? medium ?? compact,
-      MxScreenSize.large => large ?? expanded ?? medium ?? compact,
-    };
-  }
+  T responsive<T>({required T compact, T? medium, T? expanded, T? large}) =>
+      switch (mxScreenSize) {
+        MxScreenSize.compact => compact,
+        MxScreenSize.medium => medium ?? compact,
+        MxScreenSize.expanded => expanded ?? medium ?? compact,
+        MxScreenSize.large => large ?? expanded ?? medium ?? compact,
+      };
 }
 
 /// Rebuilds against the size class derived from the **local** constraints
@@ -35,16 +34,14 @@ class MxResponsiveBuilder extends StatelessWidget {
   final Widget Function(BuildContext context, MxScreenSize size) builder;
 
   @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth.isFinite
-            ? constraints.maxWidth
-            : MediaQuery.sizeOf(context).width;
-        return builder(context, MxScreenSize.fromWidth(width));
-      },
-    );
-  }
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final width = constraints.maxWidth.isFinite
+          ? constraints.maxWidth
+          : MediaQuery.sizeOf(context).width;
+      return builder(context, MxScreenSize.fromWidth(width));
+    },
+  );
 }
 
 /// Centers [child] and caps it at the size class's readable max width, with the

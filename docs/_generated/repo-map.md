@@ -407,38 +407,59 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ bootstrap/
 │  │  │  └─ app_bootstrap.dart
 │  │  ├─ di/
-│  │  │  └─ app_dependencies.dart
+│  │  │  ├─ app_dependencies.dart
+│  │  │  ├─ database_provider.dart
+│  │  │  └─ language_pair_providers.dart
 │  │  ├─ router/
 │  │  │  ├─ app_router.dart
 │  │  │  └─ route_paths.dart
 │  │  └─ memox_app.dart
 │  ├─ core/
 │  │  ├─ constants/
-│  │  │  └─ app_constants.dart
+│  │  │  ├─ app_constants.dart
+│  │  │  └─ supported_languages.dart
 │  │  ├─ error/
 │  │  │  └─ failure.dart
 │  │  ├─ logging/
 │  │  ├─ theme/
 │  │  │  ├─ app_theme.dart
-│  │  │  └─ mx_colors.dart
+│  │  │  ├─ mx_breakpoints.dart
+│  │  │  ├─ mx_colors.dart
+│  │  │  ├─ mx_elevation.dart
+│  │  │  ├─ mx_radius.dart
+│  │  │  ├─ mx_sizes.dart
+│  │  │  ├─ mx_spacing.dart
+│  │  │  ├─ mx_theme.dart
+│  │  │  └─ mx_typography.dart
 │  │  └─ util/
+│  │     ├─ clock.dart
+│  │     └─ logger.dart
 │  ├─ data/
 │  │  ├─ datasources/
 │  │  │  └─ local/
 │  │  ├─ mappers/
+│  │  │  └─ language_pair_mapper.dart
 │  │  ├─ repositories/
+│  │  │  └─ language_pair_repository_impl.dart
 │  │  └─ services/
 │  ├─ domain/
 │  │  ├─ entities/
+│  │  │  └─ language_pair.dart
 │  │  ├─ models/
+│  │  │  └─ language_pair_context.dart
 │  │  ├─ repositories/
+│  │  │  └─ language_pair_repository.dart
 │  │  ├─ services/
 │  │  ├─ types/
 │  │  │  └─ result.dart
 │  │  └─ usecases/
+│  │     └─ language_pair/
 │  ├─ l10n/
+│  │  ├─ app_en.arb
+│  │  └─ app_vi.arb
 │  ├─ presentation/
 │  │  ├─ features/
+│  │  │  └─ language_pair/
 │  │  └─ shared/
 │  │     ├─ async/
 │  │     ├─ dialogs/
@@ -447,16 +468,51 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ layouts/
 │  │     ├─ navigation/
 │  │     ├─ sort/
-│  │     ├─ widgets/
-│  │     └─ foundation_screen.dart
+│  │     └─ widgets/
 │  └─ main.dart
+├─ prompts/
+│  ├─ 00-INDEX.md
+│  ├─ 01-S0-app-shell-language-pair.md
+│  ├─ 02-W2-flashcard.md
+│  ├─ 03-W6-deck-tree.md
+│  ├─ 04-W3-srs.md
+│  ├─ 05-W5-game.md
+│  ├─ 06-W4-study.md
+│  ├─ 07-W7-search.md
+│  ├─ 08-W8-import-export.md
+│  ├─ 09-W11-engagement.md
+│  ├─ 10-W9-statistics.md
+│  ├─ 11-W10-account-sync.md
+│  ├─ 12-W12-settings.md
+│  ├─ 13-W13-personalization.md
+│  ├─ NIGHT-LOG.md
+│  └─ RUN-LOOP.md
 ├─ test/
 │  ├─ app/
 │  │  ├─ app_boot_test.dart
 │  │  └─ app_router_test.dart
-│  └─ core/
-│     └─ theme/
-│        └─ app_theme_test.dart
+│  ├─ core/
+│  │  ├─ theme/
+│  │  │  ├─ app_theme_test.dart
+│  │  │  ├─ mx_breakpoints_test.dart
+│  │  │  └─ mx_tokens_test.dart
+│  │  └─ util/
+│  │     ├─ clock_test.dart
+│  │     └─ logger_test.dart
+│  ├─ data/
+│  │  ├─ datasources/
+│  │  │  └─ local/
+│  │  └─ repositories/
+│  │     └─ language_pair_repository_impl_test.dart
+│  ├─ domain/
+│  │  ├─ types/
+│  │  │  └─ result_test.dart
+│  │  └─ usecases/
+│  │     └─ language_pair/
+│  └─ presentation/
+│     └─ shared/
+│        ├─ layouts/
+│        └─ navigation/
 ├─ tool/
 │  ├─ doc_guard/
 │  │  ├─ baseline.json
@@ -530,6 +586,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  └─ manifest.json
 ├─ windows/
 │  ├─ flutter/
+│  │  ├─ ephemeral/
 │  │  ├─ CMakeLists.txt
 │  │  ├─ generated_plugin_registrant.cc
 │  │  ├─ generated_plugin_registrant.h
@@ -553,6 +610,7 @@ Read this first in a new session instead of re-exploring the tree.
 ├─ analysis_options.yaml
 ├─ CLAUDE.md
 ├─ GETTING-STARTED.md
+├─ l10n.yaml
 ├─ memox_v4.iml
 ├─ pubspec.lock
 ├─ pubspec.yaml

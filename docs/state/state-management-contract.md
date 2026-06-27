@@ -5,16 +5,20 @@ orchestrate use cases, they don't hold business logic or the only copy of data.
 
 ## Choice
 
-**Riverpod (annotation / codegen)** — khai báo provider bằng `@riverpod`. Trạng thái
-bất đồng bộ dùng `AsyncValue<T>`: `AsyncNotifier` cho màn có hành động (study/game/editor),
-`FutureProvider`/`StreamProvider` cho đọc thuần (danh sách, watch DB). Một notifier cho
-một mối-quan-tâm cấp màn; mặc định `autoDispose`, `keepAlive` cho state xuyên màn. State
-chỉ **điều phối use case** — không chứa business logic, không giữ bản sao dữ liệu duy nhất.
+**Riverpod** — mục tiêu khai báo provider bằng `@riverpod` (codegen). **S0:** codegen
+hoãn (xung đột `riverpod_generator` ↔ `drift_dev`, xem `docs/stack/stack.md`) nên provider
+viết tay bằng `AsyncNotifierProvider` / `NotifierProvider`; chuyển sang `@riverpod` khi bật
+lại codegen. Trạng thái bất đồng bộ dùng `AsyncValue<T>`: `AsyncNotifier` cho màn/ngữ cảnh
+có hành động (study/game/editor, cặp ngôn ngữ), `FutureProvider`/`StreamProvider` cho đọc
+thuần. Một notifier cho một mối-quan-tâm; mặc định `autoDispose`, `keepAlive` cho state
+xuyên màn. State chỉ **điều phối use case** — không chứa business logic, không giữ bản sao
+dữ liệu duy nhất.
 
 ## Per-store contract
 
 | Store / notifier | Owns | Reads (use cases) | Lifetime |
 | --- | --- | --- | --- |
+| `LanguagePairNotifier` | ngữ cảnh cặp (danh sách, cặp đang chọn, chiều hiển thị) | getPairContext, createLanguagePair, setActivePair, swapDisplayDirection, removeLanguagePair | keepAlive |
 | `LibraryNotifier` | cây thư viện (đếm, sort, cặp đang chọn) | watchLibrary, sortNodes | autoDispose |
 | `DeckDetailNotifier` | danh sách thẻ của một deck | watchDeck | autoDispose |
 | `StudySessionNotifier` | hàng đợi + thẻ hiện tại + tiến độ | buildQueue, gradeCard | autoDispose |

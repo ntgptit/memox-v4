@@ -17,3 +17,14 @@ gặp · Gửi email · Đồng bộ (alpha).
 1. **Drawer mở** — header hoạt động + danh sách mục đầy đủ, icon rõ ràng.
 2. **Thêm cặp ngôn ngữ** — chọn **ngôn ngữ đang học** → **tiếng mẹ đẻ**; nút "Thêm".
 3. **Xóa ngôn ngữ** — danh sách cặp hiện có + xác nhận xoá (cảnh báo mất dữ liệu cặp đó).
+
+## Hiện thực (S0)
+
+`lib/presentation/shared/navigation/app_drawer.dart` (+ `app_shell.dart`). Ba state qua một
+`enum _DrawerView { menu, addLanguage, removeLanguage }`; cặp đang chọn + đảo chiều hiển thị
+đọc từ `languagePairNotifierProvider` (keepAlive). Mọi copy qua l10n key (`lib/l10n/*.arb`:
+`drawer*`, `addLanguage*`, `removeLanguage*`, `activity*`, `comingSoon`, `common*`); màu/giãn
+cách qua token (`MxSpacing`, `Theme`). Header hoạt động hiện 0 phút·0 từ (placeholder, W11
+nối số thật). Các mục phụ (Nhập/Xuất/Thống kê/Chủ đề/Cài đặt/FAQ/Email/Đồng bộ) hiện báo
+"sắp ra mắt", nối hành vi thật khi feature tương ứng (W8–W13) tới. Tên ngôn ngữ là endonym
+(reference data, không l10n) ở `lib/core/constants/supported_languages.dart`.
