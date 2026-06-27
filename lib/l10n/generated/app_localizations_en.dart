@@ -443,4 +443,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonClose => 'Close';
+
+  @override
+  String get searchHint => 'Search by word or meaning';
+
+  @override
+  String get searchRecent => 'Recent';
+
+  @override
+  String get searchFilterAll => 'All';
+
+  @override
+  String searchNoResults(String query) {
+    return 'No cards found for “$query”';
+  }
 }

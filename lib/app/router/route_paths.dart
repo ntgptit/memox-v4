@@ -73,4 +73,9 @@ abstract final class RoutePaths {
   static const String player = '/player/:nodeId';
 
   static String playerLocation(int nodeId) => '/player/$nodeId';
+
+  /// Global search — `search`.
+  static const String search = '/search';
+
+  static String searchLocation() => '/search';
 }

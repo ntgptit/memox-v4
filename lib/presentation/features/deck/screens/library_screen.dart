@@ -58,6 +58,12 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           ),
         ),
         IconButton(
+          key: const Key('librarySearch'),
+          icon: const Icon(Icons.search),
+          tooltip: l10n.searchHint,
+          onPressed: () => context.push(RoutePaths.search),
+        ),
+        IconButton(
           key: const Key('librarySort'),
           icon: const Icon(Icons.sort),
           tooltip: l10n.sortLabel,

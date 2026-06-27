@@ -148,5 +148,10 @@
   "reviewStudyNow": "Học ngay",
   "playerEnd": "Đã phát hết",
   "playerReplay": "Phát lại",
-  "commonClose": "Đóng"
+  "commonClose": "Đóng",
+
+  "searchHint": "Tìm theo từ hoặc nghĩa",
+  "searchRecent": "Tìm gần đây",
+  "searchFilterAll": "Tất cả",
+  "searchNoResults": "Không tìm thấy thẻ nào cho ‘{query}’"
 }

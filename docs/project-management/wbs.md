@@ -16,7 +16,7 @@ the same commit (CLAUDE.md WBS rule).
 | W4 | Học & 5 lối vào (NewLearn 5 chặng) | W3, W5 | Done | `docs/business/study/study-flow.md` |
 | W5 | 4 game luyện | W2 | Done | `docs/business/game/game-modes.md` |
 | W6 | Bộ thẻ (cây lồng nhau) | W2 | Done | `docs/business/deck/deck-management.md` |
-| W7 | Tìm kiếm | W2 | Planned | `docs/business/search/global-search.md` |
+| W7 | Tìm kiếm | W2 | Done | `docs/business/search/global-search.md` |
 | W8 | Nhập / Xuất | W6 | Planned | `docs/business/import-export/import-export.md` |
 | W9 | Thống kê | W3, W11 | Planned | `docs/business/statistics/statistics.md` |
 | W10 | Tài khoản & Đồng bộ Google | W1 | Planned | `docs/business/account-sync/account-sync.md` |
@@ -29,7 +29,8 @@ error/types/router/theme/DI đã code & test); **W2 Done** (Card CRUD + nghĩa �
 editor; audio TTS hoãn); **W6 Done** (cây bộ thẻ tự lồng + library home + deck detail +
 tổng hợp đệ quy); **W3 Done** (engine SRS 8 ô Leitner — scheduler + queue + cap, BE-only);
 **W5 Done** (4 game + picker, luyện thuần không đổi SRS); **W4 Done** (5 lối vào + Play menu +
-NewLearn/DueReview/Review/Player/result + daily_activity); **W7–W13 Planned** (spec xong, chưa code).
+NewLearn/DueReview/Review/Player/result + daily_activity); **W7 Done** (tìm kiếm term+nghĩa +
+lọc trạng thái); **W8–W13 Planned** (W8/W10 gated dep; spec xong, chưa code).
 
 **S0 (nền tiếp theo, tiền đề mọi feature) Done:** app shell (`StatefulShellRoute` +
 bottom nav 4 tab + Drawer cặp ngôn ngữ) + Drift `language_pair` (DAO/repo/usecases:

@@ -13,7 +13,7 @@ cặp ngôn ngữ (S0) đã hiện thực — xem các dòng cuối.
 | Học & luyện | `docs/business/study/study-flow.md` | `lib/domain/{entities,models,types,usecases/study}/` · `lib/data/{datasources/local/daos,repositories}/` (daily_activity) · `lib/presentation/features/study/` | `test/domain/usecases/study/` · `test/presentation/features/study/` | W4 |
 | 4 game | `docs/business/game/game-modes.md` | `lib/domain/{models,types,usecases/game}/` · `lib/presentation/features/game/` | `test/domain/usecases/game/` · `test/presentation/features/game/` | W5 |
 | Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | `lib/domain/{entities,models,usecases/deck}/` · `lib/data/{datasources/local/daos,repositories}/` · `lib/presentation/features/deck/` | `test/data/repositories/deck_repository_impl_test.dart` · `test/domain/usecases/deck/` | W6 |
-| Tìm kiếm | `docs/business/search/global-search.md` | `lib/domain/usecases/search/` · `lib/presentation/features/search/` | TBD | W7 |
+| Tìm kiếm | `docs/business/search/global-search.md` | `lib/domain/{models,usecases/search}/` · `lib/data/{datasources/local/daos,repositories}/` · `lib/presentation/features/search/` | `test/data/repositories/search_repository_impl_test.dart` · `test/presentation/features/search/` | W7 |
 | Nhập/Xuất | `docs/business/import-export/import-export.md` | `lib/domain/usecases/import_export/` | TBD | W8 |
 | Thống kê | `docs/business/statistics/statistics.md` | `lib/presentation/features/statistics/` | TBD | W9 |
 | Tài khoản/Sync | `docs/business/account-sync/account-sync.md` | `lib/data/datasources/remote/` | TBD | W10 |

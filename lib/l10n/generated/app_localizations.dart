@@ -919,6 +919,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get commonClose;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by word or meaning'**
+  String get searchHint;
+
+  /// No description provided for @searchRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get searchRecent;
+
+  /// No description provided for @searchFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get searchFilterAll;
+
+  /// No description provided for @searchNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No cards found for “{query}”'**
+  String searchNoResults(String query);
 }
 
 class _AppLocalizationsDelegate

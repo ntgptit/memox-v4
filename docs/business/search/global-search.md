@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `search/global-search` |
 | Gói công việc (WBS) | W7 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (tìm term+nghĩa, gồm thẻ ẩn, lọc trạng thái; v1 dùng LIKE — FTS/index hoãn tới khi perf cần) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-019, D-028 |
 | Phiên bản | 1.0 |

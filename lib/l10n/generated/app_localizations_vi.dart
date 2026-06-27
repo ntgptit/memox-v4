@@ -441,4 +441,18 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get commonClose => 'Đóng';
+
+  @override
+  String get searchHint => 'Tìm theo từ hoặc nghĩa';
+
+  @override
+  String get searchRecent => 'Tìm gần đây';
+
+  @override
+  String get searchFilterAll => 'Tất cả';
+
+  @override
+  String searchNoResults(String query) {
+    return 'Không tìm thấy thẻ nào cho ‘$query’';
+  }
 }

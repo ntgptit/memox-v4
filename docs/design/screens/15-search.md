@@ -22,3 +22,14 @@ thái).
 3. **Lọc theo trạng thái** — chọn một chip → danh sách thu hẹp theo trạng thái.
 4. **Không có kết quả** — "Không tìm thấy thẻ nào cho ‘<từ khoá>’".
 5. **Đang tìm (loading)** — spinner/skeleton ngắn.
+
+## Hiện thực (W7)
+
+`lib/presentation/features/search/` (route `/search`, mở từ nút 🔍 trên thanh thư viện).
+`SearchRepository` (DAO card⨝deck⨝srs, meaning khớp qua `EXISTS`, gồm cả thẻ ẩn — D-028);
+`SearchCardsUseCase` khớp `term` + nghĩa (D-019, LIKE không phân biệt hoa thường). Chip lọc
+Tất cả/Mới/Đến hạn/Đã thuộc áp ở màn (suy `CardStatus` từ box+due qua clock). Thẻ ẩn mờ +
+icon mắt-gạch; chạm kết quả mở `flashcardEditor` (W2). "Tìm gần đây" giữ trong phiên
+(`searchNotifierProvider` keepAlive). Mọi copy l10n (`search*`/`cardStatus*`), token Mx*.
+**Hoãn:** FTS/index (v1 LIKE đủ cho dữ liệu nhỏ — perf-contract); sửa inline trong kết quả
+(out of scope W7 — dùng editor W2).

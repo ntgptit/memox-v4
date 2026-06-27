@@ -178,5 +178,13 @@
   "reviewStudyNow": "Study now",
   "playerEnd": "Playback finished",
   "playerReplay": "Replay",
-  "commonClose": "Close"
+  "commonClose": "Close",
+
+  "searchHint": "Search by word or meaning",
+  "searchRecent": "Recent",
+  "searchFilterAll": "All",
+  "searchNoResults": "No cards found for “{query}”",
+  "@searchNoResults": {
+    "placeholders": { "query": { "type": "String" } }
+  }
 }

@@ -10,6 +10,7 @@ import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_edito
 import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.dart';
 import 'package:memox_v4/presentation/features/game/screens/game_screen.dart';
 import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
+import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/player_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/review_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/study_session_screen.dart';
@@ -128,6 +129,10 @@ abstract final class AppRouter {
         path: RoutePaths.player,
         builder: (context, state) =>
             PlayerScreen(nodeId: int.parse(state.pathParameters['nodeId']!)),
+      ),
+      GoRoute(
+        path: RoutePaths.search,
+        builder: (context, state) => const SearchScreen(),
       ),
     ],
   );

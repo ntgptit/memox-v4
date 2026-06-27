@@ -414,6 +414,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ database_provider.dart
 │  │  │  ├─ deck_providers.dart
 │  │  │  ├─ language_pair_providers.dart
+│  │  │  ├─ search_providers.dart
 │  │  │  └─ srs_providers.dart
 │  │  ├─ router/
 │  │  │  ├─ app_router.dart
@@ -453,6 +454,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ daily_activity_repository_impl.dart
 │  │  │  ├─ deck_repository_impl.dart
 │  │  │  ├─ language_pair_repository_impl.dart
+│  │  │  ├─ search_repository_impl.dart
 │  │  │  └─ srs_repository_impl.dart
 │  │  └─ services/
 │  ├─ domain/
@@ -470,12 +472,14 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ deck_stats.dart
 │  │  │  ├─ game_card.dart
 │  │  │  ├─ language_pair_context.dart
-│  │  │  └─ play_menu.dart
+│  │  │  ├─ play_menu.dart
+│  │  │  └─ search_result.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository.dart
 │  │  │  ├─ daily_activity_repository.dart
 │  │  │  ├─ deck_repository.dart
 │  │  │  ├─ language_pair_repository.dart
+│  │  │  ├─ search_repository.dart
 │  │  │  └─ srs_repository.dart
 │  │  ├─ services/
 │  │  │  └─ srs_scheduler.dart
@@ -494,6 +498,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ flashcard/
 │  │     ├─ game/
 │  │     ├─ language_pair/
+│  │     ├─ search/
 │  │     ├─ srs/
 │  │     └─ study/
 │  ├─ l10n/
@@ -505,6 +510,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ flashcard/
 │  │  │  ├─ game/
 │  │  │  ├─ language_pair/
+│  │  │  ├─ search/
 │  │  │  └─ study/
 │  │  └─ shared/
 │  │     ├─ async/
@@ -551,7 +557,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  └─ repositories/
 │  │     ├─ card_repository_impl_test.dart
 │  │     ├─ deck_repository_impl_test.dart
-│  │     └─ language_pair_repository_impl_test.dart
+│  │     ├─ language_pair_repository_impl_test.dart
+│  │     └─ search_repository_impl_test.dart
 │  ├─ domain/
 │  │  ├─ services/
 │  │  │  └─ srs_scheduler_test.dart
@@ -570,6 +577,7 @@ Read this first in a new session instead of re-exploring the tree.
 │     │  ├─ deck/
 │     │  ├─ flashcard/
 │     │  ├─ game/
+│     │  ├─ search/
 │     │  └─ study/
 │     └─ shared/
 │        ├─ layouts/
