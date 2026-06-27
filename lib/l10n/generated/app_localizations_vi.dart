@@ -547,6 +547,94 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
+  String get settingsGroupGame => 'Trò chơi';
+
+  @override
+  String get settingsWordsPerRound => 'Số từ mỗi ván';
+
+  @override
+  String get settingsGameRandom => 'Chọn ngẫu nhiên';
+
+  @override
+  String get settingsGroupSrs => 'Lặp lại giãn cách';
+
+  @override
+  String get settingsBoxCount => 'Số ô Leitner';
+
+  @override
+  String get settingsNewPerDay => 'Thẻ mới mỗi ngày';
+
+  @override
+  String get settingsGroupGoal => 'Mục tiêu ngày';
+
+  @override
+  String get settingsGoalMinutes => 'Mục tiêu: số phút';
+
+  @override
+  String get settingsGoalWords => 'Mục tiêu: số từ';
+
+  @override
+  String get settingsGroupReminder => 'Nhắc học';
+
+  @override
+  String get settingsReminderSummaryOff => 'Tắt';
+
+  @override
+  String get settingsGroupBackup => 'Sao lưu & khôi phục';
+
+  @override
+  String get settingsAutoBackup => 'Tự động sao lưu';
+
+  @override
+  String get settingsBackupNow => 'Sao lưu ngay';
+
+  @override
+  String get settingsRestore => 'Khôi phục từ bản sao lưu';
+
+  @override
+  String get settingsBackupDone => 'Đã lưu bản sao lưu';
+
+  @override
+  String get settingsRestoreDone => 'Đã khôi phục dữ liệu';
+
+  @override
+  String get settingsBackupError => 'Sao lưu thất bại';
+
+  @override
+  String get settingsNotSet => 'Chưa đặt';
+
+  @override
+  String get reminderEnable => 'Nhắc học hằng ngày';
+
+  @override
+  String get reminderTimeLabel => 'Giờ';
+
+  @override
+  String get reminderComingSoon =>
+      'Thông báo sắp ra mắt — lịch nhắc đã được lưu.';
+
+  @override
+  String get weekdayMon => 'T2';
+
+  @override
+  String get weekdayTue => 'T3';
+
+  @override
+  String get weekdayWed => 'T4';
+
+  @override
+  String get weekdayThu => 'T5';
+
+  @override
+  String get weekdayFri => 'T6';
+
+  @override
+  String get weekdaySat => 'T7';
+
+  @override
+  String get weekdaySun => 'CN';
+
+  @override
   String get searchHint => 'Tìm theo từ hoặc nghĩa';
 
   @override

@@ -23,7 +23,7 @@ dữ liệu duy nhất.
 | `DeckDetailNotifier` | một node: bộ thẻ con (có stats) + thẻ trực tiếp | getDeckNode, listByDeck (+ mutations deck) | autoDispose (family theo deckId) |
 | `StudySessionNotifier` | hàng đợi + thẻ hiện tại + chặng + tiến độ (NewLearn/DueReview) | buildStudyQueue, gradeCard, scheduleNewCard, finalizeStudySession | autoDispose (family theo StudyRequest) |
 | `GameSessionNotifier` | ván game (N thẻ, hàng đợi học-lại, tiến độ) | buildGameRound (đọc card/srs, KHÔNG ghi SRS — D-007) | autoDispose (family theo GameRequest) |
-| `SettingsNotifier` | cài đặt (theme, SRS, game, nhắc) | readSettings, updateSetting | keepAlive |
+| `SettingsNotifier` | cài đặt (game, SRS, mục tiêu, nhắc, tự-sao-lưu) + sao lưu/khôi phục | getSettings, updateSetting, backup/restore (BackupRepository) | keepAlive |
 | `EngagementNotifier` | hoạt động ngày + mục tiêu + streak + tóm tắt thư viện | dailyActivity.forDay/allForPair, settings.readInt (mục tiêu), computeStreak, deck.libraryTree | keepAlive |
 | `StatsScopeNotifier` | phạm vi thống kê đang chọn (cặp/toàn app) | — (UI state) | keepAlive |
 | `StatisticsNotifier` | thống kê theo phạm vi (tổng quan, ô Leitner, dự báo, hoạt động) | getStatistics (đọc card/srs_state/daily_activity) | autoDispose (family theo StatsScope) |

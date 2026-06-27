@@ -454,6 +454,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ language_pair_mapper.dart
 │  │  │  └─ srs_state_mapper.dart
 │  │  ├─ repositories/
+│  │  │  ├─ backup_repository_impl.dart
 │  │  │  ├─ card_repository_impl.dart
 │  │  │  ├─ daily_activity_repository_impl.dart
 │  │  │  ├─ deck_repository_impl.dart
@@ -472,6 +473,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ language_pair.dart
 │  │  │  └─ srs_state.dart
 │  │  ├─ models/
+│  │  │  ├─ app_settings.dart
 │  │  │  ├─ card_draft.dart
 │  │  │  ├─ card_schedule_info.dart
 │  │  │  ├─ deck_node.dart
@@ -483,6 +485,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ search_result.dart
 │  │  │  └─ statistics_summary.dart
 │  │  ├─ repositories/
+│  │  │  ├─ backup_repository.dart
 │  │  │  ├─ card_repository.dart
 │  │  │  ├─ daily_activity_repository.dart
 │  │  │  ├─ deck_repository.dart
@@ -501,6 +504,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ game_type.dart
 │  │  │  ├─ last_result.dart
 │  │  │  ├─ leitner_box.dart
+│  │  │  ├─ reminder.dart
 │  │  │  ├─ result.dart
 │  │  │  ├─ sort.dart
 │  │  │  ├─ stats_scope.dart
@@ -513,6 +517,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ game/
 │  │     ├─ language_pair/
 │  │     ├─ search/
+│  │     ├─ settings/
 │  │     ├─ srs/
 │  │     ├─ statistics/
 │  │     └─ study/
@@ -527,6 +532,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ game/
 │  │  │  ├─ language_pair/
 │  │  │  ├─ search/
+│  │  │  ├─ settings/
 │  │  │  ├─ statistics/
 │  │  │  └─ study/
 │  │  └─ shared/
@@ -572,10 +578,12 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ datasources/
 │  │  │  └─ local/
 │  │  └─ repositories/
+│  │     ├─ backup_repository_impl_test.dart
 │  │     ├─ card_repository_impl_test.dart
 │  │     ├─ deck_repository_impl_test.dart
 │  │     ├─ language_pair_repository_impl_test.dart
-│  │     └─ search_repository_impl_test.dart
+│  │     ├─ search_repository_impl_test.dart
+│  │     └─ settings_repository_impl_test.dart
 │  ├─ domain/
 │  │  ├─ services/
 │  │  │  └─ srs_scheduler_test.dart
@@ -598,6 +606,7 @@ Read this first in a new session instead of re-exploring the tree.
 │     │  ├─ flashcard/
 │     │  ├─ game/
 │     │  ├─ search/
+│     │  ├─ settings/
 │     │  ├─ statistics/
 │     │  └─ study/
 │     └─ shared/

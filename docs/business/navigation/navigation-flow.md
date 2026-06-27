@@ -19,7 +19,8 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | `review` | `/review/:nodeId` | nodeId | push | |
 | `player` | `/player/:nodeId` | nodeId | push | auto-play |
 | `search` | `/search` | query? | push | |
-| `settings` | `/settings` | — | push | |
+| `settings` | `/settings` | — | push | Cài đặt (W12): game/SRS/mục tiêu/sao lưu; mở từ drawer |
+| `reminder` | `/settings/reminder` | — | push | Nhắc học (W12): giờ + thứ; lên lịch OS hoãn (gated) |
 | `account` | `/settings/account` | — | push | Google sync |
 
 Hằng route đặt ở `lib/app/router/` (`route_paths.dart` / `app_router.dart`). S0 dựng

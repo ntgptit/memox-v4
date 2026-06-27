@@ -552,6 +552,94 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get settingsGroupGame => 'Game';
+
+  @override
+  String get settingsWordsPerRound => 'Words per round';
+
+  @override
+  String get settingsGameRandom => 'Random selection';
+
+  @override
+  String get settingsGroupSrs => 'Spaced repetition';
+
+  @override
+  String get settingsBoxCount => 'Leitner boxes';
+
+  @override
+  String get settingsNewPerDay => 'New cards per day';
+
+  @override
+  String get settingsGroupGoal => 'Daily goal';
+
+  @override
+  String get settingsGoalMinutes => 'Goal: minutes';
+
+  @override
+  String get settingsGoalWords => 'Goal: words';
+
+  @override
+  String get settingsGroupReminder => 'Reminder';
+
+  @override
+  String get settingsReminderSummaryOff => 'Off';
+
+  @override
+  String get settingsGroupBackup => 'Backup & restore';
+
+  @override
+  String get settingsAutoBackup => 'Automatic backup';
+
+  @override
+  String get settingsBackupNow => 'Back up now';
+
+  @override
+  String get settingsRestore => 'Restore from backup';
+
+  @override
+  String get settingsBackupDone => 'Backup saved';
+
+  @override
+  String get settingsRestoreDone => 'Data restored';
+
+  @override
+  String get settingsBackupError => 'Backup failed';
+
+  @override
+  String get settingsNotSet => 'Not set';
+
+  @override
+  String get reminderEnable => 'Daily reminder';
+
+  @override
+  String get reminderTimeLabel => 'Time';
+
+  @override
+  String get reminderComingSoon =>
+      'Notifications are coming soon — the schedule is saved.';
+
+  @override
+  String get weekdayMon => 'Mon';
+
+  @override
+  String get weekdayTue => 'Tue';
+
+  @override
+  String get weekdayWed => 'Wed';
+
+  @override
+  String get weekdayThu => 'Thu';
+
+  @override
+  String get weekdayFri => 'Fri';
+
+  @override
+  String get weekdaySat => 'Sat';
+
+  @override
+  String get weekdaySun => 'Sun';
+
+  @override
   String get searchHint => 'Search by word or meaning';
 
   @override

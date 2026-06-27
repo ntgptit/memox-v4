@@ -18,4 +18,33 @@ class SettingsRepositoryImpl implements SettingsRepository {
       return Err(PersistenceFailure(message: 'read setting', cause: e));
     }
   }
+
+  @override
+  Future<Result<Map<String, String>>> readAll() async {
+    try {
+      return Ok(await _dao.readAll());
+    } catch (e) {
+      return Err(PersistenceFailure(message: 'read settings', cause: e));
+    }
+  }
+
+  @override
+  Future<Result<void>> write(String key, String value) async {
+    try {
+      await _dao.write(key, value);
+      return const Ok<void>(null);
+    } catch (e) {
+      return Err(PersistenceFailure(message: 'write setting', cause: e));
+    }
+  }
+
+  @override
+  Future<Result<void>> remove(String key) async {
+    try {
+      await _dao.remove(key);
+      return const Ok<void>(null);
+    } catch (e) {
+      return Err(PersistenceFailure(message: 'remove setting', cause: e));
+    }
+  }
 }

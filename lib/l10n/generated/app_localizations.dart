@@ -1076,6 +1076,180 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{Today} =1{Tomorrow} other{+{count}d}}'**
   String statsDayOffset(int count);
 
+  /// No description provided for @settingsGroupGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Game'**
+  String get settingsGroupGame;
+
+  /// No description provided for @settingsWordsPerRound.
+  ///
+  /// In en, this message translates to:
+  /// **'Words per round'**
+  String get settingsWordsPerRound;
+
+  /// No description provided for @settingsGameRandom.
+  ///
+  /// In en, this message translates to:
+  /// **'Random selection'**
+  String get settingsGameRandom;
+
+  /// No description provided for @settingsGroupSrs.
+  ///
+  /// In en, this message translates to:
+  /// **'Spaced repetition'**
+  String get settingsGroupSrs;
+
+  /// No description provided for @settingsBoxCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Leitner boxes'**
+  String get settingsBoxCount;
+
+  /// No description provided for @settingsNewPerDay.
+  ///
+  /// In en, this message translates to:
+  /// **'New cards per day'**
+  String get settingsNewPerDay;
+
+  /// No description provided for @settingsGroupGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily goal'**
+  String get settingsGroupGoal;
+
+  /// No description provided for @settingsGoalMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal: minutes'**
+  String get settingsGoalMinutes;
+
+  /// No description provided for @settingsGoalWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal: words'**
+  String get settingsGoalWords;
+
+  /// No description provided for @settingsGroupReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get settingsGroupReminder;
+
+  /// No description provided for @settingsReminderSummaryOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get settingsReminderSummaryOff;
+
+  /// No description provided for @settingsGroupBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup & restore'**
+  String get settingsGroupBackup;
+
+  /// No description provided for @settingsAutoBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic backup'**
+  String get settingsAutoBackup;
+
+  /// No description provided for @settingsBackupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up now'**
+  String get settingsBackupNow;
+
+  /// No description provided for @settingsRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from backup'**
+  String get settingsRestore;
+
+  /// No description provided for @settingsBackupDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved'**
+  String get settingsBackupDone;
+
+  /// No description provided for @settingsRestoreDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Data restored'**
+  String get settingsRestoreDone;
+
+  /// No description provided for @settingsBackupError.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup failed'**
+  String get settingsBackupError;
+
+  /// No description provided for @settingsNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get settingsNotSet;
+
+  /// No description provided for @reminderEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get reminderEnable;
+
+  /// No description provided for @reminderTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get reminderTimeLabel;
+
+  /// No description provided for @reminderComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are coming soon — the schedule is saved.'**
+  String get reminderComingSoon;
+
+  /// No description provided for @weekdayMon.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get weekdayMon;
+
+  /// No description provided for @weekdayTue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get weekdayTue;
+
+  /// No description provided for @weekdayWed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get weekdayWed;
+
+  /// No description provided for @weekdayThu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get weekdayThu;
+
+  /// No description provided for @weekdayFri.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get weekdayFri;
+
+  /// No description provided for @weekdaySat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get weekdaySat;
+
+  /// No description provided for @weekdaySun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get weekdaySun;
+
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:

@@ -47,7 +47,7 @@ abstract final class RoutePaths {
 
   static String gamePickerLocation(int nodeId) => '/game/$nodeId';
 
-  /// A running game round. Query: `type`, `scope`, `random`.
+  /// A running game round. Query: `type`, `scope`, `random`, `words`.
   static const String gamePlay = '/game/:nodeId/play';
 
   static String gamePlayLocation(
@@ -55,8 +55,12 @@ abstract final class RoutePaths {
     GameType type,
     GameScope scope, {
     bool random = true,
-  }) =>
-      '/game/$nodeId/play?type=${type.name}&scope=${scope.name}&random=$random';
+    int? wordsPerRound,
+  }) {
+    final words = wordsPerRound == null ? '' : '&words=$wordsPerRound';
+    return '/game/$nodeId/play?type=${type.name}&scope=${scope.name}'
+        '&random=$random$words';
+  }
 
   /// Scheduled study session (`study` in navigation-flow). Query `entry`.
   static const String study = '/study/:nodeId';
@@ -78,4 +82,10 @@ abstract final class RoutePaths {
   static const String search = '/search';
 
   static String searchLocation() => '/search';
+
+  /// Settings — `settings`.
+  static const String settings = '/settings';
+
+  /// Reminder schedule — `reminder` (pushed from settings).
+  static const String reminder = '/settings/reminder';
 }

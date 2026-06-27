@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/constants/supported_languages.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/entities/language_pair.dart';
@@ -129,7 +131,12 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           l10n.drawerStatistics,
         ),
         _comingSoonTile(context, Icons.palette_outlined, l10n.drawerTheme),
-        _comingSoonTile(context, Icons.settings_outlined, l10n.drawerSettings),
+        _navTile(
+          context,
+          Icons.settings_outlined,
+          l10n.drawerSettings,
+          RoutePaths.settings,
+        ),
         _comingSoonTile(context, Icons.help_outline, l10n.drawerFaq),
         _comingSoonTile(context, Icons.mail_outline, l10n.drawerSendEmail),
         _comingSoonTile(context, Icons.sync, l10n.drawerSync),
@@ -205,6 +212,20 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         title: Text(label),
         onTap: () => _comingSoon(context),
       );
+
+  Widget _navTile(
+    BuildContext context,
+    IconData icon,
+    String label,
+    String route,
+  ) => ListTile(
+    leading: Icon(icon),
+    title: Text(label),
+    onTap: () {
+      Navigator.of(context).pop();
+      unawaited(context.push(route));
+    },
+  );
 
   void _comingSoon(BuildContext context) {
     final l10n = AppLocalizations.of(context);

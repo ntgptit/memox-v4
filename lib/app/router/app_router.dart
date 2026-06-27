@@ -3,6 +3,7 @@ import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/domain/types/game_scope.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
+import 'package:memox_v4/domain/usecases/game/build_game_round.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
@@ -12,6 +13,8 @@ import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.d
 import 'package:memox_v4/presentation/features/game/screens/game_screen.dart';
 import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
+import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
+import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
 import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/player_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/review_screen.dart';
@@ -101,6 +104,9 @@ abstract final class AppRouter {
                 query['scope'] ?? GameScope.spaced.name,
               ),
               random: query['random'] != 'false',
+              wordsPerRound:
+                  int.tryParse(query['words'] ?? '') ??
+                  kDefaultGameWordsPerRound,
             ),
           );
         },
@@ -133,6 +139,14 @@ abstract final class AppRouter {
       GoRoute(
         path: RoutePaths.search,
         builder: (context, state) => const SearchScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.settings,
+        builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.reminder,
+        builder: (context, state) => const ReminderScreen(),
       ),
     ],
   );

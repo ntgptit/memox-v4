@@ -11,6 +11,7 @@ import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/usecases/game/build_game_round.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/features/settings/viewmodels/settings_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
 
 /// "A game" picker (`docs/design/screens/07-game-picker.md`, D-013): pick one of
@@ -45,8 +46,20 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
     setState(() => _count = cards.length);
   }
 
-  void _play(GameType type) =>
-      context.push(RoutePaths.gamePlayLocation(widget.nodeId, type, _scope));
+  void _play(GameType type) {
+    final settings = ref.read(settingsNotifierProvider).valueOrNull;
+    unawaited(
+      context.push(
+        RoutePaths.gamePlayLocation(
+          widget.nodeId,
+          type,
+          _scope,
+          random: settings?.gameRandom ?? true,
+          wordsPerRound: settings?.gameWordsPerRound,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +100,9 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
 
   Widget _picker(AppLocalizations l10n) {
     final theme = Theme.of(context);
+    final wordsPerRound =
+        ref.watch(settingsNotifierProvider).valueOrNull?.gameWordsPerRound ??
+        kDefaultGameWordsPerRound;
     return ListView(
       padding: const EdgeInsets.all(MxSpacing.space5),
       children: <Widget>[
@@ -117,7 +133,7 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
         ),
         const SizedBox(height: MxSpacing.space2),
         Text(
-          l10n.gameWordsHint(kDefaultGameWordsPerRound),
+          l10n.gameWordsHint(wordsPerRound),
           style: theme.textTheme.bodySmall,
         ),
         const SizedBox(height: MxSpacing.space4),

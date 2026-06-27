@@ -21,7 +21,7 @@ the same commit (CLAUDE.md WBS rule).
 | W9 | Thống kê | W3, W11 | Done | `docs/business/statistics/statistics.md` |
 | W10 | Tài khoản & Đồng bộ Google | W1 | Planned | `docs/business/account-sync/account-sync.md` |
 | W11 | Gắn kết / streak | W4 | Done | `docs/business/engagement/dashboard-engagement.md` |
-| W12 | Cài đặt & Backup cục bộ | W1 | Planned | `docs/business/settings/settings.md` |
+| W12 | Cài đặt & Backup cục bộ | W1 | Done | `docs/business/settings/settings.md` |
 | W13 | Theme (personalization) | W12 | Planned | `docs/business/personalization/personalization.md` |
 
 Status ∈ Planned / In-progress / Blocked / Done. **W1 Done** (nền kiến trúc + core:
@@ -32,7 +32,8 @@ tổng hợp đệ quy); **W3 Done** (engine SRS 8 ô Leitner — scheduler + qu
 NewLearn/DueReview/Review/Player/result + daily_activity); **W7 Done** (tìm kiếm term+nghĩa +
 lọc trạng thái); **W11 Done** (dashboard Today: hoạt động + mục tiêu + streak D-021);
 **W9 Done** (thống kê: tổng quan + ô Leitner + dự báo + hoạt động, phạm vi cặp↔toàn app);
-**W12/W13 Planned**, **W8/W10 BLOCKED** (gated dep — xem §10 + NIGHT-LOG).
+**W12 Done** (cài đặt k-v + game/SRS/mục tiêu, sao lưu/khôi phục JSON; lịch nhắc lưu được,
+lên lịch OS hoãn); **W13 Planned**, **W8/W10 BLOCKED** (gated dep — xem §10 + NIGHT-LOG).
 
 **S0 (nền tiếp theo, tiền đề mọi feature) Done:** app shell (`StatefulShellRoute` +
 bottom nav 4 tab + Drawer cặp ngôn ngữ) + Drift `language_pair` (DAO/repo/usecases:

@@ -61,7 +61,7 @@ học. (Premium hoãn v1.) Sơ đồ đầy đủ: `docs/business/system/system-
 | Thống kê | `docs/business/statistics/statistics.md` | Implemented | `test/domain/usecases/statistics/get_statistics_test.dart` |
 | Hoạt động & streak | `docs/business/engagement/dashboard-engagement.md` | Implemented | `test/domain/usecases/engagement/compute_streak_test.dart` |
 | Tài khoản & Đồng bộ | `docs/business/account-sync/account-sync.md` | Specified | TBD |
-| Cài đặt & sao lưu | `docs/business/settings/settings.md` | Specified | TBD |
+| Cài đặt & sao lưu | `docs/business/settings/settings.md` | Implemented | `test/data/repositories/settings_repository_impl_test.dart` · `test/data/repositories/backup_repository_impl_test.dart` |
 | Cá nhân hoá (theme) | `docs/business/personalization/personalization.md` | Specified | TBD |
 
 ## 7. Giả định & ràng buộc cấp sản phẩm
