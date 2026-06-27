@@ -16,4 +16,7 @@ abstract final class SettingsKeys {
   static const String newCardsPerDay = 'new_cards_per_day';
   static const String dailyGoalMinutes = 'daily_goal_minutes';
   static const String dailyGoalWords = 'daily_goal_words';
+  static const String themeMode = 'theme_mode';
+  static const String accentColor = 'accent_color';
+  static const String fontScale = 'font_scale';
 }

@@ -88,4 +88,7 @@ abstract final class RoutePaths {
 
   /// Reminder schedule — `reminder` (pushed from settings).
   static const String reminder = '/settings/reminder';
+
+  /// Theme personalization — `theme` (pushed from settings).
+  static const String theme = '/settings/theme';
 }

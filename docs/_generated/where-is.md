@@ -19,7 +19,7 @@ cặp ngôn ngữ (S0) đã hiện thực — xem các dòng cuối.
 | Tài khoản/Sync | `docs/business/account-sync/account-sync.md` | `lib/data/datasources/remote/` | TBD | W10 |
 | Gắn kết/streak | `docs/business/engagement/dashboard-engagement.md` | `lib/domain/{types,models,usecases/engagement}` · `lib/presentation/features/engagement/` | `test/domain/usecases/engagement/compute_streak_test.dart` · `test/presentation/features/engagement/` | W11 |
 | Cài đặt/Backup | `docs/business/settings/settings.md` | `lib/domain/{types/reminder,models/app_settings,usecases/settings}` · `lib/data/repositories/{settings,backup}_repository_impl` · `lib/presentation/features/settings/` | `test/data/repositories/{settings,backup}_repository_impl_test.dart` · `test/presentation/features/settings/` | W12 |
-| Theme | `docs/business/personalization/personalization.md` | `lib/core/theme/` | TBD | W13 |
+| Theme | `docs/business/personalization/personalization.md` | `lib/core/theme/{app_theme,theme_prefs}` · `lib/presentation/features/personalization/` · `lib/app/memox_app.dart` | `test/presentation/features/personalization/personalization_notifier_test.dart` | W13 |
 
 Cơ sở dữ liệu: `docs/database/schema-contract.md` → `lib/data/datasources/local/` (Drift).
 Điều hướng: `docs/business/navigation/navigation-flow.md` → `lib/app/router/`.

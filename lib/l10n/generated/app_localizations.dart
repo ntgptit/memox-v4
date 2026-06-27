@@ -1250,6 +1250,90 @@ abstract class AppLocalizations {
   /// **'Sun'**
   String get weekdaySun;
 
+  /// No description provided for @themeModeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Color mode'**
+  String get themeModeLabel;
+
+  /// No description provided for @themeModeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeModeSystem;
+
+  /// No description provided for @themeModeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeModeLight;
+
+  /// No description provided for @themeModeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeModeDark;
+
+  /// No description provided for @themeAccentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Accent'**
+  String get themeAccentLabel;
+
+  /// No description provided for @themeAccentBrand.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand'**
+  String get themeAccentBrand;
+
+  /// No description provided for @themeAccentWarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm'**
+  String get themeAccentWarm;
+
+  /// No description provided for @themeAccentCool.
+  ///
+  /// In en, this message translates to:
+  /// **'Cool'**
+  String get themeAccentCool;
+
+  /// No description provided for @themeFontLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Font size'**
+  String get themeFontLabel;
+
+  /// No description provided for @themeFontSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get themeFontSmall;
+
+  /// No description provided for @themeFontMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get themeFontMedium;
+
+  /// No description provided for @themeFontLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get themeFontLarge;
+
+  /// No description provided for @themePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get themePreview;
+
+  /// No description provided for @themePreviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning a little every day keeps your streak alive.'**
+  String get themePreviewBody;
+
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:

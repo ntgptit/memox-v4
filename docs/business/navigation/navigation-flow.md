@@ -21,6 +21,7 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | `search` | `/search` | query? | push | |
 | `settings` | `/settings` | — | push | Cài đặt (W12): game/SRS/mục tiêu/sao lưu; mở từ drawer |
 | `reminder` | `/settings/reminder` | — | push | Nhắc học (W12): giờ + thứ; lên lịch OS hoãn (gated) |
+| `theme` | `/settings/theme` | — | push | Cá nhân hoá (W13): chế độ màu + màu nhấn + cỡ chữ, áp dụng live |
 | `account` | `/settings/account` | — | push | Google sync |
 
 Hằng route đặt ở `lib/app/router/` (`route_paths.dart` / `app_router.dart`). S0 dựng

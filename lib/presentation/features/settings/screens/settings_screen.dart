@@ -131,11 +131,10 @@ class SettingsScreen extends ConsumerWidget {
         ),
       ),
       ListTile(
+        key: const Key('settingsThemeRow'),
         title: Text(l10n.drawerTheme),
         trailing: const Icon(Icons.chevron_right),
-        onTap: () => ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(content: Text(l10n.comingSoon))),
+        onTap: () => context.push(RoutePaths.theme),
       ),
     ],
   );

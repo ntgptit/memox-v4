@@ -27,6 +27,7 @@ dữ liệu duy nhất.
 | `EngagementNotifier` | hoạt động ngày + mục tiêu + streak + tóm tắt thư viện | dailyActivity.forDay/allForPair, settings.readInt (mục tiêu), computeStreak, deck.libraryTree | keepAlive |
 | `StatsScopeNotifier` | phạm vi thống kê đang chọn (cặp/toàn app) | — (UI state) | keepAlive |
 | `StatisticsNotifier` | thống kê theo phạm vi (tổng quan, ô Leitner, dự báo, hoạt động) | getStatistics (đọc card/srs_state/daily_activity) | autoDispose (family theo StatsScope) |
+| `PersonalizationNotifier` | theme (chế độ màu + màu nhấn + cỡ chữ) | settings.readAll, updateSetting | keepAlive |
 
 ## Rules
 

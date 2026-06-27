@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `personalization/personalization` |
 | Gói công việc (WBS) | W13 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (chế độ màu sáng/tối/hệ thống + màu nhấn (brand/warm/cool từ token sẵn có) + cỡ chữ (nhỏ/vừa/lớn); áp dụng live qua MemoXApp, lưu trong settings W12. Hoãn: theme tải về, tuỳ biến theo màn, phông tuỳ ý) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | — |
 | Phiên bản | 1.0 |

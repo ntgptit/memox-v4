@@ -439,7 +439,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ mx_sizes.dart
 │  │  │  ├─ mx_spacing.dart
 │  │  │  ├─ mx_theme.dart
-│  │  │  └─ mx_typography.dart
+│  │  │  ├─ mx_typography.dart
+│  │  │  └─ theme_prefs.dart
 │  │  └─ util/
 │  │     ├─ clock.dart
 │  │     ├─ day_key.dart
@@ -531,6 +532,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ flashcard/
 │  │  │  ├─ game/
 │  │  │  ├─ language_pair/
+│  │  │  ├─ personalization/
 │  │  │  ├─ search/
 │  │  │  ├─ settings/
 │  │  │  ├─ statistics/
@@ -605,6 +607,7 @@ Read this first in a new session instead of re-exploring the tree.
 │     │  ├─ engagement/
 │     │  ├─ flashcard/
 │     │  ├─ game/
+│     │  ├─ personalization/
 │     │  ├─ search/
 │     │  ├─ settings/
 │     │  ├─ statistics/

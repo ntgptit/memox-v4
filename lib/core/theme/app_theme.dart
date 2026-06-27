@@ -6,6 +6,7 @@ import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
+import 'package:memox_v4/core/theme/theme_prefs.dart';
 
 /// Material 3 light/dark themes composed from the design tokens.
 ///
@@ -17,20 +18,29 @@ import 'package:memox_v4/core/theme/mx_typography.dart';
 abstract final class AppTheme {
   const AppTheme._();
 
-  /// Light theme.
-  static ThemeData light() =>
-      _build(Brightness.light, MxColors.light, MxShadows.light);
+  /// Light theme, optionally re-accented.
+  static ThemeData light({AccentChoice accent = AccentChoice.brand}) =>
+      _build(Brightness.light, MxColors.light, MxShadows.light, accent);
 
-  /// Dark theme.
-  static ThemeData dark() =>
-      _build(Brightness.dark, MxColors.dark, MxShadows.dark);
+  /// Dark theme, optionally re-accented.
+  static ThemeData dark({AccentChoice accent = AccentChoice.brand}) =>
+      _build(Brightness.dark, MxColors.dark, MxShadows.dark, accent);
+
+  static Color _accentColor(MxColors c, AccentChoice accent) =>
+      switch (accent) {
+        AccentChoice.brand => c.primary,
+        AccentChoice.warm => c.accent,
+        AccentChoice.cool => c.info,
+      };
 
   static ThemeData _build(
     Brightness brightness,
     MxColors c,
     MxShadows shadows,
+    AccentChoice accent,
   ) {
-    final scheme = _scheme(brightness, c);
+    final primary = _accentColor(c, accent);
+    final scheme = _scheme(brightness, c, primary);
     final text = _textTheme(c.text);
     return ThemeData(
       useMaterial3: true,
@@ -106,7 +116,7 @@ abstract final class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: MxRadius.fieldRadius,
-          borderSide: BorderSide(color: c.primary, width: 2),
+          borderSide: BorderSide(color: primary, width: 2),
         ),
       ),
       chipTheme: ChipThemeData(
@@ -141,12 +151,13 @@ abstract final class AppTheme {
   }
 
   // ── ColorScheme: seed for full M3 coverage, brand tokens for key roles ──────
-  static ColorScheme _scheme(Brightness brightness, MxColors c) =>
-      ColorScheme.fromSeed(
-        seedColor: MxColors.seed,
-        brightness: brightness,
-      ).copyWith(
-        primary: c.primary,
+  static ColorScheme _scheme(
+    Brightness brightness,
+    MxColors c,
+    Color primary,
+  ) =>
+      ColorScheme.fromSeed(seedColor: primary, brightness: brightness).copyWith(
+        primary: primary,
         onPrimary: c.onPrimary,
         primaryContainer: c.primarySoft,
         onPrimaryContainer: c.onPrimarySoft,
@@ -165,7 +176,7 @@ abstract final class AppTheme {
         outline: c.borderStrong,
         outlineVariant: c.border,
         scrim: c.overlay,
-        surfaceTint: c.primary,
+        surfaceTint: primary,
       );
 
   // ── TextTheme from the type scale ───────────────────────────────────────────

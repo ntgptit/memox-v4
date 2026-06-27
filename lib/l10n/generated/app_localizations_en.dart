@@ -640,6 +640,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weekdaySun => 'Sun';
 
   @override
+  String get themeModeLabel => 'Color mode';
+
+  @override
+  String get themeModeSystem => 'System';
+
+  @override
+  String get themeModeLight => 'Light';
+
+  @override
+  String get themeModeDark => 'Dark';
+
+  @override
+  String get themeAccentLabel => 'Accent';
+
+  @override
+  String get themeAccentBrand => 'Brand';
+
+  @override
+  String get themeAccentWarm => 'Warm';
+
+  @override
+  String get themeAccentCool => 'Cool';
+
+  @override
+  String get themeFontLabel => 'Font size';
+
+  @override
+  String get themeFontSmall => 'Small';
+
+  @override
+  String get themeFontMedium => 'Medium';
+
+  @override
+  String get themeFontLarge => 'Large';
+
+  @override
+  String get themePreview => 'Preview';
+
+  @override
+  String get themePreviewBody =>
+      'Learning a little every day keeps your streak alive.';
+
+  @override
   String get searchHint => 'Search by word or meaning';
 
   @override

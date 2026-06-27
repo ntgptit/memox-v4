@@ -635,6 +635,48 @@ class AppLocalizationsVi extends AppLocalizations {
   String get weekdaySun => 'CN';
 
   @override
+  String get themeModeLabel => 'Chế độ màu';
+
+  @override
+  String get themeModeSystem => 'Theo hệ thống';
+
+  @override
+  String get themeModeLight => 'Sáng';
+
+  @override
+  String get themeModeDark => 'Tối';
+
+  @override
+  String get themeAccentLabel => 'Màu nhấn';
+
+  @override
+  String get themeAccentBrand => 'Mặc định';
+
+  @override
+  String get themeAccentWarm => 'Ấm';
+
+  @override
+  String get themeAccentCool => 'Lạnh';
+
+  @override
+  String get themeFontLabel => 'Cỡ chữ';
+
+  @override
+  String get themeFontSmall => 'Nhỏ';
+
+  @override
+  String get themeFontMedium => 'Vừa';
+
+  @override
+  String get themeFontLarge => 'Lớn';
+
+  @override
+  String get themePreview => 'Xem trước';
+
+  @override
+  String get themePreviewBody => 'Học một chút mỗi ngày để giữ chuỗi streak.';
+
+  @override
   String get searchHint => 'Tìm theo từ hoặc nghĩa';
 
   @override
