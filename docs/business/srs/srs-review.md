@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `srs/srs-review` |
 | Gói công việc (WBS) | W3 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (engine BE: scheduler 8 ô + queue/cap; không màn riêng — UI học là W4) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-002, D-003, D-004, D-005, D-011, D-018 |
 | Phiên bản | 1.0 |

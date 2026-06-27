@@ -412,7 +412,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ clock_provider.dart
 │  │  │  ├─ database_provider.dart
 │  │  │  ├─ deck_providers.dart
-│  │  │  └─ language_pair_providers.dart
+│  │  │  ├─ language_pair_providers.dart
+│  │  │  └─ srs_providers.dart
 │  │  ├─ router/
 │  │  │  ├─ app_router.dart
 │  │  │  └─ route_paths.dart
@@ -443,36 +444,46 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ mappers/
 │  │  │  ├─ card_mapper.dart
 │  │  │  ├─ deck_mapper.dart
-│  │  │  └─ language_pair_mapper.dart
+│  │  │  ├─ language_pair_mapper.dart
+│  │  │  └─ srs_state_mapper.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository_impl.dart
 │  │  │  ├─ deck_repository_impl.dart
-│  │  │  └─ language_pair_repository_impl.dart
+│  │  │  ├─ language_pair_repository_impl.dart
+│  │  │  └─ srs_repository_impl.dart
 │  │  └─ services/
 │  ├─ domain/
 │  │  ├─ entities/
 │  │  │  ├─ card_meaning.dart
 │  │  │  ├─ card.dart
 │  │  │  ├─ deck.dart
-│  │  │  └─ language_pair.dart
+│  │  │  ├─ language_pair.dart
+│  │  │  └─ srs_state.dart
 │  │  ├─ models/
 │  │  │  ├─ card_draft.dart
+│  │  │  ├─ card_schedule_info.dart
 │  │  │  ├─ deck_node.dart
 │  │  │  ├─ deck_stats.dart
 │  │  │  └─ language_pair_context.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository.dart
 │  │  │  ├─ deck_repository.dart
-│  │  │  └─ language_pair_repository.dart
+│  │  │  ├─ language_pair_repository.dart
+│  │  │  └─ srs_repository.dart
 │  │  ├─ services/
+│  │  │  └─ srs_scheduler.dart
 │  │  ├─ types/
+│  │  │  ├─ box_interval.dart
 │  │  │  ├─ card_status.dart
+│  │  │  ├─ last_result.dart
+│  │  │  ├─ leitner_box.dart
 │  │  │  ├─ result.dart
 │  │  │  └─ sort.dart
 │  │  └─ usecases/
 │  │     ├─ deck/
 │  │     ├─ flashcard/
-│  │     └─ language_pair/
+│  │     ├─ language_pair/
+│  │     └─ srs/
 │  ├─ l10n/
 │  │  ├─ app_en.arb
 │  │  └─ app_vi.arb
@@ -528,13 +539,16 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ deck_repository_impl_test.dart
 │  │     └─ language_pair_repository_impl_test.dart
 │  ├─ domain/
+│  │  ├─ services/
+│  │  │  └─ srs_scheduler_test.dart
 │  │  ├─ types/
 │  │  │  ├─ card_status_test.dart
 │  │  │  └─ result_test.dart
 │  │  └─ usecases/
 │  │     ├─ deck/
 │  │     ├─ flashcard/
-│  │     └─ language_pair/
+│  │     ├─ language_pair/
+│  │     └─ srs/
 │  └─ presentation/
 │     ├─ features/
 │     │  ├─ deck/
