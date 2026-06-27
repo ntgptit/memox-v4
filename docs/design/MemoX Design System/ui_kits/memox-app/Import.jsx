@@ -1,15 +1,15 @@
-/* MemoX — Import (Nhập thẻ). States: source · mapping · preview · dup-warning · done */
+/* MemoX — Import cards. States: source · mapping · preview · dup-warning · done */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton, MxChip, MxIconTile } = NS;
 
 const SOURCES = [
-  { icon: 'description', name: 'Tệp CSV', desc: 'Nhập từ tệp .csv' },
-  { icon: 'table_chart', name: 'Excel', desc: 'Nhập từ tệp .xlsx' },
-  { icon: 'content_paste', name: 'Dán văn bản', desc: 'Sao chép từ nơi khác' },
+  { icon: 'description', name: 'CSV file', desc: 'Import from a .csv file' },
+  { icon: 'table_chart', name: 'Excel', desc: 'Import from an .xlsx file' },
+  { icon: 'content_paste', name: 'Paste text', desc: 'Copy from somewhere else' },
 ];
-const SEPS = ['Tab', 'Phẩy', 'Chấm phẩy'];
-const ROWS = [['Term', 'Nghĩa'], ['안녕하세요', 'Xin chào'], ['감사합니다', 'Cảm ơn'], ['사랑', 'Tình yêu'], ['학교', 'Trường học']];
+const SEPS = ['Tab', 'Comma', 'Semicolon'];
+const ROWS = [['Term', 'Meaning'], ['안녕하세요', 'Hello'], ['감사합니다', 'Thank you'], ['사랑', 'love'], ['학교', 'school']];
 
 function Table({ rows }) {
   return (
@@ -29,14 +29,14 @@ function SectionLabel({ children }) {
 }
 
 function Import({ state = 'source' }) {
-  const bar = <MxAppBar title="Nhập thẻ" node="import/appbar" leading={<MxIconButton icon="arrow_back" node="import/back" />} />;
+  const bar = <MxAppBar title="Import cards" node="import/appbar" leading={<MxIconButton icon="arrow_back" node="import/back" />} />;
 
   if (state === 'done') {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
-        <window.EmptyState node="import/done" icon="task_alt" tone="success" title="Đã nhập 124 thẻ"
-          text="Các thẻ mới đã được thêm vào bộ thẻ “TOPIK I — Từ vựng”."
-          action={<MxButton variant="primary" icon="arrow_forward" node="import/go-deck">Về bộ thẻ</MxButton>} />
+        <window.EmptyState node="import/done" icon="task_alt" tone="success" title="Imported 124 cards"
+          text="The new cards were added to “TOPIK I — Vocabulary”."
+          action={<MxButton variant="primary" icon="arrow_forward" node="import/go-deck">Back to deck</MxButton>} />
       </MxScaffold>
     );
   }
@@ -44,7 +44,7 @@ function Import({ state = 'source' }) {
   if (state === 'source') {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
-        <SectionLabel>CHỌN NGUỒN</SectionLabel>
+        <SectionLabel>CHOOSE SOURCE</SectionLabel>
         {SOURCES.map((s, i) => (
           <MxCard key={i} interactive padding="sm" node={'import/source-' + i}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
@@ -57,7 +57,7 @@ function Import({ state = 'source' }) {
             </div>
           </MxCard>
         ))}
-        <div data-mx-node="import/paste" style={{ border: '1px dashed var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', minHeight: 96, padding: '14px', color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)' }}>Dán dữ liệu vào đây (mỗi dòng một thẻ: term[tab]nghĩa)…</div>
+        <div data-mx-node="import/paste" style={{ border: '1px dashed var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', minHeight: 96, padding: '14px', color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)' }}>Paste your data here (one card per line: term[tab]meaning)…</div>
       </MxScaffold>
     );
   }
@@ -65,19 +65,19 @@ function Import({ state = 'source' }) {
   if (state === 'mapping') {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
-        <SectionLabel>DẤU PHÂN TÁCH</SectionLabel>
+        <SectionLabel>SEPARATOR</SectionLabel>
         <div style={{ display: 'flex', gap: 'var(--memox-space-2)' }}>
           {SEPS.map((s, i) => <MxChip key={s} label={s} selected={i === 0} node={'import/sep-' + i} />)}
         </div>
-        <SectionLabel>ÁNH XẠ CỘT</SectionLabel>
+        <SectionLabel>COLUMN MAPPING</SectionLabel>
         <MxCard padding="sm">
-          <window.ListRow icon="text_fields" title="Cột A → Term" sub="안녕하세요, 감사합니다…" node="import/map-term"
+          <window.ListRow icon="text_fields" title="Column A → Term" sub="안녕하세요, 감사합니다…" node="import/map-term"
             trailing={<MxIconButton icon="expand_more" size="sm" node="import/map-term-pick" />} />
-          <window.ListRow icon="translate" title="Cột B → Nghĩa" sub="Xin chào, Cảm ơn…" last node="import/map-meaning"
+          <window.ListRow icon="translate" title="Column B → Meaning" sub="Hello, Thank you…" last node="import/map-meaning"
             trailing={<MxIconButton icon="expand_more" size="sm" node="import/map-meaning-pick" />} />
         </MxCard>
         <Table rows={ROWS} />
-        <MxButton variant="primary" block node="import/to-preview">Tiếp tục</MxButton>
+        <MxButton variant="primary" block node="import/to-preview">Continue</MxButton>
       </MxScaffold>
     );
   }
@@ -88,12 +88,12 @@ function Import({ state = 'source' }) {
       {state === 'dup-warning' ? (
         <div data-mx-node="import/dup-warning" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
           <span className="material-symbols-rounded">warning</span>
-          <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>Có 8 thẻ trùng với thẻ đã có — vẫn nhập?</span>
+          <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>8 cards already exist — import anyway?</span>
         </div>
       ) : null}
-      <SectionLabel>XEM TRƯỚC · 124 THẺ</SectionLabel>
+      <SectionLabel>PREVIEW · 124 CARDS</SectionLabel>
       <Table rows={ROWS} />
-      <MxButton variant="primary" icon="download" block node="import/do-import">Nhập 124 thẻ</MxButton>
+      <MxButton variant="primary" icon="download" block node="import/do-import">Import 124 cards</MxButton>
     </MxScaffold>
   );
 }

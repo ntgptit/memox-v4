@@ -1,4 +1,4 @@
-/* MemoX — Game: Điền (typing). States: waiting · typing · hint · correct · wrong · complete */
+/* MemoX — Game: Typing. States: waiting · typing · hint · correct · wrong · complete */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxButton } = NS;
@@ -37,7 +37,7 @@ function InputBox({ content, tone, placeholder }) {
 }
 
 const INPUT = {
-  waiting: { content: null, placeholder: 'Gõ từ tiếng Hàn…' },
+  waiting: { content: null, placeholder: 'Type the Korean word…' },
   typing: { content: '친' },
   hint: { content: '친 _' },
   correct: { content: '친구', tone: 'correct' },
@@ -46,7 +46,7 @@ const INPUT = {
 
 function GameTyping({ state = 'waiting' }) {
   const bar = (
-    <MxAppBar node="game-typing/appbar" title="Điền"
+    <MxAppBar node="game-typing/appbar" title="Typing"
       leading={<MxIconButton icon="arrow_back" node="game-typing/back" />}
       trailing={<MxIconButton icon="more_horiz" node="game-typing/options" />} />
   );
@@ -55,9 +55,9 @@ function GameTyping({ state = 'waiting' }) {
     return (
       <MxScaffold node="game-typing/screen" appBar={bar}>
         <window.ProgressBar value={100} height={8} node="game-typing/progress" />
-        <window.EmptyState node="game-typing/complete" icon="celebration" tone="success" title="Hoàn thành ván!"
-          text="Bạn đã gõ đúng các từ trong ván này."
-          action={<MxButton variant="primary" icon="arrow_forward" node="game-typing/next">Ván tiếp theo</MxButton>} />
+        <window.EmptyState node="game-typing/complete" icon="celebration" tone="success" title="Round complete!"
+          text="You typed the words correctly."
+          action={<MxButton variant="primary" icon="arrow_forward" node="game-typing/next">Next round</MxButton>} />
       </MxScaffold>
     );
   }
@@ -65,19 +65,19 @@ function GameTyping({ state = 'waiting' }) {
   const inp = INPUT[state] || INPUT.waiting;
   let controls;
   if (state === 'correct') {
-    controls = <MxButton variant="primary" icon="arrow_forward" block node="game-typing/next">Tiếp</MxButton>;
+    controls = <MxButton variant="primary" icon="arrow_forward" block node="game-typing/next">Next</MxButton>;
   } else if (state === 'wrong') {
     controls = (
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
-        <MxButton variant="outline" block node="game-typing/accept">Đúng</MxButton>
-        <MxButton variant="primary" block node="game-typing/retry">Thử lại</MxButton>
+        <MxButton variant="outline" block node="game-typing/accept">Correct</MxButton>
+        <MxButton variant="primary" block node="game-typing/retry">Retry</MxButton>
       </div>
     );
   } else {
     controls = (
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
-        <MxButton variant="ghost" icon="lightbulb" block node="game-typing/hint">Trợ giúp</MxButton>
-        <MxButton variant="primary" block disabled={state === 'waiting'} node="game-typing/check">Kiểm tra</MxButton>
+        <MxButton variant="ghost" icon="lightbulb" block node="game-typing/hint">Help</MxButton>
+        <MxButton variant="primary" block disabled={state === 'waiting'} node="game-typing/check">Check</MxButton>
       </div>
     );
   }
@@ -87,17 +87,17 @@ function GameTyping({ state = 'waiting' }) {
       <window.ProgressBar value={80} height={8} node="game-typing/progress" />
 
       <MxCard node="game-typing/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 8, padding: 'var(--memox-space-6)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em' }}>NGHĨA</div>
-        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 800 }}>bạn bè</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em' }}>MEANING</div>
+        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 800 }}>friend</div>
       </MxCard>
 
-      <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-secondary)' }}>Gõ lại từ (tiếng Hàn)</div>
+      <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-secondary)' }}>Type the term (Korean)</div>
       <InputBox {...inp} />
 
-      {state === 'hint' ? <Note icon="lightbulb" tone="warning" text="Gợi ý: 2 ký tự, bắt đầu bằng 친" /> : null}
+      {state === 'hint' ? <Note icon="lightbulb" tone="warning" text="Hint: 2 characters, starts with 친" /> : null}
       {state === 'wrong' ? (
         <div style={{ textAlign: 'center', fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)' }}>
-          Đáp án đúng: <b style={{ color: 'var(--memox-success)' }}>친구</b>
+          Answer: <b style={{ color: 'var(--memox-success)' }}>친구</b>
         </div>
       ) : null}
 

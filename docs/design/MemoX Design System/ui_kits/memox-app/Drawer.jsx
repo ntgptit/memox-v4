@@ -4,16 +4,16 @@ const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton } = NS;
 
 const ITEMS = [
-  { icon: 'add', label: 'Thêm ngôn ngữ' },
-  { icon: 'delete', label: 'Xóa ngôn ngữ' },
-  { icon: 'upload_file', label: 'Nhập' },
-  { icon: 'download', label: 'Xuất' },
-  { icon: 'insights', label: 'Thống kê' },
-  { icon: 'palette', label: 'Chủ đề' },
-  { icon: 'settings', label: 'Cài đặt' },
-  { icon: 'help', label: 'Câu hỏi thường gặp' },
-  { icon: 'mail', label: 'Gửi email' },
-  { icon: 'cloud_sync', label: 'Đồng bộ (alpha)' },
+  { icon: 'add', label: 'Add language' },
+  { icon: 'delete', label: 'Remove language' },
+  { icon: 'upload_file', label: 'Import' },
+  { icon: 'download', label: 'Export' },
+  { icon: 'insights', label: 'Stats' },
+  { icon: 'palette', label: 'Theme' },
+  { icon: 'settings', label: 'Settings' },
+  { icon: 'help', label: 'FAQ' },
+  { icon: 'mail', label: 'Email us' },
+  { icon: 'cloud_sync', label: 'Sync (alpha)' },
 ];
 
 function DrawerItem({ icon, label, node }) {
@@ -46,12 +46,12 @@ function Drawer({ state = 'open' }) {
       <div data-mx-node="drawer/overlay" style={{ position: 'absolute', inset: 0, zIndex: 60, display: 'flex' }}>
         <div data-mx-node="drawer/panel" style={{ width: '82%', maxWidth: 320, height: '100%', background: 'var(--memox-surface)', display: 'flex', flexDirection: 'column', padding: 'var(--memox-space-5) var(--memox-space-4)', boxShadow: '8px 0 32px rgba(8,11,24,.2)' }}>
           <div style={{ padding: '0 8px var(--memox-space-4)', borderBottom: '1px solid var(--memox-divider)', marginBottom: 'var(--memox-space-2)' }}>
-            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em' }}>HOẠT ĐỘNG HÔM NAY</div>
+            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em' }}>TODAY'S ACTIVITY</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6, fontWeight: 700 }}>
               <span className="material-symbols-rounded" style={{ fontSize: 20, color: 'var(--memox-primary)' }}>schedule</span>
               <span style={{ fontSize: 'var(--memox-font-size-md)' }}>12:45</span>
               <span style={{ color: 'var(--memox-text-tertiary)' }}>·</span>
-              <span style={{ fontSize: 'var(--memox-font-size-md)' }}>24 từ</span>
+              <span style={{ fontSize: 'var(--memox-font-size-md)' }}>24 words</span>
             </div>
           </div>
           <div style={{ flex: 1, overflowY: 'auto' }}>
@@ -65,13 +65,13 @@ function Drawer({ state = 'open' }) {
 
   if (state === 'add-language') {
     return (
-      <MxScaffold node="drawer/add-screen" appBar={<MxAppBar title="Thêm ngôn ngữ" node="drawer/add-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/add-back" />} />}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em', margin: '4px 0 0 4px' }}>NGÔN NGỮ ĐANG HỌC</div>
-        <LangCard icon="language" name="한국어" sub="Tiếng Hàn" node="drawer/learn-lang" />
+      <MxScaffold node="drawer/add-screen" appBar={<MxAppBar title="Add language" node="drawer/add-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/add-back" />} />}>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em', margin: '4px 0 0 4px' }}>LEARNING</div>
+        <LangCard icon="language" name="한국어" sub="Korean" node="drawer/learn-lang" />
         <div style={{ display: 'flex', justifyContent: 'center', color: 'var(--memox-text-tertiary)' }}><span className="material-symbols-rounded">arrow_downward</span></div>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em', margin: '0 0 0 4px' }}>TIẾNG MẸ ĐẺ</div>
-        <LangCard icon="translate" name="Tiếng Việt" sub="Ngôn ngữ hiển thị nghĩa" node="drawer/native-lang" />
-        <MxButton variant="primary" icon="add" block node="drawer/add-confirm">Thêm cặp ngôn ngữ</MxButton>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em', margin: '0 0 0 4px' }}>NATIVE</div>
+        <LangCard icon="translate" name="English" sub="Meaning language" node="drawer/native-lang" />
+        <MxButton variant="primary" icon="add" block node="drawer/add-confirm">Add language pair</MxButton>
       </MxScaffold>
     );
   }
@@ -79,21 +79,21 @@ function Drawer({ state = 'open' }) {
   // remove-language
   return (
     <React.Fragment>
-      <MxScaffold node="drawer/remove-screen" appBar={<MxAppBar title="Xóa ngôn ngữ" node="drawer/remove-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/remove-back" />} />}>
+      <MxScaffold node="drawer/remove-screen" appBar={<MxAppBar title="Remove language" node="drawer/remove-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/remove-back" />} />}>
         <MxCard padding="sm">
-          <window.ListRow icon="translate" title="한국어 → Tiếng Việt" sub="1240 thẻ" node="drawer/pair-0"
+          <window.ListRow icon="translate" title="한국어 → English" sub="1240 cards" node="drawer/pair-0"
             trailing={<MxIconButton icon="delete" node="drawer/pair-0-del" />} />
-          <window.ListRow icon="translate" title="English → Tiếng Việt" sub="430 thẻ" last node="drawer/pair-1"
+          <window.ListRow icon="translate" title="日本語 → English" sub="430 cards" last node="drawer/pair-1"
             trailing={<MxIconButton icon="delete" node="drawer/pair-1-del" />} />
         </MxCard>
       </MxScaffold>
       <window.Scrim align="center" node="drawer/remove-scrim">
-        <window.Dialog icon="delete" tone="error" title="Xóa cặp 한국어 → Tiếng Việt?"
-          text="Toàn bộ thư mục, bộ thẻ và thẻ của cặp này sẽ bị xoá. Không thể hoàn tác."
+        <window.Dialog icon="delete" tone="error" title="Remove 한국어 → English?"
+          text="All folders, decks and cards for this pair will be deleted. This can't be undone."
           node="drawer/remove-dialog"
           actions={<React.Fragment>
-            <MxButton variant="ghost" block node="drawer/remove-cancel">Huỷ</MxButton>
-            <MxButton variant="primary" danger block node="drawer/remove-ok">Xóa</MxButton>
+            <MxButton variant="ghost" block node="drawer/remove-cancel">Cancel</MxButton>
+            <MxButton variant="primary" danger block node="drawer/remove-ok">Remove</MxButton>
           </React.Fragment>} />
       </window.Scrim>
     </React.Fragment>

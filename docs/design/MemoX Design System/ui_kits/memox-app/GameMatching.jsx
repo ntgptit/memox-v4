@@ -1,9 +1,9 @@
-/* MemoX — Game: Ghép đôi (matching). States: playing · selected · correct · wrong · almost · complete */
+/* MemoX — Game: Matching. States: playing · selected · correct · wrong · almost · complete */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
 
-const LEFT = ['thời gian', 'tình yêu', 'bạn bè', 'đồ ăn', 'trường học'];
+const LEFT = ['time', 'love', 'friend', 'food', 'school'];
 const RIGHT = ['사랑', '학교', '음식', '시간', '친구'];
 
 const TONE = {
@@ -35,7 +35,7 @@ const PROGRESS = { playing: 0, selected: 0, correct: 20, wrong: 0, almost: 60, c
 
 function GameMatching({ state = 'playing' }) {
   const bar = (
-    <MxAppBar node="game-matching/appbar" title="Ghép đôi"
+    <MxAppBar node="game-matching/appbar" title="Matching"
       leading={<MxIconButton icon="arrow_back" node="game-matching/back" />}
       trailing={<MxIconButton icon="more_horiz" node="game-matching/options" />} />
   );
@@ -44,9 +44,9 @@ function GameMatching({ state = 'playing' }) {
     return (
       <MxScaffold node="game-matching/screen" appBar={bar}>
         <window.ProgressBar value={100} height={8} node="game-matching/progress" />
-        <window.EmptyState node="game-matching/complete" icon="celebration" tone="success" title="Hoàn thành ván!"
-          text="Bạn ghép đúng 5/5 cặp. Tiếp tục để giữ phong độ."
-          action={<MxButton variant="primary" icon="arrow_forward" node="game-matching/next">Ván tiếp theo</MxButton>} />
+        <window.EmptyState node="game-matching/complete" icon="celebration" tone="success" title="Round complete!"
+          text="You matched 5/5 pairs. Keep the momentum."
+          action={<MxButton variant="primary" icon="arrow_forward" node="game-matching/next">Next round</MxButton>} />
       </MxScaffold>
     );
   }

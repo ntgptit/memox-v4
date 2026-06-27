@@ -1,20 +1,20 @@
-/* MemoX — Dashboard (Hôm nay). States: loaded · empty · loading · goal-met · streak-reset */
+/* MemoX — Dashboard (Today). States: loaded · empty · loading · goal-met · streak-reset */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar } = NS;
 
 const NAV = [
-  { id: 'home', label: 'Hôm nay', icon: 'today' },
-  { id: 'library', label: 'Thư viện', icon: 'style' },
-  { id: 'add', label: 'Thêm', icon: 'add_circle' },
-  { id: 'stats', label: 'Thống kê', icon: 'insights' },
-  { id: 'me', label: 'Hồ sơ', icon: 'person' },
+  { id: 'home', label: 'Today', icon: 'today' },
+  { id: 'library', label: 'Library', icon: 'style' },
+  { id: 'add', label: 'Add', icon: 'add_circle' },
+  { id: 'stats', label: 'Stats', icon: 'insights' },
+  { id: 'me', label: 'Profile', icon: 'person' },
 ];
 
 const DECKS = [
-  { icon: 'translate', tone: 'accent', name: 'TOPIK I — Từ vựng', meta: '320 từ · 48 đến hạn', due: 48, progress: 72 },
-  { icon: 'menu_book', tone: 'warning', name: 'Ngữ pháp sơ cấp', meta: '180 từ · 23 đến hạn', due: 23, progress: 54 },
-  { icon: 'record_voice_over', tone: 'success', name: 'Hội thoại hằng ngày', meta: '150 từ · 6 đến hạn', due: 6, progress: 88 },
+  { icon: 'translate', tone: 'accent', name: 'TOPIK I — Vocabulary', meta: '320 cards · 48 due', due: 48, progress: 72 },
+  { icon: 'menu_book', tone: 'warning', name: 'Basic Grammar', meta: '180 cards · 23 due', due: 23, progress: 54 },
+  { icon: 'record_voice_over', tone: 'success', name: 'Daily Conversation', meta: '150 cards · 6 due', due: 6, progress: 88 },
 ];
 
 function GoalRing({ pct }) {
@@ -42,7 +42,7 @@ function Note({ icon, text, tone }) {
 function Dashboard({ state = 'loaded' }) {
   const nav = <MxBottomNav items={NAV} value="home" node="shell/bottom-nav" />;
   const bar = (
-    <MxAppBar large eyebrow="Thứ Bảy · 27/06" title="Chào buổi tối, Linh" node="dashboard/appbar"
+    <MxAppBar large eyebrow="Saturday · 27 Jun" title="Good evening, Linh" node="dashboard/appbar"
       trailing={<React.Fragment>
         <MxIconButton icon="notifications" node="dashboard/notifications" />
         <MxAvatar name="Linh Tran" size="sm" />
@@ -64,14 +64,14 @@ function Dashboard({ state = 'loaded' }) {
   if (state === 'empty') {
     return (
       <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}>
-        <Note icon="bolt" tone="accent" text="Hôm nay chưa học — bắt đầu để giữ streak!" />
+        <Note icon="bolt" tone="accent" text="You haven't studied today — start to keep your streak!" />
         <MxCard variant="primary" node="dashboard/today">
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, opacity: .9, letterSpacing: '.06em' }}>HÔM NAY</div>
+          <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, opacity: .9, letterSpacing: '.06em' }}>TODAY</div>
           <div style={{ display: 'flex', gap: 'var(--memox-space-7)', marginTop: 8 }}>
-            <div><div style={{ fontSize: 30, fontWeight: 800 }}>00:00</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>thời gian học</div></div>
-            <div><div style={{ fontSize: 30, fontWeight: 800 }}>0</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>từ đã học</div></div>
+            <div><div style={{ fontSize: 30, fontWeight: 800 }}>00:00</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>time studied</div></div>
+            <div><div style={{ fontSize: 30, fontWeight: 800 }}>0</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>words learned</div></div>
           </div>
-          <MxButton variant="contrast" icon="play_arrow" block node="dashboard/start">Bắt đầu học</MxButton>
+          <MxButton variant="contrast" icon="play_arrow" block node="dashboard/start">Start studying</MxButton>
         </MxCard>
       </MxScaffold>
     );
@@ -85,23 +85,23 @@ function Dashboard({ state = 'loaded' }) {
   return (
     <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}
       fab={<MxFabReview />}>
-      {met ? <Note icon="celebration" tone="success" text="Đạt mục tiêu hôm nay! Chuỗi +1." /> : null}
-      {reset ? <Note icon="local_fire_department" tone="warning" text="Chuỗi đã reset — học hôm nay để bắt đầu lại." /> : null}
+      {met ? <Note icon="celebration" tone="success" text="Daily goal reached! Streak +1." /> : null}
+      {reset ? <Note icon="local_fire_department" tone="warning" text="Streak reset — study today to start again." /> : null}
 
       <MxCard variant="primary" node="dashboard/today">
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, opacity: .9, letterSpacing: '.06em' }}>HÔM NAY</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, opacity: .9, letterSpacing: '.06em' }}>TODAY</div>
         <div style={{ display: 'flex', gap: 'var(--memox-space-7)', marginTop: 8 }}>
-          <div><div style={{ fontSize: 30, fontWeight: 800 }}>12:30</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>thời gian học</div></div>
-          <div><div style={{ fontSize: 30, fontWeight: 800 }}>24</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>từ đã học</div></div>
+          <div><div style={{ fontSize: 30, fontWeight: 800 }}>12:30</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>time studied</div></div>
+          <div><div style={{ fontSize: 30, fontWeight: 800 }}>24</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>words learned</div></div>
         </div>
       </MxCard>
 
       <MxCard node="dashboard/goal" style={{ flexDirection: 'row', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
         <GoalRing pct={goalPct} />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)' }}>Mục tiêu ngày</div>
-          <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>{met ? '20/20 phút · hoàn thành' : '14/20 phút'}</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', marginTop: 4 }}>Đạt khi đủ phút HOẶC số từ</div>
+          <div style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)' }}>Daily goal</div>
+          <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>{met ? '20/20 min · complete' : '14/20 min'}</div>
+          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', marginTop: 4 }}>Met when minutes OR words reached</div>
         </div>
       </MxCard>
 
@@ -109,18 +109,18 @@ function Dashboard({ state = 'loaded' }) {
         <MxCard variant="primary-soft" padding="sm" node="dashboard/streak">
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span className="material-symbols-rounded" style={{ fontSize: 26 }}>local_fire_department</span>
-            <div><div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1 }}>{streak}</div><div style={{ fontSize: 12, opacity: .85 }}>ngày streak</div></div>
+            <div><div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1 }}>{streak}</div><div style={{ fontSize: 12, opacity: .85 }}>day streak</div></div>
           </div>
         </MxCard>
         <MxCard variant="muted" padding="sm" node="dashboard/mastered">
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span className="material-symbols-rounded" style={{ fontSize: 26, color: 'var(--memox-success)' }}>verified</span>
-            <div><div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1 }}>55%</div><div style={{ fontSize: 12, color: 'var(--memox-text-secondary)' }}>đã thuộc</div></div>
+            <div><div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1 }}>55%</div><div style={{ fontSize: 12, color: 'var(--memox-text-secondary)' }}>mastered</div></div>
           </div>
         </MxCard>
       </div>
 
-      <MxSectionHeader title="Tiếp tục học" caption="3 bộ thẻ đến hạn hôm nay" action="Xem tất cả" node="dashboard/decks-head" />
+      <MxSectionHeader title="Continue studying" caption="3 decks due today" action="See all" node="dashboard/decks-head" />
       {DECKS.map((d, i) => <MxCard key={i} padding="sm" interactive node={'dashboard/deck-' + i}><window.DeckRow {...d} /></MxCard>)}
     </MxScaffold>
   );
@@ -128,7 +128,7 @@ function Dashboard({ state = 'loaded' }) {
 
 function MxFabReview() {
   const { MxFab } = NS;
-  return <MxFab icon="bolt" label="Ôn ngay" node="dashboard/quick-review" />;
+  return <MxFab icon="bolt" label="Review" node="dashboard/quick-review" />;
 }
 
 window.Dashboard = Dashboard;

@@ -1,4 +1,4 @@
-/* MemoX — Player (Trình phát, auto-play). States: playing · paused · speed · end */
+/* MemoX — Player (auto-play). States: playing · paused · speed · end */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxFab, MxButton, MxSegmentedControl } = NS;
@@ -16,7 +16,7 @@ function Dots() {
 function Player({ state = 'playing' }) {
   const playing = state !== 'paused';
   const bar = (
-    <MxAppBar node="player/appbar" title="TOPIK I — Từ vựng"
+    <MxAppBar node="player/appbar" title="TOPIK I — Vocabulary"
       leading={<MxIconButton icon="arrow_back" node="player/back" />}
       trailing={<React.Fragment>
         <MxIconButton icon="format_size" node="player/text-size" />
@@ -27,11 +27,11 @@ function Player({ state = 'playing' }) {
   if (state === 'end') {
     return (
       <MxScaffold node="player/screen" appBar={bar}>
-        <window.EmptyState node="player/end" icon="library_music" tone="accent" title="Đã phát hết"
-          text="Trình phát đã đọc qua tất cả thẻ trong bộ này."
+        <window.EmptyState node="player/end" icon="library_music" tone="accent" title="All played"
+          text="The player has read through every card in this deck."
           action={<div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: 220 }}>
-            <MxButton variant="primary" icon="replay" block node="player/replay">Phát lại</MxButton>
-            <MxButton variant="ghost" icon="close" block node="player/close">Đóng</MxButton>
+            <MxButton variant="primary" icon="replay" block node="player/replay">Replay</MxButton>
+            <MxButton variant="ghost" icon="close" block node="player/close">Close</MxButton>
           </div>} />
       </MxScaffold>
     );
@@ -43,7 +43,7 @@ function Player({ state = 'playing' }) {
       <MxCard node="player/card" style={{ flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', minHeight: 280 }}>
         <div style={{ fontSize: 52, fontWeight: 800, letterSpacing: '-.02em' }}>학교</div>
         <div style={{ width: 56, height: 2, background: 'var(--memox-divider)', borderRadius: 2 }} />
-        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 700 }}>trường học</div>
+        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 700 }}>school</div>
       </MxCard>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--memox-space-6)' }}>

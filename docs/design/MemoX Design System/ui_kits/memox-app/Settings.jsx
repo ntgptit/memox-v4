@@ -1,26 +1,26 @@
-/* MemoX — Settings (Cài đặt). States: loaded · group-expanded · value-picker. (Không có Premium ở v1.) */
+/* MemoX — Settings. States: loaded · group-expanded · value-picker. (No Premium in v1.) */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxAvatar, MxSwitch, MxButton } = NS;
+const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxAvatar, MxSwitch } = NS;
 
 const NAV = [
-  { id: 'home', label: 'Hôm nay', icon: 'today' },
-  { id: 'library', label: 'Thư viện', icon: 'style' },
-  { id: 'add', label: 'Thêm', icon: 'add_circle' },
-  { id: 'stats', label: 'Thống kê', icon: 'insights' },
-  { id: 'me', label: 'Hồ sơ', icon: 'person' },
+  { id: 'home', label: 'Today', icon: 'today' },
+  { id: 'library', label: 'Library', icon: 'style' },
+  { id: 'add', label: 'Add', icon: 'add_circle' },
+  { id: 'stats', label: 'Stats', icon: 'insights' },
+  { id: 'me', label: 'Profile', icon: 'person' },
 ];
 
 const GROUPS = [
-  { icon: 'translate', title: 'Ngôn ngữ', sub: '한국어 → Tiếng Việt', val: '' },
-  { icon: 'format_shapes', title: 'Hình thức từ ngữ', sub: 'Nghĩa mẹ đẻ · màu theo giới tính' },
-  { icon: 'schedule', title: 'Lặp lại giãn cách', sub: 'Ô: 8 · Thông báo bật', val: '' },
-  { icon: 'sports_esports', title: 'Cài đặt trò chơi', sub: '5 từ/ván · ngẫu nhiên', val: '5' },
-  { icon: 'record_voice_over', title: 'Giọng nói', sub: 'TTS bật · STT tắt' },
-  { icon: 'notifications', title: 'Nhắc học', sub: '13:00 · T2–CN' },
-  { icon: 'backup', title: 'Sao lưu / Khôi phục', sub: 'Tự động · lần cuối hôm nay' },
-  { icon: 'cloud_sync', title: 'Đồng bộ đám mây', sub: 'linh@memox.app · alpha' },
-  { icon: 'palette', title: 'Chủ đề', sub: 'Sáng · màu mặc định' },
+  { icon: 'translate', title: 'Language', sub: '한국어 → English', val: '' },
+  { icon: 'format_shapes', title: 'Word display', sub: 'Native meaning · color by gender' },
+  { icon: 'schedule', title: 'Spaced repetition', sub: 'Boxes: 8 · Notifications on', val: '' },
+  { icon: 'sports_esports', title: 'Game settings', sub: '5 words/round · shuffle', val: '5' },
+  { icon: 'record_voice_over', title: 'Voice', sub: 'TTS on · STT off' },
+  { icon: 'notifications', title: 'Reminders', sub: '13:00 · Mon–Sun' },
+  { icon: 'backup', title: 'Backup / Restore', sub: 'Auto · last today' },
+  { icon: 'cloud_sync', title: 'Cloud sync', sub: 'linh@memox.app · alpha' },
+  { icon: 'palette', title: 'Theme', sub: 'Light · default accent' },
 ];
 
 function Val({ v }) {
@@ -50,24 +50,24 @@ function Profile() {
 
 function Settings({ state = 'loaded' }) {
   const [notif, setNotif] = React.useState(true);
-  const bar = <MxAppBar large title="Cài đặt" node="settings/appbar" />;
+  const bar = <MxAppBar large title="Settings" node="settings/appbar" />;
   const nav = <MxBottomNav items={NAV} value="me" node="shell/bottom-nav" />;
 
   if (state === 'group-expanded') {
     return (
       <MxScaffold node="settings/screen" appBar={bar} bottomNav={nav}>
         <Profile />
-        <Label>LẶP LẠI GIÃN CÁCH</Label>
+        <Label>SPACED REPETITION</Label>
         <MxCard padding="sm">
-          <window.ListRow icon="grid_view" title="Số ô Leitner" sub="Số hộp lặp lại" node="settings/srs-boxes" trailing={<Val v="8" />} />
-          <window.ListRow icon="timeline" title="Khoảng cách (ngày)" sub="1 · 3 · 7 · 14 · 30 · 60 · 120" node="settings/srs-intervals" trailing={<Val v="" />} />
-          <window.ListRow icon="notifications_active" title="Thông báo đến hạn" last node="settings/srs-notif"
+          <window.ListRow icon="grid_view" title="Leitner boxes" sub="Number of review boxes" node="settings/srs-boxes" trailing={<Val v="8" />} />
+          <window.ListRow icon="timeline" title="Intervals (days)" sub="1 · 3 · 7 · 14 · 30 · 60 · 120" node="settings/srs-intervals" trailing={<Val v="" />} />
+          <window.ListRow icon="notifications_active" title="Due notifications" last node="settings/srs-notif"
             trailing={<MxSwitch checked={notif} onChange={setNotif} node="settings/srs-notif-switch" />} />
         </MxCard>
-        <Label>KHÁC</Label>
+        <Label>OTHER</Label>
         <MxCard padding="sm">
-          <window.ListRow icon="sports_esports" title="Cài đặt trò chơi" sub="5 từ/ván · ngẫu nhiên" node="settings/games" trailing={<Val v="" />} />
-          <window.ListRow icon="palette" title="Chủ đề" sub="Sáng · màu mặc định" last node="settings/theme" trailing={<Val v="" />} />
+          <window.ListRow icon="sports_esports" title="Game settings" sub="5 words/round · shuffle" node="settings/games" trailing={<Val v="" />} />
+          <window.ListRow icon="palette" title="Theme" sub="Light · default accent" last node="settings/theme" trailing={<Val v="" />} />
         </MxCard>
       </MxScaffold>
     );
@@ -76,13 +76,13 @@ function Settings({ state = 'loaded' }) {
   const loaded = (
     <MxScaffold node="settings/screen" appBar={bar} bottomNav={nav}>
       <Profile />
-      <Label>HỌC TẬP</Label>
+      <Label>STUDYING</Label>
       <MxCard padding="sm">
         {GROUPS.slice(0, 5).map((g, i) => (
           <window.ListRow key={i} icon={g.icon} title={g.title} sub={g.sub} last={i === 4} node={'settings/g-' + i} trailing={<Val v={g.val || ''} />} />
         ))}
       </MxCard>
-      <Label>ỨNG DỤNG</Label>
+      <Label>APP</Label>
       <MxCard padding="sm">
         {GROUPS.slice(5).map((g, i) => (
           <window.ListRow key={i} icon={g.icon} title={g.title} sub={g.sub} last={i === GROUPS.length - 6} node={'settings/g-' + (i + 5)} trailing={<Val v={g.val || ''} />} />
@@ -96,9 +96,9 @@ function Settings({ state = 'loaded' }) {
       <React.Fragment>
         {loaded}
         <window.Scrim node="settings/picker-scrim">
-          <window.Sheet title="Số từ mỗi ván" node="settings/picker-sheet">
+          <window.Sheet title="Words per round" node="settings/picker-sheet">
             {['5', '10', '20'].map((v, i) => (
-              <window.MenuItem key={v} icon={i === 0 ? 'check' : 'circle'} label={v + ' từ'} node={'settings/words-' + v}
+              <window.MenuItem key={v} icon={i === 0 ? 'check' : 'circle'} label={v + ' words'} node={'settings/words-' + v}
                 trailing={i === 0 ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : null} />
             ))}
           </window.Sheet>

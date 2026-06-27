@@ -1,18 +1,18 @@
-/* MemoX — Search (Tìm kiếm). States: empty-recent · results · filtered · no-results · loading */
+/* MemoX — Search. States: empty-recent · results · filtered · no-results · loading */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxSearchDock, MxChip, MxCard, MxBadge } = NS;
 
-const FILTERS = ['Tất cả', 'Mới', 'Đến hạn', 'Đã thuộc'];
+const FILTERS = ['All', 'New', 'Due', 'Mastered'];
 const STATUS = {
-  new: { label: 'Mới', tone: undefined },
-  due: { label: 'Đến hạn', tone: 'error' },
-  mastered: { label: 'Đã thuộc', tone: 'success' },
+  new: { label: 'New', tone: undefined },
+  due: { label: 'Due', tone: 'error' },
+  mastered: { label: 'Mastered', tone: 'success' },
 };
 const RESULTS = [
-  { term: '공부하다', meaning: 'Học tập, học bài', deck: 'TOPIK I — Từ vựng', status: 'due' },
-  { term: '좋아하다', meaning: 'Thích, yêu thích', deck: 'Động từ thường gặp', status: 'mastered' },
-  { term: '하다', meaning: 'Làm (động từ trợ)', deck: 'TOPIK I — Từ vựng', status: 'new', hidden: true },
+  { term: '공부하다', meaning: 'to study', deck: 'TOPIK I — Vocabulary', status: 'due' },
+  { term: '좋아하다', meaning: 'to like', deck: 'Common Verbs', status: 'mastered' },
+  { term: '하다', meaning: 'to do (auxiliary)', deck: 'TOPIK I — Vocabulary', status: 'new', hidden: true },
 ];
 const RECENT = ['안녕하세요', '학교', '감사합니다'];
 
@@ -46,14 +46,14 @@ function Search({ state = 'empty-recent' }) {
   const bar = (
     <MxAppBar node="search/appbar"
       leading={<MxIconButton icon="arrow_back" node="search/back" />}
-      title={<MxSearchDock value={val || undefined} placeholder="Tìm theo từ hoặc nghĩa" node="search/dock"
+      title={<MxSearchDock value={val || undefined} placeholder="Search by word or meaning" node="search/dock"
         trailing={val ? <MxIconButton icon="close" size="sm" node="search/clear" /> : null} />} />
   );
 
   if (state === 'empty-recent') {
     return (
       <MxScaffold node="search/screen" appBar={bar}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-tertiary)', letterSpacing: '.04em', margin: '4px 0 0 4px' }}>TÌM GẦN ĐÂY</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-tertiary)', letterSpacing: '.04em', margin: '4px 0 0 4px' }}>RECENT</div>
         <MxCard padding="sm">
           {RECENT.map((r, i) => (
             <window.ListRow key={r} icon="history" title={r} last={i === RECENT.length - 1} node={'search/recent-' + i}
@@ -80,8 +80,8 @@ function Search({ state = 'empty-recent' }) {
     return (
       <MxScaffold node="search/screen" appBar={bar}>
         <Chips active={0} />
-        <window.EmptyState node="search/no-results" icon="search_off" tone="warning" title="Không tìm thấy"
-          text={'Không có thẻ nào khớp “xyz”. Thử từ khoá khác hoặc kiểm tra chính tả.'} />
+        <window.EmptyState node="search/no-results" icon="search_off" tone="warning" title="No matches"
+          text={'Nothing matched “xyz”. Try another term or check the spelling.'} />
       </MxScaffold>
     );
   }

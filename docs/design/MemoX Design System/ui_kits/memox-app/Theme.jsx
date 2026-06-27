@@ -1,4 +1,4 @@
-/* MemoX — Theme (Chủ đề). States: light · dark · accent-size */
+/* MemoX — Theme. States: light · dark · accent-size */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxSegmentedControl, MxSectionHeader } = NS;
@@ -13,27 +13,27 @@ function Theme({ state = 'light' }) {
   const accentColor = SWATCHES[accent];
   const termSize = size === 'lg' ? 42 : size === 'sm' ? 26 : 34;
 
-  const bar = <MxAppBar title="Chủ đề" node="theme/appbar" leading={<MxIconButton icon="arrow_back" node="theme/back" />} />;
+  const bar = <MxAppBar title="Theme" node="theme/appbar" leading={<MxIconButton icon="arrow_back" node="theme/back" />} />;
 
   return (
     <MxScaffold node="theme/screen" appBar={bar}>
       <MxCard node="theme/preview" style={{ gap: 'var(--memox-space-3)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em' }}>XEM TRƯỚC</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em' }}>PREVIEW</div>
         <div style={{ borderRadius: 'var(--memox-radius-control)', border: '1px solid var(--memox-divider)', padding: 'var(--memox-space-5)', textAlign: 'center' }}>
           <div style={{ fontSize: termSize, fontWeight: 800, letterSpacing: '-.02em' }}>학교</div>
-          <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 4 }}>trường học</div>
-          <div style={{ marginTop: 14, display: 'inline-block', padding: '8px 18px', borderRadius: 999, background: accentColor, color: '#fff', fontWeight: 700, fontSize: 14 }}>Học ngay</div>
+          <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 4 }}>school</div>
+          <div style={{ marginTop: 14, display: 'inline-block', padding: '8px 18px', borderRadius: 999, background: accentColor, color: '#fff', fontWeight: 700, fontSize: 14 }}>Study now</div>
         </div>
       </MxCard>
 
       <div data-mx-node="theme/mode">
-        <MxSectionHeader title="Chế độ màu" node="theme/mode-head" />
+        <MxSectionHeader title="Color mode" node="theme/mode-head" />
         <MxSegmentedControl value={mode} onChange={() => {}} block node="theme/mode-control"
-          segments={[{ value: 'light', label: 'Sáng' }, { value: 'dark', label: 'Tối' }, { value: 'system', label: 'Hệ thống' }]} />
+          segments={[{ value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }, { value: 'system', label: 'System' }]} />
       </div>
 
       <div data-mx-node="theme/accent">
-        <MxSectionHeader title="Màu nhấn" node="theme/accent-head" />
+        <MxSectionHeader title="Accent color" node="theme/accent-head" />
         <MxCard>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
             {SWATCHES.map((c, i) => (
@@ -46,9 +46,9 @@ function Theme({ state = 'light' }) {
       </div>
 
       <div data-mx-node="theme/size">
-        <MxSectionHeader title="Cỡ chữ" node="theme/size-head" />
+        <MxSectionHeader title="Text size" node="theme/size-head" />
         <MxSegmentedControl value={size} onChange={() => {}} block node="theme/size-control"
-          segments={[{ value: 'sm', label: 'Nhỏ' }, { value: 'md', label: 'Vừa' }, { value: 'lg', label: 'Lớn' }]} />
+          segments={[{ value: 'sm', label: 'Small' }, { value: 'md', label: 'Medium' }, { value: 'lg', label: 'Large' }]} />
       </div>
     </MxScaffold>
   );

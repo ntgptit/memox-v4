@@ -1,13 +1,13 @@
-/* MemoX — Game picker ("Một trò chơi") screen. States: default · scope-dropdown · not-enough */
+/* MemoX — Game picker ("Single game"). States: default · scope-dropdown · not-enough */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxCard, MxButton, MxIconButton, MxIconTile } = NS;
 
 const GAMES = [
-  { icon: 'join_inner', name: 'Ghép đôi', desc: 'Nối term với nghĩa', id: 'matching' },
-  { icon: 'quiz', name: 'Đoán', desc: 'Chọn nghĩa đúng trong nhiều lựa chọn', id: 'mc' },
-  { icon: 'psychology', name: 'Nhớ lại', desc: 'Tự nhớ rồi tự chấm', id: 'recall' },
-  { icon: 'keyboard', name: 'Điền', desc: 'Gõ lại term từ nghĩa', id: 'typing' },
+  { icon: 'join_inner', name: 'Matching', desc: 'Match terms to meanings', id: 'matching' },
+  { icon: 'quiz', name: 'Multiple choice', desc: 'Pick the right meaning', id: 'mc' },
+  { icon: 'psychology', name: 'Recall', desc: 'Recall, then self-grade', id: 'recall' },
+  { icon: 'keyboard', name: 'Typing', desc: 'Type the term from its meaning', id: 'typing' },
 ];
 
 function GameOption({ g, disabled }) {
@@ -27,15 +27,15 @@ function GameOption({ g, disabled }) {
 
 function GamePicker({ state = 'default' }) {
   const notEnough = state === 'not-enough';
-  const bar = <MxAppBar title="Một trò chơi" node="game-picker/appbar" leading={<MxIconButton icon="arrow_back" node="game-picker/back" />} />;
+  const bar = <MxAppBar title="Single game" node="game-picker/appbar" leading={<MxIconButton icon="arrow_back" node="game-picker/back" />} />;
 
   const base = (
     <MxScaffold node="game-picker/screen" appBar={bar}>
       {notEnough ? (
         <div data-mx-node="game-picker/not-enough" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
           <span className="material-symbols-rounded">info</span>
-          <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>Bộ thẻ cần tối thiểu 4 từ để chơi.</span>
-          <MxButton variant="primary" size="sm" node="game-picker/add-cards">Thêm từ</MxButton>
+          <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>This deck needs at least 4 words to play.</span>
+          <MxButton variant="primary" size="sm" node="game-picker/add-cards">Add words</MxButton>
         </div>
       ) : null}
 
@@ -43,8 +43,8 @@ function GamePicker({ state = 'default' }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
           <MxIconTile icon="tune" tone="success" />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontWeight: 700, fontSize: 'var(--memox-font-size-base)' }}>Chế độ lấy từ</div>
-            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>Theo giãn cách</div>
+            <div style={{ fontWeight: 700, fontSize: 'var(--memox-font-size-base)' }}>Card source</div>
+            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>By schedule</div>
           </div>
           <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-tertiary)' }}>expand_more</span>
         </div>
@@ -52,21 +52,21 @@ function GamePicker({ state = 'default' }) {
 
       {GAMES.map((g) => <GameOption key={g.id} g={g} disabled={notEnough} />)}
 
-      <div style={{ textAlign: 'center', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', padding: '4px 0' }}>5 từ mỗi ván · đổi trong Cài đặt</div>
+      <div style={{ textAlign: 'center', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', padding: '4px 0' }}>5 words per round · change in Settings</div>
     </MxScaffold>
   );
 
   if (state === 'scope-dropdown') {
     const opts = [
-      { icon: 'schedule', label: 'Theo giãn cách', sel: true, id: 'srs' },
-      { icon: 'apps', label: 'Tất cả', sel: false, id: 'all' },
-      { icon: 'hourglass_empty', label: 'Chỉ thẻ chưa thuộc', sel: false, id: 'unlearned' },
+      { icon: 'schedule', label: 'By schedule', sel: true, id: 'srs' },
+      { icon: 'apps', label: 'All cards', sel: false, id: 'all' },
+      { icon: 'hourglass_empty', label: 'Unlearned only', sel: false, id: 'unlearned' },
     ];
     return (
       <React.Fragment>
         {base}
         <window.Scrim node="game-picker/scope-scrim">
-          <window.Sheet title="Chế độ lấy từ" node="game-picker/scope-sheet">
+          <window.Sheet title="Card source" node="game-picker/scope-sheet">
             {opts.map((o) => (
               <window.MenuItem key={o.id} icon={o.icon} label={o.label} node={'game-picker/scope-' + o.id}
                 trailing={o.sel ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : null} />

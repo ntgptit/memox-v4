@@ -1,24 +1,23 @@
-/* MemoX — Deck detail (card list) screen. States: loaded · search · empty · card-actions · delete-confirm · loading */
+/* MemoX — Deck detail (card list). States: loaded · search · empty · card-actions · delete-confirm · loading */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxCard, MxButton, MxIconButton, MxSearchDock, MxChip, MxFab, MxBadge } = NS;
 
-const FILTERS = ['Tất cả', 'Mới', 'Đến hạn', 'Đã thuộc'];
+const FILTERS = ['All', 'New', 'Due', 'Mastered'];
 
-// status: 'new' | 'due' | 'mastered'
 const CARDS = [
-  { term: '안녕하세요', meaning: 'Xin chào (trang trọng)', status: 'due' },
-  { term: '감사합니다', meaning: 'Cảm ơn', status: 'mastered' },
-  { term: '사랑', meaning: 'Tình yêu; tình thương', status: 'new' },
-  { term: '공부하다', meaning: 'Học tập, học bài', status: 'due' },
-  { term: '맛있다', meaning: 'Ngon (đồ ăn)', status: 'mastered' },
-  { term: '어렵다', meaning: 'Khó, khó khăn', status: 'new', hidden: true },
+  { term: '안녕하세요', meaning: 'Hello (formal)', status: 'due' },
+  { term: '감사합니다', meaning: 'Thank you', status: 'mastered' },
+  { term: '사랑', meaning: 'love; affection', status: 'new' },
+  { term: '공부하다', meaning: 'to study', status: 'due' },
+  { term: '맛있다', meaning: 'delicious (food)', status: 'mastered' },
+  { term: '어렵다', meaning: 'difficult, hard', status: 'new', hidden: true },
 ];
 
 const STATUS = {
-  new: { label: 'Mới', tone: undefined },
-  due: { label: 'Đến hạn', tone: 'error' },
-  mastered: { label: 'Đã thuộc', tone: 'success' },
+  new: { label: 'New', tone: undefined },
+  due: { label: 'Due', tone: 'error' },
+  mastered: { label: 'Mastered', tone: 'success' },
 };
 
 function CardRow({ term, meaning, status, hidden, node, onClick }) {
@@ -39,7 +38,7 @@ function CardRow({ term, meaning, status, hidden, node, onClick }) {
 
 function Bar() {
   return (
-    <MxAppBar title="TOPIK I — Từ vựng" node="deck-detail/appbar"
+    <MxAppBar title="TOPIK I — Vocabulary" node="deck-detail/appbar"
       leading={<MxIconButton icon="arrow_back" node="deck-detail/back" />}
       trailing={<React.Fragment>
         <MxIconButton icon="volume_up" node="deck-detail/play-audio" />
@@ -49,16 +48,16 @@ function Bar() {
 }
 
 function DeckDetail({ state = 'loaded' }) {
-  const fab = <MxFab icon="add" label="Thêm từ" node="deck-detail/add-card" />;
+  const fab = <MxFab icon="add" label="Add word" node="deck-detail/add-card" />;
 
   if (state === 'empty') {
     return (
       <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
-        <window.EmptyState node="deck-detail/empty" icon="playing_cards" title="Chưa có thẻ"
-          text="Thêm từ thủ công hoặc nhập hàng loạt từ file CSV/Excel."
+        <window.EmptyState node="deck-detail/empty" icon="playing_cards" title="No cards yet"
+          text="Add words manually or import in bulk from a CSV / Excel file."
           action={<div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: 220 }}>
-            <MxButton variant="primary" icon="add" block node="deck-detail/empty-add">Thêm từ</MxButton>
-            <MxButton variant="ghost" icon="upload_file" block node="deck-detail/empty-import">Nhập từ file</MxButton>
+            <MxButton variant="primary" icon="add" block node="deck-detail/empty-add">Add words</MxButton>
+            <MxButton variant="ghost" icon="upload_file" block node="deck-detail/empty-import">Import from file</MxButton>
           </div>} />
       </MxScaffold>
     );
@@ -70,12 +69,7 @@ function DeckDetail({ state = 'loaded' }) {
       <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
         <S h={48} r={999} />
         {[0, 1, 2, 3, 4].map((i) => (
-          <MxCard key={i} padding="sm">
-            <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
-              <div style={{ flex: 1 }}><S w="40%" h={16} /><S w="62%" h={10} style={{ marginTop: 8 }} /></div>
-              <S w={56} h={22} r={999} />
-            </div>
-          </MxCard>
+          <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 14, alignItems: 'center' }}><div style={{ flex: 1 }}><S w="40%" h={16} /><S w="62%" h={10} style={{ marginTop: 8 }} /></div><S w={56} h={22} r={999} /></div></MxCard>
         ))}
       </MxScaffold>
     );
@@ -84,12 +78,12 @@ function DeckDetail({ state = 'loaded' }) {
   if (state === 'search') {
     return (
       <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
-        <MxSearchDock value="하다" focused node="deck-detail/search-dock"
+        <MxSearchDock value="하" focused node="deck-detail/search-dock"
           trailing={<MxIconButton icon="close" size="sm" node="deck-detail/search-clear" />} />
         <div data-mx-node="deck-detail/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 2 }}>
           {FILTERS.map((f, i) => <MxChip key={f} label={f} selected={i === 0} node={'deck-detail/filter-' + i} />)}
         </div>
-        {CARDS.filter((c) => c.term.includes('하') || c.meaning.includes('Học')).map((c, i) => (
+        {CARDS.filter((c) => c.term.includes('하') || c.meaning.includes('study')).map((c, i) => (
           <MxCard key={i} padding="sm" interactive node={'deck-detail/result-' + i}><CardRow {...c} /></MxCard>
         ))}
       </MxScaffold>
@@ -98,7 +92,7 @@ function DeckDetail({ state = 'loaded' }) {
 
   const base = (
     <MxScaffold node="deck-detail/screen" appBar={<Bar />} fab={fab}>
-      <MxSearchDock placeholder="Tìm trong bộ thẻ" node="deck-detail/search-dock"
+      <MxSearchDock placeholder="Search in deck" node="deck-detail/search-dock"
         trailing={<MxIconButton icon="swap_vert" size="sm" node="deck-detail/sort" />} />
       {CARDS.map((c, i) => (
         <MxCard key={i} padding="sm" interactive node={'deck-detail/card-' + i}><CardRow {...c} /></MxCard>
@@ -112,9 +106,9 @@ function DeckDetail({ state = 'loaded' }) {
         {base}
         <window.Scrim node="deck-detail/actions-scrim">
           <window.Sheet title="안녕하세요" node="deck-detail/actions-sheet">
-            <window.MenuItem icon="edit" label="Sửa thẻ" node="deck-detail/action-edit" />
-            <window.MenuItem icon="visibility_off" label="Ẩn thẻ" node="deck-detail/action-hide" />
-            <window.MenuItem icon="delete" label="Xoá thẻ" danger node="deck-detail/action-delete" />
+            <window.MenuItem icon="edit" label="Edit card" node="deck-detail/action-edit" />
+            <window.MenuItem icon="visibility_off" label="Hide card" node="deck-detail/action-hide" />
+            <window.MenuItem icon="delete" label="Delete card" danger node="deck-detail/action-delete" />
           </window.Sheet>
         </window.Scrim>
       </React.Fragment>
@@ -126,12 +120,12 @@ function DeckDetail({ state = 'loaded' }) {
       <React.Fragment>
         {base}
         <window.Scrim align="center" node="deck-detail/delete-scrim">
-          <window.Dialog icon="delete" tone="error" title="Xoá thẻ này?"
-            text="Thẻ “안녕하세요” sẽ bị xoá khỏi bộ thẻ. Không thể hoàn tác."
+          <window.Dialog icon="delete" tone="error" title="Delete this card?"
+            text="The card “안녕하세요” will be removed from this deck. This can't be undone."
             node="deck-detail/delete-dialog"
             actions={<React.Fragment>
-              <MxButton variant="ghost" block node="deck-detail/delete-cancel">Huỷ</MxButton>
-              <MxButton variant="primary" danger block node="deck-detail/delete-ok">Xoá</MxButton>
+              <MxButton variant="ghost" block node="deck-detail/delete-cancel">Cancel</MxButton>
+              <MxButton variant="primary" danger block node="deck-detail/delete-ok">Delete</MxButton>
             </React.Fragment>} />
         </window.Scrim>
       </React.Fragment>

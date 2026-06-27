@@ -1,14 +1,14 @@
-/* MemoX — Statistics (Thống kê). States: loading · loaded · insufficient · scope-switch */
+/* MemoX — Statistics (Stats). States: loading · loaded · insufficient · scope-switch */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxSegmentedControl } = NS;
 
 const NAV = [
-  { id: 'home', label: 'Hôm nay', icon: 'today' },
-  { id: 'library', label: 'Thư viện', icon: 'style' },
-  { id: 'add', label: 'Thêm', icon: 'add_circle' },
-  { id: 'stats', label: 'Thống kê', icon: 'insights' },
-  { id: 'me', label: 'Hồ sơ', icon: 'person' },
+  { id: 'home', label: 'Today', icon: 'today' },
+  { id: 'library', label: 'Library', icon: 'style' },
+  { id: 'add', label: 'Add', icon: 'add_circle' },
+  { id: 'stats', label: 'Stats', icon: 'insights' },
+  { id: 'me', label: 'Profile', icon: 'person' },
 ];
 
 function Bars({ data, labels, tone }) {
@@ -46,7 +46,7 @@ function Donut({ pct }) {
       <div style={{ position: 'relative', width: 130, height: 130, borderRadius: '50%', background: 'conic-gradient(var(--memox-success) ' + pct + '%, var(--memox-surface-sunken) 0)' }}>
         <div style={{ position: 'absolute', inset: 16, borderRadius: '50%', background: 'var(--memox-surface)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ fontSize: 26, fontWeight: 800 }}>{pct}%</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>chính xác</div>
+          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>accuracy</div>
         </div>
       </div>
     </div>
@@ -54,11 +54,11 @@ function Donut({ pct }) {
 }
 
 function Statistics({ state = 'loaded' }) {
-  const bar = <MxAppBar large title="Thống kê" node="statistics/appbar" />;
+  const bar = <MxAppBar large title="Stats" node="statistics/appbar" />;
   const nav = <MxBottomNav items={NAV} value="stats" node="shell/bottom-nav" />;
   const scope = (
     <MxSegmentedControl value={state === 'scope-switch' ? 'all' : 'pair'} onChange={() => {}} block node="statistics/scope"
-      segments={[{ value: 'pair', label: 'Cặp này' }, { value: 'all', label: 'Toàn app' }]} />
+      segments={[{ value: 'pair', label: 'This pair' }, { value: 'all', label: 'All' }]} />
   );
 
   if (state === 'loading') {
@@ -75,8 +75,8 @@ function Statistics({ state = 'loaded' }) {
     return (
       <MxScaffold node="statistics/screen" appBar={bar} bottomNav={nav}>
         {scope}
-        <window.EmptyState node="statistics/insufficient" icon="bar_chart" title="Chưa đủ dữ liệu"
-          text="Học thêm vài phiên để MemoX vẽ thống kê tiến độ, streak và dự báo đến hạn cho bạn." />
+        <window.EmptyState node="statistics/insufficient" icon="bar_chart" title="Not enough data"
+          text="Study a few more sessions and MemoX will chart your progress, streaks and due forecast." />
       </MxScaffold>
     );
   }
@@ -86,34 +86,34 @@ function Statistics({ state = 'loaded' }) {
       {scope}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
-        <MxCard variant="primary-soft" padding="sm" node="statistics/streak-current" style={{ alignItems: 'center' }}><window.Stat n="12" l="streak hiện tại" /></MxCard>
-        <MxCard variant="muted" padding="sm" node="statistics/streak-longest" style={{ alignItems: 'center' }}><window.Stat n="28" l="dài nhất" /></MxCard>
+        <MxCard variant="primary-soft" padding="sm" node="statistics/streak-current" style={{ alignItems: 'center' }}><window.Stat n="12" l="current streak" /></MxCard>
+        <MxCard variant="muted" padding="sm" node="statistics/streak-longest" style={{ alignItems: 'center' }}><window.Stat n="28" l="longest" /></MxCard>
       </div>
 
       <div data-mx-node="statistics/heatmap">
-        <MxSectionHeader title="Lịch học" caption="14 tuần gần nhất" node="statistics/heatmap-head" />
+        <MxSectionHeader title="Study calendar" caption="last 14 weeks" node="statistics/heatmap-head" />
         <MxCard><Heatmap /></MxCard>
       </div>
 
       <div data-mx-node="statistics/weekly">
-        <MxSectionHeader title="Thời gian theo tuần" caption="phút / ngày" node="statistics/weekly-head" />
-        <MxCard><Bars data={[12, 18, 9, 24, 15, 30, 20]} labels={['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']} /></MxCard>
+        <MxSectionHeader title="Time per week" caption="min / day" node="statistics/weekly-head" />
+        <MxCard><Bars data={[12, 18, 9, 24, 15, 30, 20]} labels={['M', 'T', 'W', 'T', 'F', 'S', 'S']} /></MxCard>
       </div>
 
       <div data-mx-node="statistics/leitner">
-        <MxSectionHeader title="Phân bố ô Leitner" caption="số thẻ theo ô 1–8" node="statistics/leitner-head" />
+        <MxSectionHeader title="Leitner box distribution" caption="cards in boxes 1–8" node="statistics/leitner-head" />
         <MxCard><Bars data={[40, 28, 22, 18, 12, 9, 6, 4]} labels={['1', '2', '3', '4', '5', '6', '7', '8']} tone="var(--memox-accent, var(--memox-primary))" /></MxCard>
       </div>
 
       <div data-mx-node="statistics/accuracy">
-        <MxSectionHeader title="Độ chính xác" caption="30 ngày" node="statistics/accuracy-head" />
+        <MxSectionHeader title="Accuracy" caption="30 days" node="statistics/accuracy-head" />
         <MxCard><Donut pct={88} /></MxCard>
       </div>
 
       <div data-mx-node="statistics/overview">
-        <MxSectionHeader title="Tổng quan thư viện" node="statistics/overview-head" />
+        <MxSectionHeader title="Library overview" node="statistics/overview-head" />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--memox-space-3)' }}>
-          {[['1240', 'tổng từ'], ['680', 'đã thuộc'], ['96', 'đến hạn']].map(([n, l], i) => (
+          {[['1240', 'total'], ['680', 'mastered'], ['96', 'due']].map(([n, l], i) => (
             <MxCard key={i} variant="muted" padding="sm" node={'statistics/ov-' + i} style={{ alignItems: 'center' }}><window.Stat n={n} l={l} /></MxCard>
           ))}
         </div>
