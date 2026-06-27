@@ -21,6 +21,17 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W11 (09-W11-engagement) · DONE · cbeedf0a · today dashboard, daily goal & streak, verify --full GREEN
+
+- What: BE — DailyGoal (met = minutes OR words) + Streak value objects; ComputeStreakUseCase (D-021: consecutive met days back from today; today-in-progress not a miss; gap/miss → 0; no goal → 0). Added DailyActivityRepository.allForPair (streak history) + a minimal SettingsRepository reading daily_goal_minutes/words (W12 owns writes). Shared dayKey() util now used by FinalizeStudySession (W4) + streak so the daily_activity key format is identical. EngagementNotifier (keepAlive) composes activity + goal + streak + library due/mastered into EngagementSummary. FE — DashboardScreen replaces the Today placeholder: greeting/date, activity (time+words), goal ring (met/none states), streak card, shortcuts (continue → Library, due count, mastered %), loading skeleton + error/retry.
+- Where: lib/domain/{types/daily_goal,types/streak,models/engagement_summary,usecases/engagement}, lib/data/{daos/settings_dao,repositories/settings_repository_impl,...daily_activity}, lib/app/di/settings_providers, lib/core/{util/day_key,constants/settings_keys}, lib/presentation/features/engagement, app_router Today branch.
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 130 tests). Pushed origin main.
+
+## 2026-06-28 · W11 · NOTE · goal needs W12 to be useful; no nightly close job
+
+- What: until W12 (settings) writes daily_goal_minutes/words, the goal is unset → the dashboard shows the "set a goal" hint and streak stays 0 (D-021 streak logic is fully tested via the use case with explicit goals). There is no background midnight job in v1 — the streak is computed on demand from the daily_activity history vs the goal, which yields the same result. Continue/due shortcuts navigate to the Library tab (study-from-dashboard deferred).
+- Next eligible: step 10 = W9 (10-W9-statistics.md) — dep W3 (Done) + W11 (now Done), NO gated dep → BUILD next. Then W12 (settings; reminders need GATED flutter_local_notifications/timezone → build settings store+UI incl. the daily-goal write that unlocks W11's goal, BLOCK only the reminder part), then W13 (dep W12). W8/W10 remain BLOCKED (gated deps).
+
 ## 2026-06-28 · W8 (08-W8-import-export) · BLOCKED · dep:file_picker,csv,excel
 
 - What: W8 (CSV/Excel/clipboard import & export) requires `file_picker` + `csv` + `excel` to pick/parse files. Its own prompt has an explicit "⚠ Dependency gate (NOT in stack.md → STOP & ask)". These deps are NOT in `docs/stack/stack.md`. Per loop rule 4 / hard rule (new dependency needs approval), NOT implemented this run.

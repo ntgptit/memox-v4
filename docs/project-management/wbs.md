@@ -62,6 +62,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- cbeedf0a · 2026-06-28 · W11 · dashboard Today (hoạt động + mục tiêu + streak) thay placeholder S0; DailyGoal/Streak VO + ComputeStreakUseCase (D-021) có test; daily_activity.allForPair + SettingsRepository (đọc mục tiêu, W12 ghi); dayKey util dùng chung với finalize(W4); EngagementNotifier keepAlive
 - ca16842e · 2026-06-28 · W7 · tìm kiếm thẻ theo term + nghĩa (D-019), gồm thẻ ẩn + lọc trạng thái (D-028) có test; DAO card⨝deck⨝srs (meaning qua EXISTS); v1 LIKE (FTS/index hoãn); route /search + nút 🔍 thư viện
 - b63ec88c · 2026-06-28 · W4 · 5 lối vào học (Play menu + NewLearn 5 chặng + DueReview + Review + Player + result); tích hợp SRS(W3)+game(W5)+deck subtree(W6) + daily_activity; D-001/009/010/016/017/002/007 có test; chặng game NewLearn dùng self-grade gộp (follow-up)
 - 41c0f0f5 · 2026-06-28 · W5 · 4 game (Ghép đôi/Đoán/Nhớ lại/Điền) + picker; luyện thuần KHÔNG đổi SrsState (D-007); round ≤5 thẻ (D-008), sai→học lại (D-015), picker 4 game (D-013) có test; không bảng mới
