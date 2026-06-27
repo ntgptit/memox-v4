@@ -21,6 +21,17 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W3 (04-W3-srs) · DONE · 9412f488 · 8-box Leitner scheduling engine, verify --full GREEN
+
+- What: BE-only (no screen). SrsState entity; LeitnerBox (0..8, +1 cap 8 / −1 floor 1) + BoxInterval (1·3·7·14·30·60·120; 0/8 unscheduled) + LastResult (stored); pure SrsScheduler (scheduleNewCard D-002, applyGrade D-003/4/5); SrsRepository (Drift DAO/mapper/impl, one row per card D-011, card⨝srs join for queues); use cases scheduleNewCard/gradeCard/buildDueQueue/buildNewQueue(cap D-018)/computeDueCount. Clock injected for due_at.
+- Where: lib/domain/{entities,services,types,usecases/srs}, lib/data/{datasources/local/daos,repositories}, lib/app/di/srs_providers.dart.
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 96 tests). Pushed origin main.
+
+## 2026-06-28 · W3 · NOTE · No migration; queues take card-id sets
+
+- What: srs_state already in schema v1; stored last_result encoding 'correct'/'wrong' matches schema-contract → no migration. The queue use cases (due/new) operate on a candidate card-id SET (the subtree is gathered by the deck repo, W6) and exclude hidden via the card⨝srs join — W4 study composes deckRepo (subtree cards) + these SRS use cases. The W6 deck recursive stats already read srs_state, so scheduled cards now light up due/mastered counts.
+- Suggested fix: when W4 builds NewLearn, read the new_cards_per_day setting (W12) for the buildNewQueue limit; for now callers pass kDefaultNewCardsPerDay (20).
+
 ## 2026-06-28 · W6 (03-W6-deck-tree) · DONE · 1f891c7e · self-nesting deck tree (library + deck detail), verify --full GREEN
 
 - What: BE — Deck entity (self-nests via parent_deck_id), DeckNode/DeckStats read-models, SortBy/SortDirection, DeckRepository (Drift DAO/mapper/impl) with recursive aggregate stats (words/hidden/due/mastered/%, due/mastered read srs_state vs injected clock), use cases (getLibraryTree, getDeckNode, create/rename/move[cycle-reject]/delete[cascade], pure sortDeckNodes). FE — library home (replaces S0 placeholder) + deck detail (push /deck/:id) with states, MxDeckTile, sort sheet, create/rename/move/delete dialogs; reuses the W2 editor. LibraryNotifier (autoDispose) + DeckDetailNotifier (family).
