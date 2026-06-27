@@ -21,6 +21,37 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W13 (13-W13-personalization) · DONE · 4b97f51c · theme mode, accent & font size, verify --full GREEN
+
+- What: BE — ThemePrefs + AccentChoice (brand/warm/cool mapped to existing tokens, no new colors) + FontScale (small/medium/large) in core/theme; AppTheme.light/dark now take an accent and re-seed the ColorScheme primary/surfaceTint; PersonalizationNotifier (keepAlive) reads/writes theme_mode/accent_color/font_scale via the W12 settings store. FE — ThemeScreen (/settings/theme) with mode + accent + font-size selectors + live preview; MemoXApp is now a ConsumerWidget so themeMode/accent/MediaQuery.textScaler apply live with no restart (AC-1/AC-2); the settings "Theme" row opens it (was a coming-soon snackbar).
+- Where: lib/core/theme/{theme_prefs,app_theme}, lib/presentation/features/personalization/{viewmodels,screens}, lib/app/memox_app.dart, app_router + route_paths (/settings/theme), settings_screen theme link, core/constants/settings_keys (theme keys).
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 146 tests). Pushed origin main.
+
+## 2026-06-28 · FINAL SUMMARY · overnight build pack COMPLETE — loop stopped
+
+Every buildable step in prompts/00-INDEX.md is merged; only gated steps remain. Main is clean and green at the W13 docs commit. Per-step status + commit hashes:
+
+- S0 foundation/shell — DONE (8d715f8)
+- W2 flashcard management — DONE (081ffc7)
+- W6 library/decks — DONE (1f891c7)
+- W3 SRS 8-box Leitner — DONE (9412f48)
+- W5 games — DONE (41c0f0f)
+- W4 study flows (NewLearn/DueReview/Review/Player + daily_activity) — DONE (b63ec88)
+- W7 search (term+meaning, filters) — DONE (ca16842)
+- W11 engagement (Today dashboard + goal + streak) — DONE (cbeedf0a)
+- W9 statistics (overview + Leitner + forecast + activity, scope toggle) — DONE (ac8fbfb8)
+- W12 settings + local backup/restore (+ reminder schedule persistence) — DONE (c48fe360)
+- W13 personalization (theme mode + accent + font size, live) — DONE (4b97f51c)
+- W8 import/export — BLOCKED (ecd795c) — needs file_picker + csv + excel (not in stack.md)
+- W10 account-sync (Google) — BLOCKED — needs google_sign_in + googleapis + secure-storage (not in stack.md)
+
+GATED DEFERRALS NEEDING APPROVAL (add dep to pubspec + docs/stack/stack.md in the same commit, then implement):
+1. W8 import/export — file_picker, csv, excel (a clipboard-only subset is feasible without deps — see the W8 BLOCKED note).
+2. W10 account-sync — google_sign_in, googleapis, flutter_secure_storage.
+3. W12 reminder OS notification scheduling — flutter_local_notifications, timezone (the reminder SCHEDULE already persists; only the firing is deferred).
+
+Test suite: 146 tests passing. Each merged step kept docs in sync (CLAUDE.md parity) and recorded a WBS §10 traceability line. The loop has no further eligible work and has stopped — no wakeup scheduled. Approve any gated dep above to resume that step.
+
 ## 2026-06-28 · W12 (12-W12-settings) · DONE · c48fe360 · settings, local backup & reminders, verify --full GREEN
 
 - What: BE — SettingsKeys (all schema keys) + Reminder VO + AppSettings snapshot; SettingsRepository/DAO extended (readAll/write/remove) + GetSettings/UpdateSetting use cases; BackupRepository (JSON snapshot of every table via raw SQL, restore replaces rows in one transaction, parents-first); SettingsNotifier (keepAlive) persists each change, refreshes the W11 dashboard goal on goal change, backup/restore via the existing path_provider. FE — SettingsScreen (/settings from drawer): game (words/round + random), SRS (boxes read-only 8, new/day), daily goal (minutes/words), reminder link, auto-backup + backup/restore buttons, theme link→W13. ReminderScreen (/settings/reminder): enable + time picker + weekday chips + "coming soon" notice. D-008: game picker sources words/round + random from settings and threads them through the gamePlay route.
