@@ -3,7 +3,10 @@
 Nguồn chân lý cho cấu trúc dữ liệu lưu trữ. Một thay đổi schema bắt buộc đi kèm file
 này + `docs/database/migration-contract.md` + một test, **trong cùng một commit** (hard rule).
 
-**Status:** Specified — *đề xuất v1, rút từ phân tích app tham chiếu; chưa có code.*
+**Status:** Implemented (cấu trúc) — *schema v1 viết bằng SQL ở
+`lib/data/datasources/local/drift/tables.drift`, nhúng vào `app_database.dart` qua
+`include`, kèm test tạo mới/cascade/index. DAO + query (cũng dạng `.drift`) + repository
+theo từng feature (W2+).*
 
 ## Phiên bản hiện tại
 
@@ -60,7 +63,7 @@ từ nguyên vào một ô (xác nhận: màn tạo/sửa thẻ dùng một ô v
 | id | int | no | | khoá chính |
 | card_id | int | no | | → `card.id` |
 | lang | text | no | | mã ngôn ngữ của phần nghĩa này |
-| text | text | no | | nội dung nghĩa (văn bản tự do) |
+| content | text | no | | nội dung nghĩa (văn bản tự do). Tên cột là `content` — **không** `text` (đụng builder `text()` của Drift) |
 
 ### srs_state
 

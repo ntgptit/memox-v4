@@ -18,8 +18,10 @@ Where and how to log, so logs are useful and never leak. Read before adding a lo
 - Messages are actionable: what failed + enough context to locate it.
 - No logging in tight loops / hot paths (see `docs/quality/performance-contract.md`).
 
-API log: package `logging` qua wrapper ở `lib/core/util/` (logger.dart); trường có cấu trúc:
-`feature`, `op`, `failure`, `ms`. `debug` tắt ở release (`kReleaseMode`).
+API log: facade `AppLogger` ở `lib/core/util/logger.dart` bọc `dart:developer` `log()`
+(**không thêm package**); một logger cho một feature, mức `LogLevel` (debug/info/warn/error);
+trường có cấu trúc: `feature`, `op`, `failure`, `ms`. `debug` bị bỏ ở release
+(`kReleaseMode`).
 
 ## Related
 

@@ -27,9 +27,10 @@ A state that exists in the design but not the implementation is a parity failure
 - Layout survives larger text scale without overflow.
 
 Flutter cụ thể: **Material 3**; theme sáng/tối/hệ thống + cỡ chữ theo `personalization`
-(`docs/business/personalization/personalization.md`); responsive bằng `LayoutBuilder`/breakpoint;
-tôn trọng `MediaQuery.textScaler`; nhãn ngữ nghĩa bằng `Semantics`. UI do người dùng tự
-thiết kế — doc này chỉ ràng buộc bất biến (states, token, a11y).
+(`docs/business/personalization/personalization.md`); responsive theo lớp kích thước
+(`MxScreenSize`/`MxBreakpoints` + `MxResponsiveBuilder`/`MxContentBounds`, xem
+`docs/design/design-language.md`); tôn trọng `MediaQuery.textScaler`; nhãn ngữ nghĩa bằng
+`Semantics`. UI do người dùng tự thiết kế — doc này chỉ ràng buộc bất biến (states, token, a11y).
 
 ## Related
 

@@ -36,7 +36,7 @@ lib/
     theme/           # Material 3 + design token (mx_colors.dart, app_theme.dart)
     util/
   domain/
-    entities/        # Card, Deck, Folder, SrsState... (thuần, không phụ thuộc framework)
+    entities/        # Card, Deck, SrsState... (thuần, không phụ thuộc framework)
     models/          # model/read-model thuần domain
     repositories/    # interface (port)
     services/        # domain service (logic thuần qua nhiều entity)
