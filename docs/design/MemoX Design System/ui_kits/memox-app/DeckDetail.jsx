@@ -90,6 +90,20 @@ function DeckDetail({ state = 'loaded' }) {
     );
   }
 
+  if (state === 'no-results') {
+    return (
+      <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
+        <MxSearchDock value="xyz" focused node="deck-detail/search-dock"
+          trailing={<MxIconButton icon="close" size="sm" node="deck-detail/search-clear" />} />
+        <div data-mx-node="deck-detail/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 2 }}>
+          {FILTERS.map((f, i) => <MxChip key={f} label={f} selected={i === 0} node={'deck-detail/nr-filter-' + i} />)}
+        </div>
+        <window.EmptyState node="deck-detail/no-results" icon="search_off" tone="warning" title="No cards found"
+          text={'Nothing matched “xyz”. Try another term or check the spelling.'} />
+      </MxScaffold>
+    );
+  }
+
   const base = (
     <MxScaffold node="deck-detail/screen" appBar={<Bar />} fab={fab}>
       <MxSearchDock placeholder="Search in deck" node="deck-detail/search-dock"
@@ -126,6 +140,23 @@ function DeckDetail({ state = 'loaded' }) {
             actions={<React.Fragment>
               <MxButton variant="ghost" block node="deck-detail/delete-cancel">Cancel</MxButton>
               <MxButton variant="primary" danger block node="deck-detail/delete-ok">Delete</MxButton>
+            </React.Fragment>} />
+        </window.Scrim>
+      </React.Fragment>
+    );
+  }
+
+  if (state === 'reset-confirm') {
+    return (
+      <React.Fragment>
+        {base}
+        <window.Scrim align="center" node="deck-detail/reset-scrim">
+          <window.Dialog icon="restart_alt" tone="warning" title="Reset progress?"
+            text="Reset all cards in this deck back to New? Their Leitner box and due dates will be cleared."
+            node="deck-detail/reset-dialog"
+            actions={<React.Fragment>
+              <MxButton variant="ghost" block node="deck-detail/reset-cancel">Cancel</MxButton>
+              <MxButton variant="primary" block node="deck-detail/reset-ok">Reset</MxButton>
             </React.Fragment>} />
         </window.Scrim>
       </React.Fragment>

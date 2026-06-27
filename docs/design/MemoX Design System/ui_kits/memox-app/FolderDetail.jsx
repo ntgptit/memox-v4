@@ -65,6 +65,16 @@ function FolderDetail({ state = 'loaded' }) {
     );
   }
 
+  if (state === 'error') {
+    return (
+      <MxScaffold node="folder-detail/screen" appBar={<Bar />}>
+        <window.EmptyState node="folder-detail/error" icon="cloud_off" tone="error" title="Couldn't load this folder"
+          text="Something went wrong. Check your connection and try again."
+          action={<MxButton variant="primary" icon="refresh" node="folder-detail/retry">Retry</MxButton>} />
+      </MxScaffold>
+    );
+  }
+
   const base = (
     <MxScaffold node="folder-detail/screen" appBar={<Bar />} fab={fab}>
       <Toolbar />
