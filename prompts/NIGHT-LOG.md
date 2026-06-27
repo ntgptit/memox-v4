@@ -21,6 +21,17 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W5 (05-W5-game) · DONE · 41c0f0f5 · four practice games + picker, verify --full GREEN
+
+- What: BE — GameType/GameScope types, GameCard, BuildGameRoundUseCase (scope filter + count cap D-008 + deterministic shuffle), EvaluateTypingUseCase (1-typo tolerant). FE — GamePickerScreen (/game/:nodeId, D-013) + GameScreen (/game/:nodeId/play) + 4 game widgets (matching/multiple-choice/recall/typing); GameSessionNotifier (family) with wrong→re-queue and round-complete-when-all-correct (D-015). Games NEVER touch srs_state (D-007).
+- Where: lib/domain/{models,types,usecases/game}, lib/presentation/features/game, lib/app/router.
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 110 tests). Pushed origin main.
+
+## 2026-06-28 · W5 · NOTE · Audio deferred; direct cards; entry point is W4
+
+- What: audio/loa in the game designs needs a TTS dep outside docs/stack/stack.md → deferred. Games draw from the node's DIRECT visible cards (cardRepository.listByDeck); recursive subtree gathering is a study-flow concern deferred to W4. The "Một trò chơi" entry from a node's Play menu also lands with W4 — for now games are reached via the /game/:nodeId route.
+- Action: NEXT eligible is W4 (06-W4-study.md) — now unblocked (W3✓, W5✓, W6✓). W4 wires NewLearn (5 stages → SRS schedule), DueReview (grade), Review/Player, the Play menu, and the study result; it composes the W3 SRS engine + W5 games + W6 deck subtree, and adds daily-activity. Consider adding a deckRepo subtreeCardIds helper there for recursive study/game gathering.
+
 ## 2026-06-28 · W3 (04-W3-srs) · DONE · 9412f488 · 8-box Leitner scheduling engine, verify --full GREEN
 
 - What: BE-only (no screen). SrsState entity; LeitnerBox (0..8, +1 cap 8 / −1 floor 1) + BoxInterval (1·3·7·14·30·60·120; 0/8 unscheduled) + LastResult (stored); pure SrsScheduler (scheduleNewCard D-002, applyGrade D-003/4/5); SrsRepository (Drift DAO/mapper/impl, one row per card D-011, card⨝srs join for queues); use cases scheduleNewCard/gradeCard/buildDueQueue/buildNewQueue(cap D-018)/computeDueCount. Clock injected for due_at.
