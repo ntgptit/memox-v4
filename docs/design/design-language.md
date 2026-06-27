@@ -5,7 +5,7 @@ into a prompt when handing a UI task to an agent.
 
 ## Tokens (single source)
 
-Token sống ở `lib/app/theme/` (Material 3 `ThemeData` + `ThemeExtension`): bảng màu
+Token sống ở `lib/core/theme/` (Material 3 `ThemeData` + `ThemeExtension`): bảng màu
 (`ColorScheme` + accent từ personalization), spacing scale (4/8/12/16/24), radius,
 typography (`TextTheme`). UI dùng `Theme.of(context)` — không giá trị thô.
 

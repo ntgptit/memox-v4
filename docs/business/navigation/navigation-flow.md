@@ -20,7 +20,10 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | `account` | `/settings/account` | — | push | Google sync |
 | `statistics` | `/statistics` | — | push | |
 
-Hằng route đặt ở `lib/app/router/` (route_paths.dart / app_router.dart) — thư mục dự kiến.
+Hằng route đặt ở `lib/app/router/` (`route_paths.dart` / `app_router.dart`). W1 đã dựng
+router với route gốc `RoutePaths.root` (`/`) trỏ vào một **foundation placeholder**
+(`FoundationScreen`); màn `library` thật thay placeholder ở W6. Các route còn lại là dự
+kiến, thêm cùng feature (route + doc cập nhật chung commit).
 
 ## Flow
 

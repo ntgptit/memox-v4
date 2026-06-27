@@ -23,9 +23,9 @@ Naming and structure rules the reviewer enforces. Keep this short and absolute.
 ## Errors & results
 
 - Return/propagate failures via the taxonomy in `docs/contracts/error-contract.md`.
-- Use case & repository trả `Future<Result<T, Failure>>` — `Result` là **sealed** Dart 3
-  (`Ok<T>` / `Err<Failure>`). Data layer bắt exception thô và **ánh xạ thành `Failure`**
-  ở ranh giới repository; KHÔNG ném exception thô lên presentation.
+- Use case & repository trả `Future<Result<T>>` — `Result` là **sealed** Dart 3
+  (`Ok<T>` mang giá trị / `Err` mang `Failure`). Data layer bắt exception thô và **ánh xạ
+  thành `Failure`** ở ranh giới repository; KHÔNG ném exception thô lên presentation.
 
 ## Imports
 

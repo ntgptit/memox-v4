@@ -19,36 +19,44 @@ Chuỗi gọi: **UseCase → Repository (interface) → DataSource (DAO/remote)*
 
 ## Bố cục thư mục (lib/)
 
+Hợp đồng thư mục do **`tool/flutter_arch/architecture.json`** định nghĩa và
+`node tool/flutter_arch/run.mjs init` sinh ra; theme nằm ở `core/theme` (xem
+`tool/tool.config.json`). Giữ doc này khớp với tool.
+
 ```
 lib/
   app/
+    bootstrap/       # khởi động app (app_bootstrap.dart) — chỉ wiring, không business
+    di/              # composition root: ProviderScope + override
     router/          # route_paths.dart, app_router.dart (hằng số route)
-    theme/           # design tokens, light/dark/system
-    di/              # khởi tạo provider/DI
   core/
+    constants/       # hằng nền tảng dùng chung (không phải copy l10n)
     error/           # Failure taxonomy (docs/contracts/error-contract.md)
-    types/           # enum/value object dùng chung (docs/contracts/types-catalog.md)
+    logging/         # log site (docs/quality/observability-contract.md)
+    theme/           # Material 3 + design token (mx_colors.dart, app_theme.dart)
     util/
   domain/
     entities/        # Card, Deck, Folder, SrsState... (thuần, không phụ thuộc framework)
+    models/          # model/read-model thuần domain
     repositories/    # interface (port)
+    services/        # domain service (logic thuần qua nhiều entity)
+    types/           # Result + enum/value object dùng chung (docs/contracts/types-catalog.md)
     usecases/<area>/ # 1 use case = 1 file
   data/
-    models/          # DTO/model + ánh xạ entity
     datasources/
-      local/         # Drift: app_database.dart, DAO (docs/database/schema-contract.md)
-      remote/        # Google Drive sync (account-sync)
+      local/         # Drift: connection, daos, drift, migrations, preferences (docs/database/schema-contract.md)
+    mappers/         # ánh xạ DTO/model ↔ entity
     repositories/    # repository impl (implements domain/repositories)
+    services/        # service phía data (vd đồng bộ remote — account-sync, W11)
   presentation/
-    features/<area>/
-      screens/       # màn hình
-      widgets/       # widget tái dùng nội bộ feature
-      providers/     # Riverpod (annotation) — state cho UI
+    features/<area>/ # routes/ · screens/ · viewmodels/ (@riverpod) · widgets/
+    shared/          # async, dialogs, feedback, hooks, layouts, navigation, sort, widgets/{...}
   l10n/              # ARB + generated
 ```
 
-Khớp với trigger-map trong `CLAUDE.md` (lib/** domain/usecase/data/presentation) và
-where-is (`docs/_generated/where-is.md`) — cột Source trỏ vào các thư mục này.
+Khớp với trigger-map trong `CLAUDE.md` (lib/** domain/usecase/data/presentation).
+Sub-domain nghiệp vụ dưới `domain/` và folder per-feature là **nội dung**, thêm theo
+từng feature (`node tool/flutter_arch/run.mjs feature <name>`).
 
 ## Module boundaries
 

@@ -10,7 +10,7 @@ the same commit (CLAUDE.md WBS rule).
 
 | WBS ID | Work package | Depends on | Status | Spec |
 | --- | --- | --- | --- | --- |
-| W1 | Nền: kiến trúc + core (error/types/router/theme/DI) | — | Planned | `docs/architecture/overview.md` |
+| W1 | Nền: kiến trúc + core (error/types/router/theme/DI) | — | Done | `docs/architecture/overview.md` |
 | W2 | Thẻ (Card) CRUD + nghĩa đa trường | W1 | Planned | `docs/business/flashcard/flashcard-management.md` |
 | W3 | SRS 8-box Leitner | W2 | Planned | `docs/business/srs/srs-review.md` |
 | W4 | Học & 5 lối vào (NewLearn 5 chặng) | W3, W5 | Planned | `docs/business/study/study-flow.md` |
@@ -25,7 +25,8 @@ the same commit (CLAUDE.md WBS rule).
 | W13 | Cài đặt & Backup cục bộ | W1 | Planned | `docs/business/settings/settings.md` |
 | W14 | Theme (personalization) | W13 | Planned | `docs/business/personalization/personalization.md` |
 
-Status ∈ Planned / In-progress / Blocked / Done. Tất cả đang **Planned** (spec xong, chưa code).
+Status ∈ Planned / In-progress / Blocked / Done. **W1 Done** (nền kiến trúc + core:
+error/types/router/theme/DI đã code & test); **W2–W14 Planned** (spec xong, chưa code).
 
 ## 2. Map sang dòng quyết định
 

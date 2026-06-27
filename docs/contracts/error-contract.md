@@ -16,7 +16,8 @@ every error into one of these — no ad-hoc strings.
 
 Tên kiểu: lớp gốc **`Failure`** (sealed); các nhánh trên là subtype. Thêm domain-specific:
 `ImportFailure` (parse CSV/Excel sai → ValidationFailure mức dòng), `SyncFailure`
-(xung đột/đăng nhập Google → Network/Conflict). Use case trả `Result<T, Failure>`
+(xung đột/đăng nhập Google → Network/Conflict). Use case trả `Result<T>` (thành công
+`Ok<T>`, lỗi `Err` mang một `Failure`) — `Result` ở `lib/domain/types/result.dart`
 (xem `docs/contracts/code-style.md`).
 
 ## Rules
