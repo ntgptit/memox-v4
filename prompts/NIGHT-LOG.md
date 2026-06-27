@@ -21,6 +21,21 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W6 (03-W6-deck-tree) · DONE · 1f891c7e · self-nesting deck tree (library + deck detail), verify --full GREEN
+
+- What: BE — Deck entity (self-nests via parent_deck_id), DeckNode/DeckStats read-models, SortBy/SortDirection, DeckRepository (Drift DAO/mapper/impl) with recursive aggregate stats (words/hidden/due/mastered/%, due/mastered read srs_state vs injected clock), use cases (getLibraryTree, getDeckNode, create/rename/move[cycle-reject]/delete[cascade], pure sortDeckNodes). FE — library home (replaces S0 placeholder) + deck detail (push /deck/:id) with states, MxDeckTile, sort sheet, create/rename/move/delete dialogs; reuses the W2 editor. LibraryNotifier (autoDispose) + DeckDetailNotifier (family).
+- Where: lib/{domain,data,app/di,presentation/features/deck}, lib/presentation/shared/widgets/mx_deck_tile.dart, lib/app/router.
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 84 tests). Pushed origin main.
+
+## 2026-06-28 · W6 · NOTE · No migration — deck table predates W6
+
+- What: `deck` (self-FK parent_deck_id) + index idx_deck_tree already exist in schema v1 (W1 tables.drift), so W6 added no table/column and needs no migration.
+
+## 2026-06-28 · W6 · NOTE · Deck sort proxies + limited move targets (schema gap)
+
+- What: D-023 sorts decks by alphabet/createdAt/lastStudied, but the `deck` table has neither a created_at nor a last_studied_at column. Sort "createdAt" uses the deck id (autoincrement insertion proxy); "lastStudied" uses the subtree's max card.last_studied_at. Move destinations are limited to the top level + existing root decks (cycle-safe by construction; the repo still enforces BR-3).
+- Action: documented in docs/business/deck/deck-management.md status + docs/domain/types/sort.dart. Deeper move targets, card-list sort, and in-deck search deferred to later steps (W7 search). Recursive stats computed in Dart (fine for v1 per-pair data; a SQL recursive CTE is the optimization if libraries get large — perf-contract).
+
 ## 2026-06-28 · W2 (02-W2-flashcard) · DONE · 081ffc74 · card CRUD + multi-field meanings, verify --full GREEN
 
 - What: BE — Card/CardMeaning entities, CardDraft, CardStatus (derived), CardRepository (Drift DAO/mapper/impl), use cases (create/update with BR-2 validation, delete cascade, toggleHidden, checkSoftDuplicate, getCard), Clock + DI. FE — flashcard editor screen (create/edit) with Save-gating, inline validation state, D-020 soft-duplicate banner, multi-meaning + gender + hidden; route flashcardEditor (/deck/:id/card).
