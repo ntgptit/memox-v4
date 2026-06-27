@@ -293,4 +293,92 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get cardStatusLearning => 'Đang học';
+
+  @override
+  String get gameTitle => 'Một trò chơi';
+
+  @override
+  String get gameMatching => 'Ghép đôi';
+
+  @override
+  String get gameMultipleChoice => 'Đoán';
+
+  @override
+  String get gameRecall => 'Nhớ lại';
+
+  @override
+  String get gameTyping => 'Điền';
+
+  @override
+  String get gameMatchingDesc => 'Ghép term với nghĩa';
+
+  @override
+  String get gameMultipleChoiceDesc => 'Chọn nghĩa đúng';
+
+  @override
+  String get gameRecallDesc => 'Lộ nghĩa rồi tự chấm';
+
+  @override
+  String get gameTypingDesc => 'Gõ lại term';
+
+  @override
+  String get gameScopeLabel => 'Chế độ lặp lại giãn cách';
+
+  @override
+  String get gameScopeSpaced => 'Theo giãn cách';
+
+  @override
+  String get gameScopeAll => 'Tất cả';
+
+  @override
+  String get gameScopeNotMastered => 'Chỉ thẻ chưa thuộc';
+
+  @override
+  String gameWordsHint(int count) {
+    return '$count từ mỗi ván';
+  }
+
+  @override
+  String get gameNotEnoughTitle => 'Cần thêm thẻ để chơi';
+
+  @override
+  String get gameComplete => 'Hoàn thành ván!';
+
+  @override
+  String get gamePlayAgain => 'Chơi lại';
+
+  @override
+  String get gameDone => 'Xong';
+
+  @override
+  String get gameShow => 'Hiển thị';
+
+  @override
+  String get gameForgot => 'Đã quên';
+
+  @override
+  String get gameRemembered => 'Nhớ được';
+
+  @override
+  String get gameCheck => 'Kiểm tra';
+
+  @override
+  String get gameHelp => 'Trợ giúp';
+
+  @override
+  String get gameRetry => 'Thử lại';
+
+  @override
+  String get gameAccept => 'Đúng';
+
+  @override
+  String get gameTypingPlaceholder => 'Gõ lại term…';
+
+  @override
+  String gameAnswerWas(String term) {
+    return 'Đáp án: $term';
+  }
+
+  @override
+  String get gameRelearn => 'Sẽ học lại từ này';
 }

@@ -643,6 +643,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Learning'**
   String get cardStatusLearning;
+
+  /// No description provided for @gameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A game'**
+  String get gameTitle;
+
+  /// No description provided for @gameMatching.
+  ///
+  /// In en, this message translates to:
+  /// **'Matching'**
+  String get gameMatching;
+
+  /// No description provided for @gameMultipleChoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Guess'**
+  String get gameMultipleChoice;
+
+  /// No description provided for @gameRecall.
+  ///
+  /// In en, this message translates to:
+  /// **'Recall'**
+  String get gameRecall;
+
+  /// No description provided for @gameTyping.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in'**
+  String get gameTyping;
+
+  /// No description provided for @gameMatchingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Match terms and meanings'**
+  String get gameMatchingDesc;
+
+  /// No description provided for @gameMultipleChoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the right meaning'**
+  String get gameMultipleChoiceDesc;
+
+  /// No description provided for @gameRecallDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reveal and self-grade'**
+  String get gameRecallDesc;
+
+  /// No description provided for @gameTypingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the term'**
+  String get gameTypingDesc;
+
+  /// No description provided for @gameScopeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat mode'**
+  String get gameScopeLabel;
+
+  /// No description provided for @gameScopeSpaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Spaced'**
+  String get gameScopeSpaced;
+
+  /// No description provided for @gameScopeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get gameScopeAll;
+
+  /// No description provided for @gameScopeNotMastered.
+  ///
+  /// In en, this message translates to:
+  /// **'Not mastered'**
+  String get gameScopeNotMastered;
+
+  /// No description provided for @gameWordsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} words per round'**
+  String gameWordsHint(int count);
+
+  /// No description provided for @gameNotEnoughTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Need more cards to play'**
+  String get gameNotEnoughTitle;
+
+  /// No description provided for @gameComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Round complete!'**
+  String get gameComplete;
+
+  /// No description provided for @gamePlayAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Play again'**
+  String get gamePlayAgain;
+
+  /// No description provided for @gameDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get gameDone;
+
+  /// No description provided for @gameShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get gameShow;
+
+  /// No description provided for @gameForgot.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot'**
+  String get gameForgot;
+
+  /// No description provided for @gameRemembered.
+  ///
+  /// In en, this message translates to:
+  /// **'Remembered'**
+  String get gameRemembered;
+
+  /// No description provided for @gameCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get gameCheck;
+
+  /// No description provided for @gameHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get gameHelp;
+
+  /// No description provided for @gameRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get gameRetry;
+
+  /// No description provided for @gameAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct'**
+  String get gameAccept;
+
+  /// No description provided for @gameTypingPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the term…'**
+  String get gameTypingPlaceholder;
+
+  /// No description provided for @gameAnswerWas.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer: {term}'**
+  String gameAnswerWas(String term);
+
+  /// No description provided for @gameRelearn.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll see this one again'**
+  String get gameRelearn;
 }
 
 class _AppLocalizationsDelegate

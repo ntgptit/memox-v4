@@ -464,6 +464,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ card_schedule_info.dart
 │  │  │  ├─ deck_node.dart
 │  │  │  ├─ deck_stats.dart
+│  │  │  ├─ game_card.dart
 │  │  │  └─ language_pair_context.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository.dart
@@ -475,6 +476,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ types/
 │  │  │  ├─ box_interval.dart
 │  │  │  ├─ card_status.dart
+│  │  │  ├─ game_scope.dart
+│  │  │  ├─ game_type.dart
 │  │  │  ├─ last_result.dart
 │  │  │  ├─ leitner_box.dart
 │  │  │  ├─ result.dart
@@ -482,6 +485,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  └─ usecases/
 │  │     ├─ deck/
 │  │     ├─ flashcard/
+│  │     ├─ game/
 │  │     ├─ language_pair/
 │  │     └─ srs/
 │  ├─ l10n/
@@ -491,6 +495,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ features/
 │  │  │  ├─ deck/
 │  │  │  ├─ flashcard/
+│  │  │  ├─ game/
 │  │  │  └─ language_pair/
 │  │  └─ shared/
 │  │     ├─ async/
@@ -547,12 +552,14 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  └─ usecases/
 │  │     ├─ deck/
 │  │     ├─ flashcard/
+│  │     ├─ game/
 │  │     ├─ language_pair/
 │  │     └─ srs/
 │  └─ presentation/
 │     ├─ features/
 │     │  ├─ deck/
-│     │  └─ flashcard/
+│     │  ├─ flashcard/
+│     │  └─ game/
 │     └─ shared/
 │        ├─ layouts/
 │        └─ navigation/

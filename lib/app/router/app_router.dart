@@ -1,9 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
+import 'package:memox_v4/domain/types/game_scope.dart';
+import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
+import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.dart';
+import 'package:memox_v4/presentation/features/game/screens/game_screen.dart';
+import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
 import 'package:memox_v4/presentation/shared/navigation/app_shell.dart';
 import 'package:memox_v4/presentation/shared/widgets/mx_placeholder.dart';
 
@@ -76,6 +81,30 @@ abstract final class AppRouter {
             cardId: cardIdRaw == null ? null : int.tryParse(cardIdRaw),
           );
         },
+      ),
+      GoRoute(
+        path: RoutePaths.gamePlay,
+        builder: (context, state) {
+          final query = state.uri.queryParameters;
+          return GameScreen(
+            request: GameRequest(
+              nodeId: int.parse(state.pathParameters['nodeId']!),
+              type: GameType.values.byName(
+                query['type'] ?? GameType.matching.name,
+              ),
+              scope: GameScope.values.byName(
+                query['scope'] ?? GameScope.spaced.name,
+              ),
+              random: query['random'] != 'false',
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: RoutePaths.gamePicker,
+        builder: (context, state) => GamePickerScreen(
+          nodeId: int.parse(state.pathParameters['nodeId']!),
+        ),
       ),
     ],
   );

@@ -14,7 +14,8 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | `deckDetail` | `/deck/:id` | deckId | push | node cây: bộ thẻ con + thẻ |
 | `flashcardEditor` | `/deck/:id/card` | deckId, cardId? | push | tạo/sửa thẻ |
 | `study` | `/study/:nodeId` | nodeId, entry | push | entry = newLearn / dueReview |
-| `game` | `/game/:nodeId` | nodeId, gameType | push | |
+| `game` | `/game/:nodeId` | nodeId | push | picker chọn 1/4 game (W5) |
+| `gamePlay` | `/game/:nodeId/play` | nodeId, type, scope, random | push | ván đang chơi (W5) |
 | `review` | `/review/:nodeId` | nodeId | push | |
 | `player` | `/player/:nodeId` | nodeId | push | auto-play |
 | `search` | `/search` | query? | push | |

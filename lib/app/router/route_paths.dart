@@ -1,3 +1,6 @@
+import 'package:memox_v4/domain/types/game_scope.dart';
+import 'package:memox_v4/domain/types/game_type.dart';
+
 /// Centralized route paths.
 ///
 /// The single source of route path strings — features reference these constants
@@ -36,4 +39,21 @@ abstract final class RoutePaths {
     final base = '/deck/$deckId/card';
     return cardId == null ? base : '$base?cardId=$cardId';
   }
+
+  /// Game picker at a node — `game` in
+  /// `docs/business/navigation/navigation-flow.md`. Path param: `nodeId`.
+  static const String gamePicker = '/game/:nodeId';
+
+  static String gamePickerLocation(int nodeId) => '/game/$nodeId';
+
+  /// A running game round. Query: `type`, `scope`, `random`.
+  static const String gamePlay = '/game/:nodeId/play';
+
+  static String gamePlayLocation(
+    int nodeId,
+    GameType type,
+    GameScope scope, {
+    bool random = true,
+  }) =>
+      '/game/$nodeId/play?type=${type.name}&scope=${scope.name}&random=$random';
 }

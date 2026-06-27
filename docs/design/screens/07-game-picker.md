@@ -19,3 +19,13 @@ giãn cách / Tất cả / Chỉ thẻ chưa thuộc.
    thích số từ mỗi ván (mặc định 5).
 2. **Mở dropdown phạm vi** — danh sách 3 lựa chọn, mục đang chọn được tô.
 3. **Không đủ thẻ** — thông báo "Cần thêm thẻ để chơi" + CTA "Thêm từ".
+
+## Hiện thực (W5)
+
+`lib/presentation/features/game/screens/game_picker_screen.dart` (route `/game/:nodeId`) +
+`game_screen.dart` (route `/game/:nodeId/play`) + 4 widget game (matching/multiple_choice/
+recall/typing). `GameSessionNotifier` (family theo `GameRequest`) dựng ván (≤ `game_words_per_round`
+= 5, D-008) qua `BuildGameRoundUseCase`, lọc theo scope; **không đổi SrsState** (D-007). Sai →
+thẻ quay lại hàng đợi ván, ván xong khi mọi thẻ đúng (D-015). Mọi copy l10n (`game*`), token Mx*.
+**Hoãn:** audio/loa (cần dep TTS ngoài stack), vào game từ menu Play của một nút (W4 study),
+gather đệ quy cây con (dùng thẻ trực tiếp của nút ở v1).

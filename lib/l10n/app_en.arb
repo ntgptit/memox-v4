@@ -115,5 +115,40 @@
   "cardStatusNew": "New",
   "cardStatusDue": "Due",
   "cardStatusMastered": "Mastered",
-  "cardStatusLearning": "Learning"
+  "cardStatusLearning": "Learning",
+
+  "gameTitle": "A game",
+  "gameMatching": "Matching",
+  "gameMultipleChoice": "Guess",
+  "gameRecall": "Recall",
+  "gameTyping": "Fill in",
+  "gameMatchingDesc": "Match terms and meanings",
+  "gameMultipleChoiceDesc": "Pick the right meaning",
+  "gameRecallDesc": "Reveal and self-grade",
+  "gameTypingDesc": "Type the term",
+  "gameScopeLabel": "Repeat mode",
+  "gameScopeSpaced": "Spaced",
+  "gameScopeAll": "All",
+  "gameScopeNotMastered": "Not mastered",
+  "gameWordsHint": "{count} words per round",
+  "@gameWordsHint": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "gameNotEnoughTitle": "Need more cards to play",
+  "gameComplete": "Round complete!",
+  "gamePlayAgain": "Play again",
+  "gameDone": "Done",
+  "gameShow": "Show",
+  "gameForgot": "Forgot",
+  "gameRemembered": "Remembered",
+  "gameCheck": "Check",
+  "gameHelp": "Help",
+  "gameRetry": "Try again",
+  "gameAccept": "Correct",
+  "gameTypingPlaceholder": "Type the term…",
+  "gameAnswerWas": "Answer: {term}",
+  "@gameAnswerWas": {
+    "placeholders": { "term": { "type": "String" } }
+  },
+  "gameRelearn": "You'll see this one again"
 }

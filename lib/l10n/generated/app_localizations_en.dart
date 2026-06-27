@@ -294,4 +294,92 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cardStatusLearning => 'Learning';
+
+  @override
+  String get gameTitle => 'A game';
+
+  @override
+  String get gameMatching => 'Matching';
+
+  @override
+  String get gameMultipleChoice => 'Guess';
+
+  @override
+  String get gameRecall => 'Recall';
+
+  @override
+  String get gameTyping => 'Fill in';
+
+  @override
+  String get gameMatchingDesc => 'Match terms and meanings';
+
+  @override
+  String get gameMultipleChoiceDesc => 'Pick the right meaning';
+
+  @override
+  String get gameRecallDesc => 'Reveal and self-grade';
+
+  @override
+  String get gameTypingDesc => 'Type the term';
+
+  @override
+  String get gameScopeLabel => 'Repeat mode';
+
+  @override
+  String get gameScopeSpaced => 'Spaced';
+
+  @override
+  String get gameScopeAll => 'All';
+
+  @override
+  String get gameScopeNotMastered => 'Not mastered';
+
+  @override
+  String gameWordsHint(int count) {
+    return '$count words per round';
+  }
+
+  @override
+  String get gameNotEnoughTitle => 'Need more cards to play';
+
+  @override
+  String get gameComplete => 'Round complete!';
+
+  @override
+  String get gamePlayAgain => 'Play again';
+
+  @override
+  String get gameDone => 'Done';
+
+  @override
+  String get gameShow => 'Show';
+
+  @override
+  String get gameForgot => 'Forgot';
+
+  @override
+  String get gameRemembered => 'Remembered';
+
+  @override
+  String get gameCheck => 'Check';
+
+  @override
+  String get gameHelp => 'Help';
+
+  @override
+  String get gameRetry => 'Try again';
+
+  @override
+  String get gameAccept => 'Correct';
+
+  @override
+  String get gameTypingPlaceholder => 'Type the term…';
+
+  @override
+  String gameAnswerWas(String term) {
+    return 'Answer: $term';
+  }
+
+  @override
+  String get gameRelearn => 'You\'ll see this one again';
 }

@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `game/game-modes` |
 | Gói công việc (WBS) | W5 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (4 game + picker; luyện thuần, không đổi SRS — vào học từ menu Play là W4) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-008, D-013, D-015 |
 | Phiên bản | 1.0 |
