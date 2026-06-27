@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/domain/types/game_scope.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
+import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
@@ -9,6 +10,9 @@ import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_edito
 import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.dart';
 import 'package:memox_v4/presentation/features/game/screens/game_screen.dart';
 import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
+import 'package:memox_v4/presentation/features/study/screens/player_screen.dart';
+import 'package:memox_v4/presentation/features/study/screens/review_screen.dart';
+import 'package:memox_v4/presentation/features/study/screens/study_session_screen.dart';
 import 'package:memox_v4/presentation/shared/navigation/app_shell.dart';
 import 'package:memox_v4/presentation/shared/widgets/mx_placeholder.dart';
 
@@ -105,6 +109,25 @@ abstract final class AppRouter {
         builder: (context, state) => GamePickerScreen(
           nodeId: int.parse(state.pathParameters['nodeId']!),
         ),
+      ),
+      GoRoute(
+        path: RoutePaths.study,
+        builder: (context, state) => StudySessionScreen(
+          nodeId: int.parse(state.pathParameters['nodeId']!),
+          entry: StudyEntry.values.byName(
+            state.uri.queryParameters['entry'] ?? StudyEntry.dueReview.name,
+          ),
+        ),
+      ),
+      GoRoute(
+        path: RoutePaths.review,
+        builder: (context, state) =>
+            ReviewScreen(nodeId: int.parse(state.pathParameters['nodeId']!)),
+      ),
+      GoRoute(
+        path: RoutePaths.player,
+        builder: (context, state) =>
+            PlayerScreen(nodeId: int.parse(state.pathParameters['nodeId']!)),
       ),
     ],
   );

@@ -150,5 +150,33 @@
   "@gameAnswerWas": {
     "placeholders": { "term": { "type": "String" } }
   },
-  "gameRelearn": "You'll see this one again"
+  "gameRelearn": "You'll see this one again",
+
+  "studyNewLearn": "Learn",
+  "studyDueReview": "Repeat {count} words",
+  "@studyDueReview": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "studyReview": "Review words",
+  "studyPlayer": "Player",
+  "studyStageReview": "Review",
+  "studyExitTitle": "Exit session?",
+  "studyExitBody": "Cards that haven't finished all 5 stages stay new.",
+  "studyExitConfirm": "Exit",
+  "studyResultTitle": "Session complete",
+  "studyResultWords": "{count} words",
+  "@studyResultWords": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "studyResultAccuracy": "{percent}% correct",
+  "@studyResultAccuracy": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
+  "studyContinue": "Continue",
+  "studyToLibrary": "To library",
+  "reviewEnd": "All reviewed",
+  "reviewStudyNow": "Study now",
+  "playerEnd": "Playback finished",
+  "playerReplay": "Replay",
+  "commonClose": "Close"
 }

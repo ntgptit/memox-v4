@@ -53,7 +53,7 @@ học. (Premium hoãn v1.) Sơ đồ đầy đủ: `docs/business/system/system-
 | --- | --- | --- | --- |
 | Quản lý Thẻ | `docs/business/flashcard/flashcard-management.md` | Implemented | `test/data/repositories/card_repository_impl_test.dart` |
 | Ôn tập SRS (8 ô Leitner) | `docs/business/srs/srs-review.md` | Implemented | `test/domain/services/srs_scheduler_test.dart` |
-| Luồng học & luyện tập | `docs/business/study/study-flow.md` | Specified | TBD |
+| Luồng học & luyện tập | `docs/business/study/study-flow.md` | Implemented | `test/presentation/features/study/study_session_test.dart` |
 | Bốn trò chơi | `docs/business/game/game-modes.md` | Implemented | `test/presentation/features/game/game_session_test.dart` |
 | Quản lý Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | Implemented | `test/data/repositories/deck_repository_impl_test.dart` |
 | Tìm kiếm | `docs/business/search/global-search.md` | Specified | TBD |

@@ -129,5 +129,24 @@
   "gameAccept": "Đúng",
   "gameTypingPlaceholder": "Gõ lại term…",
   "gameAnswerWas": "Đáp án: {term}",
-  "gameRelearn": "Sẽ học lại từ này"
+  "gameRelearn": "Sẽ học lại từ này",
+
+  "studyNewLearn": "Học",
+  "studyDueReview": "Lặp lại {count} từ",
+  "studyReview": "Xem lại các từ",
+  "studyPlayer": "Trình phát",
+  "studyStageReview": "Xem lại",
+  "studyExitTitle": "Thoát phiên?",
+  "studyExitBody": "Thẻ chưa hoàn thành 5 chặng sẽ vẫn là Mới.",
+  "studyExitConfirm": "Thoát",
+  "studyResultTitle": "Hoàn thành phiên",
+  "studyResultWords": "{count} từ",
+  "studyResultAccuracy": "{percent}% đúng",
+  "studyContinue": "Tiếp tục",
+  "studyToLibrary": "Về thư viện",
+  "reviewEnd": "Đã xem hết",
+  "reviewStudyNow": "Học ngay",
+  "playerEnd": "Đã phát hết",
+  "playerReplay": "Phát lại",
+  "commonClose": "Đóng"
 }

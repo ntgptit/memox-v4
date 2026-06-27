@@ -13,6 +13,7 @@ import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/viewmodels/deck_detail_notifier.dart';
 import 'package:memox_v4/presentation/features/deck/viewmodels/library_notifier.dart';
 import 'package:memox_v4/presentation/features/deck/widgets/deck_actions.dart';
+import 'package:memox_v4/presentation/features/study/widgets/play_menu_sheet.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
 import 'package:memox_v4/presentation/shared/widgets/mx_deck_tile.dart';
 
@@ -37,6 +38,12 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
       appBar: AppBar(
         title: Text(node?.deck.name ?? ''),
         actions: <Widget>[
+          if (node != null)
+            IconButton(
+              key: const Key('deckDetailPlay'),
+              icon: const Icon(Icons.play_circle_outline),
+              onPressed: () => unawaited(showPlayMenu(context, widget.deckId)),
+            ),
           if (node != null)
             IconButton(
               key: const Key('deckDetailMenu'),

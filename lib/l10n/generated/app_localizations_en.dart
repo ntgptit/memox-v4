@@ -382,4 +382,65 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gameRelearn => 'You\'ll see this one again';
+
+  @override
+  String get studyNewLearn => 'Learn';
+
+  @override
+  String studyDueReview(int count) {
+    return 'Repeat $count words';
+  }
+
+  @override
+  String get studyReview => 'Review words';
+
+  @override
+  String get studyPlayer => 'Player';
+
+  @override
+  String get studyStageReview => 'Review';
+
+  @override
+  String get studyExitTitle => 'Exit session?';
+
+  @override
+  String get studyExitBody =>
+      'Cards that haven\'t finished all 5 stages stay new.';
+
+  @override
+  String get studyExitConfirm => 'Exit';
+
+  @override
+  String get studyResultTitle => 'Session complete';
+
+  @override
+  String studyResultWords(int count) {
+    return '$count words';
+  }
+
+  @override
+  String studyResultAccuracy(int percent) {
+    return '$percent% correct';
+  }
+
+  @override
+  String get studyContinue => 'Continue';
+
+  @override
+  String get studyToLibrary => 'To library';
+
+  @override
+  String get reviewEnd => 'All reviewed';
+
+  @override
+  String get reviewStudyNow => 'Study now';
+
+  @override
+  String get playerEnd => 'Playback finished';
+
+  @override
+  String get playerReplay => 'Replay';
+
+  @override
+  String get commonClose => 'Close';
 }

@@ -10,6 +10,7 @@
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-001, D-002, D-007, D-008, D-009, D-010, D-013, D-014, D-015, D-016, D-029 |
 | Phiên bản | 1.0 |
+| Trạng thái triển khai | Implemented (5 lối vào + Play menu + NewLearn 5 chặng + DueReview + Review/Player + result; chặng game NewLearn dùng self-grade gộp — xem ghi chú 06) |
 
 ## 1. Mục đích & bối cảnh nghiệp vụ
 

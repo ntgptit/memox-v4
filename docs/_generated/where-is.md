@@ -10,7 +10,7 @@ cặp ngôn ngữ (S0) đã hiện thực — xem các dòng cuối.
 | --- | --- | --- | --- | --- |
 | Thẻ (Card) | `docs/business/flashcard/flashcard-management.md` | `lib/domain/{entities,usecases/flashcard}/` · `lib/data/{datasources/local/daos,repositories}/` · `lib/presentation/features/flashcard/` | `test/data/repositories/card_repository_impl_test.dart` · `test/presentation/features/flashcard/` | W2 |
 | SRS 8-box | `docs/business/srs/srs-review.md` | `lib/domain/{entities,services,types,usecases/srs}/` · `lib/data/{datasources/local/daos,repositories}/` | `test/domain/services/srs_scheduler_test.dart` · `test/domain/usecases/srs/` | W3 |
-| Học & luyện | `docs/business/study/study-flow.md` | `lib/domain/usecases/study/` · `lib/presentation/features/study/` | TBD | W4 |
+| Học & luyện | `docs/business/study/study-flow.md` | `lib/domain/{entities,models,types,usecases/study}/` · `lib/data/{datasources/local/daos,repositories}/` (daily_activity) · `lib/presentation/features/study/` | `test/domain/usecases/study/` · `test/presentation/features/study/` | W4 |
 | 4 game | `docs/business/game/game-modes.md` | `lib/domain/{models,types,usecases/game}/` · `lib/presentation/features/game/` | `test/domain/usecases/game/` · `test/presentation/features/game/` | W5 |
 | Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | `lib/domain/{entities,models,usecases/deck}/` · `lib/data/{datasources/local/daos,repositories}/` · `lib/presentation/features/deck/` | `test/data/repositories/deck_repository_impl_test.dart` · `test/domain/usecases/deck/` | W6 |
 | Tìm kiếm | `docs/business/search/global-search.md` | `lib/domain/usecases/search/` · `lib/presentation/features/search/` | TBD | W7 |

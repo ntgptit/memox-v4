@@ -35,3 +35,15 @@ luỹ 0→100%**; thân nhúng màn chặng hiện tại.
 Mỗi frame một bố cục riêng; thanh tiến độ luôn ở trên.
 
 > Gồm cả **trạng thái tương tác** của mọi control (menu ⋮, chỉnh cỡ chữ, loa, dialog thoát) — đừng để control nào ở dạng tĩnh chưa nối hành vi.
+
+## Hiện thực (W4)
+
+`lib/presentation/features/study/` (screens: study_session/review/player + `play_menu_sheet`).
+Play menu mở từ ⋮ "Play" trên deck-detail; "Lặp lại" chỉ hiện khi due>0 (D-001/D-016). NewLearn
+chạy **5 chặng** (thanh tiến độ 0→100%), DueReview một lượt chấm; sai → thẻ quay lại hàng đợi
+(D-015); hoàn thành 5 chặng → `scheduleNewCard` ô1 (D-002), thoát giữa chừng → vẫn Mới (D-017);
+finalize cộng `daily_activity` chỉ cho DueReview/NewLearn (D-010). Result hiện inline (số thẻ,
+% đúng, "Tiếp tục"/"Về thư viện"). Mọi copy l10n, token Mx*. **Đơn giản hoá (ghi NIGHT-LOG):**
+4 chặng game (Ghép đôi/Đoán/Nhớ lại/Điền) hiện dùng một flow **self-grade gộp** thay vì nhúng
+4 widget game W5 (chúng bind `GameSessionNotifier`; cần một abstraction round chung để tái dùng —
+follow-up). Audio (loa) hoãn (cần dep TTS ngoài stack).

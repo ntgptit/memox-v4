@@ -381,4 +381,64 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get gameRelearn => 'Sẽ học lại từ này';
+
+  @override
+  String get studyNewLearn => 'Học';
+
+  @override
+  String studyDueReview(int count) {
+    return 'Lặp lại $count từ';
+  }
+
+  @override
+  String get studyReview => 'Xem lại các từ';
+
+  @override
+  String get studyPlayer => 'Trình phát';
+
+  @override
+  String get studyStageReview => 'Xem lại';
+
+  @override
+  String get studyExitTitle => 'Thoát phiên?';
+
+  @override
+  String get studyExitBody => 'Thẻ chưa hoàn thành 5 chặng sẽ vẫn là Mới.';
+
+  @override
+  String get studyExitConfirm => 'Thoát';
+
+  @override
+  String get studyResultTitle => 'Hoàn thành phiên';
+
+  @override
+  String studyResultWords(int count) {
+    return '$count từ';
+  }
+
+  @override
+  String studyResultAccuracy(int percent) {
+    return '$percent% đúng';
+  }
+
+  @override
+  String get studyContinue => 'Tiếp tục';
+
+  @override
+  String get studyToLibrary => 'Về thư viện';
+
+  @override
+  String get reviewEnd => 'Đã xem hết';
+
+  @override
+  String get reviewStudyNow => 'Học ngay';
+
+  @override
+  String get playerEnd => 'Đã phát hết';
+
+  @override
+  String get playerReplay => 'Phát lại';
+
+  @override
+  String get commonClose => 'Đóng';
 }

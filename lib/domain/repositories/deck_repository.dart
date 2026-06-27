@@ -14,6 +14,13 @@ abstract interface class DeckRepository {
   /// One deck's node (deck + recursive stats + child nodes), or null if absent.
   Future<Result<DeckNode?>> node(int deckId);
 
+  /// All card ids in a deck's subtree (itself + descendants), for recursive
+  /// study/games (D-009). Hidden cards excluded unless [includeHidden].
+  Future<Result<List<int>>> subtreeCardIds(
+    int deckId, {
+    bool includeHidden = false,
+  });
+
   /// Creates a deck at root (`parentDeckId` null) or under a parent.
   Future<Result<Deck>> create({
     required int pairId,

@@ -21,7 +21,7 @@ dữ liệu duy nhất.
 | `LanguagePairNotifier` | ngữ cảnh cặp (danh sách, cặp đang chọn, chiều hiển thị) | getPairContext, createLanguagePair, setActivePair, swapDisplayDirection, removeLanguagePair | keepAlive |
 | `LibraryNotifier` | cây thư viện gốc của cặp đang chọn + sort + mutations deck | getLibraryTree, sortDeckNodes, create/rename/move/deleteDeck | autoDispose |
 | `DeckDetailNotifier` | một node: bộ thẻ con (có stats) + thẻ trực tiếp | getDeckNode, listByDeck (+ mutations deck) | autoDispose (family theo deckId) |
-| `StudySessionNotifier` | hàng đợi + thẻ hiện tại + tiến độ | buildQueue, gradeCard | autoDispose |
+| `StudySessionNotifier` | hàng đợi + thẻ hiện tại + chặng + tiến độ (NewLearn/DueReview) | buildStudyQueue, gradeCard, scheduleNewCard, finalizeStudySession | autoDispose (family theo StudyRequest) |
 | `GameSessionNotifier` | ván game (N thẻ, hàng đợi học-lại, tiến độ) | buildGameRound (đọc card/srs, KHÔNG ghi SRS — D-007) | autoDispose (family theo GameRequest) |
 | `SettingsNotifier` | cài đặt (theme, SRS, game, nhắc) | readSettings, updateSetting | keepAlive |
 | `EngagementNotifier` | hoạt động ngày + streak | watchDailyActivity | keepAlive |

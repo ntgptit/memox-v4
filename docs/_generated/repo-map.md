@@ -410,6 +410,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ app_dependencies.dart
 │  │  │  ├─ card_providers.dart
 │  │  │  ├─ clock_provider.dart
+│  │  │  ├─ daily_activity_providers.dart
 │  │  │  ├─ database_provider.dart
 │  │  │  ├─ deck_providers.dart
 │  │  │  ├─ language_pair_providers.dart
@@ -443,11 +444,13 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  └─ local/
 │  │  ├─ mappers/
 │  │  │  ├─ card_mapper.dart
+│  │  │  ├─ daily_activity_mapper.dart
 │  │  │  ├─ deck_mapper.dart
 │  │  │  ├─ language_pair_mapper.dart
 │  │  │  └─ srs_state_mapper.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository_impl.dart
+│  │  │  ├─ daily_activity_repository_impl.dart
 │  │  │  ├─ deck_repository_impl.dart
 │  │  │  ├─ language_pair_repository_impl.dart
 │  │  │  └─ srs_repository_impl.dart
@@ -456,6 +459,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ entities/
 │  │  │  ├─ card_meaning.dart
 │  │  │  ├─ card.dart
+│  │  │  ├─ daily_activity.dart
 │  │  │  ├─ deck.dart
 │  │  │  ├─ language_pair.dart
 │  │  │  └─ srs_state.dart
@@ -465,9 +469,11 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ deck_node.dart
 │  │  │  ├─ deck_stats.dart
 │  │  │  ├─ game_card.dart
-│  │  │  └─ language_pair_context.dart
+│  │  │  ├─ language_pair_context.dart
+│  │  │  └─ play_menu.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository.dart
+│  │  │  ├─ daily_activity_repository.dart
 │  │  │  ├─ deck_repository.dart
 │  │  │  ├─ language_pair_repository.dart
 │  │  │  └─ srs_repository.dart
@@ -481,13 +487,15 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ last_result.dart
 │  │  │  ├─ leitner_box.dart
 │  │  │  ├─ result.dart
-│  │  │  └─ sort.dart
+│  │  │  ├─ sort.dart
+│  │  │  └─ study_entry.dart
 │  │  └─ usecases/
 │  │     ├─ deck/
 │  │     ├─ flashcard/
 │  │     ├─ game/
 │  │     ├─ language_pair/
-│  │     └─ srs/
+│  │     ├─ srs/
+│  │     └─ study/
 │  ├─ l10n/
 │  │  ├─ app_en.arb
 │  │  └─ app_vi.arb
@@ -496,7 +504,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ deck/
 │  │  │  ├─ flashcard/
 │  │  │  ├─ game/
-│  │  │  └─ language_pair/
+│  │  │  ├─ language_pair/
+│  │  │  └─ study/
 │  │  └─ shared/
 │  │     ├─ async/
 │  │     ├─ dialogs/
@@ -554,12 +563,14 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ flashcard/
 │  │     ├─ game/
 │  │     ├─ language_pair/
-│  │     └─ srs/
+│  │     ├─ srs/
+│  │     └─ study/
 │  └─ presentation/
 │     ├─ features/
 │     │  ├─ deck/
 │     │  ├─ flashcard/
-│     │  └─ game/
+│     │  ├─ game/
+│     │  └─ study/
 │     └─ shared/
 │        ├─ layouts/
 │        └─ navigation/

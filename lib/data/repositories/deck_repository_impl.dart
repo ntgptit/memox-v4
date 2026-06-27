@@ -50,6 +50,26 @@ class DeckRepositoryImpl implements DeckRepository {
   }
 
   @override
+  Future<Result<List<int>>> subtreeCardIds(
+    int deckId, {
+    bool includeHidden = false,
+  }) async {
+    try {
+      final deck = await _dao.deckById(deckId);
+      if (deck == null) return const Ok(<int>[]);
+      final descendants = await _descendantIds(deck.pairId, deckId);
+      final deckIds = <int>[deckId, ...descendants];
+      final cards = await _dao.cardsIn(deckIds);
+      return Ok(<int>[
+        for (final c in cards)
+          if (includeHidden || !c.hidden) c.id,
+      ]);
+    } catch (e) {
+      return Err(PersistenceFailure(message: 'subtree card ids', cause: e));
+    }
+  }
+
+  @override
   Future<Result<Deck>> create({
     required int pairId,
     int? parentDeckId,

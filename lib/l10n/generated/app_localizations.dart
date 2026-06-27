@@ -811,6 +811,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You\'ll see this one again'**
   String get gameRelearn;
+
+  /// No description provided for @studyNewLearn.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn'**
+  String get studyNewLearn;
+
+  /// No description provided for @studyDueReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat {count} words'**
+  String studyDueReview(int count);
+
+  /// No description provided for @studyReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review words'**
+  String get studyReview;
+
+  /// No description provided for @studyPlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Player'**
+  String get studyPlayer;
+
+  /// No description provided for @studyStageReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get studyStageReview;
+
+  /// No description provided for @studyExitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit session?'**
+  String get studyExitTitle;
+
+  /// No description provided for @studyExitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards that haven\'t finished all 5 stages stay new.'**
+  String get studyExitBody;
+
+  /// No description provided for @studyExitConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get studyExitConfirm;
+
+  /// No description provided for @studyResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session complete'**
+  String get studyResultTitle;
+
+  /// No description provided for @studyResultWords.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} words'**
+  String studyResultWords(int count);
+
+  /// No description provided for @studyResultAccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% correct'**
+  String studyResultAccuracy(int percent);
+
+  /// No description provided for @studyContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get studyContinue;
+
+  /// No description provided for @studyToLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'To library'**
+  String get studyToLibrary;
+
+  /// No description provided for @reviewEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'All reviewed'**
+  String get reviewEnd;
+
+  /// No description provided for @reviewStudyNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Study now'**
+  String get reviewStudyNow;
+
+  /// No description provided for @playerEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'Playback finished'**
+  String get playerEnd;
+
+  /// No description provided for @playerReplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay'**
+  String get playerReplay;
+
+  /// No description provided for @commonClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get commonClose;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,6 @@
 import 'package:memox_v4/domain/types/game_scope.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
+import 'package:memox_v4/domain/types/study_entry.dart';
 
 /// Centralized route paths.
 ///
@@ -56,4 +57,20 @@ abstract final class RoutePaths {
     bool random = true,
   }) =>
       '/game/$nodeId/play?type=${type.name}&scope=${scope.name}&random=$random';
+
+  /// Scheduled study session (`study` in navigation-flow). Query `entry`.
+  static const String study = '/study/:nodeId';
+
+  static String studyLocation(int nodeId, StudyEntry entry) =>
+      '/study/$nodeId?entry=${entry.name}';
+
+  /// Review (browse) — `review`. No SRS change.
+  static const String review = '/review/:nodeId';
+
+  static String reviewLocation(int nodeId) => '/review/$nodeId';
+
+  /// Auto-play — `player`. No SRS change.
+  static const String player = '/player/:nodeId';
+
+  static String playerLocation(int nodeId) => '/player/$nodeId';
 }
