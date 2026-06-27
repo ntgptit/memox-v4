@@ -21,6 +21,13 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W8 (08-W8-import-export) · BLOCKED · dep:file_picker,csv,excel
+
+- What: W8 (CSV/Excel/clipboard import & export) requires `file_picker` + `csv` + `excel` to pick/parse files. Its own prompt has an explicit "⚠ Dependency gate (NOT in stack.md → STOP & ask)". These deps are NOT in `docs/stack/stack.md`. Per loop rule 4 / hard rule (new dependency needs approval), NOT implemented this run.
+- Where: prompts/08-W8-import-export.md; docs/stack/stack.md (deps absent).
+- Action: nothing changed in the tree (no stash needed); WBS W8 stays Planned; skipping to the next buildable step (W11).
+- Suggested fix: approve + add `file_picker`/`csv`/`excel` to `pubspec.yaml` + `docs/stack/stack.md` (same commit), then implement per `docs/business/import-export/import-export.md` (D-025 import separator/preview/soft-dup; D-026 export CSV/Excel/clipboard + optional SRS). NOTE: a clipboard-only subset (paste/copy text via Flutter's built-in `Clipboard`, manual CSV split/join) is feasible WITHOUT any gated dep — could be a partial W8 if file/Excel support is deferred; left for a human decision to avoid overstating W8 completion.
+
 ## 2026-06-28 · W7 (07-W7-search) · DONE · ca16842e · term + meaning search with filters, verify --full GREEN
 
 - What: BE — SearchResult model (derives CardStatus vs clock), SearchRepository (Drift DAO card⨝deck⨝srs; meaning matched via EXISTS → one row per card; includes hidden — D-028; scoped to active pair, optional subtree), SearchCardsUseCase (term+meaning — D-019). FE — SearchScreen (/search) with field+clear, status filter chips, empty-recent/results/no-results/loading states; hidden dimmed + eye-off; tap → W2 editor; recent kept in session; search button added to library toolbar.
