@@ -1,77 +1,113 @@
-/* MemoX — Settings screen. State: loaded */
+/* MemoX — Settings (Cài đặt). States: loaded · group-expanded · value-picker. (Không có Premium ở v1.) */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxIconButton, MxAvatar, MxSwitch, MxSegmentedControl, MxIconTile, MxBadge, MxButton } = NS;
+const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxAvatar, MxSwitch, MxButton } = NS;
 
 const NAV = [
-  { id: 'home', label: 'Today', icon: 'today' },
-  { id: 'library', label: 'Library', icon: 'style' },
-  { id: 'add', label: 'Add', icon: 'add_circle' },
-  { id: 'stats', label: 'Stats', icon: 'insights' },
-  { id: 'me', label: 'Profile', icon: 'person' },
+  { id: 'home', label: 'Hôm nay', icon: 'today' },
+  { id: 'library', label: 'Thư viện', icon: 'style' },
+  { id: 'add', label: 'Thêm', icon: 'add_circle' },
+  { id: 'stats', label: 'Thống kê', icon: 'insights' },
+  { id: 'me', label: 'Hồ sơ', icon: 'person' },
 ];
 
-function Row({ icon, tone, title, sub, trailing, node, last }) {
-  const { MxIconTile } = NS;
+const GROUPS = [
+  { icon: 'translate', title: 'Ngôn ngữ', sub: '한국어 → Tiếng Việt', val: '' },
+  { icon: 'format_shapes', title: 'Hình thức từ ngữ', sub: 'Nghĩa mẹ đẻ · màu theo giới tính' },
+  { icon: 'schedule', title: 'Lặp lại giãn cách', sub: 'Ô: 8 · Thông báo bật', val: '' },
+  { icon: 'sports_esports', title: 'Cài đặt trò chơi', sub: '5 từ/ván · ngẫu nhiên', val: '5' },
+  { icon: 'record_voice_over', title: 'Giọng nói', sub: 'TTS bật · STT tắt' },
+  { icon: 'notifications', title: 'Nhắc học', sub: '13:00 · T2–CN' },
+  { icon: 'backup', title: 'Sao lưu / Khôi phục', sub: 'Tự động · lần cuối hôm nay' },
+  { icon: 'cloud_sync', title: 'Đồng bộ đám mây', sub: 'linh@memox.app · alpha' },
+  { icon: 'palette', title: 'Chủ đề', sub: 'Sáng · màu mặc định' },
+];
+
+function Val({ v }) {
   return (
-    <div data-mx-node={node} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', paddingBottom: last ? 0 : 'var(--memox-space-4)', marginBottom: last ? 0 : 'var(--memox-space-4)', borderBottom: last ? 'none' : '1px solid var(--memox-divider)' }}>
-      <MxIconTile icon={icon} tone={tone} />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 700, fontSize: 'var(--memox-font-size-base)' }}>{title}</div>
-        {sub ? <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>{sub}</div> : null}
-      </div>
-      {trailing}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 2, color: 'var(--memox-text-tertiary)' }}>
+      {v ? <span style={{ fontWeight: 600, fontSize: 'var(--memox-font-size-sm)' }}>{v}</span> : null}
+      <span className="material-symbols-rounded" style={{ fontSize: 20 }}>chevron_right</span>
     </div>
   );
 }
 
-function Settings({ state = 'loaded' }) {
-  const [dark, setDark] = React.useState(false);
-  const [remind, setRemind] = React.useState(true);
-  const [sound, setSound] = React.useState(false);
-  const [pace, setPace] = React.useState('20');
+function Label({ children }) {
+  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em', margin: '4px 0 0 4px' }}>{children}</div>;
+}
 
+function Profile() {
   return (
-    <MxScaffold node="settings/screen"
-      appBar={<MxAppBar large title="Settings" node="settings/appbar" />}
-      bottomNav={<MxBottomNav items={NAV} value="me" node="shell/bottom-nav" />}>
-
-      <MxCard node="settings/profile" style={{ flexDirection: 'row', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
-        <MxAvatar name="Linh Tran" size="lg" ring />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)' }}>Linh Tran</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>linh@memox.app</div>
-        </div>
-        <MxBadge tone="success" soft>PRO</MxBadge>
-      </MxCard>
-
-      <div data-mx-node="settings/group-prefs">
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-tertiary)', letterSpacing: '.04em', margin: '0 0 8px 4px', textTransform: 'uppercase' }}>Preferences</div>
-        <MxCard>
-          <Row icon="dark_mode" title="Dark mode" sub="Match study time of day" node="settings/dark-mode" trailing={<MxSwitch checked={dark} onChange={setDark} node="settings/dark-mode-switch" />} />
-          <Row icon="notifications" tone="warning" title="Daily reminder" sub="Every day at 8:00 PM" node="settings/reminder" trailing={<MxSwitch checked={remind} onChange={setRemind} node="settings/reminder-switch" />} />
-          <Row icon="volume_up" tone="accent" title="Sound effects" node="settings/sound" last trailing={<MxSwitch checked={sound} onChange={setSound} node="settings/sound-switch" />} />
-        </MxCard>
+    <MxCard node="settings/profile" style={{ flexDirection: 'row', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
+      <MxAvatar name="Linh Tran" size="lg" ring />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)' }}>Linh Tran</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>linh@memox.app</div>
       </div>
+    </MxCard>
+  );
+}
 
-      <div data-mx-node="settings/group-study">
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-tertiary)', letterSpacing: '.04em', margin: '0 0 8px 4px', textTransform: 'uppercase' }}>Study</div>
-        <MxCard style={{ gap: 'var(--memox-space-4)' }}>
-          <Row icon="bolt" tone="success" title="New cards / day" sub="Across all decks" node="settings/pace" last
-            trailing={null} />
-          <MxSegmentedControl value={pace} onChange={setPace} block node="settings/pace-control"
-            segments={[{ value: '10', label: '10' }, { value: '20', label: '20' }, { value: '40', label: '40' }]} />
-        </MxCard>
-      </div>
+function Settings({ state = 'loaded' }) {
+  const [notif, setNotif] = React.useState(true);
+  const bar = <MxAppBar large title="Cài đặt" node="settings/appbar" />;
+  const nav = <MxBottomNav items={NAV} value="me" node="shell/bottom-nav" />;
 
-      <div data-mx-node="settings/group-about">
+  if (state === 'group-expanded') {
+    return (
+      <MxScaffold node="settings/screen" appBar={bar} bottomNav={nav}>
+        <Profile />
+        <Label>LẶP LẠI GIÃN CÁCH</Label>
         <MxCard padding="sm">
-          <Row icon="help" title="Help & feedback" node="settings/help" trailing={<MxIconButton icon="chevron_right" node="settings/help-go" />} />
-          <Row icon="logout" tone="error" title="Sign out" node="settings/signout" last trailing={<MxIconButton icon="chevron_right" node="settings/signout-go" />} />
+          <window.ListRow icon="grid_view" title="Số ô Leitner" sub="Số hộp lặp lại" node="settings/srs-boxes" trailing={<Val v="8" />} />
+          <window.ListRow icon="timeline" title="Khoảng cách (ngày)" sub="1 · 3 · 7 · 14 · 30 · 60 · 120" node="settings/srs-intervals" trailing={<Val v="" />} />
+          <window.ListRow icon="notifications_active" title="Thông báo đến hạn" last node="settings/srs-notif"
+            trailing={<MxSwitch checked={notif} onChange={setNotif} node="settings/srs-notif-switch" />} />
         </MxCard>
-      </div>
+        <Label>KHÁC</Label>
+        <MxCard padding="sm">
+          <window.ListRow icon="sports_esports" title="Cài đặt trò chơi" sub="5 từ/ván · ngẫu nhiên" node="settings/games" trailing={<Val v="" />} />
+          <window.ListRow icon="palette" title="Chủ đề" sub="Sáng · màu mặc định" last node="settings/theme" trailing={<Val v="" />} />
+        </MxCard>
+      </MxScaffold>
+    );
+  }
+
+  const loaded = (
+    <MxScaffold node="settings/screen" appBar={bar} bottomNav={nav}>
+      <Profile />
+      <Label>HỌC TẬP</Label>
+      <MxCard padding="sm">
+        {GROUPS.slice(0, 5).map((g, i) => (
+          <window.ListRow key={i} icon={g.icon} title={g.title} sub={g.sub} last={i === 4} node={'settings/g-' + i} trailing={<Val v={g.val || ''} />} />
+        ))}
+      </MxCard>
+      <Label>ỨNG DỤNG</Label>
+      <MxCard padding="sm">
+        {GROUPS.slice(5).map((g, i) => (
+          <window.ListRow key={i} icon={g.icon} title={g.title} sub={g.sub} last={i === GROUPS.length - 6} node={'settings/g-' + (i + 5)} trailing={<Val v={g.val || ''} />} />
+        ))}
+      </MxCard>
     </MxScaffold>
   );
+
+  if (state === 'value-picker') {
+    return (
+      <React.Fragment>
+        {loaded}
+        <window.Scrim node="settings/picker-scrim">
+          <window.Sheet title="Số từ mỗi ván" node="settings/picker-sheet">
+            {['5', '10', '20'].map((v, i) => (
+              <window.MenuItem key={v} icon={i === 0 ? 'check' : 'circle'} label={v + ' từ'} node={'settings/words-' + v}
+                trailing={i === 0 ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : null} />
+            ))}
+          </window.Sheet>
+        </window.Scrim>
+      </React.Fragment>
+    );
+  }
+
+  return loaded;
 }
 
 window.Settings = Settings;

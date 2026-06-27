@@ -1,0 +1,102 @@
+/* MemoX — Search (Tìm kiếm). States: empty-recent · results · filtered · no-results · loading */
+(function () {
+const NS = window.MemoXDesignSystem_2ffa54;
+const { MxScaffold, MxAppBar, MxIconButton, MxSearchDock, MxChip, MxCard, MxBadge } = NS;
+
+const FILTERS = ['Tất cả', 'Mới', 'Đến hạn', 'Đã thuộc'];
+const STATUS = {
+  new: { label: 'Mới', tone: undefined },
+  due: { label: 'Đến hạn', tone: 'error' },
+  mastered: { label: 'Đã thuộc', tone: 'success' },
+};
+const RESULTS = [
+  { term: '공부하다', meaning: 'Học tập, học bài', deck: 'TOPIK I — Từ vựng', status: 'due' },
+  { term: '좋아하다', meaning: 'Thích, yêu thích', deck: 'Động từ thường gặp', status: 'mastered' },
+  { term: '하다', meaning: 'Làm (động từ trợ)', deck: 'TOPIK I — Từ vựng', status: 'new', hidden: true },
+];
+const RECENT = ['안녕하세요', '학교', '감사합니다'];
+
+function ResultRow({ term, meaning, deck, status, hidden, node }) {
+  const s = STATUS[status];
+  return (
+    <div data-mx-node={node} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', opacity: hidden ? .5 : 1 }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)' }}>{term}</span>
+          {hidden ? <span className="material-symbols-rounded" style={{ fontSize: 16, color: 'var(--memox-text-tertiary)' }}>visibility_off</span> : null}
+        </div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>{meaning}</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', marginTop: 2 }}>{deck}</div>
+      </div>
+      <MxBadge tone={s.tone} soft>{s.label}</MxBadge>
+    </div>
+  );
+}
+
+function Chips({ active }) {
+  return (
+    <div data-mx-node="search/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 2 }}>
+      {FILTERS.map((f, i) => <MxChip key={f} label={f} selected={i === active} node={'search/filter-' + i} />)}
+    </div>
+  );
+}
+
+function Search({ state = 'empty-recent' }) {
+  const val = state === 'empty-recent' ? '' : (state === 'no-results' ? 'xyz' : '하');
+  const bar = (
+    <MxAppBar node="search/appbar"
+      leading={<MxIconButton icon="arrow_back" node="search/back" />}
+      title={<MxSearchDock value={val || undefined} placeholder="Tìm theo từ hoặc nghĩa" node="search/dock"
+        trailing={val ? <MxIconButton icon="close" size="sm" node="search/clear" /> : null} />} />
+  );
+
+  if (state === 'empty-recent') {
+    return (
+      <MxScaffold node="search/screen" appBar={bar}>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-tertiary)', letterSpacing: '.04em', margin: '4px 0 0 4px' }}>TÌM GẦN ĐÂY</div>
+        <MxCard padding="sm">
+          {RECENT.map((r, i) => (
+            <window.ListRow key={r} icon="history" title={r} last={i === RECENT.length - 1} node={'search/recent-' + i}
+              trailing={<MxIconButton icon="north_west" size="sm" node={'search/recent-fill-' + i} />} />
+          ))}
+        </MxCard>
+      </MxScaffold>
+    );
+  }
+
+  if (state === 'loading') {
+    const S = window.Skeleton;
+    return (
+      <MxScaffold node="search/screen" appBar={bar}>
+        <Chips active={0} />
+        {[0, 1, 2].map((i) => (
+          <MxCard key={i} padding="sm"><S w="40%" h={16} /><S w="62%" h={10} style={{ marginTop: 8 }} /><S w="50%" h={10} style={{ marginTop: 6 }} /></MxCard>
+        ))}
+      </MxScaffold>
+    );
+  }
+
+  if (state === 'no-results') {
+    return (
+      <MxScaffold node="search/screen" appBar={bar}>
+        <Chips active={0} />
+        <window.EmptyState node="search/no-results" icon="search_off" tone="warning" title="Không tìm thấy"
+          text={'Không có thẻ nào khớp “xyz”. Thử từ khoá khác hoặc kiểm tra chính tả.'} />
+      </MxScaffold>
+    );
+  }
+
+  const filtered = state === 'filtered';
+  const rows = filtered ? RESULTS.filter((r) => r.status === 'due') : RESULTS;
+  return (
+    <MxScaffold node="search/screen" appBar={bar}>
+      <Chips active={filtered ? 2 : 0} />
+      {rows.map((r, i) => (
+        <MxCard key={i} padding="sm" interactive node={'search/result-' + i}><ResultRow {...r} /></MxCard>
+      ))}
+    </MxScaffold>
+  );
+}
+
+window.Search = Search;
+})();

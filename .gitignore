@@ -18,3 +18,5 @@ code-verification-guard/
 # editor / OS
 .idea/
 .DS_Store
+*.zip
+.claude/scheduled_tasks.lock

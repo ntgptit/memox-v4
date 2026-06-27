@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "memox-kit",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["tool/preview/kit-server.mjs"],
+      "port": 4599
+    }
+  ]
+}
