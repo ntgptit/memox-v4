@@ -47,6 +47,7 @@ error/types/router/theme/DI đã code & test); **W2–W14 Planned** (spec xong, 
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- ead20623 · 2026-06-28 · W1 · scaffold foundation (error/types/router/theme/DI); align overview.md to tool/flutter_arch; W1 → Done
 - adfb86aa · 2026-06-27 · W1–W14 · populate WBS; fill contract/architecture/index stubs (AI-agent readiness)
 - 4879608 · 2026-06-26 · — · initial business specs + skeleton import
 
