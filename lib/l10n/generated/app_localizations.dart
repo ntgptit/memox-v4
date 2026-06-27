@@ -439,6 +439,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t save the card'**
   String get editorSaveError;
+
+  /// No description provided for @deckNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New deck'**
+  String get deckNewTitle;
+
+  /// No description provided for @deckNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Deck name'**
+  String get deckNameLabel;
+
+  /// No description provided for @deckNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Travel verbs'**
+  String get deckNameHint;
+
+  /// No description provided for @deckCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get deckCreate;
+
+  /// No description provided for @deckRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get deckRename;
+
+  /// No description provided for @deckMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get deckMove;
+
+  /// No description provided for @deckMoveToRoot.
+  ///
+  /// In en, this message translates to:
+  /// **'Top level'**
+  String get deckMoveToRoot;
+
+  /// No description provided for @deckMoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Move deck'**
+  String get deckMoveTitle;
+
+  /// No description provided for @deckDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete deck'**
+  String get deckDelete;
+
+  /// No description provided for @deckDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this deck?'**
+  String get deckDeleteConfirmTitle;
+
+  /// No description provided for @deckDeleteConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This deletes the deck and everything inside it — sub-decks, cards and progress.'**
+  String get deckDeleteConfirmBody;
+
+  /// No description provided for @libraryEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to study yet'**
+  String get libraryEmptyTitle;
+
+  /// No description provided for @libraryEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a deck to start collecting words.'**
+  String get libraryEmptySubtitle;
+
+  /// No description provided for @libraryCreateDeck.
+  ///
+  /// In en, this message translates to:
+  /// **'Create deck'**
+  String get libraryCreateDeck;
+
+  /// No description provided for @libraryError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the library'**
+  String get libraryError;
+
+  /// No description provided for @commonRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get commonRetry;
+
+  /// No description provided for @sortLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get sortLabel;
+
+  /// No description provided for @sortAlphabet.
+  ///
+  /// In en, this message translates to:
+  /// **'Alphabetical'**
+  String get sortAlphabet;
+
+  /// No description provided for @sortCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Date created'**
+  String get sortCreated;
+
+  /// No description provided for @sortLastStudied.
+  ///
+  /// In en, this message translates to:
+  /// **'Last studied'**
+  String get sortLastStudied;
+
+  /// No description provided for @sortAscending.
+  ///
+  /// In en, this message translates to:
+  /// **'Ascending'**
+  String get sortAscending;
+
+  /// No description provided for @sortDescending.
+  ///
+  /// In en, this message translates to:
+  /// **'Descending'**
+  String get sortDescending;
+
+  /// No description provided for @deckWords.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} words'**
+  String deckWords(int count);
+
+  /// No description provided for @deckHiddenCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hidden'**
+  String deckHiddenCount(int count);
+
+  /// No description provided for @deckDetailSubdecks.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-decks'**
+  String get deckDetailSubdecks;
+
+  /// No description provided for @deckDetailCards.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards'**
+  String get deckDetailCards;
+
+  /// No description provided for @deckAddWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Add word'**
+  String get deckAddWord;
+
+  /// No description provided for @deckNewSubdeck.
+  ///
+  /// In en, this message translates to:
+  /// **'New sub-deck'**
+  String get deckNewSubdeck;
+
+  /// No description provided for @deckDetailEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This deck is empty — add a word or a sub-deck.'**
+  String get deckDetailEmpty;
+
+  /// No description provided for @deckNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Deck not found'**
+  String get deckNotFound;
+
+  /// No description provided for @cardStatusNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get cardStatusNew;
+
+  /// No description provided for @cardStatusDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get cardStatusDue;
+
+  /// No description provided for @cardStatusMastered.
+  ///
+  /// In en, this message translates to:
+  /// **'Mastered'**
+  String get cardStatusMastered;
+
+  /// No description provided for @cardStatusLearning.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning'**
+  String get cardStatusLearning;
 }
 
 class _AppLocalizationsDelegate

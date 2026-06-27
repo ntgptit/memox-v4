@@ -19,6 +19,13 @@ abstract final class RoutePaths {
   /// Profile tab — account & settings entry (W10/W12).
   static const String profile = '/profile';
 
+  /// Deck detail (a node: sub-decks + cards) — `deckDetail` in
+  /// `docs/business/navigation/navigation-flow.md`. Path param: deck `id`.
+  static const String deckDetail = '/deck/:id';
+
+  /// Builds a concrete [deckDetail] location.
+  static String deckDetailLocation(int deckId) => '/deck/$deckId';
+
   /// Flashcard editor (create/edit) under a deck — `flashcardEditor` in
   /// `docs/business/navigation/navigation-flow.md`. Path params: deck `id`;
   /// optional `cardId` query for edit mode.

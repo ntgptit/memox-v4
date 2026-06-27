@@ -185,4 +185,112 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get editorSaveError => 'Không lưu được thẻ';
+
+  @override
+  String get deckNewTitle => 'Bộ thẻ mới';
+
+  @override
+  String get deckNameLabel => 'Tên bộ thẻ';
+
+  @override
+  String get deckNameHint => 'vd Động từ du lịch';
+
+  @override
+  String get deckCreate => 'Tạo';
+
+  @override
+  String get deckRename => 'Đổi tên';
+
+  @override
+  String get deckMove => 'Di chuyển';
+
+  @override
+  String get deckMoveToRoot => 'Ra gốc';
+
+  @override
+  String get deckMoveTitle => 'Di chuyển bộ thẻ';
+
+  @override
+  String get deckDelete => 'Xóa bộ thẻ';
+
+  @override
+  String get deckDeleteConfirmTitle => 'Xóa bộ thẻ này?';
+
+  @override
+  String get deckDeleteConfirmBody =>
+      'Xóa bộ thẻ này và toàn bộ nội dung bên trong — bộ thẻ con, thẻ và tiến độ.';
+
+  @override
+  String get libraryEmptyTitle => 'Chưa có gì để học';
+
+  @override
+  String get libraryEmptySubtitle => 'Tạo một bộ thẻ để bắt đầu gom từ.';
+
+  @override
+  String get libraryCreateDeck => 'Tạo bộ thẻ';
+
+  @override
+  String get libraryError => 'Không tải được thư viện';
+
+  @override
+  String get commonRetry => 'Thử lại';
+
+  @override
+  String get sortLabel => 'Sắp xếp';
+
+  @override
+  String get sortAlphabet => 'Bảng chữ cái';
+
+  @override
+  String get sortCreated => 'Ngày tạo';
+
+  @override
+  String get sortLastStudied => 'Ngày học';
+
+  @override
+  String get sortAscending => 'Tăng dần';
+
+  @override
+  String get sortDescending => 'Giảm dần';
+
+  @override
+  String deckWords(int count) {
+    return '$count từ';
+  }
+
+  @override
+  String deckHiddenCount(int count) {
+    return '$count ẩn';
+  }
+
+  @override
+  String get deckDetailSubdecks => 'Bộ thẻ con';
+
+  @override
+  String get deckDetailCards => 'Thẻ';
+
+  @override
+  String get deckAddWord => 'Thêm từ';
+
+  @override
+  String get deckNewSubdeck => 'Bộ thẻ con mới';
+
+  @override
+  String get deckDetailEmpty =>
+      'Bộ thẻ trống — thêm một từ hoặc một bộ thẻ con.';
+
+  @override
+  String get deckNotFound => 'Không tìm thấy bộ thẻ';
+
+  @override
+  String get cardStatusNew => 'Mới';
+
+  @override
+  String get cardStatusDue => 'Đến hạn';
+
+  @override
+  String get cardStatusMastered => 'Đã thuộc';
+
+  @override
+  String get cardStatusLearning => 'Đang học';
 }

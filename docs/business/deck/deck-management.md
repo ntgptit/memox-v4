@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `deck/deck-management` |
 | Gói công việc (WBS) | W6 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (cây tự lồng + library home + deck detail + tổng hợp đệ quy; sort deck dùng proxy id cho "ngày tạo" và max ngày-học cây con cho "ngày học" vì `deck` không có cột tương ứng) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-023, D-024 |
 | Phiên bản | 2.0 |

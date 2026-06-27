@@ -411,6 +411,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ card_providers.dart
 │  │  │  ├─ clock_provider.dart
 │  │  │  ├─ database_provider.dart
+│  │  │  ├─ deck_providers.dart
 │  │  │  └─ language_pair_providers.dart
 │  │  ├─ router/
 │  │  │  ├─ app_router.dart
@@ -441,27 +442,35 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  └─ local/
 │  │  ├─ mappers/
 │  │  │  ├─ card_mapper.dart
+│  │  │  ├─ deck_mapper.dart
 │  │  │  └─ language_pair_mapper.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository_impl.dart
+│  │  │  ├─ deck_repository_impl.dart
 │  │  │  └─ language_pair_repository_impl.dart
 │  │  └─ services/
 │  ├─ domain/
 │  │  ├─ entities/
 │  │  │  ├─ card_meaning.dart
 │  │  │  ├─ card.dart
+│  │  │  ├─ deck.dart
 │  │  │  └─ language_pair.dart
 │  │  ├─ models/
 │  │  │  ├─ card_draft.dart
+│  │  │  ├─ deck_node.dart
+│  │  │  ├─ deck_stats.dart
 │  │  │  └─ language_pair_context.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository.dart
+│  │  │  ├─ deck_repository.dart
 │  │  │  └─ language_pair_repository.dart
 │  │  ├─ services/
 │  │  ├─ types/
 │  │  │  ├─ card_status.dart
-│  │  │  └─ result.dart
+│  │  │  ├─ result.dart
+│  │  │  └─ sort.dart
 │  │  └─ usecases/
+│  │     ├─ deck/
 │  │     ├─ flashcard/
 │  │     └─ language_pair/
 │  ├─ l10n/
@@ -469,6 +478,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  └─ app_vi.arb
 │  ├─ presentation/
 │  │  ├─ features/
+│  │  │  ├─ deck/
 │  │  │  ├─ flashcard/
 │  │  │  └─ language_pair/
 │  │  └─ shared/
@@ -515,16 +525,19 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  └─ local/
 │  │  └─ repositories/
 │  │     ├─ card_repository_impl_test.dart
+│  │     ├─ deck_repository_impl_test.dart
 │  │     └─ language_pair_repository_impl_test.dart
 │  ├─ domain/
 │  │  ├─ types/
 │  │  │  ├─ card_status_test.dart
 │  │  │  └─ result_test.dart
 │  │  └─ usecases/
+│  │     ├─ deck/
 │  │     ├─ flashcard/
 │  │     └─ language_pair/
 │  └─ presentation/
 │     ├─ features/
+│     │  ├─ deck/
 │     │  └─ flashcard/
 │     └─ shared/
 │        ├─ layouts/

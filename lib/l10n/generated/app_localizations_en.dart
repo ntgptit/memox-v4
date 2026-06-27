@@ -186,4 +186,112 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorSaveError => 'Couldn\'t save the card';
+
+  @override
+  String get deckNewTitle => 'New deck';
+
+  @override
+  String get deckNameLabel => 'Deck name';
+
+  @override
+  String get deckNameHint => 'e.g. Travel verbs';
+
+  @override
+  String get deckCreate => 'Create';
+
+  @override
+  String get deckRename => 'Rename';
+
+  @override
+  String get deckMove => 'Move';
+
+  @override
+  String get deckMoveToRoot => 'Top level';
+
+  @override
+  String get deckMoveTitle => 'Move deck';
+
+  @override
+  String get deckDelete => 'Delete deck';
+
+  @override
+  String get deckDeleteConfirmTitle => 'Delete this deck?';
+
+  @override
+  String get deckDeleteConfirmBody =>
+      'This deletes the deck and everything inside it — sub-decks, cards and progress.';
+
+  @override
+  String get libraryEmptyTitle => 'Nothing to study yet';
+
+  @override
+  String get libraryEmptySubtitle => 'Create a deck to start collecting words.';
+
+  @override
+  String get libraryCreateDeck => 'Create deck';
+
+  @override
+  String get libraryError => 'Couldn\'t load the library';
+
+  @override
+  String get commonRetry => 'Retry';
+
+  @override
+  String get sortLabel => 'Sort';
+
+  @override
+  String get sortAlphabet => 'Alphabetical';
+
+  @override
+  String get sortCreated => 'Date created';
+
+  @override
+  String get sortLastStudied => 'Last studied';
+
+  @override
+  String get sortAscending => 'Ascending';
+
+  @override
+  String get sortDescending => 'Descending';
+
+  @override
+  String deckWords(int count) {
+    return '$count words';
+  }
+
+  @override
+  String deckHiddenCount(int count) {
+    return '$count hidden';
+  }
+
+  @override
+  String get deckDetailSubdecks => 'Sub-decks';
+
+  @override
+  String get deckDetailCards => 'Cards';
+
+  @override
+  String get deckAddWord => 'Add word';
+
+  @override
+  String get deckNewSubdeck => 'New sub-deck';
+
+  @override
+  String get deckDetailEmpty =>
+      'This deck is empty — add a word or a sub-deck.';
+
+  @override
+  String get deckNotFound => 'Deck not found';
+
+  @override
+  String get cardStatusNew => 'New';
+
+  @override
+  String get cardStatusDue => 'Due';
+
+  @override
+  String get cardStatusMastered => 'Mastered';
+
+  @override
+  String get cardStatusLearning => 'Learning';
 }

@@ -12,7 +12,7 @@ cặp ngôn ngữ (S0) đã hiện thực — xem các dòng cuối.
 | SRS 8-box | `docs/business/srs/srs-review.md` | `lib/domain/usecases/srs/` · `lib/data/datasources/local/` | TBD | W3 |
 | Học & luyện | `docs/business/study/study-flow.md` | `lib/domain/usecases/study/` · `lib/presentation/features/study/` | TBD | W4 |
 | 4 game | `docs/business/game/game-modes.md` | `lib/presentation/features/game/` | TBD | W5 |
-| Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | `lib/domain/usecases/deck/` · `lib/presentation/features/deck/` | TBD | W6 |
+| Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | `lib/domain/{entities,models,usecases/deck}/` · `lib/data/{datasources/local/daos,repositories}/` · `lib/presentation/features/deck/` | `test/data/repositories/deck_repository_impl_test.dart` · `test/domain/usecases/deck/` | W6 |
 | Tìm kiếm | `docs/business/search/global-search.md` | `lib/domain/usecases/search/` · `lib/presentation/features/search/` | TBD | W7 |
 | Nhập/Xuất | `docs/business/import-export/import-export.md` | `lib/domain/usecases/import_export/` | TBD | W8 |
 | Thống kê | `docs/business/statistics/statistics.md` | `lib/presentation/features/statistics/` | TBD | W9 |

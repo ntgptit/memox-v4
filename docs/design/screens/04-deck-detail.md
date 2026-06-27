@@ -27,3 +27,13 @@ badge trạng thái (mới / đến hạn / đã thuộc). Đáy: thanh hành đ
 7. **Dialog xác nhận xoá** — xoá một thẻ, hoặc xoá bộ thẻ (cảnh báo xoá lan mọi thẻ).
 8. **Dialog xác nhận đặt lại tiến độ** — "Đặt lại tiến độ tất cả thẻ về Mới?".
 9. **Lỗi** — không tải được bộ thẻ: thông báo lỗi + "Thử lại".
+
+## Hiện thực (W6)
+
+`lib/presentation/features/deck/screens/deck_detail_screen.dart` (route push `/deck/:id`).
+Node hỗn hợp: section **Bộ thẻ con** (`MxDeckTile`, menu Đổi tên/Di chuyển/Xoá) + section
+**Thẻ** (term · nghĩa rút gọn · badge trạng thái; ẩn = mờ). FAB "Thêm từ" và chạm thẻ mở
+`flashcardEditor` (W2); "Bộ thẻ con mới" qua dialog; ⋮ AppBar xoá/đổi tên/di chuyển chính
+node (xoá → xác nhận D-024 → pop). Mọi copy l10n, token Mx*. **Hoãn:** tìm trong bộ thẻ +
+chip lọc trạng thái (W7), sort thẻ, đặt-lại-tiến-độ (W3), xuất (W8), audio (cần dep ngoài
+stack).

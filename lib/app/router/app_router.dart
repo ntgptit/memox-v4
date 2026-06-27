@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
+import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/shared/navigation/app_shell.dart';
 import 'package:memox_v4/presentation/shared/widgets/mx_placeholder.dart';
@@ -34,9 +36,7 @@ abstract final class AppRouter {
             routes: <RouteBase>[
               GoRoute(
                 path: RoutePaths.root,
-                builder: (context, state) => MxPlaceholder(
-                  title: AppLocalizations.of(context).tabLibrary,
-                ),
+                builder: (context, state) => const LibraryScreen(),
               ),
             ],
           ),
@@ -60,6 +60,11 @@ abstract final class AppRouter {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: RoutePaths.deckDetail,
+        builder: (context, state) =>
+            DeckDetailScreen(deckId: int.parse(state.pathParameters['id']!)),
       ),
       GoRoute(
         path: RoutePaths.flashcardEditor,

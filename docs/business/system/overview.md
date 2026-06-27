@@ -55,7 +55,7 @@ học. (Premium hoãn v1.) Sơ đồ đầy đủ: `docs/business/system/system-
 | Ôn tập SRS (8 ô Leitner) | `docs/business/srs/srs-review.md` | Specified | TBD |
 | Luồng học & luyện tập | `docs/business/study/study-flow.md` | Specified | TBD |
 | Bốn trò chơi | `docs/business/game/game-modes.md` | Specified | TBD |
-| Quản lý Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | Specified | TBD |
+| Quản lý Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | Implemented | `test/data/repositories/deck_repository_impl_test.dart` |
 | Tìm kiếm | `docs/business/search/global-search.md` | Specified | TBD |
 | Nhập / Xuất | `docs/business/import-export/import-export.md` | Specified | TBD |
 | Thống kê | `docs/business/statistics/statistics.md` | Specified | TBD |

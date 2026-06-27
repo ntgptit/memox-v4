@@ -27,8 +27,8 @@ dòng nên có một test, và mỗi test hành vi nên truy ngược về một
 | D-020 | tạo/nhập thẻ cùng term trong deck | lưu | **cảnh báo mềm**, vẫn cho thêm (không chặn) | `docs/business/flashcard/flashcard-management.md` | `test/presentation/features/flashcard/flashcard_editor_screen_test.dart` |
 | D-021 | ngày đạt ≥1 mục tiêu (phút HOẶC từ) | chốt ngày (nửa đêm giờ máy) | `streak +1`; ngày không đạt → streak reset 0 | `docs/business/engagement/dashboard-engagement.md` | TBD |
 | D-022 | (REMOVED) xoá một thư mục — bỏ khái niệm folder (pivot v1) | — | hành vi xoá lan cây con nay do D-024 phủ | — | — |
-| D-023 | đổi tiêu chí sắp xếp | sắp xếp danh sách | theo bảng chữ cái / ngày tạo / ngày học (tăng-giảm) | `docs/business/deck/deck-management.md` | TBD |
-| D-024 | xoá một bộ thẻ | xác nhận xoá | xoá lan toàn bộ cây con (bộ thẻ con + thẻ + meaning + srs_state) | `docs/business/deck/deck-management.md` | TBD |
+| D-023 | đổi tiêu chí sắp xếp | sắp xếp danh sách | theo bảng chữ cái / ngày tạo / ngày học (tăng-giảm) | `docs/business/deck/deck-management.md` | `test/domain/usecases/deck/sort_deck_nodes_test.dart` |
+| D-024 | xoá một bộ thẻ | xác nhận xoá | xoá lan toàn bộ cây con (bộ thẻ con + thẻ + meaning + srs_state) | `docs/business/deck/deck-management.md` | `test/data/repositories/deck_repository_impl_test.dart` |
 | D-025 | import từ CSV/Excel/clipboard | chọn separator (tab/,/;) | tách cột đúng; preview; áp cảnh báo trùng (D-020) | `docs/business/import-export/import-export.md` | TBD |
 | D-026 | export | chọn định dạng + có/không kèm SRS | CSV / Excel / copy text (separator cấu hình); cho chọn kèm ô/hạn ôn | `docs/business/import-export/import-export.md` | TBD |
 | D-027 | sync gặp xung đột | hợp nhất | last-write-wins theo `updated_at` mức bản ghi | `docs/business/account-sync/account-sync.md` | TBD |

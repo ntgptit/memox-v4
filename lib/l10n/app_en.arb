@@ -74,5 +74,46 @@
   },
   "editorDuplicateAddAnyway": "Add anyway",
   "editorDuplicateViewExisting": "View existing",
-  "editorSaveError": "Couldn't save the card"
+  "editorSaveError": "Couldn't save the card",
+
+  "deckNewTitle": "New deck",
+  "deckNameLabel": "Deck name",
+  "deckNameHint": "e.g. Travel verbs",
+  "deckCreate": "Create",
+  "deckRename": "Rename",
+  "deckMove": "Move",
+  "deckMoveToRoot": "Top level",
+  "deckMoveTitle": "Move deck",
+  "deckDelete": "Delete deck",
+  "deckDeleteConfirmTitle": "Delete this deck?",
+  "deckDeleteConfirmBody": "This deletes the deck and everything inside it — sub-decks, cards and progress.",
+  "libraryEmptyTitle": "Nothing to study yet",
+  "libraryEmptySubtitle": "Create a deck to start collecting words.",
+  "libraryCreateDeck": "Create deck",
+  "libraryError": "Couldn't load the library",
+  "commonRetry": "Retry",
+  "sortLabel": "Sort",
+  "sortAlphabet": "Alphabetical",
+  "sortCreated": "Date created",
+  "sortLastStudied": "Last studied",
+  "sortAscending": "Ascending",
+  "sortDescending": "Descending",
+  "deckWords": "{count} words",
+  "@deckWords": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "deckHiddenCount": "{count} hidden",
+  "@deckHiddenCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "deckDetailSubdecks": "Sub-decks",
+  "deckDetailCards": "Cards",
+  "deckAddWord": "Add word",
+  "deckNewSubdeck": "New sub-deck",
+  "deckDetailEmpty": "This deck is empty — add a word or a sub-deck.",
+  "deckNotFound": "Deck not found",
+  "cardStatusNew": "New",
+  "cardStatusDue": "Due",
+  "cardStatusMastered": "Mastered",
+  "cardStatusLearning": "Learning"
 }

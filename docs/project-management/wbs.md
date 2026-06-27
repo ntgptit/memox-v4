@@ -15,7 +15,7 @@ the same commit (CLAUDE.md WBS rule).
 | W3 | SRS 8-box Leitner | W2 | Planned | `docs/business/srs/srs-review.md` |
 | W4 | Học & 5 lối vào (NewLearn 5 chặng) | W3, W5 | Planned | `docs/business/study/study-flow.md` |
 | W5 | 4 game luyện | W2 | Planned | `docs/business/game/game-modes.md` |
-| W6 | Bộ thẻ (cây lồng nhau) | W2 | Planned | `docs/business/deck/deck-management.md` |
+| W6 | Bộ thẻ (cây lồng nhau) | W2 | Done | `docs/business/deck/deck-management.md` |
 | W7 | Tìm kiếm | W2 | Planned | `docs/business/search/global-search.md` |
 | W8 | Nhập / Xuất | W6 | Planned | `docs/business/import-export/import-export.md` |
 | W9 | Thống kê | W3, W11 | Planned | `docs/business/statistics/statistics.md` |
@@ -26,7 +26,8 @@ the same commit (CLAUDE.md WBS rule).
 
 Status ∈ Planned / In-progress / Blocked / Done. **W1 Done** (nền kiến trúc + core:
 error/types/router/theme/DI đã code & test); **W2 Done** (Card CRUD + nghĩa đa trường +
-editor; audio TTS hoãn); **W3–W13 Planned** (spec xong, chưa code).
+editor; audio TTS hoãn); **W6 Done** (cây bộ thẻ tự lồng + library home + deck detail +
+tổng hợp đệ quy); **W3–W5, W7–W13 Planned** (spec xong, chưa code).
 
 **S0 (nền tiếp theo, tiền đề mọi feature) Done:** app shell (`StatefulShellRoute` +
 bottom nav 4 tab + Drawer cặp ngôn ngữ) + Drift `language_pair` (DAO/repo/usecases:

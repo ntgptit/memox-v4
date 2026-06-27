@@ -36,3 +36,12 @@ nút Play · badge đỏ số thẻ đến hạn. Đáy: nút "Thêm từ" (trá
 **Đầy đủ state tương tác:** thiết kế trạng thái active/mở cho MỌI control trên màn (ô tìm,
 bộ chọn cặp, sắp xếp, ⋮, Play, drawer) thành frame riêng như trên — KHÔNG để control nào ở
 dạng tĩnh chưa nối hành vi.
+
+## Hiện thực (W6)
+
+`lib/presentation/features/deck/screens/library_screen.dart` (body tab Library; AppBar +
+drawer + pair-switcher do app shell/Drawer S0 cung cấp). Render loading/empty/loaded/error;
+mỗi nút là `MxDeckTile` (tên · "N từ" đệ quy · 👁 ẩn · vòng % · badge đỏ đến hạn · menu ⋮
+Đổi tên/Di chuyển/Xoá). Sort (D-023) qua sheet; tạo bộ thẻ qua dialog. Mọi copy l10n
+(`deck*`/`library*`/`sort*`), token `MxSpacing`/`MxTheme`. **Hoãn:** tìm kiếm (W7), menu
+Play/Học (W4), chọn nhiều/nhập-xuất (W8); pair-switcher + ⋮-màn nằm ở drawer (S0).

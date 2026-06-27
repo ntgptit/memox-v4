@@ -19,8 +19,8 @@ dữ liệu duy nhất.
 | Store / notifier | Owns | Reads (use cases) | Lifetime |
 | --- | --- | --- | --- |
 | `LanguagePairNotifier` | ngữ cảnh cặp (danh sách, cặp đang chọn, chiều hiển thị) | getPairContext, createLanguagePair, setActivePair, swapDisplayDirection, removeLanguagePair | keepAlive |
-| `LibraryNotifier` | cây thư viện (đếm, sort, cặp đang chọn) | watchLibrary, sortNodes | autoDispose |
-| `DeckDetailNotifier` | danh sách thẻ của một deck | watchDeck | autoDispose |
+| `LibraryNotifier` | cây thư viện gốc của cặp đang chọn + sort + mutations deck | getLibraryTree, sortDeckNodes, create/rename/move/deleteDeck | autoDispose |
+| `DeckDetailNotifier` | một node: bộ thẻ con (có stats) + thẻ trực tiếp | getDeckNode, listByDeck (+ mutations deck) | autoDispose (family theo deckId) |
 | `StudySessionNotifier` | hàng đợi + thẻ hiện tại + tiến độ | buildQueue, gradeCard | autoDispose |
 | `GameSessionNotifier` | ván game (5 thẻ, tiến độ) | buildGameRound | autoDispose |
 | `SettingsNotifier` | cài đặt (theme, SRS, game, nhắc) | readSettings, updateSetting | keepAlive |
