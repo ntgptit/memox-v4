@@ -408,6 +408,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  └─ app_bootstrap.dart
 │  │  ├─ di/
 │  │  │  ├─ app_dependencies.dart
+│  │  │  ├─ card_providers.dart
+│  │  │  ├─ clock_provider.dart
 │  │  │  ├─ database_provider.dart
 │  │  │  └─ language_pair_providers.dart
 │  │  ├─ router/
@@ -438,27 +440,36 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ datasources/
 │  │  │  └─ local/
 │  │  ├─ mappers/
+│  │  │  ├─ card_mapper.dart
 │  │  │  └─ language_pair_mapper.dart
 │  │  ├─ repositories/
+│  │  │  ├─ card_repository_impl.dart
 │  │  │  └─ language_pair_repository_impl.dart
 │  │  └─ services/
 │  ├─ domain/
 │  │  ├─ entities/
+│  │  │  ├─ card_meaning.dart
+│  │  │  ├─ card.dart
 │  │  │  └─ language_pair.dart
 │  │  ├─ models/
+│  │  │  ├─ card_draft.dart
 │  │  │  └─ language_pair_context.dart
 │  │  ├─ repositories/
+│  │  │  ├─ card_repository.dart
 │  │  │  └─ language_pair_repository.dart
 │  │  ├─ services/
 │  │  ├─ types/
+│  │  │  ├─ card_status.dart
 │  │  │  └─ result.dart
 │  │  └─ usecases/
+│  │     ├─ flashcard/
 │  │     └─ language_pair/
 │  ├─ l10n/
 │  │  ├─ app_en.arb
 │  │  └─ app_vi.arb
 │  ├─ presentation/
 │  │  ├─ features/
+│  │  │  ├─ flashcard/
 │  │  │  └─ language_pair/
 │  │  └─ shared/
 │  │     ├─ async/
@@ -503,13 +514,18 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ datasources/
 │  │  │  └─ local/
 │  │  └─ repositories/
+│  │     ├─ card_repository_impl_test.dart
 │  │     └─ language_pair_repository_impl_test.dart
 │  ├─ domain/
 │  │  ├─ types/
+│  │  │  ├─ card_status_test.dart
 │  │  │  └─ result_test.dart
 │  │  └─ usecases/
+│  │     ├─ flashcard/
 │  │     └─ language_pair/
 │  └─ presentation/
+│     ├─ features/
+│     │  └─ flashcard/
 │     └─ shared/
 │        ├─ layouts/
 │        └─ navigation/

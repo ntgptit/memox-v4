@@ -42,5 +42,28 @@
 
   "commonBack": "Quay lại",
   "commonCancel": "Hủy",
-  "commonDelete": "Xóa"
+  "commonDelete": "Xóa",
+
+  "editorTitleNew": "Thẻ mới",
+  "editorTitleEdit": "Sửa thẻ",
+  "editorSave": "Lưu",
+  "editorTermLabel": "Từ",
+  "editorTermHint": "Nhập từ…",
+  "editorMeaningHint": "Nhập nghĩa, có thể kèm ví dụ/ghi chú…",
+  "editorAddMeaning": "Nghĩa ngôn ngữ phụ",
+  "editorMeaningLanguage": "Ngôn ngữ của nghĩa",
+  "editorGenderLabel": "Giới tính",
+  "genderMasculine": "Giống đực",
+  "genderFeminine": "Giống cái",
+  "genderNeuter": "Trung tính",
+  "editorAudioLabel": "Âm thanh",
+  "editorAudioAuto": "Tự sinh từ term",
+  "editorHiddenLabel": "Ẩn",
+  "editorHiddenSubtitle": "Loại khỏi hàng đợi học và số đến hạn",
+  "editorErrorTermRequired": "Bắt buộc nhập term",
+  "editorErrorMeaningRequired": "Bắt buộc nhập nghĩa",
+  "editorDuplicateMessage": "Đã có thẻ “{term}” trong bộ thẻ này",
+  "editorDuplicateAddAnyway": "Vẫn thêm",
+  "editorDuplicateViewExisting": "Xem thẻ đã có",
+  "editorSaveError": "Không lưu được thẻ"
 }

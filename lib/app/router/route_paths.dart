@@ -18,4 +18,15 @@ abstract final class RoutePaths {
 
   /// Profile tab — account & settings entry (W10/W12).
   static const String profile = '/profile';
+
+  /// Flashcard editor (create/edit) under a deck — `flashcardEditor` in
+  /// `docs/business/navigation/navigation-flow.md`. Path params: deck `id`;
+  /// optional `cardId` query for edit mode.
+  static const String flashcardEditor = '/deck/:id/card';
+
+  /// Builds a concrete [flashcardEditor] location.
+  static String flashcardEditorLocation(int deckId, {int? cardId}) {
+    final base = '/deck/$deckId/card';
+    return cardId == null ? base : '$base?cardId=$cardId';
+  }
 }

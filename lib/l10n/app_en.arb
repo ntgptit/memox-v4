@@ -48,5 +48,31 @@
 
   "commonBack": "Back",
   "commonCancel": "Cancel",
-  "commonDelete": "Delete"
+  "commonDelete": "Delete",
+
+  "editorTitleNew": "New card",
+  "editorTitleEdit": "Edit card",
+  "editorSave": "Save",
+  "editorTermLabel": "Term",
+  "editorTermHint": "Enter the word…",
+  "editorMeaningHint": "Enter meaning, examples, notes…",
+  "editorAddMeaning": "Secondary meaning",
+  "editorMeaningLanguage": "Meaning language",
+  "editorGenderLabel": "Gender",
+  "genderMasculine": "Masculine",
+  "genderFeminine": "Feminine",
+  "genderNeuter": "Neuter",
+  "editorAudioLabel": "Audio",
+  "editorAudioAuto": "Auto from term",
+  "editorHiddenLabel": "Hidden",
+  "editorHiddenSubtitle": "Excluded from study queues and due counts",
+  "editorErrorTermRequired": "Term is required",
+  "editorErrorMeaningRequired": "Meaning is required",
+  "editorDuplicateMessage": "A card “{term}” already exists in this deck",
+  "@editorDuplicateMessage": {
+    "placeholders": { "term": { "type": "String" } }
+  },
+  "editorDuplicateAddAnyway": "Add anyway",
+  "editorDuplicateViewExisting": "View existing",
+  "editorSaveError": "Couldn't save the card"
 }

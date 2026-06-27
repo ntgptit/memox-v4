@@ -117,4 +117,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonDelete => 'Delete';
+
+  @override
+  String get editorTitleNew => 'New card';
+
+  @override
+  String get editorTitleEdit => 'Edit card';
+
+  @override
+  String get editorSave => 'Save';
+
+  @override
+  String get editorTermLabel => 'Term';
+
+  @override
+  String get editorTermHint => 'Enter the word…';
+
+  @override
+  String get editorMeaningHint => 'Enter meaning, examples, notes…';
+
+  @override
+  String get editorAddMeaning => 'Secondary meaning';
+
+  @override
+  String get editorMeaningLanguage => 'Meaning language';
+
+  @override
+  String get editorGenderLabel => 'Gender';
+
+  @override
+  String get genderMasculine => 'Masculine';
+
+  @override
+  String get genderFeminine => 'Feminine';
+
+  @override
+  String get genderNeuter => 'Neuter';
+
+  @override
+  String get editorAudioLabel => 'Audio';
+
+  @override
+  String get editorAudioAuto => 'Auto from term';
+
+  @override
+  String get editorHiddenLabel => 'Hidden';
+
+  @override
+  String get editorHiddenSubtitle =>
+      'Excluded from study queues and due counts';
+
+  @override
+  String get editorErrorTermRequired => 'Term is required';
+
+  @override
+  String get editorErrorMeaningRequired => 'Meaning is required';
+
+  @override
+  String editorDuplicateMessage(String term) {
+    return 'A card “$term” already exists in this deck';
+  }
+
+  @override
+  String get editorDuplicateAddAnyway => 'Add anyway';
+
+  @override
+  String get editorDuplicateViewExisting => 'View existing';
+
+  @override
+  String get editorSaveError => 'Couldn\'t save the card';
 }

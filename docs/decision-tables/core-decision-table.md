@@ -10,7 +10,7 @@ dòng nên có một test, và mỗi test hành vi nên truy ngược về một
 | D-003 | thẻ ở ô k (<N), chấm Đúng | áp chuyển ô Leitner | thẻ → ô k+1; `due_at` theo khoảng cách mới | `docs/business/srs/srs-review.md` | TBD |
 | D-004 | thẻ ở ô k (>1) khi "Lặp lại", chấm Sai | áp chuyển ô Leitner | thẻ → ô k-1 (lùi 1 ô; sàn ô 1) | `docs/business/srs/srs-review.md` | TBD |
 | D-005 | thẻ ở ô 8, chấm Đúng | áp chuyển ô Leitner | giữ ở ô 8 (đã thuộc) | `docs/business/srs/srs-review.md` | TBD |
-| D-006 | thẻ bị ẩn (`hidden`) | dựng hàng đợi / tính số đến hạn | loại thẻ khỏi cả hai | `docs/business/flashcard/flashcard-management.md` | TBD |
+| D-006 | thẻ bị ẩn (`hidden`) | dựng hàng đợi / tính số đến hạn | loại thẻ khỏi cả hai | `docs/business/flashcard/flashcard-management.md` | `test/data/repositories/card_repository_impl_test.dart` |
 | D-007 | chạy Review / Game / Player | kết thúc hoạt động | `SrsState` không đổi | `docs/business/study/study-flow.md` | TBD |
 | D-008 | `game_words_per_round` = 5 | bắt đầu một ván Game | ván dùng 5 thẻ (ngẫu nhiên nếu `game_random` bật) | `docs/business/study/study-flow.md` | TBD |
 | D-009 | bắt đầu học tại một bộ thẻ cha | dựng hàng đợi | gộp **đệ quy** thẻ của mọi bộ thẻ con | `docs/business/study/study-flow.md` | TBD |
@@ -24,7 +24,7 @@ dòng nên có một test, và mỗi test hành vi nên truy ngược về một
 | D-017 | NewLearn chưa xong đủ 5 chặng | thoát giữa chừng | thẻ **vẫn là mới** (chưa vào ô 1) | `docs/business/study/study-flow.md` | TBD |
 | D-018 | NewLearn, có thẻ mới | dựng hàng đợi học mới | lấy tối đa `new_cards_per_day` thẻ mới/ngày (mặc định 20) | `docs/business/srs/srs-review.md` | TBD |
 | D-019 | nhập từ khoá tìm kiếm | tìm | khớp trên cả `term` và nghĩa (`card_meaning.text`) | `docs/business/search/global-search.md` | TBD |
-| D-020 | tạo/nhập thẻ cùng term trong deck | lưu | **cảnh báo mềm**, vẫn cho thêm (không chặn) | `docs/business/flashcard/flashcard-management.md` | TBD |
+| D-020 | tạo/nhập thẻ cùng term trong deck | lưu | **cảnh báo mềm**, vẫn cho thêm (không chặn) | `docs/business/flashcard/flashcard-management.md` | `test/presentation/features/flashcard/flashcard_editor_screen_test.dart` |
 | D-021 | ngày đạt ≥1 mục tiêu (phút HOẶC từ) | chốt ngày (nửa đêm giờ máy) | `streak +1`; ngày không đạt → streak reset 0 | `docs/business/engagement/dashboard-engagement.md` | TBD |
 | D-022 | (REMOVED) xoá một thư mục — bỏ khái niệm folder (pivot v1) | — | hành vi xoá lan cây con nay do D-024 phủ | — | — |
 | D-023 | đổi tiêu chí sắp xếp | sắp xếp danh sách | theo bảng chữ cái / ngày tạo / ngày học (tăng-giảm) | `docs/business/deck/deck-management.md` | TBD |

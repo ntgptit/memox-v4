@@ -117,4 +117,72 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get commonDelete => 'Xóa';
+
+  @override
+  String get editorTitleNew => 'Thẻ mới';
+
+  @override
+  String get editorTitleEdit => 'Sửa thẻ';
+
+  @override
+  String get editorSave => 'Lưu';
+
+  @override
+  String get editorTermLabel => 'Từ';
+
+  @override
+  String get editorTermHint => 'Nhập từ…';
+
+  @override
+  String get editorMeaningHint => 'Nhập nghĩa, có thể kèm ví dụ/ghi chú…';
+
+  @override
+  String get editorAddMeaning => 'Nghĩa ngôn ngữ phụ';
+
+  @override
+  String get editorMeaningLanguage => 'Ngôn ngữ của nghĩa';
+
+  @override
+  String get editorGenderLabel => 'Giới tính';
+
+  @override
+  String get genderMasculine => 'Giống đực';
+
+  @override
+  String get genderFeminine => 'Giống cái';
+
+  @override
+  String get genderNeuter => 'Trung tính';
+
+  @override
+  String get editorAudioLabel => 'Âm thanh';
+
+  @override
+  String get editorAudioAuto => 'Tự sinh từ term';
+
+  @override
+  String get editorHiddenLabel => 'Ẩn';
+
+  @override
+  String get editorHiddenSubtitle => 'Loại khỏi hàng đợi học và số đến hạn';
+
+  @override
+  String get editorErrorTermRequired => 'Bắt buộc nhập term';
+
+  @override
+  String get editorErrorMeaningRequired => 'Bắt buộc nhập nghĩa';
+
+  @override
+  String editorDuplicateMessage(String term) {
+    return 'Đã có thẻ “$term” trong bộ thẻ này';
+  }
+
+  @override
+  String get editorDuplicateAddAnyway => 'Vẫn thêm';
+
+  @override
+  String get editorDuplicateViewExisting => 'Xem thẻ đã có';
+
+  @override
+  String get editorSaveError => 'Không lưu được thẻ';
 }

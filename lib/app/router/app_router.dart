@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/shared/navigation/app_shell.dart';
 import 'package:memox_v4/presentation/shared/widgets/mx_placeholder.dart';
 
@@ -59,6 +60,17 @@ abstract final class AppRouter {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: RoutePaths.flashcardEditor,
+        builder: (context, state) {
+          final deckId = int.parse(state.pathParameters['id']!);
+          final cardIdRaw = state.uri.queryParameters['cardId'];
+          return FlashcardEditorScreen(
+            deckId: deckId,
+            cardId: cardIdRaw == null ? null : int.tryParse(cardIdRaw),
+          );
+        },
       ),
     ],
   );

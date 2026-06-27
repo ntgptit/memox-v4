@@ -26,3 +26,14 @@ tắc **Ẩn**.
 5. **Có nghĩa phụ (đa ngôn ngữ)** — hai khối nghĩa (mẹ đẻ + phụ, vd VI + EN), mỗi khối có
    nhãn ngôn ngữ.
 6. **Audio đang sinh / phát** — nút audio loading (sinh TTS) rồi phát được.
+
+## Hiện thực (W2)
+
+`lib/presentation/features/flashcard/screens/flashcard_editor_screen.dart`. Mọi copy qua
+l10n key (`lib/l10n/*.arb`: `editor*`, `gender*`, `commonCancel`, `comingSoon`); màu/giãn
+cách qua token (`MxSpacing`, `MxTheme`, `MxRadius`). Nút **Lưu** tắt tới khi đủ term +
+nghĩa mẹ đẻ; trường thiếu hiện lỗi inline (state 3). Trùng term → banner vàng "Vẫn thêm /
+Xem thẻ đã có" (state 4, **không chặn** lưu — D-020). Nghĩa mẹ đẻ lấy ngôn ngữ từ cặp đang
+chọn (S0); thêm nghĩa phụ kèm bộ chọn ngôn ngữ (endonym, `supported_languages.dart`).
+**Audio (state 6) hoãn:** sinh TTS cần dependency ngoài `docs/stack/stack.md` — nút hiện báo
+"sắp ra mắt". "Xem thẻ đã có" cũng hoãn tới khi có màn danh sách thẻ (W6).

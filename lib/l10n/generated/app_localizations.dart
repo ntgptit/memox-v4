@@ -307,6 +307,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get commonDelete;
+
+  /// No description provided for @editorTitleNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New card'**
+  String get editorTitleNew;
+
+  /// No description provided for @editorTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit card'**
+  String get editorTitleEdit;
+
+  /// No description provided for @editorSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get editorSave;
+
+  /// No description provided for @editorTermLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Term'**
+  String get editorTermLabel;
+
+  /// No description provided for @editorTermHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the word…'**
+  String get editorTermHint;
+
+  /// No description provided for @editorMeaningHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter meaning, examples, notes…'**
+  String get editorMeaningHint;
+
+  /// No description provided for @editorAddMeaning.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary meaning'**
+  String get editorAddMeaning;
+
+  /// No description provided for @editorMeaningLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Meaning language'**
+  String get editorMeaningLanguage;
+
+  /// No description provided for @editorGenderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get editorGenderLabel;
+
+  /// No description provided for @genderMasculine.
+  ///
+  /// In en, this message translates to:
+  /// **'Masculine'**
+  String get genderMasculine;
+
+  /// No description provided for @genderFeminine.
+  ///
+  /// In en, this message translates to:
+  /// **'Feminine'**
+  String get genderFeminine;
+
+  /// No description provided for @genderNeuter.
+  ///
+  /// In en, this message translates to:
+  /// **'Neuter'**
+  String get genderNeuter;
+
+  /// No description provided for @editorAudioLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio'**
+  String get editorAudioLabel;
+
+  /// No description provided for @editorAudioAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto from term'**
+  String get editorAudioAuto;
+
+  /// No description provided for @editorHiddenLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get editorHiddenLabel;
+
+  /// No description provided for @editorHiddenSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Excluded from study queues and due counts'**
+  String get editorHiddenSubtitle;
+
+  /// No description provided for @editorErrorTermRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Term is required'**
+  String get editorErrorTermRequired;
+
+  /// No description provided for @editorErrorMeaningRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Meaning is required'**
+  String get editorErrorMeaningRequired;
+
+  /// No description provided for @editorDuplicateMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A card “{term}” already exists in this deck'**
+  String editorDuplicateMessage(String term);
+
+  /// No description provided for @editorDuplicateAddAnyway.
+  ///
+  /// In en, this message translates to:
+  /// **'Add anyway'**
+  String get editorDuplicateAddAnyway;
+
+  /// No description provided for @editorDuplicateViewExisting.
+  ///
+  /// In en, this message translates to:
+  /// **'View existing'**
+  String get editorDuplicateViewExisting;
+
+  /// No description provided for @editorSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save the card'**
+  String get editorSaveError;
 }
 
 class _AppLocalizationsDelegate

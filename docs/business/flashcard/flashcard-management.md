@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `flashcard/flashcard-management` |
 | Gói công việc (WBS) | W2 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (CRUD + nghĩa đa trường + editor; **audio TTS hoãn** — cần dep ngoài stack) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-006, D-011, D-020 |
 | Phiên bản | 1.0 |
