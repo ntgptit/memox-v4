@@ -205,6 +205,21 @@
   },
   "dashboardError": "Couldn't load your dashboard",
 
+  "statsScopeCurrentPair": "This pair",
+  "statsScopeAllApp": "All app",
+  "statsOverviewTitle": "Library overview",
+  "statsPairs": "Pairs",
+  "statsDecks": "Decks",
+  "statsBoxTitle": "Leitner boxes",
+  "statsForecastTitle": "Due in the next 7 days",
+  "statsActivityTitle": "Activity (14 days)",
+  "statsInsufficient": "Study more to see statistics",
+  "statsError": "Couldn't load statistics",
+  "statsDayOffset": "{count, plural, =0{Today} =1{Tomorrow} other{+{count}d}}",
+  "@statsDayOffset": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+
   "searchHint": "Search by word or meaning",
   "searchRecent": "Recent",
   "searchFilterAll": "All",

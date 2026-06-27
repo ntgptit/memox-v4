@@ -15,7 +15,7 @@ cặp ngôn ngữ (S0) đã hiện thực — xem các dòng cuối.
 | Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | `lib/domain/{entities,models,usecases/deck}/` · `lib/data/{datasources/local/daos,repositories}/` · `lib/presentation/features/deck/` | `test/data/repositories/deck_repository_impl_test.dart` · `test/domain/usecases/deck/` | W6 |
 | Tìm kiếm | `docs/business/search/global-search.md` | `lib/domain/{models,usecases/search}/` · `lib/data/{datasources/local/daos,repositories}/` · `lib/presentation/features/search/` | `test/data/repositories/search_repository_impl_test.dart` · `test/presentation/features/search/` | W7 |
 | Nhập/Xuất | `docs/business/import-export/import-export.md` | `lib/domain/usecases/import_export/` | TBD | W8 |
-| Thống kê | `docs/business/statistics/statistics.md` | `lib/presentation/features/statistics/` | TBD | W9 |
+| Thống kê | `docs/business/statistics/statistics.md` | `lib/domain/{models/statistics_summary,usecases/statistics}` · `lib/data/{datasources/local/daos/stats_dao,repositories/statistics_repository_impl}` · `lib/presentation/features/statistics/` | `test/domain/usecases/statistics/get_statistics_test.dart` · `test/presentation/features/statistics/` | W9 |
 | Tài khoản/Sync | `docs/business/account-sync/account-sync.md` | `lib/data/datasources/remote/` | TBD | W10 |
 | Gắn kết/streak | `docs/business/engagement/dashboard-engagement.md` | `lib/domain/{types,models,usecases/engagement}` · `lib/presentation/features/engagement/` | `test/domain/usecases/engagement/compute_streak_test.dart` · `test/presentation/features/engagement/` | W11 |
 | Cài đặt/Backup | `docs/business/settings/settings.md` | `lib/presentation/features/settings/` | TBD | W12 |

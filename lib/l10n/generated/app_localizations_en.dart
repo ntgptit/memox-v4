@@ -510,6 +510,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardError => 'Couldn\'t load your dashboard';
 
   @override
+  String get statsScopeCurrentPair => 'This pair';
+
+  @override
+  String get statsScopeAllApp => 'All app';
+
+  @override
+  String get statsOverviewTitle => 'Library overview';
+
+  @override
+  String get statsPairs => 'Pairs';
+
+  @override
+  String get statsDecks => 'Decks';
+
+  @override
+  String get statsBoxTitle => 'Leitner boxes';
+
+  @override
+  String get statsForecastTitle => 'Due in the next 7 days';
+
+  @override
+  String get statsActivityTitle => 'Activity (14 days)';
+
+  @override
+  String get statsInsufficient => 'Study more to see statistics';
+
+  @override
+  String get statsError => 'Couldn\'t load statistics';
+
+  @override
+  String statsDayOffset(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '+${count}d',
+      one: 'Tomorrow',
+      zero: 'Today',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get searchHint => 'Search by word or meaning';
 
   @override

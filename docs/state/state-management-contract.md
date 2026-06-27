@@ -25,6 +25,8 @@ dữ liệu duy nhất.
 | `GameSessionNotifier` | ván game (N thẻ, hàng đợi học-lại, tiến độ) | buildGameRound (đọc card/srs, KHÔNG ghi SRS — D-007) | autoDispose (family theo GameRequest) |
 | `SettingsNotifier` | cài đặt (theme, SRS, game, nhắc) | readSettings, updateSetting | keepAlive |
 | `EngagementNotifier` | hoạt động ngày + mục tiêu + streak + tóm tắt thư viện | dailyActivity.forDay/allForPair, settings.readInt (mục tiêu), computeStreak, deck.libraryTree | keepAlive |
+| `StatsScopeNotifier` | phạm vi thống kê đang chọn (cặp/toàn app) | — (UI state) | keepAlive |
+| `StatisticsNotifier` | thống kê theo phạm vi (tổng quan, ô Leitner, dự báo, hoạt động) | getStatistics (đọc card/srs_state/daily_activity) | autoDispose (family theo StatsScope) |
 
 ## Rules
 

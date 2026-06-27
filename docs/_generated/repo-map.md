@@ -416,7 +416,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ language_pair_providers.dart
 │  │  │  ├─ search_providers.dart
 │  │  │  ├─ settings_providers.dart
-│  │  │  └─ srs_providers.dart
+│  │  │  ├─ srs_providers.dart
+│  │  │  └─ statistics_providers.dart
 │  │  ├─ router/
 │  │  │  ├─ app_router.dart
 │  │  │  └─ route_paths.dart
@@ -459,7 +460,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ language_pair_repository_impl.dart
 │  │  │  ├─ search_repository_impl.dart
 │  │  │  ├─ settings_repository_impl.dart
-│  │  │  └─ srs_repository_impl.dart
+│  │  │  ├─ srs_repository_impl.dart
+│  │  │  └─ statistics_repository_impl.dart
 │  │  └─ services/
 │  ├─ domain/
 │  │  ├─ entities/
@@ -478,7 +480,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ game_card.dart
 │  │  │  ├─ language_pair_context.dart
 │  │  │  ├─ play_menu.dart
-│  │  │  └─ search_result.dart
+│  │  │  ├─ search_result.dart
+│  │  │  └─ statistics_summary.dart
 │  │  ├─ repositories/
 │  │  │  ├─ card_repository.dart
 │  │  │  ├─ daily_activity_repository.dart
@@ -486,7 +489,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ language_pair_repository.dart
 │  │  │  ├─ search_repository.dart
 │  │  │  ├─ settings_repository.dart
-│  │  │  └─ srs_repository.dart
+│  │  │  ├─ srs_repository.dart
+│  │  │  └─ statistics_repository.dart
 │  │  ├─ services/
 │  │  │  └─ srs_scheduler.dart
 │  │  ├─ types/
@@ -499,6 +503,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ leitner_box.dart
 │  │  │  ├─ result.dart
 │  │  │  ├─ sort.dart
+│  │  │  ├─ stats_scope.dart
 │  │  │  ├─ streak.dart
 │  │  │  └─ study_entry.dart
 │  │  └─ usecases/
@@ -509,6 +514,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ language_pair/
 │  │     ├─ search/
 │  │     ├─ srs/
+│  │     ├─ statistics/
 │  │     └─ study/
 │  ├─ l10n/
 │  │  ├─ app_en.arb
@@ -521,6 +527,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ game/
 │  │  │  ├─ language_pair/
 │  │  │  ├─ search/
+│  │  │  ├─ statistics/
 │  │  │  └─ study/
 │  │  └─ shared/
 │  │     ├─ async/
@@ -582,6 +589,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ game/
 │  │     ├─ language_pair/
 │  │     ├─ srs/
+│  │     ├─ statistics/
 │  │     └─ study/
 │  └─ presentation/
 │     ├─ features/
@@ -590,6 +598,7 @@ Read this first in a new session instead of re-exploring the tree.
 │     │  ├─ flashcard/
 │     │  ├─ game/
 │     │  ├─ search/
+│     │  ├─ statistics/
 │     │  └─ study/
 │     └─ shared/
 │        ├─ layouts/

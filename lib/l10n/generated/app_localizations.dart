@@ -1010,6 +1010,72 @@ abstract class AppLocalizations {
   /// **'Couldn\'t load your dashboard'**
   String get dashboardError;
 
+  /// No description provided for @statsScopeCurrentPair.
+  ///
+  /// In en, this message translates to:
+  /// **'This pair'**
+  String get statsScopeCurrentPair;
+
+  /// No description provided for @statsScopeAllApp.
+  ///
+  /// In en, this message translates to:
+  /// **'All app'**
+  String get statsScopeAllApp;
+
+  /// No description provided for @statsOverviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Library overview'**
+  String get statsOverviewTitle;
+
+  /// No description provided for @statsPairs.
+  ///
+  /// In en, this message translates to:
+  /// **'Pairs'**
+  String get statsPairs;
+
+  /// No description provided for @statsDecks.
+  ///
+  /// In en, this message translates to:
+  /// **'Decks'**
+  String get statsDecks;
+
+  /// No description provided for @statsBoxTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leitner boxes'**
+  String get statsBoxTitle;
+
+  /// No description provided for @statsForecastTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Due in the next 7 days'**
+  String get statsForecastTitle;
+
+  /// No description provided for @statsActivityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity (14 days)'**
+  String get statsActivityTitle;
+
+  /// No description provided for @statsInsufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Study more to see statistics'**
+  String get statsInsufficient;
+
+  /// No description provided for @statsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load statistics'**
+  String get statsError;
+
+  /// No description provided for @statsDayOffset.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Today} =1{Tomorrow} other{+{count}d}}'**
+  String statsDayOffset(int count);
+
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:

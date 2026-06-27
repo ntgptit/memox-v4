@@ -18,7 +18,7 @@ the same commit (CLAUDE.md WBS rule).
 | W6 | Bộ thẻ (cây lồng nhau) | W2 | Done | `docs/business/deck/deck-management.md` |
 | W7 | Tìm kiếm | W2 | Done | `docs/business/search/global-search.md` |
 | W8 | Nhập / Xuất | W6 | Planned | `docs/business/import-export/import-export.md` |
-| W9 | Thống kê | W3, W11 | Planned | `docs/business/statistics/statistics.md` |
+| W9 | Thống kê | W3, W11 | Done | `docs/business/statistics/statistics.md` |
 | W10 | Tài khoản & Đồng bộ Google | W1 | Planned | `docs/business/account-sync/account-sync.md` |
 | W11 | Gắn kết / streak | W4 | Done | `docs/business/engagement/dashboard-engagement.md` |
 | W12 | Cài đặt & Backup cục bộ | W1 | Planned | `docs/business/settings/settings.md` |
@@ -31,7 +31,8 @@ tổng hợp đệ quy); **W3 Done** (engine SRS 8 ô Leitner — scheduler + qu
 **W5 Done** (4 game + picker, luyện thuần không đổi SRS); **W4 Done** (5 lối vào + Play menu +
 NewLearn/DueReview/Review/Player/result + daily_activity); **W7 Done** (tìm kiếm term+nghĩa +
 lọc trạng thái); **W11 Done** (dashboard Today: hoạt động + mục tiêu + streak D-021);
-**W9/W12/W13 Planned**, **W8/W10 BLOCKED** (gated dep — xem §10 + NIGHT-LOG).
+**W9 Done** (thống kê: tổng quan + ô Leitner + dự báo + hoạt động, phạm vi cặp↔toàn app);
+**W12/W13 Planned**, **W8/W10 BLOCKED** (gated dep — xem §10 + NIGHT-LOG).
 
 **S0 (nền tiếp theo, tiền đề mọi feature) Done:** app shell (`StatefulShellRoute` +
 bottom nav 4 tab + Drawer cặp ngôn ngữ) + Drift `language_pair` (DAO/repo/usecases:

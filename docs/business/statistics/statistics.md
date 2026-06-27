@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `statistics/statistics` |
 | Gói công việc (WBS) | W9 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (tổng quan thư viện + phân bố ô Leitner + dự báo đến hạn 7 ngày + hoạt động 14 ngày, bộ chọn phạm vi cặp↔toàn app; biểu đồ dựng từ primitive/token, không thêm thư viện chart. Hoãn: heatmap đầy đủ, độ chính xác (chưa lưu kết quả đúng/sai), streak dài nhất) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-010, D-021 |
 | Phiên bản | 1.0 |

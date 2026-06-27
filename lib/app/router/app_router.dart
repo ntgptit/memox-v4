@@ -12,6 +12,7 @@ import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.d
 import 'package:memox_v4/presentation/features/game/screens/game_screen.dart';
 import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
+import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/player_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/review_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/study_session_screen.dart';
@@ -54,8 +55,7 @@ abstract final class AppRouter {
             routes: <RouteBase>[
               GoRoute(
                 path: RoutePaths.statistics,
-                builder: (context, state) =>
-                    MxPlaceholder(title: AppLocalizations.of(context).tabStats),
+                builder: (context, state) => const StatisticsScreen(),
               ),
             ],
           ),

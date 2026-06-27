@@ -505,6 +505,48 @@ class AppLocalizationsVi extends AppLocalizations {
   String get dashboardError => 'Không tải được bảng hôm nay';
 
   @override
+  String get statsScopeCurrentPair => 'Cặp này';
+
+  @override
+  String get statsScopeAllApp => 'Toàn app';
+
+  @override
+  String get statsOverviewTitle => 'Tổng quan thư viện';
+
+  @override
+  String get statsPairs => 'Cặp';
+
+  @override
+  String get statsDecks => 'Bộ thẻ';
+
+  @override
+  String get statsBoxTitle => 'Phân bố ô Leitner';
+
+  @override
+  String get statsForecastTitle => 'Đến hạn trong 7 ngày tới';
+
+  @override
+  String get statsActivityTitle => 'Hoạt động (14 ngày)';
+
+  @override
+  String get statsInsufficient => 'Học thêm để xem thống kê';
+
+  @override
+  String get statsError => 'Không tải được thống kê';
+
+  @override
+  String statsDayOffset(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '+$count ngày',
+      one: 'Ngày mai',
+      zero: 'Hôm nay',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get searchHint => 'Tìm theo từ hoặc nghĩa';
 
   @override

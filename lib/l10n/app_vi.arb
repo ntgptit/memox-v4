@@ -166,6 +166,18 @@
   "dashboardMastered": "Đã thuộc {percent}%",
   "dashboardError": "Không tải được bảng hôm nay",
 
+  "statsScopeCurrentPair": "Cặp này",
+  "statsScopeAllApp": "Toàn app",
+  "statsOverviewTitle": "Tổng quan thư viện",
+  "statsPairs": "Cặp",
+  "statsDecks": "Bộ thẻ",
+  "statsBoxTitle": "Phân bố ô Leitner",
+  "statsForecastTitle": "Đến hạn trong 7 ngày tới",
+  "statsActivityTitle": "Hoạt động (14 ngày)",
+  "statsInsufficient": "Học thêm để xem thống kê",
+  "statsError": "Không tải được thống kê",
+  "statsDayOffset": "{count, plural, =0{Hôm nay} =1{Ngày mai} other{+{count} ngày}}",
+
   "searchHint": "Tìm theo từ hoặc nghĩa",
   "searchRecent": "Tìm gần đây",
   "searchFilterAll": "Tất cả",

@@ -9,7 +9,7 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | --- | --- | --- | --- | --- |
 | `today` | `/today` | — | tab (shell) | Hôm nay — dashboard gắn kết (W11): hoạt động + mục tiêu + streak; "Tiếp tục học" → tab Library (`/`) |
 | `library` | `/` | — | tab · root (shell) | màn chính (cây bộ thẻ gốc); placeholder ở S0, W6 thay |
-| `statistics` (tab) | `/statistics` | — | tab (shell) | Thống kê (W9); cùng route mở từ drawer |
+| `statistics` (tab) | `/statistics` | — | tab (shell) | Thống kê (W9): tổng quan + ô Leitner + dự báo + hoạt động, bộ chọn phạm vi cặp↔toàn app; cùng route mở từ drawer |
 | `profile` | `/profile` | — | tab (shell) | Cá nhân — tài khoản & cài đặt (W10/W12); placeholder ở S0 |
 | `deckDetail` | `/deck/:id` | deckId | push | node cây: bộ thẻ con + thẻ |
 | `flashcardEditor` | `/deck/:id/card` | deckId, cardId? | push | tạo/sửa thẻ |
