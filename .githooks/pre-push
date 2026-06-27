@@ -1,16 +1,47 @@
 #!/bin/sh
 # pre-push — last gate before code leaves the machine.
 #
-# Re-runs doc_guard so a push can never carry doc-code drift (a doc referencing a
-# path/symbol that no longer exists). Cheap and deterministic; no network.
+#  1) doc_guard — a push can never carry doc-code drift (doc referencing a
+#     path/symbol that no longer exists). Cheap, deterministic, no network.
+#  2) design sync — if the push includes changes under the design-kit localDir
+#     (.design-sync/config.json), push that delta to the Claude Design project
+#     via tool/parity/sync-design.mjs (drives the design-authorized `claude` CLI).
 #
-# Extend this with project-specific push-time checks (design sync, full test run,
-# etc.) as the project grows.
+# Bypass design sync with `MEMOX_SKIP_DESIGN_SYNC=1 git push` or `git push --no-verify`.
 set -e
 
 if ! command -v node >/dev/null 2>&1; then
-  echo "pre-push: node not found; skipping doc_guard." >&2
+  echo "pre-push: node not found; skipping checks." >&2
   exit 0
 fi
 
+# 1) doc/code parity
 node tool/doc_guard/run.mjs check
+
+# 2) design sync on push -----------------------------------------------------
+[ "$MEMOX_SKIP_DESIGN_SYNC" = "1" ] && exit 0
+[ -f .design-sync/config.json ] || exit 0
+if ! command -v claude >/dev/null 2>&1; then
+  echo "pre-push: \`claude\` CLI not found; skipping design sync (run \`node tool/parity/sync-design.mjs\` from a design-authorized CLI)." >&2
+  exit 0
+fi
+
+LOCALDIR=$(node -e "try{process.stdout.write((JSON.parse(require('fs').readFileSync('.design-sync/config.json','utf8')).localDir)||'')}catch(e){}")
+[ -n "$LOCALDIR" ] || exit 0
+
+zero=0000000000000000000000000000000000000000
+# git feeds ref updates on stdin: <local ref> <local sha> <remote ref> <remote sha>
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "$zero" ] && continue                 # branch deletion
+  if [ "$remote_sha" = "$zero" ]; then
+    echo "pre-push: new branch — syncing design delta since last recorded sync…"
+    node tool/parity/sync-design.mjs --no-record
+  else
+    if [ -n "$(git diff --name-only "$remote_sha".."$local_sha" -- "$LOCALDIR")" ]; then
+      echo "pre-push: design kit changed in ${remote_sha}..${local_sha} — pushing to Claude Design…"
+      node tool/parity/sync-design.mjs "$remote_sha" --no-record
+    fi
+  fi
+done
+
+exit 0
