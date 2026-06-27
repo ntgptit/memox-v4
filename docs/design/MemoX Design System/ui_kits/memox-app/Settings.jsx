@@ -25,15 +25,15 @@ const GROUPS = [
 
 function Val({ v }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 2, color: 'var(--memox-text-tertiary)' }}>
-      {v ? <span style={{ fontWeight: 600, fontSize: 'var(--memox-font-size-sm)' }}>{v}</span> : null}
-      <span className="material-symbols-rounded" style={{ fontSize: 20 }}>chevron_right</span>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-1)', color: 'var(--memox-text-tertiary)' }}>
+      {v ? <span style={{ fontWeight: 'var(--memox-font-weight-semibold)', fontSize: 'var(--memox-font-size-sm)' }}>{v}</span> : null}
+      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-lg)' }}>chevron_right</span>
     </div>
   );
 }
 
 function Label({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em', margin: '4px 0 0 4px' }}>{children}</div>;
+  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
 }
 
 function Profile() {
@@ -41,7 +41,7 @@ function Profile() {
     <MxCard node="settings/profile" style={{ flexDirection: 'row', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
       <MxAvatar name="Linh Tran" size="lg" ring />
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)' }}>Linh Tran</div>
+        <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-md)' }}>Linh Tran</div>
         <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>linh@memox.app</div>
       </div>
     </MxCard>

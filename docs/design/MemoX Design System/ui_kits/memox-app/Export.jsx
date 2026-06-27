@@ -11,7 +11,7 @@ const FORMATS = [
 const SEPS = ['Tab', 'Comma', 'Semicolon'];
 
 function SectionLabel({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em', margin: '4px 0 0 4px' }}>{children}</div>;
+  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
 }
 
 function Export({ state = 'config' }) {
@@ -22,8 +22,8 @@ function Export({ state = 'config' }) {
     return (
       <MxScaffold node="export/screen" appBar={bar}>
         <MxCard node="export/progress" style={{ alignItems: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7)' }}>
-          <span className="material-symbols-rounded" style={{ fontSize: 40, color: 'var(--memox-primary)' }}>sync</span>
-          <div style={{ fontWeight: 700 }}>Exporting…</div>
+          <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-3xl)', color: 'var(--memox-primary)' }}>sync</span>
+          <div style={{ fontWeight: 'var(--memox-font-weight-bold)' }}>Exporting…</div>
           <div style={{ width: '100%' }}><window.ProgressBar value={70} height={8} node="export/bar" /></div>
         </MxCard>
       </MxScaffold>
@@ -35,7 +35,7 @@ function Export({ state = 'config' }) {
       <MxScaffold node="export/screen" appBar={bar}>
         <window.EmptyState node="export/done" icon="ios_share" tone="success" title="Exported 320 cards"
           text="Your file is ready to share or save."
-          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: 240 }}>
+          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
             <MxButton variant="primary" icon="share" block node="export/share">Share file</MxButton>
             <MxButton variant="ghost" icon="save_alt" block node="export/save">Save to device</MxButton>
           </div>} />

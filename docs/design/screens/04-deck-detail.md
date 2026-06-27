@@ -26,3 +26,4 @@ badge trạng thái (mới / đến hạn / đã thuộc). Đáy: thanh hành đ
 6. **Sheet thao tác trên một thẻ** (chạm-giữ hoặc nút ⋮) — Sửa · Ẩn/Hiện · Xoá (đỏ).
 7. **Dialog xác nhận xoá** — xoá một thẻ, hoặc xoá bộ thẻ (cảnh báo xoá lan mọi thẻ).
 8. **Dialog xác nhận đặt lại tiến độ** — "Đặt lại tiến độ tất cả thẻ về Mới?".
+9. **Lỗi** — không tải được bộ thẻ: thông báo lỗi + "Thử lại".

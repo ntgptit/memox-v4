@@ -14,11 +14,11 @@ const NAV = [
 function Bars({ data, labels, tone }) {
   const max = Math.max.apply(null, data);
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 120 }}>
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'var(--memox-space-2)', height: 'var(--memox-size-2xl)' }}>
       {data.map((v, i) => (
-        <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, height: '100%', justifyContent: 'flex-end' }}>
-          <div style={{ width: '100%', height: (v / max * 100) + '%', background: tone || 'var(--memox-primary)', borderRadius: 6, minHeight: 4 }} />
-          <span style={{ fontSize: 10, color: 'var(--memox-text-tertiary)' }}>{labels[i]}</span>
+        <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--memox-space-1)', height: '100%', justifyContent: 'flex-end' }}>
+          <div style={{ width: '100%', height: (v / max * 100) + '%', background: tone || 'var(--memox-primary)', borderRadius: 'var(--memox-radius-xs)', minHeight: 'var(--memox-size-3xs)' }} />
+          <span style={{ fontSize: 'var(--memox-font-size-xs)', color: 'var(--memox-text-tertiary)' }}>{labels[i]}</span>
         </div>
       ))}
     </div>
@@ -27,12 +27,12 @@ function Bars({ data, labels, tone }) {
 
 function Heatmap() {
   return (
-    <div style={{ display: 'flex', gap: 3, overflowX: 'auto' }}>
+    <div style={{ display: 'flex', gap: 'var(--memox-space-1)', overflowX: 'auto' }}>
       {Array.from({ length: 14 }).map((_, w) => (
-        <div key={w} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <div key={w} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
           {Array.from({ length: 7 }).map((_, d) => {
             const op = [0.08, 0.25, 0.45, 0.7, 1][(w * 7 + d * 3) % 5];
-            return <div key={d} style={{ width: 13, height: 13, borderRadius: 4, background: 'var(--memox-primary)', opacity: op }} />;
+            return <div key={d} style={{ width: 'var(--memox-size-xs)', height: 'var(--memox-size-xs)', borderRadius: 'var(--memox-radius-xs)', background: 'var(--memox-primary)', opacity: op }} />;
           })}
         </div>
       ))}
@@ -42,10 +42,10 @@ function Heatmap() {
 
 function Donut({ pct }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: '4px 0' }}>
-      <div style={{ position: 'relative', width: 130, height: 130, borderRadius: '50%', background: 'conic-gradient(var(--memox-success) ' + pct + '%, var(--memox-surface-sunken) 0)' }}>
-        <div style={{ position: 'absolute', inset: 16, borderRadius: '50%', background: 'var(--memox-surface)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ fontSize: 26, fontWeight: 800 }}>{pct}%</div>
+    <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--memox-space-1) 0' }}>
+      <div style={{ position: 'relative', width: 'var(--memox-size-2xl)', height: 'var(--memox-size-2xl)', borderRadius: '50%', background: 'conic-gradient(var(--memox-success) ' + pct + '%, var(--memox-surface-sunken) 0)' }}>
+        <div style={{ position: 'absolute', inset: 'var(--memox-space-4)', borderRadius: '50%', background: 'var(--memox-surface)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>{pct}%</div>
           <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>accuracy</div>
         </div>
       </div>
@@ -66,7 +66,7 @@ function Statistics({ state = 'loaded' }) {
     return (
       <MxScaffold node="statistics/screen" appBar={bar} bottomNav={nav}>
         <S h={40} r={999} />
-        {[0, 1, 2].map((i) => <MxCard key={i}><S w="45%" h={14} /><S h={110} r={12} style={{ marginTop: 10 }} /></MxCard>)}
+        {[0, 1, 2].map((i) => <MxCard key={i}><S w="45%" h={14} /><S h={110} r={12} style={{ marginTop: 'var(--memox-space-3)' }} /></MxCard>)}
       </MxScaffold>
     );
   }

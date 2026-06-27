@@ -13,11 +13,11 @@ const ROWS = [['Term', 'Meaning'], ['안녕하세요', 'Hello'], ['감사합니�
 
 function Table({ rows }) {
   return (
-    <div style={{ border: '1px solid var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', overflow: 'hidden' }}>
+    <div style={{ border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', overflow: 'hidden' }}>
       {rows.map((r, i) => (
-        <div key={i} style={{ display: 'flex', gap: 12, padding: '10px 14px', borderTop: i ? '1px solid var(--memox-divider)' : 'none', background: i === 0 ? 'var(--memox-surface-sunken)' : 'transparent', fontSize: 'var(--memox-font-size-sm)' }}>
-          <span style={{ flex: 1, fontWeight: 700 }}>{r[0]}</span>
-          <span style={{ flex: 1.4, fontWeight: i === 0 ? 700 : 400, color: i === 0 ? 'inherit' : 'var(--memox-text-secondary)' }}>{r[1]}</span>
+        <div key={i} style={{ display: 'flex', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderTop: i ? 'var(--memox-stroke-hairline) solid var(--memox-divider)' : 'none', background: i === 0 ? 'var(--memox-surface-sunken)' : 'transparent', fontSize: 'var(--memox-font-size-sm)' }}>
+          <span style={{ flex: 1, fontWeight: 'var(--memox-font-weight-bold)' }}>{r[0]}</span>
+          <span style={{ flex: 1.4, fontWeight: i === 0 ? 'var(--memox-font-weight-bold)' : 'var(--memox-font-weight-regular)', color: i === 0 ? 'inherit' : 'var(--memox-text-secondary)' }}>{r[1]}</span>
         </div>
       ))}
     </div>
@@ -25,7 +25,7 @@ function Table({ rows }) {
 }
 
 function SectionLabel({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em', margin: '4px 0 0 4px' }}>{children}</div>;
+  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
 }
 
 function Import({ state = 'source' }) {
@@ -50,14 +50,14 @@ function Import({ state = 'source' }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
               <MxIconTile icon={s.icon} tone={i === 2 ? 'accent' : null} />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 700, fontSize: 'var(--memox-font-size-base)' }}>{s.name}</div>
-                <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>{s.desc}</div>
+                <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>{s.name}</div>
+                <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>{s.desc}</div>
               </div>
               <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-tertiary)' }}>chevron_right</span>
             </div>
           </MxCard>
         ))}
-        <div data-mx-node="import/paste" style={{ border: '1px dashed var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', minHeight: 96, padding: '14px', color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)' }}>Paste your data here (one card per line: term[tab]meaning)…</div>
+        <div data-mx-node="import/paste" style={{ border: 'var(--memox-stroke-hairline) dashed var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', minHeight: 'var(--memox-size-xl)', padding: 'var(--memox-space-4)', color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)' }}>Paste your data here (one card per line: term[tab]meaning)…</div>
       </MxScaffold>
     );
   }
@@ -86,7 +86,7 @@ function Import({ state = 'source' }) {
   return (
     <MxScaffold node="import/screen" appBar={bar}>
       {state === 'dup-warning' ? (
-        <div data-mx-node="import/dup-warning" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div data-mx-node="import/dup-warning" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
           <span className="material-symbols-rounded">warning</span>
           <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>8 cards already exist — import anyway?</span>
         </div>

@@ -27,6 +27,10 @@ luỹ 0→100%**; thân nhúng màn chặng hiện tại.
 7. **Ôn đến hạn ("Lặp lại")**: giống các chặng nhưng trên thẻ đến hạn; kết thúc một hình
    thức thì hiện nút "Học lại" đúng hình thức đó.
 8. **Dialog thoát giữa chừng**: "Thoát? Thẻ chưa hoàn thành 5 chặng sẽ vẫn là Mới."
+9. **Lỗi tiếp tục phiên**: không khôi phục được tiến độ của một phiên đang dở; thông báo
+   lỗi + CTA "Học lại từ đầu" / "Quay lại bộ thẻ" (không có thanh tiến độ vì chưa tải được).
+10. **Lỗi lưu câu trả lời** (mọi chặng): không ghi được kết quả một thẻ; dialog trên màn
+    chặng hiện tại + "Thử lại" để giữ đúng lịch ôn.
 
 Mỗi frame một bố cục riêng; thanh tiến độ luôn ở trên.
 

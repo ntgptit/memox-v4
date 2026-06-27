@@ -19,3 +19,9 @@ tiêu (cập nhật streak + tiến độ mục tiêu ngày). CTA: "Tiếp tục
    nay 🎉".
 3. **Chưa đạt mục tiêu** — còn thiếu bao nhiêu để đạt + CTA "Học tiếp".
 4. **Phiên có nhiều thẻ sai** — gợi ý "Ôn lại N thẻ chưa chắc" + CTA.
+5. **Đang lưu kết quả** — ngay sau khi phiên kết thúc, hệ thống ghi kết quả vào lịch ôn
+   (SRS) + cập nhật streak; khối số liệu hiển thị skeleton trong khi chờ.
+6. **Thử lưu lại** — người học bấm "Thử lại" sau khi lưu thất bại; cùng bố cục "đang lưu"
+   nhưng copy báo đang thử lại.
+7. **Lỗi lưu kết quả** — không cập nhật được lịch ôn: thông báo lỗi + CTA "Thử lại" /
+   "Để sau" (kết quả phiên không bị mất).

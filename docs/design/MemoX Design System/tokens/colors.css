@@ -137,3 +137,14 @@
   --memox-overlay: rgba(0, 0, 0, 0.66);
   --memox-scrim: rgba(255, 255, 255, 0.04);
 }
+
+/* --- accent palette · the selectable accent colors offered by the Theme
+       picker. Theme-independent (the user picks an absolute hue), additive. --- */
+:root {
+  --memox-palette-indigo: #5569ff;
+  --memox-palette-violet: #7c5cff;
+  --memox-palette-green: #2bb673;
+  --memox-palette-coral: #ff6b6b;
+  --memox-palette-amber: #ff9f43;
+  --memox-palette-cyan: #22a3c3;
+}

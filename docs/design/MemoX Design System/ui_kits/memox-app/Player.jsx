@@ -5,9 +5,9 @@ const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxFab, MxButton, MxSegmented
 
 function Dots() {
   return (
-    <div data-mx-node="player/progress" style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
+    <div data-mx-node="player/progress" style={{ display: 'flex', gap: 'var(--memox-space-2)', justifyContent: 'center' }}>
       {Array.from({ length: 8 }).map((_, i) => (
-        <div key={i} style={{ width: i === 3 ? 22 : 8, height: 8, borderRadius: 999, background: i <= 3 ? 'var(--memox-primary)' : 'var(--memox-surface-sunken)' }} />
+        <div key={i} style={{ width: i === 3 ? 'var(--memox-size-xs)' : 'var(--memox-size-2xs)', height: 'var(--memox-size-2xs)', borderRadius: 'var(--memox-radius-pill)', background: i <= 3 ? 'var(--memox-primary)' : 'var(--memox-surface-sunken)' }} />
       ))}
     </div>
   );
@@ -29,7 +29,7 @@ function Player({ state = 'playing' }) {
       <MxScaffold node="player/screen" appBar={bar}>
         <window.EmptyState node="player/end" icon="library_music" tone="accent" title="All played"
           text="The player has read through every card in this deck."
-          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: 220 }}>
+          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
             <MxButton variant="primary" icon="replay" block node="player/replay">Replay</MxButton>
             <MxButton variant="ghost" icon="close" block node="player/close">Close</MxButton>
           </div>} />
@@ -40,10 +40,10 @@ function Player({ state = 'playing' }) {
   return (
     <MxScaffold node="player/screen" appBar={bar}>
       <Dots />
-      <MxCard node="player/card" style={{ flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', minHeight: 280 }}>
-        <div style={{ fontSize: 52, fontWeight: 800, letterSpacing: '-.02em' }}>학교</div>
-        <div style={{ width: 56, height: 2, background: 'var(--memox-divider)', borderRadius: 2 }} />
-        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 700 }}>school</div>
+      <MxCard node="player/card" style={{ flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', minHeight: 'var(--memox-size-4xl)' }}>
+        <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
+        <div style={{ width: 'var(--memox-size-md)', height: 'var(--memox-size-3xs)', background: 'var(--memox-divider)', borderRadius: 'var(--memox-radius-xs)' }} />
+        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>school</div>
       </MxCard>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--memox-space-6)' }}>

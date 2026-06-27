@@ -178,6 +178,19 @@
   gap: var(--memox-space-3);
   margin-bottom: calc(-1 * var(--memox-space-2));
 }
+/* Section grouping wrapper: a plain <div> holding a MxSectionHeader plus its
+   content (card / grid / control). The header's negative margin-bottom above is
+   tuned to be absorbed by the .app__body flex gap; inside a plain block wrapper
+   there is no gap to absorb it, so the content collapses onto the caption. Lay
+   the wrapper out as a column and neutralise the negative margin there. */
+.app__body > div:has(> .section-head) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--memox-space-3);
+}
+.app__body > div:has(> .section-head) > .section-head {
+  margin-bottom: 0;
+}
 .section-head__text {
   display: flex;
   flex-direction: column;

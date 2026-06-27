@@ -7,16 +7,16 @@ const LEFT = ['time', 'love', 'friend', 'food', 'school'];
 const RIGHT = ['사랑', '학교', '음식', '시간', '친구'];
 
 const TONE = {
-  selected: { border: '2px solid var(--memox-primary)', background: 'var(--memox-primary-soft)', color: 'var(--memox-on-primary-soft)' },
-  correct: { border: '2px solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
-  wrong: { border: '2px solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
+  selected: { border: 'var(--memox-stroke-emphasis) solid var(--memox-primary)', background: 'var(--memox-primary-soft)', color: 'var(--memox-on-primary-soft)' },
+  correct: { border: 'var(--memox-stroke-emphasis) solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
+  wrong: { border: 'var(--memox-stroke-emphasis) solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
 };
 
 function Tile({ text, tone, node }) {
-  if (tone === 'matched') return <div style={{ minHeight: 56, visibility: 'hidden' }} />;
-  const skin = TONE[tone] || { border: '1px solid var(--memox-divider)', background: 'var(--memox-surface)' };
+  if (tone === 'matched') return <div style={{ minHeight: 'var(--memox-size-md)', visibility: 'hidden' }} />;
+  const skin = TONE[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
   return (
-    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: '16px 10px', minHeight: 56, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 700, fontSize: 'var(--memox-font-size-base)', cursor: 'pointer' }}>{text}</div>
+    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4) var(--memox-space-3)', minHeight: 'var(--memox-size-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', cursor: 'pointer' }}>{text}</div>
   );
 }
 

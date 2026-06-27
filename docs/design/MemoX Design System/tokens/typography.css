@@ -35,6 +35,7 @@
   --memox-font-weight-extrabold: 800;
 
   /* line heights */
+  --memox-line-height-none: 1;
   --memox-line-height-tight: 1.15;
   --memox-line-height-snug: 1.32;
   --memox-line-height-normal: 1.5;

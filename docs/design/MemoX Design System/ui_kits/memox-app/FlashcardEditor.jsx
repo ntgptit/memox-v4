@@ -5,12 +5,12 @@ const { MxScaffold, MxAppBar, MxCard, MxButton, MxIconButton, MxChip, MxSwitch }
 
 function Field({ label, value, placeholder, multiline, error, required, node, trailing }) {
   return (
-    <div data-mx-node={node} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-secondary)' }}>
+    <div data-mx-node={node} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-1)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>
         {label}{required ? <span style={{ color: 'var(--memox-error)' }}>*</span> : null}
       </div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, minHeight: multiline ? 80 : 48, padding: '12px 14px', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: '1px solid ' + (error ? 'var(--memox-error)' : 'var(--memox-divider)') }}>
-        <span style={{ flex: 1, fontSize: 'var(--memox-font-size-base)', color: value ? 'inherit' : 'var(--memox-text-tertiary)', lineHeight: 1.5 }}>{value || placeholder}</span>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--memox-space-2)', minHeight: multiline ? 'var(--memox-size-lg)' : 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: 'var(--memox-stroke-hairline) solid ' + (error ? 'var(--memox-error)' : 'var(--memox-divider)') }}>
+        <span style={{ flex: 1, fontSize: 'var(--memox-font-size-base)', color: value ? 'inherit' : 'var(--memox-text-tertiary)', lineHeight: 'var(--memox-line-height-normal)' }}>{value || placeholder}</span>
         {trailing}
       </div>
       {error ? <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-error)' }}>{error}</div> : null}
@@ -20,12 +20,12 @@ function Field({ label, value, placeholder, multiline, error, required, node, tr
 
 function DupBanner() {
   return (
-    <div data-mx-node="flashcard-editor/dup-warning" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-        <span className="material-symbols-rounded" style={{ fontSize: 20 }}>warning</span>
-        <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', lineHeight: 1.5 }}>A card “안녕하세요” already exists in this deck.</span>
+    <div data-mx-node="flashcard-editor/dup-warning" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+      <div style={{ display: 'flex', gap: 'var(--memox-space-2)', alignItems: 'flex-start' }}>
+        <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-lg)' }}>warning</span>
+        <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', lineHeight: 'var(--memox-line-height-normal)' }}>A card “안녕하세요” already exists in this deck.</span>
       </div>
-      <div style={{ display: 'flex', gap: 8 }}>
+      <div style={{ display: 'flex', gap: 'var(--memox-space-2)' }}>
         <MxButton variant="ghost" size="sm" node="flashcard-editor/dup-view">View existing</MxButton>
         <MxButton variant="primary" size="sm" node="flashcard-editor/dup-add">Add anyway</MxButton>
       </div>
@@ -61,9 +61,9 @@ function FlashcardEditor({ state = 'create' }) {
         ? <Field label="Secondary meaning (Vietnamese)" node="flashcard-editor/meaning-2" value="xin chào" placeholder="Enter a secondary meaning…" />
         : <MxButton variant="ghost" icon="add" block node="flashcard-editor/add-meaning">Add a secondary-language meaning</MxButton>}
 
-      <div data-mx-node="flashcard-editor/gender" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-secondary)' }}>Gender (optional)</div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+      <div data-mx-node="flashcard-editor/gender" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>Gender (optional)</div>
+        <div style={{ display: 'flex', gap: 'var(--memox-space-2)', flexWrap: 'wrap' }}>
           {['None', 'Masc', 'Fem', 'Neutral'].map((g, i) => <MxChip key={g} label={g} selected={i === 0} node={'flashcard-editor/gender-' + i} />)}
         </div>
       </div>

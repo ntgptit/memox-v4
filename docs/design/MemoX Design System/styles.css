@@ -8,6 +8,9 @@
 @import url('tokens/typography.css');
 @import url('tokens/spacing.css');
 @import url('tokens/radius.css');
+@import url('tokens/stroke.css');
+@import url('tokens/size.css');
+@import url('tokens/icon-size.css');
 @import url('tokens/elevation.css');
 
 @import url('components.css');

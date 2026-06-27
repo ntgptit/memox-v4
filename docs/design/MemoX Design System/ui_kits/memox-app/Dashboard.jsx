@@ -19,8 +19,8 @@ const DECKS = [
 
 function GoalRing({ pct }) {
   return (
-    <div style={{ position: 'relative', width: 74, height: 74, borderRadius: '50%', background: 'conic-gradient(var(--memox-primary) ' + pct + '%, var(--memox-surface-sunken) 0)', flexShrink: 0 }}>
-      <div style={{ position: 'absolute', inset: 8, borderRadius: '50%', background: 'var(--memox-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 15 }}>{pct}%</div>
+    <div style={{ position: 'relative', width: 'var(--memox-size-lg)', height: 'var(--memox-size-lg)', borderRadius: '50%', background: 'conic-gradient(var(--memox-primary) ' + pct + '%, var(--memox-surface-sunken) 0)', flexShrink: 0 }}>
+      <div style={{ position: 'absolute', inset: 'var(--memox-space-2)', borderRadius: '50%', background: 'var(--memox-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-base)' }}>{pct}%</div>
     </div>
   );
 }
@@ -33,8 +33,8 @@ function Note({ icon, text, tone }) {
   };
   const c = map[tone] || map.accent;
   return (
-    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8, fontSize: 'var(--memox-font-size-sm)', fontWeight: 600 }}>
-      <span className="material-symbols-rounded" style={{ fontSize: 18 }}>{icon}</span>{text}
+    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)' }}>
+      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{icon}</span>{text}
     </div>
   );
 }
@@ -53,10 +53,10 @@ function Dashboard({ state = 'loaded' }) {
     const S = window.Skeleton;
     return (
       <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}>
-        <MxCard><S w="40%" h={12} /><S w="55%" h={30} style={{ marginTop: 8 }} /></MxCard>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>{[0, 1].map((i) => <MxCard key={i} padding="sm"><S w="60%" h={22} /><S w="45%" h={10} style={{ marginTop: 8 }} /></MxCard>)}</div>
+        <MxCard><S w="40%" h={12} /><S w="55%" h={30} style={{ marginTop: 'var(--memox-space-2)' }} /></MxCard>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>{[0, 1].map((i) => <MxCard key={i} padding="sm"><S w="60%" h={22} /><S w="45%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></MxCard>)}</div>
         <S w="45%" h={16} />
-        {[0, 1].map((i) => <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 14, alignItems: 'center' }}><S w={48} h={48} r={16} /><div style={{ flex: 1 }}><S w="60%" h={14} /><S w="40%" h={10} style={{ marginTop: 8 }} /></div></div></MxCard>)}
+        {[0, 1].map((i) => <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><S w={48} h={48} r={16} /><div style={{ flex: 1 }}><S w="60%" h={14} /><S w="40%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>)}
       </MxScaffold>
     );
   }
@@ -66,10 +66,10 @@ function Dashboard({ state = 'loaded' }) {
       <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}>
         <Note icon="bolt" tone="accent" text="You haven't studied today — start to keep your streak!" />
         <MxCard variant="primary" node="dashboard/today">
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, opacity: .9, letterSpacing: '.06em' }}>TODAY</div>
-          <div style={{ display: 'flex', gap: 'var(--memox-space-7)', marginTop: 8 }}>
-            <div><div style={{ fontSize: 30, fontWeight: 800 }}>00:00</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>time studied</div></div>
-            <div><div style={{ fontSize: 30, fontWeight: 800 }}>0</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>words learned</div></div>
+          <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', opacity: .9, letterSpacing: 'var(--memox-letter-spacing-wide)' }}>TODAY</div>
+          <div style={{ display: 'flex', gap: 'var(--memox-space-7)', marginTop: 'var(--memox-space-2)' }}>
+            <div><div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>00:00</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>time studied</div></div>
+            <div><div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>0</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>words learned</div></div>
           </div>
           <MxButton variant="contrast" icon="play_arrow" block node="dashboard/start">Start studying</MxButton>
         </MxCard>
@@ -89,33 +89,33 @@ function Dashboard({ state = 'loaded' }) {
       {reset ? <Note icon="local_fire_department" tone="warning" text="Streak reset — study today to start again." /> : null}
 
       <MxCard variant="primary" node="dashboard/today">
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, opacity: .9, letterSpacing: '.06em' }}>TODAY</div>
-        <div style={{ display: 'flex', gap: 'var(--memox-space-7)', marginTop: 8 }}>
-          <div><div style={{ fontSize: 30, fontWeight: 800 }}>12:30</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>time studied</div></div>
-          <div><div style={{ fontSize: 30, fontWeight: 800 }}>24</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>words learned</div></div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', opacity: .9, letterSpacing: 'var(--memox-letter-spacing-wide)' }}>TODAY</div>
+        <div style={{ display: 'flex', gap: 'var(--memox-space-7)', marginTop: 'var(--memox-space-2)' }}>
+          <div><div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>12:30</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>time studied</div></div>
+          <div><div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>24</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>words learned</div></div>
         </div>
       </MxCard>
 
       <MxCard node="dashboard/goal" style={{ flexDirection: 'row', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
         <GoalRing pct={goalPct} />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)' }}>Daily goal</div>
-          <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>{met ? '20/20 min · complete' : '14/20 min'}</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', marginTop: 4 }}>Met when minutes OR words reached</div>
+          <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-md)' }}>Daily goal</div>
+          <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>{met ? '20/20 min · complete' : '14/20 min'}</div>
+          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', marginTop: 'var(--memox-space-1)' }}>Met when minutes OR words reached</div>
         </div>
       </MxCard>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
         <MxCard variant="primary-soft" padding="sm" node="dashboard/streak">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span className="material-symbols-rounded" style={{ fontSize: 26 }}>local_fire_department</span>
-            <div><div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1 }}>{streak}</div><div style={{ fontSize: 12, opacity: .85 }}>day streak</div></div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
+            <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xl)' }}>local_fire_department</span>
+            <div><div style={{ fontSize: 'var(--memox-icon-size-md)', fontWeight: 'var(--memox-font-weight-extrabold)', lineHeight: 'var(--memox-line-height-none)' }}>{streak}</div><div style={{ fontSize: 'var(--memox-font-size-xs)', opacity: .85 }}>day streak</div></div>
           </div>
         </MxCard>
         <MxCard variant="muted" padding="sm" node="dashboard/mastered">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span className="material-symbols-rounded" style={{ fontSize: 26, color: 'var(--memox-success)' }}>verified</span>
-            <div><div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1 }}>55%</div><div style={{ fontSize: 12, color: 'var(--memox-text-secondary)' }}>mastered</div></div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
+            <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xl)', color: 'var(--memox-success)' }}>verified</span>
+            <div><div style={{ fontSize: 'var(--memox-icon-size-md)', fontWeight: 'var(--memox-font-weight-extrabold)', lineHeight: 'var(--memox-line-height-none)' }}>55%</div><div style={{ fontSize: 'var(--memox-font-size-xs)', color: 'var(--memox-text-secondary)' }}>mastered</div></div>
           </div>
         </MxCard>
       </div>

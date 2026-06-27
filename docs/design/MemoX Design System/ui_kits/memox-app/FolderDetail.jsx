@@ -45,7 +45,7 @@ function FolderDetail({ state = 'loaded' }) {
       <MxScaffold node="folder-detail/screen" appBar={<Bar />}>
         <window.EmptyState node="folder-detail/empty" icon="folder_open" title="Empty folder"
           text="Create a deck or subfolder to start organizing your vocabulary."
-          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: 220 }}>
+          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
             <MxButton variant="primary" icon="style" block node="folder-detail/empty-deck">Create deck</MxButton>
             <MxButton variant="ghost" icon="create_new_folder" block node="folder-detail/empty-folder">Create subfolder</MxButton>
           </div>} />
@@ -59,7 +59,7 @@ function FolderDetail({ state = 'loaded' }) {
       <MxScaffold node="folder-detail/screen" appBar={<Bar />}>
         <S h={48} r={999} />
         {[0, 1, 2, 3].map((i) => (
-          <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 14, alignItems: 'center' }}><S w={48} h={48} r={16} /><div style={{ flex: 1 }}><S w="55%" h={14} /><S w="38%" h={10} style={{ marginTop: 8 }} /></div></div></MxCard>
+          <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><S w={48} h={48} r={16} /><div style={{ flex: 1 }}><S w="55%" h={14} /><S w="38%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>
         ))}
       </MxScaffold>
     );
@@ -130,7 +130,7 @@ function FolderDetail({ state = 'loaded' }) {
               <window.ListRow key={d.node} icon={d.icon} title={d.name} muted={d.muted} node={d.node}
                 trailing={d.muted ? null : <MxIconButton icon="radio_button_unchecked" node={d.node + '-pick'} />} />
             ))}
-            <div style={{ marginTop: 8 }}><MxButton variant="primary" block node="folder-detail/move-apply">Move</MxButton></div>
+            <div style={{ marginTop: 'var(--memox-space-2)' }}><MxButton variant="primary" block node="folder-detail/move-apply">Move</MxButton></div>
           </window.Sheet>
         </window.Scrim>
       </React.Fragment>

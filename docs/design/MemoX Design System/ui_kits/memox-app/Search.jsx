@@ -21,12 +21,12 @@ function ResultRow({ term, meaning, deck, status, hidden, node }) {
   return (
     <div data-mx-node={node} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', opacity: hidden ? .5 : 1 }}>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)' }}>{term}</span>
-          {hidden ? <span className="material-symbols-rounded" style={{ fontSize: 16, color: 'var(--memox-text-tertiary)' }}>visibility_off</span> : null}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)' }}>
+          <span style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-md)' }}>{term}</span>
+          {hidden ? <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-tertiary)' }}>visibility_off</span> : null}
         </div>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>{meaning}</div>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', marginTop: 2 }}>{deck}</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>{meaning}</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', marginTop: 'var(--memox-space-1)' }}>{deck}</div>
       </div>
       <MxBadge tone={s.tone} soft>{s.label}</MxBadge>
     </div>
@@ -35,7 +35,7 @@ function ResultRow({ term, meaning, deck, status, hidden, node }) {
 
 function Chips({ active }) {
   return (
-    <div data-mx-node="search/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 2 }}>
+    <div data-mx-node="search/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 'var(--memox-space-1)' }}>
       {FILTERS.map((f, i) => <MxChip key={f} label={f} selected={i === active} node={'search/filter-' + i} />)}
     </div>
   );
@@ -53,7 +53,7 @@ function Search({ state = 'empty-recent' }) {
   if (state === 'empty-recent') {
     return (
       <MxScaffold node="search/screen" appBar={bar}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-tertiary)', letterSpacing: '.04em', margin: '4px 0 0 4px' }}>RECENT</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>RECENT</div>
         <MxCard padding="sm">
           {RECENT.map((r, i) => (
             <window.ListRow key={r} icon="history" title={r} last={i === RECENT.length - 1} node={'search/recent-' + i}
@@ -70,7 +70,7 @@ function Search({ state = 'empty-recent' }) {
       <MxScaffold node="search/screen" appBar={bar}>
         <Chips active={0} />
         {[0, 1, 2].map((i) => (
-          <MxCard key={i} padding="sm"><S w="40%" h={16} /><S w="62%" h={10} style={{ marginTop: 8 }} /><S w="50%" h={10} style={{ marginTop: 6 }} /></MxCard>
+          <MxCard key={i} padding="sm"><S w="40%" h={16} /><S w="62%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /><S w="50%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></MxCard>
         ))}
       </MxScaffold>
     );

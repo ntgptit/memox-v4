@@ -8,8 +8,8 @@ function Note({ icon, text, tone }) {
     ? ['var(--memox-success-soft)', 'var(--memox-on-success-soft)']
     : ['var(--memox-warning-soft)', 'var(--memox-on-warning-soft)'];
   return (
-    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8, fontSize: 'var(--memox-font-size-sm)', fontWeight: 600 }}>
-      <span className="material-symbols-rounded" style={{ fontSize: 18 }}>{icon}</span>{text}
+    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)' }}>
+      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{icon}</span>{text}
     </div>
   );
 }
@@ -18,20 +18,20 @@ function CharCompare() {
   const typed = ['친', '고'];
   const correct = ['친', '구'];
   return (
-    <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
+    <div style={{ display: 'flex', gap: 'var(--memox-space-2)', justifyContent: 'center' }}>
       {correct.map((c, i) => {
         const ok = typed[i] === c;
-        return <span key={i} style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 800, color: ok ? 'var(--memox-success)' : 'var(--memox-error)' }}>{typed[i] || '_'}</span>;
+        return <span key={i} style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)', color: ok ? 'var(--memox-success)' : 'var(--memox-error)' }}>{typed[i] || '_'}</span>;
       })}
     </div>
   );
 }
 
 function InputBox({ content, tone, placeholder }) {
-  const border = tone === 'correct' ? '2px solid var(--memox-success)' : tone === 'wrong' ? '2px solid var(--memox-error)' : '1px solid var(--memox-divider)';
+  const border = tone === 'correct' ? 'var(--memox-stroke-emphasis) solid var(--memox-success)' : tone === 'wrong' ? 'var(--memox-stroke-emphasis) solid var(--memox-error)' : 'var(--memox-stroke-hairline) solid var(--memox-divider)';
   return (
-    <div data-mx-node="game-typing/input" style={{ border, borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', padding: '16px', minHeight: 56, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--memox-font-size-2xl)', fontWeight: 800 }}>
-      {content != null ? content : <span style={{ color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)', fontWeight: 600 }}>{placeholder}</span>}
+    <div data-mx-node="game-typing/input" style={{ border, borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', padding: 'var(--memox-space-4)', minHeight: 'var(--memox-size-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>
+      {content != null ? content : <span style={{ color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)', fontWeight: 'var(--memox-font-weight-semibold)' }}>{placeholder}</span>}
     </div>
   );
 }
@@ -86,12 +86,12 @@ function GameTyping({ state = 'waiting' }) {
     <MxScaffold node="game-typing/screen" appBar={bar}>
       <window.ProgressBar value={80} height={8} node="game-typing/progress" />
 
-      <MxCard node="game-typing/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 8, padding: 'var(--memox-space-6)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 700, letterSpacing: '.04em' }}>MEANING</div>
-        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 800 }}>friend</div>
+      <MxCard node="game-typing/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', padding: 'var(--memox-space-6)' }}>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>MEANING</div>
+        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>friend</div>
       </MxCard>
 
-      <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-secondary)' }}>Type the term (Korean)</div>
+      <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>Type the term (Korean)</div>
       <InputBox {...inp} />
 
       {state === 'hint' ? <Note icon="lightbulb" tone="warning" text="Hint: 2 characters, starts with 친" /> : null}

@@ -7,11 +7,11 @@ const CHOICES = ['school', 'hospital', 'park', 'restaurant'];
 
 function Choice({ text, tone, node }) {
   const skin = {
-    correct: { border: '2px solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
-    wrong: { border: '2px solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
-  }[tone] || { border: '1px solid var(--memox-divider)', background: 'var(--memox-surface)' };
+    correct: { border: 'var(--memox-stroke-emphasis) solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
+    wrong: { border: 'var(--memox-stroke-emphasis) solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
+  }[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
   return (
-    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: '16px', fontWeight: 700, fontSize: 'var(--memox-font-size-base)', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4)', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', cursor: 'pointer' }}>
       <span style={{ flex: 1 }}>{text}</span>
       {tone === 'correct' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-success)' }}>check_circle</span> : null}
       {tone === 'wrong' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-error)' }}>cancel</span> : null}
@@ -47,7 +47,7 @@ function GameMultipleChoice({ state = 'waiting' }) {
     <MxScaffold node="game-mc/screen" appBar={bar}>
       <window.ProgressBar value={40} height={8} node="game-mc/progress" />
       <MxCard node="game-mc/prompt" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-6)' }}>
-        <div style={{ fontSize: 48, fontWeight: 800, letterSpacing: '-.02em' }}>학교</div>
+        <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
         <div style={{ display: 'flex', gap: 'var(--memox-space-2)' }}>
           <MxIconButton icon="volume_up" node="game-mc/audio" />
           <MxIconButton icon="edit" size="sm" node="game-mc/edit" />

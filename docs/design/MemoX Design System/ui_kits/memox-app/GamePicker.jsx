@@ -16,8 +16,8 @@ function GameOption({ g, disabled }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
         <MxIconTile icon={g.icon} tone="accent" />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 700, fontSize: 'var(--memox-font-size-base)' }}>{g.name}</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>{g.desc}</div>
+          <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>{g.name}</div>
+          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>{g.desc}</div>
         </div>
         <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-tertiary)' }}>chevron_right</span>
       </div>
@@ -32,7 +32,7 @@ function GamePicker({ state = 'default' }) {
   const base = (
     <MxScaffold node="game-picker/screen" appBar={bar}>
       {notEnough ? (
-        <div data-mx-node="game-picker/not-enough" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div data-mx-node="game-picker/not-enough" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
           <span className="material-symbols-rounded">info</span>
           <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>This deck needs at least 4 words to play.</span>
           <MxButton variant="primary" size="sm" node="game-picker/add-cards">Add words</MxButton>
@@ -43,8 +43,8 @@ function GamePicker({ state = 'default' }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
           <MxIconTile icon="tune" tone="success" />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontWeight: 700, fontSize: 'var(--memox-font-size-base)' }}>Card source</div>
-            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2 }}>By schedule</div>
+            <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>Card source</div>
+            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>By schedule</div>
           </div>
           <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-tertiary)' }}>expand_more</span>
         </div>
@@ -52,7 +52,7 @@ function GamePicker({ state = 'default' }) {
 
       {GAMES.map((g) => <GameOption key={g.id} g={g} disabled={notEnough} />)}
 
-      <div style={{ textAlign: 'center', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', padding: '4px 0' }}>5 words per round · change in Settings</div>
+      <div style={{ textAlign: 'center', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', padding: 'var(--memox-space-1) 0' }}>5 words per round · change in Settings</div>
     </MxScaffold>
   );
 

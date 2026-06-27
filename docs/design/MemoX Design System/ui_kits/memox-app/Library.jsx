@@ -31,9 +31,9 @@ function ContextBar() {
   return (
     <div data-mx-node="library/context" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)' }}>
       <MxIconButton icon="search" node="library/search-btn" />
-      <button data-mx-node="library/pair" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, border: '1px solid var(--memox-divider)', background: 'var(--memox-surface)', borderRadius: 999, padding: '10px 14px', font: 'inherit', fontWeight: 700, cursor: 'pointer', color: 'inherit' }}>
-        한국어 <span className="material-symbols-rounded" style={{ fontSize: 18, color: 'var(--memox-text-tertiary)' }}>swap_horiz</span> English
-        <span className="material-symbols-rounded" style={{ fontSize: 18, color: 'var(--memox-text-tertiary)' }}>expand_more</span>
+      <button data-mx-node="library/pair" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--memox-space-2)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-pill)', padding: 'var(--memox-space-3) var(--memox-space-4)', font: 'inherit', fontWeight: 'var(--memox-font-weight-bold)', cursor: 'pointer', color: 'inherit' }}>
+        한국어 <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)', color: 'var(--memox-text-tertiary)' }}>swap_horiz</span> English
+        <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)', color: 'var(--memox-text-tertiary)' }}>expand_more</span>
       </button>
       <MxIconButton icon="swap_vert" node="library/sort-btn" />
     </div>
@@ -68,7 +68,7 @@ function Library({ state = 'loaded' }) {
       <MxScaffold node="library/screen" appBar={<Bar />} bottomNav={nav}>
         <S h={48} r={999} />
         {[0, 1, 2, 3].map((i) => (
-          <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 14, alignItems: 'center' }}><S w={48} h={48} r={16} /><div style={{ flex: 1 }}><S w="55%" h={14} /><S w="38%" h={10} style={{ marginTop: 8 }} /></div></div></MxCard>
+          <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><S w={48} h={48} r={16} /><div style={{ flex: 1 }}><S w="55%" h={14} /><S w="38%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>
         ))}
       </MxScaffold>
     );
@@ -80,7 +80,7 @@ function Library({ state = 'loaded' }) {
         <ContextBar />
         <window.EmptyState node="library/empty" icon="style" title="Your library is empty"
           text="Decks and words you add will show up here. Start with a deck or import a CSV."
-          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: 220 }}>
+          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
             <MxButton variant="primary" icon="style" block node="library/empty-deck">Create deck</MxButton>
             <MxButton variant="ghost" icon="add" block node="library/empty-add">Add words</MxButton>
           </div>} />
@@ -103,7 +103,7 @@ function Library({ state = 'loaded' }) {
       <MxScaffold node="library/screen" appBar={<Bar />} bottomNav={nav}>
         <MxSearchDock focused placeholder="Search by word or meaning" node="library/search-dock"
           trailing={<MxIconButton icon="close" size="sm" node="library/search-clear" />} />
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 700, color: 'var(--memox-text-tertiary)', letterSpacing: '.04em', margin: '4px 0 0 4px' }}>RECENT</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>RECENT</div>
         <MxCard padding="sm">
           {['안녕하세요', '학교', '공부하다'].map((r, i) => (
             <window.ListRow key={r} icon="history" title={r} last={i === 2} node={'library/recent-' + i} />

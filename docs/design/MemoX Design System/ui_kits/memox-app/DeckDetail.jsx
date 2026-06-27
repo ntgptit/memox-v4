@@ -1,4 +1,4 @@
-/* MemoX — Deck detail (card list). States: loaded · search · empty · card-actions · delete-confirm · loading */
+/* MemoX — Deck detail (card list). States: loaded · search · no-results · empty · card-actions · delete-confirm · reset-confirm · loading · error */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxCard, MxButton, MxIconButton, MxSearchDock, MxChip, MxFab, MxBadge } = NS;
@@ -25,11 +25,11 @@ function CardRow({ term, meaning, status, hidden, node, onClick }) {
   return (
     <div data-mx-node={node} onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', opacity: hidden ? .5 : 1 }}>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 800, fontSize: 'var(--memox-font-size-md)', letterSpacing: '-.01em' }}>{term}</span>
-          {hidden ? <span className="material-symbols-rounded" style={{ fontSize: 16, color: 'var(--memox-text-tertiary)' }}>visibility_off</span> : null}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)' }}>
+          <span style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-md)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{term}</span>
+          {hidden ? <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-tertiary)' }}>visibility_off</span> : null}
         </div>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{meaning}</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{meaning}</div>
       </div>
       <MxBadge tone={s.tone} soft>{s.label}</MxBadge>
     </div>
@@ -55,7 +55,7 @@ function DeckDetail({ state = 'loaded' }) {
       <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
         <window.EmptyState node="deck-detail/empty" icon="playing_cards" title="No cards yet"
           text="Add words manually or import in bulk from a CSV / Excel file."
-          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: 220 }}>
+          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
             <MxButton variant="primary" icon="add" block node="deck-detail/empty-add">Add words</MxButton>
             <MxButton variant="ghost" icon="upload_file" block node="deck-detail/empty-import">Import from file</MxButton>
           </div>} />
@@ -69,8 +69,18 @@ function DeckDetail({ state = 'loaded' }) {
       <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
         <S h={48} r={999} />
         {[0, 1, 2, 3, 4].map((i) => (
-          <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 14, alignItems: 'center' }}><div style={{ flex: 1 }}><S w="40%" h={16} /><S w="62%" h={10} style={{ marginTop: 8 }} /></div><S w={56} h={22} r={999} /></div></MxCard>
+          <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><div style={{ flex: 1 }}><S w="40%" h={16} /><S w="62%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div><S w={56} h={22} r={999} /></div></MxCard>
         ))}
+      </MxScaffold>
+    );
+  }
+
+  if (state === 'error') {
+    return (
+      <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
+        <window.EmptyState node="deck-detail/error" icon="cloud_off" tone="error" title="Couldn't load this deck"
+          text="Something went wrong. Check your connection and try again."
+          action={<MxButton variant="primary" icon="refresh" node="deck-detail/retry">Retry</MxButton>} />
       </MxScaffold>
     );
   }
@@ -80,7 +90,7 @@ function DeckDetail({ state = 'loaded' }) {
       <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
         <MxSearchDock value="하" focused node="deck-detail/search-dock"
           trailing={<MxIconButton icon="close" size="sm" node="deck-detail/search-clear" />} />
-        <div data-mx-node="deck-detail/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 2 }}>
+        <div data-mx-node="deck-detail/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 'var(--memox-space-1)' }}>
           {FILTERS.map((f, i) => <MxChip key={f} label={f} selected={i === 0} node={'deck-detail/filter-' + i} />)}
         </div>
         {CARDS.filter((c) => c.term.includes('하') || c.meaning.includes('study')).map((c, i) => (
@@ -95,7 +105,7 @@ function DeckDetail({ state = 'loaded' }) {
       <MxScaffold node="deck-detail/screen" appBar={<Bar />}>
         <MxSearchDock value="xyz" focused node="deck-detail/search-dock"
           trailing={<MxIconButton icon="close" size="sm" node="deck-detail/search-clear" />} />
-        <div data-mx-node="deck-detail/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 2 }}>
+        <div data-mx-node="deck-detail/filters" style={{ display: 'flex', gap: 'var(--memox-space-2)', overflowX: 'auto', paddingBottom: 'var(--memox-space-1)' }}>
           {FILTERS.map((f, i) => <MxChip key={f} label={f} selected={i === 0} node={'deck-detail/nr-filter-' + i} />)}
         </div>
         <window.EmptyState node="deck-detail/no-results" icon="search_off" tone="warning" title="No cards found"

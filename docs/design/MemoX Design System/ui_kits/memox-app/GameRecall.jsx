@@ -8,8 +8,8 @@ function Note({ icon, text, tone }) {
     ? ['var(--memox-success-soft)', 'var(--memox-on-success-soft)']
     : ['var(--memox-warning-soft)', 'var(--memox-on-warning-soft)'];
   return (
-    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8, fontSize: 'var(--memox-font-size-sm)', fontWeight: 600 }}>
-      <span className="material-symbols-rounded" style={{ fontSize: 18 }}>{icon}</span>{text}
+    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)' }}>
+      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{icon}</span>{text}
     </div>
   );
 }
@@ -38,23 +38,23 @@ function GameRecall({ state = 'before-reveal' }) {
       <window.ProgressBar value={60} height={8} node="game-recall/progress" />
 
       <MxCard node="game-recall/term" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-6)' }}>
-        <div style={{ fontSize: 48, fontWeight: 800, letterSpacing: '-.02em' }}>친구</div>
+        <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>친구</div>
         <div style={{ display: 'flex', gap: 'var(--memox-space-2)' }}>
           <MxIconButton icon="volume_up" node="game-recall/audio" />
           <MxIconButton icon="edit" size="sm" node="game-recall/edit" />
         </div>
       </MxCard>
 
-      <MxCard node="game-recall/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 8, minHeight: 120, justifyContent: 'center' }}>
+      <MxCard node="game-recall/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', minHeight: 'var(--memox-size-2xl)', justifyContent: 'center' }}>
         {revealed ? (
           <React.Fragment>
-            <div style={{ width: 56, height: 2, background: 'var(--memox-divider)', borderRadius: 2 }} />
-            <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 700 }}>friend</div>
+            <div style={{ width: 'var(--memox-size-md)', height: 'var(--memox-size-3xs)', background: 'var(--memox-divider)', borderRadius: 'var(--memox-radius-xs)' }} />
+            <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>friend</div>
             <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)' }}>a friend, companion</div>
           </React.Fragment>
         ) : (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 600 }}>
-            <span className="material-symbols-rounded" style={{ fontSize: 18 }}>visibility</span> Recall the meaning, then tap “Show”
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)' }}>
+            <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>visibility</span> Recall the meaning, then tap “Show”
           </div>
         )}
       </MxCard>
