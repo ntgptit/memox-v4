@@ -21,6 +21,17 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W7 (07-W7-search) · DONE · ca16842e · term + meaning search with filters, verify --full GREEN
+
+- What: BE — SearchResult model (derives CardStatus vs clock), SearchRepository (Drift DAO card⨝deck⨝srs; meaning matched via EXISTS → one row per card; includes hidden — D-028; scoped to active pair, optional subtree), SearchCardsUseCase (term+meaning — D-019). FE — SearchScreen (/search) with field+clear, status filter chips, empty-recent/results/no-results/loading states; hidden dimmed + eye-off; tap → W2 editor; recent kept in session; search button added to library toolbar.
+- Where: lib/domain/{models,usecases/search}, lib/data/{...search}, lib/presentation/features/search, lib/app/router, library_screen toolbar.
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 122 tests). Pushed origin main.
+
+## 2026-06-28 · W7 · NOTE · No index (v1 LIKE); next is GATED W8
+
+- What: search uses case-insensitive LIKE over card/card_meaning — no FTS/index added (deferred until the performance contract requires it on large libraries). No schema change/migration.
+- Next eligible: step 8 W8 (08-W8-import-export.md) needs file_picker/csv/excel which are NOT in docs/stack/stack.md → must log BLOCKED(dep:file_picker,csv,excel) + git stash + commit the NIGHT-LOG via verify --docs + skip. Then step 9 W11 (09-W11-engagement.md, dep W4 Done) is the next BUILDABLE step (Today dashboard / daily goal / streak — reuse dailyActivityRepository from W4; settings keys daily_goal_minutes/words for the goal; no gated dep).
+
 ## 2026-06-28 · W4 (06-W4-study) · DONE · b63ec88c · five study entries + NewLearn/DueReview/review/player/result, verify --full GREEN
 
 - What: BE — StudyEntry, PlayMenu, DailyActivity entity+repo (Drift, cumulative), deckRepository.subtreeCardIds (D-009 recursive), use cases buildPlayMenu (D-001/D-016 gating), buildStudyQueue (reuses W3 due/new queues), finalizeStudySession (D-010 activity only for due/new). StudySessionNotifier: NewLearn 5 stages → scheduleNewCard box1 only on completion (D-002), quit→new (D-017), DueReview grades SRS (W3), wrong→re-queue (D-015). FE — play menu sheet (from deck-detail ⋮ Play), StudySessionScreen (stages + exit dialog + inline result), ReviewScreen, PlayerScreen (auto-play timer, no SRS). Routes study/review/player.
