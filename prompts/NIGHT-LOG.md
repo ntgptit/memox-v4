@@ -21,6 +21,26 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W2 (02-W2-flashcard) · DONE · 081ffc74 · card CRUD + multi-field meanings, verify --full GREEN
+
+- What: BE — Card/CardMeaning entities, CardDraft, CardStatus (derived), CardRepository (Drift DAO/mapper/impl), use cases (create/update with BR-2 validation, delete cascade, toggleHidden, checkSoftDuplicate, getCard), Clock + DI. FE — flashcard editor screen (create/edit) with Save-gating, inline validation state, D-020 soft-duplicate banner, multi-meaning + gender + hidden; route flashcardEditor (/deck/:id/card).
+- Where: lib/{domain,data,app/di,presentation/features/flashcard}, lib/app/router.
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 71 tests). Pushed origin main.
+
+## 2026-06-28 · W2 · NOTE · Audio/TTS deferred (dep:flutter_tts)
+
+- What: editor design state 6 (audio generation) needs a TTS package outside docs/stack/stack.md.
+- Action: editor renders the audio control but it shows "coming soon"; `card.audio_ref` stays null. "View existing" on the dup banner likewise deferred (needs a card list, W6). Logged per loop rule 4 (no unapproved dep).
+- Suggested fix: add flutter_tts to stack.md (needs approval), then wire term→audio generation + playback.
+
+## 2026-06-28 · W2 · NOTE · No migration — card/card_meaning predate W2
+
+- What: `card` + `card_meaning` (and all v1 tables) were created in schema v1 by W1's tables.drift, so W2 added no table/column and needs no migration. migration-contract already lists them under 0→1.
+
+## 2026-06-28 · W2 · NOTE · Editor viewmodel as ConsumerStatefulWidget; native lang from active pair
+
+- What: Riverpod @riverpod codegen stays deferred (S0 toolchain conflict), and the form is controller-driven, so the editor orchestrates use cases from a ConsumerStatefulWidget (validation RULES live in the use cases; the widget only maps results to field errors). The native meaning's language is resolved from the active pair (S0) rather than a deck→pair join, since there is no deck navigation yet (W6).
+
 ## 2026-06-28 · S0 (01-S0-app-shell-language-pair) · DONE · 8d715f83 · app shell + language_pair + l10n, verify --full GREEN
 
 - What: BE — Drift `language_pair` DAO/repo + mapper + use cases (list, getPairContext, create [D-030], remove, setActive, swapDisplayDirection); pair context persisted via `settings` keys `active_pair_id`/`display_swapped`. FE — `StatefulShellRoute` shell (Today/Library/Stats/Profile + center Add) + language Drawer (menu / add-language / remove-language) wired to a keepAlive notifier; l10n vi/en.
