@@ -92,7 +92,7 @@ VI + nghiệp vụ MemoX.
 - [x] `folder-detail/` — FolderDetail.jsx — spec 03 — DONE
 - [x] `deck-detail/` — DeckDetail.jsx — spec 04 — DONE
 - [x] `flashcard-editor/` — FlashcardEditor.jsx — spec 05 — state: create·edit·validation·duplicate·multi-meaning·audio
-- [x] `study-session/` — StudySession.jsx — spec 06 *(realign sang 5 chặng)* — state: stage1-review·stage2-matching·stage3-choice·stage4-recall·stage5-typing·relearn·due-review·exit
+- [x] `study-session/` — StudySession.jsx — spec 06 *(realign sang 5 chặng)* — state: stage1-review·stage2-matching·stage3-choice·stage4-recall·stage5-typing·relearn·due-review·exit·resume-error·answer-save-error
 - [x] `game-picker/` — GamePicker.jsx — spec 07 — state: default·scope-dropdown·not-enough
 - [x] `game-matching/` — GameMatching.jsx — spec 08 — state: playing·selected·correct·wrong·almost·complete
 - [x] `game-mc/` — GameMultipleChoice.jsx — spec 09 — state: waiting·correct·wrong·complete
@@ -100,7 +100,7 @@ VI + nghiệp vụ MemoX.
 - [x] `game-typing/` — GameTyping.jsx — spec 11 — state: waiting·typing·hint·correct·wrong·complete
 - [x] `review/` — Review.jsx — spec 12 — state: browsing·editing·audio·end
 - [x] `player/` — Player.jsx — spec 13 — state: playing·paused·speed·end
-- [x] `study-result/` — StudyResult.jsx — spec 14 — state: standard·goal-met·goal-missed·many-wrong
+- [x] `study-result/` — StudyResult.jsx — spec 14 — state: standard·goal-met·goal-missed·many-wrong·finalizing·retry-finalize·finalize-error
 - [x] `search/` — Search.jsx — spec 15 — state: empty-recent·results·filtered·no-results·loading
 - [x] `statistics/` — Statistics.jsx — spec 16 — state: loading·loaded·insufficient·scope-switch
 - [x] `settings/` — Settings.jsx — spec 17 *(realign)* — state: loaded·group-expanded·value-picker

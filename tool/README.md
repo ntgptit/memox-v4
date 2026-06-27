@@ -29,7 +29,7 @@ marker, so they can't be committed.
 ## doc_guard — docs/process linter + index generator
 
 ```
-node tool/doc_guard/run.mjs check        # path-ref existence + path convention + WBS hygiene
+node tool/doc_guard/run.mjs check        # path-ref existence + path convention + WBS hygiene + kit state-parity
 node tool/doc_guard/run.mjs generate     # (re)write docs/_generated/repo-map.md
 node tool/doc_guard/run.mjs terms <old>  # find leftover refs after a rename
 ```

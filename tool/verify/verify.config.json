@@ -18,10 +18,12 @@
       "analyze"
     ],
     "code": [
+      "doc_guard",
       "analyze",
       "format"
     ],
     "full": [
+      "doc_guard",
       "analyze",
       "format",
       "test"

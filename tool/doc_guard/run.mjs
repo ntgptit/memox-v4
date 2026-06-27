@@ -107,6 +107,9 @@ if (cmd === 'check' || !cmd) {
     if (!/Commit Traceability Log/i.test(body)) warnings.push('wbs.md: missing "Commit Traceability Log" section (§10).');
   }
 
+  // UI-kit state-parity (see checkKitParity)
+  checkKitParity(errors, warnings);
+
   for (const w of warnings) console.log(`WARN  ${w}`);
   for (const e of errors) console.log(`ERR   ${e}`);
   console.log(`\ndoc_guard: ${errors.length} error(s), ${warnings.length} warning(s) across ${docFiles().length} doc(s).`);
@@ -157,4 +160,67 @@ function treeLines(dir, prefix, depth, maxDepth) {
     if (isDir && depth < maxDepth) out.push(...treeLines(p, prefix + (last ? '   ' : '│  '), depth + 1, maxDepth));
   });
   return out;
+}
+
+// ── UI-kit state-parity ──────────────────────────────────────────────────────
+// The kit gallery's SCREENS array (index.html) is the source of truth for which
+// screens/states exist — it actually renders them. Other docs restate that
+// inventory and drift silently: the build queue (tool/preview/kit-build.md)
+// lists per-screen state sets, and the design-system readme states a screen
+// count. This locks those restatements to SCREENS and verifies every screen
+// module the gallery loads exists. If the kit can't be found the check warns and
+// skips, so doc_guard stays usable in a scaffolded repo without this kit.
+function checkKitParity(errors, warnings) {
+  const kitHtml = join(repoRoot, 'docs', 'design', 'MemoX Design System', 'ui_kits', 'memox-app', 'index.html');
+  if (!existsSync(kitHtml)) { warnings.push('kit-parity: index.html not found — skipped.'); return; }
+  const html = readFileSync(kitHtml, 'utf8');
+  const kitDir = dirname(kitHtml);
+
+  // Parse SCREENS: each `{ id: '..', … states: ['a','b',…] }` (one entry per line).
+  const screens = new Map();
+  const screenRe = /\{\s*id:\s*'([^']+)'[^}]*?states:\s*\[([^\]]*)\]/g;
+  let sm;
+  while ((sm = screenRe.exec(html))) {
+    const states = sm[2].split(',').map((s) => s.trim().replace(/^'|'$/g, '')).filter(Boolean);
+    screens.set(sm[1], new Set(states));
+  }
+  if (screens.size === 0) { warnings.push('kit-parity: no SCREENS parsed from index.html — skipped.'); return; }
+
+  // (C) every screen module the gallery loads must exist on disk.
+  const scriptRe = /<script[^>]*\bsrc="([^"]+\.jsx)"/g;
+  let cm;
+  while ((cm = scriptRe.exec(html))) {
+    if (!existsSync(join(kitDir, cm[1]))) errors.push(`kit-parity: index.html loads missing module \`${cm[1]}\``);
+  }
+
+  // (A) build-queue state sets must equal SCREENS (set-wise; gallery order is cosmetic).
+  const queue = join(repoRoot, 'tool', 'preview', 'kit-build.md');
+  if (existsSync(queue)) {
+    readFileSync(queue, 'utf8').split('\n').forEach((line, i) => {
+      const idM = line.match(/`([a-z0-9-]+)\/`/);
+      const stM = line.match(/state:\s*([^\n]+?)\s*$/);
+      if (!idM || !stM) return;
+      const id = idM[1];
+      const at = `${rel(queue)}:${i + 1}`;
+      const canon = screens.get(id);
+      if (!canon) { errors.push(`kit-parity: ${at} queue lists screen \`${id}\` absent from SCREENS`); return; }
+      const listed = new Set(stM[1].split('·').map((s) => s.trim()).filter(Boolean));
+      const missing = [...canon].filter((s) => !listed.has(s));
+      const extra = [...listed].filter((s) => !canon.has(s));
+      if (missing.length || extra.length) {
+        errors.push(`kit-parity: ${at} state drift for \`${id}\`` +
+          (missing.length ? ` — queue missing ${missing.join('·')}` : '') +
+          (extra.length ? ` — queue has extra ${extra.join('·')}` : ''));
+      }
+    });
+  }
+
+  // (B) design-system readme screen count must equal SCREENS size.
+  const readme = join(kitDir, '..', '..', 'readme.md');
+  if (existsSync(readme)) {
+    const cM = readFileSync(readme, 'utf8').match(/gallery\s*\((\d+)\s+screens/i);
+    if (cM && Number(cM[1]) !== screens.size) {
+      errors.push(`kit-parity: ${rel(readme)} says ${cM[1]} screens but SCREENS has ${screens.size}`);
+    }
+  }
 }

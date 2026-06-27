@@ -1,10 +1,11 @@
 {
   "$comment": "SINGLE source of project-specific paths for everything under tool/. Edit these to retarget the toolchain to a new project layout. All paths are repo-root-relative with forward slashes. The loader (tool/_config.mjs) derives the rest (theme dir, token css, ui-kit shots/specs/index.html) from these — so to move the design system you usually only change `designSystemDir`, and to move source you only change `srcDir`.",
+  "$pointsAt": "The active kit is docs/design/MemoX Design System/ui_kits/memox-app (23 screens). kitHtml/uiKitDir/shotsDir/specsDir now resolve there. NOTE still-pending: (1) tokensCss derives to <designSystemDir>/colors_and_type.css but this kit splits tokens across tokens/colors.css + tokens/typography.css — reconcile when gen_tokens/token_lint are wired (they also need lib/core/theme to exist). (2) shots/specs dirs are not generated yet (need export_shots/export_specs via Chrome). Until then the path-derived parity tools are inert by design, not mispointed.",
   "srcDir": "lib",
   "docsDir": "docs",
-  "designSystemDir": "docs/design-system",
+  "designSystemDir": "docs/design/MemoX Design System",
   "themeSubdir": "core/theme",
-  "uiKitSubdir": "ui_kits/mobile",
+  "uiKitSubdir": "ui_kits/memox-app",
   "$derived": {
     "themeDir": "<srcDir>/<themeSubdir>",
     "colorsDart": "<themeDir>/mx_colors.dart",
