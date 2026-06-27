@@ -1,0 +1,435 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/core/**",
+              "components/navigation/**",
+              "components/surfaces/**",
+              "ui_kits/memox-app/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Plus Jakarta Sans))/i]",
+        "message": "Font not provided by the design system. Available: Plus Jakarta Sans."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxAppBar'] > JSXAttribute > JSXIdentifier[name!=/^(?:title|eyebrow|large|leading|trailing|node|className|key|ref|className|style|children)$/]",
+        "message": "<MxAppBar> doesn't accept that prop. Declared props: title, eyebrow, large, leading, trailing, node, className."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxAvatar'] > JSXAttribute > JSXIdentifier[name!=/^(?:name|src|size|variant|ring|node|key|ref|className|style|children)$/]",
+        "message": "<MxAvatar> doesn't accept that prop. Declared props: name, src, size, variant, ring, node."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxAvatar'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|lg)$/]",
+        "message": "<MxAvatar> size must be one of 'sm' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxAvatar'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:accent)$/]",
+        "message": "<MxAvatar> variant must be one of 'accent'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxBadge'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|tone|soft|dot|node|key|ref|className|style|children)$/]",
+        "message": "<MxBadge> doesn't accept that prop. Declared props: children, tone, soft, dot, node."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxBadge'] > JSXAttribute[name.name='tone'] > Literal[value!=/^(?:success|warning|error)$/]",
+        "message": "<MxBadge> tone must be one of 'success' | 'warning' | 'error'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxBottomNavItem'] > JSXAttribute > JSXIdentifier[name!=/^(?:id|label|icon|key|ref|className|style|children)$/]",
+        "message": "<MxBottomNavItem> doesn't accept that prop. Declared props: id, label, icon."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxButton'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|size|icon|trailingIcon|block|danger|disabled|node|className|children|onClick|type|key|ref|className|style|children)$/]",
+        "message": "<MxButton> doesn't accept that prop. Declared props: variant, size, icon, trailingIcon, block, danger, disabled, node, className, children, onClick, type."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxButton'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:primary|secondary|outline|ghost|contrast)$/]",
+        "message": "<MxButton> variant must be one of 'primary' | 'secondary' | 'outline' | 'ghost' | 'contrast'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxButton'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|lg)$/]",
+        "message": "<MxButton> size must be one of 'sm' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxButton'] > JSXAttribute[name.name='type'] > Literal[value!=/^(?:button|submit|reset)$/]",
+        "message": "<MxButton> type must be one of 'button' | 'submit' | 'reset'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|interactive|padding|node|className|children|onClick|style|key|ref|className|style|children)$/]",
+        "message": "<MxCard> doesn't accept that prop. Declared props: variant, interactive, padding, node, className, children, onClick, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxCard'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:flat|muted|primary|primary-soft)$/]",
+        "message": "<MxCard> variant must be one of 'flat' | 'muted' | 'primary' | 'primary-soft'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxCard'] > JSXAttribute[name.name='padding'] > Literal[value!=/^(?:sm|lg)$/]",
+        "message": "<MxCard> padding must be one of 'sm' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxChip'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|icon|selected|variant|node|onClick|children|key|ref|className|style|children)$/]",
+        "message": "<MxChip> doesn't accept that prop. Declared props: label, icon, selected, variant, node, onClick, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxChip'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:accent|ghost)$/]",
+        "message": "<MxChip> variant must be one of 'accent' | 'ghost'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxFab'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|label|variant|round|node|onClick|key|ref|className|style|children)$/]",
+        "message": "<MxFab> doesn't accept that prop. Declared props: icon, label, variant, round, node, onClick."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxFab'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:accent)$/]",
+        "message": "<MxFab> variant must be one of 'accent'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxIconButton'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|variant|size|node|className|onClick|ariaLabel|key|ref|className|style|children)$/]",
+        "message": "<MxIconButton> doesn't accept that prop. Declared props: icon, variant, size, node, className, onClick, ariaLabel."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxIconButton'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:filled|primary)$/]",
+        "message": "<MxIconButton> variant must be one of 'filled' | 'primary'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxIconButton'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm)$/]",
+        "message": "<MxIconButton> size must be one of 'sm'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxIconTile'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|tone|size|solid|node|className|key|ref|className|style|children)$/]",
+        "message": "<MxIconTile> doesn't accept that prop. Declared props: icon, tone, size, solid, node, className."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxIconTile'] > JSXAttribute[name.name='tone'] > Literal[value!=/^(?:accent|success|warning|error)$/]",
+        "message": "<MxIconTile> tone must be one of 'accent' | 'success' | 'warning' | 'error'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxIconTile'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:lg)$/]",
+        "message": "<MxIconTile> size must be one of 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxScaffold'] > JSXAttribute > JSXIdentifier[name!=/^(?:appBar|bottomNav|fab|children|flush|node|className|style|key|ref|className|style|children)$/]",
+        "message": "<MxScaffold> doesn't accept that prop. Declared props: appBar, bottomNav, fab, children, flush, node, className, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxSearchDock'] > JSXAttribute > JSXIdentifier[name!=/^(?:placeholder|value|onChange|focused|flat|trailing|node|key|ref|className|style|children)$/]",
+        "message": "<MxSearchDock> doesn't accept that prop. Declared props: placeholder, value, onChange, focused, flat, trailing, node."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxSectionHeader'] > JSXAttribute > JSXIdentifier[name!=/^(?:title|caption|action|onAction|node|key|ref|className|style|children)$/]",
+        "message": "<MxSectionHeader> doesn't accept that prop. Declared props: title, caption, action, onAction, node."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxSegment'] > JSXAttribute > JSXIdentifier[name!=/^(?:value|label|icon|key|ref|className|style|children)$/]",
+        "message": "<MxSegment> doesn't accept that prop. Declared props: value, label, icon."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MxSwitch'] > JSXAttribute > JSXIdentifier[name!=/^(?:checked|disabled|onChange|node|key|ref|className|style|children)$/]",
+        "message": "<MxSwitch> doesn't accept that prop. Declared props: checked, disabled, onChange, node."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "MxAppBar": {
+        "replaces": []
+      },
+      "MxAvatar": {
+        "replaces": []
+      },
+      "MxBadge": {
+        "replaces": []
+      },
+      "MxBottomNavItem": {
+        "replaces": []
+      },
+      "MxButton": {
+        "replaces": []
+      },
+      "MxCard": {
+        "replaces": []
+      },
+      "MxChip": {
+        "replaces": []
+      },
+      "MxFab": {
+        "replaces": []
+      },
+      "MxIconButton": {
+        "replaces": []
+      },
+      "MxIconTile": {
+        "replaces": []
+      },
+      "MxScaffold": {
+        "replaces": []
+      },
+      "MxSearchDock": {
+        "replaces": []
+      },
+      "MxSectionHeader": {
+        "replaces": []
+      },
+      "MxSegment": {
+        "replaces": []
+      },
+      "MxSwitch": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--memox-accent",
+      "--memox-accent-soft",
+      "--memox-appbar-height",
+      "--memox-appbar-lg-height",
+      "--memox-bg",
+      "--memox-border",
+      "--memox-border-strong",
+      "--memox-bottom-nav-height",
+      "--memox-divider",
+      "--memox-error",
+      "--memox-error-soft",
+      "--memox-fab-size",
+      "--memox-focus-ring",
+      "--memox-font-mono",
+      "--memox-font-sans",
+      "--memox-font-size-2xl",
+      "--memox-font-size-3xl",
+      "--memox-font-size-4xl",
+      "--memox-font-size-base",
+      "--memox-font-size-lg",
+      "--memox-font-size-md",
+      "--memox-font-size-sm",
+      "--memox-font-size-xl",
+      "--memox-font-size-xs",
+      "--memox-font-weight-bold",
+      "--memox-font-weight-extrabold",
+      "--memox-font-weight-medium",
+      "--memox-font-weight-regular",
+      "--memox-font-weight-semibold",
+      "--memox-gutter",
+      "--memox-info",
+      "--memox-info-soft",
+      "--memox-letter-spacing-caps",
+      "--memox-letter-spacing-normal",
+      "--memox-letter-spacing-tight",
+      "--memox-letter-spacing-wide",
+      "--memox-line-height-normal",
+      "--memox-line-height-relaxed",
+      "--memox-line-height-snug",
+      "--memox-line-height-tight",
+      "--memox-on-accent",
+      "--memox-on-error",
+      "--memox-on-error-soft",
+      "--memox-on-info",
+      "--memox-on-info-soft",
+      "--memox-on-primary",
+      "--memox-on-primary-soft",
+      "--memox-on-success",
+      "--memox-on-success-soft",
+      "--memox-on-warning",
+      "--memox-on-warning-soft",
+      "--memox-overlay",
+      "--memox-primary",
+      "--memox-primary-soft",
+      "--memox-primary-strong",
+      "--memox-radius-2xl",
+      "--memox-radius-card",
+      "--memox-radius-chip",
+      "--memox-radius-control",
+      "--memox-radius-field",
+      "--memox-radius-full",
+      "--memox-radius-lg",
+      "--memox-radius-md",
+      "--memox-radius-pill",
+      "--memox-radius-sm",
+      "--memox-radius-tile",
+      "--memox-radius-xl",
+      "--memox-radius-xs",
+      "--memox-ring-focus",
+      "--memox-scrim",
+      "--memox-shadow-card",
+      "--memox-shadow-fab",
+      "--memox-shadow-lg",
+      "--memox-shadow-nav",
+      "--memox-shadow-sm",
+      "--memox-space-0",
+      "--memox-space-1",
+      "--memox-space-10",
+      "--memox-space-11",
+      "--memox-space-12",
+      "--memox-space-2",
+      "--memox-space-3",
+      "--memox-space-4",
+      "--memox-space-5",
+      "--memox-space-6",
+      "--memox-space-7",
+      "--memox-space-8",
+      "--memox-space-9",
+      "--memox-state-disabled",
+      "--memox-state-hover",
+      "--memox-state-pressed",
+      "--memox-state-selected",
+      "--memox-success",
+      "--memox-success-soft",
+      "--memox-surface",
+      "--memox-surface-muted",
+      "--memox-surface-raised",
+      "--memox-surface-sunken",
+      "--memox-text",
+      "--memox-text-secondary",
+      "--memox-text-tertiary",
+      "--memox-touch-min",
+      "--memox-warning",
+      "--memox-warning-soft"
+    ],
+    "tokenKinds": {
+      "--memox-bg": "color",
+      "--memox-surface": "color",
+      "--memox-surface-muted": "color",
+      "--memox-surface-raised": "color",
+      "--memox-surface-sunken": "color",
+      "--memox-text": "font",
+      "--memox-text-secondary": "font",
+      "--memox-text-tertiary": "font",
+      "--memox-primary": "color",
+      "--memox-primary-strong": "color",
+      "--memox-on-primary": "color",
+      "--memox-primary-soft": "color",
+      "--memox-on-primary-soft": "color",
+      "--memox-accent": "color",
+      "--memox-on-accent": "color",
+      "--memox-accent-soft": "color",
+      "--memox-border": "color",
+      "--memox-border-strong": "color",
+      "--memox-divider": "color",
+      "--memox-success": "color",
+      "--memox-on-success": "color",
+      "--memox-success-soft": "color",
+      "--memox-on-success-soft": "color",
+      "--memox-warning": "color",
+      "--memox-on-warning": "color",
+      "--memox-warning-soft": "color",
+      "--memox-on-warning-soft": "color",
+      "--memox-error": "color",
+      "--memox-on-error": "color",
+      "--memox-error-soft": "color",
+      "--memox-on-error-soft": "color",
+      "--memox-info": "color",
+      "--memox-on-info": "color",
+      "--memox-info-soft": "color",
+      "--memox-on-info-soft": "color",
+      "--memox-state-hover": "color",
+      "--memox-state-pressed": "color",
+      "--memox-state-selected": "color",
+      "--memox-state-disabled": "color",
+      "--memox-focus-ring": "color",
+      "--memox-overlay": "color",
+      "--memox-scrim": "color",
+      "--memox-font-sans": "font",
+      "--memox-font-mono": "font",
+      "--memox-font-size-xs": "font",
+      "--memox-font-size-sm": "font",
+      "--memox-font-size-base": "font",
+      "--memox-font-size-md": "font",
+      "--memox-font-size-lg": "font",
+      "--memox-font-size-xl": "font",
+      "--memox-font-size-2xl": "font",
+      "--memox-font-size-3xl": "font",
+      "--memox-font-size-4xl": "font",
+      "--memox-font-weight-regular": "font",
+      "--memox-font-weight-medium": "font",
+      "--memox-font-weight-semibold": "font",
+      "--memox-font-weight-bold": "font",
+      "--memox-font-weight-extrabold": "font",
+      "--memox-line-height-tight": "font",
+      "--memox-line-height-snug": "font",
+      "--memox-line-height-normal": "font",
+      "--memox-line-height-relaxed": "font",
+      "--memox-letter-spacing-tight": "font",
+      "--memox-letter-spacing-normal": "font",
+      "--memox-letter-spacing-wide": "font",
+      "--memox-letter-spacing-caps": "font",
+      "--memox-space-0": "spacing",
+      "--memox-space-1": "spacing",
+      "--memox-space-2": "spacing",
+      "--memox-space-3": "spacing",
+      "--memox-space-4": "spacing",
+      "--memox-space-5": "spacing",
+      "--memox-space-6": "spacing",
+      "--memox-space-7": "spacing",
+      "--memox-space-8": "spacing",
+      "--memox-space-9": "spacing",
+      "--memox-space-10": "spacing",
+      "--memox-space-11": "spacing",
+      "--memox-space-12": "spacing",
+      "--memox-gutter": "spacing",
+      "--memox-appbar-height": "spacing",
+      "--memox-appbar-lg-height": "spacing",
+      "--memox-bottom-nav-height": "spacing",
+      "--memox-fab-size": "spacing",
+      "--memox-touch-min": "spacing",
+      "--memox-radius-xs": "radius",
+      "--memox-radius-sm": "radius",
+      "--memox-radius-md": "radius",
+      "--memox-radius-lg": "radius",
+      "--memox-radius-xl": "radius",
+      "--memox-radius-2xl": "radius",
+      "--memox-radius-card": "radius",
+      "--memox-radius-tile": "radius",
+      "--memox-radius-control": "radius",
+      "--memox-radius-field": "radius",
+      "--memox-radius-chip": "radius",
+      "--memox-radius-pill": "radius",
+      "--memox-radius-full": "radius",
+      "--memox-shadow-sm": "shadow",
+      "--memox-shadow-card": "shadow",
+      "--memox-shadow-lg": "shadow",
+      "--memox-shadow-fab": "shadow",
+      "--memox-shadow-nav": "shadow",
+      "--memox-ring-focus": "color"
+    },
+    "fontFamilies": [
+      "Plus Jakarta Sans"
+    ]
+  }
+}
