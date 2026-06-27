@@ -5,7 +5,7 @@
 | Trường | Giá trị |
 | --- | --- |
 | Mã tính năng | `account-sync/account-sync` |
-| Gói công việc (WBS) | W11 |
+| Gói công việc (WBS) | W10 |
 | Trạng thái | Specified (alpha) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-027 |
@@ -40,7 +40,7 @@ xung đột.
 ## 5. Luồng nghiệp vụ (Use cases)
 
 ### UC-1: Đăng nhập & đồng bộ
-- **Luồng chính:** người học đăng nhập Google; hệ thống đồng bộ cặp ngôn ngữ, thư mục, bộ
+- **Luồng chính:** người học đăng nhập Google; hệ thống đồng bộ cặp ngôn ngữ, bộ
   thẻ, thẻ, trạng thái ôn, cài đặt và hoạt động; đồng bộ tự động khi có mạng, có thể đồng
   bộ thủ công.
 - **Luồng ngoại lệ (xung đột):** khi cùng một bản ghi bị sửa ở hai nơi, hệ thống giữ bản

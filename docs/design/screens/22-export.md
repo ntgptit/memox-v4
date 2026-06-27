@@ -6,7 +6,7 @@ dark).
 
 **Ngữ cảnh:** xuất thẻ ra ngoài để sao lưu hoặc chia sẻ.
 
-**Bố cục:** chọn **phạm vi** (một bộ thẻ / một thư mục) · chọn **định dạng** (CSV / Excel /
+**Bố cục:** chọn **phạm vi** (một bộ thẻ, gồm cả cây con) · chọn **định dạng** (CSV / Excel /
 sao chép văn bản) · chọn **dấu phân tách** (cho CSV & văn bản) · công tắc **"Kèm trạng thái
 ôn (ô/hạn)"** · nút "Xuất".
 

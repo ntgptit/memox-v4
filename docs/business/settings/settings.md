@@ -5,7 +5,7 @@
 | Trường | Giá trị |
 | --- | --- |
 | Mã tính năng | `settings/settings` |
-| Gói công việc (WBS) | W13 |
+| Gói công việc (WBS) | W12 |
 | Trạng thái | Specified |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-008, D-012 |

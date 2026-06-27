@@ -13,7 +13,7 @@ dòng nên có một test, và mỗi test hành vi nên truy ngược về một
 | D-006 | thẻ bị ẩn (`hidden`) | dựng hàng đợi / tính số đến hạn | loại thẻ khỏi cả hai | `docs/business/flashcard/flashcard-management.md` | TBD |
 | D-007 | chạy Review / Game / Player | kết thúc hoạt động | `SrsState` không đổi | `docs/business/study/study-flow.md` | TBD |
 | D-008 | `game_words_per_round` = 5 | bắt đầu một ván Game | ván dùng 5 thẻ (ngẫu nhiên nếu `game_random` bật) | `docs/business/study/study-flow.md` | TBD |
-| D-009 | bắt đầu học tại một thư mục | dựng hàng đợi | gộp thẻ của mọi deck con | `docs/business/study/study-flow.md` | TBD |
+| D-009 | bắt đầu học tại một bộ thẻ cha | dựng hàng đợi | gộp **đệ quy** thẻ của mọi bộ thẻ con | `docs/business/study/study-flow.md` | TBD |
 | D-010 | kết thúc phiên DueReview/NewLearn | chốt phiên | `DailyActivity` cộng giây + số từ (chỉ DueReview/NewLearn; Game/Review/Player không) | `docs/business/study/study-flow.md` | TBD |
 | D-011 | đảo chiều hiển thị (KO↔VI) | lập lịch một thẻ | dùng **cùng một** `SrsState` (một chiều duy nhất) | `docs/business/srs/srs-review.md` | TBD |
 | D-012 | (HOÃN v1) Premium | — | Premium chưa phát triển ở v1 — chưa có tính năng bị khoá | `docs/business/settings/settings.md` | — |
@@ -26,9 +26,9 @@ dòng nên có một test, và mỗi test hành vi nên truy ngược về một
 | D-019 | nhập từ khoá tìm kiếm | tìm | khớp trên cả `term` và nghĩa (`card_meaning.text`) | `docs/business/search/global-search.md` | TBD |
 | D-020 | tạo/nhập thẻ cùng term trong deck | lưu | **cảnh báo mềm**, vẫn cho thêm (không chặn) | `docs/business/flashcard/flashcard-management.md` | TBD |
 | D-021 | ngày đạt ≥1 mục tiêu (phút HOẶC từ) | chốt ngày (nửa đêm giờ máy) | `streak +1`; ngày không đạt → streak reset 0 | `docs/business/engagement/dashboard-engagement.md` | TBD |
-| D-022 | xoá một thư mục | xác nhận xoá | xoá lan toàn bộ cây con (thư mục con + deck + thẻ + meaning + srs) | `docs/business/folder/folder-management.md` | TBD |
-| D-023 | đổi tiêu chí sắp xếp | sắp xếp danh sách | theo bảng chữ cái / ngày tạo / ngày học (tăng-giảm) | `docs/business/folder/folder-management.md` | TBD |
-| D-024 | xoá một bộ thẻ | xác nhận xoá | xoá lan mọi thẻ + meaning + srs_state | `docs/business/deck/deck-management.md` | TBD |
+| D-022 | (REMOVED) xoá một thư mục — bỏ khái niệm folder (pivot v1) | — | hành vi xoá lan cây con nay do D-024 phủ | — | — |
+| D-023 | đổi tiêu chí sắp xếp | sắp xếp danh sách | theo bảng chữ cái / ngày tạo / ngày học (tăng-giảm) | `docs/business/deck/deck-management.md` | TBD |
+| D-024 | xoá một bộ thẻ | xác nhận xoá | xoá lan toàn bộ cây con (bộ thẻ con + thẻ + meaning + srs_state) | `docs/business/deck/deck-management.md` | TBD |
 | D-025 | import từ CSV/Excel/clipboard | chọn separator (tab/,/;) | tách cột đúng; preview; áp cảnh báo trùng (D-020) | `docs/business/import-export/import-export.md` | TBD |
 | D-026 | export | chọn định dạng + có/không kèm SRS | CSV / Excel / copy text (separator cấu hình); cho chọn kèm ô/hạn ôn | `docs/business/import-export/import-export.md` | TBD |
 | D-027 | sync gặp xung đột | hợp nhất | last-write-wins theo `updated_at` mức bản ghi | `docs/business/account-sync/account-sync.md` | TBD |

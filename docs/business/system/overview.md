@@ -33,7 +33,7 @@ học chéo nhiều cặp ngôn ngữ trong một phiên.
 
 ## 5. Bản đồ năng lực & luồng tổng thể
 
-Nội dung thuộc về một **Cặp ngôn ngữ**; người học duyệt cây **Thư mục/Bộ thẻ**, chọn một
+Nội dung thuộc về một **Cặp ngôn ngữ**; người học duyệt cây **Bộ thẻ (lồng nhau)**, chọn một
 nút và chọn một hình thức học:
 
 ```
@@ -55,8 +55,7 @@ học. (Premium hoãn v1.) Sơ đồ đầy đủ: `docs/business/system/system-
 | Ôn tập SRS (8 ô Leitner) | `docs/business/srs/srs-review.md` | Specified | TBD |
 | Luồng học & luyện tập | `docs/business/study/study-flow.md` | Specified | TBD |
 | Bốn trò chơi | `docs/business/game/game-modes.md` | Specified | TBD |
-| Quản lý Thư mục | `docs/business/folder/folder-management.md` | Specified | TBD |
-| Quản lý Bộ thẻ | `docs/business/deck/deck-management.md` | Specified | TBD |
+| Quản lý Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | Specified | TBD |
 | Tìm kiếm | `docs/business/search/global-search.md` | Specified | TBD |
 | Nhập / Xuất | `docs/business/import-export/import-export.md` | Specified | TBD |
 | Thống kê | `docs/business/statistics/statistics.md` | Specified | TBD |

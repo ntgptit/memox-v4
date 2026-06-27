@@ -7,7 +7,7 @@ mutate persisted shape without a forward migration.
 
 | From → To | Change | Migration step | Test |
 | --- | --- | --- | --- |
-| 0 → 1 | tạo schema ban đầu (language_pair, folder, deck, card, card_meaning, srs_state, daily_activity, settings) | `onCreate` của Drift | TBD |
+| 0 → 1 | tạo schema ban đầu (language_pair, deck [tự lồng qua `parent_deck_id`], card, card_meaning, srs_state, daily_activity, settings) | `onCreate` của Drift | TBD |
 
 Mỗi dòng = một lần tăng `schema_version` trong `docs/database/schema-contract.md`.
 Hiện ở **v1** — chưa có migration nào sau khi tạo mới (append-only khi v2+).

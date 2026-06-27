@@ -13,8 +13,8 @@
 
 ## 1. Mục đích & bối cảnh nghiệp vụ
 
-Người học cần một điểm khởi đầu rõ ràng để học, ôn hoặc luyện tập từ bất kỳ bộ thẻ hay
-thư mục nào. Nếu các hình thức học bị trộn lẫn, người học sẽ không hiểu hoạt động nào
+Người học cần một điểm khởi đầu rõ ràng để học, ôn hoặc luyện tập từ bất kỳ bộ thẻ nào
+(kể cả bộ thẻ cha gồm cả cây con). Nếu các hình thức học bị trộn lẫn, người học sẽ không hiểu hoạt động nào
 ảnh hưởng tới lịch ôn của mình.
 
 Tính năng này định nghĩa **năm lối vào** mở ra từ nút Play tại một nút, và phân định
@@ -50,7 +50,7 @@ thuật toán lập lịch (xem `docs/business/srs/srs-review.md`); học trộn
 ## 5. Luồng nghiệp vụ (Use cases)
 
 ### UC-1: Chọn nút và mở menu hành động
-- **Luồng chính:** người học bấm nút Play tại một bộ thẻ/thư mục; hệ thống mở menu gồm
+- **Luồng chính:** người học bấm nút Play tại một bộ thẻ (lá hoặc cha); hệ thống mở menu gồm
   các lối vào phù hợp.
 - **Quy tắc hiển thị:** mục **"Lặp lại"** chỉ xuất hiện khi nút có thẻ đến hạn (badge > 0).
 
@@ -83,7 +83,7 @@ thuật toán lập lịch (xem `docs/business/srs/srs-review.md`); học trộn
 | BR-3 | "Học" dẫn qua chuỗi 5 chặng; thẻ vào ô 1 sau khi hoàn thành đủ 5 chặng. | Đảm bảo tiếp xúc đủ trước khi xếp lịch. | D-002 |
 | BR-4 | Trả lời sai ở **bất kỳ** hình thức học nào → thẻ học lại đến khi đúng hết. | Không bỏ sót thẻ chưa nắm. | D-015 |
 | BR-5 | Chỉ "Lặp lại" và "Học" thay đổi lịch ôn và cộng hoạt động ngày. | Luyện tập không nên làm sai lệch lịch/độ chuyên cần. | D-007, D-010 |
-| BR-6 | Học/ôn tại một thư mục gộp toàn bộ thẻ của các bộ thẻ con. | Cho phép học theo nhóm chủ đề. | D-009 |
+| BR-6 | Học/ôn tại một bộ thẻ cha gộp **đệ quy** toàn bộ thẻ của các bộ thẻ con. | Cho phép học theo nhóm chủ đề. | D-009 |
 | BR-7 | Mỗi ván trò chơi dùng `game_words_per_round` thẻ (mặc định 5). | Giữ ván ngắn, tập trung. | D-008 |
 | BR-8 | "Trình phát" phát tự động kèm âm thanh, không đổi lịch ôn. | Hỗ trợ học thụ động, rảnh tay. | D-014 |
 

@@ -10,8 +10,8 @@ Shared enums and value objects used across layers. Define once; reference by nam
 | `LastResult` | correct · wrong | srs (`srs_state.last_result`, **lưu**) |
 | `GameType` | matching · multipleChoice · recall · typing | game (Ghép đôi/Đoán/Nhớ lại/Điền) |
 | `StudyEntry` | dueReview · newLearn · review · game · player | study (menu Play) |
-| `SortBy` | alphabet · createdAt · lastStudied | folder, deck |
-| `SortDirection` | asc · desc | folder, deck |
+| `SortBy` | alphabet · createdAt · lastStudied | deck |
+| `SortDirection` | asc · desc | deck |
 | `GameScope` | spaced · all · notMastered | game ("Chế độ lặp lại giãn cách") |
 | `ImportFormat` | csv · excel · clipboard | import-export |
 | `Separator` | tab · comma · semicolon · custom | import-export |

@@ -11,7 +11,7 @@ Bản hợp nhất luồng runtime của toàn hệ thống, chia **5 vùng**. L
 flowchart TD
   subgraph Z1["① Vào app & ngữ cảnh"]
     direction LR
-    A1["Mở app"] --> A2["Chọn cặp ngôn ngữ (한국어 → Tiếng Việt)"] --> A3["Thư viện: cây Thư mục/Bộ thẻ"]
+    A1["Mở app"] --> A2["Chọn cặp ngôn ngữ (한국어 → Tiếng Việt)"] --> A3["Thư viện: cây Bộ thẻ (lồng nhau)"]
   end
   subgraph Z2["② Chọn 1 nút → bấm Play → menu"]
     P["▶ Play → menu hành động"]
@@ -57,7 +57,7 @@ Viền xanh (`srs`) = nhánh **đổi lịch SRS** (Lặp lại + Học). Còn l
 ## Đọc theo vùng
 
 1. **Vào app & ngữ cảnh** — mọi nội dung thuộc một cặp ngôn ngữ; thư viện là cây
-   Thư mục → Bộ thẻ → Thẻ. Dữ liệu: `LanguagePair → Folder → Deck → Card → SrsState (8 ô)`.
+   Bộ thẻ (lồng nhau) → Thẻ. Dữ liệu: `LanguagePair → Deck (tự lồng) → Card → SrsState (8 ô)`.
 2. **Hành động tại 1 nút** — bấm Play mở menu 5 mục; "Lặp lại" chỉ hiện khi có thẻ đến hạn.
 3. **Engine học** — nhánh SRS (Lặp lại/Học): hiện thẻ → tự chấm → Đúng +1 ô / Sai −1 ô
    (8-box) → cộng hoạt động; **sai ở mọi mode → học lại đến hết**. NewLearn = chuỗi 5

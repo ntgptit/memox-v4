@@ -5,7 +5,7 @@
 | Trường | Giá trị |
 | --- | --- |
 | Mã tính năng | `personalization/personalization` |
-| Gói công việc (WBS) | W14 |
+| Gói công việc (WBS) | W13 |
 | Trạng thái | Specified |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | — |

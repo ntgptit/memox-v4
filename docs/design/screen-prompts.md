@@ -15,10 +15,9 @@ ngữ cảnh + mọi state inline**, không tham chiếu file khác — dùng tr
 
 | File prompt | Màn | Spec nghiệp vụ |
 | --- | --- | --- |
-| `docs/design/screens/01-library.md` | Thư viện | `docs/business/folder/folder-management.md` |
+| `docs/design/screens/01-library.md` | Thư viện | `docs/business/deck/deck-management.md` |
 | `docs/design/screens/02-dashboard.md` | Dashboard / Hoạt động | `docs/business/engagement/dashboard-engagement.md` |
-| `docs/design/screens/03-folder-detail.md` | Chi tiết thư mục | `docs/business/folder/folder-management.md` |
-| `docs/design/screens/04-deck-detail.md` | Danh sách thẻ | `docs/business/deck/deck-management.md` |
+| `docs/design/screens/04-deck-detail.md` | Chi tiết bộ thẻ (cây con + thẻ) | `docs/business/deck/deck-management.md` |
 | `docs/design/screens/05-flashcard-editor.md` | Tạo/Sửa thẻ | `docs/business/flashcard/flashcard-management.md` |
 | `docs/design/screens/06-study-session.md` | Phiên học (5 chặng) | `docs/business/study/study-flow.md` |
 | `docs/design/screens/07-game-picker.md` | Chọn trò chơi | `docs/business/game/game-modes.md` |

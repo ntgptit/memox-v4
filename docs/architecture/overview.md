@@ -47,7 +47,7 @@ lib/
       local/         # Drift: connection, daos, drift, migrations, preferences (docs/database/schema-contract.md)
     mappers/         # ánh xạ DTO/model ↔ entity
     repositories/    # repository impl (implements domain/repositories)
-    services/        # service phía data (vd đồng bộ remote — account-sync, W11)
+    services/        # service phía data (vd đồng bộ remote — account-sync, W10)
   presentation/
     features/<area>/ # routes/ · screens/ · viewmodels/ (@riverpod) · widgets/
     shared/          # async, dialogs, feedback, hooks, layouts, navigation, sort, widgets/{...}
@@ -68,8 +68,7 @@ Mỗi feature là một lát dọc qua domain/usecases + presentation/features; 
 | srs | Lập lịch 8-box Leitner | flashcard |
 | study | 5 lối vào, chuỗi NewLearn 5 chặng | srs, game, flashcard |
 | game | 4 game luyện (Ghép đôi/Đoán/Nhớ lại/Điền) | flashcard |
-| folder | Cây thư mục | core |
-| deck | Bộ thẻ | folder, flashcard |
+| deck | Cây bộ thẻ lồng nhau (chứa thẻ + bộ thẻ con) | flashcard |
 | search | Tìm theo term + nghĩa | flashcard |
 | import-export | CSV/Excel/clipboard | deck, flashcard |
 | statistics | Chỉ số học | srs, engagement |

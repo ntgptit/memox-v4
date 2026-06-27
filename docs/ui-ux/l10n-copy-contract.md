@@ -10,7 +10,7 @@ ARB ở `lib/l10n/` (`app_en.arb`, `app_vi.arb`); sinh accessor bằng `gen_l10n
 ## Rules
 
 - Add a key, reference it; no inline literals in UI code.
-- Key names are semantic (`folder.delete.confirm`, not `text1`).
+- Key names are semantic (`deck.delete.confirm`, not `text1`).
 - Every failure that reaches the user (`docs/contracts/error-contract.md`) has a key.
 - Each new key is referenced from the screen/feature doc that introduced it.
 - Run the project's l10n generation step (through `tool/verify`) after adding keys.

@@ -5,7 +5,7 @@
 | Trường | Giá trị |
 | --- | --- |
 | Mã tính năng | `search/global-search` |
-| Gói công việc (WBS) | W8 |
+| Gói công việc (WBS) | W7 |
 | Trạng thái | Specified |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-019, D-028 |

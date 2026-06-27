@@ -5,7 +5,7 @@
 | Trường | Giá trị |
 | --- | --- |
 | Mã tính năng | `engagement/dashboard-engagement` |
-| Gói công việc (WBS) | W12 |
+| Gói công việc (WBS) | W11 |
 | Trạng thái | Specified |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-010, D-021 |

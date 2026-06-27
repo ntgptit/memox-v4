@@ -15,18 +15,21 @@ the same commit (CLAUDE.md WBS rule).
 | W3 | SRS 8-box Leitner | W2 | Planned | `docs/business/srs/srs-review.md` |
 | W4 | Học & 5 lối vào (NewLearn 5 chặng) | W3, W5 | Planned | `docs/business/study/study-flow.md` |
 | W5 | 4 game luyện | W2 | Planned | `docs/business/game/game-modes.md` |
-| W6 | Thư mục | W1 | Planned | `docs/business/folder/folder-management.md` |
-| W7 | Bộ thẻ | W6, W2 | Planned | `docs/business/deck/deck-management.md` |
-| W8 | Tìm kiếm | W2 | Planned | `docs/business/search/global-search.md` |
-| W9 | Nhập / Xuất | W7 | Planned | `docs/business/import-export/import-export.md` |
-| W10 | Thống kê | W3, W12 | Planned | `docs/business/statistics/statistics.md` |
-| W11 | Tài khoản & Đồng bộ Google | W1 | Planned | `docs/business/account-sync/account-sync.md` |
-| W12 | Gắn kết / streak | W4 | Planned | `docs/business/engagement/dashboard-engagement.md` |
-| W13 | Cài đặt & Backup cục bộ | W1 | Planned | `docs/business/settings/settings.md` |
-| W14 | Theme (personalization) | W13 | Planned | `docs/business/personalization/personalization.md` |
+| W6 | Bộ thẻ (cây lồng nhau) | W2 | Planned | `docs/business/deck/deck-management.md` |
+| W7 | Tìm kiếm | W2 | Planned | `docs/business/search/global-search.md` |
+| W8 | Nhập / Xuất | W6 | Planned | `docs/business/import-export/import-export.md` |
+| W9 | Thống kê | W3, W11 | Planned | `docs/business/statistics/statistics.md` |
+| W10 | Tài khoản & Đồng bộ Google | W1 | Planned | `docs/business/account-sync/account-sync.md` |
+| W11 | Gắn kết / streak | W4 | Planned | `docs/business/engagement/dashboard-engagement.md` |
+| W12 | Cài đặt & Backup cục bộ | W1 | Planned | `docs/business/settings/settings.md` |
+| W13 | Theme (personalization) | W12 | Planned | `docs/business/personalization/personalization.md` |
 
 Status ∈ Planned / In-progress / Blocked / Done. **W1 Done** (nền kiến trúc + core:
-error/types/router/theme/DI đã code & test); **W2–W14 Planned** (spec xong, chưa code).
+error/types/router/theme/DI đã code & test); **W2–W13 Planned** (spec xong, chưa code).
+
+> **Pivot v1 (2026-06-28):** bỏ khái niệm **Thư mục** — bộ thẻ **tự lồng nhau** (cây) đảm
+> nhiệm việc tổ chức. W6 (Thư mục) cũ bị xoá; **W7–W14 cũ dồn xuống W6–W13**. Phụ thuộc đã
+> remap. Chi tiết: `docs/business/deck/deck-management.md`.
 
 ## 2. Map sang dòng quyết định
 
@@ -36,11 +39,12 @@ error/types/router/theme/DI đã code & test); **W2–W14 Planned** (spec xong, 
 | W3 | D-002, D-003, D-004, D-005, D-011, D-018 |
 | W4 | D-001, D-007, D-009, D-010, D-016, D-029 |
 | W5 | D-008, D-013, D-015 |
-| W8 | D-019, D-028 |
-| W9 | D-025, D-026 |
-| W11 | D-027 |
-| W12 | D-010, D-021 |
-| W13 | D-012 (Premium — hoãn v1) |
+| W6 | D-023, D-024 |
+| W7 | D-019, D-028 |
+| W8 | D-025, D-026 |
+| W10 | D-027 |
+| W11 | D-010, D-021 |
+| W12 | D-012 (Premium — hoãn v1) |
 
 ## 10. Commit Traceability Log
 

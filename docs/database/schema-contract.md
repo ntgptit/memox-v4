@@ -22,23 +22,16 @@ này + `docs/database/migration-contract.md` + một test, **trong cùng một c
 | target_lang | text | no | | mã ngôn ngữ phía người học (vd `vi`) |
 | order_index | int | no | 0 | thứ tự hiển thị |
 
-### folder
-
-| Cột | Kiểu | Null | Mặc định | Ghi chú |
-| --- | --- | --- | --- | --- |
-| id | int | no | | khoá chính |
-| pair_id | int | no | | → `language_pair.id` |
-| parent_id | int | yes | null | → `folder.id`; null = gốc |
-| name | text | no | | |
-| order_index | int | no | 0 | thứ tự giữa các anh em |
-
 ### deck
 
+Bộ thẻ **tự lồng nhau** qua `parent_deck_id` (cây nhiều cấp; không có bảng `folder` riêng).
+Một bộ thẻ chứa đồng thời thẻ trực tiếp (`card.deck_id`) và bộ thẻ con.
+
 | Cột | Kiểu | Null | Mặc định | Ghi chú |
 | --- | --- | --- | --- | --- |
 | id | int | no | | khoá chính |
 | pair_id | int | no | | → `language_pair.id` |
-| folder_id | int | yes | null | → `folder.id`; null = deck ở gốc |
+| parent_deck_id | int | yes | null | → `deck.id`; null = bộ thẻ gốc |
 | name | text | no | | |
 | order_index | int | no | 0 | thứ tự giữa các anh em |
 
@@ -114,19 +107,17 @@ Một thẻ có **một** dòng (một chiều duy nhất) — lập lịch Leit
 | --- | --- | --- |
 | card | (deck_id, order_index) | liệt kê một deck theo thứ tự |
 | srs_state | (due_at) | dựng hàng đợi đến hạn nhanh |
-| folder | (pair_id, parent_id, order_index) | render cây |
-| deck | (pair_id, folder_id, order_index) | render cây |
+| deck | (pair_id, parent_deck_id, order_index) | render cây |
 | card_meaning | (card_id) | nạp các nghĩa của một thẻ |
 
 ## Bất biến (invariants)
 
-- Một `card` thuộc đúng một `deck`; một `deck` thuộc tối đa một `folder`; một
-  `folder` thuộc tối đa một `folder` cha — không có chu trình.
+- Một `card` thuộc đúng một `deck`; một `deck` thuộc tối đa một `deck` cha
+  (`parent_deck_id`) — không có chu trình.
 - `srs_state.box` ∈ [0, 8]: `0` = thẻ mới (chưa xếp lịch); vào `1` khi hoàn thành đủ
   5 chặng NewLearn; sau đó Đúng +1 (trần 8), Sai −1 (sàn 1).
 - Thẻ `hidden = true` không bao giờ xuất hiện trong hàng đợi học lẫn `DueCount`.
-- Xoá một `deck` xoá lan các `card`, `card_meaning` và `srs_state` của nó.
-- Xoá một `folder` xoá lan toàn bộ cây con (thư mục con + deck + thẻ + meaning + srs).
+- Xoá một `deck` xoá lan toàn bộ cây con (bộ thẻ con + `card` + `card_meaning` + `srs_state`).
 - `daily_activity` chỉ được cộng bởi DueReview/NewLearn (không phải Review/Game/Player).
 - **Hiển thị (xác nhận):** số "X từ" trên mỗi nút là số thẻ ĐANG HIỂN THỊ (KHÔNG gồm
   thẻ ẩn); biểu tượng 👁 + số = số thẻ ẩn (tính thêm; tổng = X + ẩn).

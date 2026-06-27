@@ -26,7 +26,7 @@ nội dung học và duy trì thói quen hằng ngày.
 
 ## 4. Phạm vi sản phẩm (v1)
 
-**Trong phạm vi:** quản lý nội dung (thư mục/bộ thẻ/thẻ), SRS 8 ô, các hình thức học &
+**Trong phạm vi:** quản lý nội dung (bộ thẻ lồng nhau/thẻ), SRS 8 ô, các hình thức học &
 luyện, tìm kiếm, nhập/xuất, thống kê & gắn kết, đồng bộ Google (alpha), cài đặt & cá nhân hoá.
 **Ngoài phạm vi (v1):** kiếm tiền Premium; chia sẻ nội dung giữa người dùng; media ngoài âm thanh.
 
@@ -38,15 +38,14 @@ luyện, tìm kiếm, nhập/xuất, thống kê & gắn kết, đồng bộ Goo
 | srs | Ôn tập SRS (8 ô Leitner) | `docs/business/srs/srs-review.md` | W3 | Specified |
 | study | Luồng học & luyện tập | `docs/business/study/study-flow.md` | W4 | Specified |
 | game | Bốn trò chơi luyện tập | `docs/business/game/game-modes.md` | W5 | Specified |
-| folder | Quản lý Thư mục | `docs/business/folder/folder-management.md` | W6 | Specified |
-| deck | Quản lý Bộ thẻ | `docs/business/deck/deck-management.md` | W7 | Specified |
-| search | Tìm kiếm thẻ | `docs/business/search/global-search.md` | W8 | Specified |
-| import-export | Nhập & Xuất dữ liệu | `docs/business/import-export/import-export.md` | W9 | Specified |
-| statistics | Thống kê học tập | `docs/business/statistics/statistics.md` | W10 | Specified |
-| account-sync | Tài khoản & Đồng bộ | `docs/business/account-sync/account-sync.md` | W11 | Specified |
-| engagement | Hoạt động, mục tiêu & streak | `docs/business/engagement/dashboard-engagement.md` | W12 | Specified |
-| settings | Cài đặt, sao lưu & kiếm tiền | `docs/business/settings/settings.md` | W13 | Specified |
-| personalization | Cá nhân hoá giao diện | `docs/business/personalization/personalization.md` | W14 | Specified |
+| deck | Quản lý Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | W6 | Specified |
+| search | Tìm kiếm thẻ | `docs/business/search/global-search.md` | W7 | Specified |
+| import-export | Nhập & Xuất dữ liệu | `docs/business/import-export/import-export.md` | W8 | Specified |
+| statistics | Thống kê học tập | `docs/business/statistics/statistics.md` | W9 | Specified |
+| account-sync | Tài khoản & Đồng bộ | `docs/business/account-sync/account-sync.md` | W10 | Specified |
+| engagement | Hoạt động, mục tiêu & streak | `docs/business/engagement/dashboard-engagement.md` | W11 | Specified |
+| settings | Cài đặt, sao lưu & kiếm tiền | `docs/business/settings/settings.md` | W12 | Specified |
+| personalization | Cá nhân hoá giao diện | `docs/business/personalization/personalization.md` | W13 | Specified |
 
 ## 6. Cách thêm một đặc tả tính năng
 

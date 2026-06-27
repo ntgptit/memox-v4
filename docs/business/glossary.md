@@ -11,8 +11,7 @@ mã nguồn để truy vết; đổi tên một thuật ngữ phải cập nhậ
 | --- | --- | --- |
 | Cặp ngôn ngữ | Ngữ cảnh học gồm ngôn ngữ đang học và ngôn ngữ của người học; mọi nội dung thuộc về một cặp. Đảo chiều hiển thị được. | `LanguagePair` |
 | Tiếng mẹ đẻ | Ngôn ngữ của người học, đặt ở mức toàn cục; mặt nghĩa mặc định. | `NativeLanguage` |
-| Thư mục | Nút chứa thư mục con và/hoặc bộ thẻ; lồng nhiều cấp. | `Folder` |
-| Bộ thẻ | Nút chứa trực tiếp các thẻ học. | `Deck` |
+| Bộ thẻ | Nút thư viện **tự lồng**: chứa thẻ trực tiếp và/hoặc bộ thẻ con; lồng nhiều cấp. | `Deck` |
 | Thẻ học | Đơn vị từ vựng: một term cùng một/nhiều khối nghĩa, kèm âm thanh và các cờ. | `Card` |
 | Nghĩa | Khối nghĩa theo một ngôn ngữ — một ô văn bản tự do. | `CardMeaning` |
 | Term | Mặt ngôn ngữ đang học của thẻ (mặt hỏi). | `term` |

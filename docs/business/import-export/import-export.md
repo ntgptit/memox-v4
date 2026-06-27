@@ -5,7 +5,7 @@
 | Trường | Giá trị |
 | --- | --- |
 | Mã tính năng | `import-export/import-export` |
-| Gói công việc (WBS) | W9 |
+| Gói công việc (WBS) | W8 |
 | Trạng thái | Specified |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-020, D-025, D-026 |
@@ -46,7 +46,7 @@ trước khi ghi; xuất ra CSV/Excel/clipboard, tuỳ chọn kèm trạng thái
 - **Luồng ngoại lệ:** thẻ trùng được **cảnh báo mềm** nhưng vẫn cho thêm.
 
 ### UC-2: Xuất thẻ
-- **Luồng chính:** người học chọn phạm vi (một bộ thẻ hoặc thư mục) và định dạng
+- **Luồng chính:** người học chọn phạm vi (một bộ thẻ, gồm cả cây con) và định dạng
   (CSV / Excel / sao chép văn bản); chọn **có kèm trạng thái ôn hay không**; hệ thống tạo
   kết quả.
 
