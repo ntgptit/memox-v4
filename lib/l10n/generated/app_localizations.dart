@@ -920,6 +920,96 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get commonClose;
 
+  /// No description provided for @dashboardGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello'**
+  String get dashboardGreeting;
+
+  /// No description provided for @dashboardTimeStudied.
+  ///
+  /// In en, this message translates to:
+  /// **'Time studied'**
+  String get dashboardTimeStudied;
+
+  /// No description provided for @dashboardWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Words'**
+  String get dashboardWords;
+
+  /// No description provided for @dashboardEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'No study yet today — start to keep your streak!'**
+  String get dashboardEmptyHint;
+
+  /// No description provided for @dashboardGoalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily goal'**
+  String get dashboardGoalTitle;
+
+  /// No description provided for @dashboardGoalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach your minutes OR words'**
+  String get dashboardGoalHint;
+
+  /// No description provided for @dashboardGoalNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a daily goal in settings'**
+  String get dashboardGoalNone;
+
+  /// No description provided for @dashboardGoalMet.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal reached today 🎉'**
+  String get dashboardGoalMet;
+
+  /// No description provided for @dashboardStreakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get dashboardStreakTitle;
+
+  /// No description provided for @dashboardStreakDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String dashboardStreakDays(int count);
+
+  /// No description provided for @dashboardStreakNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Start your streak today'**
+  String get dashboardStreakNone;
+
+  /// No description provided for @dashboardContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue learning'**
+  String get dashboardContinue;
+
+  /// No description provided for @dashboardDueCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No cards due} =1{1 card due} other{{count} cards due}}'**
+  String dashboardDueCount(int count);
+
+  /// No description provided for @dashboardMastered.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% mastered'**
+  String dashboardMastered(int percent);
+
+  /// No description provided for @dashboardError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your dashboard'**
+  String get dashboardError;
+
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:

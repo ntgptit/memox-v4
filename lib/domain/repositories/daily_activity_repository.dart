@@ -14,4 +14,7 @@ abstract interface class DailyActivityRepository {
 
   /// The totals for a day, or null when nothing has been recorded.
   Future<Result<DailyActivity?>> forDay(int pairId, String day);
+
+  /// Every recorded day for a pair — the input to streak computation.
+  Future<Result<List<DailyActivity>>> allForPair(int pairId);
 }

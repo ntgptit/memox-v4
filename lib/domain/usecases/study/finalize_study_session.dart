@@ -1,4 +1,5 @@
 import 'package:memox_v4/core/util/clock.dart';
+import 'package:memox_v4/core/util/day_key.dart';
 import 'package:memox_v4/domain/repositories/daily_activity_repository.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
@@ -20,16 +21,9 @@ class FinalizeStudySessionUseCase {
     if (!entry.changesSchedule) return Future.value(const Ok<void>(null));
     return _repository.add(
       pairId: pairId,
-      day: _dayKey(_clock.now()),
+      day: dayKey(_clock.now()),
       seconds: seconds,
       words: words,
     );
-  }
-
-  String _dayKey(DateTime date) {
-    final year = date.year.toString().padLeft(4, '0');
-    final month = date.month.toString().padLeft(2, '0');
-    final day = date.day.toString().padLeft(2, '0');
-    return '$year-$month-$day';
   }
 }

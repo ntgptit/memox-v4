@@ -443,6 +443,68 @@ class AppLocalizationsVi extends AppLocalizations {
   String get commonClose => 'Đóng';
 
   @override
+  String get dashboardGreeting => 'Xin chào';
+
+  @override
+  String get dashboardTimeStudied => 'Thời gian học';
+
+  @override
+  String get dashboardWords => 'Số từ';
+
+  @override
+  String get dashboardEmptyHint => 'Hôm nay chưa học — bắt đầu để giữ streak!';
+
+  @override
+  String get dashboardGoalTitle => 'Mục tiêu ngày';
+
+  @override
+  String get dashboardGoalHint => 'Đạt khi hoàn thành số phút HOẶC số từ';
+
+  @override
+  String get dashboardGoalNone => 'Đặt mục tiêu ngày trong cài đặt';
+
+  @override
+  String get dashboardGoalMet => 'Đã đạt mục tiêu hôm nay 🎉';
+
+  @override
+  String get dashboardStreakTitle => 'Chuỗi ngày';
+
+  @override
+  String dashboardStreakDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ngày',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboardStreakNone => 'Bắt đầu chuỗi hôm nay';
+
+  @override
+  String get dashboardContinue => 'Tiếp tục học';
+
+  @override
+  String dashboardDueCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count thẻ đến hạn',
+      zero: 'Không có thẻ đến hạn',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dashboardMastered(int percent) {
+    return 'Đã thuộc $percent%';
+  }
+
+  @override
+  String get dashboardError => 'Không tải được bảng hôm nay';
+
+  @override
   String get searchHint => 'Tìm theo từ hoặc nghĩa';
 
   @override

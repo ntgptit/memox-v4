@@ -7,7 +7,7 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 
 | Name | Path | Params | Push / replace | Notes |
 | --- | --- | --- | --- | --- |
-| `today` | `/today` | — | tab (shell) | Hôm nay — dashboard gắn kết (W11); placeholder ở S0 |
+| `today` | `/today` | — | tab (shell) | Hôm nay — dashboard gắn kết (W11): hoạt động + mục tiêu + streak; "Tiếp tục học" → tab Library (`/`) |
 | `library` | `/` | — | tab · root (shell) | màn chính (cây bộ thẻ gốc); placeholder ở S0, W6 thay |
 | `statistics` (tab) | `/statistics` | — | tab (shell) | Thống kê (W9); cùng route mở từ drawer |
 | `profile` | `/profile` | — | tab (shell) | Cá nhân — tài khoản & cài đặt (W10/W12); placeholder ở S0 |

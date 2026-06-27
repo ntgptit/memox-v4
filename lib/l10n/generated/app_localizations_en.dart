@@ -445,6 +445,71 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonClose => 'Close';
 
   @override
+  String get dashboardGreeting => 'Hello';
+
+  @override
+  String get dashboardTimeStudied => 'Time studied';
+
+  @override
+  String get dashboardWords => 'Words';
+
+  @override
+  String get dashboardEmptyHint =>
+      'No study yet today — start to keep your streak!';
+
+  @override
+  String get dashboardGoalTitle => 'Daily goal';
+
+  @override
+  String get dashboardGoalHint => 'Reach your minutes OR words';
+
+  @override
+  String get dashboardGoalNone => 'Set a daily goal in settings';
+
+  @override
+  String get dashboardGoalMet => 'Goal reached today 🎉';
+
+  @override
+  String get dashboardStreakTitle => 'Streak';
+
+  @override
+  String dashboardStreakDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboardStreakNone => 'Start your streak today';
+
+  @override
+  String get dashboardContinue => 'Continue learning';
+
+  @override
+  String dashboardDueCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count cards due',
+      one: '1 card due',
+      zero: 'No cards due',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dashboardMastered(int percent) {
+    return '$percent% mastered';
+  }
+
+  @override
+  String get dashboardError => 'Couldn\'t load your dashboard';
+
+  @override
   String get searchHint => 'Search by word or meaning';
 
   @override

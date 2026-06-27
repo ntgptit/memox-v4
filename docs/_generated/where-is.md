@@ -17,7 +17,7 @@ cặp ngôn ngữ (S0) đã hiện thực — xem các dòng cuối.
 | Nhập/Xuất | `docs/business/import-export/import-export.md` | `lib/domain/usecases/import_export/` | TBD | W8 |
 | Thống kê | `docs/business/statistics/statistics.md` | `lib/presentation/features/statistics/` | TBD | W9 |
 | Tài khoản/Sync | `docs/business/account-sync/account-sync.md` | `lib/data/datasources/remote/` | TBD | W10 |
-| Gắn kết/streak | `docs/business/engagement/dashboard-engagement.md` | `lib/domain/usecases/engagement/` | TBD | W11 |
+| Gắn kết/streak | `docs/business/engagement/dashboard-engagement.md` | `lib/domain/{types,models,usecases/engagement}` · `lib/presentation/features/engagement/` | `test/domain/usecases/engagement/compute_streak_test.dart` · `test/presentation/features/engagement/` | W11 |
 | Cài đặt/Backup | `docs/business/settings/settings.md` | `lib/presentation/features/settings/` | TBD | W12 |
 | Theme | `docs/business/personalization/personalization.md` | `lib/core/theme/` | TBD | W13 |
 

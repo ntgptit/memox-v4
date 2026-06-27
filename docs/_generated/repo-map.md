@@ -415,6 +415,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ deck_providers.dart
 │  │  │  ├─ language_pair_providers.dart
 │  │  │  ├─ search_providers.dart
+│  │  │  ├─ settings_providers.dart
 │  │  │  └─ srs_providers.dart
 │  │  ├─ router/
 │  │  │  ├─ app_router.dart
@@ -423,6 +424,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  ├─ core/
 │  │  ├─ constants/
 │  │  │  ├─ app_constants.dart
+│  │  │  ├─ settings_keys.dart
 │  │  │  └─ supported_languages.dart
 │  │  ├─ error/
 │  │  │  └─ failure.dart
@@ -439,6 +441,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  └─ mx_typography.dart
 │  │  └─ util/
 │  │     ├─ clock.dart
+│  │     ├─ day_key.dart
 │  │     └─ logger.dart
 │  ├─ data/
 │  │  ├─ datasources/
@@ -455,6 +458,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ deck_repository_impl.dart
 │  │  │  ├─ language_pair_repository_impl.dart
 │  │  │  ├─ search_repository_impl.dart
+│  │  │  ├─ settings_repository_impl.dart
 │  │  │  └─ srs_repository_impl.dart
 │  │  └─ services/
 │  ├─ domain/
@@ -470,6 +474,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ card_schedule_info.dart
 │  │  │  ├─ deck_node.dart
 │  │  │  ├─ deck_stats.dart
+│  │  │  ├─ engagement_summary.dart
 │  │  │  ├─ game_card.dart
 │  │  │  ├─ language_pair_context.dart
 │  │  │  ├─ play_menu.dart
@@ -480,21 +485,25 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ deck_repository.dart
 │  │  │  ├─ language_pair_repository.dart
 │  │  │  ├─ search_repository.dart
+│  │  │  ├─ settings_repository.dart
 │  │  │  └─ srs_repository.dart
 │  │  ├─ services/
 │  │  │  └─ srs_scheduler.dart
 │  │  ├─ types/
 │  │  │  ├─ box_interval.dart
 │  │  │  ├─ card_status.dart
+│  │  │  ├─ daily_goal.dart
 │  │  │  ├─ game_scope.dart
 │  │  │  ├─ game_type.dart
 │  │  │  ├─ last_result.dart
 │  │  │  ├─ leitner_box.dart
 │  │  │  ├─ result.dart
 │  │  │  ├─ sort.dart
+│  │  │  ├─ streak.dart
 │  │  │  └─ study_entry.dart
 │  │  └─ usecases/
 │  │     ├─ deck/
+│  │     ├─ engagement/
 │  │     ├─ flashcard/
 │  │     ├─ game/
 │  │     ├─ language_pair/
@@ -507,6 +516,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  ├─ presentation/
 │  │  ├─ features/
 │  │  │  ├─ deck/
+│  │  │  ├─ engagement/
 │  │  │  ├─ flashcard/
 │  │  │  ├─ game/
 │  │  │  ├─ language_pair/
@@ -567,6 +577,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  └─ result_test.dart
 │  │  └─ usecases/
 │  │     ├─ deck/
+│  │     ├─ engagement/
 │  │     ├─ flashcard/
 │  │     ├─ game/
 │  │     ├─ language_pair/
@@ -575,6 +586,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  └─ presentation/
 │     ├─ features/
 │     │  ├─ deck/
+│     │  ├─ engagement/
 │     │  ├─ flashcard/
 │     │  ├─ game/
 │     │  ├─ search/

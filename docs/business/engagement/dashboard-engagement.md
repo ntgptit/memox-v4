@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `engagement/dashboard-engagement` |
 | Gói công việc (WBS) | W11 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (dashboard Today: hoạt động + mục tiêu + streak; mục tiêu đọc từ settings do W12 ghi; chưa có job chốt-ngày — streak tính trực tiếp từ lịch sử `daily_activity`) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-010, D-021 |
 | Phiên bản | 1.0 |

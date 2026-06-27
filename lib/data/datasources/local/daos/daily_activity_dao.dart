@@ -12,6 +12,10 @@ class DailyActivityDao {
             ..where((t) => t.pairId.equals(pairId) & t.day.equals(day)))
           .getSingleOrNull();
 
+  Future<List<DailyActivityData>> allForPair(int pairId) => (_db.select(
+    _db.dailyActivity,
+  )..where((t) => t.pairId.equals(pairId))).get();
+
   Future<void> add({
     required int pairId,
     required String day,

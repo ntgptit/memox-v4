@@ -35,4 +35,14 @@ class DailyActivityRepositoryImpl implements DailyActivityRepository {
       return Err(PersistenceFailure(message: 'read daily activity', cause: e));
     }
   }
+
+  @override
+  Future<Result<List<DailyActivity>>> allForPair(int pairId) async {
+    try {
+      final rows = await _dao.allForPair(pairId);
+      return Ok(rows.map(mapDailyActivity).toList(growable: false));
+    } catch (e) {
+      return Err(PersistenceFailure(message: 'list daily activity', cause: e));
+    }
+  }
 }
