@@ -21,6 +21,17 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W9 (10-W9-statistics) · DONE · ac8fbfb8 · learning stats with scope toggle, verify --full GREEN
+
+- What: BE — StatsScope (current pair / all app) + StatisticsSummary read-model; StatsDao aggregates over card/srs_state/daily_activity (library counts, Leitner box distribution box0=new, scheduled due_at list, daily activity), hidden-excluded, scoped by pair or all-app; StatisticsRepository + GetStatisticsUseCase buckets the 7-day due forecast + 14-day activity window vs the injected clock. FE — StatisticsScreen replaces the Stats placeholder: scope SegmentedButton, overview (pairs/decks/words + mastered %), box + forecast bars, 14-day activity bars, loading/insufficient/error states; charts hand-rolled from Mx* tokens (NO charting dep). StatsScopeNotifier + autoDispose-family StatisticsNotifier(scope).
+- Where: lib/domain/{types/stats_scope,models/statistics_summary,usecases/statistics}, lib/data/{daos/stats_dao,repositories/statistics_repository_impl}, lib/app/di/statistics_providers, lib/presentation/features/statistics, app_router Stats branch.
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 135 tests). Pushed origin main.
+
+## 2026-06-28 · W9 · NOTE · deferred metrics; charts hand-rolled (no dep)
+
+- What: per the W9 dependency gate (charting package not in stack.md), all charts are built from primitives/tokens (FractionallySizedBox bars + LinearProgressIndicator) — no fl_chart/dep added. Deferred from the spec's metric catalogue: full calendar heatmap (showed a 14-day activity bar instead), accuracy donut (no persisted correct/total — study accuracy is computed in-session only, never stored; needs a review-outcomes table to implement), and longest-streak (W11 only computes current streak). These are additive and can land when the data exists.
+- Next eligible: step 11 = W12 (settings) — dep W1 (Done) → BUILD next. Reminders need GATED flutter_local_notifications/timezone → build the settings store + UI WITHOUT reminders, INCLUDING the daily_goal_minutes/words WRITE that activates W11's goal (extend SettingsRepository with writeInt + add SettingsNotifier — the state-mgmt contract already has a SettingsNotifier row). Either omit the reminder UI or render it disabled with a NIGHT-LOG BLOCKED(dep) note for just that sub-feature. Then W13 (dep W12). W8/W10 remain BLOCKED (gated deps).
+
 ## 2026-06-28 · W11 (09-W11-engagement) · DONE · cbeedf0a · today dashboard, daily goal & streak, verify --full GREEN
 
 - What: BE — DailyGoal (met = minutes OR words) + Streak value objects; ComputeStreakUseCase (D-021: consecutive met days back from today; today-in-progress not a miss; gap/miss → 0; no goal → 0). Added DailyActivityRepository.allForPair (streak history) + a minimal SettingsRepository reading daily_goal_minutes/words (W12 owns writes). Shared dayKey() util now used by FinalizeStudySession (W4) + streak so the daily_activity key format is identical. EngagementNotifier (keepAlive) composes activity + goal + streak + library due/mastered into EngagementSummary. FE — DashboardScreen replaces the Today placeholder: greeting/date, activity (time+words), goal ring (met/none states), streak card, shortcuts (continue → Library, due count, mastered %), loading skeleton + error/retry.
