@@ -8,6 +8,9 @@ UI/spec from overflowing the window or being implemented wrong.
 > Built on W1 (foundation: `core/theme`, `core/error`, `domain/types`, router, DI).
 > Folder concept is removed — decks self-nest (`deck.parent_deck_id`).
 
+> **Copy-paste driver:** see `prompts/RUN-LOOP.md` for the ready-to-run loop prompt
+> (paste into a fresh session each iteration — it auto-detects the next step).
+
 ## How to run (one iteration = one file)
 1. Open the next file in the order below.
 2. Paste its **full content** into a **fresh** Claude Code session: `/loop <file content>`
