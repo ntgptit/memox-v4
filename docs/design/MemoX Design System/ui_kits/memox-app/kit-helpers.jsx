@@ -80,7 +80,7 @@ function Scrim({ children, align = 'end', node }) {
 /* Bottom action sheet surface. */
 function Sheet({ title, children, node }) {
   return (
-    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-5) var(--memox-space-4) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
+    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-5) var(--memox-space-4) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
       <div style={{ width: 'var(--memox-size-sm)', height: 'var(--memox-size-3xs)', borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-divider)', margin: '0 auto var(--memox-space-4)' }} />
       {title ? <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', textTransform: 'uppercase', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</div> : null}
       {children}
@@ -104,7 +104,7 @@ function MenuItem({ icon, label, tone, danger, trailing, node, onClick }) {
 function Dialog({ icon, tone, title, text, actions, node }) {
   const { MxIconTile } = NS;
   return (
-    <div data-mx-node={node} style={{ width: '100%', maxWidth: 'var(--memox-size-5xl)', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-xl)', padding: 'var(--memox-space-6)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', boxShadow: 'var(--memox-shadow-lg)' }}>
+    <div data-mx-node={node} style={{ width: '100%', maxWidth: 'var(--memox-size-5xl)', background: 'var(--memox-surface)', color: 'var(--memox-text)', borderRadius: 'var(--memox-radius-xl)', padding: 'var(--memox-space-6)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', boxShadow: 'var(--memox-shadow-lg)' }}>
       {icon ? <MxIconTile icon={icon} tone={tone} size="lg" /> : null}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
         <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{title}</div>

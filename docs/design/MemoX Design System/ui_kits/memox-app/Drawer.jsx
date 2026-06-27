@@ -44,7 +44,7 @@ function Drawer({ state = 'open' }) {
   if (state === 'open') {
     return (
       <div data-mx-node="drawer/overlay" style={{ position: 'absolute', inset: 0, zIndex: 60, display: 'flex' }}>
-        <div data-mx-node="drawer/panel" style={{ width: '82%', maxWidth: 'var(--memox-size-5xl)', height: '100%', background: 'var(--memox-surface)', display: 'flex', flexDirection: 'column', padding: 'var(--memox-space-5) var(--memox-space-4)', boxShadow: 'var(--memox-shadow-lg)' }}>
+        <div data-mx-node="drawer/panel" style={{ width: '82%', maxWidth: 'var(--memox-size-5xl)', height: '100%', background: 'var(--memox-surface)', color: 'var(--memox-text)', display: 'flex', flexDirection: 'column', padding: 'var(--memox-space-5) var(--memox-space-4)', boxShadow: 'var(--memox-shadow-lg)' }}>
           <div style={{ padding: '0 var(--memox-space-2) var(--memox-space-4)', borderBottom: 'var(--memox-stroke-hairline) solid var(--memox-divider)', marginBottom: 'var(--memox-space-2)' }}>
             <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>TODAY'S ACTIVITY</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', marginTop: 'var(--memox-space-2)', fontWeight: 'var(--memox-font-weight-bold)' }}>
