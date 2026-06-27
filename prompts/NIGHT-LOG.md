@@ -21,6 +21,18 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · W12 (12-W12-settings) · DONE · c48fe360 · settings, local backup & reminders, verify --full GREEN
+
+- What: BE — SettingsKeys (all schema keys) + Reminder VO + AppSettings snapshot; SettingsRepository/DAO extended (readAll/write/remove) + GetSettings/UpdateSetting use cases; BackupRepository (JSON snapshot of every table via raw SQL, restore replaces rows in one transaction, parents-first); SettingsNotifier (keepAlive) persists each change, refreshes the W11 dashboard goal on goal change, backup/restore via the existing path_provider. FE — SettingsScreen (/settings from drawer): game (words/round + random), SRS (boxes read-only 8, new/day), daily goal (minutes/words), reminder link, auto-backup + backup/restore buttons, theme link→W13. ReminderScreen (/settings/reminder): enable + time picker + weekday chips + "coming soon" notice. D-008: game picker sources words/round + random from settings and threads them through the gamePlay route.
+- Where: lib/domain/{types/reminder,models/app_settings,repositories/{settings,backup}_repository,usecases/settings}, lib/data/{daos/settings_dao,repositories/{settings,backup}_repository_impl}, lib/app/di/settings_providers, lib/presentation/features/settings, app_router + route_paths (/settings,/settings/reminder), app_drawer (Settings→/settings), game_picker_screen + route (D-008).
+- Verify: `node tool/verify/run.mjs --full` → PASS (doc_guard, analyze, format, 142 tests). Pushed origin main.
+
+## 2026-06-28 · W12 · BLOCKED(partial) · dep:flutter_local_notifications,timezone — reminder OS scheduling deferred
+
+- What: the reminder SCHEDULE (time + weekdays + enabled) persists and round-trips, but actually firing a local notification at that time needs flutter_local_notifications + timezone, which are NOT in docs/stack/stack.md (W12 prompt dependency gate). Per loop rule 4, not added. The reminder screen shows a "notifications coming soon" notice; the schedule is stored so it can be activated once the deps are approved.
+- Suggested fix: approve + add flutter_local_notifications + timezone to pubspec + stack.md (same commit), then add a NotificationScheduler that reads the persisted Reminder and schedules/cancels OS notifications (request permission per BR-4).
+- Next eligible: step 13 = W13 (13-W13-personalization.md) — dep W12 (now Done) → BUILD next. Likely theme picker + word-display personalization (settings links to it). Read its prompt + docs/business/personalization + design screens. After W13, only W8 + W10 (gated deps) remain → write the FINAL SUMMARY to NIGHT-LOG and STOP the loop (omit ScheduleWakeup).
+
 ## 2026-06-28 · W9 (10-W9-statistics) · DONE · ac8fbfb8 · learning stats with scope toggle, verify --full GREEN
 
 - What: BE — StatsScope (current pair / all app) + StatisticsSummary read-model; StatsDao aggregates over card/srs_state/daily_activity (library counts, Leitner box distribution box0=new, scheduled due_at list, daily activity), hidden-excluded, scoped by pair or all-app; StatisticsRepository + GetStatisticsUseCase buckets the 7-day due forecast + 14-day activity window vs the injected clock. FE — StatisticsScreen replaces the Stats placeholder: scope SegmentedButton, overview (pairs/decks/words + mastered %), box + forecast bars, 14-day activity bars, loading/insufficient/error states; charts hand-rolled from Mx* tokens (NO charting dep). StatsScopeNotifier + autoDispose-family StatisticsNotifier(scope).
