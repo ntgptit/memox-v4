@@ -21,6 +21,21 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · GAP-FILL ROUND · deps unblocked (user granted blanket approval)
+
+User approved adding all gated libraries + asked to complete every deferred point. Deps added + pushed (a7e7ff4): file_picker^8/csv^8/excel^4 (W8), google_sign_in^7/googleapis^16/flutter_secure_storage^10 (W10), flutter_local_notifications^22/timezone^0.11 (W12), flutter_tts^4 (audio). All resolve with the analyzer-9 stack. WORK QUEUE (one per iteration, verify --full green + push each):
+
+1. **W12 reminders (OS firing)** — NotificationService abstraction (flutter_local_notifications + timezone init); schedule/cancel from the persisted Reminder on settings change; permission request; remove the "coming soon" notice. Test the schedule-computation/wiring via the abstraction (the plugin call is thin; OS firing not unit-testable).
+2. **Audio/TTS** — TtsService abstraction (flutter_tts); wire the editor audio control + player + game "speaker" (term → speak). Test the service contract; UI buttons trigger it.
+3. **W8 import/export** — full per docs/business/import-export (D-025 import: file_picker pick + csv/excel parse + separator + preview + soft-dup D-020; D-026 export csv/excel/clipboard + optional SRS). Screens 21-import/22-export from Library overflow.
+4. **W4 RoundController** — extract a RoundController interface (pending/current/markCorrect/markWrong) implemented by GameSessionNotifier + StudySessionNotifier; parameterise the 4 game widgets by it; NewLearn stages 2–5 reuse the real games instead of the unified self-grade.
+5. **W9 metrics** — add a `review_outcome` table (card_id, ts, correct, mode) + MIGRATION (v→v+1) + schema/migration docs; record outcomes in DueReview grade + game answers; then build accuracy donut + full activity heatmap + longest-streak (extend ComputeStreak).
+6. **W7 FTS** — optional: FTS5 virtual table + triggers (migration) replacing LIKE, OR leave as documented perf-deferral if migration risk outweighs the win.
+7. **W10 Google account-sync** — google_sign_in + googleapis(Drive). Sign-in + upload/download the local JSON backup to Drive appDataFolder; secure-storage for tokens. NOTE: real OAuth needs the user's GCP client config (android/ios) — build the structure + abstract the auth; flag the platform-config step as the human gap.
+8. **Code-review pass** — run `code-reviewer` + `docs-drift-detector` over the cumulative gap-fill diff; fix blockers.
+
+Rules unchanged: verify ONLY via tool/verify; verify --full green before push; docs parity each commit; WBS §10 traceability; per dep already approved. After item 8 (or when all done/blocked), write FINAL SUMMARY + stop.
+
 ## 2026-06-28 · W13 (13-W13-personalization) · DONE · 4b97f51c · theme mode, accent & font size, verify --full GREEN
 
 - What: BE — ThemePrefs + AccentChoice (brand/warm/cool mapped to existing tokens, no new colors) + FontScale (small/medium/large) in core/theme; AppTheme.light/dark now take an accent and re-seed the ColorScheme primary/surfaceTint; PersonalizationNotifier (keepAlive) reads/writes theme_mode/accent_color/font_scale via the W12 settings store. FE — ThemeScreen (/settings/theme) with mode + accent + font-size selectors + live preview; MemoXApp is now a ConsumerWidget so themeMode/accent/MediaQuery.textScaler apply live with no restart (AC-1/AC-2); the settings "Theme" row opens it (was a coming-soon snackbar).
