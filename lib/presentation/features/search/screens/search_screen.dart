@@ -41,10 +41,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final state = ref.watch(searchProvider);
     final now = ref.read(clockProvider).now().millisecondsSinceEpoch;
     return MxScaffold(
+      key: const ValueKey('mx-node:search/screen'),
       flush: true,
       appBar: AppBar(
+        key: const ValueKey('mx-node:search/appbar'),
         title: TextField(
-          key: const Key('searchField'),
+          key: const ValueKey('mx-node:search/dock'),
           controller: _controller,
           autofocus: true,
           onChanged: (value) => unawaited(_notifier.search(value)),

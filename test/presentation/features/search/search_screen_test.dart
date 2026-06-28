@@ -53,7 +53,10 @@ void main() {
     await tester.pumpWidget(host());
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byKey(const Key('searchField')), 'xin');
+    await tester.enterText(
+      find.byKey(const ValueKey('mx-node:search/dock')),
+      'xin',
+    );
     await tester.pumpAndSettle();
 
     expect(find.byKey(Key('searchResult-$cardId')), findsOneWidget);
@@ -65,7 +68,10 @@ void main() {
     await tester.pumpWidget(host());
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byKey(const Key('searchField')), 'zzz');
+    await tester.enterText(
+      find.byKey(const ValueKey('mx-node:search/dock')),
+      'zzz',
+    );
     await tester.pumpAndSettle();
 
     expect(find.textContaining('zzz'), findsWidgets);
