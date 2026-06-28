@@ -496,8 +496,9 @@ GREEN; commit+push; then ScheduleWakeup to continue.
 - DONE: dashboard (271ba4ea) · library (29ba5597 — 7 keyed, 3 exempt) · deck-detail
   (7b833db0 — 10 keyed +empty Add/Import +error retry, 7 exempt: card delete/audio→editor,
   reset→engine, search-dock→/search, move-apply→tap-to-apply) · statistics (aa59387f —
-  7 keyed, 2 exempt: streak-current/longest→dashboard).
-- QUEUE (18 left): settings · search · study-session · review ·
+  7 keyed, 2 exempt: streak-current/longest→dashboard) · settings (5936c6ee — screen/appbar
+  keyed, 2 exempt: profile→no-account, srs-notif-switch→/reminder screen).
+- QUEUE (17 left): search · study-session · review ·
   player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing ·
   flashcard-editor · import · export · reminder · theme · account-sync · drawer.
-- NEXT ITERATION = settings.
+- NEXT ITERATION = search.
