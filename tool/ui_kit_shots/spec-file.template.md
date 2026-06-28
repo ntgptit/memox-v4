@@ -24,15 +24,13 @@ start - build it as a list/builder, not N copies (a +N suffix means a trailing p
 `shadow:<offY>/<blur>` is the box-shadow -> map to an elevation. Coordinates are px on the
 390x780 phone frame (light theme measured; dark remaps the same `--memox-*` tokens). A
 `<color>` is a `--memox-*` token name; `token@NN` / `#rrggbb@NN` = that color at NN% opacity
-(overlay/tint, not a hardcoded color). Token names map to Flutter symbols via
-`docs/design/design-token-mapping.md`; a bare `#rrggbb` means no token matched - treat as a
-gap, not a license to hardcode. Non-base states are an ordered diff (`+` added / `-` removed
+(overlay/tint, not a hardcoded color). Token names map to the Flutter theme tokens; a bare
+`#rrggbb` means no token matched - treat as a gap, not a license to hardcode. Non-base states are an ordered diff (`+` added / `-` removed
 in document order with abs+rel bbox kept, `...` = unchanged run). Every quoted "..." string is
 MOCK COPY - the kit carries NO l10n keys; never copy it into the app, source real strings from
-ARB (`docs/design/mock-design-index.md`). Numbers/counts are illustrative, not the system
-contract. `mx:<Mx>` is the suggested MemoX shared component (grounded in
-`docs/design/component-visual-contract.md`); `mx:?` is an interactive control with no
-confident mapping (resolve via that contract). When no `mx:` is present, `name` is just the
+the app ARB (`lib/l10n/`). Numbers/counts are illustrative, not the system contract. `mx:<Mx>`
+is the suggested MemoX shared component (the per-screen identity contract is
+`tool/parity/contracts/`); `mx:?` is an interactive control with no confident mapping. When no `mx:` is present, `name` is just the
 raw kit CSS class (e.g. `ov`, `title`) and is NOT a resolved component. Two mappings stay
 deliberately MISSING, not guessed: a bare `#rrggbb` is an un-tokenized color, and quoted text
 has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).

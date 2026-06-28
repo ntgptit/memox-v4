@@ -94,6 +94,31 @@ node tool/parity/gen_bindings.mjs --check  # gate freshness (đỏ nếu binding
 - Gate ở đây = **freshness** (contract khớp spec — mirror `gen_contract`). FE-conformance + ngoại lệ
   behavior vẫn ở tầng test / ui-parity / `intent-ledger.json`.
 
+## `gen_parity_contract.mjs` — contract từ kit JSX TĨNH (không Chrome)
+
+`gen_contract`/`gen_bindings` đọc `specs/*.md` — chỉ có sau khi `export_specs` (Chrome) render kit, **chưa
+chạy** ở layout hiện hành nên cả hai inert. Tool này **parse thẳng JSX** (`<Mx* node="…" variant="…">` là
+literal) → de-inert lớp **identity + styling** từ CÙNG nguồn design mà không cần Chrome. Sinh
+`contracts/<screen>.gen.json` = `key + component + variant` cho mọi screen.
+
+```bash
+node tool/parity/gen_parity_contract.mjs            # write contracts/<screen>.gen.json
+node tool/parity/gen_parity_contract.mjs --check    # gate freshness (đỏ nếu .gen.json lệch JSX) — wired vào verify
+node tool/parity/gen_parity_contract.mjs --json     # in, không ghi
+```
+
+- `variant` kebab→camel (`primary-soft`→`primarySoft`); thiếu `variant=` ⇒ default component (`MxCard`→
+  `elevated`). Vì MxCard map `variant→(bg,radius,border)`, emit `variant` là **đã có gate styling miễn phí**
+  — KHÔNG khai `decorations`.
+- `shell/*` (app bar, bottom nav) là chrome dùng chung → loại khỏi screen, để cho shell contract.
+- Node lặp dùng template-literal `node={'…'+i}` (deck rows) **không** bị bắt (đúng — tag container, không
+  tag từng item).
+- **CỐ Ý không emit slots**: `role`/layout cần computed-style của renderer (`export_specs`) + bảng
+  font→role curated (mirror `component-variants.json`); `l10n` key **không tồn tại trong design** (kit là
+  literal string). Slot sống ở overlay curated `contracts/<screen>.slots.json` tới khi `export_specs` chạy.
+- Trùng `node=` qua nhiều state (loaded/empty) được dedupe; **variant bất đồng** giữa các state in
+  `CONFLICT` + exit 1.
+
 ## `report.mjs` — báo cáo parity per screen/state
 
 Đọc `parity-map.json`; với mỗi state:
@@ -197,14 +222,34 @@ lộ ra.
 4. RESOLVE   đỏ → implement/sửa FE · ngoại lệ có-docs → intent-ledger.json
 ```
 
-Helper: `test/support/parity_contract.dart` → `expectParityContract(screen, {label: Finder})` (gom hết
-node thiếu rồi fail 1 lần). Prototype: `test/presentation/features/dashboard/dashboard_parity_test.dart`
-(3 node: due-summary + 2 shortcut, keyed ở `dashboard_body.dart`). Đã chứng minh: thêm 1 key node FE
-chưa có → test đỏ "1/4 required NOT rendered"; gỡ → xanh.
+**STATUS (2026-06-28) — POC materialized for dashboard, contract TOOL-GENERATED.** Vì `specsDir` chưa có
+(cần export_specs/Chrome — xem `tool.config.json` `$pointsAt`), `gen_contract`/`gen_bindings` (đọc specs)
+còn **inert**. Thay vì seed tay, **`gen_parity_contract.mjs` parse THẲNG kit JSX** (không Chrome) sinh
+`tool/parity/contracts/<screen>.gen.json` cho **cả 23 screen** = `key + component + variant`. Lớp slot
+(không derive được từ JSX tĩnh) nằm ở overlay **curated** `tool/parity/contracts/dashboard.slots.json`.
+FE gắn `ValueKey('mx-node:...')` ở `lib/presentation/features/engagement/screens/dashboard_screen.dart`
+(mới 4 MxCard). Test: `test/presentation/features/engagement/dashboard_parity_test.dart` — **data-driven
+đọc `dashboard.gen.json` + `dashboard.slots.json`**, assert 3 lớp (prop/string-level, KHÔNG pixel/AI):
+(1) IDENTITY `find.byKey`; (2) STYLING `MxCard.variant` khớp gen (phủ bg/radius/border vì MxCard derive từ
+variant); (3) SLOTS mỗi slot render `MxText` đúng `MxTextRole`, slot `l10n` assert đúng localized string
+(bắt sai/thiếu copy), slot `bind` chỉ assert role. Đã chứng minh đỏ→xanh: `variant` lệch ("variant
+drifted") và slot role lệch ("MxText(role:labelSmall) … absent"). Gate `gen_parity_contract --check` đã
+wired vào `verify` (code/full/docs) — đổi kit JSX mà chưa regen `.gen.json` ⇒ commit đỏ.
+
+> **Schema contract = chỉ DELTA** Mx component + rule global chưa quyết: `key` + `component` + `variant` +
+> `slots[{name,widget,role,l10n|bind}]`. CỐ Ý không có `decorations` (variant sở hữu bg/radius/border),
+> không card-padding/margin (MxCard `padding` enum + MxSpacing), không `design_system_context`
+> (architecture/imports là global). Vocab repo thật (MxCard/MxText/MxTextRole/l10n key), KHÔNG
+> AppColors/AppTextStyles/literal — tránh phantom-API mà `symbol_lint` vốn để diệt.
+
+> Helper `test/support/parity_contract.dart` + bản prototype `dashboard_body.dart`/3-node mô tả trước đây
+> **chưa từng tồn tại trong layout hiện hành** — POC ở trên thay thế (engagement feature path, 4 node,
+> identity + styling). Các con số "23/23 tagged · 0 missing" bên dưới là **mục tiêu**, chưa phản ánh code
+> (FE mới có 4 key của 02). Reconcile khi rollout + export_specs xong.
 
 Pump-cô-lập chỉ bắt được thiếu element TRONG screen pump được; "cả màn chưa dựng" là check thô hơn
 (route tồn tại / pump được không). **Rollout** = curate danh sách key/screen từ design + gắn key vào FE
-(prototype xong 02; 03–08/17 còn lại).
+(POC xong 02; 03–08/17 còn lại — pattern: viết tay 1 test/screen tới khi `gen_parity_tests.mjs` sinh được).
 
 ## `mxnode_coverage.mjs` — `data-mx-node` đã tag đủ chưa (kit coverage)
 
@@ -240,57 +285,76 @@ mới mà chưa tag và chưa ghi ledger ⇒ đỏ. Để tag được **shared 
 PickerRow, IconTile, ListRow, SectionHead, HeroCard…) phải thêm prop `node` ở
 `_shared.jsx` (common-layer first) rồi truyền id ở call site — đừng hand-attach trên bản copy.
 
-## `fe_node_usage.mjs` — `data-mx-node` đã được FE DÙNG đủ chưa (Flutter side)
+## `fe_node_usage.mjs` — gate THỪA/THIẾU key FE↔kit (Flutter side, bidirectional)
 
 Cặp đối xứng của `mxnode_coverage.mjs`: cái kia hỏi "KIT đã tag đủ chưa?", cái này
-hỏi "FLUTTER đã DÙNG chưa?". Tất định, KHÔNG AI, **KHÔNG cần Flutter** — chỉ
-cross-check 3 lớp bằng regex:
+hỏi "FLUTTER đã DÙNG đúng chưa — không thiếu, không thừa?". Tất định, KHÔNG AI,
+**KHÔNG cần Flutter** — cross-check 2 tập bằng regex:
 
-- **contractIds** — distinct id từ `contracts/contracts.json` (tập "bắt buộc" đã
-  resolve; `gen_contract.mjs --check` giữ nó tươi trong CI). Mỗi id mang theo
-  screen sở hữu.
+- **kit node-keys** — distinct id từ **`contracts/*.gen.json`** (gen_parity_contract,
+  parse JSX tĩnh, tươi cho mọi màn). Mỗi id mang theo screen sở hữu. Shell chrome
+  (`shell/*`) không được emit ở đó nên ngoài scope theo thiết kế.
 - **feIds** — distinct id từ scan `lib/**/*.dart` tìm `mx-node:<id>` (đọc bằng Node;
   **đừng** dùng `git grep -oE` — POSIX ERE không có `\w`, cắt cụt chuỗi).
-- **jsxLiteralIds** — chuỗi `data-mx-node="<id>"` literal trong kit JSX (phụ trợ;
-  cứu một FE id khỏi bị gọi "orphan" khi kit CÓ tag nhưng `export_specs` rớt `id:`).
 
-**Identity là set-level** (theo distinct id): id chia sẻ (`study-session/*`,
-`flashcard-editor/*`) nằm dưới nhiều screen contract nhưng là MỘT identity render
-bởi widget dùng chung → id coi là "đã dùng" nếu xuất hiện **bất kỳ đâu** trong
-`lib/**`. Phần "key đúng trên screen/state đúng" vẫn là việc của parity-contract
-widget test (`test/**/*_parity_test.dart`) — tool này là gate rẻ chạy-mọi-lần, test
-là lớp ngữ nghĩa. (Cùng triết lý 2-lớp như `report.mjs` ↔ `ui-parity-checker`.)
+Gate **hai pha** (đúng thứ tự rollout):
 
-Phân loại:
+- **MISSING** = kit node-key không có FE key → **block `--check`**. *Pha 1*: thêm key
+  cho tới khi FE phủ hết node kit.
+- **ORPHAN** = FE key không có trong contract kit nào → **block `--check`** (FE key thứ
+  kit không thiết kế = THỪA). *Pha 2*: khi đã đủ key, đây là phần bắt FE dư.
 
-- **MISSING** = contract id không có FE key → **block `--check`**.
-- **ORPHAN** = FE key không khớp contract id VÀ không phải literal trong kit JSX →
-  **block `--check`** (typo / kit node bị rename / FE tự đặt key chưa tag ở kit).
-- **SPEC-LAG** = FE key không có trong contract NHƯNG có literal trong kit JSX →
-  **chỉ cảnh báo** (resolution = re-export specs; không phải bug FE).
+→ Gate ratchet MISSING→0 rồi ORPHAN→0, bắt được cả thừa lẫn thiếu **ở mức key**.
 
-**Ngoại lệ dùng CHUNG `intent-ledger.json` → `exceptions`** (KHÔNG có mảng song
-song): một MISSING/ORPHAN mà node-segment + screen khớp một `exceptions` entry sẽ rớt
-xuống `exempt` (vẫn hiện) thay vì block. Với MISSING, **mọi** screen sở hữu phải được
-except (screen còn cần thật thì vẫn block); ORPHAN không có screen contract nên match
-theo node-segment ở bất kỳ screen nào.
+**Identity là set-level** (theo distinct id): id chia sẻ (`study-session/*`) là MỘT
+identity render bởi widget dùng chung → coi là "đã dùng" nếu xuất hiện **bất kỳ đâu**
+trong `lib/**`. ⚠️ **Giới hạn:** vì set-level, một node kit ĐÃ key vẫn tính là "dùng"
+**bất kể render ở STATE nào** — gate này KHÔNG bắt "card hiện ở state mà kit bỏ" (vd
+goal card lọt vào empty state). Lớp **state-composition** đó là việc của parity-contract
+widget test pump **từng state** (`test/**/*_parity_test.dart`). Hai lớp bổ trợ: cái này
+là key-level rẻ chạy-mọi-lần, widget test là state-level.
+
+**Ngoại lệ dùng CHUNG `intent-ledger.json` → `exceptions`**: một MISSING/ORPHAN mà
+node-segment + screen khớp một entry rớt xuống `exempt` (vẫn hiện) thay vì block. Với
+MISSING, **mọi** screen sở hữu phải được except; ORPHAN match theo node-segment.
 
 ```bash
-node tool/parity/fe_node_usage.mjs            # missing / orphan / spec-lag / exempt
-node tool/parity/fe_node_usage.mjs --screen 17-study-result
+node tool/parity/fe_node_usage.mjs            # missing / orphan / exempt
+node tool/parity/fe_node_usage.mjs --screen dashboard
 node tool/parity/fe_node_usage.mjs --check    # exit 1 nếu có missing/orphan blocking
 node tool/parity/fe_node_usage.mjs --json
 ```
 
-Hiện **0 missing · 0 orphan · 1 spec-lag** (`study-session/progress` — kit JSX
-`_shared.jsx` có tag, spec export rớt `id:`) **· 3 exempt** (`deck-picker` Future,
-`17-study-result/close-btn` Rejected, `study-session/speak` behavior — đều đã có
-trong `exceptions`). CI chạy `--check` làm gate ratchet: thêm contract id mà FE chưa
-key, hoặc thêm FE key lạ, mà chưa ghi ledger ⇒ đỏ. Trigger `lib/**` đã được thêm vào
-`parity.yml` để FE key đổi là gate chạy.
+Hiện **186 kit node · 6 keyed · 180 missing · 0 orphan** (rollout identity mới bắt
+đầu; dashboard body đã đủ key, còn shell chrome `dashboard/{appbar,notifications,
+quick-review,screen}` chờ key ở `app_shell`). **Report-first** — chưa wired `--check`
+vào `verify` tới khi rollout key xong (180 missing sẽ chặn mọi commit). Lên gate
+ratchet per-screen khi từng màn đạt 0 missing.
 
-Exit: `0` ok · `1` gate fail (`--check`) · `2` IO error (thiếu `contracts.json` →
-chạy `gen_contract.mjs` trước).
+Exit: `0` ok · `1` gate fail (`--check`) · `2` IO error (thiếu `contracts/*.gen.json`
+→ chạy `gen_parity_contract.mjs` trước).
+
+**Ratchet per-screen trong verify:** `verify.config.json` chạy step `parity_fe_keys` =
+`fe_node_usage --check --screen dashboard` (code + full chain). Mỗi màn đạt 0 missing thì
+thêm `--screen <id>` để bật gate cho màn đó; chưa bật toàn-app vì 180 node chưa key sẽ chặn
+mọi commit.
+
+## State-composition gate — bắt THỪA "node lọt vào sai state"
+
+Lớp key-level (`fe_node_usage`) là **set-level**: node đã key tính là "dùng" **bất kể
+render ở state nào** → KHÔNG thấy "card hiện ở state mà kit bỏ" (vd goal/streak/mastered
+lọt vào empty state tối giản). Lớp này bịt lỗ đó.
+
+- **`contracts/<screen>.states.json`** (curated, mirror `slots.json`) — tập node BODY mà
+  kit render **trong từng state** (loại shell chrome). Nguồn: verify tay theo kit JSX;
+  auto-derive (parse nhánh `if (state === 'x')` của JSX, hoặc dựng lại từ per-state diff của
+  `export_specs`) là bản thay thế tương lai.
+- **`test/**/*_states_test.dart`** (vd `dashboard_states_test.dart`) — pump **từng state**,
+  assert FE body render **ĐÚNG tập**: node ngoài tập = **THỪA** (fail), thiếu = **THIẾU**
+  (fail). Đây là gate bắt được ca empty-thừa mà key-level không thấy.
+
+Hai lớp bổ trợ: `fe_node_usage` (key-level, rẻ, chạy-mọi-lần) + `*_states_test` (state-level,
+render thật). Cùng triết lý 2-lớp như `report.mjs` ↔ `ui-parity-checker`.
 
 ## `fe_node_coverage.mjs` — bịt lỗ THỪA-không-key (FE EXTRA-coverage probe)
 
@@ -483,6 +547,7 @@ tất định fail.
 - **Rollout parity-contract** ra 03–08/17: curate key `mx-node:...` bắt buộc/screen từ design + gắn key
   vào FE + 1 test contract/screen (pattern: `dashboard_parity_test.dart`).
 - Pump screen **trong app-shell** + **scroll** để contract phủ cả bottom-nav và node dưới fold.
-- Lớp **styling** (màu/spacing/size) chưa có gate tất định ngoài pixel/SSIM — vẫn dựa
-  `ui-parity-checker` cho phán đoán cuối.
+- Lớp **styling**: **variant**-driven surface (MxCard bg/radius theo prop) **đã có gate tất định**
+  prop-level (POC 02 — `dashboard_parity_test.dart`); còn **màu inline + spacing/size** (node không qua
+  prop, vd `_DashboardNote`/`_GoalRing`) vẫn dựa pixel/SSIM + `ui-parity-checker` cho phán đoán cuối.
 - Gắn `report.mjs --check` vào `tool/verify/run.mjs` khi ổn định.

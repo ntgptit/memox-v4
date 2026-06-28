@@ -1,0 +1,27 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "game-matching",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/GameMatching.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:game-matching/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-matching/options",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-matching/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-matching/next",
+      "component": "MxButton",
+      "variant": "primary"
+    }
+  ]
+}

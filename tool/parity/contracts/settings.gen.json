@@ -1,0 +1,27 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "settings",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Settings.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:settings/profile",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:settings/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:settings/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:settings/srs-notif-switch",
+      "component": "MxSwitch",
+      "variant": null
+    }
+  ]
+}

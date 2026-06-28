@@ -2,7 +2,7 @@
 
 Gives agents WITHOUT vision a text feedback loop for visual parity: run the app
 screen (flutter golden test / integration screenshot), then compare against the
-canonical mock PNG under docs/system-design/MemoX Design System/ui_kits/mobile/shots/.
+canonical mock PNG under the kit shots dir (docs/design/MemoX Design System/ui_kits/memox-app/shots/).
 Output is text an agent can act on: a per-pixel mismatch %, the bounding box of the
 differing region, an optional SSIM score, an optional PER-NODE divergence log
 (--spec), and optional heat-map PNGs.
@@ -52,7 +52,6 @@ except ImportError:  # pragma: no cover
 
 _ABS = re.compile(r"abs:\s*\[(\d+),(\d+)\s+(\d+)x(\d+)\]")
 _NODE = re.compile(r"node:\s*(\S+)")
-_STYLE_KEYS = ("font", "color", "bg", "r:", "border", "tracking", "shadow")
 
 
 def _skimage():
@@ -227,8 +226,12 @@ def ssim_score(actual, expected, soft=False):
 def parse_spec_nodes(path):
     """Parse a specs/NN-*.md DOM spec into per-node dicts.
 
-    Each node: {name, abs:(x,y,w,h), style:str, text:str|None}. A node's own abs
-    is the first abs after its `- node:` line; style is its first `style:` line.
+    Each node: {name, abs:(x,y,w,h), style, size, spacing, text}. A node's own abs
+    is the first abs after its `- node:` line; style/size/spacing are its first
+    matching field line. size/spacing carry the INTENDED dims (minh/minw, padding) so
+    the per-node log surfaces design height/width/padding next to the divergence —
+    these are shown, NOT pixel-measured (measuring FE box from pixels is unsound; the
+    deterministic dim assertion lives in the widget/parity test layer).
     Only nodes that have an abs bbox are returned.
     """
     nodes = []
@@ -245,7 +248,7 @@ def parse_spec_nodes(path):
         if n:
             if cur:
                 nodes.append(cur)
-            cur = {"name": n.group(1), "abs": None, "style": "", "text": None}
+            cur = {"name": n.group(1), "abs": None, "style": "", "size": "", "spacing": "", "text": None}
             continue
         if cur is None:
             continue
@@ -257,6 +260,10 @@ def parse_spec_nodes(path):
             cur["text"] = s[len("text:"):].strip()[:24]
         if not cur["style"] and s.startswith("style:"):
             cur["style"] = s[len("style:"):].strip()
+        if not cur["size"] and s.startswith("size:"):
+            cur["size"] = s[len("size:"):].strip()
+        if not cur["spacing"] and s.startswith("spacing:"):
+            cur["spacing"] = s[len("spacing:"):].strip()
     if cur:
         nodes.append(cur)
     # Dedupe identical (name, abs) — a spec lists a node once per state section,
@@ -311,7 +318,10 @@ def node_rows(actual, expected, nodes, tolerance):
             "pct": pct,
             "ssim": ns["score"] if ns else None,
             "status": status,
-            "style": n["style"] or "—",
+            # Intended design facts from the spec: style (bg/color/font/r/border) +
+            # dims (size: minh/minw, spacing: padding). Shown for the fixer to act on,
+            # not pixel-measured.
+            "intended": " ".join(x for x in (n["style"], n["size"], n["spacing"]) if x) or "—",
             "golden_hex": a_hex,
             "shot_hex": e_hex,
             "drgb": drgb,
@@ -352,7 +362,7 @@ def main(argv=None) -> int:
     if px["bbox"]:
         x0, y0, x1, y1 = px["bbox"]
         print(f"diff region: [{x0},{y0} {x1 - x0}x{y1 - y0}] "
-              f"(compare with element bboxes in ui_kits/mobile/specs/)")
+              f"(compare with element bboxes in the kit specs dir)")
     else:
         print("diff region: none")
 
@@ -378,7 +388,7 @@ def main(argv=None) -> int:
             sval = f"{r['ssim']:.2f}" if r["ssim"] is not None else "  - "
             color = f"{r['golden_hex']}→{r['shot_hex']} ({r['drgb']:>3})"
             print(f"  {r['status']:9}{r['name'][:22]:22} {box:16} {r['pct']:6.2f} "
-                  f"{sval:>5}  {color:22} {r['style']}")
+                  f"{sval:>5}  {color:22} {r['intended']}")
         print("  legend: MISSING? = in mock, blank in render (figure-ground) · "
               "COLOR? = wrong colour/token (high ΔRGB) · SHIFT? = text/position/size.")
 

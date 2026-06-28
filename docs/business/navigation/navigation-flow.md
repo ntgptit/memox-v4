@@ -27,11 +27,16 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | (settings tile) | — | — | inline | Đồng bộ Google (W10 alpha): tile trong `/settings`, không route riêng |
 
 Hằng route đặt ở `lib/app/router/` (`route_paths.dart` / `app_router.dart`). S0 dựng
-**app shell** bằng `StatefulShellRoute.indexedStack`: 4 tab (Today · Library · Stats ·
-Profile) + nút **Add** ở giữa (action, chưa phải route) + **Drawer** quản lý cặp ngôn ngữ
+**app shell** bằng `StatefulShellRoute.indexedStack` với **4 nhánh tab** (Today · Library ·
+Stats · Profile). Bottom nav theo design kit có **5 mục**: Today · Library · **Add** (mục
+giữa) · Stats · Profile — `Add` là **action** (không phải route/nhánh), chạm mở luồng thêm
+(S0: placeholder `comingSoon`), nên không bao giờ ở trạng thái active. Tab **Today** có thêm
+**Review FAB** (ôn nhanh, S0: placeholder `comingSoon`); các tab khác không có FAB.
+Kèm **Drawer** quản lý cặp ngôn ngữ
 (`docs/design/screens/23-drawer.md`). App bar shell theo design kit: **không có tiêu đề
-thương hiệu** — chỉ hành động chuông (🔔, placeholder) + **avatar** (mở Drawer khi chạm, thay
-cho nút ☰ cũ). Route gốc `RoutePaths.root` (`/`) là tab Library,
+thương hiệu** — tab Today dùng large app bar để hiện ngày + lời chào; các tab còn lại chỉ có
+hành động chuông (placeholder) + **avatar** (mở Drawer khi chạm, thay cho nút ☰ cũ).
+Route gốc `RoutePaths.root` (`/`) là tab Library,
 hiển thị **cây bộ thẻ thật** (`LibraryScreen`, W6); mở một nút push sang `deckDetail`
 (`/deck/:id`, `DeckDetailScreen`) — node hỗn hợp gồm bộ thẻ con + thẻ. Các route push còn
 lại là dự kiến, thêm cùng feature (route + doc cập nhật chung commit).

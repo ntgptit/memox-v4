@@ -35,6 +35,7 @@ class MxAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title,
     this.eyebrow,
     this.large = false,
+    this.automaticallyImplyLeading = true,
     this.leading,
     this.trailing = const <Widget>[],
   });
@@ -42,19 +43,22 @@ class MxAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final String? eyebrow;
   final bool large;
+  final bool automaticallyImplyLeading;
   final Widget? leading;
   final List<Widget> trailing;
 
-  static const double _largeHeight = 96;
-
   @override
-  Size get preferredSize =>
-      Size.fromHeight(large ? _largeHeight : kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(
+    large ? MxSpacing.appBarLargeHeight : MxSpacing.appBarHeight,
+  );
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = MxTheme.of(context).colors;
+    final titleStyle = large
+        ? theme.textTheme.displaySmall?.copyWith(fontWeight: FontWeight.w800)
+        : theme.textTheme.titleLarge;
     final titleWidget = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -69,21 +73,29 @@ class MxAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (title case final t?)
           Text(
             t,
-            style:
-                (large ? theme.textTheme.headlineMedium : null) ??
-                theme.textTheme.titleLarge,
+            style: titleStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
       ],
     );
     return AppBar(
+      automaticallyImplyLeading: automaticallyImplyLeading,
+      backgroundColor: colors.bg,
+      foregroundColor: colors.text,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+      scrolledUnderElevation: 0,
       leading: leading,
-      titleSpacing: leading == null ? MxSpacing.space4 : 0,
+      titleSpacing: leading == null ? MxSpacing.gutter : 0,
       title: titleWidget,
       actions: <Widget>[
         ...trailing,
         const SizedBox(width: MxSpacing.space2),
       ],
-      toolbarHeight: large ? _largeHeight : kToolbarHeight,
+      toolbarHeight: large
+          ? MxSpacing.appBarLargeHeight
+          : MxSpacing.appBarHeight,
     );
   }
 }

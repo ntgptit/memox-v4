@@ -24,6 +24,9 @@ Read this first in a new session instead of re-exploring the tree.
 │  ├─ local.properties
 │  ├─ memox_v4_android.iml
 │  └─ settings.gradle.kts
+├─ assets/
+│  └─ fonts/
+│     └─ PlusJakartaSans.ttf
 ├─ code-verification-guard/
 │  ├─ code_verification_guard/
 │  │  ├─ __pycache__/
@@ -489,8 +492,10 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ srs_repository_impl.dart
 │  │  │  └─ statistics_repository_impl.dart
 │  │  └─ services/
+│  │     ├─ file_saver/
 │  │     ├─ flutter_tts_service.dart
 │  │     ├─ google_drive_sync_service.dart
+│  │     ├─ local_file_save_service.dart
 │  │     ├─ local_notification_service.dart
 │  │     └─ table_codec.dart
 │  ├─ domain/
@@ -526,6 +531,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  └─ statistics_repository.dart
 │  │  ├─ services/
 │  │  │  ├─ cloud_sync_service.dart
+│  │  │  ├─ file_save_service.dart
 │  │  │  ├─ notification_service.dart
 │  │  │  ├─ reminder_scheduler.dart
 │  │  │  ├─ srs_scheduler.dart
@@ -659,7 +665,8 @@ Read this first in a new session instead of re-exploring the tree.
 │     │  └─ study/
 │     └─ shared/
 │        ├─ layouts/
-│        └─ navigation/
+│        ├─ navigation/
+│        └─ widgets/
 ├─ tool/
 │  ├─ doc_guard/
 │  │  ├─ baseline.json
@@ -673,6 +680,30 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ requirements.txt
 │  │  └─ test_diff.py
 │  ├─ parity/
+│  │  ├─ contracts/
+│  │  │  ├─ account.gen.json
+│  │  │  ├─ dashboard.gen.json
+│  │  │  ├─ dashboard.slots.json
+│  │  │  ├─ deck-detail.gen.json
+│  │  │  ├─ drawer.gen.json
+│  │  │  ├─ export.gen.json
+│  │  │  ├─ flashcard-editor.gen.json
+│  │  │  ├─ game-matching.gen.json
+│  │  │  ├─ game-mc.gen.json
+│  │  │  ├─ game-picker.gen.json
+│  │  │  ├─ game-recall.gen.json
+│  │  │  ├─ game-typing.gen.json
+│  │  │  ├─ import.gen.json
+│  │  │  ├─ library.gen.json
+│  │  │  ├─ player.gen.json
+│  │  │  ├─ reminder.gen.json
+│  │  │  ├─ review.gen.json
+│  │  │  ├─ search.gen.json
+│  │  │  ├─ settings.gen.json
+│  │  │  ├─ statistics.gen.json
+│  │  │  ├─ study-result.gen.json
+│  │  │  ├─ study-session.gen.json
+│  │  │  └─ theme.gen.json
 │  │  ├─ after-sync.mjs
 │  │  ├─ component-variants.json
 │  │  ├─ design_watch.mjs
@@ -681,6 +712,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ gen_bindings.mjs
 │  │  ├─ gen_component_contract.mjs
 │  │  ├─ gen_contract.mjs
+│  │  ├─ gen_parity_contract.mjs
 │  │  ├─ gen_tokens.mjs
 │  │  ├─ intent-ledger.json
 │  │  ├─ mxnode_coverage.mjs
@@ -708,7 +740,6 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  └─ run.mjs
 │  ├─ ui_kit_shots/
 │  │  ├─ check_specs_fresh.mjs
-│  │  ├─ component-map.json
 │  │  ├─ export_shots.mjs
 │  │  ├─ export_specs.mjs
 │  │  ├─ package-lock.json
@@ -728,9 +759,13 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  ├─ Icon-512.png
 │  │  ├─ Icon-maskable-192.png
 │  │  └─ Icon-maskable-512.png
+│  ├─ drift_worker.dart
+│  ├─ drift_worker.dart.js
 │  ├─ favicon.png
 │  ├─ index.html
-│  └─ manifest.json
+│  ├─ manifest.json
+│  ├─ README-drift.md
+│  └─ sqlite3.wasm
 ├─ windows/
 │  ├─ flutter/
 │  │  ├─ ephemeral/

@@ -38,7 +38,13 @@ const kitDir = join(repoRoot, PATHS.uiKitDir);
 const kitHtml = join(kitDir, 'index.html');
 const outDir = join(kitDir, 'specs');
 
+// Serve from the design-system root so the kit's `../../styles.css` + `../../_ds_bundle.js`
+// resolve; navigate to the kit index path relative to that root (derived from PATHS).
+const serveRoot = resolve(kitDir, '..', '..');
+const navPath = '/' + PATHS.kitHtml.slice(PATHS.designSystemDir.length).replace(/^[/\\]+/, '');
+
 const chromeCandidates = [
+  process.env.CHROME_PATH,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
   `${process.env.LOCALAPPDATA}/Google/Chrome/Application/chrome.exe`,
@@ -47,7 +53,7 @@ const chromeCandidates = [
 ];
 const chromePath = chromeCandidates.find((p) => p && existsSync(p));
 if (!chromePath) {
-  console.error('Chrome not found. Install Google Chrome.');
+  console.error('Chrome not found. Set CHROME_PATH or install Google Chrome.');
   process.exit(1);
 }
 
@@ -102,17 +108,22 @@ window.__mx = (() => {
   function buildTokenMap() {
     if (colorToToken) return colorToToken;
     const raw = {};
-    for (const sheet of document.styleSheets) {
-      let rules;
-      try { rules = sheet.cssRules; } catch { continue; }
+    // Walk rules, following @import — the kit splits tokens across tokens/*.css
+    // imported by styles.css, so their --memox-* defs live in nested stylesheets
+    // (CSSImportRule.styleSheet), not directly in document.styleSheets.
+    const collect = (rules) => {
       for (const rule of rules) {
+        if (rule.styleSheet) { try { collect(rule.styleSheet.cssRules); } catch {} continue; }
         if (!rule.style || !rule.selectorText) continue;
-        if (rule.selectorText.includes('memox-dark')) continue; // light values only
+        if (rule.selectorText.includes('data-theme') && rule.selectorText.includes('dark')) continue; // light values only
         for (let k = 0; k < rule.style.length; k++) {
           const prop = rule.style[k];
           if (prop.startsWith('--memox-')) raw[prop] = rule.style.getPropertyValue(prop).trim();
         }
       }
+    };
+    for (const sheet of document.styleSheets) {
+      try { collect(sheet.cssRules); } catch { continue; }
     }
     const probe = document.createElement('div');
     document.body.appendChild(probe);
@@ -165,8 +176,11 @@ window.__mx = (() => {
   function nodeName(el) {
     const cls = (el.getAttribute('class') || '').split(/\\s+/).filter((c) => c && !c.startsWith('memox'))[0];
     if (el.dataset && el.dataset.lucide) return 'icon:' + el.dataset.lucide;
+    if (el.classList && el.classList.contains('material-symbols-rounded')) return 'icon:' + (el.textContent || '').trim();
     const i = el.querySelector(':scope > i[data-lucide]');
     if (el.tagName === 'BUTTON' && i && el.childElementCount === 1) return 'icon-button:' + i.dataset.lucide;
+    const sym = el.querySelector(':scope > .material-symbols-rounded');
+    if (el.tagName === 'BUTTON' && sym && el.childElementCount === 1) return 'icon-button:' + (sym.textContent || '').trim();
     if (cls) return cls;
     return el.tagName.toLowerCase();
   }
@@ -426,7 +440,7 @@ window.__mx = (() => {
     for (let k = 0; k < period && k < children.length; k++) {
       const el = children[k];
       if (el.textContent && el.textContent.trim()) return true;
-      if (el.querySelector && el.querySelector('[data-lucide], svg')) return true;
+      if (el.querySelector && el.querySelector('[data-lucide], svg, .material-symbols-rounded')) return true;
     }
     return false;
   }
@@ -437,7 +451,7 @@ window.__mx = (() => {
   function kindOf(el) {
     if (el.textContent && el.textContent.trim()) return 't';
     if (el.dataset && el.dataset.lucide) return 'i';
-    if (el.querySelector && el.querySelector('[data-lucide], svg')) return 'i';
+    if (el.querySelector && el.querySelector('[data-lucide], svg, .material-symbols-rounded')) return 'i';
     return 'o';
   }
 
@@ -554,6 +568,11 @@ window.__mx = (() => {
       }
     }
 
+    // phone is the device FRAME; walk each of its direct children so we capture both
+    // the screen root (the MxScaffold .app, walked as a child so its own data-mx-node
+    // screen id is emitted) AND any sibling overlay: Scrim/Sheet/Dialog states render
+    // as a Fragment of [scaffold, scrim], so the scrim is a sibling of .app, not a
+    // descendant — walking only .app would drop every dialog node.
     for (const child of phone.children) walk(child, 0, undefined, origin);
     return { blocks, signatures };
   }
@@ -628,34 +647,30 @@ async function main() {
   // Serve the kit over HTTP so external `text/babel src=screens/*.jsx` scripts load
   // (browsers block fetch of local files under file://).
   // Serve from the design-system root so `../../colors_and_type.css` resolves.
-  const kitServer = await startKitServer(resolve(kitDir, '..', '..'));
-  await page.goto(`${kitServer.origin}/ui_kits/mobile/index.html`, { waitUntil: 'networkidle2', timeout: 120000 });
-  await page.waitForSelector('.row .row-num', { timeout: 120000 });
+  const kitServer = await startKitServer(serveRoot);
+  await page.goto(`${kitServer.origin}${navPath}`, { waitUntil: 'networkidle2', timeout: 120000 });
+  await page.waitForSelector('.mxg-row .mxg-frame', { timeout: 120000 });
   await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important}' });
   await page.evaluate((m) => { window.__MX_COMPONENT_MAP = m; }, compMap);
   await page.evaluate(pageHelpers);
 
-  const rowCount = await page.$$eval('.row', (rows) => rows.length);
+  const rowCount = await page.$$eval('.mxg-row', (rows) => rows.length);
   const manifest = [];
 
   for (let r = 0; r < rowCount; r++) {
-    const row = (await page.$$('.row'))[r];
+    const row = (await page.$$('.mxg-row'))[r];
     await row.evaluate((el) => el.scrollIntoView({ block: 'center' }));
-    await page.waitForFunction(
-      (idx) => document.querySelectorAll('.row')[idx].querySelectorAll('.phone').length >= 1,
-      { timeout: 30000 },
-      r,
-    );
     await sleep(350);
 
-    const head = await row.evaluate((el) => ({
-      num: el.querySelector('.row-num')?.textContent.trim() ?? '',
-      title: el.querySelector('.row-title')?.textContent.trim() ?? '',
-      label: el.querySelector('.st-label')?.textContent.trim() ?? '',
-      single: !el.querySelector('.stepper'),
-    }));
-    const total = head.single ? 1 : Number(head.label.match(/(\d+)\s*$/)?.[1] ?? 1);
-    console.log(`[${head.num}] ${head.title} — ${total} state(s)`);
+    const head = await row.evaluate((el) => {
+      const id = el.getAttribute('data-screen-label') ?? '';
+      const title = el.querySelector('.mxg-row__title')?.textContent.trim() ?? '';
+      const sub = el.querySelector('.mxg-row__sub')?.textContent.trim() ?? '';
+      return { id, title, total: Number(sub.match(/(\d+)\s*state/)?.[1] ?? 1) };
+    });
+    const screenId = head.id || slug(head.title);
+    const total = head.total;
+    console.log(`[${screenId}] ${head.title} — ${total} state(s)`);
 
     let baseLabel = '';
     let baseSignatures = [];
@@ -663,14 +678,17 @@ async function main() {
     const sections = [];
 
     for (let s = 0; s < total; s++) {
-      const stateLabel = head.single
-        ? 'Default'
-        : (await row.evaluate((el) => el.querySelector('.st-label').textContent.trim())).replace(/\s*·\s*\d+\/\d+$/, '');
+      const stateLabel = await row.evaluate((el) => el.querySelector('.mxg-label')?.textContent.trim() ?? 'Default');
       await sleep(450);
 
-      // Always measure the LIGHT frame (first frame in "both" view): values are
-      // emitted as token names, which the dark theme remaps identically.
-      const phone = (await row.$$('.frame-wrap:not(.memox-dark) .phone'))[0];
+      // Always measure the LIGHT frame: values are emitted as token names, which the
+      // dark theme remaps identically. Pass the frame itself — extract walks its direct
+      // children (scaffold + any sibling overlay) — the analog of the old kit's `.phone`.
+      const phone = await row.$('.mxg-frame[data-theme="light"]');
+      if (!phone) {
+        console.warn(`  skip ${screenId}/${stateLabel}: missing light frame`);
+        continue;
+      }
       const { blocks, signatures } = await phone.evaluate((el) => window.__mx.extract(el));
 
       if (s === 0) {
@@ -692,28 +710,27 @@ async function main() {
         }
       }
 
-      if (!head.single && s < total - 1) {
-        const next = await row.$('.stepper button[aria-label="Next state"]');
+      if (s < total - 1) {
+        const next = await row.$('.mxg-stepper button[aria-label="Next state"]');
         await next.evaluate((el) => el.click());
+        // No numeric counter in the new gallery — wait for the label text to change.
         await page.waitForFunction(
-          (idx, expected) =>
-            document.querySelectorAll('.row')[idx].querySelector('.st-label').textContent.includes(`${expected}/`),
+          (el, prev) => el.querySelector('.mxg-label')?.textContent.trim() !== prev,
           { timeout: 15000 },
-          r,
-          s + 2,
+          row,
+          stateLabel,
         );
       }
     }
 
-    const screenSlug = slug(head.title);
-    const file = `${head.num}-${screenSlug}.md`;
+    const file = `${screenId}.md`;
     const fileContent = renderTemplate(specFileTemplate, {
-      screen_num: head.num,
+      screen_num: screenId,
       screen_title: head.title,
       sections: sections.join('\n\n'),
     });
     writeFileSync(join(outDir, file), normalizeFinalNewline(fileContent));
-    manifest.push({ num: head.num, title: head.title, file, states: total });
+    manifest.push({ num: screenId, title: head.title, file, states: total });
   }
 
   const idx = [
@@ -727,7 +744,7 @@ async function main() {
     `Source \`index.html\` sha256: \`${sourceHash}\` (mirror of \`specs/.source-hash\`; the`,
     'freshness check in `tool/verify/run.mjs` fails if `index.html` changed without re-export).',
     '',
-    '| # | Screen | Spec file | States |',
+    '| ID | Screen | Spec file | States |',
     '| --- | --- | --- | --- |',
     ...manifest.map((m) => `| ${m.num} | ${m.title} | \`${m.file}\` | ${m.states} |`),
     '',

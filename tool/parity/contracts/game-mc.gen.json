@@ -1,0 +1,42 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "game-mc",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/GameMultipleChoice.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:game-mc/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-mc/options",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-mc/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-mc/next",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:game-mc/prompt",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:game-mc/audio",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-mc/edit",
+      "component": "MxIconButton",
+      "variant": null
+    }
+  ]
+}

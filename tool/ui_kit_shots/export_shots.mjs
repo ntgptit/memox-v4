@@ -1,14 +1,18 @@
-// Exports every screen x state x theme frame of the MemoX mobile UI kit as PNGs.
+// Exports every screen x state x theme frame of the MemoX app UI kit as PNGs.
 //
-// The kit (docs/system-design/MemoX Design System/ui_kits/mobile/index.html) renders
-// one state at a time per screen behind a stepper, with lazy-rendered frames, so this
-// script scrolls each row into view, steps through ALL states, and screenshots the
-// light and dark phone frames separately. It also writes shots/INDEX.md as the
-// agent-facing manifest.
+// The kit (PATHS.uiKitDir → docs/design/MemoX Design System/ui_kits/memox-app/index.html)
+// renders a gallery: one `.mxg-row` per screen, a stepper cycling its states, each
+// state framed light + dark in a `.mxg-frame[data-theme]` device frame. This script
+// steps through ALL states of every row and screenshots the light and dark frames
+// separately, then writes shots/INDEX.md as the agent-facing manifest.
+//
+// Shots are named `<screen-id>--<state>--<theme>.png` where <screen-id> is the row's
+// `data-screen-label` (e.g. `dashboard`, `deck-detail`) — the same id the parity
+// contracts (tool/parity/contracts/<id>.gen.json) and parity-map.json key on.
 //
 // Usage:  cd tool/ui_kit_shots && npm install && npm run export
-// Requires: Google Chrome installed (path auto-detected below) + network access
-// (the kit loads React/Babel/Lucide from unpkg).
+// Requires: Google Chrome installed (path auto-detected; or set CHROME_PATH) +
+// network access (the kit loads React/Babel from unpkg + Material Symbols font).
 
 import { existsSync, mkdirSync, writeFileSync, readdirSync, unlinkSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
@@ -23,7 +27,14 @@ const kitDir = join(repoRoot, PATHS.uiKitDir);
 const kitHtml = join(kitDir, 'index.html');
 const outDir = join(kitDir, 'shots');
 
+// Serve from the design-system root so the kit's `../../styles.css` + `../../_ds_bundle.js`
+// resolve; navigate to the kit index path *relative to that root* (derived from PATHS,
+// so retargeting the kit in tool.config.json needs no edit here).
+const serveRoot = resolve(kitDir, '..', '..');
+const navPath = '/' + PATHS.kitHtml.slice(PATHS.designSystemDir.length).replace(/^[/\\]+/, '');
+
 const chromeCandidates = [
+  process.env.CHROME_PATH,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
   `${process.env.LOCALAPPDATA}/Google/Chrome/Application/chrome.exe`,
@@ -61,79 +72,65 @@ async function main() {
   const page = await browser.newPage();
 
   page.on('pageerror', (e) => console.warn('pageerror:', e.message));
-  // Serve the kit over HTTP so external `text/babel src=screens/*.jsx` scripts load
-  // (browsers block fetch of local files under file://).
-  // Serve from the design-system root so the kit's `../../colors_and_type.css`
-  // + `../../memox-components.css` resolve (rooting at mobile/ 404s them).
-  const kitServer = await startKitServer(resolve(kitDir, '..', '..'));
-  await page.goto(`${kitServer.origin}/ui_kits/mobile/index.html`, { waitUntil: 'networkidle2', timeout: 120000 });
+  const kitServer = await startKitServer(serveRoot);
+  await page.goto(`${kitServer.origin}${navPath}`, { waitUntil: 'networkidle2', timeout: 120000 });
 
-  // Babel-in-browser compile can take a while; wait for the rows to exist.
-  await page.waitForSelector('.row .row-num', { timeout: 120000 });
+  // Babel-in-browser compile can take a while; wait for the rows to render.
+  await page.waitForSelector('.mxg-row .mxg-frame', { timeout: 120000 });
 
   // Freeze animations/transitions so screenshots are deterministic.
   await page.addStyleTag({
     content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}',
   });
 
-  const rowCount = await page.$$eval('.row', (rows) => rows.length);
+  const rowCount = await page.$$eval('.mxg-row', (rows) => rows.length);
   console.log(`rows: ${rowCount}`);
 
   const manifest = [];
   let shotCount = 0;
 
   for (let r = 0; r < rowCount; r++) {
-    const row = (await page.$$('.row'))[r];
+    const row = (await page.$$('.mxg-row'))[r];
     await row.evaluate((el) => el.scrollIntoView({ block: 'center' }));
-    // Lazy frames render once near the viewport.
-    await page.waitForFunction(
-      (idx) => document.querySelectorAll('.row')[idx].querySelectorAll('.phone').length >= 1,
-      { timeout: 30000 },
-      r,
-    );
-    await sleep(350); // settle fonts/lucide icons
+    await sleep(350); // settle fonts/icons
 
     const head = await row.evaluate((el) => {
-      const num = el.querySelector('.row-num')?.textContent.trim() ?? '';
-      const title = el.querySelector('.row-title')?.textContent.trim() ?? '';
-      const label = el.querySelector('.st-label')?.textContent.trim() ?? '';
-      const single = !el.querySelector('.stepper');
-      return { num, title, label, single };
+      const id = el.getAttribute('data-screen-label') ?? '';
+      const title = el.querySelector('.mxg-row__title')?.textContent.trim() ?? '';
+      const sub = el.querySelector('.mxg-row__sub')?.textContent.trim() ?? '';
+      const total = Number(sub.match(/(\d+)\s*state/)?.[1] ?? 1);
+      return { id, title, total };
     });
-    const total = head.single ? 1 : Number(head.label.match(/(\d+)\s*$/)?.[1] ?? 1);
-    const screenSlug = slug(head.title);
-    const entry = { num: head.num, title: head.title, states: [] };
-    console.log(`[${head.num}] ${head.title} — ${total} state(s)`);
+    const screenId = head.id || slug(head.title);
+    const entry = { id: screenId, title: head.title, states: [] };
+    console.log(`[${screenId}] ${head.title} — ${head.total} state(s)`);
 
-    for (let s = 0; s < total; s++) {
-      const stateLabel = head.single
-        ? 'Default'
-        : (await row.evaluate((el) => el.querySelector('.st-label').textContent.trim())).replace(/\s*·\s*\d+\/\d+$/, '');
+    for (let s = 0; s < head.total; s++) {
+      const stateLabel = await row.evaluate((el) => el.querySelector('.mxg-label')?.textContent.trim() ?? '');
       const stateSlug = slug(stateLabel) || `state-${s + 1}`;
-      await sleep(450); // lucide icons re-create after each remount
+      await sleep(400); // icons/skeleton re-render after each state remount
 
-      const frames = await row.$$('.frame-wrap');
+      const frames = await row.$$('.mxg-frame-wrap');
       const files = {};
-      for (const frame of frames) {
-        const isDark = await frame.evaluate((el) => el.classList.contains('memox-dark'));
-        const theme = isDark ? 'dark' : 'light';
-        const phone = await frame.$('.phone');
-        const file = `${head.num}-${screenSlug}--${stateSlug}--${theme}.png`;
-        await phone.screenshot({ path: join(outDir, file) });
+      for (const wrap of frames) {
+        const frame = await wrap.$('.mxg-frame');
+        const theme = await frame.evaluate((el) => el.getAttribute('data-theme') || 'light');
+        const file = `${screenId}--${stateSlug}--${theme}.png`;
+        await frame.screenshot({ path: join(outDir, file) });
         files[theme] = file;
         shotCount++;
       }
       entry.states.push({ label: stateLabel, ...files });
 
-      if (!head.single && s < total - 1) {
-        const next = await row.$('.stepper button[aria-label="Next state"]');
+      if (s < head.total - 1) {
+        const next = await row.$('.mxg-stepper button[aria-label="Next state"]');
         await next.evaluate((el) => el.click());
+        // No numeric counter in the new gallery — wait for the label text to change.
         await page.waitForFunction(
-          (idx, expected) =>
-            document.querySelectorAll('.row')[idx].querySelector('.st-label').textContent.includes(`${expected}/`),
+          (el, prev) => el.querySelector('.mxg-label')?.textContent.trim() !== prev,
           { timeout: 15000 },
-          r,
-          s + 2,
+          row,
+          stateLabel,
         );
       }
     }
@@ -145,15 +142,15 @@ async function main() {
     '# UI Kit Screenshots — Manifest',
     '',
     'Auto-generated by `tool/ui_kit_shots/export_shots.mjs`. Do not edit by hand;',
-    're-run the exporter after any change to `../index.html`.',
+    're-run the exporter after any change to the kit `index.html` / screen `.jsx`.',
     '',
     'Every screen state ships as a light + dark PNG pair at 390px width. These PNGs',
     'are the canonical visual mock reference for UI tasks — read the PNG, not the',
-    '10k-line `index.html` source.',
+    'kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.',
     '',
   ];
   for (const e of manifest) {
-    lines.push(`## ${e.num} — ${e.title}`, '');
+    lines.push(`## ${e.id} — ${e.title}`, '');
     lines.push('| State | Light | Dark |');
     lines.push('| --- | --- | --- |');
     for (const st of e.states) {

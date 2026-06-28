@@ -1,0 +1,77 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "review",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Review.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:review/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:review/text-size",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:review/options",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:review/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:review/study-now",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:review/back-deck",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:review/meaning",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:review/edit",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:review/edit-cancel",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:review/edit-save",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:review/term",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:review/audio",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:review/prev",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:review/next",
+      "component": "MxIconButton",
+      "variant": null
+    }
+  ]
+}

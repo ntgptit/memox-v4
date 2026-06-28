@@ -98,6 +98,8 @@ SPEC_FIXTURE = (
     "    text: Library\n"
     "    box:\n"
     "      abs: [20,18 120x24]\n"
+    "    spacing: pad:0/8\n"
+    "    size: minh:48\n"
     "    style: font:18/700 color:text\n"
 )
 
@@ -113,6 +115,8 @@ class SpecParseTests(unittest.TestCase):
             self.assertEqual(nodes[1]["abs"], (20, 18, 120, 24))
             self.assertEqual(nodes[1]["text"], "Library")
             self.assertEqual(nodes[1]["style"], "font:18/700 color:text")
+            self.assertEqual(nodes[1]["size"], "minh:48")        # intended height carried
+            self.assertEqual(nodes[1]["spacing"], "pad:0/8")     # intended padding carried
 
     def test_skips_nodes_without_abs(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -136,7 +140,9 @@ class NodeRowsTests(unittest.TestCase):
             title = next(r for r in rows if r["name"] == "title")
             self.assertGreater(title["pct"], 90.0)        # box fully changed
             self.assertGreater(title["drgb"], 200)         # red vs blue
-            self.assertIn("color:text", title["style"])    # intended carried
+            self.assertIn("color:text", title["intended"])  # intended style carried
+            self.assertIn("minh:48", title["intended"])      # intended dims surfaced
+            self.assertIn("pad:0/8", title["intended"])      # intended padding surfaced
             self.assertTrue(title["golden_hex"].startswith("#"))
             self.assertEqual(title["status"], "COLOR?")     # both present, wrong colour
 

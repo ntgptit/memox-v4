@@ -1,0 +1,37 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "theme",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Theme.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:theme/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:theme/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:theme/preview",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:theme/mode-head",
+      "component": "MxSectionHeader",
+      "variant": null
+    },
+    {
+      "key": "mx-node:theme/accent-head",
+      "component": "MxSectionHeader",
+      "variant": null
+    },
+    {
+      "key": "mx-node:theme/size-head",
+      "component": "MxSectionHeader",
+      "variant": null
+    }
+  ]
+}

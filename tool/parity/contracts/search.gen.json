@@ -1,0 +1,22 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "search",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Search.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:search/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:search/dock",
+      "component": "MxSearchDock",
+      "variant": null
+    },
+    {
+      "key": "mx-node:search/screen",
+      "component": "MxScaffold",
+      "variant": null
+    }
+  ]
+}

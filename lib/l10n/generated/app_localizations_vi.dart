@@ -15,6 +15,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tabLibrary => 'Thư viện';
 
   @override
+  String get tabAdd => 'Thêm';
+
+  @override
   String get tabStats => 'Thống kê';
 
   @override
@@ -22,6 +25,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get addTooltip => 'Thêm';
+
+  @override
+  String get notificationsTooltip => 'Thông báo';
 
   @override
   String get comingSoon => 'Sắp ra mắt';
@@ -476,6 +482,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get dashboardContinueStudying => 'Tiếp tục học';
 
   @override
+  String get dashboardQuickReview => 'Ôn tập';
+
+  @override
   String dashboardDecksDue(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -504,6 +513,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get dashboardEmptyHint => 'Hôm nay chưa học — bắt đầu để giữ streak!';
 
   @override
+  String get dashboardStartStudying => 'Bắt đầu học';
+
+  @override
   String get dashboardGoalTitle => 'Mục tiêu ngày';
 
   @override
@@ -514,6 +526,35 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get dashboardGoalMet => 'Đã đạt mục tiêu hôm nay 🎉';
+
+  @override
+  String get dashboardGoalMetBanner => 'Đã đạt mục tiêu hôm nay. Streak +1.';
+
+  @override
+  String dashboardGoalProgressMinutes(
+    int current,
+    int target,
+    String complete,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(complete, {
+      'true': ' · hoàn thành',
+      'other': '',
+    });
+    return '$current/$target phút$_temp0';
+  }
+
+  @override
+  String dashboardGoalProgressWords(int current, int target, String complete) {
+    String _temp0 = intl.Intl.selectLogic(complete, {
+      'true': ' · hoàn thành',
+      'other': '',
+    });
+    return '$current/$target từ$_temp0';
+  }
+
+  @override
+  String get dashboardStreakResetHint =>
+      'Streak đã reset — học hôm nay để bắt đầu lại.';
 
   @override
   String get dashboardStreakTitle => 'Chuỗi ngày';

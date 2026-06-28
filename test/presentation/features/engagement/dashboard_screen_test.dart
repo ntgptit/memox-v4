@@ -78,9 +78,38 @@ void main() {
     // 7 words ≥ goal 5 → streak of 1 day (streak card shows the count + label).
     expect(find.byKey(const Key('dashboardStreak')), findsOneWidget);
     expect(find.text('1'), findsOneWidget);
+    expect(find.text('Daily goal reached. Streak +1.'), findsOneWidget);
   });
 
-  testWidgets('with no goal set, shows the set-a-goal hint', (tester) async {
+  testWidgets('empty state is minimal — only the note + Start CTA', (
+    tester,
+  ) async {
+    await tester.pumpWidget(host());
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('No study yet today — start to keep your streak!'),
+      findsOneWidget,
+    );
+    expect(find.text('Start studying'), findsOneWidget);
+    // The kit's empty state drops the goal / streak / mastered / decks stack.
+    expect(find.byKey(const Key('dashboardGoalNone')), findsNothing);
+    expect(find.byKey(const Key('dashboardStreak')), findsNothing);
+  });
+
+  testWidgets('with activity but no goal, shows the set-a-goal hint', (
+    tester,
+  ) async {
+    await db
+        .into(db.dailyActivity)
+        .insert(
+          DailyActivityCompanion.insert(
+            day: dayKey(today),
+            pairId: pairId,
+            seconds: const Value(60),
+            words: const Value(3),
+          ),
+        );
     await tester.pumpWidget(host());
     await tester.pumpAndSettle();
 

@@ -9,6 +9,16 @@
     "reason": "<why the FE intentionally diverges>",
     "source": "<doc path that authorizes it>"
   },
-  "exceptions": [],
+  "exceptions": [
+    {
+      "screen": "dashboard",
+      "node": "screen",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit models each screen as its own MxScaffold (dashboard/screen); the FE factors the scaffold into the shared, persistent AppShell, so it cannot carry a per-screen ValueKey without rebuilding the whole shell on every tab switch. Chrome it provides (appbar/notifications/quick-review) IS keyed there when the Today tab is active.",
+      "source": "lib/presentation/shared/navigation/app_shell.dart"
+    }
+  ],
   "coverageExempt": []
 }

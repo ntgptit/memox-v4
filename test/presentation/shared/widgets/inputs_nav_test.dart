@@ -71,6 +71,9 @@ void main() {
       ),
     );
     expect(find.text('Add'), findsOneWidget);
+    // The extended FAB hugs its content — it must not stretch to fill the
+    // bounded constraints the Scaffold gives its FAB slot.
+    expect(tester.getSize(find.byType(MxFab)).width, lessThan(300));
     await tester.tap(find.byIcon(Icons.add));
     expect(taps, 1);
   });

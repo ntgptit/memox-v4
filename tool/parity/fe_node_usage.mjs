@@ -1,43 +1,34 @@
 #!/usr/bin/env node
-// tool/parity/fe_node_usage.mjs — FE-side coverage check for data-mx-node
-// (deterministic, no AI, no Flutter). The static counterpart to
-// mxnode_coverage.mjs: that one asks "did the KIT tag enough nodes?"; this one
-// asks "did the FLUTTER code CONSUME them?" by cross-checking the resolved kit
-// contract against the actual `ValueKey('mx-node:<id>')` strings in lib/**.
+// tool/parity/fe_node_usage.mjs — bidirectional FE↔kit identity gate for
+// data-mx-node (deterministic, no AI, no Flutter). Catches BOTH directions, the
+// way the rollout wants it:
 //
-// Three layers, no Flutter runtime:
-//   - contractIds  : distinct ids from tool/parity/contracts/contracts.json
-//                    (the resolved required set; gen_contract.mjs --check keeps it
-//                    fresh in CI). Each id carries its owning screen(s).
-//   - feIds        : distinct ids from a JS-regex scan of lib/**/*.dart for
-//                    `mx-node:<id>` (read in Node — git grep -oE has no \w in
-//                    POSIX ERE and silently truncates).
-//   - jsxLiteralIds: literal `data-mx-node="<id>"` strings in the kit screens
-//                    (supplementary; rescues an FE id from "orphan" when the kit
-//                    DOES tag it but export_specs dropped the id: — a spec-lag, not
-//                    an FE bug). `data-mx-node={node}` props are unresolved and
-//                    ignored — contractIds already resolves those.
+//   MISSING  a kit node-key (from contracts/<screen>.gen.json) that NO
+//            ValueKey('mx-node:<id>') in lib/** consumes → FE must add the key.
+//   ORPHAN   a ValueKey('mx-node:<id>') in lib/** that NO kit contract declares
+//            → FE keyed something the kit never designed (the "thừa"/excess case).
 //
-// Identity is SET-LEVEL (distinct id): shared ids (study-session/*,
-// flashcard-editor/*) live under several screen contracts but are one identity
-// rendered by a shared widget, so an id counts as consumed if it appears ANYWHERE
-// in lib/**. Per-screen "right key on the right screen/state" stays with the
-// runtime parity-contract widget tests (test/.../*_parity_test.dart) — this tool
-// is the cheap always-on gate; those are the semantic layer.
+// Phase 1 (keys still rolling out): MISSING dominates — add the keys until the FE
+// covers every kit node. Phase 2 (keys complete): ORPHAN is what remains — FE excess
+// vs the kit. Both block --check, so the gate ratchets MISSING→0 then ORPHAN→0.
 //
-// Classification:
-//   MISSING  contract id with no FE key            → blocks --check
-//   ORPHAN   FE key, no contract id, not in kit JSX → blocks --check
-//   SPEC-LAG FE key, no contract id, but in kit JSX → warn only (re-export specs)
-// Documented FE↔mock divergences are read from intent-ledger.json `exceptions`
-// (the SAME ledger the parity tests honour — no parallel list): a MISSING/ORPHAN
-// whose node-segment + screen matches an exception drops to `exempt` (kept
-// visible) instead of blocking.
+// Kit source = tool/parity/contracts/*.gen.json (gen_parity_contract.mjs, static
+// kit-JSX parse, fresh for every screen, no Chrome). Shell chrome (shell/*) is not
+// emitted there, so it is out of scope by construction.
+//
+// Identity is SET-LEVEL: a shared id (study-session/*) rendered by one widget counts
+// as consumed if it appears ANYWHERE in lib/**. The orthogonal "right key on the
+// right STATE" — e.g. a card that must be ABSENT in the empty state — is NOT visible
+// here (a keyed kit-node is "consumed" regardless of which state renders it); that
+// state-composition check is the per-state parity widget test's job. This gate is the
+// cheap always-on key-level layer; the widget test is the state-level layer.
+//
+// Documented FE↔kit divergences live in intent-ledger.json `exceptions`.
 //
 // Usage:
-//   node tool/parity/fe_node_usage.mjs            # missing / orphan / spec-lag / exempt
-//   node tool/parity/fe_node_usage.mjs --screen 17-study-result
-//   node tool/parity/fe_node_usage.mjs --check    # exit 1 on any blocking missing/orphan
+//   node tool/parity/fe_node_usage.mjs            # missing / orphan / exempt
+//   node tool/parity/fe_node_usage.mjs --screen dashboard
+//   node tool/parity/fe_node_usage.mjs --check    # exit 1 on any blocking item
 //   node tool/parity/fe_node_usage.mjs --json
 //
 // Exit: 0 ok, 1 gate fail (--check), 2 IO error.
@@ -49,10 +40,7 @@ import { PATHS } from '../_config.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '..', '..');
-const MAP = JSON.parse(readFileSync(join(HERE, 'parity-map.json'), 'utf8'));
-const KIT = join(REPO, PATHS.uiKitDir); // .../ui_kits/mobile
-const SCREENS = join(KIT, 'screens'); // kit JSX
-const CONTRACTS = join(HERE, 'contracts', 'contracts.json');
+const CONTRACTS_DIR = join(HERE, 'contracts');
 const LIB = join(REPO, PATHS.srcDir);
 
 const args = process.argv.slice(2);
@@ -61,17 +49,20 @@ const onlyScreen = opt('--screen', null);
 const check = args.includes('--check');
 const asJson = args.includes('--json');
 
-if (!existsSync(CONTRACTS)) {
-  console.error(`fe_node_usage: missing ${CONTRACTS} — run \`node tool/parity/gen_contract.mjs\` first.`);
+// --- Layer 1: kit node-keys from contracts/*.gen.json (id -> owning screens) --
+const genFiles = existsSync(CONTRACTS_DIR)
+  ? readdirSync(CONTRACTS_DIR).filter((f) => f.endsWith('.gen.json'))
+  : [];
+if (!genFiles.length) {
+  console.error('fe_node_usage: no contracts/*.gen.json — run `node tool/parity/gen_parity_contract.mjs` first.');
   process.exit(2);
 }
-
-// --- Layer 1: the resolved contract (id -> owning screens) -------------------
-const CONTRACT = JSON.parse(readFileSync(CONTRACTS, 'utf8')).contracts || {};
 const idScreens = new Map(); // id -> Set(screen)
-for (const [screen, arr] of Object.entries(CONTRACT)) {
-  for (const e of arr) {
-    const id = e.key.replace(/^mx-node:/, '');
+for (const f of genFiles) {
+  const data = JSON.parse(readFileSync(join(CONTRACTS_DIR, f), 'utf8'));
+  const screen = data.screen ?? f.replace(/\.gen\.json$/, '');
+  for (const n of data.nodes ?? []) {
+    const id = String(n.key).replace(/^mx-node:/, '');
     (idScreens.get(id) ?? idScreens.set(id, new Set()).get(id)).add(screen);
   }
 }
@@ -101,23 +92,11 @@ if (existsSync(LIB)) {
 }
 const feIds = new Set(feLoc.keys());
 
-// --- Layer 3: literal kit-JSX data-mx-node ids (spec-lag rescue) --------------
-const JSX_RE = /data-mx-node=["']([^"'{}]+)["']/g;
-const jsxLiteral = new Set();
-if (existsSync(SCREENS)) {
-  for (const f of readdirSync(SCREENS).filter((x) => x.endsWith('.jsx'))) {
-    const text = readFileSync(join(SCREENS, f), 'utf8');
-    let m;
-    while ((m = JSX_RE.exec(text))) jsxLiteral.add(m[1]);
-  }
-}
-
-// --- Documented FE↔mock exceptions (reuse the parity ledger) -----------------
-// Match an id to an `exceptions` entry by node-segment (the id's last path
-// segment, which is what the ledger's `node` field names) + screen. For a MISSING
-// id every owning screen must be excepted (so a still-required screen keeps it
-// blocking); an ORPHAN has no contract screen, so a node-segment documented as an
-// intentional FE addition on ANY screen exempts it.
+// --- Documented FE↔kit exceptions (reuse the parity ledger) ------------------
+// Match an id to an `exceptions` entry by node-segment (the id's last path segment,
+// what the ledger's `node` names) + screen. A MISSING id needs every owning screen
+// excepted (so a still-required screen keeps it blocking); an ORPHAN has no contract
+// screen, so a node-segment documented as an intentional FE addition exempts it.
 const LEDGER = (() => {
   try { return JSON.parse(readFileSync(join(HERE, 'intent-ledger.json'), 'utf8')); }
   catch { return {}; }
@@ -133,31 +112,25 @@ function missingExemption(id) {
   const hits = screens.map((s) => excMatch(s, id)[0]).filter(Boolean);
   return hits.length === screens.length ? hits[0] : null; // every owning screen excepted
 }
-function orphanExemption(id) {
-  return excMatch(null, id)[0] ?? null;
-}
+const orphanExemption = (id) => excMatch(null, id)[0] ?? null;
 
 // --- Classify ----------------------------------------------------------------
 const missing = []; // {id, screens, exempt?}
 for (const id of [...contractIds].sort()) {
   if (feIds.has(id)) continue;
   if (onlyScreen && !(idScreens.get(id) ?? new Set()).has(onlyScreen)) continue;
-  const ex = missingExemption(id);
-  missing.push({ id, screens: [...(idScreens.get(id) ?? [])].sort(), exempt: ex });
+  missing.push({ id, screens: [...(idScreens.get(id) ?? [])].sort(), exempt: missingExemption(id) });
 }
-const orphan = []; // {id, files, exempt?, specLag}
+const orphan = []; // {id, files, exempt?}
 for (const id of [...feIds].sort()) {
   if (contractIds.has(id)) continue;
-  const specLag = jsxLiteral.has(id);
-  const ex = specLag ? null : orphanExemption(id);
-  orphan.push({ id, files: [...(feLoc.get(id) ?? [])].sort(), specLag, exempt: ex });
+  orphan.push({ id, files: [...(feLoc.get(id) ?? [])].sort(), exempt: orphanExemption(id) });
 }
 
 const missingBlock = missing.filter((r) => !r.exempt);
 const missingExempt = missing.filter((r) => r.exempt);
-const orphanBlock = orphan.filter((r) => !r.specLag && !r.exempt);
-const orphanExempt = orphan.filter((r) => !r.specLag && r.exempt);
-const specLag = orphan.filter((r) => r.specLag); // never shown when --screen (global)
+const orphanBlock = orphan.filter((r) => !r.exempt);
+const orphanExempt = orphan.filter((r) => r.exempt);
 const blocking = missingBlock.length + orphanBlock.length;
 
 if (asJson) {
@@ -167,7 +140,6 @@ if (asJson) {
       feIds: feIds.size,
       missingBlock: missingBlock.length,
       orphanBlock: orphanBlock.length,
-      specLag: specLag.length,
       exempt: missingExempt.length + orphanExempt.length,
     },
     missing, orphan,
@@ -176,33 +148,25 @@ if (asJson) {
 }
 
 // --- Report ------------------------------------------------------------------
-console.log('# data-mx-node FE usage (Flutter side, deterministic — no AI)\n');
-const list = (rows, render) => rows.length
-  ? rows.map((r) => `  - ${render(r)}`).join('\n')
-  : '  (none)';
+console.log('# data-mx-node FE↔kit usage (bidirectional, deterministic — no AI)\n');
+const list = (rows, render) => rows.length ? rows.map((r) => `  - ${render(r)}`).join('\n') : '  (none)';
 
-console.log(`## MISSING — required by kit contract, no ValueKey in lib/** (${missingBlock.length})`);
+console.log(`## MISSING — kit node-key with no ValueKey in lib/** (${missingBlock.length})`);
 console.log(list(missingBlock, (r) => `${r.id}  [${r.screens.join(', ')}]`));
 console.log('');
 if (!onlyScreen) {
-  console.log(`## ORPHAN — ValueKey in lib/** with no kit contract id (${orphanBlock.length})`);
+  console.log(`## ORPHAN — ValueKey in lib/** with no kit contract node (${orphanBlock.length})`);
   console.log(list(orphanBlock, (r) => `${r.id}  @ ${r.files.join(', ')}`));
   console.log('');
-  console.log(`## SPEC-LAG — FE key IS tagged in kit JSX but missing from the spec export (${specLag.length})`);
-  console.log('   → re-export specs so the contract carries it (not an FE bug).');
-  console.log(list(specLag, (r) => `${r.id}  @ ${r.files.join(', ')}`));
-  console.log('');
 }
-console.log(`## EXEMPT — documented FE↔mock divergence in intent-ledger.json (${missingExempt.length + orphanExempt.length})`);
-console.log(list([...missingExempt, ...orphanExempt], (r) =>
-  `${r.id}  (${r.exempt.exceptionKind}) — ${r.exempt.source}`));
+console.log(`## EXEMPT — documented FE↔kit divergence in intent-ledger.json (${missingExempt.length + orphanExempt.length})`);
+console.log(list([...missingExempt, ...orphanExempt], (r) => `${r.id}  (${r.exempt.exceptionKind}) — ${r.exempt.source}`));
 console.log('');
 
-console.log(`Summary: ${contractIds.size} contract id(s) · ${feIds.size} keyed in FE · `
-  + `${missingBlock.length} missing · ${orphanBlock.length} orphan · ${specLag.length} spec-lag · `
+console.log(`Summary: ${contractIds.size} kit node(s) · ${feIds.size} keyed in FE · `
+  + `${missingBlock.length} missing · ${orphanBlock.length} orphan · `
   + `${missingExempt.length + orphanExempt.length} exempt.`);
-console.log('Identity is set-level (an id counts as consumed if keyed anywhere in lib/**); the per-screen');
-console.log('"right key, right state" check stays with test/**/*_parity_test.dart. Exemptions: intent-ledger.json `exceptions`.');
+console.log('Identity is set-level; per-state "right key, right state" stays with test/**/*_parity_test.dart.');
 
 if (check && blocking) {
   console.error(`\nfe_node_usage: FAIL — ${blocking} blocking item(s) (${missingBlock.length} missing, ${orphanBlock.length} orphan). `

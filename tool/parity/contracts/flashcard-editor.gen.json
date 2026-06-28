@@ -1,0 +1,47 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "flashcard-editor",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/FlashcardEditor.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:flashcard-editor/dup-view",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:flashcard-editor/dup-add",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:flashcard-editor/appbar",
+      "component": "MxAppBar",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:flashcard-editor/save",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:flashcard-editor/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:flashcard-editor/add-meaning",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:flashcard-editor/audio-play",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:flashcard-editor/hidden-switch",
+      "component": "MxSwitch",
+      "variant": null
+    }
+  ]
+}

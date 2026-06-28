@@ -1,0 +1,42 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "drawer",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Drawer.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:drawer/add-screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/add-confirm",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:drawer/remove-screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/pair-0-del",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/pair-1-del",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/remove-cancel",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:drawer/remove-ok",
+      "component": "MxButton",
+      "variant": "primary"
+    }
+  ]
+}

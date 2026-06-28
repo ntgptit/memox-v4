@@ -26,7 +26,9 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const rel = (p) => p.slice(repoRoot.length + 1).replaceAll(sep, '/');
-const IGNORE = new Set(['node_modules', '.git', '.dart_tool', 'build', 'dist', 'generated', '.idea', '.vscode']);
+// `shots`/`specs` are the UI-kit exporter's generated output (tool/ui_kit_shots);
+// like `generated`, they are machine artifacts — neither linted nor mapped.
+const IGNORE = new Set(['node_modules', '.git', '.dart_tool', 'build', 'dist', 'generated', 'shots', 'specs', '.idea', '.vscode']);
 
 function walk(dir, out = []) {
   if (!existsSync(dir)) return out;

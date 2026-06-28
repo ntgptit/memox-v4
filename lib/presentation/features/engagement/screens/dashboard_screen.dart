@@ -48,57 +48,82 @@ class _DashboardBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final colors = MxTheme.of(context).colors;
-    final date = MaterialLocalizations.of(
-      context,
-    ).formatFullDate(DateTime.now());
     final decks = ref.watch(libraryProvider).value ?? const <DeckNode>[];
     final dueDecks = <DeckNode>[
       for (final node in decks)
         if (node.stats.due > 0) node,
     ];
+    final status = _DashboardStatus.from(summary);
     return MxContentBounds(
+      applyGutter: false,
       child: ListView(
         key: const Key('dashboard'),
-        padding: const EdgeInsets.all(MxSpacing.space4),
+        padding: const EdgeInsets.fromLTRB(
+          MxSpacing.gutter,
+          MxSpacing.space4,
+          MxSpacing.gutter,
+          MxSpacing.space6,
+        ),
         children: <Widget>[
-          MxText(
-            date,
-            role: MxTextRole.labelMedium,
-            color: colors.textSecondary,
-          ),
-          MxText(
-            _greeting(l10n),
-            role: MxTextRole.displaySmall,
-            weight: FontWeight.w800,
-          ),
-          const SizedBox(height: MxSpacing.space4),
-          _TodayCard(summary: summary),
-          const SizedBox(height: MxSpacing.space3),
-          _GoalCard(summary: summary),
-          const SizedBox(height: MxSpacing.space3),
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(child: _StreakCard(summary: summary)),
-                const SizedBox(width: MxSpacing.space3),
-                Expanded(child: _MasteredCard(summary: summary)),
-              ],
+          if (status == _DashboardStatus.empty) ...<Widget>[
+            _DashboardNote(
+              icon: Icons.bolt,
+              text: l10n.dashboardEmptyHint,
+              tone: _DashboardNoteTone.accent,
             ),
-          ),
-          const SizedBox(height: MxSpacing.space5),
-          MxSectionHeader(
-            title: l10n.dashboardContinueStudying,
-            caption: l10n.dashboardDecksDue(dueDecks.length),
-            action: l10n.commonSeeAll,
-            onAction: () => context.go(RoutePaths.root),
-          ),
-          for (var i = 0; i < dueDecks.length; i++)
-            Padding(
-              padding: const EdgeInsets.only(bottom: MxSpacing.space2),
-              child: _DeckRow(node: dueDecks[i], tone: _toneFor(i)),
+            const SizedBox(height: MxSpacing.space3),
+          ],
+          if (status == _DashboardStatus.goalMet) ...<Widget>[
+            _DashboardNote(
+              icon: Icons.check_circle,
+              text: l10n.dashboardGoalMetBanner,
+              tone: _DashboardNoteTone.success,
             ),
+            const SizedBox(height: MxSpacing.space3),
+          ],
+          if (status == _DashboardStatus.streakReset) ...<Widget>[
+            _DashboardNote(
+              icon: Icons.local_fire_department,
+              text: l10n.dashboardStreakResetHint,
+              tone: _DashboardNoteTone.warning,
+            ),
+            const SizedBox(height: MxSpacing.space3),
+          ],
+          _TodayCard(
+            summary: summary,
+            empty: status == _DashboardStatus.empty,
+            onStart: () => context.go(RoutePaths.root),
+          ),
+          // The kit's empty state is minimal — only the note + TODAY/Start card.
+          // The goal / streak-mastered / decks stack appears once there is activity.
+          if (status != _DashboardStatus.empty) ...<Widget>[
+            const SizedBox(height: MxSpacing.space3),
+            _GoalCard(summary: summary),
+            const SizedBox(height: MxSpacing.space3),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(child: _StreakCard(summary: summary)),
+                  const SizedBox(width: MxSpacing.space3),
+                  Expanded(child: _MasteredCard(summary: summary)),
+                ],
+              ),
+            ),
+            const SizedBox(height: MxSpacing.space5),
+            MxSectionHeader(
+              key: const ValueKey('mx-node:dashboard/decks-head'),
+              title: l10n.dashboardContinueStudying,
+              caption: l10n.dashboardDecksDue(dueDecks.length),
+              action: l10n.commonSeeAll,
+              onAction: () => context.go(RoutePaths.root),
+            ),
+            for (var i = 0; i < dueDecks.length; i++)
+              Padding(
+                padding: const EdgeInsets.only(bottom: MxSpacing.space2),
+                child: _DeckRow(node: dueDecks[i], tone: _toneFor(i)),
+              ),
+          ],
         ],
       ),
     );
@@ -111,16 +136,37 @@ class _DashboardBody extends ConsumerWidget {
   };
 }
 
+enum _DashboardStatus {
+  empty,
+  progressing,
+  goalMet,
+  streakReset;
+
+  static _DashboardStatus from(EngagementSummary summary) {
+    if (!summary.hasActivity) return _DashboardStatus.empty;
+    if (summary.goalMet) return _DashboardStatus.goalMet;
+    if (summary.streak.days == 0) return _DashboardStatus.streakReset;
+    return _DashboardStatus.progressing;
+  }
+}
+
 /// The primary "TODAY" hero card: time studied + words learned.
 class _TodayCard extends StatelessWidget {
-  const _TodayCard({required this.summary});
+  const _TodayCard({
+    required this.summary,
+    required this.empty,
+    required this.onStart,
+  });
 
   final EngagementSummary summary;
+  final bool empty;
+  final VoidCallback onStart;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return MxCard(
+      key: const ValueKey('mx-node:dashboard/today'),
       variant: MxCardVariant.primary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +190,68 @@ class _TodayCard extends StatelessWidget {
               ),
             ],
           ),
+          if (empty) ...<Widget>[
+            const SizedBox(height: MxSpacing.space4),
+            MxButton(
+              key: const ValueKey('mx-node:dashboard/start'),
+              label: l10n.dashboardStartStudying,
+              onPressed: onStart,
+              variant: MxButtonVariant.contrast,
+              icon: Icons.play_arrow,
+              block: true,
+            ),
+          ],
         ],
+      ),
+    );
+  }
+}
+
+enum _DashboardNoteTone { accent, success, warning }
+
+class _DashboardNote extends StatelessWidget {
+  const _DashboardNote({
+    required this.icon,
+    required this.text,
+    required this.tone,
+  });
+
+  final IconData icon;
+  final String text;
+  final _DashboardNoteTone tone;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = MxTheme.of(context).colors;
+    final (background, foreground) = switch (tone) {
+      _DashboardNoteTone.accent => (colors.primarySoft, colors.onPrimarySoft),
+      _DashboardNoteTone.success => (colors.successSoft, colors.onSuccessSoft),
+      _DashboardNoteTone.warning => (colors.warningSoft, colors.onWarningSoft),
+    };
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: MxRadius.controlRadius,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: MxSpacing.space4,
+          vertical: MxSpacing.space3,
+        ),
+        child: Row(
+          children: <Widget>[
+            Icon(icon, color: foreground, size: MxSpacing.space5),
+            const SizedBox(width: MxSpacing.space2),
+            Expanded(
+              child: MxText(
+                text,
+                role: MxTextRole.bodySmall,
+                color: foreground,
+                weight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -179,6 +286,7 @@ class _GoalCard extends StatelessWidget {
     final colors = MxTheme.of(context).colors;
     if (!summary.goal.hasGoal) {
       return MxCard(
+        key: const ValueKey('mx-node:dashboard/goal'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -194,7 +302,19 @@ class _GoalCard extends StatelessWidget {
         ),
       );
     }
+    final goal = summary.goal;
+    final met = summary.goalMet;
+    // Progress in the goal's own unit (minutes if set, else words) — the kit's
+    // "14/20 min" line, with a "· complete" suffix when met.
+    final progress = goal.minutes != null && goal.minutes! > 0
+        ? l10n.dashboardGoalProgressMinutes(
+            summary.seconds ~/ 60,
+            goal.minutes!,
+            '$met',
+          )
+        : l10n.dashboardGoalProgressWords(summary.words, goal.words!, '$met');
     return MxCard(
+      key: const ValueKey('mx-node:dashboard/goal'),
       child: Row(
         children: <Widget>[
           _GoalRing(progress: summary.goalProgress),
@@ -207,9 +327,13 @@ class _GoalCard extends StatelessWidget {
                 MxText.title(l10n.dashboardGoalTitle),
                 const SizedBox(height: MxSpacing.space1),
                 MxText(
-                  summary.goalMet
-                      ? l10n.dashboardGoalMet
-                      : l10n.dashboardGoalHint,
+                  progress,
+                  role: MxTextRole.bodyMedium,
+                  color: colors.textSecondary,
+                ),
+                const SizedBox(height: MxSpacing.space1),
+                MxText(
+                  l10n.dashboardGoalHint,
                   role: MxTextRole.bodySmall,
                   color: colors.textTertiary,
                 ),
@@ -230,6 +354,8 @@ class _GoalRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = MxTheme.of(context).colors;
+    // The kit ring shows the percentage in the centre for every state (no check
+    // icon) — "complete" is signalled by the full ring + the success note banner.
     return SizedBox(
       width: MxSpacing.space11,
       height: MxSpacing.space11,
@@ -265,6 +391,7 @@ class _StreakCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final days = summary.streak.days;
     return MxCard(
+      key: const ValueKey('mx-node:dashboard/streak'),
       variant: MxCardVariant.primarySoft,
       padding: MxCardPadding.sm,
       child: Row(
@@ -282,7 +409,7 @@ class _StreakCard extends StatelessWidget {
                   weight: FontWeight.w800,
                 ),
                 MxText(
-                  days > 0 ? l10n.dashboardDayStreak : l10n.dashboardStreakNone,
+                  l10n.dashboardDayStreak,
                   key: const Key('dashboardStreak'),
                   role: MxTextRole.labelSmall,
                   maxLines: 1,
@@ -308,6 +435,7 @@ class _MasteredCard extends StatelessWidget {
     final colors = MxTheme.of(context).colors;
     final percent = (summary.masteredProgress * 100).round();
     return MxCard(
+      key: const ValueKey('mx-node:dashboard/mastered'),
       variant: MxCardVariant.muted,
       padding: MxCardPadding.sm,
       child: Row(
@@ -397,13 +525,6 @@ class _DeckRow extends StatelessWidget {
       ),
     );
   }
-}
-
-String _greeting(AppLocalizations l10n) {
-  final hour = DateTime.now().hour;
-  if (hour < 12) return l10n.dashboardGreetingMorning;
-  if (hour < 18) return l10n.dashboardGreetingAfternoon;
-  return l10n.dashboardGreetingEvening;
 }
 
 String _formatDuration(int seconds) {

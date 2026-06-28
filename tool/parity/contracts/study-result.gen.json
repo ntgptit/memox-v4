@@ -1,0 +1,52 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "study-result",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/StudyResult.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:study-result/continue",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:study-result/later",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:study-result/review-wrong",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:study-result/library",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:study-result/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:study-result/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:study-result/finalize-retry",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:study-result/finalize-later",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:study-result/goal",
+      "component": "MxCard",
+      "variant": "primarySoft"
+    }
+  ]
+}

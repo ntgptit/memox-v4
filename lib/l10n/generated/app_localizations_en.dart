@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabLibrary => 'Library';
 
   @override
+  String get tabAdd => 'Add';
+
+  @override
   String get tabStats => 'Stats';
 
   @override
@@ -22,6 +25,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addTooltip => 'Add';
+
+  @override
+  String get notificationsTooltip => 'Notifications';
 
   @override
   String get comingSoon => 'Coming soon';
@@ -478,6 +484,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardContinueStudying => 'Continue studying';
 
   @override
+  String get dashboardQuickReview => 'Review';
+
+  @override
   String dashboardDecksDue(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -508,16 +517,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'No study yet today — start to keep your streak!';
 
   @override
+  String get dashboardStartStudying => 'Start studying';
+
+  @override
   String get dashboardGoalTitle => 'Daily goal';
 
   @override
-  String get dashboardGoalHint => 'Reach your minutes OR words';
+  String get dashboardGoalHint => 'Met when minutes OR words reached';
 
   @override
   String get dashboardGoalNone => 'Set a daily goal in settings';
 
   @override
   String get dashboardGoalMet => 'Goal reached today 🎉';
+
+  @override
+  String get dashboardGoalMetBanner => 'Daily goal reached. Streak +1.';
+
+  @override
+  String dashboardGoalProgressMinutes(
+    int current,
+    int target,
+    String complete,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(complete, {
+      'true': ' · complete',
+      'other': '',
+    });
+    return '$current/$target min$_temp0';
+  }
+
+  @override
+  String dashboardGoalProgressWords(int current, int target, String complete) {
+    String _temp0 = intl.Intl.selectLogic(complete, {
+      'true': ' · complete',
+      'other': '',
+    });
+    return '$current/$target words$_temp0';
+  }
+
+  @override
+  String get dashboardStreakResetHint =>
+      'Streak reset — study today to start again.';
 
   @override
   String get dashboardStreakTitle => 'Streak';

@@ -1,0 +1,32 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "reminder",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Reminder.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:reminder/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:reminder/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:reminder/time",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:reminder/time-edit",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:reminder/picker-done",
+      "component": "MxButton",
+      "variant": "primary"
+    }
+  ]
+}

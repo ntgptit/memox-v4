@@ -4,10 +4,10 @@ import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 
 /// Surface treatment for [MxCard].
-enum MxCardVariant { flat, muted, primary, primarySoft }
+enum MxCardVariant { elevated, flat, muted, primary, primarySoft }
 
 /// Inner padding step for [MxCard].
-enum MxCardPadding { sm, lg }
+enum MxCardPadding { sm, md, lg }
 
 /// A rounded content surface — the design kit's `MxCard`.
 ///
@@ -34,12 +34,12 @@ enum MxCardPadding { sm, lg }
 /// default, pressed (when interactive)
 ///
 /// Variants:
-/// flat, muted, primary, primarySoft
+/// elevated, flat, muted, primary, primarySoft
 class MxCard extends StatelessWidget {
   const MxCard({
     super.key,
-    this.variant = MxCardVariant.flat,
-    this.padding = MxCardPadding.lg,
+    this.variant = MxCardVariant.elevated,
+    this.padding = MxCardPadding.md,
     this.interactive = false,
     this.onTap,
     required this.child,
@@ -54,29 +54,65 @@ class MxCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = MxTheme.of(context).colors;
-    final (background, foreground) = switch (variant) {
-      MxCardVariant.flat => (colors.surfaceRaised, colors.text),
-      MxCardVariant.muted => (colors.surfaceMuted, colors.text),
-      MxCardVariant.primary => (colors.primary, colors.onPrimary),
-      MxCardVariant.primarySoft => (colors.primarySoft, colors.onPrimarySoft),
+    final shadows = MxTheme.of(context).shadows;
+    final (background, foreground, shadow, border) = switch (variant) {
+      MxCardVariant.elevated => (
+        colors.surface,
+        colors.text,
+        shadows.card,
+        null,
+      ),
+      MxCardVariant.flat => (
+        colors.surface,
+        colors.text,
+        <BoxShadow>[],
+        Border.all(color: colors.border),
+      ),
+      MxCardVariant.muted => (
+        colors.surfaceMuted,
+        colors.text,
+        <BoxShadow>[],
+        null,
+      ),
+      MxCardVariant.primary => (
+        colors.primary,
+        colors.onPrimary,
+        shadows.fab,
+        null,
+      ),
+      MxCardVariant.primarySoft => (
+        colors.primarySoft,
+        colors.onPrimarySoft,
+        <BoxShadow>[],
+        null,
+      ),
     };
     final pad = switch (padding) {
-      MxCardPadding.sm => MxSpacing.space3,
-      MxCardPadding.lg => MxSpacing.space4,
+      MxCardPadding.sm => MxSpacing.space4,
+      MxCardPadding.md => MxSpacing.space5,
+      MxCardPadding.lg => MxSpacing.space6,
     };
-    return Material(
-      color: background,
-      borderRadius: MxRadius.cardRadius,
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: interactive ? onTap : null,
-        child: Padding(
-          padding: EdgeInsets.all(pad),
-          child: DefaultTextStyle.merge(
-            style: TextStyle(color: foreground),
-            child: IconTheme.merge(
-              data: IconThemeData(color: foreground),
-              child: child,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: MxRadius.cardRadius,
+        border: border,
+        boxShadow: shadow,
+      ),
+      child: Material(
+        color: background,
+        borderRadius: MxRadius.cardRadius,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: interactive ? onTap : null,
+          child: Padding(
+            padding: EdgeInsets.all(pad),
+            child: DefaultTextStyle.merge(
+              style: TextStyle(color: foreground),
+              child: IconTheme.merge(
+                data: IconThemeData(color: foreground),
+                child: child,
+              ),
             ),
           ),
         ),

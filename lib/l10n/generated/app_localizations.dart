@@ -110,6 +110,12 @@ abstract class AppLocalizations {
   /// **'Library'**
   String get tabLibrary;
 
+  /// No description provided for @tabAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get tabAdd;
+
   /// No description provided for @tabStats.
   ///
   /// In en, this message translates to:
@@ -127,6 +133,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add'**
   String get addTooltip;
+
+  /// No description provided for @notificationsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTooltip;
 
   /// No description provided for @comingSoon.
   ///
@@ -986,6 +998,12 @@ abstract class AppLocalizations {
   /// **'Continue studying'**
   String get dashboardContinueStudying;
 
+  /// No description provided for @dashboardQuickReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get dashboardQuickReview;
+
   /// No description provided for @dashboardDecksDue.
   ///
   /// In en, this message translates to:
@@ -1022,6 +1040,12 @@ abstract class AppLocalizations {
   /// **'No study yet today — start to keep your streak!'**
   String get dashboardEmptyHint;
 
+  /// No description provided for @dashboardStartStudying.
+  ///
+  /// In en, this message translates to:
+  /// **'Start studying'**
+  String get dashboardStartStudying;
+
   /// No description provided for @dashboardGoalTitle.
   ///
   /// In en, this message translates to:
@@ -1031,7 +1055,7 @@ abstract class AppLocalizations {
   /// No description provided for @dashboardGoalHint.
   ///
   /// In en, this message translates to:
-  /// **'Reach your minutes OR words'**
+  /// **'Met when minutes OR words reached'**
   String get dashboardGoalHint;
 
   /// No description provided for @dashboardGoalNone.
@@ -1045,6 +1069,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Goal reached today 🎉'**
   String get dashboardGoalMet;
+
+  /// No description provided for @dashboardGoalMetBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily goal reached. Streak +1.'**
+  String get dashboardGoalMetBanner;
+
+  /// No description provided for @dashboardGoalProgressMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{target} min{complete, select, true{ · complete} other{}}'**
+  String dashboardGoalProgressMinutes(int current, int target, String complete);
+
+  /// No description provided for @dashboardGoalProgressWords.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{target} words{complete, select, true{ · complete} other{}}'**
+  String dashboardGoalProgressWords(int current, int target, String complete);
+
+  /// No description provided for @dashboardStreakResetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak reset — study today to start again.'**
+  String get dashboardStreakResetHint;
 
   /// No description provided for @dashboardStreakTitle.
   ///

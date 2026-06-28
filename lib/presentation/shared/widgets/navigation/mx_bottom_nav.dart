@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
@@ -53,8 +54,8 @@ class MxBottomNav extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: MxSpacing.space1),
+        child: SizedBox(
+          height: MxSpacing.bottomNavHeight,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -64,24 +65,36 @@ class MxBottomNav extends StatelessWidget {
                     onTap: () => onChanged(item.id),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        vertical: MxSpacing.space2,
+                        vertical: MxSpacing.space1,
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(
-                            item.icon,
-                            size: MxSpacing.space6,
-                            color: item.id == value
-                                ? colors.primary
-                                : colors.textTertiary,
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: item.id == value
+                                  ? colors.primarySoft
+                                  : Colors.transparent,
+                              borderRadius: MxRadius.pillRadius,
+                            ),
+                            child: SizedBox(
+                              width: MxSizes.sizeMd,
+                              height: MxSpacing.space7,
+                              child: Icon(
+                                item.icon,
+                                size: MxIconSize.lg,
+                                color: item.id == value
+                                    ? colors.primaryStrong
+                                    : colors.textTertiary,
+                              ),
+                            ),
                           ),
-                          const SizedBox(height: MxSpacing.space1),
                           Text(
                             item.label,
                             style: theme.textTheme.labelSmall?.copyWith(
                               color: item.id == value
-                                  ? colors.primary
+                                  ? colors.primaryStrong
                                   : colors.textTertiary,
                             ),
                           ),

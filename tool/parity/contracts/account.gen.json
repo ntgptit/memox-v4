@@ -1,0 +1,47 @@
+{
+  "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
+  "screen": "account",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/AccountSync.jsx",
+  "nodes": [
+    {
+      "key": "mx-node:account/sync",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:account/sync-now",
+      "component": "MxButton",
+      "variant": "outline"
+    },
+    {
+      "key": "mx-node:account/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:account/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:account/signin",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:account/google",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:account/profile",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:account/signout",
+      "component": "MxButton",
+      "variant": "ghost"
+    }
+  ]
+}
