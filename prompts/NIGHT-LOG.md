@@ -352,3 +352,18 @@ User requested a recursive review of the whole gap-fill round with 8 sub-agents.
 
 ### Verdicts
 No layer-boundary violations (architect). Security: no hardcoded creds, no SQL-value injection; the fixed guards close the restore-path risks. doc_guard clean. Net: the round's architecture is sound; the convergent correctness bugs are fixed; the deferred items are improvements, not blockers.
+
+## 2026-06-28 · HARDEN follow-ups (from 8-agent review) — 4 commits, all verify --full GREEN
+
+User chose "harden review follow-ups". Worked the deferred items in 4 verified commits (186 tests, +8 from 178):
+1. `cebab9c1` **Perf** — ExportCardsUseCase subtree now uses `CardRepository.listByIds` (one bulk cardsByIds + meaningsForCards, re-ordered) instead of 2N getById queries; BackupRepository.deserialize inserts via chunked multi-row INSERT (chunk 200) + validates column names are plain identifiers (closes the restore-path injection note too). +1 export-subtree test.
+2. `9e150ff9` **UX** — import/export screens show `transferError` (vi/en) on an Err result instead of silently no-op'ing; export uses `Separator.comma.char`; LocalNotificationService.sync skips scheduling when permission is denied (was ignoring the result).
+3. `68ea6971` **Cleanup** — removed dead `StudySessionState.revealed` + `reveal()` (recall game owns its local `_revealed`); SyncNow uses `valueOrNull` instead of `(x as Ok).value` casts.
+4. `461747c7` **Test depth + doc** — +6 SyncNow error-path tests (each Err branch + equal-timestamp tie) + 1 GoogleDrive not-configured guard test (MockClient asserts no network); statistics doc clarifies accuracy is DueReview-only in v1.
+
+### Still deferred (intentionally not done — low value for single-user v1 / needs on-device)
+- Stats `_activity`/`_accuracy` unbounded "all-app" scan: add an 84-day / pair window in SQL once history grows (low urgency for one user).
+- Sign-in orchestration split (`SettingsNotifier.syncNow` vs `SyncNowUseCase`): a refinement; current flow + the granted-check work correctly.
+- On-device verification of notifications/TTS/Drive (human gap; no real GCP creds).
+
+Net: every convergent review finding is now either fixed or explicitly deferred with a reason. main green.
