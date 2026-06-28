@@ -247,3 +247,14 @@ Test suite: 146 tests passing. Each merged step kept docs in sync (CLAUDE.md par
 
 - What: unattended cost-sensitive loop — per-step `code-reviewer` + `docs-drift-detector` fan-out skipped to keep the night moving.
 - Action: relied on `doc_guard` + `flutter analyze` (strict ruleset) + `dart format` + 54 tests, all green. Re-run a manual review pass in the morning if desired.
+
+## 2026-06-28 · W9 · GAP-FILL item 5/8 — accuracy + heatmap + longest streak
+
+- Commit: `7ef989e4` (feat) — verify --full GREEN (doc_guard, analyze, format, 167 tests; +5).
+- **Schema v1→2 (CLAUDE.md hard rule satisfied):** new `review_outcome` table (id, card_id FK, pair_id FK, ts, correct, mode) + index `idx_review_outcome_pair_ts`. `schemaVersion` 1→2; `onUpgrade(from<2)` creates the table + index. Migration test `test/data/datasources/local/drift/migration_v2_test.dart` (drop table → onUpgrade → table back, v1 data untouched). Docs: schema-contract (table + v2), migration-contract (1→2 row), storage-boundaries — all same commit.
+- **Accuracy:** ReviewOutcomeDao/Repository (+DI); StudySessionNotifier records an outcome on every DueReview grade. StatsDao.accuracy → StatsRaw/StatisticsSummary (accuracyCorrect/Total + ratio). Stats screen shows a review-accuracy card (only when hasReviews). Tests: accuracy = 2/3, empty scope = 0.
+- **Heatmap:** activity window 14→84 days; `_Heatmap` widget (Wrap of token-shaded squares, no chart dep) replaces the 14-day bars.
+- **Longest streak:** `ComputeStreakUseCase.longest` (max consecutive met run over history) → EngagementSummary.longestStreak → dashboard streak card. Test: 3-run with a gap → 3; no goal → 0.
+- Recording scope decision: only DueReview grades recorded (NewLearn has multiple attempts per card → noisy); `mode` column keeps the door open for newLearn later.
+- WBS §10: traceability line added. NIGHT-LOG: this entry.
+- NEXT (item 6/8): W7 FTS (optional) — full-text search over term+meaning. If FTS5 in the bundled sqlite is unavailable/awkward under Drift without a dep bump, fall back to the existing LIKE search and log it; this item is OPTIONAL, so keep it small and green.
