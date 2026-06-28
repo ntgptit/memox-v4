@@ -267,3 +267,24 @@ Test suite: 146 tests passing. Each merged step kept docs in sync (CLAUDE.md par
 - Docs (same commit): global-search BR-1 (multi-token), AC-4, status; decision-table D-019 (also corrected the stale `card_meaning.text` → `.content` reference).
 - WBS §10 + NIGHT-LOG updated.
 - NEXT (item 7/8): **W10 Google Drive sync** — build what's buildable behind interfaces (sync service/repository + DI + a settings entry point + serialize/merge using the existing backup JSON), and FLAG the GCP OAuth client-id / platform config (google_sign_in setup, Drive API enablement, SHA-1, plist/entitlements) as the HUMAN GAP rather than faking credentials. Keep verify GREEN; no real network calls in tests (fake the remote behind the interface). deps google_sign_in/googleapis/flutter_secure_storage already added in step 0.
+
+## 2026-06-28 · W10 · GAP-FILL item 7/8 — Google Drive sync (structure; GCP = human gap)
+
+- Commit: `30b4d56b` (feat) — verify --full GREEN (doc_guard, analyze, format, 173 tests; +5).
+- **Built (code + tests, behind interfaces, no real network):**
+  - Domain: `CloudSyncService` (interface) + `RemoteSnapshotMeta`/`SyncOutcome` types + `SyncNowUseCase`.
+  - `SyncNowUseCase` policy = **snapshot-level last-writer-wins** (D-027): remote.modifiedAt > settings `cloud_last_sync_at` ⇒ pull+restore, else push; never-synced device adopts existing remote. Reuses `BackupRepository.serialize()/deserialize(json)` (added; backup/restore now delegate to them).
+  - **Bonus fix:** the backup snapshot was missing `review_outcome` (introduced W9) — added to `_tables` + a serialize/deserialize round-trip test. So cloud sync + local backup now carry stats too.
+  - Data: `GoogleDriveSyncService` — REAL google_sign_in 7 sign-in/lightweight/signOut + Drive REST (appDataFolder) over `http` (multipart-free: create metadata then PATCH media; list by name for meta; GET alt=media for download); Drive file id cached in secure storage. Guarded by `CloudSyncConfig.isConfigured` (empty clientId ⇒ clear "not configured" `NetworkFailure`, never calls Google).
+  - DI: `sync_providers` (cloudSyncConfig/cloudSyncService/syncNow, keepAlive). Override `cloudSyncConfigProvider` to inject a real client id.
+  - UI: "Đồng bộ Google Drive" tile in `/settings` → `SettingsNotifier.syncNow` (sign-in-if-needed → SyncNow; a pull invalidates library + dashboard like a restore). l10n vi/en.
+  - Tests (+5): SyncNow push (no remote) / pull (remote newer) / push (remote older = local latest) / signed-out → signInRequired, with a faked remote; backup review_outcome round-trip.
+  - New dep: `http ^1.2.0` (approved blanket).
+- **🔴 HUMAN GAP (cannot be done from code — the only thing left for real sync):**
+  1. GCP project with **Drive API enabled**.
+  2. **OAuth client id** → put in `CloudSyncConfig.clientId` (or `--dart-define=GOOGLE_OAUTH_CLIENT_ID` + override `cloudSyncConfigProvider` at the composition root).
+  3. Per-platform OAuth: Android SHA-1 + `google-services.json`; iOS URL scheme + `Info.plist`; desktop OAuth client.
+  Until then the service is inert by design (reports "not configured"); the app stays fully offline-capable.
+- v1 limitation kept honest: LWW is whole-snapshot, not per-record (MemoX has no per-row update clock); per-record merge + delete tombstones deferred (account-sync §10/§12).
+- WBS §10 + W10 status (Planned→Partial) + the stale "W8/W10 BLOCKED" note (W8 was Done) updated. Docs: account-sync §12, D-027, overview, schema-contract, storage-boundaries.
+- NEXT (item 8/8, FINAL): **code-review pass** — run the `code-reviewer` + `docs-drift-detector` subagents over the gap-fill diff (this round: items 1–7). Fold findings into NIGHT-LOG, fix any blockers (keep verify GREEN), then write the FINAL SUMMARY and STOP (omit ScheduleWakeup).
