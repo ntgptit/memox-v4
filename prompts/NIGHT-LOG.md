@@ -493,9 +493,10 @@ exception (cite a doc); extend the verify `parity_fe_keys` gate with the screen;
 `node tool/parity/fe_node_usage.mjs --check --screen <X>` must be clean; verify --full
 GREEN; commit+push; then ScheduleWakeup to continue.
 
-- DONE: dashboard (271ba4ea) · library (29ba5597 — 7 keyed, 3 exempt: overflow→drawer,
-  search-dock→/search, empty-add→needs deck).
-- QUEUE (20 left): deck-detail · statistics · settings · search · study-session · review ·
+- DONE: dashboard (271ba4ea) · library (29ba5597 — 7 keyed, 3 exempt) · deck-detail
+  (7b833db0 — 10 keyed +empty Add/Import +error retry, 7 exempt: card delete/audio→editor,
+  reset→engine, search-dock→/search, move-apply→tap-to-apply).
+- QUEUE (19 left): statistics · settings · search · study-session · review ·
   player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing ·
   flashcard-editor · import · export · reminder · theme · account-sync · drawer.
-- NEXT ITERATION = deck-detail.
+- NEXT ITERATION = statistics.
