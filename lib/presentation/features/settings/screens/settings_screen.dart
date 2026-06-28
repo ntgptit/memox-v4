@@ -31,7 +31,11 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final settings = ref.watch(settingsProvider);
     return MxScaffold(
-      appBar: MxAppBar(title: l10n.drawerSettings),
+      key: const ValueKey('mx-node:settings/screen'),
+      appBar: MxAppBar(
+        key: const ValueKey('mx-node:settings/appbar'),
+        title: l10n.drawerSettings,
+      ),
       flush: true,
       body: settings.when(
         loading: () => const MxStateView.loading(),

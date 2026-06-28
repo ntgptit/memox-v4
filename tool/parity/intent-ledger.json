@@ -99,6 +99,24 @@
       "exceptionKind": "behavior",
       "reason": "The kit shows current/longest streak on the statistics screen. The FE surfaces streak (current + longest) on the dashboard Today tab where it drives engagement; the statistics screen focuses on library/SRS/accuracy/activity metrics and does not duplicate the streak counters.",
       "source": "docs/business/engagement/dashboard-engagement.md"
+    },
+    {
+      "screen": "settings",
+      "node": "profile",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit puts a user-profile section in settings. MemoX is a local-first app with no user account/identity; the only account surface is the optional Google Drive sync tile, so there is no profile node in settings.",
+      "source": "docs/business/account-sync/account-sync.md"
+    },
+    {
+      "screen": "settings",
+      "node": "srs-notif-switch",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a single inline SRS-notification switch. The FE configures study reminders on a dedicated /reminder screen (enable + time + weekdays), which is richer than a single switch, so settings has a reminder navigation row instead of an inline toggle.",
+      "source": "docs/business/settings/settings.md"
     }
   ],
   "coverageExempt": []
