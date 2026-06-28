@@ -288,3 +288,41 @@ Test suite: 146 tests passing. Each merged step kept docs in sync (CLAUDE.md par
 - v1 limitation kept honest: LWW is whole-snapshot, not per-record (MemoX has no per-row update clock); per-record merge + delete tombstones deferred (account-sync §10/§12).
 - WBS §10 + W10 status (Planned→Partial) + the stale "W8/W10 BLOCKED" note (W8 was Done) updated. Docs: account-sync §12, D-027, overview, schema-contract, storage-boundaries.
 - NEXT (item 8/8, FINAL): **code-review pass** — run the `code-reviewer` + `docs-drift-detector` subagents over the gap-fill diff (this round: items 1–7). Fold findings into NIGHT-LOG, fix any blockers (keep verify GREEN), then write the FINAL SUMMARY and STOP (omit ScheduleWakeup).
+
+## 2026-06-28 · GAP-FILL ROUND — FINAL SUMMARY (item 8/8: code-review pass + close-out)
+
+The unattended gap-fill round is COMPLETE. All 8 queue items done; main is green at `9e963064`.
+
+### What shipped (8 items)
+1. **Deps** (`a7e7ff4b`) — approved libraries for W8/W10/W12/audio; drift pinned <2.34 to keep @riverpod codegen.
+2. **W12 reminders** (`a5d55cc3`) — real OS notification scheduling (flutter_local_notifications 22 + timezone) behind NotificationService/ReminderScheduler.
+3. **Audio/TTS** (`3c847223`) — TtsService + FlutterTtsService + speaker button.
+4. **W8 import/export** (`de8d09a5`) — CSV/Excel/clipboard import+export (D-025/D-026), plugin-free use cases + TableCodec.
+5. **W4 RoundController** (`c3e78e43`) — NewLearn stages 2–5 use the real W5 game widgets via RoundState/RoundActions; widgets decoupled from providers.
+6. **W9 metrics** (`7ef989e4`) — review_outcome table (**schema v1→2 migration** + test), review accuracy, 12-week heatmap, longest streak.
+7. **W7 search** (`1d1e5072`) — multi-token AND search; FTS5 evaluated and deferred per spec.
+8. **W10 Google Drive sync** (`30b4d56b`) — CloudSyncService + GoogleDriveSyncService (google_sign_in 7 + Drive REST + secure storage) + SyncNowUseCase (snapshot-level LWW) + settings tile; **structure done, GCP config = human gap**.
+   + review fixes (`9e963064`).
+
+Each item: `node tool/verify/run.mjs --full` GREEN before push. Test count grew ~from the round start to **173** passing. Two-commit pattern throughout (feat → docs). All schema changes obeyed the CLAUDE.md hard rule (schemaVersion + onUpgrade + schema/migration docs + migration test, same commit).
+
+### Code-review pass (item 8) — subagents
+- **code-reviewer:** 1 runtime BLOCKER (sync service missing `_ensureInit()` before google_sign_in calls) — FIXED in `9e963064`. Praised RoundController, the idempotent v1→v2 migration, the not-configured sync guard, LWW correctness, and injection-safe multi-token search.
+- **docs-drift-detector:** doc_guard clean; found 4 doc drifts — all FIXED in `9e963064`: 4 missing WBS §10 lines, study-flow status Specified→Implemented, WBS "audio TTS hoãn" narrative, and a literal old-column-name in a changelog line.
+
+### Minor findings logged (NOT blockers — for a future pass)
+- `export_cards.dart` subtree export does N+1 `getById` per card → add a bulk `getByIds`.
+- `export_screen.dart` / `import_screen.dart` swallow `Err` results with no UI feedback → add an error message branch.
+- `study_session_notifier` markCorrect/markWrong ignore the passed `cardId` (always grade `session.current`) → guard or document the RoundActions deviation.
+- `local_notification_service.sync()` calls `cancelAll()` before `requestPermission()` → if denied, schedules are lost.
+- Statistics heatmap uses a `Wrap` (reflows mid-week on narrow phones) → consider a fixed 7-column grid.
+- `'dueReview'` string literal in study notifier → promote to a named constant.
+- migration_v2_test could additionally assert pre-existing rows survive onUpgrade (currently checks table presence + new insert).
+
+### 🔴 Human gaps remaining (cannot be done from code — need device/account/cloud config)
+- **W10 cloud sync:** GCP project + Drive API enabled + OAuth client id (`CloudSyncConfig`/`--dart-define`) + per-platform OAuth (Android SHA-1 + google-services.json, iOS URL scheme + Info.plist, desktop). Until then sync is inert by design.
+- **W12 reminders / Audio TTS:** real device verification of OS notification delivery + TTS voices (unit-wired + faked here; not run on a device).
+- Real-device run of the Drive REST happy path once credentials exist.
+
+### Status
+S0 + W2–W9, W11–W13 implemented & tested. W8 Done. **W10 Partial** (structure + tests; GCP config = human gap). Loop STOPPED (no further wakeup scheduled).
