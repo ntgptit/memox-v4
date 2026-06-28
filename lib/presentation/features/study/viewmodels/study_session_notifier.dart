@@ -14,6 +14,7 @@ import 'package:memox_v4/domain/repositories/deck_repository.dart';
 import 'package:memox_v4/domain/repositories/srs_repository.dart';
 import 'package:memox_v4/domain/types/last_result.dart';
 import 'package:memox_v4/domain/types/result.dart';
+import 'package:memox_v4/domain/types/review_outcome_mode.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/domain/usecases/srs/grade_card.dart';
 import 'package:memox_v4/domain/usecases/srs/schedule_new_card.dart';
@@ -158,46 +159,56 @@ class StudySessionNotifier extends _$StudySessionNotifier
   }
 
   // ── RoundActions: lets the game widgets drive NewLearn stages ──────────────
+  // The card to grade is the one the widget identifies (e.g. the matched pair),
+  // not necessarily the queue head, so [cardId] must be honored.
   @override
-  void markCorrect(int cardId) => unawaited(grade(true));
+  void markCorrect(int cardId) => unawaited(grade(true, cardId: cardId));
 
   @override
-  void markWrong(int cardId, {bool requeue = true}) => unawaited(grade(false));
+  void markWrong(int cardId, {bool requeue = true}) =>
+      unawaited(grade(false, cardId: cardId, requeue: requeue));
 
   @override
   void clearWrong() {}
 
-  Future<void> grade(bool correct) async {
+  Future<void> grade(bool correct, {int? cardId, bool requeue = true}) async {
     final session = state.value;
-    final card = session?.current;
-    if (session == null || card == null) return;
+    if (session == null) return;
+    final targetId = cardId ?? session.current?.cardId;
+    if (targetId == null || !session.pending.contains(targetId)) return;
 
     if (session.entry == StudyEntry.dueReview) {
       await GradeCardUseCase(
         _srs,
         _clock,
-      ).call(card.cardId, correct ? LastResult.correct : LastResult.wrong);
+      ).call(targetId, correct ? LastResult.correct : LastResult.wrong);
       await ref
           .read(reviewOutcomeRepositoryProvider)
           .record(
-            cardId: card.cardId,
+            cardId: targetId,
             pairId: session.pairId,
             ts: _clock.now().millisecondsSinceEpoch,
             correct: correct,
-            mode: 'dueReview',
+            mode: ReviewOutcomeMode.dueReview,
           );
+    }
+
+    // Wrong without re-queue (matching): the card simply stays in place.
+    if (!correct && !requeue) {
+      state = AsyncData(session.copyWith(wrongCount: session.wrongCount + 1));
+      return;
     }
 
     var pending = <int>[
       for (final id in session.pending)
-        if (id != card.cardId) id,
+        if (id != targetId) id,
     ];
     var correctCount = session.correctCount;
     var wrongCount = session.wrongCount;
     if (correct) {
       correctCount++;
     } else {
-      pending = <int>[...pending, card.cardId];
+      pending = <int>[...pending, targetId];
       wrongCount++;
     }
 

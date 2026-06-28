@@ -556,9 +556,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statsForecastTitle => 'Due in the next 7 days';
 
   @override
-  String get statsActivityTitle => 'Activity (14 days)';
-
-  @override
   String get statsInsufficient => 'Study more to see statistics';
 
   @override

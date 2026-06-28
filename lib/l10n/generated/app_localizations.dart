@@ -1082,12 +1082,6 @@ abstract class AppLocalizations {
   /// **'Due in the next 7 days'**
   String get statsForecastTitle;
 
-  /// No description provided for @statsActivityTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Activity (14 days)'**
-  String get statsActivityTitle;
-
   /// No description provided for @statsInsufficient.
   ///
   /// In en, this message translates to:

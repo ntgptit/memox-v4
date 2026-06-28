@@ -80,6 +80,19 @@ void main() {
     expect(ids.contains(onlyTerm), isFalse);
   });
 
+  test('a literal % is matched literally, not as a LIKE wildcard', () async {
+    final pct = await card('100%', 'phần trăm');
+    final other = await card('1000', 'nghìn');
+
+    final results = (await repository.search(
+      pairId: pairId,
+      query: '100%',
+    )).valueOrNull!;
+    final ids = results.map((r) => r.cardId).toSet();
+    expect(ids, contains(pct));
+    expect(ids.contains(other), isFalse);
+  });
+
   test('D-028: results include hidden cards', () async {
     final hidden = await card('mesa', 'bàn', hidden: true);
     final results = (await repository.search(

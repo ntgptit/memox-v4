@@ -64,6 +64,11 @@ class BackupRepositoryImpl implements BackupRepository {
   @override
   Future<Result<void>> deserialize(String json) => _guard('restore', () async {
     final raw = jsonDecode(json) as Map<String, dynamic>;
+    // Guard against wiping the DB from an empty/corrupt snapshot: a valid
+    // snapshot always carries the root table, even when it has no rows.
+    if (!raw.containsKey('language_pair')) {
+      throw const FormatException('snapshot missing core tables');
+    }
     await _db.transaction(() async {
       for (final table in _tables.reversed) {
         await _db.customStatement('DELETE FROM $table');

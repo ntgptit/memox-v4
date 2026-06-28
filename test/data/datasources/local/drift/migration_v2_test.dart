@@ -12,17 +12,11 @@ void main() {
     return rows.isNotEmpty;
   }
 
-  test('schema 1→2 migration adds review_outcome', () async {
+  test('schema 1→2 migration adds review_outcome, preserves v1 data', () async {
     final db = AppDatabase.forTesting(openInMemoryDatabase());
-    // Simulate a v1 database (before review_outcome existed).
+    // Simulate a v1 database (before review_outcome existed) holding real data.
     await db.customStatement('DROP TABLE review_outcome');
     expect(await hasTable(db, 'review_outcome'), isFalse);
-
-    // Run the 1 → 2 upgrade step.
-    await db.migration.onUpgrade(db.createMigrator(), 1, 2);
-
-    expect(await hasTable(db, 'review_outcome'), isTrue);
-    // The table is usable + the v1 data (e.g. cards) is untouched.
     final pairId = await db
         .into(db.languagePair)
         .insert(
@@ -36,6 +30,15 @@ void main() {
         .insert(
           CardCompanion.insert(deckId: deckId, term: 'xin', createdAt: 1),
         );
+
+    // Run the 1 → 2 upgrade step.
+    await db.migration.onUpgrade(db.createMigrator(), 1, 2);
+
+    expect(await hasTable(db, 'review_outcome'), isTrue);
+    // Pre-existing v1 rows survive the migration untouched.
+    expect(await db.select(db.card).get(), hasLength(1));
+    expect((await db.select(db.card).getSingle()).term, 'xin');
+    // The new table is usable.
     await db
         .into(db.reviewOutcome)
         .insert(

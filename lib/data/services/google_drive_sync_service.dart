@@ -128,6 +128,7 @@ class GoogleDriveSyncService implements CloudSyncService {
         return const Err<void>(NetworkFailure(message: 'not signed in'));
       }
       var fileId = await _storage.read(key: _fileIdKey);
+      var fileIdIsNew = false;
       if (fileId == null) {
         final created = await _client.post(
           Uri.parse('$_filesUrl?fields=id'),
@@ -147,7 +148,7 @@ class GoogleDriveSyncService implements CloudSyncService {
         }
         fileId =
             (jsonDecode(created.body) as Map<String, dynamic>)['id'] as String;
-        await _storage.write(key: _fileIdKey, value: fileId);
+        fileIdIsNew = true;
       }
       final resp = await _client.patch(
         Uri.parse('$_uploadUrl/$fileId?uploadType=media'),
@@ -159,6 +160,11 @@ class GoogleDriveSyncService implements CloudSyncService {
       );
       if (resp.statusCode != 200) {
         return Err<void>(NetworkFailure(message: 'upload ${resp.statusCode}'));
+      }
+      // Only cache the id once the content upload succeeded, so a failed first
+      // upload never leaves a cached id pointing at an empty Drive file.
+      if (fileIdIsNew) {
+        await _storage.write(key: _fileIdKey, value: fileId);
       }
       return const Ok<void>(null);
     } catch (e) {

@@ -58,7 +58,9 @@ class ComputeStreakUseCase {
 
   static DateTime _parseDay(String key) {
     final parts = key.split('-');
-    return DateTime(
+    // UTC midnight so consecutive calendar days are exactly 24h apart — a local
+    // DateTime would mis-count `inDays` across a DST boundary.
+    return DateTime.utc(
       int.parse(parts[0]),
       int.parse(parts[1]),
       int.parse(parts[2]),

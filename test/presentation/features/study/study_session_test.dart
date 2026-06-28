@@ -99,6 +99,37 @@ void main() {
     expect(state.stageIndex, 0);
   });
 
+  test('RoundActions: grades the identified card, not the queue head', () async {
+    await card();
+    await card();
+    final request = StudyRequest(nodeId: deckId, entry: StudyEntry.newLearn);
+    final initial = await open(request);
+    expect(initial.pending, hasLength(2));
+    final head = initial.pending.first;
+    final other = initial.pending.last;
+
+    // Match the NON-head card (e.g. a matching pair) → that card leaves, head stays.
+    await notifier(request).grade(true, cardId: other);
+    final state = container.read(studySessionProvider(request)).value!;
+    expect(state.pending, <int>[head]);
+  });
+
+  test(
+    'RoundActions: wrong with requeue:false leaves the card in place',
+    () async {
+      await card();
+      await card();
+      final request = StudyRequest(nodeId: deckId, entry: StudyEntry.newLearn);
+      final initial = await open(request);
+      final other = initial.pending.last;
+
+      await notifier(request).grade(false, cardId: other, requeue: false);
+      final state = container.read(studySessionProvider(request)).value!;
+      expect(state.pending, initial.pending);
+      expect(state.wrongCount, 1);
+    },
+  );
+
   test('D-007: DueReview grades the card into SRS', () async {
     final c = await card();
     await srsRepo.upsert(SrsState(cardId: c, box: 2, dueAt: 5000));

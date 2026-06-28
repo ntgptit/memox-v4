@@ -223,7 +223,6 @@
   },
   "statsBoxTitle": "Leitner boxes",
   "statsForecastTitle": "Due in the next 7 days",
-  "statsActivityTitle": "Activity (14 days)",
   "statsInsufficient": "Study more to see statistics",
   "statsError": "Couldn't load statistics",
   "statsDayOffset": "{count, plural, =0{Today} =1{Tomorrow} other{+{count}d}}",

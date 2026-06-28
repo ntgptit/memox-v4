@@ -46,11 +46,12 @@ class SearchDao {
     );
     final variables = <Variable<Object>>[Variable<int>(pairId)];
     for (final token in tokens) {
-      final like = '%$token%';
+      // Escape LIKE metacharacters so a typed % or _ matches literally.
+      final like = '%${_escapeLike(token)}%';
       sql.write(
-        ' AND (LOWER(c.term) LIKE ? OR EXISTS '
+        " AND (LOWER(c.term) LIKE ? ESCAPE '\\' OR EXISTS "
         '(SELECT 1 FROM card_meaning cm WHERE cm.card_id = c.id '
-        'AND LOWER(cm.content) LIKE ?))',
+        "AND LOWER(cm.content) LIKE ? ESCAPE '\\'))",
       );
       variables
         ..add(Variable<String>(like))
@@ -93,4 +94,9 @@ class SearchDao {
         )
         .toList(growable: false);
   }
+
+  /// Escapes SQL LIKE metacharacters (`\`, `%`, `_`) so user input matches
+  /// literally; paired with `ESCAPE '\'` in the query.
+  static String _escapeLike(String token) =>
+      token.replaceAllMapped(RegExp(r'[\\%_]'), (m) => '\\${m[0]}');
 }

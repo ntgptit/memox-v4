@@ -178,7 +178,6 @@
   "dashboardLongestStreak": "Dài nhất: {count, plural, other{{count} ngày}}",
   "statsBoxTitle": "Phân bố ô Leitner",
   "statsForecastTitle": "Đến hạn trong 7 ngày tới",
-  "statsActivityTitle": "Hoạt động (14 ngày)",
   "statsInsufficient": "Học thêm để xem thống kê",
   "statsError": "Không tải được thống kê",
   "statsDayOffset": "{count, plural, =0{Hôm nay} =1{Ngày mai} other{+{count} ngày}}",

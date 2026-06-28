@@ -78,6 +78,17 @@ void main() {
     expect(useCase.longest(byDay: byDay, goal: goal), 3);
   });
 
+  test('longest counts consecutive days across a DST boundary', () {
+    // 2026-03-08 is US spring-forward; a local-midnight diff would be 23h and
+    // mis-count these as non-consecutive. UTC parsing keeps them exactly 24h.
+    final byDay = <String, DayActivity>{
+      '2026-03-07': (seconds: 0, words: 9),
+      '2026-03-08': (seconds: 0, words: 9),
+      '2026-03-09': (seconds: 0, words: 9),
+    };
+    expect(useCase.longest(byDay: byDay, goal: goal), 3);
+  });
+
   test('longest is 0 with no goal', () {
     expect(
       useCase.longest(

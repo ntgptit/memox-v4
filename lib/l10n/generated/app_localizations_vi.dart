@@ -550,9 +550,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get statsForecastTitle => 'Đến hạn trong 7 ngày tới';
 
   @override
-  String get statsActivityTitle => 'Hoạt động (14 ngày)';
-
-  @override
   String get statsInsufficient => 'Học thêm để xem thống kê';
 
   @override

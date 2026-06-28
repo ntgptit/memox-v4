@@ -53,9 +53,13 @@ class SyncNowUseCase {
     final now = _clock.now();
     final uploaded = await _cloud.upload((json as Ok<String>).value, now);
     if (uploaded case Err(:final failure)) return Err<SyncOutcome>(failure);
+    // Stamp lastSync from the server's post-upload modifiedTime when available,
+    // so the next sync compares like-for-like (the device clock may lag the
+    // server, which would otherwise make our own upload look "newer" and pull).
+    final stamp = (await _cloud.remoteMeta()).valueOrNull?.modifiedAt ?? now;
     await _settings.write(
       SettingsKeys.cloudLastSyncAt,
-      '${now.millisecondsSinceEpoch}',
+      '${stamp.millisecondsSinceEpoch}',
     );
     return const Ok<SyncOutcome>(SyncOutcome.pushed);
   }

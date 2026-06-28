@@ -1,4 +1,4 @@
--- MemoX V4 — local schema (schema_version = 1).
+-- MemoX V4 — local schema (schema_version = 2).
 -- SQL is the source of the table shape; embedded into AppDatabase via
 -- `@DriftDatabase(include: {'tables.drift'})` and compiled by drift_dev.
 -- Mirrors docs/database/schema-contract.md exactly (table/column names, FKs,
