@@ -15,6 +15,12 @@ import 'package:memox_v4/domain/usecases/study/build_study_queue.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Auto-play through cards (term + meaning); never changes the schedule (D-014).
 /// Speaks each term aloud via TTS as it advances.
@@ -112,10 +118,10 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final cards = _cards;
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.studyPlayer)),
+    return MxScaffold(
+      appBar: MxAppBar(title: l10n.studyPlayer),
       body: cards == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const MxStateView.loading()
           : cards.isEmpty || _index >= cards.length
           ? _end(l10n)
           : _player(l10n, cards),
@@ -123,41 +129,34 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   }
 
   Widget _player(AppLocalizations l10n, List<GameCard> cards) {
-    final theme = Theme.of(context);
     final card = cards[_index];
-    return Padding(
-      padding: const EdgeInsets.all(MxSpacing.space5),
-      child: Column(
-        children: <Widget>[
-          Text(
-            '${_index + 1} / ${cards.length}',
-            style: theme.textTheme.labelMedium,
-          ),
-          const Spacer(),
-          Text(card.term, style: theme.textTheme.headlineMedium),
-          const SizedBox(height: MxSpacing.space3),
-          Text(card.meaning, style: theme.textTheme.bodyLarge),
-          const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton.filled(
-                key: const Key('playerToggle'),
-                iconSize: MxSpacing.space9,
-                onPressed: _togglePlay,
-                icon: Icon(_playing ? Icons.pause : Icons.play_arrow),
-              ),
-              const SizedBox(width: MxSpacing.space4),
-              IconButton.outlined(
-                key: const Key('playerSpeak'),
-                iconSize: MxSpacing.space7,
-                onPressed: _speakCurrent,
-                icon: const Icon(Icons.volume_up_outlined),
-              ),
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        MxText.label('${_index + 1} / ${cards.length}'),
+        const Spacer(),
+        MxText(card.term, role: MxTextRole.headlineMedium),
+        const SizedBox(height: MxSpacing.space3),
+        MxText(card.meaning, role: MxTextRole.bodyLarge),
+        const Spacer(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            MxIconButton(
+              key: const Key('playerToggle'),
+              icon: _playing ? Icons.pause : Icons.play_arrow,
+              variant: MxIconButtonVariant.primary,
+              onPressed: _togglePlay,
+            ),
+            const SizedBox(width: MxSpacing.space4),
+            MxIconButton(
+              key: const Key('playerSpeak'),
+              icon: Icons.volume_up_outlined,
+              variant: MxIconButtonVariant.filled,
+              onPressed: _speakCurrent,
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -166,22 +165,23 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(l10n.playerEnd, style: Theme.of(context).textTheme.titleMedium),
+          MxText.title(l10n.playerEnd),
           const SizedBox(height: MxSpacing.space4),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OutlinedButton(
+              MxButton(
+                label: l10n.playerReplay,
+                variant: MxButtonVariant.outline,
                 onPressed: () => setState(() {
                   _index = 0;
                   _playing = false;
                 }),
-                child: Text(l10n.playerReplay),
               ),
               const SizedBox(width: MxSpacing.space3),
-              FilledButton(
+              MxButton(
+                label: l10n.commonClose,
                 onPressed: () => unawaited(Navigator.of(context).maybePop()),
-                child: Text(l10n.commonClose),
               ),
             ],
           ),

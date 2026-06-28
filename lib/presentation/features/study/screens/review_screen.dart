@@ -15,6 +15,12 @@ import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/domain/usecases/study/build_study_queue.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_card.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Browse cards (term + meaning); never changes the schedule (D-007).
 class ReviewScreen extends ConsumerStatefulWidget {
@@ -66,10 +72,11 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final cards = _cards;
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.studyReview)),
+    return MxScaffold(
+      appBar: MxAppBar(title: l10n.studyReview),
+      flush: true,
       body: cards == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const MxStateView.loading()
           : cards.isEmpty || _index >= cards.length
           ? _end(l10n)
           : _card(l10n, cards),
@@ -77,7 +84,6 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   }
 
   Widget _card(AppLocalizations l10n, List<GameCard> cards) {
-    final theme = Theme.of(context);
     final card = cards[_index];
     return Column(
       children: <Widget>[
@@ -87,39 +93,35 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
             padding: const EdgeInsets.all(MxSpacing.space5),
             child: Column(
               children: <Widget>[
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(MxSpacing.space6),
-                    child: Text(card.meaning, style: theme.textTheme.bodyLarge),
-                  ),
+                MxCard(
+                  padding: MxCardPadding.lg,
+                  child: MxText(card.meaning, role: MxTextRole.bodyLarge),
                 ),
                 const SizedBox(height: MxSpacing.space4),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(MxSpacing.space6),
-                    child: Text(
-                      card.term,
-                      style: theme.textTheme.headlineSmall,
-                    ),
-                  ),
+                MxCard(
+                  padding: MxCardPadding.lg,
+                  child: MxText.headline(card.term),
                 ),
                 const Spacer(),
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: OutlinedButton(
+                      child: MxButton(
+                        label: l10n.commonBack,
+                        variant: MxButtonVariant.outline,
+                        block: true,
                         onPressed: _index == 0
                             ? null
                             : () => setState(() => _index--),
-                        child: Text(l10n.commonBack),
                       ),
                     ),
                     const SizedBox(width: MxSpacing.space3),
                     Expanded(
-                      child: FilledButton(
+                      child: MxButton(
                         key: const Key('reviewNext'),
+                        label: l10n.studyContinue,
+                        block: true,
                         onPressed: () => setState(() => _index++),
-                        child: Text(l10n.studyContinue),
                       ),
                     ),
                   ],
@@ -137,21 +139,22 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(l10n.reviewEnd, style: Theme.of(context).textTheme.titleMedium),
+          MxText.title(l10n.reviewEnd),
           const SizedBox(height: MxSpacing.space4),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OutlinedButton(
+              MxButton(
+                label: l10n.reviewStudyNow,
+                variant: MxButtonVariant.outline,
                 onPressed: () => context.push(
                   RoutePaths.studyLocation(widget.nodeId, StudyEntry.newLearn),
                 ),
-                child: Text(l10n.reviewStudyNow),
               ),
               const SizedBox(width: MxSpacing.space3),
-              FilledButton(
+              MxButton(
+                label: l10n.studyToLibrary,
                 onPressed: () => context.go(RoutePaths.root),
-                child: Text(l10n.studyToLibrary),
               ),
             ],
           ),

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/game/round.dart';
@@ -14,6 +15,13 @@ import 'package:memox_v4/presentation/features/game/widgets/recall_game.dart';
 import 'package:memox_v4/presentation/features/game/widgets/typing_game.dart';
 import 'package:memox_v4/presentation/features/study/viewmodels/study_session_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_card.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Scheduled study session. NewLearn runs 5 stages over the cards — stage 1 is a
 /// learn pass (term + meaning), stages 2–5 reuse the real W5 game widgets
@@ -49,13 +57,14 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
           title: Text(l10n.studyExitTitle),
           content: Text(l10n.studyExitBody),
           actions: <Widget>[
-            TextButton(
+            MxButton(
+              label: l10n.commonCancel,
+              variant: MxButtonVariant.ghost,
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(l10n.commonCancel),
             ),
-            FilledButton(
+            MxButton(
+              label: l10n.studyExitConfirm,
               onPressed: () => Navigator.of(ctx).pop(true),
-              child: Text(l10n.studyExitConfirm),
             ),
           ],
         ),
@@ -69,17 +78,18 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final async = ref.watch(studySessionProvider(_request));
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
+    return MxScaffold(
+      appBar: MxAppBar(
+        leading: MxIconButton(
           key: const Key('studyExit'),
-          icon: const Icon(Icons.close),
+          icon: Icons.close,
           onPressed: () => unawaited(_onExit()),
         ),
-        title: Text(_stageLabel(l10n, async.value)),
+        title: _stageLabel(l10n, async.value),
       ),
+      flush: true,
       body: async.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const MxStateView.loading(),
         error: (error, stack) => _message(l10n.libraryError),
         data: (state) {
           if (state.isEmpty) return _message(l10n.reviewEnd);
@@ -112,75 +122,72 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
   }
 
   Widget _learnStage(AppLocalizations l10n, RoundState round) {
-    final theme = Theme.of(context);
     final current = round.current!;
     return Padding(
       padding: const EdgeInsets.all(MxSpacing.space5),
       child: Column(
         children: <Widget>[
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(MxSpacing.space6),
-              child: Center(
-                child: Text(current.term, style: theme.textTheme.headlineSmall),
-              ),
+          MxCard(
+            padding: MxCardPadding.lg,
+            child: Center(
+              child: MxText.headline(current.term, textAlign: TextAlign.center),
             ),
           ),
           const SizedBox(height: MxSpacing.space4),
-          Text(current.meaning, style: theme.textTheme.bodyLarge),
+          MxText(current.meaning, role: MxTextRole.bodyLarge),
           const Spacer(),
-          FilledButton(
+          MxButton(
             key: const Key('studyLearnNext'),
+            label: l10n.studyContinue,
+            block: true,
             onPressed: () => _notifier.markCorrect(current.cardId),
-            child: Text(l10n.studyContinue),
           ),
         ],
       ),
     );
   }
 
-  Widget _result(AppLocalizations l10n, StudySessionState state) {
-    final theme = Theme.of(context);
-    return MxContentBounds(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(
-              Icons.check_circle_outline,
-              size: MxSpacing.space10,
-              color: theme.colorScheme.primary,
-            ),
-            const SizedBox(height: MxSpacing.space4),
-            Text(l10n.studyResultTitle, style: theme.textTheme.headlineSmall),
-            const SizedBox(height: MxSpacing.space2),
-            Text(l10n.studyResultWords(state.cards.length)),
-            Text(l10n.studyResultAccuracy((state.accuracy * 100).round())),
-            const SizedBox(height: MxSpacing.space5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                OutlinedButton(
-                  key: const Key('studyContinue'),
-                  onPressed: () =>
-                      ref.invalidate(studySessionProvider(_request)),
-                  child: Text(l10n.studyContinue),
-                ),
-                const SizedBox(width: MxSpacing.space3),
-                FilledButton(
-                  onPressed: () => context.go(RoutePaths.root),
-                  child: Text(l10n.studyToLibrary),
-                ),
-              ],
-            ),
-          ],
+  Widget _result(AppLocalizations l10n, StudySessionState state) =>
+      MxContentBounds(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(
+                Icons.check_circle_outline,
+                size: MxSpacing.space10,
+                color: MxTheme.of(context).colors.primary,
+              ),
+              const SizedBox(height: MxSpacing.space4),
+              MxText.headline(l10n.studyResultTitle),
+              const SizedBox(height: MxSpacing.space2),
+              MxText(l10n.studyResultWords(state.cards.length)),
+              MxText(l10n.studyResultAccuracy((state.accuracy * 100).round())),
+              const SizedBox(height: MxSpacing.space5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  MxButton(
+                    key: const Key('studyContinue'),
+                    label: l10n.studyContinue,
+                    variant: MxButtonVariant.outline,
+                    onPressed: () =>
+                        ref.invalidate(studySessionProvider(_request)),
+                  ),
+                  const SizedBox(width: MxSpacing.space3),
+                  MxButton(
+                    label: l10n.studyToLibrary,
+                    onPressed: () => context.go(RoutePaths.root),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   Widget _message(String text) =>
-      MxContentBounds(child: Center(child: Text(text)));
+      MxContentBounds(child: Center(child: MxText(text)));
 
   String _stageLabel(AppLocalizations l10n, StudySessionState? state) {
     if (state == null) return '';
