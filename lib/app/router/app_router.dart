@@ -12,6 +12,8 @@ import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_edito
 import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.dart';
 import 'package:memox_v4/presentation/features/game/screens/game_screen.dart';
 import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
+import 'package:memox_v4/presentation/features/import_export/screens/export_screen.dart';
+import 'package:memox_v4/presentation/features/import_export/screens/import_screen.dart';
 import 'package:memox_v4/presentation/features/personalization/screens/theme_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
@@ -140,6 +142,16 @@ abstract final class AppRouter {
       GoRoute(
         path: RoutePaths.search,
         builder: (context, state) => const SearchScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.deckImport,
+        builder: (context, state) =>
+            ImportScreen(deckId: int.parse(state.pathParameters['id']!)),
+      ),
+      GoRoute(
+        path: RoutePaths.deckExport,
+        builder: (context, state) =>
+            ExportScreen(deckId: int.parse(state.pathParameters['id']!)),
       ),
       GoRoute(
         path: RoutePaths.settings,

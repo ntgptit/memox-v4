@@ -691,6 +691,61 @@ class AppLocalizationsVi extends AppLocalizations {
   String get themePreviewBody => 'Học một chút mỗi ngày để giữ chuỗi streak.';
 
   @override
+  String get importTitle => 'Nhập';
+
+  @override
+  String get importPickFile => 'Chọn file';
+
+  @override
+  String get importPaste => 'Dán';
+
+  @override
+  String get importSeparator => 'Dấu phân cách';
+
+  @override
+  String get importHasHeader => 'Dòng đầu là tiêu đề';
+
+  @override
+  String get importTermColumn => 'Cột từ';
+
+  @override
+  String get importMeaningColumn => 'Cột nghĩa';
+
+  @override
+  String get importPreview => 'Xem trước';
+
+  @override
+  String get importRun => 'Nhập';
+
+  @override
+  String importDone(int count, int dup) {
+    return 'Đã nhập $count thẻ ($dup trùng)';
+  }
+
+  @override
+  String get exportTitle => 'Xuất';
+
+  @override
+  String get exportScopeSubtree => 'Gồm bộ thẻ con';
+
+  @override
+  String get exportIncludeSrs => 'Kèm trạng thái ôn';
+
+  @override
+  String get exportFormat => 'Định dạng';
+
+  @override
+  String get exportRun => 'Xuất';
+
+  @override
+  String get exportCopied => 'Đã sao chép vào clipboard';
+
+  @override
+  String exportSavedTo(String path) {
+    return 'Đã lưu vào $path';
+  }
+
+  @override
   String get searchHint => 'Tìm theo từ hoặc nghĩa';
 
   @override

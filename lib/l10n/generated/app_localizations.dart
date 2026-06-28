@@ -1358,6 +1358,108 @@ abstract class AppLocalizations {
   /// **'Learning a little every day keeps your streak alive.'**
   String get themePreviewBody;
 
+  /// No description provided for @importTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get importTitle;
+
+  /// No description provided for @importPickFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick file'**
+  String get importPickFile;
+
+  /// No description provided for @importPaste.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste'**
+  String get importPaste;
+
+  /// No description provided for @importSeparator.
+  ///
+  /// In en, this message translates to:
+  /// **'Separator'**
+  String get importSeparator;
+
+  /// No description provided for @importHasHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'First row is a header'**
+  String get importHasHeader;
+
+  /// No description provided for @importTermColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Term column'**
+  String get importTermColumn;
+
+  /// No description provided for @importMeaningColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Meaning column'**
+  String get importMeaningColumn;
+
+  /// No description provided for @importPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get importPreview;
+
+  /// No description provided for @importRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get importRun;
+
+  /// No description provided for @importDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported {count} cards ({dup} duplicates)'**
+  String importDone(int count, int dup);
+
+  /// No description provided for @exportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get exportTitle;
+
+  /// No description provided for @exportScopeSubtree.
+  ///
+  /// In en, this message translates to:
+  /// **'Include sub-decks'**
+  String get exportScopeSubtree;
+
+  /// No description provided for @exportIncludeSrs.
+  ///
+  /// In en, this message translates to:
+  /// **'Include review state'**
+  String get exportIncludeSrs;
+
+  /// No description provided for @exportFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get exportFormat;
+
+  /// No description provided for @exportRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get exportRun;
+
+  /// No description provided for @exportCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get exportCopied;
+
+  /// No description provided for @exportSavedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to {path}'**
+  String exportSavedTo(String path);
+
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:

@@ -57,7 +57,7 @@ học. (Premium hoãn v1.) Sơ đồ đầy đủ: `docs/business/system/system-
 | Bốn trò chơi | `docs/business/game/game-modes.md` | Implemented | `test/presentation/features/game/game_session_test.dart` |
 | Quản lý Bộ thẻ (cây lồng nhau) | `docs/business/deck/deck-management.md` | Implemented | `test/data/repositories/deck_repository_impl_test.dart` |
 | Tìm kiếm | `docs/business/search/global-search.md` | Implemented | `test/data/repositories/search_repository_impl_test.dart` |
-| Nhập / Xuất | `docs/business/import-export/import-export.md` | Specified | TBD |
+| Nhập / Xuất | `docs/business/import-export/import-export.md` | Implemented | `test/domain/usecases/import_export/` |
 | Thống kê | `docs/business/statistics/statistics.md` | Implemented | `test/domain/usecases/statistics/get_statistics_test.dart` |
 | Hoạt động & streak | `docs/business/engagement/dashboard-engagement.md` | Implemented | `test/domain/usecases/engagement/compute_streak_test.dart` |
 | Tài khoản & Đồng bộ | `docs/business/account-sync/account-sync.md` | Specified | TBD |

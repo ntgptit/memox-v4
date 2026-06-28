@@ -697,6 +697,61 @@ class AppLocalizationsEn extends AppLocalizations {
       'Learning a little every day keeps your streak alive.';
 
   @override
+  String get importTitle => 'Import';
+
+  @override
+  String get importPickFile => 'Pick file';
+
+  @override
+  String get importPaste => 'Paste';
+
+  @override
+  String get importSeparator => 'Separator';
+
+  @override
+  String get importHasHeader => 'First row is a header';
+
+  @override
+  String get importTermColumn => 'Term column';
+
+  @override
+  String get importMeaningColumn => 'Meaning column';
+
+  @override
+  String get importPreview => 'Preview';
+
+  @override
+  String get importRun => 'Import';
+
+  @override
+  String importDone(int count, int dup) {
+    return 'Imported $count cards ($dup duplicates)';
+  }
+
+  @override
+  String get exportTitle => 'Export';
+
+  @override
+  String get exportScopeSubtree => 'Include sub-decks';
+
+  @override
+  String get exportIncludeSrs => 'Include review state';
+
+  @override
+  String get exportFormat => 'Format';
+
+  @override
+  String get exportRun => 'Export';
+
+  @override
+  String get exportCopied => 'Copied to clipboard';
+
+  @override
+  String exportSavedTo(String path) {
+    return 'Saved to $path';
+  }
+
+  @override
   String get searchHint => 'Search by word or meaning';
 
   @override

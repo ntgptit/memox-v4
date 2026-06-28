@@ -13,6 +13,8 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | `profile` | `/profile` | — | tab (shell) | Cá nhân — tài khoản & cài đặt (W10/W12); placeholder ở S0 |
 | `deckDetail` | `/deck/:id` | deckId | push | node cây: bộ thẻ con + thẻ |
 | `flashcardEditor` | `/deck/:id/card` | deckId, cardId? | push | tạo/sửa thẻ |
+| `deckImport` | `/deck/:id/import` | deckId | push | Nhập CSV/Excel/clipboard (W8), mở từ deck-detail |
+| `deckExport` | `/deck/:id/export` | deckId | push | Xuất CSV/Excel/clipboard (W8), mở từ deck-detail |
 | `study` | `/study/:nodeId` | nodeId, entry | push | entry = newLearn / dueReview |
 | `game` | `/game/:nodeId` | nodeId | push | picker chọn 1/4 game (W5) |
 | `gamePlay` | `/game/:nodeId/play` | nodeId, type, scope, random | push | ván đang chơi (W5) |

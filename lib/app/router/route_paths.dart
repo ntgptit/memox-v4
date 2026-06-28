@@ -41,6 +41,16 @@ abstract final class RoutePaths {
     return cardId == null ? base : '$base?cardId=$cardId';
   }
 
+  /// Import cards into a deck — `deckImport`.
+  static const String deckImport = '/deck/:id/import';
+
+  static String deckImportLocation(int deckId) => '/deck/$deckId/import';
+
+  /// Export a deck's cards — `deckExport`.
+  static const String deckExport = '/deck/:id/export';
+
+  static String deckExportLocation(int deckId) => '/deck/$deckId/export';
+
   /// Game picker at a node — `game` in
   /// `docs/business/navigation/navigation-flow.md`. Path param: `nodeId`.
   static const String gamePicker = '/game/:nodeId';

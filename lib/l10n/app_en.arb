@@ -269,6 +269,30 @@
   "themePreview": "Preview",
   "themePreviewBody": "Learning a little every day keeps your streak alive.",
 
+  "importTitle": "Import",
+  "importPickFile": "Pick file",
+  "importPaste": "Paste",
+  "importSeparator": "Separator",
+  "importHasHeader": "First row is a header",
+  "importTermColumn": "Term column",
+  "importMeaningColumn": "Meaning column",
+  "importPreview": "Preview",
+  "importRun": "Import",
+  "importDone": "Imported {count} cards ({dup} duplicates)",
+  "@importDone": {
+    "placeholders": { "count": { "type": "int" }, "dup": { "type": "int" } }
+  },
+  "exportTitle": "Export",
+  "exportScopeSubtree": "Include sub-decks",
+  "exportIncludeSrs": "Include review state",
+  "exportFormat": "Format",
+  "exportRun": "Export",
+  "exportCopied": "Copied to clipboard",
+  "exportSavedTo": "Saved to {path}",
+  "@exportSavedTo": {
+    "placeholders": { "path": { "type": "String" } }
+  },
+
   "searchHint": "Search by word or meaning",
   "searchRecent": "Recent",
   "searchFilterAll": "All",

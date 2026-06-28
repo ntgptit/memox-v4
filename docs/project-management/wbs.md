@@ -17,7 +17,7 @@ the same commit (CLAUDE.md WBS rule).
 | W5 | 4 game luyện | W2 | Done | `docs/business/game/game-modes.md` |
 | W6 | Bộ thẻ (cây lồng nhau) | W2 | Done | `docs/business/deck/deck-management.md` |
 | W7 | Tìm kiếm | W2 | Done | `docs/business/search/global-search.md` |
-| W8 | Nhập / Xuất | W6 | Planned | `docs/business/import-export/import-export.md` |
+| W8 | Nhập / Xuất | W6 | Done | `docs/business/import-export/import-export.md` |
 | W9 | Thống kê | W3, W11 | Done | `docs/business/statistics/statistics.md` |
 | W10 | Tài khoản & Đồng bộ Google | W1 | Planned | `docs/business/account-sync/account-sync.md` |
 | W11 | Gắn kết / streak | W4 | Done | `docs/business/engagement/dashboard-engagement.md` |

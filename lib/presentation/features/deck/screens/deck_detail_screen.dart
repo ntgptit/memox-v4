@@ -40,6 +40,24 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
         actions: <Widget>[
           if (node != null)
             IconButton(
+              key: const Key('deckDetailImport'),
+              icon: const Icon(Icons.download_outlined),
+              tooltip: l10n.drawerImport,
+              onPressed: () => unawaited(
+                context.push(RoutePaths.deckImportLocation(widget.deckId)),
+              ),
+            ),
+          if (node != null)
+            IconButton(
+              key: const Key('deckDetailExport'),
+              icon: const Icon(Icons.upload_outlined),
+              tooltip: l10n.drawerExport,
+              onPressed: () => unawaited(
+                context.push(RoutePaths.deckExportLocation(widget.deckId)),
+              ),
+            ),
+          if (node != null)
+            IconButton(
               key: const Key('deckDetailPlay'),
               icon: const Icon(Icons.play_circle_outline),
               onPressed: () => unawaited(showPlayMenu(context, widget.deckId)),

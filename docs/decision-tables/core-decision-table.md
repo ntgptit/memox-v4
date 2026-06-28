@@ -29,8 +29,8 @@ dòng nên có một test, và mỗi test hành vi nên truy ngược về một
 | D-022 | (REMOVED) xoá một thư mục — bỏ khái niệm folder (pivot v1) | — | hành vi xoá lan cây con nay do D-024 phủ | — | — |
 | D-023 | đổi tiêu chí sắp xếp | sắp xếp danh sách | theo bảng chữ cái / ngày tạo / ngày học (tăng-giảm) | `docs/business/deck/deck-management.md` | `test/domain/usecases/deck/sort_deck_nodes_test.dart` |
 | D-024 | xoá một bộ thẻ | xác nhận xoá | xoá lan toàn bộ cây con (bộ thẻ con + thẻ + meaning + srs_state) | `docs/business/deck/deck-management.md` | `test/data/repositories/deck_repository_impl_test.dart` |
-| D-025 | import từ CSV/Excel/clipboard | chọn separator (tab/,/;) | tách cột đúng; preview; áp cảnh báo trùng (D-020) | `docs/business/import-export/import-export.md` | TBD |
-| D-026 | export | chọn định dạng + có/không kèm SRS | CSV / Excel / copy text (separator cấu hình); cho chọn kèm ô/hạn ôn | `docs/business/import-export/import-export.md` | TBD |
+| D-025 | import từ CSV/Excel/clipboard | chọn separator (tab/,/;) | tách cột đúng; preview; áp cảnh báo trùng (D-020) | `docs/business/import-export/import-export.md` | `test/domain/usecases/import_export/import_cards_test.dart` |
+| D-026 | export | chọn định dạng + có/không kèm SRS | CSV / Excel / copy text (separator cấu hình); cho chọn kèm ô/hạn ôn | `docs/business/import-export/import-export.md` | `test/domain/usecases/import_export/export_cards_test.dart` |
 | D-027 | sync gặp xung đột | hợp nhất | last-write-wins theo `updated_at` mức bản ghi | `docs/business/account-sync/account-sync.md` | TBD |
 | D-028 | tìm kiếm | hiển thị kết quả | khớp term+nghĩa; **gồm cả thẻ ẩn**; có bộ lọc trạng thái (mới/đến hạn/đã thuộc) | `docs/business/search/global-search.md` | `test/data/repositories/search_repository_impl_test.dart` |
 | D-029 | kết thúc một mode trong DueReview | chốt mode | hiện "học lại" đúng mode vừa chạy (DueReview không có UI riêng) | `docs/business/study/study-flow.md` | `test/presentation/features/study/study_session_test.dart` (result "Tiếp tục" chạy lại cùng entry) |

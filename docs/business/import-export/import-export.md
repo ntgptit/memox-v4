@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `import-export/import-export` |
 | Gói công việc (WBS) | W8 |
-| Trạng thái | Specified |
+| Trạng thái | Implemented (nhập CSV/Excel/clipboard: chọn file (file_picker) hoặc dán → chọn separator + cột term/nghĩa → preview → nhập, đếm trùng mềm D-020 không chặn; xuất CSV/Excel/clipboard, tùy chọn gồm bộ thẻ con + trạng thái SRS. Parse/encode qua `TableCodec` (csv/excel), use case không phụ thuộc plugin nên test được) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-020, D-025, D-026 |
 | Phiên bản | 1.0 |
