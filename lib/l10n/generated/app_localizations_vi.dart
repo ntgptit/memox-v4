@@ -774,6 +774,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get exportRun => 'Xuất';
 
   @override
+  String get transferError => 'Không hoàn tất được — vui lòng thử lại';
+
+  @override
   String get exportCopied => 'Đã sao chép vào clipboard';
 
   @override

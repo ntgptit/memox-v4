@@ -40,17 +40,20 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
           includeSrs: _includeSrs,
         );
     final rows = result.valueOrNull;
-    if (rows == null) return;
+    if (rows == null) {
+      if (mounted) setState(() => _message = l10n.transferError);
+      return;
+    }
     switch (_format) {
       case TransferFormat.clipboard:
         await Clipboard.setData(
-          ClipboardData(text: codec.toDelimited(rows, ',')),
+          ClipboardData(text: codec.toDelimited(rows, Separator.comma.char)),
         );
         if (mounted) setState(() => _message = l10n.exportCopied);
       case TransferFormat.csv:
         final path = await _writeFile(
           'memox_export.csv',
-          utf8.encode(codec.toDelimited(rows, ',')),
+          utf8.encode(codec.toDelimited(rows, Separator.comma.char)),
         );
         if (mounted) setState(() => _message = l10n.exportSavedTo(path));
       case TransferFormat.excel:

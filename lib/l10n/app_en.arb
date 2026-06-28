@@ -302,6 +302,7 @@
   "exportIncludeSrs": "Include review state",
   "exportFormat": "Format",
   "exportRun": "Export",
+  "transferError": "Couldn't complete — please try again",
   "exportCopied": "Copied to clipboard",
   "exportSavedTo": "Saved to {path}",
   "@exportSavedTo": {

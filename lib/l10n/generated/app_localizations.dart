@@ -1502,6 +1502,12 @@ abstract class AppLocalizations {
   /// **'Export'**
   String get exportRun;
 
+  /// No description provided for @transferError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t complete — please try again'**
+  String get transferError;
+
   /// No description provided for @exportCopied.
   ///
   /// In en, this message translates to:

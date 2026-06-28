@@ -43,7 +43,8 @@ trước khi ghi; xuất ra CSV/Excel/clipboard, tuỳ chọn kèm trạng thái
 - **Luồng chính:** người học chọn nguồn (file CSV/Excel hoặc dán văn bản) và dấu phân
   tách (Tab / phẩy / chấm phẩy / …); hệ thống tách cột, hiển thị **bước xem trước**;
   người học xác nhận; hệ thống ghi thẻ vào bộ thẻ ở trạng thái Mới.
-- **Luồng ngoại lệ:** thẻ trùng được **cảnh báo mềm** nhưng vẫn cho thêm.
+- **Luồng ngoại lệ:** thẻ trùng được **cảnh báo mềm** nhưng vẫn cho thêm. Nếu thao tác
+  nhập/xuất thất bại (đọc/ghi/giải mã lỗi), hiện thông báo lỗi và không ghi gì.
 
 ### UC-2: Xuất thẻ
 - **Luồng chính:** người học chọn phạm vi (một bộ thẻ, gồm cả cây con) và định dạng

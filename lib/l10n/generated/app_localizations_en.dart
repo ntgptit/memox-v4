@@ -781,6 +781,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportRun => 'Export';
 
   @override
+  String get transferError => 'Couldn\'t complete — please try again';
+
+  @override
   String get exportCopied => 'Copied to clipboard';
 
   @override

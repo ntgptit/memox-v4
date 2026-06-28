@@ -67,7 +67,9 @@ class LocalNotificationService implements NotificationService {
     await init();
     await _plugin.cancelAll();
     if (!reminder.enabled) return;
-    await requestPermission();
+    // Without permission the OS silently drops scheduled notifications, so don't
+    // bother scheduling them.
+    if (!await requestPermission()) return;
     final times = ReminderScheduler.nextFireTimes(reminder, DateTime.now());
     const details = NotificationDetails(
       android: AndroidNotificationDetails(

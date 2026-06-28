@@ -251,6 +251,7 @@
   "exportIncludeSrs": "Kèm trạng thái ôn",
   "exportFormat": "Định dạng",
   "exportRun": "Xuất",
+  "transferError": "Không hoàn tất được — vui lòng thử lại",
   "exportCopied": "Đã sao chép vào clipboard",
   "exportSavedTo": "Đã lưu vào {path}",
 

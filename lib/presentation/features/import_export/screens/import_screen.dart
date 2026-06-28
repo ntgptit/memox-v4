@@ -33,6 +33,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
   String? _rawText; // set for delimited sources, null for xlsx
   List<List<String>>? _rows;
   ImportResult? _result;
+  String? _error;
 
   Future<void> _pickFile() async {
     final picked = await FilePicker.platform.pickFiles(
@@ -94,8 +95,15 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
           meaningLang: lang,
           hasHeader: _hasHeader,
         );
-    if (result case Ok<ImportResult>(:final value)) {
-      setState(() => _result = value);
+    if (!mounted) return;
+    switch (result) {
+      case Ok<ImportResult>(:final value):
+        setState(() {
+          _result = value;
+          _error = null;
+        });
+      case Err<ImportResult>():
+        setState(() => _error = AppLocalizations.of(context).transferError);
     }
   }
 
@@ -189,6 +197,14 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
             Text(
               l10n.importDone(r.imported, r.duplicates),
               key: const Key('importResult'),
+            ),
+          ],
+          if (_error case final e?) ...<Widget>[
+            const SizedBox(height: MxSpacing.space4),
+            Text(
+              e,
+              key: const Key('importError'),
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ],
         ],
