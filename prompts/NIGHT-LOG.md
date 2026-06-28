@@ -383,3 +383,30 @@ Net: every convergent review finding is now either fixed or explicitly deferred 
 - App display name (`memox_v4` → brand), icons/splash assets, Android/iOS signing keys, GCP/OAuth for sync, and the on-device smoke pass. All in `docs/checklist/release-readiness.md`.
 
 main green. Feature-complete v1 + hardened + CI + release checklist; the rest needs assets/credentials/a device.
+
+## 2026-06-28 · code-verification-guard (ruleset memox) triage — A/B/C
+
+Ran `python code-verification-guard/guard/run.py check --project . --ruleset memox` → 523 errors / 138 warnings. This is an ASPIRATIONAL design-system/convention spec far stricter than the real gate (`tool/verify` is green). Root cause: the `Mx*` UI-kit + flutter_hooks + shared utils the guard assumes were **never built** (only mx_deck_tile/mx_placeholder exist; no MxScaffold/MxButton/...; no hooks dep). So most errors = "code doesn't use a UI-kit that doesn't exist", not "bad code".
+
+### Tier A — guard bugs / false-positives → fix the GUARD, not code (~80)
+- `no_async_value_or_null` (42): text-matches `.valueOrNull` and flags **`Result.valueOrNull`** (e.g. `export_cards.dart`, a domain use case with no AsyncValue). Scope the rule to AsyncValue / exclude domain+data.
+- `guard.config.missing_target_path` (24) + `rule_without_targets` (16): rules point at non-existent files (route_placeholder.dart, mx_text_field.dart, study_repo_impl.dart). Stale config.
+- `hooks.*` (~5): no flutter_hooks dep — convention not adopted.
+- `no_debug_print` (logger.dart:85): flags `developer.log` inside the **AppLogger wrapper itself** (the approved sink) — should exempt the logger file.
+
+### Tier B — convention/design-system not implemented; valid intent but = a big WP, NOT a piecemeal fix (~360)
+- All `no_raw_*` widgets + `no_raw_scaffold`/`use_mx_scaffold_family` + `no_direct_scaffold_messenger`: require Mx* widgets that don't exist.
+- `no_direct_text_theme` (81) + `no_raw_text_style` (2): require an Mx text-style API. NOTE: these two are **coupled** — "fixing" no_raw_text_style with `textTheme.copyWith` would create a no_direct_text_theme error. Needs the text API first.
+- `string_normalization_via_string_utils` (35), `use_shared_navigation_extension` (17): require shared utils/extensions not adopted.
+- `no_stateful_widget_in_features` (28) + `no_set_state` (46): project deliberately uses StatefulWidget/setState for game widgets; guard wants hooks.
+- `usecase_file_suffix` (38) + `usecase_class_suffix` (2): project names use cases without the `_usecase` suffix throughout.
+→ Recommendation: decide as a project — build the Mx design-system as a new WP, or downgrade these rules to `warning` until it exists.
+
+### Tier C — genuinely fixable now → DONE (commit `5863e973`)
+- `no_blind_json_decode_cast` (3→0): backup + Drive now `is Map` type-check jsonDecode.
+- `presentation_no_dart_io_imports` (1→0): extracted `FileSaveService` (domain) + `LocalFileSaveService` (data) + DI; export screen no longer imports dart:io.
+- `no_hardcoded_radius` (2→0): `MxRadius.fieldRadius`.
+- `no_raw_spacing_value` (2→1): dashboard 96 → `MxSpacing.space12`. Left statistics 120 (no matching token — rule over-reaches for a component dimension).
+- Left as guard-over-strict (not fixed): `i18n.no_hardcoded_strings` (3 — all numeric labels `${i+1}`/box-count/`$percent%`, not translatable prose); `no_raw_duration_value` (player 3s — no motion token exists + it's a behavior cadence, out of the rule's own stated scope).
+
+verify --full GREEN (186 tests). Errors 523→518 net.
