@@ -258,6 +258,13 @@ class _StreakCard extends StatelessWidget {
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
+                if (summary.longestStreak > 0)
+                  Text(
+                    l10n.dashboardLongestStreak(summary.longestStreak),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
               ],
             ),
           ),

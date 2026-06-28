@@ -9,8 +9,8 @@ void main() {
   setUp(() => db = AppDatabase.forTesting(openInMemoryDatabase()));
   tearDown(() => db.close());
 
-  test('0 → 1: onCreate builds schema_version 1', () async {
-    expect(db.schemaVersion, 1);
+  test('onCreate builds the current schema (v2)', () async {
+    expect(db.schemaVersion, 2);
     final names = await db
         .customSelect("SELECT name FROM sqlite_master WHERE type='table'")
         .get();

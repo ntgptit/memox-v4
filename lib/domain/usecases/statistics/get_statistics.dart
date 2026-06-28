@@ -11,7 +11,7 @@ class GetStatisticsUseCase {
   const GetStatisticsUseCase(this._repository, this._clock);
 
   static const int _forecastDays = 7;
-  static const int _activityWindow = 14;
+  static const int _activityWindow = 84; // 12 weeks for the heatmap
 
   final StatisticsRepository _repository;
   final Clock _clock;
@@ -67,6 +67,8 @@ class GetStatisticsUseCase {
       activity: activity,
       totalSeconds: totalSeconds,
       totalWords: totalWords,
+      accuracyCorrect: raw.accuracyCorrect,
+      accuracyTotal: raw.accuracyTotal,
     );
   }
 }

@@ -8,9 +8,10 @@ mutate persisted shape without a forward migration.
 | From → To | Change | Migration step | Test |
 | --- | --- | --- | --- |
 | 0 → 1 | tạo schema ban đầu (language_pair, deck [tự lồng qua `parent_deck_id`], card, card_meaning, srs_state, daily_activity, settings) | `onCreate` của Drift | `test/data/datasources/local/app_database_test.dart` |
+| 1 → 2 | thêm bảng `review_outcome` (+ index `idx_review_outcome_pair_ts`) cho thống kê độ chính xác (W9) | `onUpgrade` (from < 2): `m.createTable(reviewOutcome)` + tạo index | `test/data/datasources/local/drift/migration_v2_test.dart` |
 
 Mỗi dòng = một lần tăng `schema_version` trong `docs/database/schema-contract.md`.
-Hiện ở **v1** — chưa có migration nào sau khi tạo mới (append-only khi v2+).
+Hiện ở **v2**. Bảng append-only thêm mới không đụng dữ liệu cũ (chỉ tạo bảng).
 
 > **Khoá `settings` mới không cần migration:** store `settings` là key-value; thêm một
 > khoá (vd `active_pair_id`, `display_swapped` ở S0) chỉ là dữ liệu, không đổi hình dạng

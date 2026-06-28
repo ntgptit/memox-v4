@@ -76,6 +76,13 @@ class _StatsBody extends StatelessWidget {
       ),
       children: <Widget>[
         _OverviewCard(summary: summary),
+        if (summary.hasReviews) ...<Widget>[
+          const SizedBox(height: MxSpacing.space3),
+          _StatsCard(
+            title: l10n.statsAccuracyTitle,
+            child: _Accuracy(summary: summary),
+          ),
+        ],
         const SizedBox(height: MxSpacing.space3),
         _StatsCard(
           title: l10n.statsBoxTitle,
@@ -100,8 +107,8 @@ class _StatsBody extends StatelessWidget {
         ),
         const SizedBox(height: MxSpacing.space3),
         _StatsCard(
-          title: l10n.statsActivityTitle,
-          child: _ActivityBars(activity: summary.activity),
+          title: l10n.statsHeatmapTitle,
+          child: _Heatmap(activity: summary.activity),
         ),
       ],
     );
@@ -260,8 +267,53 @@ class _BarList extends StatelessWidget {
 }
 
 /// Vertical activity bars (seconds per day).
-class _ActivityBars extends StatelessWidget {
-  const _ActivityBars({required this.activity});
+/// Review-accuracy ratio (correct / total) for the scope.
+class _Accuracy extends StatelessWidget {
+  const _Accuracy({required this.summary});
+
+  final StatisticsSummary summary;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final percent = (summary.accuracy * 100).round();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: ClipRRect(
+                borderRadius: MxRadius.pillRadius,
+                child: LinearProgressIndicator(
+                  value: summary.accuracy,
+                  minHeight: MxSpacing.space2,
+                ),
+              ),
+            ),
+            const SizedBox(width: MxSpacing.space3),
+            Text('$percent%', style: theme.textTheme.titleMedium),
+          ],
+        ),
+        const SizedBox(height: MxSpacing.space1),
+        Text(
+          l10n.statsAccuracyDetail(
+            summary.accuracyCorrect,
+            summary.accuracyTotal,
+          ),
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// A calendar heatmap: one square per day, shaded by time studied.
+class _Heatmap extends StatelessWidget {
+  const _Heatmap({required this.activity});
 
   final List<ActivityPoint> activity;
 
@@ -269,30 +321,29 @@ class _ActivityBars extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final max = activity.fold<int>(1, (m, a) => a.seconds > m ? a.seconds : m);
-    return SizedBox(
-      height: MxSpacing.space11,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          for (final point in activity)
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 1),
-                child: FractionallySizedBox(
-                  heightFactor: (point.seconds / max).clamp(0.02, 1.0),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: point.seconds > 0
-                          ? theme.colorScheme.primary
-                          : theme.colorScheme.surfaceContainerHigh,
-                      borderRadius: MxRadius.controlRadius,
+    return Wrap(
+      spacing: MxSpacing.space1,
+      runSpacing: MxSpacing.space1,
+      children: <Widget>[
+        for (final point in activity)
+          DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: MxRadius.controlRadius,
+              color: point.seconds == 0
+                  ? theme.colorScheme.surfaceContainerHigh
+                  : theme.colorScheme.primary.withValues(
+                      alpha: (0.3 + 0.7 * (point.seconds / max)).clamp(
+                        0.0,
+                        1.0,
+                      ),
                     ),
-                  ),
-                ),
-              ),
             ),
-        ],
-      ),
+            child: const SizedBox(
+              width: MxSpacing.space3,
+              height: MxSpacing.space3,
+            ),
+          ),
+      ],
     );
   }
 }

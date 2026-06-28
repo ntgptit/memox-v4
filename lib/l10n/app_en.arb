@@ -211,6 +211,16 @@
   "statsOverviewTitle": "Library overview",
   "statsPairs": "Pairs",
   "statsDecks": "Decks",
+  "statsAccuracyTitle": "Review accuracy",
+  "statsAccuracyDetail": "{correct}/{total} correct",
+  "@statsAccuracyDetail": {
+    "placeholders": { "correct": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "statsHeatmapTitle": "Activity (12 weeks)",
+  "dashboardLongestStreak": "Best: {count, plural, =1{1 day} other{{count} days}}",
+  "@dashboardLongestStreak": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "statsBoxTitle": "Leitner boxes",
   "statsForecastTitle": "Due in the next 7 days",
   "statsActivityTitle": "Activity (14 days)",

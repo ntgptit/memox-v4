@@ -4,6 +4,7 @@ import 'package:memox_v4/app/di/card_providers.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/daily_activity_providers.dart';
 import 'package:memox_v4/app/di/deck_providers.dart';
+import 'package:memox_v4/app/di/review_outcome_providers.dart';
 import 'package:memox_v4/app/di/srs_providers.dart';
 import 'package:memox_v4/core/util/clock.dart';
 import 'package:memox_v4/domain/models/game_card.dart';
@@ -176,6 +177,15 @@ class StudySessionNotifier extends _$StudySessionNotifier
         _srs,
         _clock,
       ).call(card.cardId, correct ? LastResult.correct : LastResult.wrong);
+      await ref
+          .read(reviewOutcomeRepositoryProvider)
+          .record(
+            cardId: card.cardId,
+            pairId: session.pairId,
+            ts: _clock.now().millisecondsSinceEpoch,
+            correct: correct,
+            mode: 'dueReview',
+          );
     }
 
     var pending = <int>[

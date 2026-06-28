@@ -71,4 +71,20 @@ void main() {
     };
     expect(useCase.call(byDay: byDay, goal: minutesGoal, today: today).days, 2);
   });
+
+  test('longest: the maximum consecutive met run over history', () {
+    // offsets 0,1,2 met (3 in a row); gap at 3; offsets 4,5 met (2 in a row).
+    final byDay = days(<int, int>{0: 6, 1: 6, 2: 6, 4: 6, 5: 6});
+    expect(useCase.longest(byDay: byDay, goal: goal), 3);
+  });
+
+  test('longest is 0 with no goal', () {
+    expect(
+      useCase.longest(
+        byDay: days(<int, int>{0: 9, 1: 9}),
+        goal: const DailyGoal(),
+      ),
+      0,
+    );
+  });
 }

@@ -40,7 +40,7 @@ final class EngagementNotifierProvider
 }
 
 String _$engagementNotifierHash() =>
-    r'7a40fa0015a7361ced14a83221bfd21f6c1deb2d';
+    r'20a66bdbff395044521a7510c4ff57a7638b7eba';
 
 /// Today dashboard state (kept alive). Composes daily activity (W4), the goal
 /// (settings), the streak (D-021), and the library's due/mastered snapshot.

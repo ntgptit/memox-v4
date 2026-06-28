@@ -8,6 +8,7 @@ class EngagementSummary {
     required this.words,
     required this.goal,
     required this.streak,
+    required this.longestStreak,
     required this.dueCount,
     required this.masteredCount,
     required this.totalWords,
@@ -17,6 +18,10 @@ class EngagementSummary {
   final int words;
   final DailyGoal goal;
   final Streak streak;
+
+  /// Longest run of consecutive goal-met days over the whole history.
+  final int longestStreak;
+
   final int dueCount;
   final int masteredCount;
   final int totalWords;

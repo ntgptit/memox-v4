@@ -10,7 +10,7 @@ theo từng feature (W2+).*
 
 ## Phiên bản hiện tại
 
-`schema_version = 1`
+`schema_version = 2` (v1→v2: thêm `review_outcome`, xem `docs/database/migration-contract.md`)
 
 ## Bảng / collection / key
 
@@ -109,6 +109,19 @@ Một thẻ có **một** dòng (một chiều duy nhất) — lập lịch Leit
 | active_pair_id | int | null | cặp ngôn ngữ đang chọn (ngữ cảnh app); null = chưa chọn → suy ra cặp đầu |
 | display_swapped | bool | false | đảo chiều hiển thị của cặp đang chọn (mặt hỏi target↔source) |
 
+### review_outcome (W9, schema v2)
+
+Append-only — mỗi lần chấm một thẻ ở DueReview ghi một dòng, dùng cho độ chính xác.
+
+| Cột | Kiểu | Ghi chú |
+| --- | --- | --- |
+| id | int PK AUTOINCREMENT | |
+| card_id | int | FK `card(id)` ON DELETE CASCADE |
+| pair_id | int | FK `language_pair(id)` ON DELETE CASCADE |
+| ts | int | epoch ms (giờ máy) |
+| correct | int | 0 / 1 |
+| mode | text | `dueReview` / `newLearn` (v1 chỉ ghi `dueReview`) |
+
 ## Index
 
 | Bảng | Cột | Lý do |
@@ -117,6 +130,7 @@ Một thẻ có **một** dòng (một chiều duy nhất) — lập lịch Leit
 | srs_state | (due_at) | dựng hàng đợi đến hạn nhanh |
 | deck | (pair_id, parent_deck_id, order_index) | render cây |
 | card_meaning | (card_id) | nạp các nghĩa của một thẻ |
+| review_outcome | (pair_id, ts) | tổng hợp độ chính xác theo cặp/thời gian |
 
 ## Bất biến (invariants)
 

@@ -23,6 +23,7 @@ class EngagementNotifier extends _$EngagementNotifier {
     words: 0,
     goal: DailyGoal(),
     streak: Streak(0),
+    longestStreak: 0,
     dueCount: 0,
     masteredCount: 0,
     totalWords: 0,
@@ -55,11 +56,9 @@ class EngagementNotifier extends _$EngagementNotifier {
       SettingsKeys.dailyGoalWords,
     )).valueOrNull;
     final goal = DailyGoal(minutes: minutes, words: words);
-    final streak = const ComputeStreakUseCase().call(
-      byDay: byDay,
-      goal: goal,
-      today: now,
-    );
+    const compute = ComputeStreakUseCase();
+    final streak = compute.call(byDay: byDay, goal: goal, today: now);
+    final longestStreak = compute.longest(byDay: byDay, goal: goal);
 
     final roots =
         (await ref.read(deckRepositoryProvider).libraryTree(pairId))
@@ -79,6 +78,7 @@ class EngagementNotifier extends _$EngagementNotifier {
       words: today?.words ?? 0,
       goal: goal,
       streak: streak,
+      longestStreak: longestStreak,
       dueCount: due,
       masteredCount: mastered,
       totalWords: totalWords,

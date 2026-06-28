@@ -12,6 +12,8 @@ typedef StatsRaw = ({
   List<BoxCount> boxes,
   List<int> dueAts,
   List<ActivityPoint> activity,
+  int accuracyCorrect,
+  int accuracyTotal,
 });
 
 /// Aggregated learning statistics for a scope (`docs/business/statistics/statistics.md`).
@@ -27,6 +29,8 @@ class StatisticsSummary {
     required this.activity,
     required this.totalSeconds,
     required this.totalWords,
+    required this.accuracyCorrect,
+    required this.accuracyTotal,
   });
 
   /// Empty/insufficient summary.
@@ -40,6 +44,8 @@ class StatisticsSummary {
     activity: <ActivityPoint>[],
     totalSeconds: 0,
     totalWords: 0,
+    accuracyCorrect: 0,
+    accuracyTotal: 0,
   );
 
   final int pairs;
@@ -63,7 +69,17 @@ class StatisticsSummary {
   final int totalSeconds;
   final int totalWords;
 
+  /// Review answers (DueReview): correct count + total, for the accuracy metric.
+  final int accuracyCorrect;
+  final int accuracyTotal;
+
   double get masteredProgress => words == 0 ? 0 : mastered / words;
+
+  /// Correct-answer ratio over recorded reviews (0 when none yet).
+  double get accuracy =>
+      accuracyTotal == 0 ? 0 : accuracyCorrect / accuracyTotal;
+
+  bool get hasReviews => accuracyTotal > 0;
 
   /// Too little data to render meaningful charts.
   bool get hasEnoughData => words > 0;

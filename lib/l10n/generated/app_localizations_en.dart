@@ -528,6 +528,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statsDecks => 'Decks';
 
   @override
+  String get statsAccuracyTitle => 'Review accuracy';
+
+  @override
+  String statsAccuracyDetail(int correct, int total) {
+    return '$correct/$total correct';
+  }
+
+  @override
+  String get statsHeatmapTitle => 'Activity (12 weeks)';
+
+  @override
+  String dashboardLongestStreak(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return 'Best: $_temp0';
+  }
+
+  @override
   String get statsBoxTitle => 'Leitner boxes';
 
   @override

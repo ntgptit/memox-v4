@@ -523,6 +523,27 @@ class AppLocalizationsVi extends AppLocalizations {
   String get statsDecks => 'Bộ thẻ';
 
   @override
+  String get statsAccuracyTitle => 'Độ chính xác ôn';
+
+  @override
+  String statsAccuracyDetail(int correct, int total) {
+    return '$correct/$total đúng';
+  }
+
+  @override
+  String get statsHeatmapTitle => 'Hoạt động (12 tuần)';
+
+  @override
+  String dashboardLongestStreak(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ngày',
+    );
+    return 'Dài nhất: $_temp0';
+  }
+
+  @override
   String get statsBoxTitle => 'Phân bố ô Leitner';
 
   @override

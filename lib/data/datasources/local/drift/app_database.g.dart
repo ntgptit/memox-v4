@@ -2406,6 +2406,393 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   }
 }
 
+class ReviewOutcome extends Table
+    with TableInfo<ReviewOutcome, ReviewOutcomeData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ReviewOutcome(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT',
+  );
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  late final GeneratedColumn<int> cardId = GeneratedColumn<int>(
+    'card_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    $customConstraints: 'NOT NULL REFERENCES card(id)ON DELETE CASCADE',
+  );
+  static const VerificationMeta _pairIdMeta = const VerificationMeta('pairId');
+  late final GeneratedColumn<int> pairId = GeneratedColumn<int>(
+    'pair_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    $customConstraints:
+        'NOT NULL REFERENCES language_pair(id)ON DELETE CASCADE',
+  );
+  static const VerificationMeta _tsMeta = const VerificationMeta('ts');
+  late final GeneratedColumn<int> ts = GeneratedColumn<int>(
+    'ts',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    $customConstraints: 'NOT NULL',
+  );
+  static const VerificationMeta _correctMeta = const VerificationMeta(
+    'correct',
+  );
+  late final GeneratedColumn<int> correct = GeneratedColumn<int>(
+    'correct',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    $customConstraints: 'NOT NULL',
+  );
+  static const VerificationMeta _modeMeta = const VerificationMeta('mode');
+  late final GeneratedColumn<String> mode = GeneratedColumn<String>(
+    'mode',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: 'NOT NULL',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, cardId, pairId, ts, correct, mode];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'review_outcome';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReviewOutcomeData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('card_id')) {
+      context.handle(
+        _cardIdMeta,
+        cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    if (data.containsKey('pair_id')) {
+      context.handle(
+        _pairIdMeta,
+        pairId.isAcceptableOrUnknown(data['pair_id']!, _pairIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pairIdMeta);
+    }
+    if (data.containsKey('ts')) {
+      context.handle(_tsMeta, ts.isAcceptableOrUnknown(data['ts']!, _tsMeta));
+    } else if (isInserting) {
+      context.missing(_tsMeta);
+    }
+    if (data.containsKey('correct')) {
+      context.handle(
+        _correctMeta,
+        correct.isAcceptableOrUnknown(data['correct']!, _correctMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_correctMeta);
+    }
+    if (data.containsKey('mode')) {
+      context.handle(
+        _modeMeta,
+        mode.isAcceptableOrUnknown(data['mode']!, _modeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_modeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReviewOutcomeData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReviewOutcomeData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      cardId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}card_id'],
+      )!,
+      pairId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pair_id'],
+      )!,
+      ts: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}ts'],
+      )!,
+      correct: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}correct'],
+      )!,
+      mode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mode'],
+      )!,
+    );
+  }
+
+  @override
+  ReviewOutcome createAlias(String alias) {
+    return ReviewOutcome(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class ReviewOutcomeData extends DataClass
+    implements Insertable<ReviewOutcomeData> {
+  final int id;
+  final int cardId;
+  final int pairId;
+  final int ts;
+
+  /// epoch ms (machine clock)
+  final int correct;
+
+  /// 0 / 1
+  final String mode;
+  const ReviewOutcomeData({
+    required this.id,
+    required this.cardId,
+    required this.pairId,
+    required this.ts,
+    required this.correct,
+    required this.mode,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['card_id'] = Variable<int>(cardId);
+    map['pair_id'] = Variable<int>(pairId);
+    map['ts'] = Variable<int>(ts);
+    map['correct'] = Variable<int>(correct);
+    map['mode'] = Variable<String>(mode);
+    return map;
+  }
+
+  ReviewOutcomeCompanion toCompanion(bool nullToAbsent) {
+    return ReviewOutcomeCompanion(
+      id: Value(id),
+      cardId: Value(cardId),
+      pairId: Value(pairId),
+      ts: Value(ts),
+      correct: Value(correct),
+      mode: Value(mode),
+    );
+  }
+
+  factory ReviewOutcomeData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReviewOutcomeData(
+      id: serializer.fromJson<int>(json['id']),
+      cardId: serializer.fromJson<int>(json['card_id']),
+      pairId: serializer.fromJson<int>(json['pair_id']),
+      ts: serializer.fromJson<int>(json['ts']),
+      correct: serializer.fromJson<int>(json['correct']),
+      mode: serializer.fromJson<String>(json['mode']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'card_id': serializer.toJson<int>(cardId),
+      'pair_id': serializer.toJson<int>(pairId),
+      'ts': serializer.toJson<int>(ts),
+      'correct': serializer.toJson<int>(correct),
+      'mode': serializer.toJson<String>(mode),
+    };
+  }
+
+  ReviewOutcomeData copyWith({
+    int? id,
+    int? cardId,
+    int? pairId,
+    int? ts,
+    int? correct,
+    String? mode,
+  }) => ReviewOutcomeData(
+    id: id ?? this.id,
+    cardId: cardId ?? this.cardId,
+    pairId: pairId ?? this.pairId,
+    ts: ts ?? this.ts,
+    correct: correct ?? this.correct,
+    mode: mode ?? this.mode,
+  );
+  ReviewOutcomeData copyWithCompanion(ReviewOutcomeCompanion data) {
+    return ReviewOutcomeData(
+      id: data.id.present ? data.id.value : this.id,
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+      pairId: data.pairId.present ? data.pairId.value : this.pairId,
+      ts: data.ts.present ? data.ts.value : this.ts,
+      correct: data.correct.present ? data.correct.value : this.correct,
+      mode: data.mode.present ? data.mode.value : this.mode,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReviewOutcomeData(')
+          ..write('id: $id, ')
+          ..write('cardId: $cardId, ')
+          ..write('pairId: $pairId, ')
+          ..write('ts: $ts, ')
+          ..write('correct: $correct, ')
+          ..write('mode: $mode')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, cardId, pairId, ts, correct, mode);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReviewOutcomeData &&
+          other.id == this.id &&
+          other.cardId == this.cardId &&
+          other.pairId == this.pairId &&
+          other.ts == this.ts &&
+          other.correct == this.correct &&
+          other.mode == this.mode);
+}
+
+class ReviewOutcomeCompanion extends UpdateCompanion<ReviewOutcomeData> {
+  final Value<int> id;
+  final Value<int> cardId;
+  final Value<int> pairId;
+  final Value<int> ts;
+  final Value<int> correct;
+  final Value<String> mode;
+  const ReviewOutcomeCompanion({
+    this.id = const Value.absent(),
+    this.cardId = const Value.absent(),
+    this.pairId = const Value.absent(),
+    this.ts = const Value.absent(),
+    this.correct = const Value.absent(),
+    this.mode = const Value.absent(),
+  });
+  ReviewOutcomeCompanion.insert({
+    this.id = const Value.absent(),
+    required int cardId,
+    required int pairId,
+    required int ts,
+    required int correct,
+    required String mode,
+  }) : cardId = Value(cardId),
+       pairId = Value(pairId),
+       ts = Value(ts),
+       correct = Value(correct),
+       mode = Value(mode);
+  static Insertable<ReviewOutcomeData> custom({
+    Expression<int>? id,
+    Expression<int>? cardId,
+    Expression<int>? pairId,
+    Expression<int>? ts,
+    Expression<int>? correct,
+    Expression<String>? mode,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (cardId != null) 'card_id': cardId,
+      if (pairId != null) 'pair_id': pairId,
+      if (ts != null) 'ts': ts,
+      if (correct != null) 'correct': correct,
+      if (mode != null) 'mode': mode,
+    });
+  }
+
+  ReviewOutcomeCompanion copyWith({
+    Value<int>? id,
+    Value<int>? cardId,
+    Value<int>? pairId,
+    Value<int>? ts,
+    Value<int>? correct,
+    Value<String>? mode,
+  }) {
+    return ReviewOutcomeCompanion(
+      id: id ?? this.id,
+      cardId: cardId ?? this.cardId,
+      pairId: pairId ?? this.pairId,
+      ts: ts ?? this.ts,
+      correct: correct ?? this.correct,
+      mode: mode ?? this.mode,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (cardId.present) {
+      map['card_id'] = Variable<int>(cardId.value);
+    }
+    if (pairId.present) {
+      map['pair_id'] = Variable<int>(pairId.value);
+    }
+    if (ts.present) {
+      map['ts'] = Variable<int>(ts.value);
+    }
+    if (correct.present) {
+      map['correct'] = Variable<int>(correct.value);
+    }
+    if (mode.present) {
+      map['mode'] = Variable<String>(mode.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReviewOutcomeCompanion(')
+          ..write('id: $id, ')
+          ..write('cardId: $cardId, ')
+          ..write('pairId: $pairId, ')
+          ..write('ts: $ts, ')
+          ..write('correct: $correct, ')
+          ..write('mode: $mode')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2432,6 +2819,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final DailyActivity dailyActivity = DailyActivity(this);
   late final Settings settings = Settings(this);
+  late final ReviewOutcome reviewOutcome = ReviewOutcome(this);
+  late final Index idxReviewOutcomePairTs = Index(
+    'idx_review_outcome_pair_ts',
+    'CREATE INDEX idx_review_outcome_pair_ts ON review_outcome (pair_id, ts)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2448,6 +2840,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     idxSrsDue,
     dailyActivity,
     settings,
+    reviewOutcome,
+    idxReviewOutcomePairTs,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -2485,6 +2879,20 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('daily_activity', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'card',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('review_outcome', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'language_pair',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('review_outcome', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -2543,6 +2951,27 @@ final class $LanguagePairReferences
     ).filter((f) => f.pairId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_dailyActivityRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<ReviewOutcome, List<ReviewOutcomeData>>
+  _reviewOutcomeRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.reviewOutcome,
+    aliasName: $_aliasNameGenerator(
+      db.languagePair.id,
+      db.reviewOutcome.pairId,
+    ),
+  );
+
+  $ReviewOutcomeProcessedTableManager get reviewOutcomeRefs {
+    final manager = $ReviewOutcomeTableManager(
+      $_db,
+      $_db.reviewOutcome,
+    ).filter((f) => f.pairId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_reviewOutcomeRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -2619,6 +3048,31 @@ class $LanguagePairFilterComposer
           }) => $DailyActivityFilterComposer(
             $db: $db,
             $table: $db.dailyActivity,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> reviewOutcomeRefs(
+    Expression<bool> Function($ReviewOutcomeFilterComposer f) f,
+  ) {
+    final $ReviewOutcomeFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.reviewOutcome,
+      getReferencedColumn: (t) => t.pairId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $ReviewOutcomeFilterComposer(
+            $db: $db,
+            $table: $db.reviewOutcome,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -2735,6 +3189,31 @@ class $LanguagePairAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> reviewOutcomeRefs<T extends Object>(
+    Expression<T> Function($ReviewOutcomeAnnotationComposer a) f,
+  ) {
+    final $ReviewOutcomeAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.reviewOutcome,
+      getReferencedColumn: (t) => t.pairId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $ReviewOutcomeAnnotationComposer(
+            $db: $db,
+            $table: $db.reviewOutcome,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $LanguagePairTableManager
@@ -2750,7 +3229,11 @@ class $LanguagePairTableManager
           $LanguagePairUpdateCompanionBuilder,
           (LanguagePairData, $LanguagePairReferences),
           LanguagePairData,
-          PrefetchHooks Function({bool deckRefs, bool dailyActivityRefs})
+          PrefetchHooks Function({
+            bool deckRefs,
+            bool dailyActivityRefs,
+            bool reviewOutcomeRefs,
+          })
         > {
   $LanguagePairTableManager(_$AppDatabase db, LanguagePair table)
     : super(
@@ -2794,12 +3277,17 @@ class $LanguagePairTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({deckRefs = false, dailyActivityRefs = false}) {
+              ({
+                deckRefs = false,
+                dailyActivityRefs = false,
+                reviewOutcomeRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (deckRefs) db.deck,
                     if (dailyActivityRefs) db.dailyActivity,
+                    if (reviewOutcomeRefs) db.reviewOutcome,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -2842,6 +3330,27 @@ class $LanguagePairTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (reviewOutcomeRefs)
+                        await $_getPrefetchedData<
+                          LanguagePairData,
+                          LanguagePair,
+                          ReviewOutcomeData
+                        >(
+                          currentTable: table,
+                          referencedTable: $LanguagePairReferences
+                              ._reviewOutcomeRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $LanguagePairReferences(
+                                db,
+                                table,
+                                p0,
+                              ).reviewOutcomeRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.pairId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -2862,7 +3371,11 @@ typedef $LanguagePairProcessedTableManager =
       $LanguagePairUpdateCompanionBuilder,
       (LanguagePairData, $LanguagePairReferences),
       LanguagePairData,
-      PrefetchHooks Function({bool deckRefs, bool dailyActivityRefs})
+      PrefetchHooks Function({
+        bool deckRefs,
+        bool dailyActivityRefs,
+        bool reviewOutcomeRefs,
+      })
     >;
 typedef $DeckCreateCompanionBuilder =
     DeckCompanion Function({
@@ -3334,6 +3847,24 @@ final class $CardReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<ReviewOutcome, List<ReviewOutcomeData>>
+  _reviewOutcomeRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.reviewOutcome,
+    aliasName: $_aliasNameGenerator(db.card.id, db.reviewOutcome.cardId),
+  );
+
+  $ReviewOutcomeProcessedTableManager get reviewOutcomeRefs {
+    final manager = $ReviewOutcomeTableManager(
+      $_db,
+      $_db.reviewOutcome,
+    ).filter((f) => f.cardId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_reviewOutcomeRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $CardFilterComposer extends Composer<_$AppDatabase, Card> {
@@ -3448,6 +3979,31 @@ class $CardFilterComposer extends Composer<_$AppDatabase, Card> {
           }) => $SrsStateFilterComposer(
             $db: $db,
             $table: $db.srsState,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> reviewOutcomeRefs(
+    Expression<bool> Function($ReviewOutcomeFilterComposer f) f,
+  ) {
+    final $ReviewOutcomeFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.reviewOutcome,
+      getReferencedColumn: (t) => t.cardId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $ReviewOutcomeFilterComposer(
+            $db: $db,
+            $table: $db.reviewOutcome,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -3638,6 +4194,31 @@ class $CardAnnotationComposer extends Composer<_$AppDatabase, Card> {
     );
     return f(composer);
   }
+
+  Expression<T> reviewOutcomeRefs<T extends Object>(
+    Expression<T> Function($ReviewOutcomeAnnotationComposer a) f,
+  ) {
+    final $ReviewOutcomeAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.reviewOutcome,
+      getReferencedColumn: (t) => t.cardId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $ReviewOutcomeAnnotationComposer(
+            $db: $db,
+            $table: $db.reviewOutcome,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $CardTableManager
@@ -3657,6 +4238,7 @@ class $CardTableManager
             bool deckId,
             bool cardMeaningRefs,
             bool srsStateRefs,
+            bool reviewOutcomeRefs,
           })
         > {
   $CardTableManager(_$AppDatabase db, Card table)
@@ -3722,12 +4304,14 @@ class $CardTableManager
                 deckId = false,
                 cardMeaningRefs = false,
                 srsStateRefs = false,
+                reviewOutcomeRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (cardMeaningRefs) db.cardMeaning,
                     if (srsStateRefs) db.srsState,
+                    if (reviewOutcomeRefs) db.reviewOutcome,
                   ],
                   addJoins:
                       <
@@ -3794,6 +4378,23 @@ class $CardTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (reviewOutcomeRefs)
+                        await $_getPrefetchedData<
+                          CardData,
+                          Card,
+                          ReviewOutcomeData
+                        >(
+                          currentTable: table,
+                          referencedTable: $CardReferences
+                              ._reviewOutcomeRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $CardReferences(db, table, p0).reviewOutcomeRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.cardId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -3818,6 +4419,7 @@ typedef $CardProcessedTableManager =
         bool deckId,
         bool cardMeaningRefs,
         bool srsStateRefs,
+        bool reviewOutcomeRefs,
       })
     >;
 typedef $CardMeaningCreateCompanionBuilder =
@@ -4849,6 +5451,425 @@ typedef $SettingsProcessedTableManager =
       Setting,
       PrefetchHooks Function()
     >;
+typedef $ReviewOutcomeCreateCompanionBuilder =
+    ReviewOutcomeCompanion Function({
+      Value<int> id,
+      required int cardId,
+      required int pairId,
+      required int ts,
+      required int correct,
+      required String mode,
+    });
+typedef $ReviewOutcomeUpdateCompanionBuilder =
+    ReviewOutcomeCompanion Function({
+      Value<int> id,
+      Value<int> cardId,
+      Value<int> pairId,
+      Value<int> ts,
+      Value<int> correct,
+      Value<String> mode,
+    });
+
+final class $ReviewOutcomeReferences
+    extends BaseReferences<_$AppDatabase, ReviewOutcome, ReviewOutcomeData> {
+  $ReviewOutcomeReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static Card _cardIdTable(_$AppDatabase db) => db.card.createAlias(
+    $_aliasNameGenerator(db.reviewOutcome.cardId, db.card.id),
+  );
+
+  $CardProcessedTableManager get cardId {
+    final $_column = $_itemColumn<int>('card_id')!;
+
+    final manager = $CardTableManager(
+      $_db,
+      $_db.card,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_cardIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static LanguagePair _pairIdTable(_$AppDatabase db) =>
+      db.languagePair.createAlias(
+        $_aliasNameGenerator(db.reviewOutcome.pairId, db.languagePair.id),
+      );
+
+  $LanguagePairProcessedTableManager get pairId {
+    final $_column = $_itemColumn<int>('pair_id')!;
+
+    final manager = $LanguagePairTableManager(
+      $_db,
+      $_db.languagePair,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_pairIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $ReviewOutcomeFilterComposer
+    extends Composer<_$AppDatabase, ReviewOutcome> {
+  $ReviewOutcomeFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get ts => $composableBuilder(
+    column: $table.ts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get correct => $composableBuilder(
+    column: $table.correct,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mode => $composableBuilder(
+    column: $table.mode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $CardFilterComposer get cardId {
+    final $CardFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.cardId,
+      referencedTable: $db.card,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $CardFilterComposer(
+            $db: $db,
+            $table: $db.card,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $LanguagePairFilterComposer get pairId {
+    final $LanguagePairFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.pairId,
+      referencedTable: $db.languagePair,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $LanguagePairFilterComposer(
+            $db: $db,
+            $table: $db.languagePair,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $ReviewOutcomeOrderingComposer
+    extends Composer<_$AppDatabase, ReviewOutcome> {
+  $ReviewOutcomeOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get ts => $composableBuilder(
+    column: $table.ts,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get correct => $composableBuilder(
+    column: $table.correct,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mode => $composableBuilder(
+    column: $table.mode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $CardOrderingComposer get cardId {
+    final $CardOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.cardId,
+      referencedTable: $db.card,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $CardOrderingComposer(
+            $db: $db,
+            $table: $db.card,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $LanguagePairOrderingComposer get pairId {
+    final $LanguagePairOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.pairId,
+      referencedTable: $db.languagePair,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $LanguagePairOrderingComposer(
+            $db: $db,
+            $table: $db.languagePair,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $ReviewOutcomeAnnotationComposer
+    extends Composer<_$AppDatabase, ReviewOutcome> {
+  $ReviewOutcomeAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get ts =>
+      $composableBuilder(column: $table.ts, builder: (column) => column);
+
+  GeneratedColumn<int> get correct =>
+      $composableBuilder(column: $table.correct, builder: (column) => column);
+
+  GeneratedColumn<String> get mode =>
+      $composableBuilder(column: $table.mode, builder: (column) => column);
+
+  $CardAnnotationComposer get cardId {
+    final $CardAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.cardId,
+      referencedTable: $db.card,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $CardAnnotationComposer(
+            $db: $db,
+            $table: $db.card,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $LanguagePairAnnotationComposer get pairId {
+    final $LanguagePairAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.pairId,
+      referencedTable: $db.languagePair,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $LanguagePairAnnotationComposer(
+            $db: $db,
+            $table: $db.languagePair,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $ReviewOutcomeTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          ReviewOutcome,
+          ReviewOutcomeData,
+          $ReviewOutcomeFilterComposer,
+          $ReviewOutcomeOrderingComposer,
+          $ReviewOutcomeAnnotationComposer,
+          $ReviewOutcomeCreateCompanionBuilder,
+          $ReviewOutcomeUpdateCompanionBuilder,
+          (ReviewOutcomeData, $ReviewOutcomeReferences),
+          ReviewOutcomeData,
+          PrefetchHooks Function({bool cardId, bool pairId})
+        > {
+  $ReviewOutcomeTableManager(_$AppDatabase db, ReviewOutcome table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $ReviewOutcomeFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ReviewOutcomeOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ReviewOutcomeAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> cardId = const Value.absent(),
+                Value<int> pairId = const Value.absent(),
+                Value<int> ts = const Value.absent(),
+                Value<int> correct = const Value.absent(),
+                Value<String> mode = const Value.absent(),
+              }) => ReviewOutcomeCompanion(
+                id: id,
+                cardId: cardId,
+                pairId: pairId,
+                ts: ts,
+                correct: correct,
+                mode: mode,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int cardId,
+                required int pairId,
+                required int ts,
+                required int correct,
+                required String mode,
+              }) => ReviewOutcomeCompanion.insert(
+                id: id,
+                cardId: cardId,
+                pairId: pairId,
+                ts: ts,
+                correct: correct,
+                mode: mode,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $ReviewOutcomeReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({cardId = false, pairId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (cardId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.cardId,
+                                referencedTable: $ReviewOutcomeReferences
+                                    ._cardIdTable(db),
+                                referencedColumn: $ReviewOutcomeReferences
+                                    ._cardIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+                    if (pairId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.pairId,
+                                referencedTable: $ReviewOutcomeReferences
+                                    ._pairIdTable(db),
+                                referencedColumn: $ReviewOutcomeReferences
+                                    ._pairIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $ReviewOutcomeProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      ReviewOutcome,
+      ReviewOutcomeData,
+      $ReviewOutcomeFilterComposer,
+      $ReviewOutcomeOrderingComposer,
+      $ReviewOutcomeAnnotationComposer,
+      $ReviewOutcomeCreateCompanionBuilder,
+      $ReviewOutcomeUpdateCompanionBuilder,
+      (ReviewOutcomeData, $ReviewOutcomeReferences),
+      ReviewOutcomeData,
+      PrefetchHooks Function({bool cardId, bool pairId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4865,4 +5886,6 @@ class $AppDatabaseManager {
       $DailyActivityTableManager(_db, _db.dailyActivity);
   $SettingsTableManager get settings =>
       $SettingsTableManager(_db, _db.settings);
+  $ReviewOutcomeTableManager get reviewOutcome =>
+      $ReviewOutcomeTableManager(_db, _db.reviewOutcome);
 }

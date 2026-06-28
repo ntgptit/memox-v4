@@ -1046,6 +1046,30 @@ abstract class AppLocalizations {
   /// **'Decks'**
   String get statsDecks;
 
+  /// No description provided for @statsAccuracyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review accuracy'**
+  String get statsAccuracyTitle;
+
+  /// No description provided for @statsAccuracyDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{correct}/{total} correct'**
+  String statsAccuracyDetail(int correct, int total);
+
+  /// No description provided for @statsHeatmapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity (12 weeks)'**
+  String get statsHeatmapTitle;
+
+  /// No description provided for @dashboardLongestStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Best: {count, plural, =1{1 day} other{{count} days}}'**
+  String dashboardLongestStreak(int count);
+
   /// No description provided for @statsBoxTitle.
   ///
   /// In en, this message translates to:

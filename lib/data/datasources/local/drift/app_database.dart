@@ -20,12 +20,22 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
       await m.createAll();
+    },
+    onUpgrade: (m, from, to) async {
+      // 1 → 2: add review_outcome (accuracy stats, W9).
+      if (from < 2) {
+        await m.createTable(reviewOutcome);
+        await customStatement(
+          'CREATE INDEX IF NOT EXISTS idx_review_outcome_pair_ts '
+          'ON review_outcome (pair_id, ts)',
+        );
+      }
     },
     beforeOpen: (details) async {
       // Cascade deletes (ownership tree) require FK enforcement, off by default.

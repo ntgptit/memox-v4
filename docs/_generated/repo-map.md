@@ -424,6 +424,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ language_pair_providers.g.dart
 │  │  │  ├─ notification_providers.dart
 │  │  │  ├─ notification_providers.g.dart
+│  │  │  ├─ review_outcome_providers.dart
+│  │  │  ├─ review_outcome_providers.g.dart
 │  │  │  ├─ search_providers.dart
 │  │  │  ├─ search_providers.g.dart
 │  │  │  ├─ settings_providers.dart
@@ -476,6 +478,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ daily_activity_repository_impl.dart
 │  │  │  ├─ deck_repository_impl.dart
 │  │  │  ├─ language_pair_repository_impl.dart
+│  │  │  ├─ review_outcome_repository_impl.dart
 │  │  │  ├─ search_repository_impl.dart
 │  │  │  ├─ settings_repository_impl.dart
 │  │  │  ├─ srs_repository_impl.dart
@@ -510,6 +513,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ daily_activity_repository.dart
 │  │  │  ├─ deck_repository.dart
 │  │  │  ├─ language_pair_repository.dart
+│  │  │  ├─ review_outcome_repository.dart
 │  │  │  ├─ search_repository.dart
 │  │  │  ├─ settings_repository.dart
 │  │  │  ├─ srs_repository.dart

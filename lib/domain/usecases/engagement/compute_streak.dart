@@ -29,9 +29,39 @@ class ComputeStreakUseCase {
     return Streak(count);
   }
 
+  /// The longest run of consecutive goal-met days over the whole history.
+  int longest({
+    required Map<String, DayActivity> byDay,
+    required DailyGoal goal,
+  }) {
+    if (!goal.hasGoal) return 0;
+    final metDays = <DateTime>[
+      for (final entry in byDay.entries)
+        if (goal.isMetBy(entry.value.seconds, entry.value.words))
+          _parseDay(entry.key),
+    ]..sort();
+    if (metDays.isEmpty) return 0;
+    var best = 1;
+    var run = 1;
+    for (var i = 1; i < metDays.length; i++) {
+      run = metDays[i].difference(metDays[i - 1]).inDays == 1 ? run + 1 : 1;
+      if (run > best) best = run;
+    }
+    return best;
+  }
+
   bool _met(Map<String, DayActivity> byDay, DailyGoal goal, DateTime day) {
     final activity = byDay[dayKey(day)];
     if (activity == null) return false;
     return goal.isMetBy(activity.seconds, activity.words);
+  }
+
+  static DateTime _parseDay(String key) {
+    final parts = key.split('-');
+    return DateTime(
+      int.parse(parts[0]),
+      int.parse(parts[1]),
+      int.parse(parts[2]),
+    );
   }
 }

@@ -75,3 +75,16 @@ CREATE TABLE settings (
   "key" TEXT NOT NULL PRIMARY KEY,   -- quoted: KEY is a SQL keyword
   value TEXT
 );
+
+-- Per-grade review outcomes for accuracy stats (W9). Append-only; added in
+-- schema v2 (see migration-contract 1→2).
+CREATE TABLE review_outcome (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  card_id INTEGER NOT NULL REFERENCES card(id) ON DELETE CASCADE,
+  pair_id INTEGER NOT NULL REFERENCES language_pair(id) ON DELETE CASCADE,
+  ts INTEGER NOT NULL,               -- epoch ms (machine clock)
+  correct INTEGER NOT NULL,          -- 0 / 1
+  mode TEXT NOT NULL                 -- 'dueReview' / 'newLearn'
+);
+
+CREATE INDEX idx_review_outcome_pair_ts ON review_outcome (pair_id, ts);

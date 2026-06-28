@@ -57,7 +57,7 @@ final class GameSessionNotifierProvider
 }
 
 String _$gameSessionNotifierHash() =>
-    r'90aa3d1cb17e06aa03977788bdaa0de7ca9596c2';
+    r'd5549b2527abe71edc1ae50dfd4bcc634adaec96';
 
 /// Drives a practice round. Never touches `srs_state` (D-007): wrong answers
 /// re-queue the card within the round (D-015), nothing is scheduled.

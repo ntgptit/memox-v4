@@ -9,13 +9,33 @@ class StatsDao {
 
   final AppDatabase _db;
 
-  Future<StatsRaw> read(int? pairId) async => (
-    pairs: await _pairs(pairId),
-    decks: await _decks(pairId),
-    boxes: await _boxes(pairId),
-    dueAts: await _dueAts(pairId),
-    activity: await _activity(pairId),
-  );
+  Future<StatsRaw> read(int? pairId) async {
+    final accuracy = await _accuracy(pairId);
+    return (
+      pairs: await _pairs(pairId),
+      decks: await _decks(pairId),
+      boxes: await _boxes(pairId),
+      dueAts: await _dueAts(pairId),
+      activity: await _activity(pairId),
+      accuracyCorrect: accuracy.correct,
+      accuracyTotal: accuracy.total,
+    );
+  }
+
+  Future<({int correct, int total})> _accuracy(int? pairId) async {
+    final where = pairId == null ? '' : ' WHERE pair_id = ?';
+    final row = await _db
+        .customSelect(
+          'SELECT COUNT(*) AS total, COALESCE(SUM(correct), 0) AS correct '
+          'FROM review_outcome$where',
+          variables: _scopeVar(pairId),
+          readsFrom: <ResultSetImplementation<Object, Object>>{
+            _db.reviewOutcome,
+          },
+        )
+        .getSingle();
+    return (correct: row.read<int>('correct'), total: row.read<int>('total'));
+  }
 
   List<Variable<Object>> _scopeVar(int? pairId) => pairId == null
       ? const <Variable<Object>>[]
