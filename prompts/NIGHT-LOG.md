@@ -449,3 +449,16 @@ All 16 design-kit components + the text/state/feedback helpers now live under `l
 
 ### Remaining = Phase 5 (separate)
 Migrate the ~20 feature screens to use the Mx widgets (replaces raw Material + direct TextTheme) — this is what actually clears the bulk of the guard's 523 screen-level errors. Not started.
+
+## 2026-06-28 · Phase 5 — screen migration to Mx widgets (in progress: 5/16)
+
+Migrating feature screens off raw Material onto the design-system widgets. Pattern (per screen): Scaffold→MxScaffold, AppBar→MxAppBar, Filled/Outlined/Elevated→MxButton, IconButton→MxIconButton, FloatingActionButton→MxFab, Switch/SwitchListTile→MxSwitch row, FilterChip/ChoiceChip→MxChip, SegmentedButton→MxSegmentedControl, ScaffoldMessenger/SnackBar→MxSnackbar, `.when(loading/error)`→MxStateView, `Text(style: textTheme.X)`→MxText.role. Keys + behavior preserved; verify --full GREEN per batch.
+
+Done (3 commits):
+- `a939c2a4` reminder + theme (no test).
+- `fa1aea57` settings (18 raw → ~0).
+- `643ae577` import + export.
+
+Remaining 11 screens: deck_detail (10), study_session (7), review (6), library* (6), game (5), player (4), statistics* (4), search* (4), dashboard* (4), game_picker* (2), flashcard_editor* (16). (* = has a widget test → migrate carefully, keep the asserted text/keys/types; e.g. a test using `find.byType(FilledButton)` must switch to `find.byType(MxButton)`).
+
+Dropdowns (DropdownButtonFormField) kept as-is — no Mx dropdown component in the kit yet. TimePicker kept (platform dialog).
