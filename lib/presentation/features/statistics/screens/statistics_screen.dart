@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/models/statistics_summary.dart';
 import 'package:memox_v4/domain/types/stats_scope.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/statistics/viewmodels/statistics_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/inputs/mx_segmented_control.dart';
 
 /// Stats tab — library overview, box distribution, due forecast, activity, with
 /// a current-pair ↔ all-app scope toggle (`16-statistics.md`).
@@ -23,20 +27,23 @@ class StatisticsScreen extends ConsumerWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(MxSpacing.space4),
-            child: SegmentedButton<StatsScope>(
-              segments: <ButtonSegment<StatsScope>>[
-                ButtonSegment<StatsScope>(
-                  value: StatsScope.currentPair,
-                  label: Text(l10n.statsScopeCurrentPair),
+            child: MxSegmentedControl(
+              segments: <MxSegment>[
+                (
+                  value: StatsScope.currentPair.name,
+                  label: l10n.statsScopeCurrentPair,
+                  icon: null,
                 ),
-                ButtonSegment<StatsScope>(
-                  value: StatsScope.allApp,
-                  label: Text(l10n.statsScopeAllApp),
+                (
+                  value: StatsScope.allApp.name,
+                  label: l10n.statsScopeAllApp,
+                  icon: null,
                 ),
               ],
-              selected: <StatsScope>{scope},
-              onSelectionChanged: (selected) =>
-                  ref.read(statsScopeProvider.notifier).set(selected.first),
+              value: scope.name,
+              onChanged: (v) => ref
+                  .read(statsScopeProvider.notifier)
+                  .set(StatsScope.values.byName(v)),
             ),
           ),
           Expanded(
@@ -132,7 +139,7 @@ class _StatsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
+          MxText.title(title),
           const SizedBox(height: MxSpacing.space3),
           child,
         ],
@@ -180,9 +187,9 @@ class _OverviewCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: MxSpacing.space1),
-          Text(
+          MxText(
             l10n.dashboardMastered(masteredPercent),
-            style: Theme.of(context).textTheme.bodySmall,
+            role: MxTextRole.bodySmall,
           ),
         ],
       ),
@@ -197,20 +204,16 @@ class _Stat extends StatelessWidget {
   final String label;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      children: <Widget>[
-        Text(value, style: theme.textTheme.headlineSmall),
-        Text(
-          label,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Column(
+    children: <Widget>[
+      MxText.headline(value),
+      MxText(
+        label,
+        role: MxTextRole.bodySmall,
+        color: MxTheme.of(context).colors.textSecondary,
+      ),
+    ],
+  );
 }
 
 /// Horizontal bars normalized to the largest value.
@@ -233,7 +236,7 @@ class _BarList extends StatelessWidget {
               children: <Widget>[
                 SizedBox(
                   width: MxSpacing.space9,
-                  child: Text(labels[i], style: theme.textTheme.bodySmall),
+                  child: MxText(labels[i], role: MxTextRole.bodySmall),
                 ),
                 Expanded(
                   child: ClipRRect(
@@ -252,10 +255,10 @@ class _BarList extends StatelessWidget {
                 ),
                 SizedBox(
                   width: MxSpacing.space7,
-                  child: Text(
+                  child: MxText(
                     '${values[i]}',
+                    role: MxTextRole.bodySmall,
                     textAlign: TextAlign.end,
-                    style: theme.textTheme.bodySmall,
                   ),
                 ),
               ],
@@ -276,7 +279,6 @@ class _Accuracy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final percent = (summary.accuracy * 100).round();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -293,18 +295,17 @@ class _Accuracy extends StatelessWidget {
               ),
             ),
             const SizedBox(width: MxSpacing.space3),
-            Text('$percent%', style: theme.textTheme.titleMedium),
+            MxText.title('$percent%'),
           ],
         ),
         const SizedBox(height: MxSpacing.space1),
-        Text(
+        MxText(
           l10n.statsAccuracyDetail(
             summary.accuracyCorrect,
             summary.accuracyTotal,
           ),
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+          role: MxTextRole.bodySmall,
+          color: MxTheme.of(context).colors.textSecondary,
         ),
       ],
     );
@@ -357,7 +358,7 @@ class _StatsInsufficient extends StatelessWidget {
   Widget build(BuildContext context) => Center(
     child: Padding(
       padding: const EdgeInsets.all(MxSpacing.space6),
-      child: Text(
+      child: MxText(
         message,
         key: const Key('statsInsufficient'),
         textAlign: TextAlign.center,
@@ -409,9 +410,9 @@ class _StatsError extends StatelessWidget {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(message),
+        MxText(message),
         const SizedBox(height: MxSpacing.space3),
-        FilledButton(onPressed: onRetry, child: Text(retryLabel)),
+        MxButton(label: retryLabel, onPressed: onRetry),
       ],
     ),
   );

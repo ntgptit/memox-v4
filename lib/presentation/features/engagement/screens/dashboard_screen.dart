@@ -4,10 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/models/engagement_summary.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/engagement/viewmodels/engagement_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
 
 /// Today tab — effort, daily goal, streak and shortcuts (`02-dashboard.md`).
 class DashboardScreen extends ConsumerWidget {
@@ -45,11 +48,8 @@ class _DashboardBody extends StatelessWidget {
         key: const Key('dashboard'),
         padding: const EdgeInsets.all(MxSpacing.space4),
         children: <Widget>[
-          Text(
-            l10n.dashboardGreeting,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          Text(date, style: Theme.of(context).textTheme.bodyMedium),
+          MxText.headline(l10n.dashboardGreeting),
+          MxText(date, role: MxTextRole.bodyMedium),
           const SizedBox(height: MxSpacing.space4),
           _ActivityCard(summary: summary),
           const SizedBox(height: MxSpacing.space3),
@@ -97,12 +97,11 @@ class _ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     return _Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(l10n.drawerActivityTitle, style: theme.textTheme.titleMedium),
+          MxText.title(l10n.drawerActivityTitle),
           const SizedBox(height: MxSpacing.space3),
           Row(
             children: <Widget>[
@@ -124,11 +123,10 @@ class _ActivityCard extends StatelessWidget {
           ),
           if (!summary.hasActivity) ...<Widget>[
             const SizedBox(height: MxSpacing.space3),
-            Text(
+            MxText(
               l10n.dashboardEmptyHint,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+              role: MxTextRole.bodySmall,
+              color: MxTheme.of(context).colors.textSecondary,
             ),
           ],
         ],
@@ -146,19 +144,14 @@ class _Metric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colors = MxTheme.of(context).colors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Icon(icon, color: theme.colorScheme.primary),
+        Icon(icon, color: colors.primary),
         const SizedBox(height: MxSpacing.space1),
-        Text(value, style: theme.textTheme.headlineSmall),
-        Text(
-          label,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
+        MxText.headline(value),
+        MxText(label, role: MxTextRole.bodySmall, color: colors.textSecondary),
       ],
     );
   }
@@ -172,31 +165,25 @@ class _GoalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
+    final colors = MxTheme.of(context).colors;
     return _Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
-              Expanded(
-                child: Text(
-                  l10n.dashboardGoalTitle,
-                  style: theme.textTheme.titleMedium,
-                ),
-              ),
+              Expanded(child: MxText.title(l10n.dashboardGoalTitle)),
               if (summary.goalMet)
-                Icon(Icons.check_circle, color: theme.colorScheme.primary),
+                Icon(Icons.check_circle, color: colors.primary),
             ],
           ),
           const SizedBox(height: MxSpacing.space3),
           if (!summary.goal.hasGoal)
-            Text(
+            MxText(
               l10n.dashboardGoalNone,
               key: const Key('dashboardGoalNone'),
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+              role: MxTextRole.bodyMedium,
+              color: colors.textSecondary,
             )
           else ...<Widget>[
             ClipRRect(
@@ -207,11 +194,10 @@ class _GoalCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: MxSpacing.space2),
-            Text(
+            MxText(
               summary.goalMet ? l10n.dashboardGoalMet : l10n.dashboardGoalHint,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+              role: MxTextRole.bodySmall,
+              color: colors.textSecondary,
             ),
           ],
         ],
@@ -228,7 +214,7 @@ class _StreakCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
+    final colors = MxTheme.of(context).colors;
     final days = summary.streak.days;
     return _Card(
       child: Row(
@@ -236,34 +222,27 @@ class _StreakCard extends StatelessWidget {
           Icon(
             Icons.local_fire_department,
             size: MxSpacing.space8,
-            color: days > 0
-                ? theme.colorScheme.primary
-                : theme.colorScheme.onSurfaceVariant,
+            color: days > 0 ? colors.primary : colors.textTertiary,
           ),
           const SizedBox(width: MxSpacing.space3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  l10n.dashboardStreakTitle,
-                  style: theme.textTheme.titleMedium,
-                ),
-                Text(
+                MxText.title(l10n.dashboardStreakTitle),
+                MxText(
                   days > 0
                       ? l10n.dashboardStreakDays(days)
                       : l10n.dashboardStreakNone,
                   key: const Key('dashboardStreak'),
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
+                  role: MxTextRole.bodyMedium,
+                  color: colors.textSecondary,
                 ),
                 if (summary.longestStreak > 0)
-                  Text(
+                  MxText(
                     l10n.dashboardLongestStreak(summary.longestStreak),
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
+                    role: MxTextRole.bodySmall,
+                    color: colors.textSecondary,
                   ),
               ],
             ),
@@ -282,29 +261,25 @@ class _ShortcutsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final masteredPercent = (summary.masteredProgress * 100).round();
     return _Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text(
-            l10n.dashboardDueCount(summary.dueCount),
-            style: theme.textTheme.titleMedium,
-          ),
+          MxText.title(l10n.dashboardDueCount(summary.dueCount)),
           const SizedBox(height: MxSpacing.space1),
-          Text(
+          MxText(
             l10n.dashboardMastered(masteredPercent),
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
+            role: MxTextRole.bodySmall,
+            color: MxTheme.of(context).colors.textSecondary,
           ),
           const SizedBox(height: MxSpacing.space3),
-          FilledButton.icon(
+          MxButton(
             key: const Key('dashboardContinue'),
+            label: l10n.dashboardContinue,
+            icon: Icons.play_arrow,
+            block: true,
             onPressed: () => context.go(RoutePaths.root),
-            icon: const Icon(Icons.play_arrow),
-            label: Text(l10n.dashboardContinue),
           ),
         ],
       ),
@@ -356,9 +331,9 @@ class _DashboardError extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(message),
+          MxText(message),
           const SizedBox(height: MxSpacing.space3),
-          FilledButton(onPressed: onRetry, child: Text(retryLabel)),
+          MxButton(label: retryLabel, onPressed: onRetry),
         ],
       ),
     ),
