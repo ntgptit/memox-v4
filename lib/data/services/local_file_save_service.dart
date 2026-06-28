@@ -1,17 +1,12 @@
-import 'dart:io';
-
+import 'package:memox_v4/data/services/file_saver/file_saver.dart';
 import 'package:memox_v4/domain/services/file_save_service.dart';
-import 'package:path_provider/path_provider.dart';
 
-/// Writes to the app documents directory.
+/// Writes exported bytes via the platform file saver (native: documents dir;
+/// web: not yet supported).
 class LocalFileSaveService implements FileSaveService {
   const LocalFileSaveService();
 
   @override
-  Future<String> save(String fileName, List<int> bytes) async {
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/$fileName');
-    await file.writeAsBytes(bytes);
-    return file.path;
-  }
+  Future<String> save(String fileName, List<int> bytes) =>
+      saveExportBytes(fileName, bytes);
 }

@@ -23,3 +23,7 @@ code-verification-guard/
 .DS_Store
 *.zip
 .claude/scheduled_tasks.lock
+
+# Drift web worker build artifacts (the .js is committed; these regenerate)
+web/drift_worker.dart.js.deps
+web/drift_worker.dart.js.map

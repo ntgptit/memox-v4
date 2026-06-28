@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:memox_v4/core/error/failure.dart';
+import 'package:memox_v4/data/datasources/local/connection/path_file.dart';
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/domain/repositories/backup_repository.dart';
 import 'package:memox_v4/domain/types/result.dart';
@@ -32,7 +32,7 @@ class BackupRepositoryImpl implements BackupRepository {
     final json = await serialize();
     switch (json) {
       case Ok(value: final content):
-        return _guard('backup', () => File(path).writeAsString(content));
+        return _guard('backup', () => writePathString(path, content));
       case Err(:final failure):
         return Err<void>(failure);
     }
@@ -41,7 +41,7 @@ class BackupRepositoryImpl implements BackupRepository {
   @override
   Future<Result<void>> restore(String path) async {
     try {
-      return await deserialize(await File(path).readAsString());
+      return await deserialize(await readPathString(path));
     } catch (e) {
       return Err(PersistenceFailure(message: 'restore', cause: e));
     }
