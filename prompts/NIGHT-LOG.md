@@ -258,3 +258,12 @@ Test suite: 146 tests passing. Each merged step kept docs in sync (CLAUDE.md par
 - Recording scope decision: only DueReview grades recorded (NewLearn has multiple attempts per card → noisy); `mode` column keeps the door open for newLearn later.
 - WBS §10: traceability line added. NIGHT-LOG: this entry.
 - NEXT (item 6/8): W7 FTS (optional) — full-text search over term+meaning. If FTS5 in the bundled sqlite is unavailable/awkward under Drift without a dep bump, fall back to the existing LIKE search and log it; this item is OPTIONAL, so keep it small and green.
+
+## 2026-06-28 · W7 · GAP-FILL item 6/8 — multi-token search (FTS deferred)
+
+- Commit: `1d1e5072` (feat) — verify --full GREEN (doc_guard, analyze, format, 168 tests; +1).
+- **FTS5 decision: evaluated → DEFERRED.** The spec (global-search §0/§8) already states v1 uses LIKE and defers FTS/index "until perf needs it" with a <200ms NFR. FTS5 under Drift would require a `CREATE VIRTUAL TABLE … USING fts5` + content-sync triggers + backfill + a schema **v2→3** migration (schemaVersion bump + onUpgrade + schema/migration docs + migration test — same hard rule as item 5). That is disproportionate for an OPTIONAL item the spec deliberately defers; card counts in a vocab app are small enough that LIKE meets the NFR. So no schema change.
+- **Shipped instead (low-risk, real quality win):** multi-token AND matching in `SearchDao` — query split on whitespace; each token must match `term` OR a meaning, AND-ed across tokens (D-019). "xin chào" now finds a card whose term holds one token and meaning the other. A single token is identical to the old substring match → no regression. Empty/whitespace query returns empty defensively.
+- Docs (same commit): global-search BR-1 (multi-token), AC-4, status; decision-table D-019 (also corrected the stale `card_meaning.text` → `.content` reference).
+- WBS §10 + NIGHT-LOG updated.
+- NEXT (item 7/8): **W10 Google Drive sync** — build what's buildable behind interfaces (sync service/repository + DI + a settings entry point + serialize/merge using the existing backup JSON), and FLAG the GCP OAuth client-id / platform config (google_sign_in setup, Drive API enablement, SHA-1, plist/entitlements) as the HUMAN GAP rather than faking credentials. Keep verify GREEN; no real network calls in tests (fake the remote behind the interface). deps google_sign_in/googleapis/flutter_secure_storage already added in step 0.

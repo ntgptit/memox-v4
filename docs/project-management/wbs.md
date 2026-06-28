@@ -65,6 +65,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 1d1e5072 · 2026-06-28 · W7 · tìm kiếm khớp đa từ-khoá AND (tách token theo khoảng trắng; mỗi token khớp term hoặc nghĩa) trong SearchDao — cải tiến recall không đổi schema; FTS5 đánh giá & hoãn đúng theo spec (LIKE tới khi perf cần); test multi-token + docs global-search (BR-1/AC-4/status) + D-019 (sửa luôn ref cũ card_meaning.text→.content)
 - 7ef989e4 · 2026-06-28 · W9 · hoàn tất metric còn thiếu của W9: độ chính xác ôn (bảng `review_outcome` schema v2 — migration 1→2 + test), heatmap hoạt động 12 tuần, streak dài nhất (ComputeStreak.longest → dashboard W11); ReviewOutcomeDao/Repository ghi khi chấm DueReview; StatsDao.accuracy → StatisticsSummary; schema/migration/storage docs cùng commit
 - 4b97f51c · 2026-06-28 · W13 · cá nhân hoá theme (chế độ màu sáng/tối/hệ thống + màu nhấn brand/warm/cool từ token sẵn có + cỡ chữ nhỏ/vừa/lớn) áp dụng live qua MemoXApp + lưu settings W12; AppTheme nhận accent re-seed ColorScheme; ThemeScreen /settings/theme có test persist/reload — bước build cuối, S0+W2–W13 xong
 - c48fe360 · 2026-06-28 · W12 · cài đặt k-v (SettingsRepository read/write + GetSettings/UpdateSetting) + UI; số từ/ván feed game (D-008) qua route; mục tiêu ngày kích hoạt dashboard W11; sao lưu/khôi phục JSON cục bộ (BackupRepository raw-SQL) có test; lịch nhắc lưu được (lên lịch OS hoãn — gated dep); không khoá Premium (D-012)
