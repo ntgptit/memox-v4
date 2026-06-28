@@ -90,6 +90,15 @@
       "exceptionKind": "behavior",
       "reason": "The kit's move flow has a separate 'apply' button. The FE move dialog applies immediately when a destination (root or a candidate deck) is tapped, so there is no distinct move-apply step.",
       "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "statistics",
+      "node": "streak",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit shows current/longest streak on the statistics screen. The FE surfaces streak (current + longest) on the dashboard Today tab where it drives engagement; the statistics screen focuses on library/SRS/accuracy/activity metrics and does not duplicate the streak counters.",
+      "source": "docs/business/engagement/dashboard-engagement.md"
     }
   ],
   "coverageExempt": []

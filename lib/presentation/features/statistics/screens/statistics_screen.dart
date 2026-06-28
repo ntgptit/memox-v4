@@ -24,8 +24,10 @@ class StatisticsScreen extends ConsumerWidget {
     final stats = ref.watch(statisticsProvider(scope));
     return MxContentBounds(
       child: Column(
+        key: const ValueKey('mx-node:statistics/screen'),
         children: <Widget>[
           Padding(
+            key: const ValueKey('mx-node:statistics/appbar'),
             padding: const EdgeInsets.all(MxSpacing.space4),
             child: MxSegmentedControl(
               segments: <MxSegment>[
@@ -86,12 +88,14 @@ class _StatsBody extends StatelessWidget {
         if (summary.hasReviews) ...<Widget>[
           const SizedBox(height: MxSpacing.space3),
           _StatsCard(
+            headKey: const ValueKey('mx-node:statistics/accuracy-head'),
             title: l10n.statsAccuracyTitle,
             child: _Accuracy(summary: summary),
           ),
         ],
         const SizedBox(height: MxSpacing.space3),
         _StatsCard(
+          headKey: const ValueKey('mx-node:statistics/leitner-head'),
           title: l10n.statsBoxTitle,
           child: _BarList(
             values: summary.boxCounts,
@@ -103,6 +107,7 @@ class _StatsBody extends StatelessWidget {
         ),
         const SizedBox(height: MxSpacing.space3),
         _StatsCard(
+          headKey: const ValueKey('mx-node:statistics/weekly-head'),
           title: l10n.statsForecastTitle,
           child: _BarList(
             values: summary.dueForecast,
@@ -114,6 +119,7 @@ class _StatsBody extends StatelessWidget {
         ),
         const SizedBox(height: MxSpacing.space3),
         _StatsCard(
+          headKey: const ValueKey('mx-node:statistics/heatmap-head'),
           title: l10n.statsHeatmapTitle,
           child: _Heatmap(activity: summary.activity),
         ),
@@ -123,10 +129,11 @@ class _StatsBody extends StatelessWidget {
 }
 
 class _StatsCard extends StatelessWidget {
-  const _StatsCard({required this.title, required this.child});
+  const _StatsCard({required this.title, required this.child, this.headKey});
 
   final String title;
   final Widget child;
+  final Key? headKey;
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
@@ -139,7 +146,7 @@ class _StatsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          MxText.title(title),
+          MxText.title(title, key: headKey),
           const SizedBox(height: MxSpacing.space3),
           child,
         ],
@@ -158,6 +165,7 @@ class _OverviewCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final masteredPercent = (summary.masteredProgress * 100).round();
     return _StatsCard(
+      headKey: const ValueKey('mx-node:statistics/overview-head'),
       title: l10n.statsOverviewTitle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
