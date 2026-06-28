@@ -64,6 +64,7 @@
   "genderNeuter": "Neuter",
   "editorAudioLabel": "Audio",
   "editorAudioAuto": "Auto from term",
+  "audioSpeak": "Speak",
   "editorHiddenLabel": "Hidden",
   "editorHiddenSubtitle": "Excluded from study queues and due counts",
   "editorErrorTermRequired": "Term is required",

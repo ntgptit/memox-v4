@@ -6,16 +6,18 @@ import 'package:memox_v4/app/di/card_providers.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/deck_providers.dart';
 import 'package:memox_v4/app/di/srs_providers.dart';
+import 'package:memox_v4/app/di/tts_providers.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/models/game_card.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/domain/usecases/study/build_study_queue.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
 
 /// Auto-play through cards (term + meaning); never changes the schedule (D-014).
-/// Audio is deferred (TTS needs a non-stack dependency).
+/// Speaks each term aloud via TTS as it advances.
 class PlayerScreen extends ConsumerStatefulWidget {
   const PlayerScreen({super.key, required this.nodeId});
 
@@ -75,6 +77,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     setState(() => _playing = !_playing);
     _timer?.cancel();
     if (_playing) {
+      _speakCurrent();
       _timer = Timer.periodic(_interval, (_) => _advance());
     }
   }
@@ -91,6 +94,18 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
       return;
     }
     setState(() => _index++);
+    _speakCurrent();
+  }
+
+  void _speakCurrent() {
+    final cards = _cards;
+    if (cards == null || _index >= cards.length) return;
+    final active = ref.read(languagePairProvider).value?.active;
+    unawaited(
+      ref
+          .read(ttsServiceProvider)
+          .speak(cards[_index].term, languageCode: active?.sourceLang),
+    );
   }
 
   @override
@@ -123,11 +138,23 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
           const SizedBox(height: MxSpacing.space3),
           Text(card.meaning, style: theme.textTheme.bodyLarge),
           const Spacer(),
-          IconButton.filled(
-            key: const Key('playerToggle'),
-            iconSize: MxSpacing.space9,
-            onPressed: _togglePlay,
-            icon: Icon(_playing ? Icons.pause : Icons.play_arrow),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              IconButton.filled(
+                key: const Key('playerToggle'),
+                iconSize: MxSpacing.space9,
+                onPressed: _togglePlay,
+                icon: Icon(_playing ? Icons.pause : Icons.play_arrow),
+              ),
+              const SizedBox(width: MxSpacing.space4),
+              IconButton.outlined(
+                key: const Key('playerSpeak'),
+                iconSize: MxSpacing.space7,
+                onPressed: _speakCurrent,
+                icon: const Icon(Icons.volume_up_outlined),
+              ),
+            ],
           ),
         ],
       ),

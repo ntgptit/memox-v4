@@ -392,6 +392,12 @@ abstract class AppLocalizations {
   /// **'Auto from term'**
   String get editorAudioAuto;
 
+  /// No description provided for @audioSpeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak'**
+  String get audioSpeak;
+
   /// No description provided for @editorHiddenLabel.
   ///
   /// In en, this message translates to:

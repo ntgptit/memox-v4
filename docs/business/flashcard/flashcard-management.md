@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `flashcard/flashcard-management` |
 | Gói công việc (WBS) | W2 |
-| Trạng thái | Implemented (CRUD + nghĩa đa trường + editor; **audio TTS hoãn** — cần dep ngoài stack) |
+| Trạng thái | Implemented (CRUD + nghĩa đa trường + editor; **đọc term qua TTS** (`TtsService`/flutter_tts) ở editor + trình phát, theo ngôn ngữ nguồn của cặp). Sinh & lưu file audio (`card.audio_ref`) vẫn hoãn |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-006, D-011, D-020 |
 | Phiên bản | 1.0 |

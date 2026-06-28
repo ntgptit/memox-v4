@@ -161,6 +161,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get editorAudioAuto => 'Tự sinh từ term';
 
   @override
+  String get audioSpeak => 'Đọc';
+
+  @override
   String get editorHiddenLabel => 'Ẩn';
 
   @override

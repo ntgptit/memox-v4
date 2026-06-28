@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/card_providers.dart';
+import 'package:memox_v4/app/di/tts_providers.dart';
 import 'package:memox_v4/core/constants/supported_languages.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
@@ -34,8 +35,8 @@ class _MeaningField {
 
 /// Create / edit a flashcard (`docs/design/screens/05-flashcard-editor.md`).
 /// Save stays disabled until a valid term + native meaning exist; a soft
-/// duplicate (D-020) warns but never blocks. Audio generation is deferred (TTS
-/// needs a non-stack dependency).
+/// duplicate (D-020) warns but never blocks. The audio button speaks the term
+/// aloud via `TtsService` (flutter_tts) in the pair's source language.
 class FlashcardEditorScreen extends ConsumerStatefulWidget {
   const FlashcardEditorScreen({super.key, required this.deckId, this.cardId});
 
@@ -85,6 +86,19 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
   String _nativeLang() {
     final active = ref.read(languagePairProvider).value?.active;
     return active?.targetLang ?? kSupportedLanguages.first.code;
+  }
+
+  String _sourceLang() {
+    final active = ref.read(languagePairProvider).value?.active;
+    return active?.sourceLang ?? kSupportedLanguages.first.code;
+  }
+
+  void _speakTerm() {
+    final term = _termController.text.trim();
+    if (term.isEmpty) return;
+    unawaited(
+      ref.read(ttsServiceProvider).speak(term, languageCode: _sourceLang()),
+    );
   }
 
   _MeaningField _primaryField(String content) => _MeaningField(
@@ -413,9 +427,10 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
       Text(l10n.editorAudioLabel, style: theme.textTheme.labelMedium),
       const Spacer(),
       OutlinedButton.icon(
-        onPressed: _comingSoon,
+        key: const Key('editorAudioPlay'),
+        onPressed: _speakTerm,
         icon: const Icon(Icons.volume_up_outlined),
-        label: Text(l10n.editorAudioAuto),
+        label: Text(l10n.audioSpeak),
       ),
     ],
   );

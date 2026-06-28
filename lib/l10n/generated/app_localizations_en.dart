@@ -161,6 +161,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorAudioAuto => 'Auto from term';
 
   @override
+  String get audioSpeak => 'Speak';
+
+  @override
   String get editorHiddenLabel => 'Hidden';
 
   @override
