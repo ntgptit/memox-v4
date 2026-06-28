@@ -367,3 +367,19 @@ User chose "harden review follow-ups". Worked the deferred items in 4 verified c
 - On-device verification of notifications/TTS/Drive (human gap; no real GCP creds).
 
 Net: every convergent review finding is now either fixed or explicitly deferred with a reason. main green.
+
+## 2026-06-28 · Deferred items + release prep (user: "đồng ý tất cả")
+
+### Deferred review items finished (`5db02f4a`, verify --full GREEN, 186 tests)
+- **Sync sign-in orchestration:** `SyncNowUseCase` is the single sign-in-state authority; `SettingsNotifier.syncNow` calls it and only runs interactive `signIn` + retries once on `signInRequired` (removed the duplicate isSignedIn pre-check).
+- **Stats query bounding:** the heatmap query is now windowed in SQL (`day >= cutoff`) instead of fetching all daily_activity and trimming in Dart. Caught a coupling trap — `totalSeconds/totalWords` were summed from the same rows, so they'd have silently become 84-day totals. Fixed by adding a separate `_activityTotals` SUM aggregate, keeping totals lifetime. Both reads now bounded; results unchanged.
+
+### Release prep (`da1c28cf`)
+- **CI gate** `.github/workflows/ci.yml`: runs `node tool/verify/run.mjs --full` (doc_guard + analyze + format + tests) on push to main + PRs. Flutter 3.41.7 + Node 22 + libsqlite3 for the Drift host tests. *First run should be watched* — sqlite/host specifics on ubuntu CI may need a tweak (can't trigger Actions from here).
+- **`docs/checklist/release-readiness.md`**: build-config TODOs + the W10 GCP human gap + a device smoke-test checklist for the platform-channel features (notifications/TTS/file-picker/secure-storage/Drive) that unit tests only fake.
+- App identity already real: `com.memox.memox_v4` / `com.memox.memoxV4`, `version 1.0.0+1`.
+
+### Remaining = human-only (documented, not code)
+- App display name (`memox_v4` → brand), icons/splash assets, Android/iOS signing keys, GCP/OAuth for sync, and the on-device smoke pass. All in `docs/checklist/release-readiness.md`.
+
+main green. Feature-complete v1 + hardened + CI + release checklist; the rest needs assets/credentials/a device.

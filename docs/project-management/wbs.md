@@ -68,6 +68,8 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- da1c28cf · 2026-06-28 · release · CI gate (`.github/workflows/ci.yml` chạy verify --full trên push/PR) + `docs/checklist/release-readiness.md` (build-config TODO + human gap GCP + smoke-test thiết bị)
+- 5db02f4a · 2026-06-28 · W9,W10 · hoàn tất 2 mục hoãn của review: gộp sign-in orchestration (SyncNowUseCase là nguồn duy nhất, notifier retry khi signInRequired) + bound query thống kê (heatmap windowed trong SQL, totals lifetime qua SUM riêng)
 - 461747c7 · 2026-06-28 · W9,W10 · harden (4/4) test depth + doc: +6 test error-path SyncNow (isSignedIn/remoteMeta/serialize/download/deserialize + tie), +1 test GoogleDrive not-configured (MockClient không gọi mạng), doc statistics ghi rõ accuracy chỉ tính DueReview (186 test)
 - 68ea6971 · 2026-06-28 · W4,W10 · harden (3/4) cleanup: bỏ StudySessionState.revealed + reveal() chết, SyncNow dùng valueOrNull thay cast
 - 9e150ff9 · 2026-06-28 · W8,W12 · harden (2/4) UX: màn import/export báo lỗi khi Err (l10n transferError), export dùng Separator.comma.char, LocalNotificationService bỏ lên lịch khi bị từ chối quyền
