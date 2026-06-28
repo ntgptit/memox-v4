@@ -45,6 +45,51 @@
       "exceptionKind": "behavior",
       "reason": "The kit's empty library offers a secondary 'Add words' CTA. The FE data model requires a deck before any word can be added, so the empty state offers only 'Create deck' (empty-deck); an 'Add words' action is impossible with zero decks.",
       "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "delete",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit deletes a single card via a confirm dialog launched from the card row. The FE manages cards (edit, hide, delete) inside the flashcard editor, not via a deck-detail row dialog, so there is no per-row delete-cancel/delete-ok here. (Deck deletion — deck-delete-* — IS keyed.)",
+      "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "reset",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit exposes a 'reset progress' confirm on deck-detail. v1 SRS scheduling is engine-driven (8-box Leitner) with no manual per-card/deck progress reset, so reset-cancel/reset-ok have no FE counterpart.",
+      "source": "docs/business/srs/srs-review.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "play-audio",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit plays card audio inline from the deck-detail row. The FE plays/generates audio inside the flashcard editor (audioSpeak), keeping the row a compact navigation target, so there is no row-level play-audio control.",
+      "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "search-dock",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers an in-screen search dock on deck-detail. The FE routes search to the dedicated global /search screen rather than a per-deck inline dock.",
+      "source": "docs/business/search/global-search.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "move-apply",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit's move flow has a separate 'apply' button. The FE move dialog applies immediately when a destination (root or a candidate deck) is tapped, so there is no distinct move-apply step.",
+      "source": "docs/business/deck/deck-management.md"
     }
   ],
   "coverageExempt": []

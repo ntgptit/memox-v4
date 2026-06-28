@@ -42,7 +42,9 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
     final async = ref.watch(deckDetailProvider(widget.deckId));
     final node = async.value?.node;
     return MxScaffold(
+      key: const ValueKey('mx-node:deck-detail/screen'),
       appBar: MxAppBar(
+        key: const ValueKey('mx-node:deck-detail/appbar'),
         title: node?.deck.name ?? '',
         trailing: <Widget>[
           if (node != null)
@@ -71,7 +73,7 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
             ),
           if (node != null)
             MxIconButton(
-              key: const Key('deckDetailMenu'),
+              key: const ValueKey('mx-node:deck-detail/menu'),
               icon: Icons.more_vert,
               onPressed: () => unawaited(_deckMenu(node, isSelf: true)),
             ),
@@ -81,14 +83,14 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
       fab: node == null
           ? null
           : MxFab(
-              key: const Key('deckDetailAddWord'),
+              key: const ValueKey('mx-node:deck-detail/add'),
               icon: Icons.add,
               label: l10n.deckAddWord,
               onPressed: () => unawaited(_addWord()),
             ),
       body: async.when(
         loading: () => const MxStateView.loading(),
-        error: (error, stack) => _message(l10n.libraryError),
+        error: (error, stack) => _error(l10n),
         data: (state) => state.node == null
             ? _message(l10n.deckNotFound)
             : _content(l10n, state),
@@ -108,11 +110,28 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
               MxText.body(l10n.deckDetailEmpty, textAlign: TextAlign.center),
               const SizedBox(height: MxSpacing.space4),
               MxButton(
-                key: const Key('deckDetailNewSubdeckEmpty'),
+                key: const ValueKey('mx-node:deck-detail/empty-add'),
+                label: l10n.deckAddWord,
+                icon: Icons.add,
+                onPressed: () => unawaited(_addWord()),
+              ),
+              const SizedBox(height: MxSpacing.space2),
+              MxButton(
+                key: const ValueKey('mx-node:deck-detail/empty-subdeck'),
                 label: l10n.deckNewSubdeck,
                 icon: Icons.create_new_folder_outlined,
                 variant: MxButtonVariant.outline,
                 onPressed: () => unawaited(_createSubDeck()),
+              ),
+              const SizedBox(height: MxSpacing.space2),
+              MxButton(
+                key: const ValueKey('mx-node:deck-detail/empty-import'),
+                label: l10n.drawerImport,
+                icon: Icons.download_outlined,
+                variant: MxButtonVariant.ghost,
+                onPressed: () => unawaited(
+                  context.push(RoutePaths.deckImportLocation(widget.deckId)),
+                ),
               ),
             ],
           ),
@@ -209,6 +228,23 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
 
   Widget _message(String text) =>
       MxContentBounds(child: Center(child: MxText(text)));
+
+  Widget _error(AppLocalizations l10n) => MxContentBounds(
+    child: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          MxText(l10n.libraryError),
+          const SizedBox(height: MxSpacing.space4),
+          MxButton(
+            key: const ValueKey('mx-node:deck-detail/retry'),
+            label: l10n.commonRetry,
+            onPressed: () => unawaited(_notifier.refresh()),
+          ),
+        ],
+      ),
+    ),
+  );
 
   // ── actions ────────────────────────────────────────────────────────────────
   DeckDetailNotifier get _notifier =>

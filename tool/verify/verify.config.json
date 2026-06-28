@@ -19,7 +19,7 @@
       "cmd": "node tool/parity/gen_parity_contract.mjs --check"
     },
     "parity_fe_keys": {
-      "cmd": "node tool/parity/fe_node_usage.mjs --check --screen dashboard && node tool/parity/fe_node_usage.mjs --check --screen library"
+      "cmd": "node tool/parity/fe_node_usage.mjs --check --screen dashboard && node tool/parity/fe_node_usage.mjs --check --screen library && node tool/parity/fe_node_usage.mjs --check --screen deck-detail"
     }
   },
   "chains": {

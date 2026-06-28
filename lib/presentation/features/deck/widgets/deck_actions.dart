@@ -99,11 +99,12 @@ Future<bool> confirmDeleteDeck(BuildContext context) async {
       content: Text(l10n.deckDeleteConfirmBody),
       actions: <Widget>[
         TextButton(
+          key: const ValueKey('mx-node:deck-detail/deck-delete-cancel'),
           onPressed: () => Navigator.of(ctx).pop(false),
           child: Text(l10n.commonCancel),
         ),
         FilledButton(
-          key: const Key('deckDeleteConfirm'),
+          key: const ValueKey('mx-node:deck-detail/deck-delete-ok'),
           onPressed: () => Navigator.of(ctx).pop(true),
           child: Text(l10n.commonDelete),
         ),
