@@ -451,6 +451,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardGreeting => 'Hello';
 
   @override
+  String get dashboardTodayLabel => 'TODAY';
+
+  @override
+  String get dashboardTimeStudiedLabel => 'time studied';
+
+  @override
+  String get dashboardWordsLearned => 'words learned';
+
+  @override
+  String get dashboardDayStreak => 'day streak';
+
+  @override
+  String get dashboardMasteredLabel => 'mastered';
+
+  @override
+  String get dashboardContinueStudying => 'Continue studying';
+
+  @override
+  String dashboardDecksDue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count decks due today',
+      one: '1 deck due today',
+      zero: 'No decks due today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deckCardsDue(int cards, int due) {
+    return '$cards cards · $due due';
+  }
+
+  @override
+  String get commonSeeAll => 'See all';
+
+  @override
   String get dashboardTimeStudied => 'Time studied';
 
   @override

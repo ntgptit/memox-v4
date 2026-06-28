@@ -449,6 +449,43 @@ class AppLocalizationsVi extends AppLocalizations {
   String get dashboardGreeting => 'Xin chào';
 
   @override
+  String get dashboardTodayLabel => 'HÔM NAY';
+
+  @override
+  String get dashboardTimeStudiedLabel => 'thời gian học';
+
+  @override
+  String get dashboardWordsLearned => 'từ đã học';
+
+  @override
+  String get dashboardDayStreak => 'ngày liên tiếp';
+
+  @override
+  String get dashboardMasteredLabel => 'đã thuộc';
+
+  @override
+  String get dashboardContinueStudying => 'Tiếp tục học';
+
+  @override
+  String dashboardDecksDue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bộ thẻ đến hạn hôm nay',
+      zero: 'Không có bộ thẻ đến hạn',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deckCardsDue(int cards, int due) {
+    return '$cards thẻ · $due đến hạn';
+  }
+
+  @override
+  String get commonSeeAll => 'Xem tất cả';
+
+  @override
   String get dashboardTimeStudied => 'Thời gian học';
 
   @override

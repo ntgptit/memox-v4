@@ -932,6 +932,60 @@ abstract class AppLocalizations {
   /// **'Hello'**
   String get dashboardGreeting;
 
+  /// No description provided for @dashboardTodayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'TODAY'**
+  String get dashboardTodayLabel;
+
+  /// No description provided for @dashboardTimeStudiedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'time studied'**
+  String get dashboardTimeStudiedLabel;
+
+  /// No description provided for @dashboardWordsLearned.
+  ///
+  /// In en, this message translates to:
+  /// **'words learned'**
+  String get dashboardWordsLearned;
+
+  /// No description provided for @dashboardDayStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'day streak'**
+  String get dashboardDayStreak;
+
+  /// No description provided for @dashboardMasteredLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'mastered'**
+  String get dashboardMasteredLabel;
+
+  /// No description provided for @dashboardContinueStudying.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue studying'**
+  String get dashboardContinueStudying;
+
+  /// No description provided for @dashboardDecksDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No decks due today} =1{1 deck due today} other{{count} decks due today}}'**
+  String dashboardDecksDue(int count);
+
+  /// No description provided for @deckCardsDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{cards} cards · {due} due'**
+  String deckCardsDue(int cards, int due);
+
+  /// No description provided for @commonSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get commonSeeAll;
+
   /// No description provided for @dashboardTimeStudied.
   ///
   /// In en, this message translates to:

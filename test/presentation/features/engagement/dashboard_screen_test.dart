@@ -73,9 +73,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('dashboard')), findsOneWidget);
-    expect(find.byKey(const Key('dashboardContinue')), findsOneWidget);
-    // 7 words ≥ goal 5 → streak of 1 day.
-    expect(find.text('1 day'), findsOneWidget);
+    // 7 words shown in the TODAY hero card.
+    expect(find.text('7'), findsOneWidget);
+    // 7 words ≥ goal 5 → streak of 1 day (streak card shows the count + label).
+    expect(find.byKey(const Key('dashboardStreak')), findsOneWidget);
+    expect(find.text('1'), findsOneWidget);
   });
 
   testWidgets('with no goal set, shows the set-a-goal hint', (tester) async {

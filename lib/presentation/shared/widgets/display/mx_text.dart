@@ -127,9 +127,12 @@ class MxText extends StatelessWidget {
       MxTextRole.labelMedium => t.labelMedium,
       MxTextRole.labelSmall => t.labelSmall,
     };
+    // Inherit the ambient text color (e.g. a card's onPrimary) when none is
+    // given, so MxText reads correctly on colored surfaces.
+    final resolved = color ?? DefaultTextStyle.of(context).style.color;
     return Text(
       data,
-      style: base?.copyWith(color: color, fontWeight: weight),
+      style: base?.copyWith(color: resolved, fontWeight: weight),
       maxLines: maxLines,
       overflow: overflow,
       textAlign: textAlign,
