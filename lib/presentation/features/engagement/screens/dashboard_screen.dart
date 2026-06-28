@@ -13,6 +13,7 @@ import 'package:memox_v4/presentation/features/deck/viewmodels/library_notifier.
 import 'package:memox_v4/presentation/features/engagement/viewmodels/engagement_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
 import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_badge.dart';
 import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
 import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_card.dart';
 import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_icon_tile.dart';
@@ -66,7 +67,11 @@ class _DashboardBody extends ConsumerWidget {
             role: MxTextRole.labelMedium,
             color: colors.textSecondary,
           ),
-          MxText(l10n.dashboardGreeting, role: MxTextRole.headlineMedium),
+          MxText(
+            _greeting(l10n),
+            role: MxTextRole.displaySmall,
+            weight: FontWeight.w800,
+          ),
           const SizedBox(height: MxSpacing.space4),
           _TodayCard(summary: summary),
           const SizedBox(height: MxSpacing.space3),
@@ -347,7 +352,9 @@ class _DeckRow extends StatelessWidget {
     return MxCard(
       padding: MxCardPadding.sm,
       interactive: true,
-      onTap: () => context.push(RoutePaths.deckDetailLocation(node.deck.id)),
+      onTap: () => context.push(
+        RoutePaths.studyLocation(node.deck.id, StudyEntry.dueReview),
+      ),
       child: Row(
         children: <Widget>[
           MxIconTile(icon: Icons.translate, tone: tone),
@@ -381,17 +388,22 @@ class _DeckRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: MxSpacing.space3),
-          MxButton(
-            label: l10n.studyReview,
-            size: MxButtonSize.sm,
-            onPressed: () => context.push(
-              RoutePaths.studyLocation(node.deck.id, StudyEntry.dueReview),
-            ),
+          MxBadge(
+            label: '${node.stats.due}',
+            tone: MxBadgeTone.warning,
+            soft: true,
           ),
         ],
       ),
     );
   }
+}
+
+String _greeting(AppLocalizations l10n) {
+  final hour = DateTime.now().hour;
+  if (hour < 12) return l10n.dashboardGreetingMorning;
+  if (hour < 18) return l10n.dashboardGreetingAfternoon;
+  return l10n.dashboardGreetingEvening;
 }
 
 String _formatDuration(int seconds) {

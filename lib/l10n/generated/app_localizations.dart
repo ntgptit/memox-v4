@@ -932,6 +932,24 @@ abstract class AppLocalizations {
   /// **'Hello'**
   String get dashboardGreeting;
 
+  /// No description provided for @dashboardGreetingMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get dashboardGreetingMorning;
+
+  /// No description provided for @dashboardGreetingAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get dashboardGreetingAfternoon;
+
+  /// No description provided for @dashboardGreetingEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get dashboardGreetingEvening;
+
   /// No description provided for @dashboardTodayLabel.
   ///
   /// In en, this message translates to:

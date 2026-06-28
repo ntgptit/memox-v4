@@ -449,6 +449,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get dashboardGreeting => 'Xin chào';
 
   @override
+  String get dashboardGreetingMorning => 'Chào buổi sáng';
+
+  @override
+  String get dashboardGreetingAfternoon => 'Chào buổi chiều';
+
+  @override
+  String get dashboardGreetingEvening => 'Chào buổi tối';
+
+  @override
   String get dashboardTodayLabel => 'HÔM NAY';
 
   @override

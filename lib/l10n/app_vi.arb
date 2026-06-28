@@ -152,6 +152,9 @@
   "commonClose": "Đóng",
 
   "dashboardGreeting": "Xin chào",
+  "dashboardGreetingMorning": "Chào buổi sáng",
+  "dashboardGreetingAfternoon": "Chào buổi chiều",
+  "dashboardGreetingEvening": "Chào buổi tối",
   "dashboardTodayLabel": "HÔM NAY",
   "dashboardTimeStudiedLabel": "thời gian học",
   "dashboardWordsLearned": "từ đã học",

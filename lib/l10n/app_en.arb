@@ -182,6 +182,9 @@
   "commonClose": "Close",
 
   "dashboardGreeting": "Hello",
+  "dashboardGreetingMorning": "Good morning",
+  "dashboardGreetingAfternoon": "Good afternoon",
+  "dashboardGreetingEvening": "Good evening",
   "dashboardTodayLabel": "TODAY",
   "dashboardTimeStudiedLabel": "time studied",
   "dashboardWordsLearned": "words learned",

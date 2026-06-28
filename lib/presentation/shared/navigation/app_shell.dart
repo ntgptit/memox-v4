@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:memox_v4/core/constants/app_constants.dart';
+import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/shared/navigation/app_drawer.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_avatar.dart';
 
 /// Application shell: the persistent frame around the four primary tabs. Hosts
 /// the app bar (drawer toggle), bottom navigation, the center Add action, and
@@ -30,7 +32,28 @@ class AppShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text(AppConstants.appName)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        actions: <Widget>[
+          MxIconButton(
+            icon: Icons.notifications_none,
+            onPressed: () => _onAdd(context),
+            tooltip: l10n.tabProfile,
+          ),
+          Builder(
+            builder: (innerContext) => Padding(
+              padding: const EdgeInsets.only(right: MxSpacing.space3),
+              child: GestureDetector(
+                onTap: () => Scaffold.of(innerContext).openDrawer(),
+                child: const MxAvatar(name: 'Me', size: MxAvatarSize.sm),
+              ),
+            ),
+          ),
+        ],
+      ),
       drawer: const AppDrawer(),
       body: navigationShell,
       floatingActionButton: FloatingActionButton(

@@ -451,6 +451,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardGreeting => 'Hello';
 
   @override
+  String get dashboardGreetingMorning => 'Good morning';
+
+  @override
+  String get dashboardGreetingAfternoon => 'Good afternoon';
+
+  @override
+  String get dashboardGreetingEvening => 'Good evening';
+
+  @override
   String get dashboardTodayLabel => 'TODAY';
 
   @override
