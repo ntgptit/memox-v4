@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/game/round.dart';
@@ -12,6 +13,11 @@ import 'package:memox_v4/presentation/features/game/widgets/multiple_choice_game
 import 'package:memox_v4/presentation/features/game/widgets/recall_game.dart';
 import 'package:memox_v4/presentation/features/game/widgets/typing_game.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Runs one game round: the frame (app bar + progress) plus the body for the
 /// chosen game, and the complete / not-enough states.
@@ -24,11 +30,13 @@ class GameScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final async = ref.watch(gameSessionProvider(request));
-    return Scaffold(
-      appBar: AppBar(title: Text(_gameName(l10n, request.type))),
+    return MxScaffold(
+      appBar: MxAppBar(title: _gameName(l10n, request.type)),
+      flush: true,
       body: async.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text(l10n.libraryError)),
+        loading: () => const MxStateView.loading(),
+        error: (error, stack) =>
+            MxContentBounds(child: Center(child: MxText(l10n.libraryError))),
         data: (state) {
           if (state.isEmpty) return _notEnough(context, l10n);
           if (state.isComplete) return _complete(context, ref, l10n);
@@ -66,11 +74,11 @@ class GameScreen extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(l10n.gameNotEnoughTitle),
+              MxText(l10n.gameNotEnoughTitle),
               const SizedBox(height: MxSpacing.space4),
-              FilledButton(
+              MxButton(
+                label: l10n.commonBack,
                 onPressed: () => unawaited(Navigator.of(context).maybePop()),
-                child: Text(l10n.commonBack),
               ),
             ],
           ),
@@ -89,26 +97,24 @@ class GameScreen extends ConsumerWidget {
           Icon(
             Icons.celebration_outlined,
             size: MxSpacing.space10,
-            color: Theme.of(context).colorScheme.primary,
+            color: MxTheme.of(context).colors.primary,
           ),
           const SizedBox(height: MxSpacing.space4),
-          Text(
-            l10n.gameComplete,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
+          MxText.headline(l10n.gameComplete),
           const SizedBox(height: MxSpacing.space5),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OutlinedButton(
+              MxButton(
                 key: const Key('gamePlayAgain'),
+                label: l10n.gamePlayAgain,
+                variant: MxButtonVariant.outline,
                 onPressed: () => ref.invalidate(gameSessionProvider(request)),
-                child: Text(l10n.gamePlayAgain),
               ),
               const SizedBox(width: MxSpacing.space3),
-              FilledButton(
+              MxButton(
+                label: l10n.gameDone,
                 onPressed: () => unawaited(Navigator.of(context).maybePop()),
-                child: Text(l10n.gameDone),
               ),
             ],
           ),

@@ -15,7 +15,14 @@ import 'package:memox_v4/presentation/features/deck/viewmodels/library_notifier.
 import 'package:memox_v4/presentation/features/deck/widgets/deck_actions.dart';
 import 'package:memox_v4/presentation/features/study/widgets/play_menu_sheet.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
 import 'package:memox_v4/presentation/shared/widgets/mx_deck_tile.dart';
+import 'package:memox_v4/presentation/shared/widgets/navigation/mx_fab.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Deck detail — a node's sub-decks + direct cards (a mixed node). Pushed route
 /// `/deck/:id` (`docs/design/screens/04-deck-detail.md`).
@@ -34,52 +41,53 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
     final l10n = AppLocalizations.of(context);
     final async = ref.watch(deckDetailProvider(widget.deckId));
     final node = async.value?.node;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(node?.deck.name ?? ''),
-        actions: <Widget>[
+    return MxScaffold(
+      appBar: MxAppBar(
+        title: node?.deck.name ?? '',
+        trailing: <Widget>[
           if (node != null)
-            IconButton(
+            MxIconButton(
               key: const Key('deckDetailImport'),
-              icon: const Icon(Icons.download_outlined),
+              icon: Icons.download_outlined,
               tooltip: l10n.drawerImport,
               onPressed: () => unawaited(
                 context.push(RoutePaths.deckImportLocation(widget.deckId)),
               ),
             ),
           if (node != null)
-            IconButton(
+            MxIconButton(
               key: const Key('deckDetailExport'),
-              icon: const Icon(Icons.upload_outlined),
+              icon: Icons.upload_outlined,
               tooltip: l10n.drawerExport,
               onPressed: () => unawaited(
                 context.push(RoutePaths.deckExportLocation(widget.deckId)),
               ),
             ),
           if (node != null)
-            IconButton(
+            MxIconButton(
               key: const Key('deckDetailPlay'),
-              icon: const Icon(Icons.play_circle_outline),
+              icon: Icons.play_circle_outline,
               onPressed: () => unawaited(showPlayMenu(context, widget.deckId)),
             ),
           if (node != null)
-            IconButton(
+            MxIconButton(
               key: const Key('deckDetailMenu'),
-              icon: const Icon(Icons.more_vert),
+              icon: Icons.more_vert,
               onPressed: () => unawaited(_deckMenu(node, isSelf: true)),
             ),
         ],
       ),
-      floatingActionButton: node == null
+      flush: true,
+      fab: node == null
           ? null
-          : FloatingActionButton.extended(
+          : MxFab(
               key: const Key('deckDetailAddWord'),
+              icon: Icons.add,
+              label: l10n.deckAddWord,
               onPressed: () => unawaited(_addWord()),
-              icon: const Icon(Icons.add),
-              label: Text(l10n.deckAddWord),
             ),
       body: async.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const MxStateView.loading(),
         error: (error, stack) => _message(l10n.libraryError),
         data: (state) => state.node == null
             ? _message(l10n.deckNotFound)
@@ -97,17 +105,14 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(
-                l10n.deckDetailEmpty,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+              MxText.body(l10n.deckDetailEmpty, textAlign: TextAlign.center),
               const SizedBox(height: MxSpacing.space4),
-              OutlinedButton.icon(
+              MxButton(
                 key: const Key('deckDetailNewSubdeckEmpty'),
+                label: l10n.deckNewSubdeck,
+                icon: Icons.create_new_folder_outlined,
+                variant: MxButtonVariant.outline,
                 onPressed: () => unawaited(_createSubDeck()),
-                icon: const Icon(Icons.create_new_folder_outlined),
-                label: Text(l10n.deckNewSubdeck),
               ),
             ],
           ),
@@ -154,21 +159,20 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
     ),
     child: Row(
       children: <Widget>[
-        Expanded(
-          child: Text(title, style: Theme.of(context).textTheme.labelMedium),
-        ),
-        TextButton.icon(
+        Expanded(child: MxText.label(title)),
+        MxButton(
           key: actionKey,
+          label: actionLabel,
+          icon: Icons.add,
+          variant: MxButtonVariant.ghost,
+          size: MxButtonSize.sm,
           onPressed: onAction,
-          icon: const Icon(Icons.add),
-          label: Text(actionLabel),
         ),
       ],
     ),
   );
 
   Widget _cardRow(AppLocalizations l10n, domain.Card card) {
-    final theme = Theme.of(context);
     final status = deriveCardStatus(
       hidden: card.hidden,
       box: null,
@@ -179,16 +183,15 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
       opacity: card.hidden ? 0.5 : 1,
       child: ListTile(
         key: Key('cardRow-${card.id}'),
-        title: Text(
+        title: MxText.title(
           card.term,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: theme.textTheme.titleMedium,
         ),
         subtitle: Text(meaning, maxLines: 1, overflow: TextOverflow.ellipsis),
-        trailing: Text(
+        trailing: MxText(
           _statusLabel(l10n, status),
-          style: theme.textTheme.labelSmall,
+          role: MxTextRole.labelSmall,
         ),
         onTap: () => unawaited(_editCard(card.id)),
       ),
@@ -205,7 +208,7 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
       };
 
   Widget _message(String text) =>
-      MxContentBounds(child: Center(child: Text(text)));
+      MxContentBounds(child: Center(child: MxText(text)));
 
   // ── actions ────────────────────────────────────────────────────────────────
   DeckDetailNotifier get _notifier =>
