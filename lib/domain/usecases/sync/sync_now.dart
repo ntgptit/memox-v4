@@ -35,7 +35,7 @@ class SyncNowUseCase {
 
     final metaResult = await _cloud.remoteMeta();
     if (metaResult case Err(:final failure)) return Err<SyncOutcome>(failure);
-    final meta = (metaResult as Ok<RemoteSnapshotMeta?>).value;
+    final meta = metaResult.valueOrNull; // null = no remote snapshot yet
 
     final lastSync =
         (await _settings.readInt(SettingsKeys.cloudLastSyncAt)).valueOrNull ??
@@ -51,7 +51,7 @@ class SyncNowUseCase {
     final json = await _backup.serialize();
     if (json case Err(:final failure)) return Err<SyncOutcome>(failure);
     final now = _clock.now();
-    final uploaded = await _cloud.upload((json as Ok<String>).value, now);
+    final uploaded = await _cloud.upload(json.valueOrNull!, now);
     if (uploaded case Err(:final failure)) return Err<SyncOutcome>(failure);
     // Stamp lastSync from the server's post-upload modifiedTime when available,
     // so the next sync compares like-for-like (the device clock may lag the
@@ -67,9 +67,7 @@ class SyncNowUseCase {
   Future<Result<SyncOutcome>> _pull(RemoteSnapshotMeta meta) async {
     final downloaded = await _cloud.download();
     if (downloaded case Err(:final failure)) return Err<SyncOutcome>(failure);
-    final restored = await _backup.deserialize(
-      (downloaded as Ok<String>).value,
-    );
+    final restored = await _backup.deserialize(downloaded.valueOrNull!);
     if (restored case Err(:final failure)) return Err<SyncOutcome>(failure);
     await _settings.write(
       SettingsKeys.cloudLastSyncAt,

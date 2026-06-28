@@ -52,7 +52,6 @@ class StudySessionState {
     required this.stageIndex,
     required this.pending,
     required this.startMs,
-    this.revealed = false,
     this.correctCount = 0,
     this.wrongCount = 0,
     this.finished = false,
@@ -64,7 +63,6 @@ class StudySessionState {
   final int stageIndex;
   final List<int> pending;
   final int startMs;
-  final bool revealed;
   final int correctCount;
   final int wrongCount;
   final bool finished;
@@ -87,7 +85,6 @@ class StudySessionState {
   StudySessionState copyWith({
     int? stageIndex,
     List<int>? pending,
-    bool? revealed,
     int? correctCount,
     int? wrongCount,
     bool? finished,
@@ -98,7 +95,6 @@ class StudySessionState {
     startMs: startMs,
     stageIndex: stageIndex ?? this.stageIndex,
     pending: pending ?? this.pending,
-    revealed: revealed ?? this.revealed,
     correctCount: correctCount ?? this.correctCount,
     wrongCount: wrongCount ?? this.wrongCount,
     finished: finished ?? this.finished,
@@ -150,12 +146,6 @@ class StudySessionNotifier extends _$StudySessionNotifier
       pending: <int>[for (final c in cards) c.cardId],
       startMs: _clock.now().millisecondsSinceEpoch,
     );
-  }
-
-  void reveal() {
-    final current = state.value;
-    if (current == null) return;
-    state = AsyncData(current.copyWith(revealed: true));
   }
 
   // ── RoundActions: lets the game widgets drive NewLearn stages ──────────────
@@ -233,7 +223,6 @@ class StudySessionNotifier extends _$StudySessionNotifier
     state = AsyncData(
       session.copyWith(
         pending: pending,
-        revealed: false,
         correctCount: correctCount,
         wrongCount: wrongCount,
         stageIndex: stageIndex,
