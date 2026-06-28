@@ -410,3 +410,21 @@ Ran `python code-verification-guard/guard/run.py check --project . --ruleset mem
 - Left as guard-over-strict (not fixed): `i18n.no_hardcoded_strings` (3 — all numeric labels `${i+1}`/box-count/`$percent%`, not translatable prose); `no_raw_duration_value` (player 3s — no motion token exists + it's a behavior cadence, out of the rule's own stated scope).
 
 verify --full GREEN (186 tests). Errors 523→518 net.
+
+## 2026-06-28 · Web support (flutter run -d chrome) — fixed
+
+User couldn't run `flutter run -d chrome --web-port 3000`. Two distinct causes:
+
+1. **Compile blocker (real):** the app's Drift DB used `NativeDatabase` → `dart:ffi`/`dart:io`, which can't compile for web (`flutter build web` failed: "Dart library 'dart:ffi' is not available on this platform"). Fixed by making the DB backend platform-conditional:
+   - `connection/database_connection.dart` now `export 'connection_unsupported.dart' if (dart.library.io) 'connection_native.dart' if (dart.library.js_interop) 'connection_web.dart'`.
+   - Native keeps NativeDatabase; web uses `WasmDatabase.open(databaseName:'memox', sqlite3Uri:'sqlite3.wasm', driftWorkerUri:'drift_worker.dart.js')`.
+   - Web assets committed: `web/sqlite3.wasm` (sqlite3 2.9.4, curled from the release) + `web/drift_worker.dart.js` (compiled from `web/drift_worker.dart` = `WasmDatabase.workerMainForOpen()`, matching drift 2.31.0). Regeneration documented in `web/README-drift.md`. `.js.deps`/`.js.map` gitignored.
+   - The other two `dart:io` sites conditionalized too: `path_file.dart` (backup/restore) + `file_saver.dart` (export) — native impls off-web, throw-stubs on web. Tests still use the native in-memory db on the VM.
+   - Result: `flutter build web` → `√ Built build\web`; `flutter run -d chrome` reaches "Flutter run key commands" (serving). Commit `0dd4a5db`, verify --full GREEN (186 tests).
+
+2. **Port 3000 in use (environment):** after the compile was fixed, the run failed to bind 3000 (`errno 10048`) — a stale process (likely a prior hung `flutter run`) held it. Freed it; rerun served fine. If it recurs, kill the listener on 3000 (`Get-NetTCPConnection -LocalPort 3000` → Stop-Process) or use a different `--web-port`.
+
+### Web limitations (documented in web/README-drift.md)
+- File export + local file backup/restore throw on web (no browser filesystem) — use cloud sync there.
+- Notifications/TTS depend on browser support.
+- Web isn't yet in the release-readiness target list; this enables dev/preview on web.
