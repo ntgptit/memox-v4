@@ -15,7 +15,7 @@ void main() {
   setUp(() {
     db = AppDatabase.forTesting(openInMemoryDatabase());
     container = ProviderContainer(
-      overrides: <Override>[databaseProvider.overrideWithValue(db)],
+      overrides: [databaseProvider.overrideWithValue(db)],
     );
     container.listen(settingsNotifierProvider, (_, _) {});
   });

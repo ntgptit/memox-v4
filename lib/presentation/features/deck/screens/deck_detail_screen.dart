@@ -32,8 +32,8 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final async = ref.watch(deckDetailNotifierProvider(widget.deckId));
-    final node = async.valueOrNull?.node;
+    final async = ref.watch(deckDetailProvider(widget.deckId));
+    final node = async.value?.node;
     return Scaffold(
       appBar: AppBar(
         title: Text(node?.deck.name ?? ''),
@@ -191,7 +191,7 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
 
   // ── actions ────────────────────────────────────────────────────────────────
   DeckDetailNotifier get _notifier =>
-      ref.read(deckDetailNotifierProvider(widget.deckId).notifier);
+      ref.read(deckDetailProvider(widget.deckId).notifier);
 
   Future<void> _openChild(int childId) async {
     await context.push(RoutePaths.deckDetailLocation(childId));
@@ -232,8 +232,7 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
         if (!mounted || name == null) return;
         await _notifier.renameDeck(node.deck.id, name);
       case DeckAction.move:
-        final roots =
-            ref.read(libraryNotifierProvider).valueOrNull ?? const <DeckNode>[];
+        final roots = ref.read(libraryProvider).value ?? const <DeckNode>[];
         final candidates = <Deck>[
           for (final n in roots)
             if (n.deck.id != node.deck.id) n.deck,

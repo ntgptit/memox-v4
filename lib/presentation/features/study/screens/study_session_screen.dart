@@ -32,7 +32,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
       StudyRequest(nodeId: widget.nodeId, entry: widget.entry);
 
   StudySessionNotifier get _notifier =>
-      ref.read(studySessionNotifierProvider(_request).notifier);
+      ref.read(studySessionProvider(_request).notifier);
 
   Future<void> _onExit() async {
     if (widget.entry == StudyEntry.newLearn) {
@@ -62,7 +62,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final async = ref.watch(studySessionNotifierProvider(_request));
+    final async = ref.watch(studySessionProvider(_request));
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -70,7 +70,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
           icon: const Icon(Icons.close),
           onPressed: () => unawaited(_onExit()),
         ),
-        title: Text(_stageLabel(l10n, async.valueOrNull)),
+        title: Text(_stageLabel(l10n, async.value)),
       ),
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -164,7 +164,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
                 OutlinedButton(
                   key: const Key('studyContinue'),
                   onPressed: () =>
-                      ref.invalidate(studySessionNotifierProvider(_request)),
+                      ref.invalidate(studySessionProvider(_request)),
                   child: Text(l10n.studyContinue),
                 ),
                 const SizedBox(width: MxSpacing.space3),

@@ -16,7 +16,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: <Override>[databaseProvider.overrideWithValue(db)],
+        overrides: [databaseProvider.overrideWithValue(db)],
         child: const MemoXApp(),
       ),
     );

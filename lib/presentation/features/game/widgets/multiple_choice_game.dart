@@ -12,10 +12,10 @@ class MultipleChoiceGame extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(gameSessionNotifierProvider(request)).valueOrNull;
+    final state = ref.watch(gameSessionProvider(request)).value;
     final current = state?.current;
     if (state == null || current == null) return const SizedBox.shrink();
-    final notifier = ref.read(gameSessionNotifierProvider(request).notifier);
+    final notifier = ref.read(gameSessionProvider(request).notifier);
     final options = _options(state, current);
     return ListView(
       padding: const EdgeInsets.all(MxSpacing.space5),

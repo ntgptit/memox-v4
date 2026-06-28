@@ -26,7 +26,7 @@ void main() {
   tearDown(() => db.close());
 
   Widget host({int? cardId}) => ProviderScope(
-    overrides: <Override>[databaseProvider.overrideWithValue(db)],
+    overrides: [databaseProvider.overrideWithValue(db)],
     child: MaterialApp(
       theme: AppTheme.light(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,

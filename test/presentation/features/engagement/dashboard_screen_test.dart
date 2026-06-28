@@ -37,7 +37,7 @@ void main() {
   tearDown(() => db.close());
 
   Widget host() => ProviderScope(
-    overrides: <Override>[
+    overrides: [
       databaseProvider.overrideWithValue(db),
       clockProvider.overrideWithValue(_FixedClock(today)),
     ],

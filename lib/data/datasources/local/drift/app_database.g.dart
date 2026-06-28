@@ -2512,7 +2512,7 @@ final class $LanguagePairReferences
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.deck,
-    aliasName: 'language_pair__id__deck__pair_id',
+    aliasName: $_aliasNameGenerator(db.languagePair.id, db.deck.pairId),
   );
 
   $DeckProcessedTableManager get deckRefs {
@@ -2530,7 +2530,10 @@ final class $LanguagePairReferences
   static MultiTypedResultKey<DailyActivity, List<DailyActivityData>>
   _dailyActivityRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.dailyActivity,
-    aliasName: 'language_pair__id__daily_activity__pair_id',
+    aliasName: $_aliasNameGenerator(
+      db.languagePair.id,
+      db.dailyActivity.pairId,
+    ),
   );
 
   $DailyActivityProcessedTableManager get dailyActivityRefs {
@@ -2882,8 +2885,8 @@ final class $DeckReferences
     extends BaseReferences<_$AppDatabase, Deck, DeckData> {
   $DeckReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static LanguagePair _pairIdTable(_$AppDatabase db) =>
-      db.languagePair.createAlias('deck__pair_id__language_pair__id');
+  static LanguagePair _pairIdTable(_$AppDatabase db) => db.languagePair
+      .createAlias($_aliasNameGenerator(db.deck.pairId, db.languagePair.id));
 
   $LanguagePairProcessedTableManager get pairId {
     final $_column = $_itemColumn<int>('pair_id')!;
@@ -2903,7 +2906,7 @@ final class $DeckReferences
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.card,
-    aliasName: 'deck__id__card__deck_id',
+    aliasName: $_aliasNameGenerator(db.deck.id, db.card.deckId),
   );
 
   $CardProcessedTableManager get cardRefs {
@@ -3279,7 +3282,7 @@ final class $CardReferences
   $CardReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static Deck _deckIdTable(_$AppDatabase db) =>
-      db.deck.createAlias('card__deck_id__deck__id');
+      db.deck.createAlias($_aliasNameGenerator(db.card.deckId, db.deck.id));
 
   $DeckProcessedTableManager get deckId {
     final $_column = $_itemColumn<int>('deck_id')!;
@@ -3298,7 +3301,7 @@ final class $CardReferences
   static MultiTypedResultKey<CardMeaning, List<CardMeaningData>>
   _cardMeaningRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.cardMeaning,
-    aliasName: 'card__id__card_meaning__card_id',
+    aliasName: $_aliasNameGenerator(db.card.id, db.cardMeaning.cardId),
   );
 
   $CardMeaningProcessedTableManager get cardMeaningRefs {
@@ -3317,7 +3320,7 @@ final class $CardReferences
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.srsState,
-    aliasName: 'card__id__srs_state__card_id',
+    aliasName: $_aliasNameGenerator(db.card.id, db.srsState.cardId),
   );
 
   $SrsStateProcessedTableManager get srsStateRefs {
@@ -3836,8 +3839,9 @@ final class $CardMeaningReferences
     extends BaseReferences<_$AppDatabase, CardMeaning, CardMeaningData> {
   $CardMeaningReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static Card _cardIdTable(_$AppDatabase db) =>
-      db.card.createAlias('card_meaning__card_id__card__id');
+  static Card _cardIdTable(_$AppDatabase db) => db.card.createAlias(
+    $_aliasNameGenerator(db.cardMeaning.cardId, db.card.id),
+  );
 
   $CardProcessedTableManager get cardId {
     final $_column = $_itemColumn<int>('card_id')!;
@@ -4128,7 +4132,7 @@ final class $SrsStateReferences
   $SrsStateReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static Card _cardIdTable(_$AppDatabase db) =>
-      db.card.createAlias('srs_state__card_id__card__id');
+      db.card.createAlias($_aliasNameGenerator(db.srsState.cardId, db.card.id));
 
   $CardProcessedTableManager get cardId {
     final $_column = $_itemColumn<int>('card_id')!;
@@ -4437,7 +4441,9 @@ final class $DailyActivityReferences
   $DailyActivityReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static LanguagePair _pairIdTable(_$AppDatabase db) =>
-      db.languagePair.createAlias('daily_activity__pair_id__language_pair__id');
+      db.languagePair.createAlias(
+        $_aliasNameGenerator(db.dailyActivity.pairId, db.languagePair.id),
+      );
 
   $LanguagePairProcessedTableManager get pairId {
     final $_column = $_itemColumn<int>('pair_id')!;

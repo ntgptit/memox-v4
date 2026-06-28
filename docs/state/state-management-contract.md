@@ -5,10 +5,15 @@ orchestrate use cases, they don't hold business logic or the only copy of data.
 
 ## Choice
 
-**Riverpod** — mục tiêu khai báo provider bằng `@riverpod` (codegen). **S0:** codegen
-hoãn (xung đột `riverpod_generator` ↔ `drift_dev`, xem `docs/stack/stack.md`) nên provider
-viết tay bằng `AsyncNotifierProvider` / `NotifierProvider`; chuyển sang `@riverpod` khi bật
-lại codegen. Trạng thái bất đồng bộ dùng `AsyncValue<T>`: `AsyncNotifier` cho màn/ngữ cảnh
+**Riverpod 3** — `@riverpod` codegen **đã bật** (drift ghim `<2.34` để chung analyzer 9,
+xem `docs/stack/stack.md`). Notifier family/autoDispose (`StudySessionNotifier`,
+`GameSessionNotifier`, `DeckDetailNotifier`, `LibraryNotifier`, `Statistics`) dùng
+`@riverpod` (provider sinh ra **bỏ hậu tố `Notifier`** → `studySessionProvider`,
+`gameSessionProvider`, `deckDetailProvider`, `libraryProvider`, `statisticsProvider`).
+Notifier đơn (`LanguagePairNotifier`, `EngagementNotifier`, `SettingsNotifier`,
+`PersonalizationNotifier`, `SearchNotifier`, `StatsScopeNotifier`) + `Provider` DI hiện vẫn
+viết tay (`AsyncNotifierProvider`/`NotifierProvider`) — chuyển dần sang `@riverpod` được.
+Riverpod 3: đọc giá trị async bằng `AsyncValue.value` (không còn `valueOrNull`). Trạng thái bất đồng bộ dùng `AsyncValue<T>`: `AsyncNotifier` cho màn/ngữ cảnh
 có hành động (study/game/editor, cặp ngôn ngữ), `FutureProvider`/`StreamProvider` cho đọc
 thuần. Một notifier cho một mối-quan-tâm; mặc định `autoDispose`, `keepAlive` cho state
 xuyên màn. State chỉ **điều phối use case** — không chứa business logic, không giữ bản sao
@@ -26,7 +31,7 @@ dữ liệu duy nhất.
 | `SettingsNotifier` | cài đặt (game, SRS, mục tiêu, nhắc, tự-sao-lưu) + sao lưu/khôi phục | getSettings, updateSetting, backup/restore (BackupRepository) | keepAlive |
 | `EngagementNotifier` | hoạt động ngày + mục tiêu + streak + tóm tắt thư viện | dailyActivity.forDay/allForPair, settings.readInt (mục tiêu), computeStreak, deck.libraryTree | keepAlive |
 | `StatsScopeNotifier` | phạm vi thống kê đang chọn (cặp/toàn app) | — (UI state) | keepAlive |
-| `StatisticsNotifier` | thống kê theo phạm vi (tổng quan, ô Leitner, dự báo, hoạt động) | getStatistics (đọc card/srs_state/daily_activity) | autoDispose (family theo StatsScope) |
+| `Statistics` (`@riverpod`) | thống kê theo phạm vi (tổng quan, ô Leitner, dự báo, hoạt động) | getStatistics (đọc card/srs_state/daily_activity) | autoDispose (family theo StatsScope) |
 | `PersonalizationNotifier` | theme (chế độ màu + màu nhấn + cỡ chữ) | settings.readAll, updateSetting | keepAlive |
 
 ## Rules

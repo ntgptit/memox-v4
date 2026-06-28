@@ -19,15 +19,13 @@ class _RecallGameState extends ConsumerState<RecallGame> {
   bool _revealed = false;
 
   GameSessionNotifier get _notifier =>
-      ref.read(gameSessionNotifierProvider(widget.request).notifier);
+      ref.read(gameSessionProvider(widget.request).notifier);
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final state = ref
-        .watch(gameSessionNotifierProvider(widget.request))
-        .valueOrNull;
+    final state = ref.watch(gameSessionProvider(widget.request)).value;
     final current = state?.current;
     if (state == null || current == null) return const SizedBox.shrink();
     return Padding(

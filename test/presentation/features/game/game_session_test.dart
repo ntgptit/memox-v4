@@ -40,7 +40,7 @@ void main() {
         .into(db.deck)
         .insert(DeckCompanion.insert(pairId: pairId, name: 'Deck'));
     container = ProviderContainer(
-      overrides: <Override>[
+      overrides: [
         databaseProvider.overrideWithValue(db),
         clockProvider.overrideWithValue(const _FixedClock(0)),
       ],
@@ -64,8 +64,8 @@ void main() {
   }
 
   Future<GameSessionState> open(GameRequest request) {
-    container.listen(gameSessionNotifierProvider(request), (_, _) {});
-    return container.read(gameSessionNotifierProvider(request).future);
+    container.listen(gameSessionProvider(request), (_, _) {});
+    return container.read(gameSessionProvider(request).future);
   }
 
   test('D-008: a round uses at most game_words_per_round cards', () async {
@@ -96,20 +96,18 @@ void main() {
         wordsPerRound: 2,
       );
       await open(request);
-      final notifier = container.read(
-        gameSessionNotifierProvider(request).notifier,
-      );
+      final notifier = container.read(gameSessionProvider(request).notifier);
 
       notifier.markWrong(c1);
       expect(
-        container.read(gameSessionNotifierProvider(request)).value!.isComplete,
+        container.read(gameSessionProvider(request)).value!.isComplete,
         isFalse,
       );
 
       notifier.markCorrect(c2);
       notifier.markCorrect(c1);
       expect(
-        container.read(gameSessionNotifierProvider(request)).value!.isComplete,
+        container.read(gameSessionProvider(request)).value!.isComplete,
         isTrue,
       );
     },
@@ -124,12 +122,10 @@ void main() {
       random: false,
     );
     await open(request);
-    container
-        .read(gameSessionNotifierProvider(request).notifier)
-        .markCorrect(c1);
+    container.read(gameSessionProvider(request).notifier).markCorrect(c1);
 
     expect(
-      container.read(gameSessionNotifierProvider(request)).value!.isComplete,
+      container.read(gameSessionProvider(request)).value!.isComplete,
       isTrue,
     );
     expect(await db.select(db.srsState).get(), isEmpty);

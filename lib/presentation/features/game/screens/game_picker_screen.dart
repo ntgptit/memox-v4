@@ -47,7 +47,7 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
   }
 
   void _play(GameType type) {
-    final settings = ref.read(settingsNotifierProvider).valueOrNull;
+    final settings = ref.read(settingsNotifierProvider).value;
     unawaited(
       context.push(
         RoutePaths.gamePlayLocation(
@@ -101,7 +101,7 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
   Widget _picker(AppLocalizations l10n) {
     final theme = Theme.of(context);
     final wordsPerRound =
-        ref.watch(settingsNotifierProvider).valueOrNull?.gameWordsPerRound ??
+        ref.watch(settingsNotifierProvider).value?.gameWordsPerRound ??
         kDefaultGameWordsPerRound;
     return ListView(
       padding: const EdgeInsets.all(MxSpacing.space5),

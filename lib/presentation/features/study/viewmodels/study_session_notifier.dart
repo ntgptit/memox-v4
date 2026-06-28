@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/card_providers.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/daily_activity_providers.dart';
@@ -18,6 +17,9 @@ import 'package:memox_v4/domain/usecases/srs/schedule_new_card.dart';
 import 'package:memox_v4/domain/usecases/study/build_study_queue.dart';
 import 'package:memox_v4/domain/usecases/study/finalize_study_session.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'study_session_notifier.g.dart';
 
 /// Identifies a scheduled study session: which node, which entry (newLearn or
 /// dueReview).
@@ -102,13 +104,8 @@ class StudySessionState {
 /// into SRS (W3); NewLearn schedules cards into box 1 only after all 5 stages
 /// complete (D-002) — quitting before then leaves them new (D-017). Finalize
 /// adds activity for these entries only (D-010).
-final studySessionNotifierProvider = AsyncNotifierProvider.autoDispose
-    .family<StudySessionNotifier, StudySessionState, StudyRequest>(
-      StudySessionNotifier.new,
-    );
-
-class StudySessionNotifier
-    extends AutoDisposeFamilyAsyncNotifier<StudySessionState, StudyRequest> {
+@riverpod
+class StudySessionNotifier extends _$StudySessionNotifier {
   DeckRepository get _deck => ref.read(deckRepositoryProvider);
   SrsRepository get _srs => ref.read(srsRepositoryProvider);
   CardRepository get _card => ref.read(cardRepositoryProvider);
@@ -139,7 +136,7 @@ class StudySessionNotifier
       }
     }
     final pairId =
-        ref.read(languagePairNotifierProvider).valueOrNull?.active?.id ?? 0;
+        ref.read(languagePairNotifierProvider).value?.active?.id ?? 0;
     return StudySessionState(
       entry: arg.entry,
       cards: cards,
@@ -151,13 +148,13 @@ class StudySessionNotifier
   }
 
   void reveal() {
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     state = AsyncData(current.copyWith(revealed: true));
   }
 
   Future<void> grade(bool correct) async {
-    final session = state.valueOrNull;
+    final session = state.value;
     final card = session?.current;
     if (session == null || card == null) return;
 

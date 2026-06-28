@@ -26,8 +26,7 @@ class _MemoXAppState extends ConsumerState<MemoXApp> {
   @override
   Widget build(BuildContext context) {
     final prefs =
-        ref.watch(personalizationNotifierProvider).valueOrNull ??
-        const ThemePrefs();
+        ref.watch(personalizationNotifierProvider).value ?? const ThemePrefs();
     return MaterialApp.router(
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,

@@ -37,7 +37,7 @@ class LanguagePairNotifier extends AsyncNotifier<LanguagePairContext> {
       _repository,
     ).call(sourceLang: sourceLang, targetLang: targetLang);
     if (result case Ok(value: final pair)) {
-      final hadNone = state.valueOrNull?.isEmpty ?? true;
+      final hadNone = state.value?.isEmpty ?? true;
       if (hadNone) {
         await SetActivePairUseCase(_repository).call(pair.id);
       }

@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/card_providers.dart';
 import 'package:memox_v4/app/di/deck_providers.dart';
 import 'package:memox_v4/domain/entities/card.dart';
@@ -12,6 +11,9 @@ import 'package:memox_v4/domain/usecases/deck/move_deck.dart';
 import 'package:memox_v4/domain/usecases/deck/rename_deck.dart';
 import 'package:memox_v4/domain/usecases/deck/sort_deck_nodes.dart';
 import 'package:memox_v4/presentation/features/deck/viewmodels/library_notifier.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'deck_detail_notifier.g.dart';
 
 /// A deck-detail view: the deck's node (with recursive stats + sub-decks) and
 /// its direct cards. `node` is null when the deck no longer exists.
@@ -24,24 +26,27 @@ class DeckDetailState {
 
 /// Deck-detail state for one deck id. Mutations refresh this view and invalidate
 /// the library so its recursive counts stay in sync.
-final deckDetailNotifierProvider = AsyncNotifierProvider.autoDispose
-    .family<DeckDetailNotifier, DeckDetailState, int>(DeckDetailNotifier.new);
+@riverpod
+class DeckDetailNotifier extends _$DeckDetailNotifier {
+  late int _deckId;
 
-class DeckDetailNotifier
-    extends AutoDisposeFamilyAsyncNotifier<DeckDetailState, int> {
   @override
-  Future<DeckDetailState> build(int arg) => _load();
+  Future<DeckDetailState> build(int deckId) {
+    _deckId = deckId;
+    return _load();
+  }
 
   Future<DeckDetailState> _load() async {
     final nodeResult = await GetDeckNodeUseCase(
       ref.read(deckRepositoryProvider),
-    ).call(arg);
+    ).call(_deckId);
     final node = nodeResult.valueOrNull;
     if (node == null) {
       return const DeckDetailState(node: null, cards: <Card>[]);
     }
     final cards =
-        (await ref.read(cardRepositoryProvider).listByDeck(arg)).valueOrNull ??
+        (await ref.read(cardRepositoryProvider).listByDeck(_deckId))
+            .valueOrNull ??
         const <Card>[];
     final sortedChildren = const SortDeckNodesUseCase().call(
       node.children,
@@ -59,11 +64,11 @@ class DeckDetailNotifier
   }
 
   Future<void> createSubDeck(String name) async {
-    final pairId = state.valueOrNull?.node?.deck.pairId;
+    final pairId = state.value?.node?.deck.pairId;
     if (pairId == null) return;
     await CreateDeckUseCase(
       ref.read(deckRepositoryProvider),
-    ).call(pairId: pairId, parentDeckId: arg, name: name);
+    ).call(pairId: pairId, parentDeckId: _deckId, name: name);
     await _refreshAll();
   }
 
@@ -87,7 +92,7 @@ class DeckDetailNotifier
   Future<void> refresh() => _refresh();
 
   Future<void> _refreshAll() async {
-    ref.invalidate(libraryNotifierProvider);
+    ref.invalidate(libraryProvider);
     await _refresh();
   }
 

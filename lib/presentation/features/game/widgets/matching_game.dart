@@ -25,16 +25,14 @@ class _MatchingGameState extends ConsumerState<MatchingGame> {
   @override
   void initState() {
     super.initState();
-    final state = ref
-        .read(gameSessionNotifierProvider(widget.request))
-        .valueOrNull;
+    final state = ref.read(gameSessionProvider(widget.request)).value;
     final ids = state?.cards.map((c) => c.cardId).toList() ?? const <int>[];
     _leftOrder = List<int>.of(ids)..shuffle();
     _rightOrder = List<int>.of(ids)..shuffle();
   }
 
   GameSessionNotifier get _notifier =>
-      ref.read(gameSessionNotifierProvider(widget.request).notifier);
+      ref.read(gameSessionProvider(widget.request).notifier);
 
   void _selectLeft(int id) {
     setState(() => _selectedLeft = id);
@@ -63,9 +61,7 @@ class _MatchingGameState extends ConsumerState<MatchingGame> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref
-        .watch(gameSessionNotifierProvider(widget.request))
-        .valueOrNull;
+    final state = ref.watch(gameSessionProvider(widget.request)).value;
     if (state == null) return const SizedBox.shrink();
     final pending = state.pending.toSet();
     GameCard cardOf(int id) => state.cards.firstWhere((c) => c.cardId == id);

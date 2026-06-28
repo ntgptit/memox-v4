@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/card_providers.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/srs_providers.dart';
@@ -8,6 +7,9 @@ import 'package:memox_v4/domain/types/game_scope.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/usecases/game/build_game_round.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'game_session_notifier.g.dart';
 
 /// Identifies a game round: which node's cards, which game, scope, and options.
 class GameRequest {
@@ -74,13 +76,8 @@ class GameSessionState {
 
 /// Drives a practice round. Never touches `srs_state` (D-007): wrong answers
 /// re-queue the card within the round (D-015), nothing is scheduled.
-final gameSessionNotifierProvider = AsyncNotifierProvider.autoDispose
-    .family<GameSessionNotifier, GameSessionState, GameRequest>(
-      GameSessionNotifier.new,
-    );
-
-class GameSessionNotifier
-    extends AutoDisposeFamilyAsyncNotifier<GameSessionState, GameRequest> {
+@riverpod
+class GameSessionNotifier extends _$GameSessionNotifier {
   @override
   Future<GameSessionState> build(GameRequest arg) async {
     final cards =
@@ -121,7 +118,7 @@ class GameSessionNotifier
   }
 
   void markCorrect(int cardId) {
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     state = AsyncData(
       current.copyWith(
@@ -137,7 +134,7 @@ class GameSessionNotifier
   /// Marks the card wrong. For sequential games [requeue] moves it to the back of
   /// the queue; for matching the card simply stays (requeue false).
   void markWrong(int cardId, {bool requeue = true}) {
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     if (!requeue) {
       state = AsyncData(current.copyWith(lastWrong: true));
@@ -156,7 +153,7 @@ class GameSessionNotifier
   }
 
   void clearWrong() {
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     state = AsyncData(current.copyWith(lastWrong: false));
   }

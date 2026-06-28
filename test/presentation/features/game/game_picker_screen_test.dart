@@ -34,7 +34,7 @@ void main() {
   ) async {
     await tester.pumpWidget(
       ProviderScope(
-        overrides: <Override>[databaseProvider.overrideWithValue(db)],
+        overrides: [databaseProvider.overrideWithValue(db)],
         child: MaterialApp(
           theme: AppTheme.light(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,

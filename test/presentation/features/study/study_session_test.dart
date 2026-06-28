@@ -41,7 +41,7 @@ void main() {
         .into(db.deck)
         .insert(DeckCompanion.insert(pairId: pairId, name: 'Deck'));
     container = ProviderContainer(
-      overrides: <Override>[
+      overrides: [
         databaseProvider.overrideWithValue(db),
         clockProvider.overrideWithValue(const _FixedClock(10000)),
       ],
@@ -58,12 +58,12 @@ void main() {
 
   Future<StudySessionState> open(StudyRequest request) async {
     await container.read(languagePairNotifierProvider.future);
-    container.listen(studySessionNotifierProvider(request), (_, _) {});
-    return container.read(studySessionNotifierProvider(request).future);
+    container.listen(studySessionProvider(request), (_, _) {});
+    return container.read(studySessionProvider(request).future);
   }
 
   StudySessionNotifier notifier(StudyRequest request) =>
-      container.read(studySessionNotifierProvider(request).notifier);
+      container.read(studySessionProvider(request).notifier);
 
   test(
     'D-002/D-017: NewLearn schedules into box 1 only after all 5 stages',
@@ -94,7 +94,7 @@ void main() {
     expect(initial.cards, hasLength(2));
 
     await notifier(request).grade(false);
-    final state = container.read(studySessionNotifierProvider(request)).value!;
+    final state = container.read(studySessionProvider(request)).value!;
     expect(state.pending, hasLength(2));
     expect(state.stageIndex, 0);
   });

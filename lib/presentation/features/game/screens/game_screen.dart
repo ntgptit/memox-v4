@@ -22,7 +22,7 @@ class GameScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final async = ref.watch(gameSessionNotifierProvider(request));
+    final async = ref.watch(gameSessionProvider(request));
     return Scaffold(
       appBar: AppBar(title: Text(_gameName(l10n, request.type))),
       body: async.when(
@@ -91,8 +91,7 @@ class GameScreen extends ConsumerWidget {
             children: <Widget>[
               OutlinedButton(
                 key: const Key('gamePlayAgain'),
-                onPressed: () =>
-                    ref.invalidate(gameSessionNotifierProvider(request)),
+                onPressed: () => ref.invalidate(gameSessionProvider(request)),
                 child: Text(l10n.gamePlayAgain),
               ),
               const SizedBox(width: MxSpacing.space3),

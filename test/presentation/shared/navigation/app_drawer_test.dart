@@ -8,7 +8,7 @@ import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/shared/navigation/app_drawer.dart';
 
 Widget _host(AppDatabase db) => ProviderScope(
-  overrides: <Override>[databaseProvider.overrideWithValue(db)],
+  overrides: [databaseProvider.overrideWithValue(db)],
   child: const MaterialApp(
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,

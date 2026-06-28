@@ -38,11 +38,7 @@ class EngagementNotifier extends AsyncNotifier<EngagementSummary> {
   }
 
   Future<EngagementSummary> _load() async {
-    final pairId = ref
-        .watch(languagePairNotifierProvider)
-        .valueOrNull
-        ?.active
-        ?.id;
+    final pairId = ref.watch(languagePairNotifierProvider).value?.active?.id;
     if (pairId == null) return _empty;
 
     final now = ref.read(clockProvider).now();

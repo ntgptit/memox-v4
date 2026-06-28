@@ -6,6 +6,9 @@ import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/types/stats_scope.dart';
 import 'package:memox_v4/domain/usecases/statistics/get_statistics.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'statistics_notifier.g.dart';
 
 /// The selected statistics scope (current pair vs whole app).
 final statsScopeProvider = NotifierProvider<StatsScopeNotifier, StatsScope>(
@@ -19,21 +22,16 @@ class StatsScopeNotifier extends Notifier<StatsScope> {
   void set(StatsScope scope) => state = scope;
 }
 
-/// The statistics summary for a scope. AutoDispose family so switching scope
-/// discards the previous computation.
-final statisticsProvider = AsyncNotifierProvider.autoDispose
-    .family<StatisticsNotifier, StatisticsSummary, StatsScope>(
-      StatisticsNotifier.new,
-    );
-
-class StatisticsNotifier
-    extends AutoDisposeFamilyAsyncNotifier<StatisticsSummary, StatsScope> {
+/// The statistics summary for a scope (autoDispose family — switching scope
+/// discards the previous computation).
+@riverpod
+class Statistics extends _$Statistics {
   @override
-  Future<StatisticsSummary> build(StatsScope arg) async {
-    final pairId = arg == StatsScope.allApp
+  Future<StatisticsSummary> build(StatsScope scope) async {
+    final pairId = scope == StatsScope.allApp
         ? null
-        : ref.watch(languagePairNotifierProvider).valueOrNull?.active?.id;
-    if (arg == StatsScope.currentPair && pairId == null) {
+        : ref.watch(languagePairNotifierProvider).value?.active?.id;
+    if (scope == StatsScope.currentPair && pairId == null) {
       return StatisticsSummary.empty;
     }
     final useCase = GetStatisticsUseCase(

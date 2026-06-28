@@ -27,7 +27,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final asyncNodes = ref.watch(libraryNotifierProvider);
+    final asyncNodes = ref.watch(libraryProvider);
     return Column(
       children: <Widget>[
         _toolbar(l10n),
@@ -141,9 +141,8 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
             Text(l10n.libraryError),
             const SizedBox(height: MxSpacing.space4),
             FilledButton(
-              onPressed: () => unawaited(
-                ref.read(libraryNotifierProvider.notifier).refresh(),
-              ),
+              onPressed: () =>
+                  unawaited(ref.read(libraryProvider.notifier).refresh()),
               child: Text(l10n.commonRetry),
             ),
           ],
@@ -158,11 +157,11 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
       title: AppLocalizations.of(context).deckNewTitle,
     );
     if (!mounted || name == null) return;
-    await ref.read(libraryNotifierProvider.notifier).createDeck(name: name);
+    await ref.read(libraryProvider.notifier).createDeck(name: name);
   }
 
   Future<void> _onDeckMenu(DeckNode node) async {
-    final notifier = ref.read(libraryNotifierProvider.notifier);
+    final notifier = ref.read(libraryProvider.notifier);
     final action = await showDeckActions(context);
     if (!mounted || action == null) return;
     switch (action) {
@@ -175,8 +174,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         if (!mounted || name == null) return;
         await notifier.renameDeck(node.deck.id, name);
       case DeckAction.move:
-        final roots =
-            ref.read(libraryNotifierProvider).valueOrNull ?? const <DeckNode>[];
+        final roots = ref.read(libraryProvider).value ?? const <DeckNode>[];
         final candidates = <Deck>[
           for (final n in roots)
             if (n.deck.id != node.deck.id) n.deck,
@@ -193,7 +191,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
 
   Future<void> _showSortSheet() async {
     final l10n = AppLocalizations.of(context);
-    final notifier = ref.read(libraryNotifierProvider.notifier);
+    final notifier = ref.read(libraryProvider.notifier);
     await showModalBottomSheet<void>(
       context: context,
       builder: (ctx) {

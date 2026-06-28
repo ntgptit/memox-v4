@@ -5,24 +5,29 @@ Detected/seeded stack: **Flutter / Dart 3** (id: `flutter`, source root: `lib/`)
 Thêm dependency cần **duyệt** (CLAUDE.md hard rule). Phiên bản chính xác chốt khi
 hoàn thiện `pubspec.yaml`.
 
-**Đã trong `pubspec.yaml` (W1 + S0):** `flutter_riverpod ^2.6.1`, `go_router ^14.6.0`,
-`drift ^2.34.0` + `sqlite3_flutter_libs` + `path` + `path_provider`, và i18n
-`flutter_localizations` (sdk) + `intl` (ghim theo `flutter_localizations`). Các package
-còn lại (mocktail, sync…) thêm khi feature tương ứng cần.
+**Đã trong `pubspec.yaml` (W1 + S0):** `flutter_riverpod ^3.3.1` + `riverpod_annotation ^4.0.2`,
+`go_router ^14.6.0`, `drift >=2.28.1 <2.34.0` + `sqlite3_flutter_libs` + `path` +
+`path_provider`, và i18n `flutter_localizations` (sdk) + `intl` (ghim theo
+`flutter_localizations`). Codegen: `build_runner` + `drift_dev >=2.28.1 <2.34.0` +
+`riverpod_generator ^4.0.3`. Các package còn lại (mocktail, sync…) thêm khi feature cần.
 
-> **Riverpod codegen hoãn (S0):** `riverpod_generator` ghim `source_gen ^2` /
-> `analyzer 7–8`, xung đột trực tiếp với `drift_dev 2.34` (`source_gen ^3` /
-> `analyzer 10–12`); bản `riverpod_generator ^3` lại kéo theo `flutter_riverpod ^3`.
-> Để giữ pin `^2` và không nâng major không người giám sát, S0 dùng **`AsyncNotifier`
-> viết tay** (vẫn Riverpod, vẫn keepAlive) thay cho `@riverpod`. Xem lại khi nâng
-> `drift_dev`/`analyzer` để bật lại codegen.
+> **Riverpod codegen ĐÃ BẬT (nâng Riverpod 2→3):** Lúc S0, `riverpod_generator` (trần
+> `analyzer ≤9`) xung đột với `drift_dev 2.34` (`analyzer ≥10`) — `flutter pub get` thất
+> bại, không có vùng giao. Cách gỡ: **ghim `drift`/`drift_dev` ở `>=2.28.1 <2.34.0`**
+> (vẫn `source_gen ^3` nhưng `analyzer 9`, tương thích) + nâng `flutter_riverpod` lên `^3`
+> với `riverpod_annotation ^4` / `riverpod_generator ^4`. Tổ hợp resolve: drift 2.31 +
+> riverpod 3.3.1 + generator 4.0.3 (analyzer 9.0.0). **Ràng buộc:** không nâng `drift_dev`
+> ≥2.34 cho tới khi `riverpod_generator` hỗ trợ `analyzer ≥10`. Notifier family/autoDispose
+> dùng `@riverpod`; notifier đơn + `Provider` DI hiện vẫn viết tay (chuyển dần được).
+> Riverpod 3: `AsyncValue.valueOrNull` → `.value`; `Override` (overrides) export ở
+> `package:flutter_riverpod/misc.dart`.
 
 | Concern | Choice | Version | Notes |
 | --- | --- | --- | --- |
 | Language / runtime | Dart | 3.x | null-safety, sealed/pattern |
 | Framework | Flutter | stable | Material 3 |
-| State management | Riverpod | `flutter_riverpod ^2.6.1` | `AsyncNotifier` viết tay; `@riverpod` codegen hoãn (xung đột `drift_dev`, xem ghi chú trên) |
-| Persistence | Drift (SQLite) | ^2 | DB cục bộ |
+| State management | Riverpod 3 | `flutter_riverpod ^3.3.1` + `riverpod_annotation ^4.0.2` | `@riverpod` codegen bật (generator `^4.0.3`); family/autoDispose dùng codegen, notifier đơn + DI viết tay |
+| Persistence | Drift (SQLite) | `drift >=2.28.1 <2.34.0` | DB cục bộ; ghim <2.34 để analyzer 9 tương thích riverpod_generator |
 | Routing | go_router | `go_router ^14.6.0` | hằng ở `route_paths.dart` |
 | i18n | flutter_localizations + ARB | — | `gen_l10n` |
 | Testing | flutter_test + mocktail | — | Drift in-memory |

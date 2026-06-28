@@ -13,7 +13,7 @@ void main() {
 
   ProviderContainer makeContainer() {
     final container = ProviderContainer(
-      overrides: <Override>[databaseProvider.overrideWithValue(db)],
+      overrides: [databaseProvider.overrideWithValue(db)],
     );
     container.listen(personalizationNotifierProvider, (_, _) {});
     return container;
