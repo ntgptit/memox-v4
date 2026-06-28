@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/settings_providers.dart';
 import 'package:memox_v4/core/constants/settings_keys.dart';
 import 'package:memox_v4/core/theme/theme_prefs.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/usecases/settings/update_setting.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'personalization_notifier.g.dart';
 
 /// Theme personalization (kept alive): mode + accent + font scale, persisted via
 /// the W12 settings store and applied live by `MemoXApp`.
-final personalizationNotifierProvider =
-    AsyncNotifierProvider<PersonalizationNotifier, ThemePrefs>(
-      PersonalizationNotifier.new,
-    );
-
-class PersonalizationNotifier extends AsyncNotifier<ThemePrefs> {
+@Riverpod(keepAlive: true)
+class PersonalizationNotifier extends _$PersonalizationNotifier {
   UpdateSettingUseCase get _update =>
       UpdateSettingUseCase(ref.read(settingsRepositoryProvider));
 

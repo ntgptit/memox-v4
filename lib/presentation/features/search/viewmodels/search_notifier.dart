@@ -1,10 +1,12 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/search_providers.dart';
 import 'package:memox_v4/domain/models/search_result.dart';
 import 'package:memox_v4/domain/types/card_status.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/usecases/search/search_cards.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'search_notifier.g.dart';
 
 /// Search UI state: the query, the status filter (null = all), and the raw
 /// results (the screen applies the filter against the clock).
@@ -38,11 +40,8 @@ class SearchUiState {
 }
 
 /// Kept alive so recent searches survive within a session.
-final searchNotifierProvider = NotifierProvider<SearchNotifier, SearchUiState>(
-  SearchNotifier.new,
-);
-
-class SearchNotifier extends Notifier<SearchUiState> {
+@Riverpod(keepAlive: true)
+class SearchNotifier extends _$SearchNotifier {
   static const int _recentLimit = 5;
 
   @override
@@ -55,7 +54,7 @@ class SearchNotifier extends Notifier<SearchUiState> {
       state = state.copyWith(results: const <SearchResult>[], searching: false);
       return;
     }
-    final pairContext = await ref.read(languagePairNotifierProvider.future);
+    final pairContext = await ref.read(languagePairProvider.future);
     if (state.query.trim() != trimmed) return;
     final pairId = pairContext.active?.id;
     if (pairId == null) {

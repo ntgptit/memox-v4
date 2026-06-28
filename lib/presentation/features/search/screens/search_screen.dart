@@ -23,7 +23,7 @@ class SearchScreen extends ConsumerStatefulWidget {
 class _SearchScreenState extends ConsumerState<SearchScreen> {
   final TextEditingController _controller = TextEditingController();
 
-  SearchNotifier get _notifier => ref.read(searchNotifierProvider.notifier);
+  SearchNotifier get _notifier => ref.read(searchProvider.notifier);
 
   @override
   void dispose() {
@@ -34,7 +34,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final state = ref.watch(searchNotifierProvider);
+    final state = ref.watch(searchProvider);
     final now = ref.read(clockProvider).now().millisecondsSinceEpoch;
     return Scaffold(
       appBar: AppBar(

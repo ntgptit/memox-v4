@@ -41,8 +41,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     });
   }
 
-  LanguagePairNotifier get _notifier =>
-      ref.read(languagePairNotifierProvider.notifier);
+  LanguagePairNotifier get _notifier => ref.read(languagePairProvider.notifier);
 
   void _setActive(int id) => unawaited(_notifier.setActive(id));
 
@@ -52,7 +51,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final asyncContext = ref.watch(languagePairNotifierProvider);
+    final asyncContext = ref.watch(languagePairProvider);
     return Drawer(
       child: SafeArea(
         child: asyncContext.when(

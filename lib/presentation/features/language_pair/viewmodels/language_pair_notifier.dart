@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/language_pair_providers.dart';
 import 'package:memox_v4/domain/models/language_pair_context.dart';
 import 'package:memox_v4/domain/repositories/language_pair_repository.dart';
@@ -8,20 +7,15 @@ import 'package:memox_v4/domain/usecases/language_pair/get_pair_context.dart';
 import 'package:memox_v4/domain/usecases/language_pair/remove_language_pair.dart';
 import 'package:memox_v4/domain/usecases/language_pair/set_active_pair.dart';
 import 'package:memox_v4/domain/usecases/language_pair/swap_display_direction.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'language_pair_notifier.g.dart';
 
 /// App-wide language-pair context (active pair + display direction), kept alive
 /// for the app's lifetime. Orchestrates the language-pair use cases only; holds
 /// no business logic and no sole copy of data (`state-management-contract`).
-///
-/// Hand-written `AsyncNotifier` rather than `@riverpod` codegen: the generator's
-/// `source_gen`/`analyzer` pins conflict with `drift_dev` (see
-/// `docs/stack/stack.md`). The provider is keepAlive (not `autoDispose`).
-final languagePairNotifierProvider =
-    AsyncNotifierProvider<LanguagePairNotifier, LanguagePairContext>(
-      LanguagePairNotifier.new,
-    );
-
-class LanguagePairNotifier extends AsyncNotifier<LanguagePairContext> {
+@Riverpod(keepAlive: true)
+class LanguagePairNotifier extends _$LanguagePairNotifier {
   LanguagePairRepository get _repository =>
       ref.read(languagePairRepositoryProvider);
 

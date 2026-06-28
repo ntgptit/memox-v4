@@ -14,12 +14,12 @@ class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   SettingsNotifier _notifier(WidgetRef ref) =>
-      ref.read(settingsNotifierProvider.notifier);
+      ref.read(settingsProvider.notifier);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final settings = ref.watch(settingsNotifierProvider);
+    final settings = ref.watch(settingsProvider);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.drawerSettings)),
       body: settings.when(

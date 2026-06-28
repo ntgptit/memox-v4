@@ -12,13 +12,13 @@ class ThemeScreen extends ConsumerWidget {
   const ThemeScreen({super.key});
 
   PersonalizationNotifier _notifier(WidgetRef ref) =>
-      ref.read(personalizationNotifierProvider.notifier);
+      ref.read(personalizationProvider.notifier);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final prefs =
-        ref.watch(personalizationNotifierProvider).value ?? const ThemePrefs();
+        ref.watch(personalizationProvider).value ?? const ThemePrefs();
     return Scaffold(
       appBar: AppBar(title: Text(l10n.drawerTheme)),
       body: ListView(

@@ -5,19 +5,19 @@ orchestrate use cases, they don't hold business logic or the only copy of data.
 
 ## Choice
 
-**Riverpod 3** — `@riverpod` codegen **đã bật** (drift ghim `<2.34` để chung analyzer 9,
-xem `docs/stack/stack.md`). Notifier family/autoDispose (`StudySessionNotifier`,
-`GameSessionNotifier`, `DeckDetailNotifier`, `LibraryNotifier`, `Statistics`) dùng
-`@riverpod` (provider sinh ra **bỏ hậu tố `Notifier`** → `studySessionProvider`,
-`gameSessionProvider`, `deckDetailProvider`, `libraryProvider`, `statisticsProvider`).
-Notifier đơn (`LanguagePairNotifier`, `EngagementNotifier`, `SettingsNotifier`,
-`PersonalizationNotifier`, `SearchNotifier`, `StatsScopeNotifier`) + `Provider` DI hiện vẫn
-viết tay (`AsyncNotifierProvider`/`NotifierProvider`) — chuyển dần sang `@riverpod` được.
-Riverpod 3: đọc giá trị async bằng `AsyncValue.value` (không còn `valueOrNull`). Trạng thái bất đồng bộ dùng `AsyncValue<T>`: `AsyncNotifier` cho màn/ngữ cảnh
-có hành động (study/game/editor, cặp ngôn ngữ), `FutureProvider`/`StreamProvider` cho đọc
-thuần. Một notifier cho một mối-quan-tâm; mặc định `autoDispose`, `keepAlive` cho state
-xuyên màn. State chỉ **điều phối use case** — không chứa business logic, không giữ bản sao
-dữ liệu duy nhất.
+**Riverpod 3** — **toàn bộ provider khai báo bằng `@riverpod` codegen** (drift ghim `<2.34`
+để chung analyzer 9, xem `docs/stack/stack.md`). Áp dụng cho mọi notifier (study/game/
+deck/library/statistics + cặp ngôn ngữ, engagement, settings, personalization, search,
+stats-scope) và mọi `Provider` DI (`lib/app/di/**`). Quy ước: viết bằng `dart run
+build_runner build` (file `*.g.dart` được commit). **Tên provider sinh ra bỏ hậu tố
+`Notifier`** (class `LibraryNotifier` → `libraryProvider`, `StudySessionNotifier` →
+`studySessionProvider`, …); class `Statistics` → `statisticsProvider`. `@riverpod` mặc
+định `autoDispose`; dùng `@Riverpod(keepAlive: true)` cho state/DI sống xuyên màn. Riverpod
+3: đọc giá trị async bằng `AsyncValue.value` (không còn `valueOrNull`); `Override` (overrides
+trong test) import từ `package:flutter_riverpod/misc.dart`. Trạng thái bất đồng bộ dùng
+`AsyncValue<T>`: `AsyncNotifier` cho màn/ngữ cảnh có hành động, `FutureProvider`/
+`StreamProvider` cho đọc thuần. Một notifier cho một mối-quan-tâm. State chỉ **điều phối use
+case** — không chứa business logic, không giữ bản sao dữ liệu duy nhất.
 
 ## Per-store contract
 

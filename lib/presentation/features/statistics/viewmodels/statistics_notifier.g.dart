@@ -8,6 +8,65 @@ part of 'statistics_notifier.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// The selected statistics scope (current pair vs whole app).
+
+@ProviderFor(StatsScopeNotifier)
+final statsScopeProvider = StatsScopeNotifierProvider._();
+
+/// The selected statistics scope (current pair vs whole app).
+final class StatsScopeNotifierProvider
+    extends $NotifierProvider<StatsScopeNotifier, StatsScope> {
+  /// The selected statistics scope (current pair vs whole app).
+  StatsScopeNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'statsScopeProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$statsScopeNotifierHash();
+
+  @$internal
+  @override
+  StatsScopeNotifier create() => StatsScopeNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(StatsScope value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<StatsScope>(value),
+    );
+  }
+}
+
+String _$statsScopeNotifierHash() =>
+    r'3f7a17c60713fe4a8fd90bed5e73baec54bfb62c';
+
+/// The selected statistics scope (current pair vs whole app).
+
+abstract class _$StatsScopeNotifier extends $Notifier<StatsScope> {
+  StatsScope build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<StatsScope, StatsScope>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<StatsScope, StatsScope>,
+              StatsScope,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
 /// The statistics summary for a scope (autoDispose family — switching scope
 /// discards the previous computation).
 
@@ -56,7 +115,7 @@ final class StatisticsProvider
   }
 }
 
-String _$statisticsHash() => r'696094c0585c2706aac46daef6079a1056ede1bf';
+String _$statisticsHash() => r'273aa82dce513574cd256810767558954a237139';
 
 /// The statistics summary for a scope (autoDispose family — switching scope
 /// discards the previous computation).

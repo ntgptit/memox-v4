@@ -16,12 +16,12 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final summary = ref.watch(engagementNotifierProvider);
+    final summary = ref.watch(engagementProvider);
     return summary.when(
       loading: () => const _DashboardSkeleton(),
       error: (_, _) => _DashboardError(
         message: l10n.dashboardError,
-        onRetry: () => ref.read(engagementNotifierProvider.notifier).refresh(),
+        onRetry: () => ref.read(engagementProvider.notifier).refresh(),
         retryLabel: l10n.commonRetry,
       ),
       data: (data) => _DashboardBody(summary: data),

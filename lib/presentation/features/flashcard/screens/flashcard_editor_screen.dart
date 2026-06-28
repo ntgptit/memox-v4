@@ -83,7 +83,7 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
 
   // ── data ──────────────────────────────────────────────────────────────────
   String _nativeLang() {
-    final active = ref.read(languagePairNotifierProvider).value?.active;
+    final active = ref.read(languagePairProvider).value?.active;
     return active?.targetLang ?? kSupportedLanguages.first.code;
   }
 

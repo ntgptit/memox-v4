@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/settings_providers.dart';
 import 'package:memox_v4/core/constants/settings_keys.dart';
 import 'package:memox_v4/domain/models/app_settings.dart';
@@ -9,13 +8,14 @@ import 'package:memox_v4/domain/usecases/settings/update_setting.dart';
 import 'package:memox_v4/presentation/features/engagement/viewmodels/engagement_notifier.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'settings_notifier.g.dart';
 
 /// User settings (kept alive). Persists each change, then refreshes the
 /// dashboard goal when the daily goal changes.
-final settingsNotifierProvider =
-    AsyncNotifierProvider<SettingsNotifier, AppSettings>(SettingsNotifier.new);
-
-class SettingsNotifier extends AsyncNotifier<AppSettings> {
+@Riverpod(keepAlive: true)
+class SettingsNotifier extends _$SettingsNotifier {
   static const String _backupFileName = 'memox_backup.json';
 
   UpdateSettingUseCase get _update =>
@@ -38,7 +38,7 @@ class SettingsNotifier extends AsyncNotifier<AppSettings> {
   }) async {
     await _update.call(key, value);
     state = await AsyncValue.guard(_load);
-    if (affectsGoal) ref.invalidate(engagementNotifierProvider);
+    if (affectsGoal) ref.invalidate(engagementProvider);
   }
 
   Future<void> setGameWordsPerRound(int value) =>
@@ -85,8 +85,8 @@ class SettingsNotifier extends AsyncNotifier<AppSettings> {
     final path = await _backupPath();
     final result = await ref.read(backupRepositoryProvider).restore(path);
     if (result is Ok<void>) {
-      ref.invalidate(languagePairNotifierProvider);
-      ref.invalidate(engagementNotifierProvider);
+      ref.invalidate(languagePairProvider);
+      ref.invalidate(engagementProvider);
       ref.invalidateSelf();
     }
     return result;

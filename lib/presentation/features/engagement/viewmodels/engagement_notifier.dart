@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/daily_activity_providers.dart';
 import 'package:memox_v4/app/di/deck_providers.dart';
@@ -11,15 +10,14 @@ import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/types/streak.dart';
 import 'package:memox_v4/domain/usecases/engagement/compute_streak.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'engagement_notifier.g.dart';
 
 /// Today dashboard state (kept alive). Composes daily activity (W4), the goal
 /// (settings), the streak (D-021), and the library's due/mastered snapshot.
-final engagementNotifierProvider =
-    AsyncNotifierProvider<EngagementNotifier, EngagementSummary>(
-      EngagementNotifier.new,
-    );
-
-class EngagementNotifier extends AsyncNotifier<EngagementSummary> {
+@Riverpod(keepAlive: true)
+class EngagementNotifier extends _$EngagementNotifier {
   static const EngagementSummary _empty = EngagementSummary(
     seconds: 0,
     words: 0,
@@ -38,7 +36,7 @@ class EngagementNotifier extends AsyncNotifier<EngagementSummary> {
   }
 
   Future<EngagementSummary> _load() async {
-    final pairId = ref.watch(languagePairNotifierProvider).value?.active?.id;
+    final pairId = ref.watch(languagePairProvider).value?.active?.id;
     if (pairId == null) return _empty;
 
     final now = ref.read(clockProvider).now();

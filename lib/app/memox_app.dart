@@ -11,7 +11,7 @@ import 'package:memox_v4/presentation/features/personalization/viewmodels/person
 /// Root application widget.
 ///
 /// Wires the Material 3 themes + router, and applies personalization (W13) live:
-/// theme mode, accent and font scale react to [personalizationNotifierProvider]
+/// theme mode, accent and font scale react to [personalizationProvider]
 /// without a restart.
 class MemoXApp extends ConsumerStatefulWidget {
   const MemoXApp({super.key});
@@ -26,7 +26,7 @@ class _MemoXAppState extends ConsumerState<MemoXApp> {
   @override
   Widget build(BuildContext context) {
     final prefs =
-        ref.watch(personalizationNotifierProvider).value ?? const ThemePrefs();
+        ref.watch(personalizationProvider).value ?? const ThemePrefs();
     return MaterialApp.router(
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,

@@ -42,7 +42,7 @@ final class LibraryNotifierProvider
   LibraryNotifier create() => LibraryNotifier();
 }
 
-String _$libraryNotifierHash() => r'e76f17763c9425b6ec4ca1c3b88ca978af274c56';
+String _$libraryNotifierHash() => r'905e278bd120e9feacd1a5aab8ca27edac14e590';
 
 /// Library home state: the active pair's root deck nodes, sorted. Owns the
 /// current sort and the deck mutations (`state-management-contract`). Reloads

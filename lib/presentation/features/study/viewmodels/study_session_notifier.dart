@@ -135,8 +135,7 @@ class StudySessionNotifier extends _$StudySessionNotifier {
         );
       }
     }
-    final pairId =
-        ref.read(languagePairNotifierProvider).value?.active?.id ?? 0;
+    final pairId = ref.read(languagePairProvider).value?.active?.id ?? 0;
     return StudySessionState(
       entry: arg.entry,
       cards: cards,

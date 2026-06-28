@@ -17,7 +17,7 @@ void main() {
     container = ProviderContainer(
       overrides: [databaseProvider.overrideWithValue(db)],
     );
-    container.listen(settingsNotifierProvider, (_, _) {});
+    container.listen(settingsProvider, (_, _) {});
   });
   tearDown(() async {
     container.dispose();
@@ -25,12 +25,10 @@ void main() {
   });
 
   test('setGameWordsPerRound persists and updates state', () async {
-    await container.read(settingsNotifierProvider.future);
-    await container
-        .read(settingsNotifierProvider.notifier)
-        .setGameWordsPerRound(9);
+    await container.read(settingsProvider.future);
+    await container.read(settingsProvider.notifier).setGameWordsPerRound(9);
 
-    final settings = await container.read(settingsNotifierProvider.future);
+    final settings = await container.read(settingsProvider.future);
     expect(settings.gameWordsPerRound, 9);
   });
 

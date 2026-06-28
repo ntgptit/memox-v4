@@ -28,7 +28,7 @@ class LibraryNotifier extends _$LibraryNotifier {
   Future<List<DeckNode>> build() => _load();
 
   Future<List<DeckNode>> _load() async {
-    final pairId = ref.watch(languagePairNotifierProvider).value?.active?.id;
+    final pairId = ref.watch(languagePairProvider).value?.active?.id;
     if (pairId == null) return const <DeckNode>[];
     final result = await GetLibraryTreeUseCase(
       ref.read(deckRepositoryProvider),
@@ -52,7 +52,7 @@ class LibraryNotifier extends _$LibraryNotifier {
   }
 
   Future<void> createDeck({int? parentDeckId, required String name}) async {
-    final pairId = ref.read(languagePairNotifierProvider).value?.active?.id;
+    final pairId = ref.read(languagePairProvider).value?.active?.id;
     if (pairId == null) return;
     await CreateDeckUseCase(
       ref.read(deckRepositoryProvider),

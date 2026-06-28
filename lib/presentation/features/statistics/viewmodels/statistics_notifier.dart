@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/statistics_providers.dart';
 import 'package:memox_v4/domain/models/statistics_summary.dart';
@@ -11,11 +10,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'statistics_notifier.g.dart';
 
 /// The selected statistics scope (current pair vs whole app).
-final statsScopeProvider = NotifierProvider<StatsScopeNotifier, StatsScope>(
-  StatsScopeNotifier.new,
-);
-
-class StatsScopeNotifier extends Notifier<StatsScope> {
+@Riverpod(keepAlive: true)
+class StatsScopeNotifier extends _$StatsScopeNotifier {
   @override
   StatsScope build() => StatsScope.currentPair;
 
@@ -30,7 +26,7 @@ class Statistics extends _$Statistics {
   Future<StatisticsSummary> build(StatsScope scope) async {
     final pairId = scope == StatsScope.allApp
         ? null
-        : ref.watch(languagePairNotifierProvider).value?.active?.id;
+        : ref.watch(languagePairProvider).value?.active?.id;
     if (scope == StatsScope.currentPair && pairId == null) {
       return StatisticsSummary.empty;
     }

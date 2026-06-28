@@ -17,16 +17,17 @@ hoàn thiện `pubspec.yaml`.
 > (vẫn `source_gen ^3` nhưng `analyzer 9`, tương thích) + nâng `flutter_riverpod` lên `^3`
 > với `riverpod_annotation ^4` / `riverpod_generator ^4`. Tổ hợp resolve: drift 2.31 +
 > riverpod 3.3.1 + generator 4.0.3 (analyzer 9.0.0). **Ràng buộc:** không nâng `drift_dev`
-> ≥2.34 cho tới khi `riverpod_generator` hỗ trợ `analyzer ≥10`. Notifier family/autoDispose
-> dùng `@riverpod`; notifier đơn + `Provider` DI hiện vẫn viết tay (chuyển dần được).
-> Riverpod 3: `AsyncValue.valueOrNull` → `.value`; `Override` (overrides) export ở
+> ≥2.34 cho tới khi `riverpod_generator` hỗ trợ `analyzer ≥10`. **Toàn bộ** notifier +
+> `Provider` DI khai báo bằng `@riverpod` (chạy `dart run build_runner build`; `*.g.dart`
+> được commit). Tên provider sinh ra **bỏ hậu tố `Notifier`** (vd `libraryProvider`). Riverpod
+> 3: `AsyncValue.valueOrNull` → `.value`; `Override` (overrides) export ở
 > `package:flutter_riverpod/misc.dart`.
 
 | Concern | Choice | Version | Notes |
 | --- | --- | --- | --- |
 | Language / runtime | Dart | 3.x | null-safety, sealed/pattern |
 | Framework | Flutter | stable | Material 3 |
-| State management | Riverpod 3 | `flutter_riverpod ^3.3.1` + `riverpod_annotation ^4.0.2` | `@riverpod` codegen bật (generator `^4.0.3`); family/autoDispose dùng codegen, notifier đơn + DI viết tay |
+| State management | Riverpod 3 | `flutter_riverpod ^3.3.1` + `riverpod_annotation ^4.0.2` | `@riverpod` codegen (generator `^4.0.3`); **toàn bộ** notifier + DI dùng codegen |
 | Persistence | Drift (SQLite) | `drift >=2.28.1 <2.34.0` | DB cục bộ; ghim <2.34 để analyzer 9 tương thích riverpod_generator |
 | Routing | go_router | `go_router ^14.6.0` | hằng ở `route_paths.dart` |
 | i18n | flutter_localizations + ARB | — | `gen_l10n` |

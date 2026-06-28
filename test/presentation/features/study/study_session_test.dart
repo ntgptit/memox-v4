@@ -57,7 +57,7 @@ void main() {
       .insert(CardCompanion.insert(deckId: deckId, term: 't', createdAt: 1));
 
   Future<StudySessionState> open(StudyRequest request) async {
-    await container.read(languagePairNotifierProvider.future);
+    await container.read(languagePairProvider.future);
     container.listen(studySessionProvider(request), (_, _) {});
     return container.read(studySessionProvider(request).future);
   }

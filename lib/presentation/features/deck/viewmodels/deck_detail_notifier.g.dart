@@ -57,7 +57,7 @@ final class DeckDetailNotifierProvider
 }
 
 String _$deckDetailNotifierHash() =>
-    r'e56dfdc658db34e95e1e822bbeaadd11f62f59ec';
+    r'bc37629bfa7cb595142f1db6344648fa1eee955a';
 
 /// Deck-detail state for one deck id. Mutations refresh this view and invalidate
 /// the library so its recursive counts stay in sync.

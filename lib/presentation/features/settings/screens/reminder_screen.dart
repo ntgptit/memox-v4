@@ -15,7 +15,7 @@ class ReminderScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final settings = ref.watch(settingsNotifierProvider);
+    final settings = ref.watch(settingsProvider);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsGroupReminder)),
       body: settings.when(
@@ -32,7 +32,7 @@ class ReminderScreen extends ConsumerWidget {
     AppLocalizations l10n,
     Reminder reminder,
   ) {
-    final notifier = ref.read(settingsNotifierProvider.notifier);
+    final notifier = ref.read(settingsProvider.notifier);
     return ListView(
       padding: const EdgeInsets.all(MxSpacing.space4),
       children: <Widget>[
