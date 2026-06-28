@@ -8,11 +8,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/di/import_export_providers.dart';
 import 'package:memox_v4/core/constants/supported_languages.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/types/import_export_format.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/usecases/import_export/import_cards.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/inputs/mx_switch.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Import cards into a deck from a CSV/Excel file or the clipboard (D-025): pick
 /// source → map columns → preview → import (soft-dup counted, never blocks).
@@ -112,29 +118,33 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     final l10n = AppLocalizations.of(context);
     final rows = _rows;
     final columns = (rows != null && rows.isNotEmpty) ? rows.first.length : 0;
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.importTitle)),
+    return MxScaffold(
+      appBar: MxAppBar(title: l10n.importTitle),
       body: ListView(
         key: const Key('import'),
-        padding: const EdgeInsets.all(MxSpacing.space4),
+        padding: const EdgeInsets.symmetric(vertical: MxSpacing.space4),
         children: <Widget>[
           Row(
             children: <Widget>[
               Expanded(
-                child: FilledButton.tonalIcon(
+                child: MxButton(
                   key: const Key('importPickFile'),
+                  label: l10n.importPickFile,
+                  icon: Icons.upload_file,
+                  variant: MxButtonVariant.secondary,
+                  block: true,
                   onPressed: () => unawaited(_pickFile()),
-                  icon: const Icon(Icons.upload_file),
-                  label: Text(l10n.importPickFile),
                 ),
               ),
               const SizedBox(width: MxSpacing.space3),
               Expanded(
-                child: OutlinedButton.icon(
+                child: MxButton(
                   key: const Key('importPaste'),
+                  label: l10n.importPaste,
+                  icon: Icons.content_paste,
+                  variant: MxButtonVariant.outline,
+                  block: true,
                   onPressed: () => unawaited(_paste()),
-                  icon: const Icon(Icons.content_paste),
-                  label: Text(l10n.importPaste),
                 ),
               ),
             ],
@@ -150,10 +160,12 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               ],
               onChanged: (v) => v == null ? null : _changeSeparator(v),
             ),
-            SwitchListTile(
+            ListTile(
               title: Text(l10n.importHasHeader),
-              value: _hasHeader,
-              onChanged: (v) => setState(() => _hasHeader = v),
+              trailing: MxSwitch(
+                value: _hasHeader,
+                onChanged: (v) => setState(() => _hasHeader = v),
+              ),
             ),
             _columnPicker(
               l10n.importTermColumn,
@@ -174,22 +186,20 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               const Key('importMeaningColumn'),
             ),
             const SizedBox(height: MxSpacing.space3),
-            Text(
-              l10n.importPreview,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
+            MxText(l10n.importPreview, role: MxTextRole.titleSmall),
             for (final row in rows.take(5))
-              Text(
+              MxText(
                 row.join('  |  '),
+                role: MxTextRole.bodySmall,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall,
               ),
             const SizedBox(height: MxSpacing.space4),
-            FilledButton(
+            MxButton(
               key: const Key('importRun'),
+              label: l10n.importRun,
+              block: true,
               onPressed: () => unawaited(_import()),
-              child: Text(l10n.importRun),
             ),
           ],
           if (_result case final r?) ...<Widget>[
@@ -201,10 +211,10 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
           ],
           if (_error case final e?) ...<Widget>[
             const SizedBox(height: MxSpacing.space4),
-            Text(
+            MxText(
               e,
               key: const Key('importError'),
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+              color: MxTheme.of(context).colors.error,
             ),
           ],
         ],

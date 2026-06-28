@@ -9,6 +9,10 @@ import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/types/import_export_format.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/inputs/mx_switch.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Export a deck's cards to CSV/Excel/clipboard, optionally its subtree and SRS
 /// state (D-026).
@@ -67,23 +71,27 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.exportTitle)),
+    return MxScaffold(
+      appBar: MxAppBar(title: l10n.exportTitle),
       body: ListView(
         key: const Key('export'),
-        padding: const EdgeInsets.all(MxSpacing.space4),
+        padding: const EdgeInsets.symmetric(vertical: MxSpacing.space4),
         children: <Widget>[
-          SwitchListTile(
-            key: const Key('exportSubtree'),
+          ListTile(
             title: Text(l10n.exportScopeSubtree),
-            value: _includeSubtree,
-            onChanged: (v) => setState(() => _includeSubtree = v),
+            trailing: MxSwitch(
+              key: const Key('exportSubtree'),
+              value: _includeSubtree,
+              onChanged: (v) => setState(() => _includeSubtree = v),
+            ),
           ),
-          SwitchListTile(
-            key: const Key('exportIncludeSrs'),
+          ListTile(
             title: Text(l10n.exportIncludeSrs),
-            value: _includeSrs,
-            onChanged: (v) => setState(() => _includeSrs = v),
+            trailing: MxSwitch(
+              key: const Key('exportIncludeSrs'),
+              value: _includeSrs,
+              onChanged: (v) => setState(() => _includeSrs = v),
+            ),
           ),
           const SizedBox(height: MxSpacing.space3),
           DropdownButtonFormField<TransferFormat>(
@@ -96,10 +104,11 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
             onChanged: (v) => v == null ? null : setState(() => _format = v),
           ),
           const SizedBox(height: MxSpacing.space4),
-          FilledButton(
+          MxButton(
             key: const Key('exportRun'),
+            label: l10n.exportRun,
+            block: true,
             onPressed: () => unawaited(_export()),
-            child: Text(l10n.exportRun),
           ),
           if (_message case final m?) ...<Widget>[
             const SizedBox(height: MxSpacing.space4),
