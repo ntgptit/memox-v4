@@ -23,7 +23,7 @@ dòng nên có một test, và mỗi test hành vi nên truy ngược về một
 | D-016 | nút có due=0 | bấm Play mở menu | menu KHÔNG có mục "Lặp lại" (chỉ Học/Xem lại/Trò chơi/Trình phát) | `docs/business/study/study-flow.md` | `test/domain/usecases/study/study_use_cases_test.dart` |
 | D-017 | NewLearn chưa xong đủ 5 chặng | thoát giữa chừng | thẻ **vẫn là mới** (chưa vào ô 1) | `docs/business/study/study-flow.md` | `test/presentation/features/study/study_session_test.dart` |
 | D-018 | NewLearn, có thẻ mới | dựng hàng đợi học mới | lấy tối đa `new_cards_per_day` thẻ mới/ngày (mặc định 20) | `docs/business/srs/srs-review.md` | `test/domain/usecases/srs/srs_use_cases_test.dart` |
-| D-019 | nhập từ khoá tìm kiếm | tìm | khớp trên cả `term` và nghĩa (`card_meaning.text`) | `docs/business/search/global-search.md` | `test/data/repositories/search_repository_impl_test.dart` |
+| D-019 | nhập từ khoá tìm kiếm | tìm | tách token theo khoảng trắng; **mỗi** token khớp `term` hoặc nghĩa (`card_meaning.content`) — AND giữa các token | `docs/business/search/global-search.md` | `test/data/repositories/search_repository_impl_test.dart` |
 | D-020 | tạo/nhập thẻ cùng term trong deck | lưu | **cảnh báo mềm**, vẫn cho thêm (không chặn) | `docs/business/flashcard/flashcard-management.md` | `test/presentation/features/flashcard/flashcard_editor_screen_test.dart` |
 | D-021 | ngày đạt ≥1 mục tiêu (phút HOẶC từ) | chốt ngày (nửa đêm giờ máy) | `streak +1`; ngày không đạt → streak reset 0 | `docs/business/engagement/dashboard-engagement.md` | `test/domain/usecases/engagement/compute_streak_test.dart` |
 | D-022 | (REMOVED) xoá một thư mục — bỏ khái niệm folder (pivot v1) | — | hành vi xoá lan cây con nay do D-024 phủ | — | — |

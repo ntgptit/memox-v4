@@ -13,9 +13,12 @@ typedef SearchRow = ({
   int? dueAt,
 });
 
-/// Searches `card` + `card_meaning` within a pair. The term is matched directly;
-/// meanings via `EXISTS` so a multi-meaning card yields one row. Includes hidden
-/// cards (D-028); the displayed meaning is the card's first.
+/// Searches `card` + `card_meaning` within a pair. The query is split on
+/// whitespace into tokens; **each** token must match the term or a meaning
+/// (AND across tokens — D-019), so "xin chào" finds a card whose term holds one
+/// token and meaning the other. Meanings are matched via `EXISTS` so a
+/// multi-meaning card yields one row. Includes hidden cards (D-028); the
+/// displayed meaning is the card's first.
 class SearchDao {
   const SearchDao(this._db);
 
@@ -26,7 +29,12 @@ class SearchDao {
     required String query,
     List<int>? scopeCardIds,
   }) async {
-    final like = '%${query.toLowerCase()}%';
+    final tokens = query
+        .toLowerCase()
+        .split(RegExp(r'\s+'))
+        .where((t) => t.isNotEmpty)
+        .toList(growable: false);
+    if (tokens.isEmpty) return const <SearchRow>[];
     final sql = StringBuffer(
       'SELECT c.id AS card_id, c.deck_id AS deck_id, c.term AS term, '
       'c.hidden AS hidden, d.name AS deck_name, s.box AS box, s.due_at AS due_at, '
@@ -34,15 +42,20 @@ class SearchDao {
       'AS meaning '
       'FROM card c JOIN deck d ON c.deck_id = d.id '
       'LEFT JOIN srs_state s ON s.card_id = c.id '
-      'WHERE d.pair_id = ? AND (LOWER(c.term) LIKE ? OR EXISTS '
-      '(SELECT 1 FROM card_meaning cm WHERE cm.card_id = c.id '
-      'AND LOWER(cm.content) LIKE ?))',
+      'WHERE d.pair_id = ?',
     );
-    final variables = <Variable<Object>>[
-      Variable<int>(pairId),
-      Variable<String>(like),
-      Variable<String>(like),
-    ];
+    final variables = <Variable<Object>>[Variable<int>(pairId)];
+    for (final token in tokens) {
+      final like = '%$token%';
+      sql.write(
+        ' AND (LOWER(c.term) LIKE ? OR EXISTS '
+        '(SELECT 1 FROM card_meaning cm WHERE cm.card_id = c.id '
+        'AND LOWER(cm.content) LIKE ?))',
+      );
+      variables
+        ..add(Variable<String>(like))
+        ..add(Variable<String>(like));
+    }
     if (scopeCardIds != null && scopeCardIds.isNotEmpty) {
       final placeholders = List<String>.filled(
         scopeCardIds.length,

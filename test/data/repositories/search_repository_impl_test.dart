@@ -67,6 +67,19 @@ void main() {
     expect(ids.contains(other), isFalse);
   });
 
+  test('D-019: multi-token query ANDs across term and meaning', () async {
+    final split = await card('xin', 'chào bạn'); // 'xin' term, 'bạn' meaning
+    final onlyTerm = await card('xin', 'cảm ơn'); // matches 'xin' but not 'bạn'
+
+    final results = (await repository.search(
+      pairId: pairId,
+      query: 'xin bạn',
+    )).valueOrNull!;
+    final ids = results.map((r) => r.cardId).toSet();
+    expect(ids, contains(split));
+    expect(ids.contains(onlyTerm), isFalse);
+  });
+
   test('D-028: results include hidden cards', () async {
     final hidden = await card('mesa', 'bàn', hidden: true);
     final results = (await repository.search(

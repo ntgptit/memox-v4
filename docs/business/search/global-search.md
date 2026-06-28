@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `search/global-search` |
 | Gói công việc (WBS) | W7 |
-| Trạng thái | Implemented (tìm term+nghĩa, gồm thẻ ẩn, lọc trạng thái; v1 dùng LIKE — FTS/index hoãn tới khi perf cần) |
+| Trạng thái | Implemented (tìm term+nghĩa, **khớp đa từ-khoá AND** theo khoảng trắng, gồm thẻ ẩn, lọc trạng thái; v1 dùng LIKE — FTS5/index hoãn tới khi perf cần (xem §8)) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-019, D-028 |
 | Phiên bản | 1.0 |
@@ -48,7 +48,7 @@ nút; bộ lọc theo trạng thái thẻ.
 
 | Mã | Quy tắc | Lý do | Truy vết |
 | --- | --- | --- | --- |
-| BR-1 | Từ khoá khớp trên cả `term` và nội dung nghĩa. | Tìm được bằng mặt người học nhớ. | D-019 |
+| BR-1 | Từ khoá tách theo khoảng trắng thành các token; **mỗi** token phải khớp `term` **hoặc** một nghĩa (AND giữa các token). Một token đơn = khớp chuỗi con như cũ. | Tìm được bằng mặt người học nhớ; gõ vài từ thu hẹp đúng thẻ kể cả khi token nằm rải ở term lẫn nghĩa. | D-019 |
 | BR-2 | Kết quả bao gồm cả thẻ ẩn; có bộ lọc theo trạng thái (mới / đến hạn / đã thuộc). | Người học vẫn cần tìm thấy thẻ đã ẩn. | D-028 |
 | BR-3 | Chỉ tìm trong cặp ngôn ngữ đang chọn; phạm vi là toàn thư viện hoặc trong nút đang mở. | Kết quả đúng ngữ cảnh. | — |
 
@@ -59,6 +59,8 @@ nút; bộ lọc theo trạng thái thẻ.
 - **AC-2** — *Cho* một thẻ đang ẩn khớp từ khoá, *khi* tìm, *thì* thẻ vẫn xuất hiện. ↔ D-028
 - **AC-3** — *Cho* bộ lọc trạng thái "đến hạn", *khi* áp dụng, *thì* chỉ còn thẻ đến hạn
   trong kết quả. ↔ D-028
+- **AC-4** — *Cho* từ khoá hai token mà một token khớp `term` còn token kia khớp nghĩa của
+  cùng một thẻ, *khi* tìm, *thì* thẻ đó xuất hiện; thẻ chỉ khớp một token thì không. ↔ D-019
 
 ## 8. Yêu cầu phi chức năng
 
