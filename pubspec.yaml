@@ -87,6 +87,13 @@ flutter:
   # Generate localizations (gen_l10n) from lib/l10n/*.arb per l10n.yaml.
   generate: true
 
+  # Brand font (design kit: Plus Jakarta Sans, variable weight). Wires
+  # MxTypography.fontFamily so the theme renders in the brand face.
+  fonts:
+    - family: Plus Jakarta Sans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
