@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 21ac799e · 2026-06-28 · design-system · xây tầng shared widget (W14): font Plus Jakarta Sans wire (eeadac73); 16 component design-kit + text/state/feedback — surfaces (aab4e399: MxScaffold/MxAppBar/MxCard/MxSectionHeader/MxIconTile), core (b79ae6ec: MxButton/MxChip/MxSwitch/MxSegmentedControl/MxBadge/MxAvatar), inputs+nav (eefce1c2: MxTextField/MxSearchField/MxIconButton/MxFab/MxBottomNav), text+async+feedback (21ac799e: MxText/MxStateView/MxSnackbar); token-only + doc-header guard + smoke test; migrate màn hình (Phase 5) để sau
 - 0dd4a5db · 2026-06-28 · platform · chạy được trên web: connection conditional native(dart:ffi)↔web(Drift WASM) + assets web/sqlite3.wasm + web/drift_worker.dart.js; conditionalize dart:io ở backup + file-save (web stub); `flutter build web` PASS, `flutter run -d chrome` chạy; export/local-backup degrade trên web (xem web/README-drift.md)
 - 5863e973 · 2026-06-28 · W8,W10,W11 · fix Tier-C của code-verification-guard (ruleset memox): type-check jsonDecode (backup+Drive), tách FileSaveService (export screen bỏ dart:io), MxRadius.fieldRadius, MxSpacing.space12; phân loại A/B/C trong NIGHT-LOG
 - da1c28cf · 2026-06-28 · release · CI gate (`.github/workflows/ci.yml` chạy verify --full trên push/PR) + `docs/checklist/release-readiness.md` (build-config TODO + human gap GCP + smoke-test thiết bị)

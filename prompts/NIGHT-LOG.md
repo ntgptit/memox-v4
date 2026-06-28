@@ -428,3 +428,24 @@ User couldn't run `flutter run -d chrome --web-port 3000`. Two distinct causes:
 - File export + local file backup/restore throw on web (no browser filesystem) — use cloud sync there.
 - Notifications/TTS depend on browser support.
 - Web isn't yet in the release-readiness target list; this enables dev/preview on web.
+
+## 2026-06-28 · Design system — shared widget library built (Phase 0–4)
+
+User: `lib/presentation/shared` had no real widgets and the theme wasn't fully on the design kit. Assessment: tokens (mx_colors/typography/radius/spacing/sizes/elevation) + app_theme were actually faithful to `docs/design/MemoX Design System/tokens/*`; the real gaps were (a) the brand font wasn't wired, and (b) the 16 design-kit components weren't built.
+
+Built across 5 commits (each token-only + guard doc-header + smoke test, verify --full GREEN):
+- `eeadac73` **Phase 0 font** — wired Plus Jakarta Sans (asset + pubspec); app was rendering in platform sans.
+- `aab4e399` **surfaces** — MxScaffold, MxAppBar, MxCard, MxSectionHeader, MxIconTile.
+- `b79ae6ec` **core controls** — MxButton (5 variants), MxChip, MxSwitch, MxSegmentedControl, MxBadge, MxAvatar.
+- `eefce1c2` **inputs+nav** — MxTextField, MxSearchField (MxSearchDock), MxIconButton, MxFab, MxBottomNav.
+- `21ac799e` **text+async+feedback** — MxText (the text-role API centralizing TextTheme access), MxStateView (loading/empty/error), MxSnackbar.
+
+All 16 design-kit components + the text/state/feedback helpers now live under `lib/presentation/shared/widgets/{surfaces,buttons,inputs,display,navigation,states,feedback}/`. My new widgets pass the guard's `shared_widget_doc` rules (doc-header format matches the fixture).
+
+### Guard delta + two follow-ups
+- `missing_target_path` for mx_text_field/mx_search_field: resolved (files exist).
+- Guard total errors rose slightly (518→541): building the wrapper layer ADDS no_raw_*/no_direct_text_theme hits **inside the Mx widgets themselves** — e.g. MxFab must call FloatingActionButton, MxAppBar/MxButton style via TextTheme. The guard doesn't exempt the design-system implementation layer. **Recommended Tier-A guard fix:** scope `no_raw_*` / `no_direct_text_theme` to exclude `lib/presentation/shared/widgets/**` (the layer whose job is to wrap raw primitives). MxText then becomes the only sanctioned TextTheme reader.
+- 25 `shared_widget_doc` warnings remain on 5 PRE-EXISTING shared widgets (MxResponsiveBuilder, MxDeckTile, MxPlaceholder, …) that predate this format — add structured headers when convenient.
+
+### Remaining = Phase 5 (separate)
+Migrate the ~20 feature screens to use the Mx widgets (replaces raw Material + direct TextTheme) — this is what actually clears the bulk of the guard's 523 screen-level errors. Not started.
