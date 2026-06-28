@@ -483,3 +483,19 @@ Guard impact: total errors 541 → **362**. Screen-level rules cleared:
 1. **Tier-A guard exemption** (recommended): scope `no_raw_*` / `no_direct_text_theme` to exclude `lib/presentation/shared/widgets/**` (the design-system layer's job is to wrap raw primitives) → the residual ~362 drops sharply and the count reflects real feature-code violations only.
 2. Migrate the 4 game widgets (matching/recall/typing/multiple_choice) to MxText/MxButton/MxCard if desired (they're gameplay, lower priority).
 3. Add structured doc-headers to the 5 legacy shared widgets (MxDeckTile/MxPlaceholder/MxResponsiveBuilder…).
+
+## PARITY LOOP (per-screen node parity to design kit) — started 2026-06-29
+
+Self-paced /loop: ONE screen per iteration → add `ValueKey('mx-node:<screen>/<node>')`
+to FE widgets matching the kit contract (`tool/parity/contracts/*.gen.json`); for
+deliberate architectural divergences add a documented `tool/parity/intent-ledger.json`
+exception (cite a doc); extend the verify `parity_fe_keys` gate with the screen;
+`node tool/parity/fe_node_usage.mjs --check --screen <X>` must be clean; verify --full
+GREEN; commit+push; then ScheduleWakeup to continue.
+
+- DONE: dashboard (271ba4ea) · library (29ba5597 — 7 keyed, 3 exempt: overflow→drawer,
+  search-dock→/search, empty-add→needs deck).
+- QUEUE (20 left): deck-detail · statistics · settings · search · study-session · review ·
+  player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing ·
+  flashcard-editor · import · export · reminder · theme · account-sync · drawer.
+- NEXT ITERATION = deck-detail.
