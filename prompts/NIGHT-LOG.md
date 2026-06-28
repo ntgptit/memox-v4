@@ -326,3 +326,29 @@ Each item: `node tool/verify/run.mjs --full` GREEN before push. Test count grew 
 
 ### Status
 S0 + W2–W9, W11–W13 implemented & tested. W8 Done. **W10 Partial** (structure + tests; GCP config = human gap). Loop STOPPED (no further wakeup scheduled).
+
+## 2026-06-28 · 8-SUBAGENT RECURSIVE REVIEW (post-round) + fixes
+
+User requested a recursive review of the whole gap-fill round with 8 sub-agents. Ran them read-only over `04656999..HEAD` (the 7 items), each a distinct lens per `docs/checklist/recursive-agent-review.md`: security-auditor, performance-auditor, test-engineer, refactoring-specialist, solution-architect, docs-drift-detector, debugger, code-reviewer.
+
+### Fixed (commit `2edd575e`, verify --full GREEN, 177 tests +4) — convergent findings
+- **W4 study grade-wrong-card (HIGH; debugger + test-engineer + architect + code-reviewer):** `StudySessionNotifier.markCorrect/markWrong` ignored the passed `cardId`/`requeue` and always graded the queue head. In a NewLearn **MatchingGame** stage, matching a non-head pair graded the wrong card (and re-queued wrong matches). Now honors cardId+requeue, mirroring the correct GameSessionNotifier. +2 tests. Also extracted `ReviewOutcomeMode.dueReview` constant.
+- **W7 search wildcard injection of meaning (debugger):** typed `%`/`_` acted as LIKE wildcards. Now escaped with `ESCAPE '\'`. +1 test.
+- **W9 longest-streak DST (debugger):** `_parseDay` used local midnight → `inDays` mis-count across spring-forward. Now UTC midnight. +1 test.
+- **W10/backup data-loss guards (security + debugger):** `deserialize` now rejects a snapshot missing the root table (was: empty `{}` → DELETE-all → wipe). `GoogleDriveSyncService` caches the Drive file id only after the media PATCH succeeds (was: cached early → failed first upload leaves an empty file the next sync pulls). `SyncNowUseCase` stamps lastSync from the server's modifiedTime (was: local clock → push↔pull ping-pong under clock skew).
+- **Tests/docs:** migration_v2_test now seeds rows before onUpgrade and asserts survival (data-preservation). Doc parity: tables.drift schema_version 1→2 comment; navigation-flow dropped the non-existent `/settings/account` route (sync is an inline settings tile); business/index statuses Specified→Implemented (W10 alpha); removed dead `statsActivityTitle` l10n key.
+
+### Deferred (logged; not blocking — bigger or needs a product decision)
+- **Perf — export N+1** (`export_cards.dart` subtree fetches getById per card): add a bulk `CardRepository.listByIds` + one `meaningsForCards`. Medium effort (repository contract change).
+- **Perf — restore per-row INSERT** (`backup_repository_impl.deserialize`): batch multi-row INSERT / Drift `batch()` for large datasets.
+- **Perf — stats `_activity`/`_accuracy` unbounded** for "all app" scope: push an 84-day / pair window into SQL as history grows.
+- **Arch — sign-in orchestration split** (`SettingsNotifier.syncNow` pre-checks sign-in that `SyncNowUseCase` also handles): consolidate to one seam.
+- **UX — import/export screens swallow `Err`** with no feedback: add an error message branch.
+- **UX — `LocalNotificationService.sync` requests permission on every save**: request once on first-enable.
+- **Security (hardening) — backup deserialize column-name interpolation**: validate column names against an allow-list/regex (data is the user's own backup/Drive, so lower risk; root-table guard already added).
+- **Cleanup** — `sync_now` `(x as Ok).value` after Err-guard → `valueOrNull`; dead `StudySessionState.revealed`/`reveal()`; export_screen hardcoded `','` → `Separator.comma.char`.
+- **Doc decision** — record that accuracy stats are dueReview-only (NewLearn game grades not recorded), per architect note.
+- **Test depth** — sync error-path coverage, GoogleDriveSyncService not-configured guard test, export subtree/hidden coverage.
+
+### Verdicts
+No layer-boundary violations (architect). Security: no hardcoded creds, no SQL-value injection; the fixed guards close the restore-path risks. doc_guard clean. Net: the round's architecture is sound; the convergent correctness bugs are fixed; the deferred items are improvements, not blockers.
