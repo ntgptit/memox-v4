@@ -11,6 +11,10 @@ import 'package:memox_v4/domain/types/card_status.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/search/viewmodels/search_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_chip.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Global search by term + meaning, with status filter chips (`15-search.md`).
 class SearchScreen extends ConsumerStatefulWidget {
@@ -36,7 +40,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final l10n = AppLocalizations.of(context);
     final state = ref.watch(searchProvider);
     final now = ref.read(clockProvider).now().millisecondsSinceEpoch;
-    return Scaffold(
+    return MxScaffold(
+      flush: true,
       appBar: AppBar(
         title: TextField(
           key: const Key('searchField'),
@@ -70,10 +75,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget _filterChips(AppLocalizations l10n, SearchUiState state) {
     Widget chip(String label, CardStatus? value) => Padding(
       padding: const EdgeInsets.only(right: MxSpacing.space2),
-      child: ChoiceChip(
-        label: Text(label),
+      child: MxChip(
+        label: label,
         selected: state.filter == value,
-        onSelected: (_) => _notifier.setFilter(value),
+        onTap: () => _notifier.setFilter(value),
       ),
     );
     return SingleChildScrollView(
@@ -95,7 +100,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   Widget _body(AppLocalizations l10n, SearchUiState state, int now) {
     if (state.searching) {
-      return const Center(child: CircularProgressIndicator());
+      return const MxStateView.loading();
     }
     if (state.query.trim().isEmpty) return _recent(l10n, state);
     final filtered = <SearchResult>[
@@ -104,7 +109,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     ];
     if (filtered.isEmpty) {
       return MxContentBounds(
-        child: Center(child: Text(l10n.searchNoResults(state.query.trim()))),
+        child: Center(child: MxText(l10n.searchNoResults(state.query.trim()))),
       );
     }
     return ListView.builder(
@@ -128,9 +133,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      trailing: Text(
+      trailing: MxText(
         _statusLabel(l10n, result.status(now)),
-        style: Theme.of(context).textTheme.labelSmall,
+        role: MxTextRole.labelSmall,
       ),
       onTap: () => unawaited(
         context.push(
@@ -145,7 +150,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   Widget _recent(AppLocalizations l10n, SearchUiState state) {
     if (state.recent.isEmpty) {
-      return MxContentBounds(child: Center(child: Text(l10n.searchHint)));
+      return MxContentBounds(child: Center(child: MxText(l10n.searchHint)));
     }
     return ListView(
       children: <Widget>[
@@ -156,10 +161,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             MxSpacing.space5,
             MxSpacing.space1,
           ),
-          child: Text(
-            l10n.searchRecent,
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
+          child: MxText.label(l10n.searchRecent),
         ),
         for (final query in state.recent)
           ListTile(

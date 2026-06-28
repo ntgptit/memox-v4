@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/di/card_providers.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/types/game_scope.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/domain/types/result.dart';
@@ -13,6 +14,11 @@ import 'package:memox_v4/domain/usecases/game/build_game_round.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/viewmodels/settings_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// "A game" picker (`docs/design/screens/07-game-picker.md`, D-013): pick one of
 /// the four games + a scope, or a not-enough state.
@@ -64,10 +70,11 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.gameTitle)),
+    return MxScaffold(
+      appBar: MxAppBar(title: l10n.gameTitle),
+      flush: true,
       body: switch (_count) {
-        null => const Center(child: CircularProgressIndicator()),
+        null => const MxStateView.loading(),
         0 => _notEnough(l10n),
         _ => _picker(l10n),
       },
@@ -82,16 +89,16 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
           Icon(
             Icons.videogame_asset_outlined,
             size: MxSpacing.space10,
-            color: Theme.of(context).colorScheme.primary,
+            color: MxTheme.of(context).colors.primary,
           ),
           const SizedBox(height: MxSpacing.space4),
-          Text(l10n.gameNotEnoughTitle),
+          MxText(l10n.gameNotEnoughTitle),
           const SizedBox(height: MxSpacing.space4),
-          FilledButton.icon(
+          MxButton(
+            label: l10n.deckAddWord,
+            icon: Icons.add,
             onPressed: () =>
                 context.push(RoutePaths.flashcardEditorLocation(widget.nodeId)),
-            icon: const Icon(Icons.add),
-            label: Text(l10n.deckAddWord),
           ),
         ],
       ),
@@ -99,14 +106,13 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
   );
 
   Widget _picker(AppLocalizations l10n) {
-    final theme = Theme.of(context);
     final wordsPerRound =
         ref.watch(settingsProvider).value?.gameWordsPerRound ??
         kDefaultGameWordsPerRound;
     return ListView(
       padding: const EdgeInsets.all(MxSpacing.space5),
       children: <Widget>[
-        Text(l10n.gameScopeLabel, style: theme.textTheme.labelMedium),
+        MxText.label(l10n.gameScopeLabel),
         const SizedBox(height: MxSpacing.space2),
         DropdownButton<GameScope>(
           key: const Key('gameScope'),
@@ -132,10 +138,7 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
           ],
         ),
         const SizedBox(height: MxSpacing.space2),
-        Text(
-          l10n.gameWordsHint(wordsPerRound),
-          style: theme.textTheme.bodySmall,
-        ),
+        MxText(l10n.gameWordsHint(wordsPerRound), role: MxTextRole.bodySmall),
         const SizedBox(height: MxSpacing.space4),
         _gameTile(
           GameType.matching,
