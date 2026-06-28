@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/core/constants/settings_keys.dart';
+import 'package:memox_v4/core/error/failure.dart';
 import 'package:memox_v4/core/util/clock.dart';
 import 'package:memox_v4/domain/repositories/backup_repository.dart';
 import 'package:memox_v4/domain/repositories/settings_repository.dart';
@@ -21,9 +22,13 @@ class _FakeCloud implements CloudSyncService {
   String remoteContent = '{"r":1}';
   String? uploaded;
   bool downloaded = false;
+  Failure? signedInError;
+  Failure? metaError;
+  Failure? downloadError;
 
   @override
-  Future<Result<bool>> isSignedIn() async => Ok<bool>(signedIn);
+  Future<Result<bool>> isSignedIn() async =>
+      signedInError != null ? Err<bool>(signedInError!) : Ok<bool>(signedIn);
   @override
   Future<Result<void>> signIn() async {
     signedIn = true;
@@ -37,8 +42,9 @@ class _FakeCloud implements CloudSyncService {
   }
 
   @override
-  Future<Result<RemoteSnapshotMeta?>> remoteMeta() async =>
-      Ok<RemoteSnapshotMeta?>(meta);
+  Future<Result<RemoteSnapshotMeta?>> remoteMeta() async => metaError != null
+      ? Err<RemoteSnapshotMeta?>(metaError!)
+      : Ok<RemoteSnapshotMeta?>(meta);
   @override
   Future<Result<void>> upload(String snapshotJson, DateTime modifiedAt) async {
     uploaded = snapshotJson;
@@ -48,18 +54,25 @@ class _FakeCloud implements CloudSyncService {
   @override
   Future<Result<String>> download() async {
     downloaded = true;
-    return Ok<String>(remoteContent);
+    return downloadError != null
+        ? Err<String>(downloadError!)
+        : Ok<String>(remoteContent);
   }
 }
 
 class _FakeBackup implements BackupRepository {
   String serialized = '{"local":1}';
   String? restored;
+  Failure? serializeError;
+  Failure? deserializeError;
 
   @override
-  Future<Result<String>> serialize() async => Ok<String>(serialized);
+  Future<Result<String>> serialize() async => serializeError != null
+      ? Err<String>(serializeError!)
+      : Ok<String>(serialized);
   @override
   Future<Result<void>> deserialize(String json) async {
+    if (deserializeError != null) return Err<void>(deserializeError!);
     restored = json;
     return const Ok<void>(null);
   }
@@ -142,4 +155,56 @@ void main() {
     expect(cloud.uploaded, backup.serialized);
     expect(backup.restored, isNull);
   });
+
+  test('equal timestamp resolves to push (strict >)', () async {
+    settings.store[SettingsKeys.cloudLastSyncAt] = '5000';
+    cloud.meta = (modifiedAt: DateTime.fromMillisecondsSinceEpoch(5000));
+    final result = await useCase.call();
+    expect(result.valueOrNull, SyncOutcome.pushed);
+    expect(backup.restored, isNull);
+  });
+
+  test('isSignedIn error propagates, nothing transferred', () async {
+    cloud.signedInError = const NetworkFailure(message: 'x');
+    final result = await useCase.call();
+    expect(result, isA<Err<SyncOutcome>>());
+    expect(cloud.uploaded, isNull);
+    expect(cloud.downloaded, isFalse);
+  });
+
+  test('remoteMeta error propagates', () async {
+    cloud.metaError = const NetworkFailure(message: 'x');
+    final result = await useCase.call();
+    expect(result, isA<Err<SyncOutcome>>());
+    expect(cloud.uploaded, isNull);
+  });
+
+  test('serialize error during push propagates, no upload', () async {
+    cloud.meta = null;
+    backup.serializeError = const PersistenceFailure(message: 'x');
+    final result = await useCase.call();
+    expect(result, isA<Err<SyncOutcome>>());
+    expect(cloud.uploaded, isNull);
+  });
+
+  test('download error during pull propagates, no restore', () async {
+    settings.store[SettingsKeys.cloudLastSyncAt] = '1000';
+    cloud.meta = (modifiedAt: DateTime.fromMillisecondsSinceEpoch(5000));
+    cloud.downloadError = const NetworkFailure(message: 'x');
+    final result = await useCase.call();
+    expect(result, isA<Err<SyncOutcome>>());
+    expect(backup.restored, isNull);
+  });
+
+  test(
+    'deserialize error during pull propagates, lastSync unchanged',
+    () async {
+      settings.store[SettingsKeys.cloudLastSyncAt] = '1000';
+      cloud.meta = (modifiedAt: DateTime.fromMillisecondsSinceEpoch(5000));
+      backup.deserializeError = const PersistenceFailure(message: 'x');
+      final result = await useCase.call();
+      expect(result, isA<Err<SyncOutcome>>());
+      expect(settings.store[SettingsKeys.cloudLastSyncAt], '1000');
+    },
+  );
 }

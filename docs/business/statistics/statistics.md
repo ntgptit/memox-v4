@@ -45,7 +45,7 @@ kế giao diện quyết định.
 | Số từ đã học | Tích luỹ theo thời gian. |
 | Phân bố theo ô Leitner | Số thẻ ở mỗi ô 1..8, phản ánh độ thành thạo. |
 | Dự báo đến hạn | Số thẻ sẽ đến hạn ôn trong N ngày tới. |
-| Độ chính xác | Tỉ lệ trả lời đúng khi học/ôn. |
+| Độ chính xác | Tỉ lệ trả lời đúng. **v1 chỉ tính lượt DueReview** (ghi vào `review_outcome`); các lượt chấm ở NewLearn/luyện game không tính (nhiều lần thử, không phải tín hiệu ghi nhớ). |
 | Tổng quan thư viện | Số cặp ngôn ngữ, bộ thẻ, thẻ; tỉ lệ đã thuộc. |
 
 ## 6. Quy tắc nghiệp vụ (Business rules)
