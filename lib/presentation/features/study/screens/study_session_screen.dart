@@ -7,12 +7,18 @@ import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/features/game/round.dart';
+import 'package:memox_v4/presentation/features/game/widgets/matching_game.dart';
+import 'package:memox_v4/presentation/features/game/widgets/multiple_choice_game.dart';
+import 'package:memox_v4/presentation/features/game/widgets/recall_game.dart';
+import 'package:memox_v4/presentation/features/game/widgets/typing_game.dart';
 import 'package:memox_v4/presentation/features/study/viewmodels/study_session_notifier.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
 
-/// Scheduled study session (NewLearn 5 stages / DueReview). A unified self-grade
-/// drives the round; the per-stage game widgets are reused from W5 in a follow-up
-/// (they bind to the game notifier — see NIGHT-LOG).
+/// Scheduled study session. NewLearn runs 5 stages over the cards — stage 1 is a
+/// learn pass (term + meaning), stages 2–5 reuse the real W5 game widgets
+/// (matching / guess / recall / fill-in) driven by the study session via
+/// `RoundActions`. DueReview is a single recall pass that grades SRS (D-014).
 class StudySessionScreen extends ConsumerStatefulWidget {
   const StudySessionScreen({
     super.key,
@@ -90,9 +96,24 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
   }
 
   Widget _body(AppLocalizations l10n, StudySessionState state) {
+    final round = RoundState(cards: state.cards, pending: state.pending);
+    if (round.current == null) return const SizedBox.shrink();
+    if (state.entry == StudyEntry.dueReview) {
+      return RecallGame(round: round, actions: _notifier);
+    }
+    // NewLearn: stage 1 learns, stages 2–5 are the real games.
+    return switch (state.stageIndex) {
+      0 => _learnStage(l10n, round),
+      1 => MatchingGame(round: round, actions: _notifier),
+      2 => MultipleChoiceGame(round: round, actions: _notifier),
+      3 => RecallGame(round: round, actions: _notifier),
+      _ => TypingGame(round: round, actions: _notifier),
+    };
+  }
+
+  Widget _learnStage(AppLocalizations l10n, RoundState round) {
     final theme = Theme.of(context);
-    final current = state.current;
-    if (current == null) return const SizedBox.shrink();
+    final current = round.current!;
     return Padding(
       padding: const EdgeInsets.all(MxSpacing.space5),
       child: Column(
@@ -106,35 +127,13 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
             ),
           ),
           const SizedBox(height: MxSpacing.space4),
-          if (state.revealed)
-            Text(current.meaning, style: theme.textTheme.bodyLarge),
+          Text(current.meaning, style: theme.textTheme.bodyLarge),
           const Spacer(),
-          if (!state.revealed)
-            FilledButton(
-              key: const Key('studyShow'),
-              onPressed: _notifier.reveal,
-              child: Text(l10n.gameShow),
-            )
-          else
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: OutlinedButton(
-                    key: const Key('studyForgot'),
-                    onPressed: () => unawaited(_notifier.grade(false)),
-                    child: Text(l10n.gameForgot),
-                  ),
-                ),
-                const SizedBox(width: MxSpacing.space3),
-                Expanded(
-                  child: FilledButton(
-                    key: const Key('studyRemembered'),
-                    onPressed: () => unawaited(_notifier.grade(true)),
-                    child: Text(l10n.gameRemembered),
-                  ),
-                ),
-              ],
-            ),
+          FilledButton(
+            key: const Key('studyLearnNext'),
+            onPressed: () => _notifier.markCorrect(current.cardId),
+            child: Text(l10n.studyContinue),
+          ),
         ],
       ),
     );

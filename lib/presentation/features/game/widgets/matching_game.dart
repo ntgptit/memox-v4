@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/models/game_card.dart';
-import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
+import 'package:memox_v4/presentation/features/game/round.dart';
 
 /// Matching: pair meanings (left) with terms (right); a correct pair disappears,
 /// a wrong pair stays (re-learn within the round, D-015 — no re-queue needed as
 /// the card is simply not removed).
-class MatchingGame extends ConsumerStatefulWidget {
-  const MatchingGame({super.key, required this.request});
+class MatchingGame extends StatefulWidget {
+  const MatchingGame({super.key, required this.round, required this.actions});
 
-  final GameRequest request;
+  final RoundState round;
+  final RoundActions actions;
 
   @override
-  ConsumerState<MatchingGame> createState() => _MatchingGameState();
+  State<MatchingGame> createState() => _MatchingGameState();
 }
 
-class _MatchingGameState extends ConsumerState<MatchingGame> {
+class _MatchingGameState extends State<MatchingGame> {
   List<int> _leftOrder = const <int>[];
   List<int> _rightOrder = const <int>[];
   int? _selectedLeft;
@@ -25,14 +25,10 @@ class _MatchingGameState extends ConsumerState<MatchingGame> {
   @override
   void initState() {
     super.initState();
-    final state = ref.read(gameSessionProvider(widget.request)).value;
-    final ids = state?.cards.map((c) => c.cardId).toList() ?? const <int>[];
+    final ids = widget.round.cards.map((c) => c.cardId).toList();
     _leftOrder = List<int>.of(ids)..shuffle();
     _rightOrder = List<int>.of(ids)..shuffle();
   }
-
-  GameSessionNotifier get _notifier =>
-      ref.read(gameSessionProvider(widget.request).notifier);
 
   void _selectLeft(int id) {
     setState(() => _selectedLeft = id);
@@ -49,9 +45,9 @@ class _MatchingGameState extends ConsumerState<MatchingGame> {
     final right = _selectedRight;
     if (left == null || right == null) return;
     if (left == right) {
-      _notifier.markCorrect(left);
+      widget.actions.markCorrect(left);
     } else {
-      _notifier.markWrong(left, requeue: false);
+      widget.actions.markWrong(left, requeue: false);
     }
     setState(() {
       _selectedLeft = null;
@@ -61,10 +57,9 @@ class _MatchingGameState extends ConsumerState<MatchingGame> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(gameSessionProvider(widget.request)).value;
-    if (state == null) return const SizedBox.shrink();
-    final pending = state.pending.toSet();
-    GameCard cardOf(int id) => state.cards.firstWhere((c) => c.cardId == id);
+    final pending = widget.round.pending.toSet();
+    GameCard cardOf(int id) =>
+        widget.round.cards.firstWhere((c) => c.cardId == id);
     final left = <int>[
       for (final id in _leftOrder)
         if (pending.contains(id)) id,

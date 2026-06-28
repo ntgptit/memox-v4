@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/usecases/game/evaluate_typing.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
-import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
+import 'package:memox_v4/presentation/features/game/round.dart';
 
 /// Fill in: show a meaning, type the term (tolerant match). Wrong re-queues the
 /// card (D-015).
-class TypingGame extends ConsumerStatefulWidget {
-  const TypingGame({super.key, required this.request});
+class TypingGame extends StatefulWidget {
+  const TypingGame({super.key, required this.round, required this.actions});
 
-  final GameRequest request;
+  final RoundState round;
+  final RoundActions actions;
 
   @override
-  ConsumerState<TypingGame> createState() => _TypingGameState();
+  State<TypingGame> createState() => _TypingGameState();
 }
 
-class _TypingGameState extends ConsumerState<TypingGame> {
+class _TypingGameState extends State<TypingGame> {
   final TextEditingController _controller = TextEditingController();
   static const EvaluateTypingUseCase _evaluate = EvaluateTypingUseCase();
   bool _checkedWrong = false;
   bool _showHint = false;
-
-  GameSessionNotifier get _notifier =>
-      ref.read(gameSessionProvider(widget.request).notifier);
 
   @override
   void dispose() {
@@ -41,7 +38,7 @@ class _TypingGameState extends ConsumerState<TypingGame> {
 
   void _check(int cardId, String term) {
     if (_evaluate(_controller.text, term)) {
-      _notifier.markCorrect(cardId);
+      widget.actions.markCorrect(cardId);
       _reset();
     } else {
       setState(() => _checkedWrong = true);
@@ -52,9 +49,8 @@ class _TypingGameState extends ConsumerState<TypingGame> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final state = ref.watch(gameSessionProvider(widget.request)).value;
-    final current = state?.current;
-    if (state == null || current == null) return const SizedBox.shrink();
+    final current = widget.round.current;
+    if (current == null) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.all(MxSpacing.space5),
       child: Column(
@@ -118,7 +114,7 @@ class _TypingGameState extends ConsumerState<TypingGame> {
                   child: OutlinedButton(
                     key: const Key('typingRetry'),
                     onPressed: () {
-                      _notifier.markWrong(current.cardId);
+                      widget.actions.markWrong(current.cardId);
                       _reset();
                     },
                     child: Text(l10n.gameRetry),
@@ -129,7 +125,7 @@ class _TypingGameState extends ConsumerState<TypingGame> {
                   child: FilledButton(
                     key: const Key('typingAccept'),
                     onPressed: () {
-                      _notifier.markCorrect(current.cardId);
+                      widget.actions.markCorrect(current.cardId);
                       _reset();
                     },
                     child: Text(l10n.gameAccept),

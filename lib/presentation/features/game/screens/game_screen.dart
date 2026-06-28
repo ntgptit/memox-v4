@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/features/game/round.dart';
 import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
 import 'package:memox_v4/presentation/features/game/widgets/matching_game.dart';
 import 'package:memox_v4/presentation/features/game/widgets/multiple_choice_game.dart';
@@ -31,10 +32,16 @@ class GameScreen extends ConsumerWidget {
         data: (state) {
           if (state.isEmpty) return _notEnough(context, l10n);
           if (state.isComplete) return _complete(context, ref, l10n);
+          final round = RoundState(
+            cards: state.cards,
+            pending: state.pending,
+            lastWrong: state.lastWrong,
+          );
+          final actions = ref.read(gameSessionProvider(request).notifier);
           return Column(
             children: <Widget>[
               LinearProgressIndicator(value: state.progress),
-              Expanded(child: _body(request.type)),
+              Expanded(child: _body(request.type, round, actions)),
             ],
           );
         },
@@ -42,12 +49,16 @@ class GameScreen extends ConsumerWidget {
     );
   }
 
-  Widget _body(GameType type) => switch (type) {
-    GameType.matching => MatchingGame(request: request),
-    GameType.multipleChoice => MultipleChoiceGame(request: request),
-    GameType.recall => RecallGame(request: request),
-    GameType.typing => TypingGame(request: request),
-  };
+  Widget _body(GameType type, RoundState round, RoundActions actions) =>
+      switch (type) {
+        GameType.matching => MatchingGame(round: round, actions: actions),
+        GameType.multipleChoice => MultipleChoiceGame(
+          round: round,
+          actions: actions,
+        ),
+        GameType.recall => RecallGame(round: round, actions: actions),
+        GameType.typing => TypingGame(round: round, actions: actions),
+      };
 
   Widget _notEnough(BuildContext context, AppLocalizations l10n) =>
       MxContentBounds(

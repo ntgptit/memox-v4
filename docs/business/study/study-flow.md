@@ -10,7 +10,7 @@
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-001, D-002, D-007, D-008, D-009, D-010, D-013, D-014, D-015, D-016, D-029 |
 | Phiên bản | 1.0 |
-| Trạng thái triển khai | Implemented (5 lối vào + Play menu + NewLearn 5 chặng + DueReview + Review/Player + result; chặng game NewLearn dùng self-grade gộp — xem ghi chú 06) |
+| Trạng thái triển khai | Implemented (5 lối vào + Play menu + NewLearn 5 chặng + DueReview + Review/Player + result; **NewLearn chặng 1 = Xem lại, chặng 2–5 dùng game thật W5** (Ghép đôi/Đoán/Nhớ lại/Điền) lái qua `RoundActions` — `lib/presentation/features/game/round.dart`; DueReview = một lượt Nhớ lại chấm SRS) |
 
 ## 1. Mục đích & bối cảnh nghiệp vụ
 

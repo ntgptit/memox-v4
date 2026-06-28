@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/models/game_card.dart';
-import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
+import 'package:memox_v4/presentation/features/game/round.dart';
 
 /// Guess: show a term, pick the correct meaning. Wrong re-queues the card (D-015).
-class MultipleChoiceGame extends ConsumerWidget {
-  const MultipleChoiceGame({super.key, required this.request});
+class MultipleChoiceGame extends StatelessWidget {
+  const MultipleChoiceGame({
+    super.key,
+    required this.round,
+    required this.actions,
+  });
 
-  final GameRequest request;
+  final RoundState round;
+  final RoundActions actions;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(gameSessionProvider(request)).value;
-    final current = state?.current;
-    if (state == null || current == null) return const SizedBox.shrink();
-    final notifier = ref.read(gameSessionProvider(request).notifier);
-    final options = _options(state, current);
+  Widget build(BuildContext context) {
+    final current = round.current;
+    if (current == null) return const SizedBox.shrink();
+    final options = _options(round, current);
     return ListView(
       padding: const EdgeInsets.all(MxSpacing.space5),
       children: <Widget>[
@@ -39,9 +41,9 @@ class MultipleChoiceGame extends ConsumerWidget {
               key: option == current.meaning ? const Key('mcCorrect') : null,
               onPressed: () {
                 if (option == current.meaning) {
-                  notifier.markCorrect(current.cardId);
+                  actions.markCorrect(current.cardId);
                 } else {
-                  notifier.markWrong(current.cardId);
+                  actions.markWrong(current.cardId);
                 }
               },
               child: Text(option),
@@ -51,9 +53,9 @@ class MultipleChoiceGame extends ConsumerWidget {
     );
   }
 
-  List<String> _options(GameSessionState state, GameCard current) {
+  List<String> _options(RoundState round, GameCard current) {
     final options = <String>{current.meaning};
-    for (final card in state.cards) {
+    for (final card in round.cards) {
       if (options.length >= 4) break;
       if (card.cardId != current.cardId && card.meaning.isNotEmpty) {
         options.add(card.meaning);

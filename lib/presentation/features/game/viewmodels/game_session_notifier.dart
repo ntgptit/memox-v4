@@ -7,6 +7,7 @@ import 'package:memox_v4/domain/types/game_scope.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/usecases/game/build_game_round.dart';
+import 'package:memox_v4/presentation/features/game/round.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'game_session_notifier.g.dart';
@@ -77,7 +78,8 @@ class GameSessionState {
 /// Drives a practice round. Never touches `srs_state` (D-007): wrong answers
 /// re-queue the card within the round (D-015), nothing is scheduled.
 @riverpod
-class GameSessionNotifier extends _$GameSessionNotifier {
+class GameSessionNotifier extends _$GameSessionNotifier
+    implements RoundActions {
   @override
   Future<GameSessionState> build(GameRequest arg) async {
     final cards =
@@ -117,6 +119,7 @@ class GameSessionNotifier extends _$GameSessionNotifier {
     );
   }
 
+  @override
   void markCorrect(int cardId) {
     final current = state.value;
     if (current == null) return;
@@ -133,6 +136,7 @@ class GameSessionNotifier extends _$GameSessionNotifier {
 
   /// Marks the card wrong. For sequential games [requeue] moves it to the back of
   /// the queue; for matching the card simply stays (requeue false).
+  @override
   void markWrong(int cardId, {bool requeue = true}) {
     final current = state.value;
     if (current == null) return;
@@ -152,6 +156,7 @@ class GameSessionNotifier extends _$GameSessionNotifier {
     );
   }
 
+  @override
   void clearWrong() {
     final current = state.value;
     if (current == null) return;

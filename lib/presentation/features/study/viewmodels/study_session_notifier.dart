@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:memox_v4/app/di/card_providers.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/daily_activity_providers.dart';
@@ -16,6 +18,7 @@ import 'package:memox_v4/domain/usecases/srs/grade_card.dart';
 import 'package:memox_v4/domain/usecases/srs/schedule_new_card.dart';
 import 'package:memox_v4/domain/usecases/study/build_study_queue.dart';
 import 'package:memox_v4/domain/usecases/study/finalize_study_session.dart';
+import 'package:memox_v4/presentation/features/game/round.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -105,7 +108,8 @@ class StudySessionState {
 /// complete (D-002) — quitting before then leaves them new (D-017). Finalize
 /// adds activity for these entries only (D-010).
 @riverpod
-class StudySessionNotifier extends _$StudySessionNotifier {
+class StudySessionNotifier extends _$StudySessionNotifier
+    implements RoundActions {
   DeckRepository get _deck => ref.read(deckRepositoryProvider);
   SrsRepository get _srs => ref.read(srsRepositoryProvider);
   CardRepository get _card => ref.read(cardRepositoryProvider);
@@ -151,6 +155,16 @@ class StudySessionNotifier extends _$StudySessionNotifier {
     if (current == null) return;
     state = AsyncData(current.copyWith(revealed: true));
   }
+
+  // ── RoundActions: lets the game widgets drive NewLearn stages ──────────────
+  @override
+  void markCorrect(int cardId) => unawaited(grade(true));
+
+  @override
+  void markWrong(int cardId, {bool requeue = true}) => unawaited(grade(false));
+
+  @override
+  void clearWrong() {}
 
   Future<void> grade(bool correct) async {
     final session = state.value;
