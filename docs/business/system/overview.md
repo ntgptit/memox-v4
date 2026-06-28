@@ -60,7 +60,7 @@ học. (Premium hoãn v1.) Sơ đồ đầy đủ: `docs/business/system/system-
 | Nhập / Xuất | `docs/business/import-export/import-export.md` | Implemented | `test/domain/usecases/import_export/` |
 | Thống kê | `docs/business/statistics/statistics.md` | Implemented | `test/domain/usecases/statistics/get_statistics_test.dart` |
 | Hoạt động & streak | `docs/business/engagement/dashboard-engagement.md` | Implemented | `test/domain/usecases/engagement/compute_streak_test.dart` |
-| Tài khoản & Đồng bộ | `docs/business/account-sync/account-sync.md` | Specified | TBD |
+| Tài khoản & Đồng bộ | `docs/business/account-sync/account-sync.md` | Implemented (alpha — cấu trúc + LWW mức snapshot; GCP/OAuth config = human gap) | TBD |
 | Cài đặt & sao lưu | `docs/business/settings/settings.md` | Implemented | `test/data/repositories/settings_repository_impl_test.dart` · `test/data/repositories/backup_repository_impl_test.dart` |
 | Cá nhân hoá (theme) | `docs/business/personalization/personalization.md` | Implemented | `test/presentation/features/personalization/personalization_notifier_test.dart` |
 

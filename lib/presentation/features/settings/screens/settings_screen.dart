@@ -5,6 +5,7 @@ import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/models/app_settings.dart';
 import 'package:memox_v4/domain/types/result.dart';
+import 'package:memox_v4/domain/types/sync.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/viewmodels/settings_notifier.dart';
 
@@ -131,6 +132,13 @@ class SettingsScreen extends ConsumerWidget {
         ),
       ),
       ListTile(
+        key: const Key('settingsSyncRow'),
+        leading: const Icon(Icons.cloud_sync_outlined),
+        title: Text(l10n.settingsSyncTitle),
+        subtitle: Text(l10n.settingsSyncSubtitle),
+        onTap: () => _sync(context, ref, l10n),
+      ),
+      ListTile(
         key: const Key('settingsThemeRow'),
         title: Text(l10n.drawerTheme),
         trailing: const Icon(Icons.chevron_right),
@@ -138,6 +146,24 @@ class SettingsScreen extends ConsumerWidget {
       ),
     ],
   );
+
+  Future<void> _sync(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+  ) async {
+    final result = await _notifier(ref).syncNow();
+    if (!context.mounted) return;
+    final message = switch (result) {
+      Ok(value: SyncOutcome.pushed) => l10n.settingsSyncPushed,
+      Ok(value: SyncOutcome.pulled) => l10n.settingsSyncPulled,
+      Ok(value: SyncOutcome.signInRequired) => l10n.settingsSyncSignInRequired,
+      Err() => l10n.settingsSyncError,
+    };
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(message)));
+  }
 
   Future<void> _backup(
     BuildContext context,

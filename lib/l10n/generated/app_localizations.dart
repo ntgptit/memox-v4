@@ -1214,6 +1214,42 @@ abstract class AppLocalizations {
   /// **'Backup failed'**
   String get settingsBackupError;
 
+  /// No description provided for @settingsSyncTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync with Google Drive'**
+  String get settingsSyncTitle;
+
+  /// No description provided for @settingsSyncSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Multi-device backup (sign-in required)'**
+  String get settingsSyncSubtitle;
+
+  /// No description provided for @settingsSyncPushed.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded to Google Drive'**
+  String get settingsSyncPushed;
+
+  /// No description provided for @settingsSyncPulled.
+  ///
+  /// In en, this message translates to:
+  /// **'Restored from Google Drive'**
+  String get settingsSyncPulled;
+
+  /// No description provided for @settingsSyncSignInRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to Google to sync'**
+  String get settingsSyncSignInRequired;
+
+  /// No description provided for @settingsSyncError.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync unavailable'**
+  String get settingsSyncError;
+
   /// No description provided for @settingsNotSet.
   ///
   /// In en, this message translates to:

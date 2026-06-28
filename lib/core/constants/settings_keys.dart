@@ -19,4 +19,8 @@ abstract final class SettingsKeys {
   static const String themeMode = 'theme_mode';
   static const String accentColor = 'accent_color';
   static const String fontScale = 'font_scale';
+
+  /// Epoch ms of the last successful cloud sync (push or pull). Drives the
+  /// snapshot-level last-writer-wins policy (W10).
+  static const String cloudLastSyncAt = 'cloud_last_sync_at';
 }

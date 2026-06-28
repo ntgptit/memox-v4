@@ -53,4 +53,49 @@ void main() {
     final decks = await db.select(db.deck).get();
     expect(decks.single.name, 'Deck');
   });
+
+  test(
+    'serialize/deserialize round-trips review_outcome (W9 in snapshot)',
+    () async {
+      final pairId = await db
+          .into(db.languagePair)
+          .insert(
+            LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
+          );
+      final deckId = await db
+          .into(db.deck)
+          .insert(DeckCompanion.insert(pairId: pairId, name: 'Deck'));
+      final cardId = await db
+          .into(db.card)
+          .insert(
+            CardCompanion.insert(deckId: deckId, term: 'xin', createdAt: 1),
+          );
+      await db
+          .into(db.reviewOutcome)
+          .insert(
+            ReviewOutcomeCompanion.insert(
+              cardId: cardId,
+              pairId: pairId,
+              ts: 1000,
+              correct: 1,
+              mode: 'dueReview',
+            ),
+          );
+
+      final json = await repository.serialize();
+      expect(json, isA<Ok<String>>());
+
+      await db.delete(db.reviewOutcome).go();
+      await db.delete(db.card).go();
+      await db.delete(db.deck).go();
+      await db.delete(db.languagePair).go();
+      expect(await db.select(db.reviewOutcome).get(), isEmpty);
+
+      expect(
+        await repository.deserialize((json as Ok<String>).value),
+        isA<Ok<void>>(),
+      );
+      expect(await db.select(db.reviewOutcome).get(), hasLength(1));
+    },
+  );
 }

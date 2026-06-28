@@ -625,6 +625,24 @@ class AppLocalizationsVi extends AppLocalizations {
   String get settingsBackupError => 'Sao lưu thất bại';
 
   @override
+  String get settingsSyncTitle => 'Đồng bộ Google Drive';
+
+  @override
+  String get settingsSyncSubtitle => 'Sao lưu đa thiết bị (cần đăng nhập)';
+
+  @override
+  String get settingsSyncPushed => 'Đã tải lên Google Drive';
+
+  @override
+  String get settingsSyncPulled => 'Đã khôi phục từ Google Drive';
+
+  @override
+  String get settingsSyncSignInRequired => 'Đăng nhập Google để đồng bộ';
+
+  @override
+  String get settingsSyncError => 'Chưa thể đồng bộ';
+
+  @override
   String get settingsNotSet => 'Chưa đặt';
 
   @override

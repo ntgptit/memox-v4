@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `account-sync/account-sync` |
 | Gói công việc (WBS) | W10 |
-| Trạng thái | Specified (alpha) |
+| Trạng thái | Implemented (alpha) — cấu trúc đồng bộ + LWW mức snapshot + tests; **human gap** = cấu hình GCP/OAuth (xem §12) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-027 |
 | Phiên bản | 1.0 |
@@ -83,3 +83,24 @@ xung đột.
 
 - **Quyết định:** `docs/decision-tables/core-decision-table.md` — D-027.
 - **Spec liên quan:** `docs/business/settings/settings.md` (sao lưu cục bộ).
+
+## 12. Triển khai v1 & human gap
+
+**Đã làm (code + test):**
+- `CloudSyncService` (interface, `lib/domain/services/`) + `GoogleDriveSyncService`
+  (`lib/data/services/`): đăng nhập google_sign_in 7 + Drive REST (appDataFolder) qua
+  HTTP; lưu file-id ở secure storage.
+- `SyncNowUseCase` (`lib/domain/usecases/sync/`): tái dùng snapshot JSON của
+  `BackupRepository.serialize/deserialize`; **LWW mức snapshot** — nếu mốc sửa remote mới
+  hơn `cloud_last_sync_at` (settings) thì pull+restore, ngược lại push. Máy mới chưa từng
+  sync sẽ nhận remote nếu có. Test: `test/domain/usecases/sync/sync_now_test.dart`.
+- Điểm vào UI: tile "Đồng bộ Google Drive" ở `/settings`.
+
+**Giới hạn v1 (đúng §10):** LWW là mức snapshot (toàn bộ), KHÔNG per-record — MemoX chưa
+có mốc cập nhật từng bản ghi. Hợp nhất per-record + tombstone xoá hoãn.
+
+**🔴 Human gap (không làm được từ code):** `CloudSyncConfig.clientId` mặc định rỗng nên
+service trơ (báo "not configured"). Để bật thật cần: (1) project GCP bật **Drive API**;
+(2) **OAuth client id** (đưa vào `CloudSyncConfig` hoặc `--dart-define`); (3) cấu hình OAuth
+theo nền tảng: Android SHA-1 + `google-services.json`, iOS URL scheme + `Info.plist`,
+desktop client.

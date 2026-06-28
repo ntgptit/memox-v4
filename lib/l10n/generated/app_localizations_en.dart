@@ -631,6 +631,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsBackupError => 'Backup failed';
 
   @override
+  String get settingsSyncTitle => 'Sync with Google Drive';
+
+  @override
+  String get settingsSyncSubtitle => 'Multi-device backup (sign-in required)';
+
+  @override
+  String get settingsSyncPushed => 'Uploaded to Google Drive';
+
+  @override
+  String get settingsSyncPulled => 'Restored from Google Drive';
+
+  @override
+  String get settingsSyncSignInRequired => 'Sign in to Google to sync';
+
+  @override
+  String get settingsSyncError => 'Sync unavailable';
+
+  @override
   String get settingsNotSet => 'Not set';
 
   @override

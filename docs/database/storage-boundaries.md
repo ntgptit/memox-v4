@@ -7,7 +7,7 @@ What lives where, so nothing important survives only in memory (hard rule).
 | Entity (deck/card/card_meaning/srs_state/daily_activity/review_outcome) | Drift SQLite | truy vấn, bền | persistent |
 | Cài đặt (theme, SRS, game, nhắc, mục tiêu) + ngữ cảnh cặp (`active_pair_id`, `display_swapped`) | Drift `settings` (key-value) | nhỏ, phẳng | persistent |
 | State UI tạm (hàng đợi học, tiến độ ván) | Riverpod (in-memory) | dẫn xuất, tính lại được | session |
-| Token Google / phiên đăng nhập | secure storage | không để plaintext | persistent |
+| Token Google / phiên đăng nhập + id file snapshot Drive | secure storage | không để plaintext | persistent |
 | Backup | file cục bộ (Documents) | snapshot khôi phục | persistent |
 
 ## Rules

@@ -1,9 +1,11 @@
 import 'package:memox_v4/app/di/notification_providers.dart';
 import 'package:memox_v4/app/di/settings_providers.dart';
+import 'package:memox_v4/app/di/sync_providers.dart';
 import 'package:memox_v4/core/constants/settings_keys.dart';
 import 'package:memox_v4/domain/models/app_settings.dart';
 import 'package:memox_v4/domain/types/reminder.dart';
 import 'package:memox_v4/domain/types/result.dart';
+import 'package:memox_v4/domain/types/sync.dart';
 import 'package:memox_v4/domain/usecases/settings/get_settings.dart';
 import 'package:memox_v4/domain/usecases/settings/update_setting.dart';
 import 'package:memox_v4/presentation/features/engagement/viewmodels/engagement_notifier.dart';
@@ -93,6 +95,24 @@ class SettingsNotifier extends _$SettingsNotifier {
     final path = await _backupPath();
     final result = await ref.read(backupRepositoryProvider).restore(path);
     if (result is Ok<void>) {
+      ref.invalidate(languagePairProvider);
+      ref.invalidate(engagementProvider);
+      ref.invalidateSelf();
+    }
+    return result;
+  }
+
+  /// Sign in to Google if needed, then sync (snapshot-level LWW, W10). A pull
+  /// refreshes the library + dashboard like a local restore.
+  Future<Result<SyncOutcome>> syncNow() async {
+    final cloud = ref.read(cloudSyncServiceProvider);
+    final signedIn = (await cloud.isSignedIn()).valueOrNull ?? false;
+    if (!signedIn) {
+      final signIn = await cloud.signIn();
+      if (signIn is Err<void>) return Err<SyncOutcome>(signIn.failure);
+    }
+    final result = await ref.read(syncNowProvider).call();
+    if (result case Ok(value: SyncOutcome.pulled)) {
       ref.invalidate(languagePairProvider);
       ref.invalidate(engagementProvider);
       ref.invalidateSelf();

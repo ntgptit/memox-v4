@@ -8,4 +8,10 @@ abstract interface class BackupRepository {
 
   /// Replaces all data with the snapshot at [path].
   Future<Result<void>> restore(String path);
+
+  /// The same snapshot as [backup], as a JSON string (for cloud sync upload).
+  Future<Result<String>> serialize();
+
+  /// Replaces all data with the snapshot held in [json] (cloud sync download).
+  Future<Result<void>> deserialize(String json);
 }

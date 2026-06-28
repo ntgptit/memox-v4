@@ -434,6 +434,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ srs_providers.g.dart
 │  │  │  ├─ statistics_providers.dart
 │  │  │  ├─ statistics_providers.g.dart
+│  │  │  ├─ sync_providers.dart
+│  │  │  ├─ sync_providers.g.dart
 │  │  │  ├─ tts_providers.dart
 │  │  │  └─ tts_providers.g.dart
 │  │  ├─ router/
@@ -464,6 +466,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ day_key.dart
 │  │     └─ logger.dart
 │  ├─ data/
+│  │  ├─ config/
+│  │  │  └─ cloud_sync_config.dart
 │  │  ├─ datasources/
 │  │  │  └─ local/
 │  │  ├─ mappers/
@@ -485,6 +489,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  └─ statistics_repository_impl.dart
 │  │  └─ services/
 │  │     ├─ flutter_tts_service.dart
+│  │     ├─ google_drive_sync_service.dart
 │  │     ├─ local_notification_service.dart
 │  │     └─ table_codec.dart
 │  ├─ domain/
@@ -519,6 +524,7 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ srs_repository.dart
 │  │  │  └─ statistics_repository.dart
 │  │  ├─ services/
+│  │  │  ├─ cloud_sync_service.dart
 │  │  │  ├─ notification_service.dart
 │  │  │  ├─ reminder_scheduler.dart
 │  │  │  ├─ srs_scheduler.dart
@@ -537,7 +543,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │  │  ├─ sort.dart
 │  │  │  ├─ stats_scope.dart
 │  │  │  ├─ streak.dart
-│  │  │  └─ study_entry.dart
+│  │  │  ├─ study_entry.dart
+│  │  │  └─ sync.dart
 │  │  └─ usecases/
 │  │     ├─ deck/
 │  │     ├─ engagement/
@@ -549,7 +556,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ settings/
 │  │     ├─ srs/
 │  │     ├─ statistics/
-│  │     └─ study/
+│  │     ├─ study/
+│  │     └─ sync/
 │  ├─ l10n/
 │  │  ├─ app_en.arb
 │  │  └─ app_vi.arb
@@ -633,7 +641,8 @@ Read this first in a new session instead of re-exploring the tree.
 │  │     ├─ language_pair/
 │  │     ├─ srs/
 │  │     ├─ statistics/
-│  │     └─ study/
+│  │     ├─ study/
+│  │     └─ sync/
 │  └─ presentation/
 │     ├─ features/
 │     │  ├─ deck/

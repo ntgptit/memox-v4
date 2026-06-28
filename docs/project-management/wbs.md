@@ -19,7 +19,7 @@ the same commit (CLAUDE.md WBS rule).
 | W7 | Tìm kiếm | W2 | Done | `docs/business/search/global-search.md` |
 | W8 | Nhập / Xuất | W6 | Done | `docs/business/import-export/import-export.md` |
 | W9 | Thống kê | W3, W11 | Done | `docs/business/statistics/statistics.md` |
-| W10 | Tài khoản & Đồng bộ Google | W1 | Planned | `docs/business/account-sync/account-sync.md` |
+| W10 | Tài khoản & Đồng bộ Google | W1 | Partial (cấu trúc + LWW snapshot + tests; GCP/OAuth config = human gap) | `docs/business/account-sync/account-sync.md` |
 | W11 | Gắn kết / streak | W4 | Done | `docs/business/engagement/dashboard-engagement.md` |
 | W12 | Cài đặt & Backup cục bộ | W1 | Done | `docs/business/settings/settings.md` |
 | W13 | Theme (personalization) | W12 | Done | `docs/business/personalization/personalization.md` |
@@ -34,7 +34,10 @@ lọc trạng thái); **W11 Done** (dashboard Today: hoạt động + mục tiê
 **W9 Done** (thống kê: tổng quan + ô Leitner + dự báo + hoạt động, phạm vi cặp↔toàn app);
 **W12 Done** (cài đặt k-v + game/SRS/mục tiêu, sao lưu/khôi phục JSON; lịch nhắc lưu được,
 lên lịch OS hoãn); **W13 Done** (cá nhân hoá: chế độ màu + màu nhấn + cỡ chữ, áp dụng live).
-**Toàn bộ S0 + W2–W13 đã code & test; chỉ còn W8/W10 BLOCKED** (gated dep — xem §10 + NIGHT-LOG).
+**Toàn bộ S0 + W2–W13 đã code & test. W8 Done (nhập/xuất). W10 Partial**: cấu trúc đồng
+bộ (CloudSyncService + SyncNow LWW snapshot + Drive REST/sign-in + tests) đã xong; chỉ còn
+**human gap** = cấu hình GCP/OAuth (client id, bật Drive API, file OAuth theo nền tảng) —
+xem §10 + NIGHT-LOG.
 
 **S0 (nền tiếp theo, tiền đề mọi feature) Done:** app shell (`StatefulShellRoute` +
 bottom nav 4 tab + Drawer cặp ngôn ngữ) + Drift `language_pair` (DAO/repo/usecases:

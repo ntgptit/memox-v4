@@ -108,6 +108,7 @@ Một thẻ có **một** dòng (một chiều duy nhất) — lập lịch Leit
 | font_scale | text | medium | cá nhân hoá (W13): small / medium / large |
 | active_pair_id | int | null | cặp ngôn ngữ đang chọn (ngữ cảnh app); null = chưa chọn → suy ra cặp đầu |
 | display_swapped | bool | false | đảo chiều hiển thị của cặp đang chọn (mặt hỏi target↔source) |
+| cloud_last_sync_at | int | null | epoch ms lần sync mây gần nhất (LWW mức snapshot, W10) |
 
 ### review_outcome (W9, schema v2)
 
