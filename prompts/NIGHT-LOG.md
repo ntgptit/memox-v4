@@ -462,3 +462,24 @@ Done (3 commits):
 Remaining 11 screens: deck_detail (10), study_session (7), review (6), library* (6), game (5), player (4), statistics* (4), search* (4), dashboard* (4), game_picker* (2), flashcard_editor* (16). (* = has a widget test → migrate carefully, keep the asserted text/keys/types; e.g. a test using `find.byType(FilledButton)` must switch to `find.byType(MxButton)`).
 
 Dropdowns (DropdownButtonFormField) kept as-is — no Mx dropdown component in the kit yet. TimePicker kept (platform dialog).
+
+## 2026-06-28 · Phase 5 COMPLETE — all 16 screens migrated to Mx widgets
+
+Finished the screen migration (8 commits total). Every feature screen now composes the design-system widgets instead of raw Material:
+- a939c2a4 reminder+theme · fa1aea57 settings · 643ae577 import+export · e42c0fab study(session/review/player) · e839160c deck-detail+game · 9466a5a3 game-picker+search · e49fb36e statistics+dashboard · 458a6e9a library+flashcard-editor.
+
+Guard impact: total errors 541 → **362**. Screen-level rules cleared:
+- no_raw_scaffold 14→0, no_raw_switch 7→0, no_raw_chip 4→0, no_raw_snackbar 5→0, no_direct_scaffold_messenger →0.
+- no_raw_app_bar 14→1 (search keeps an AppBar-hosted TextField), no_raw_icon_button 14→1.
+- **no_direct_text_theme 81→7**, no_raw_button 49→14 — the residual is INSIDE the Mx widget implementations (MxAppBar/MxButton/MxText must read TextTheme / wrap raw primitives) + the 4 game widgets (matching/recall/typing/multiple_choice, which are gameplay widgets, not screens).
+
+### Migration notes / decisions
+- Kept raw where no Mx equivalent exists: DropdownButton(FormField), showTimePicker, showModalBottomSheet sort sheet, AlertDialog/showDeckActions sheets, LinearProgressIndicator. The search field stays in a raw AppBar (MxAppBar takes a String title, not a TextField).
+- Kept the flashcard-editor term/meaning TextFields raw: the widget test calls `enterText(find.byKey(...))` which needs an EditableText, so the key must stay on the TextField, not an MxTextField wrapper.
+- Test update: `flashcard_editor_screen_test` cast `editorSave` to FilledButton → MxButton. Other screen tests assert text/keys/icons (not widget types) → unaffected.
+- All keys + behaviour preserved; verify --full GREEN per batch.
+
+### Remaining (small, optional follow-ups)
+1. **Tier-A guard exemption** (recommended): scope `no_raw_*` / `no_direct_text_theme` to exclude `lib/presentation/shared/widgets/**` (the design-system layer's job is to wrap raw primitives) → the residual ~362 drops sharply and the count reflects real feature-code violations only.
+2. Migrate the 4 game widgets (matching/recall/typing/multiple_choice) to MxText/MxButton/MxCard if desired (they're gameplay, lower priority).
+3. Add structured doc-headers to the 5 legacy shared widgets (MxDeckTile/MxPlaceholder/MxResponsiveBuilder…).
