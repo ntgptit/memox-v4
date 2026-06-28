@@ -36,7 +36,10 @@ void main() {
     await tester.pumpWidget(host());
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const Key('libraryCreateDeck')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('mx-node:library/empty-deck')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('a seeded root deck renders as a tile', (tester) async {

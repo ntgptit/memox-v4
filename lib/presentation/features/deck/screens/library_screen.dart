@@ -34,6 +34,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     final l10n = AppLocalizations.of(context);
     final asyncNodes = ref.watch(libraryProvider);
     return Column(
+      key: const ValueKey('mx-node:library/screen'),
       children: <Widget>[
         _toolbar(l10n),
         Expanded(
@@ -48,6 +49,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   }
 
   Widget _toolbar(AppLocalizations l10n) => Padding(
+    key: const ValueKey('mx-node:library/appbar'),
     padding: const EdgeInsets.fromLTRB(
       MxSpacing.space4,
       MxSpacing.space2,
@@ -58,19 +60,19 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
       children: <Widget>[
         Expanded(child: MxText.title(l10n.tabLibrary)),
         MxIconButton(
-          key: const Key('librarySearch'),
+          key: const ValueKey('mx-node:library/search-btn'),
           icon: Icons.search,
           tooltip: l10n.searchHint,
           onPressed: () => context.push(RoutePaths.search),
         ),
         MxIconButton(
-          key: const Key('librarySort'),
+          key: const ValueKey('mx-node:library/sort-btn'),
           icon: Icons.sort,
           tooltip: l10n.sortLabel,
           onPressed: () => unawaited(_showSortSheet()),
         ),
         MxButton(
-          key: const Key('libraryNewDeck'),
+          key: const ValueKey('mx-node:library/create'),
           label: l10n.libraryCreateDeck,
           icon: Icons.create_new_folder_outlined,
           variant: MxButtonVariant.ghost,
@@ -110,7 +112,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           MxText.body(l10n.libraryEmptySubtitle, textAlign: TextAlign.center),
           const SizedBox(height: MxSpacing.space5),
           MxButton(
-            key: const Key('libraryCreateDeck'),
+            key: const ValueKey('mx-node:library/empty-deck'),
             label: l10n.libraryCreateDeck,
             icon: Icons.add,
             onPressed: () => unawaited(_createRootDeck()),
@@ -134,6 +136,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           MxText(l10n.libraryError),
           const SizedBox(height: MxSpacing.space4),
           MxButton(
+            key: const ValueKey('mx-node:library/retry'),
             label: l10n.commonRetry,
             onPressed: () =>
                 unawaited(ref.read(libraryProvider.notifier).refresh()),

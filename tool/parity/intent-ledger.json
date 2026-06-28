@@ -18,6 +18,33 @@
       "exceptionKind": "behavior",
       "reason": "The kit models each screen as its own MxScaffold (dashboard/screen); the FE factors the scaffold into the shared, persistent AppShell, so it cannot carry a per-screen ValueKey without rebuilding the whole shell on every tab switch. Chrome it provides (appbar/notifications/quick-review) IS keyed there when the Today tab is active.",
       "source": "lib/presentation/shared/navigation/app_shell.dart"
+    },
+    {
+      "screen": "library",
+      "node": "overflow",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit puts an app-bar overflow menu (import/export/settings) on the library screen. The FE consolidates those actions into the shared language Drawer (opened from the avatar), so there is no duplicate overflow control; adding one would create two paths to the same actions.",
+      "source": "docs/business/navigation/navigation-flow.md"
+    },
+    {
+      "screen": "library",
+      "node": "search-dock",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit shows an inline expanding search dock in the app bar. The FE routes the search button to a dedicated full-screen /search experience (richer filtering than an inline dock), so there is no in-place search-dock node.",
+      "source": "docs/business/search/global-search.md"
+    },
+    {
+      "screen": "library",
+      "node": "empty-add",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit's empty library offers a secondary 'Add words' CTA. The FE data model requires a deck before any word can be added, so the empty state offers only 'Create deck' (empty-deck); an 'Add words' action is impossible with zero decks.",
+      "source": "docs/business/deck/deck-management.md"
     }
   ],
   "coverageExempt": []
