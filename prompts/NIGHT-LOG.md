@@ -21,6 +21,13 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · GAP item 4/8 · W4 RoundController · DONE · c3e78e43 · verify --full GREEN (162 tests)
+
+- What: closed the W4 "simplified self-grade" gap. New RoundState + RoundActions (presentation/features/game/round.dart). The 4 game widgets now take (RoundState, RoundActions) instead of GameRequest + reading the game provider → decoupled. GameSessionNotifier + StudySessionNotifier both implements RoundActions (study delegates markCorrect/markWrong to grade()). GameScreen builds RoundState + passes the notifier. StudySessionScreen: NewLearn stage 1 = learn, stages 2–5 embed the real games (Ghép đôi/Đoán/Nhớ lại/Điền); DueReview = recall pass. D-002/D-015/D-017 logic unchanged.
+- Tests (+2): a game widget grades via a fake RoundActions (proves decoupling) + recall reveal→grade. Existing game/study notifier tests unaffected (they test notifiers, not widgets — so the widget refactor broke nothing).
+- The earlier W4 NIGHT-LOG "NewLearn game-stages simplified" note is now superseded — NewLearn uses the real games.
+- Next: GAP item 5 = W9 accuracy + heatmap + longest-streak (needs a review_outcome table + Drift MIGRATION (bump schemaVersion) + schema/migration docs + recording outcomes in grade/game answers).
+
 ## 2026-06-28 · GAP item 3/8 · W8 import/export · DONE · de8d09a5 · verify --full GREEN (160 tests)
 
 - What: full CSV/Excel/clipboard import+export. BE plugin-free + testable: ImportCardsUseCase (map term/meaning columns, skip header, soft-dup D-020 counted not blocked), ExportCardsUseCase (deck or subtree → header + rows, optional box/due_at). TableCodec (data) wraps csv 8 (CsvDecoder/CsvEncoder) + excel 4 (XLSX). FE: ImportScreen (/deck/:id/import — file_picker or paste → separator/header/column pickers → preview → import) + ExportScreen (/deck/:id/export — subtree+SRS toggles + format → save to documents or clipboard), reachable from deck-detail AppBar.
