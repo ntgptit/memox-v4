@@ -11,9 +11,12 @@ class StatisticsRepositoryImpl implements StatisticsRepository {
   final StatsDao _dao;
 
   @override
-  Future<Result<StatsRaw>> read(int? pairId) async {
+  Future<Result<StatsRaw>> read(
+    int? pairId, {
+    required String activitySince,
+  }) async {
     try {
-      return Ok(await _dao.read(pairId));
+      return Ok(await _dao.read(pairId, activitySince: activitySince));
     } catch (e) {
       return Err(PersistenceFailure(message: 'read statistics', cause: e));
     }

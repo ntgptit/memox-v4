@@ -12,6 +12,8 @@ typedef StatsRaw = ({
   List<BoxCount> boxes,
   List<int> dueAts,
   List<ActivityPoint> activity,
+  int totalSeconds,
+  int totalWords,
   int accuracyCorrect,
   int accuracyTotal,
 });

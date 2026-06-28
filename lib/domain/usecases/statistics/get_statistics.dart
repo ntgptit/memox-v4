@@ -17,20 +17,24 @@ class GetStatisticsUseCase {
   final Clock _clock;
 
   Future<Result<StatisticsSummary>> call({required int? pairId}) async {
-    final result = await _repository.read(pairId);
-    return result.map(_build);
+    final now = _clock.now();
+    final today = DateTime(now.year, now.month, now.day);
+    // Only the last [_activityWindow] days feed the heatmap; bound the query so a
+    // long history isn't fetched whole (lifetime totals come from a SUM).
+    final since = dayKey(
+      today.subtract(const Duration(days: _activityWindow - 1)),
+    );
+    final result = await _repository.read(pairId, activitySince: since);
+    return result.map((raw) => _build(raw, today));
   }
 
-  StatisticsSummary _build(StatsRaw raw) {
+  StatisticsSummary _build(StatsRaw raw, DateTime today) {
     final boxCounts = List<int>.filled(9, 0);
     for (final entry in raw.boxes) {
       if (entry.box >= 0 && entry.box <= 8) boxCounts[entry.box] = entry.count;
     }
     final words = boxCounts.fold<int>(0, (sum, n) => sum + n);
     final mastered = boxCounts[8];
-
-    final now = _clock.now();
-    final today = DateTime(now.year, now.month, now.day);
 
     final forecast = List<int>.filled(_forecastDays, 0);
     for (final dueAt in raw.dueAts) {
@@ -50,13 +54,6 @@ class GetStatisticsUseCase {
       activity.add(byDay[key] ?? (day: key, seconds: 0, words: 0));
     }
 
-    var totalSeconds = 0;
-    var totalWords = 0;
-    for (final a in raw.activity) {
-      totalSeconds += a.seconds;
-      totalWords += a.words;
-    }
-
     return StatisticsSummary(
       pairs: raw.pairs,
       decks: raw.decks,
@@ -65,8 +62,8 @@ class GetStatisticsUseCase {
       boxCounts: boxCounts,
       dueForecast: forecast,
       activity: activity,
-      totalSeconds: totalSeconds,
-      totalWords: totalWords,
+      totalSeconds: raw.totalSeconds,
+      totalWords: raw.totalWords,
       accuracyCorrect: raw.accuracyCorrect,
       accuracyTotal: raw.accuracyTotal,
     );

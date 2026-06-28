@@ -9,17 +9,37 @@ class StatsDao {
 
   final AppDatabase _db;
 
-  Future<StatsRaw> read(int? pairId) async {
+  Future<StatsRaw> read(int? pairId, {required String activitySince}) async {
     final accuracy = await _accuracy(pairId);
+    final totals = await _activityTotals(pairId);
     return (
       pairs: await _pairs(pairId),
       decks: await _decks(pairId),
       boxes: await _boxes(pairId),
       dueAts: await _dueAts(pairId),
-      activity: await _activity(pairId),
+      activity: await _activity(pairId, activitySince),
+      totalSeconds: totals.seconds,
+      totalWords: totals.words,
       accuracyCorrect: accuracy.correct,
       accuracyTotal: accuracy.total,
     );
+  }
+
+  /// Lifetime study totals for the scope (a single aggregate row, not the whole
+  /// history).
+  Future<({int seconds, int words})> _activityTotals(int? pairId) async {
+    final where = pairId == null ? '' : ' WHERE pair_id = ?';
+    final row = await _db
+        .customSelect(
+          'SELECT COALESCE(SUM(seconds), 0) AS s, COALESCE(SUM(words), 0) AS w '
+          'FROM daily_activity$where',
+          variables: _scopeVar(pairId),
+          readsFrom: <ResultSetImplementation<Object, Object>>{
+            _db.dailyActivity,
+          },
+        )
+        .getSingle();
+    return (seconds: row.read<int>('s'), words: row.read<int>('w'));
   }
 
   Future<({int correct, int total})> _accuracy(int? pairId) async {
@@ -107,13 +127,16 @@ class StatsDao {
     return <int>[for (final r in rows) r.read<int>('due_at')];
   }
 
-  Future<List<ActivityPoint>> _activity(int? pairId) async {
-    final where = pairId == null ? '' : ' WHERE pair_id = ?';
+  Future<List<ActivityPoint>> _activity(int? pairId, String since) async {
+    final pairClause = pairId == null ? '' : 'pair_id = ? AND ';
     final rows = await _db
         .customSelect(
           'SELECT day AS day, seconds AS seconds, words AS words '
-          'FROM daily_activity$where',
-          variables: _scopeVar(pairId),
+          'FROM daily_activity WHERE ${pairClause}day >= ?',
+          variables: <Variable<Object>>[
+            ..._scopeVar(pairId),
+            Variable<String>(since),
+          ],
           readsFrom: <ResultSetImplementation<Object, Object>>{
             _db.dailyActivity,
           },

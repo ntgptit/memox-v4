@@ -102,16 +102,17 @@ class SettingsNotifier extends _$SettingsNotifier {
     return result;
   }
 
-  /// Sign in to Google if needed, then sync (snapshot-level LWW, W10). A pull
-  /// refreshes the library + dashboard like a local restore.
+  /// Syncs with the cloud (snapshot-level LWW, W10). The use case owns sign-in
+  /// detection; when it reports [SyncOutcome.signInRequired] we run the
+  /// interactive sign-in and retry once. A pull refreshes the library + dashboard
+  /// like a local restore.
   Future<Result<SyncOutcome>> syncNow() async {
-    final cloud = ref.read(cloudSyncServiceProvider);
-    final signedIn = (await cloud.isSignedIn()).valueOrNull ?? false;
-    if (!signedIn) {
-      final signIn = await cloud.signIn();
+    var result = await ref.read(syncNowProvider).call();
+    if (result.valueOrNull == SyncOutcome.signInRequired) {
+      final signIn = await ref.read(cloudSyncServiceProvider).signIn();
       if (signIn is Err<void>) return Err<SyncOutcome>(signIn.failure);
+      result = await ref.read(syncNowProvider).call();
     }
-    final result = await ref.read(syncNowProvider).call();
     if (result case Ok(value: SyncOutcome.pulled)) {
       ref.invalidate(languagePairProvider);
       ref.invalidate(engagementProvider);
