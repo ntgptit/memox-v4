@@ -2,7 +2,7 @@ import 'package:memox_v4/core/error/failure.dart';
 import 'package:memox_v4/core/util/clock.dart';
 import 'package:memox_v4/data/datasources/local/daos/card_dao.dart';
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart'
-    show CardMeaningData;
+    show CardData, CardMeaningData;
 import 'package:memox_v4/data/mappers/card_mapper.dart';
 import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/models/card_draft.dart';
@@ -54,6 +54,33 @@ class CardRepositoryImpl implements CardRepository {
       return Ok(mapCard(card, meanings));
     } catch (e) {
       return Err(PersistenceFailure(message: 'get card', cause: e));
+    }
+  }
+
+  @override
+  Future<Result<List<Card>>> listByIds(
+    List<int> ids, {
+    bool includeHidden = true,
+  }) async {
+    try {
+      if (ids.isEmpty) return const Ok(<Card>[]);
+      final cards = await _dao.cardsByIds(ids, includeHidden: includeHidden);
+      if (cards.isEmpty) return const Ok(<Card>[]);
+      final meanings = await _dao.meaningsForCards(
+        cards.map((c) => c.id).toList(growable: false),
+      );
+      final byCard = <int, List<CardMeaningData>>{};
+      for (final m in meanings) {
+        (byCard[m.cardId] ??= <CardMeaningData>[]).add(m);
+      }
+      final byId = <int, CardData>{for (final c in cards) c.id: c};
+      return Ok(<Card>[
+        for (final id in ids)
+          if (byId[id] case final card?)
+            mapCard(card, byCard[id] ?? const <CardMeaningData>[]),
+      ]);
+    } catch (e) {
+      return Err(PersistenceFailure(message: 'list cards by ids', cause: e));
     }
   }
 

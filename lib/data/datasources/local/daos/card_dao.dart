@@ -27,6 +27,18 @@ class CardDao {
   Future<CardData?> cardById(int id) =>
       (_db.select(_db.card)..where((t) => t.id.equals(id))).getSingleOrNull();
 
+  Future<List<CardData>> cardsByIds(
+    List<int> ids, {
+    bool includeHidden = true,
+  }) {
+    if (ids.isEmpty) return Future.value(const <CardData>[]);
+    final query = _db.select(_db.card)..where((t) => t.id.isIn(ids));
+    if (!includeHidden) {
+      query.where((t) => t.hidden.equals(false));
+    }
+    return query.get();
+  }
+
   Future<List<CardMeaningData>> meaningsForCard(int cardId) => (_db.select(
     _db.cardMeaning,
   )..where((t) => t.cardId.equals(cardId))).get();

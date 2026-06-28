@@ -17,6 +17,14 @@ abstract interface class CardRepository {
   /// One card with its meanings, or null when absent.
   Future<Result<Card?>> getById(int id);
 
+  /// Cards for [ids] with their meanings, in the given id order (one bulk read,
+  /// not per-id). Missing ids are skipped; hidden included unless [includeHidden]
+  /// is false.
+  Future<Result<List<Card>>> listByIds(
+    List<int> ids, {
+    bool includeHidden = true,
+  });
+
   /// Creates a card (appended after the deck's current last) with its meanings.
   Future<Result<Card>> create(CardDraft draft);
 

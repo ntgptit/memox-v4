@@ -29,10 +29,7 @@ class ExportCardsUseCase {
             includeHidden: true,
           )).valueOrNull ??
           const <int>[];
-      for (final id in ids) {
-        final card = (await _cards.getById(id)).valueOrNull;
-        if (card != null) cards.add(card);
-      }
+      cards.addAll((await _cards.listByIds(ids)).valueOrNull ?? const <Card>[]);
     } else {
       cards.addAll(
         (await _cards.listByDeck(deckId, includeHidden: true)).valueOrNull ??

@@ -32,6 +32,11 @@ class _FakeRepository implements CardRepository {
   @override
   Future<Result<Card?>> getById(int id) => throw UnimplementedError();
   @override
+  Future<Result<List<Card>>> listByIds(
+    List<int> ids, {
+    bool includeHidden = true,
+  }) => throw UnimplementedError();
+  @override
   Future<Result<List<Card>>> listByDeck(
     int deckId, {
     bool includeHidden = true,

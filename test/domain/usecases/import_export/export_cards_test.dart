@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/core/util/clock.dart';
 import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
@@ -18,6 +19,7 @@ void main() {
   late AppDatabase db;
   late ExportCardsUseCase useCase;
   late CardRepositoryImpl cards;
+  late int pairId;
   late int deckId;
 
   setUp(() async {
@@ -28,7 +30,7 @@ void main() {
       DeckRepositoryImpl(DeckDao(db), const SystemClock()),
       SrsRepositoryImpl(SrsDao(db)),
     );
-    final pairId = await db
+    pairId = await db
         .into(db.languagePair)
         .insert(
           LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
@@ -54,6 +56,42 @@ void main() {
     expect(rows.first, <String>['term', 'meaning']);
     expect(rows[1][0], 'xin');
     expect(rows[1][1], 'please');
+  });
+
+  test('includeSubtree gathers cards from child decks (bulk)', () async {
+    await cards.create(
+      CardDraft(
+        deckId: deckId,
+        term: 'parent',
+        meanings: const <CardMeaning>[CardMeaning(lang: 'vi', content: 'cha')],
+      ),
+    );
+    final childId = await db
+        .into(db.deck)
+        .insert(
+          DeckCompanion.insert(
+            pairId: pairId,
+            name: 'Child',
+            parentDeckId: Value(deckId),
+          ),
+        );
+    await cards.create(
+      CardDraft(
+        deckId: childId,
+        term: 'child',
+        meanings: const <CardMeaning>[CardMeaning(lang: 'vi', content: 'con')],
+      ),
+    );
+
+    final flat = (await useCase.call(deckId: deckId)).valueOrNull!;
+    expect(flat, hasLength(2)); // header + parent card only
+
+    final subtree = (await useCase.call(
+      deckId: deckId,
+      includeSubtree: true,
+    )).valueOrNull!;
+    final terms = <String>[for (final row in subtree.skip(1)) row[0]];
+    expect(terms, containsAll(<String>['parent', 'child']));
   });
 
   test('D-026: includeSrs adds the box + due_at columns', () async {

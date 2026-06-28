@@ -76,17 +76,42 @@ class BackupRepositoryImpl implements BackupRepository {
       for (final table in _tables) {
         final rows = (raw[table] as List<dynamic>? ?? const <dynamic>[])
             .cast<Map<String, dynamic>>();
-        for (final row in rows) {
-          final cols = row.keys.toList();
-          final placeholders = List<String>.filled(cols.length, '?').join(', ');
+        if (rows.isEmpty) continue;
+        final cols = rows.first.keys.toList();
+        // Column names are interpolated into SQL, so reject anything that isn't a
+        // plain identifier (defends the restore/sync path against a crafted key).
+        if (!cols.every(_isIdentifier)) {
+          throw const FormatException('snapshot has an invalid column name');
+        }
+        final colSql = cols.join(', ');
+        final rowPlaceholder =
+            '(${List<String>.filled(cols.length, '?').join(', ')})';
+        // Batch into multi-row INSERTs so a large restore isn't O(rows) round-trips.
+        for (var i = 0; i < rows.length; i += _restoreChunk) {
+          final chunk = rows.sublist(
+            i,
+            i + _restoreChunk < rows.length ? i + _restoreChunk : rows.length,
+          );
+          final values = List<String>.filled(
+            chunk.length,
+            rowPlaceholder,
+          ).join(', ');
           await _db.customStatement(
-            'INSERT INTO $table (${cols.join(', ')}) VALUES ($placeholders)',
-            <Object?>[for (final c in cols) row[c]],
+            'INSERT INTO $table ($colSql) VALUES $values',
+            <Object?>[
+              for (final row in chunk)
+                for (final c in cols) row[c],
+            ],
           );
         }
       }
     });
   });
+
+  static const int _restoreChunk = 200;
+
+  static bool _isIdentifier(String name) =>
+      RegExp(r'^[A-Za-z_][A-Za-z0-9_]*$').hasMatch(name);
 
   Future<Result<void>> _guard(String op, Future<void> Function() body) async {
     try {
