@@ -3,9 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/types/reminder.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/viewmodels/settings_notifier.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_chip.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/inputs/mx_switch.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Reminder schedule (`18-reminder.md`): enable + time + weekdays. Persists and
 /// schedules an OS notification per selected weekday (W12).
@@ -16,10 +23,11 @@ class ReminderScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final settings = ref.watch(settingsProvider);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.settingsGroupReminder)),
+    return MxScaffold(
+      appBar: MxAppBar(title: l10n.settingsGroupReminder),
+      flush: true,
       body: settings.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const MxStateView.loading(),
         error: (_, _) => const SizedBox.shrink(),
         data: (data) => _body(context, ref, l10n, data.reminder),
       ),
@@ -36,12 +44,14 @@ class ReminderScreen extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.all(MxSpacing.space4),
       children: <Widget>[
-        SwitchListTile(
-          key: const Key('reminderEnable'),
+        ListTile(
           title: Text(l10n.reminderEnable),
-          value: reminder.enabled,
-          onChanged: (value) =>
-              _save(l10n, notifier, reminder.copyWith(enabled: value)),
+          trailing: MxSwitch(
+            key: const Key('reminderEnable'),
+            value: reminder.enabled,
+            onChanged: (value) =>
+                _save(l10n, notifier, reminder.copyWith(enabled: value)),
+          ),
         ),
         ListTile(
           enabled: reminder.enabled,
@@ -54,15 +64,18 @@ class ReminderScreen extends ConsumerWidget {
         const SizedBox(height: MxSpacing.space3),
         Wrap(
           spacing: MxSpacing.space2,
+          runSpacing: MxSpacing.space2,
           children: <Widget>[
             for (var day = 1; day <= 7; day++)
-              FilterChip(
-                label: Text(_weekdayLabel(l10n, day)),
+              MxChip(
+                label: _weekdayLabel(l10n, day),
                 selected: reminder.weekdays.contains(day),
-                onSelected: reminder.enabled
-                    ? (selected) {
+                onTap: reminder.enabled
+                    ? () {
                         final weekdays = <int>{...reminder.weekdays};
-                        selected ? weekdays.add(day) : weekdays.remove(day);
+                        reminder.weekdays.contains(day)
+                            ? weekdays.remove(day)
+                            : weekdays.add(day);
                         _save(
                           l10n,
                           notifier,
@@ -75,11 +88,10 @@ class ReminderScreen extends ConsumerWidget {
         ),
         if (reminder.enabled) ...<Widget>[
           const SizedBox(height: MxSpacing.space4),
-          Text(
+          MxText(
             l10n.reminderActiveHint,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
+            role: MxTextRole.bodySmall,
+            color: MxTheme.of(context).colors.textSecondary,
           ),
         ],
       ],

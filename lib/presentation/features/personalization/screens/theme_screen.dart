@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/theme_prefs.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/personalization/viewmodels/personalization_notifier.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_chip.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/inputs/mx_segmented_control.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_card.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Theme personalization (`20-theme.md`): mode, accent and font size with a live
 /// preview. Changes apply app-wide immediately (BR-3) and persist.
@@ -19,43 +25,42 @@ class ThemeScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final prefs =
         ref.watch(personalizationProvider).value ?? const ThemePrefs();
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.drawerTheme)),
+    return MxScaffold(
+      appBar: MxAppBar(title: l10n.drawerTheme),
       body: ListView(
         key: const Key('theme'),
-        padding: const EdgeInsets.all(MxSpacing.space4),
+        padding: const EdgeInsets.symmetric(vertical: MxSpacing.space4),
         children: <Widget>[
-          Text(
-            l10n.themeModeLabel,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+          MxText.title(l10n.themeModeLabel),
           const SizedBox(height: MxSpacing.space2),
-          SegmentedButton<ThemeMode>(
-            segments: <ButtonSegment<ThemeMode>>[
-              ButtonSegment<ThemeMode>(
-                value: ThemeMode.system,
-                label: Text(l10n.themeModeSystem),
+          MxSegmentedControl(
+            segments: <MxSegment>[
+              (
+                value: ThemeMode.system.name,
+                label: l10n.themeModeSystem,
+                icon: null,
               ),
-              ButtonSegment<ThemeMode>(
-                value: ThemeMode.light,
-                label: Text(l10n.themeModeLight),
+              (
+                value: ThemeMode.light.name,
+                label: l10n.themeModeLight,
+                icon: null,
               ),
-              ButtonSegment<ThemeMode>(
-                value: ThemeMode.dark,
-                label: Text(l10n.themeModeDark),
+              (
+                value: ThemeMode.dark.name,
+                label: l10n.themeModeDark,
+                icon: null,
               ),
             ],
-            selected: <ThemeMode>{prefs.mode},
-            onSelectionChanged: (s) => _notifier(ref).setMode(s.first),
+            value: prefs.mode.name,
+            onChanged: (v) =>
+                _notifier(ref).setMode(ThemeMode.values.byName(v)),
           ),
           const SizedBox(height: MxSpacing.space5),
-          Text(
-            l10n.themeAccentLabel,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+          MxText.title(l10n.themeAccentLabel),
           const SizedBox(height: MxSpacing.space2),
           Wrap(
             spacing: MxSpacing.space2,
+            runSpacing: MxSpacing.space2,
             children: <Widget>[
               _accentChip(
                 ref,
@@ -68,28 +73,29 @@ class ThemeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: MxSpacing.space5),
-          Text(
-            l10n.themeFontLabel,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+          MxText.title(l10n.themeFontLabel),
           const SizedBox(height: MxSpacing.space2),
-          SegmentedButton<FontScale>(
-            segments: <ButtonSegment<FontScale>>[
-              ButtonSegment<FontScale>(
-                value: FontScale.small,
-                label: Text(l10n.themeFontSmall),
+          MxSegmentedControl(
+            segments: <MxSegment>[
+              (
+                value: FontScale.small.name,
+                label: l10n.themeFontSmall,
+                icon: null,
               ),
-              ButtonSegment<FontScale>(
-                value: FontScale.medium,
-                label: Text(l10n.themeFontMedium),
+              (
+                value: FontScale.medium.name,
+                label: l10n.themeFontMedium,
+                icon: null,
               ),
-              ButtonSegment<FontScale>(
-                value: FontScale.large,
-                label: Text(l10n.themeFontLarge),
+              (
+                value: FontScale.large.name,
+                label: l10n.themeFontLarge,
+                icon: null,
               ),
             ],
-            selected: <FontScale>{prefs.fontScale},
-            onSelectionChanged: (s) => _notifier(ref).setFontScale(s.first),
+            value: prefs.fontScale.name,
+            onChanged: (v) =>
+                _notifier(ref).setFontScale(FontScale.values.byName(v)),
           ),
           const SizedBox(height: MxSpacing.space6),
           _Preview(title: l10n.themePreview, body: l10n.themePreviewBody),
@@ -103,11 +109,11 @@ class ThemeScreen extends ConsumerWidget {
     String label,
     AccentChoice accent,
     ThemePrefs prefs,
-  ) => ChoiceChip(
+  ) => MxChip(
     key: Key('accent-${accent.name}'),
-    label: Text(label),
+    label: label,
     selected: prefs.accent == accent,
-    onSelected: (_) => _notifier(ref).setAccent(accent),
+    onTap: () => _notifier(ref).setAccent(accent),
   );
 }
 
@@ -118,35 +124,26 @@ class _Preview extends StatelessWidget {
   final String body;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest,
-        borderRadius: MxRadius.cardRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(MxSpacing.space4),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+  Widget build(BuildContext context) => MxCard(
+    variant: MxCardVariant.muted,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        MxText.title(title),
+        const SizedBox(height: MxSpacing.space2),
+        MxText.body(body),
+        const SizedBox(height: MxSpacing.space3),
+        Row(
           children: <Widget>[
-            Text(title, style: theme.textTheme.titleMedium),
-            const SizedBox(height: MxSpacing.space2),
-            Text(body, style: theme.textTheme.bodyMedium),
-            const SizedBox(height: MxSpacing.space3),
-            Row(
-              children: <Widget>[
-                FilledButton(onPressed: () {}, child: Text(title)),
-                const SizedBox(width: MxSpacing.space3),
-                Icon(
-                  Icons.local_fire_department,
-                  color: theme.colorScheme.primary,
-                ),
-              ],
+            MxButton(label: title, size: MxButtonSize.sm, onPressed: () {}),
+            const SizedBox(width: MxSpacing.space3),
+            Icon(
+              Icons.local_fire_department,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ],
         ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
 }
