@@ -21,6 +21,13 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · GAP item 2/8 · Audio/TTS · DONE · 3c847223 · verify --full GREEN (152 tests)
+
+- What: TtsService interface (domain) + FlutterTtsService (flutter_tts: stop→setLanguage→speak, blank=no-op) behind an interface; @riverpod ttsServiceProvider. Flashcard editor audio button speaks the term in the pair's source language (was "coming soon"); PlayerScreen speaks each term as it auto-advances + a manual speaker button.
+- Tests (+2): editor speak wiring via fake TtsService (term + source lang; blank no-op).
+- Human gap: actual speech is device-only (platform channel, not unit-testable); audio-FILE generation/storage (card.audio_ref) still deferred — only live TTS read is done.
+- Next: GAP item 3 = W8 import/export (file_picker + csv + excel).
+
 ## 2026-06-28 · GAP item 1/8 · W12 reminders OS firing · DONE · a5d55cc3 · verify --full GREEN (150 tests)
 
 - What: completed the deferred W12 reminder firing. NotificationService interface (domain) + LocalNotificationService (flutter_local_notifications 22 + timezone + flutter_timezone) scheduling one weekly notification per selected weekday (dayOfWeekAndTime), lazy init + permission request, behind an interface. Pure ReminderScheduler.nextFireTimes (unit-tested). SettingsNotifier.setReminder now calls notificationService.sync(reminder, title, body); ReminderScreen dropped "coming soon" → active hint + threads l10n. AndroidManifest: boot/post-notification permissions + plugin receivers.
