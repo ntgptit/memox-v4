@@ -81,6 +81,7 @@ class GoogleDriveSyncService implements CloudSyncService {
   Future<Result<RemoteSnapshotMeta?>> remoteMeta() async {
     if (!_config.isConfigured) return _notConfigured<RemoteSnapshotMeta?>();
     try {
+      await _ensureInit();
       final headers = await _authHeaders();
       if (headers == null) {
         return const Err<RemoteSnapshotMeta?>(
@@ -121,6 +122,7 @@ class GoogleDriveSyncService implements CloudSyncService {
     // sent here.
     if (!_config.isConfigured) return _notConfigured<void>();
     try {
+      await _ensureInit();
       final headers = await _authHeaders();
       if (headers == null) {
         return const Err<void>(NetworkFailure(message: 'not signed in'));
@@ -168,6 +170,7 @@ class GoogleDriveSyncService implements CloudSyncService {
   Future<Result<String>> download() async {
     if (!_config.isConfigured) return _notConfigured<String>();
     try {
+      await _ensureInit();
       final headers = await _authHeaders();
       if (headers == null) {
         return const Err<String>(NetworkFailure(message: 'not signed in'));
