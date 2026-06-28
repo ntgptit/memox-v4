@@ -21,6 +21,13 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · GAP item 1/8 · W12 reminders OS firing · DONE · a5d55cc3 · verify --full GREEN (150 tests)
+
+- What: completed the deferred W12 reminder firing. NotificationService interface (domain) + LocalNotificationService (flutter_local_notifications 22 + timezone + flutter_timezone) scheduling one weekly notification per selected weekday (dayOfWeekAndTime), lazy init + permission request, behind an interface. Pure ReminderScheduler.nextFireTimes (unit-tested). SettingsNotifier.setReminder now calls notificationService.sync(reminder, title, body); ReminderScreen dropped "coming soon" → active hint + threads l10n. AndroidManifest: boot/post-notification permissions + plugin receivers.
+- Tests (+4): scheduler fire-time logic + setReminder→sync wiring (fake service).
+- Human gap: on-device firing needs the runtime POST_NOTIFICATIONS grant (handled by requestPermission on enable). iOS works via the plugin (no extra manifest). Verified the Dart side green; actual OS delivery is device-only (not unit-testable).
+- Next: GAP item 2 = Audio/TTS (flutter_tts) — TtsService abstraction + wire editor/player/game speaker.
+
 ## 2026-06-28 · GAP-FILL ROUND · deps unblocked (user granted blanket approval)
 
 User approved adding all gated libraries + asked to complete every deferred point. Deps added + pushed (a7e7ff4): file_picker^8/csv^8/excel^4 (W8), google_sign_in^7/googleapis^16/flutter_secure_storage^10 (W10), flutter_local_notifications^22/timezone^0.11 (W12), flutter_tts^4 (audio). All resolve with the analyzer-9 stack. WORK QUEUE (one per iteration, verify --full green + push each):
