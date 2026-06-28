@@ -54,6 +54,48 @@ final class TableCodecProvider
 
 String _$tableCodecHash() => r'63a9d1fed4b15af55085356ceba10c7e0b578932';
 
+@ProviderFor(fileSaveService)
+final fileSaveServiceProvider = FileSaveServiceProvider._();
+
+final class FileSaveServiceProvider
+    extends
+        $FunctionalProvider<FileSaveService, FileSaveService, FileSaveService>
+    with $Provider<FileSaveService> {
+  FileSaveServiceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'fileSaveServiceProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$fileSaveServiceHash();
+
+  @$internal
+  @override
+  $ProviderElement<FileSaveService> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  FileSaveService create(Ref ref) {
+    return fileSaveService(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(FileSaveService value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<FileSaveService>(value),
+    );
+  }
+}
+
+String _$fileSaveServiceHash() => r'cfed80dab44ed73f1f1579de8a830cc4687a2ce1';
+
 @ProviderFor(importCards)
 final importCardsProvider = ImportCardsProvider._();
 

@@ -328,7 +328,10 @@ class _DashboardSkeleton extends StatelessWidget {
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: MxRadius.cardRadius,
               ),
-              child: const SizedBox(height: 96, width: double.infinity),
+              child: const SizedBox(
+                height: MxSpacing.space12,
+                width: double.infinity,
+              ),
             ),
           ),
       ],

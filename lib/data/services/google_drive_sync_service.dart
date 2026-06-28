@@ -98,10 +98,13 @@ class GoogleDriveSyncService implements CloudSyncService {
           NetworkFailure(message: 'remoteMeta ${resp.statusCode}'),
         );
       }
-      final files =
-          (jsonDecode(resp.body) as Map<String, dynamic>)['files']
-              as List<dynamic>? ??
-          const <dynamic>[];
+      final body = jsonDecode(resp.body);
+      if (body is! Map<String, dynamic>) {
+        return const Err<RemoteSnapshotMeta?>(
+          NetworkFailure(message: 'remoteMeta: unexpected response'),
+        );
+      }
+      final files = body['files'] as List<dynamic>? ?? const <dynamic>[];
       if (files.isEmpty) return const Ok<RemoteSnapshotMeta?>(null);
       final file = files.first as Map<String, dynamic>;
       await _storage.write(key: _fileIdKey, value: file['id'] as String);
@@ -146,8 +149,14 @@ class GoogleDriveSyncService implements CloudSyncService {
             NetworkFailure(message: 'create ${created.statusCode}'),
           );
         }
-        fileId =
-            (jsonDecode(created.body) as Map<String, dynamic>)['id'] as String;
+        final createdBody = jsonDecode(created.body);
+        if (createdBody is! Map<String, dynamic> ||
+            createdBody['id'] is! String) {
+          return const Err<void>(
+            NetworkFailure(message: 'create: unexpected response'),
+          );
+        }
+        fileId = createdBody['id'] as String;
         fileIdIsNew = true;
       }
       final resp = await _client.patch(

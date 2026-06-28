@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +9,6 @@ import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/domain/types/import_export_format.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
-import 'package:path_provider/path_provider.dart';
 
 /// Export a deck's cards to CSV/Excel/clipboard, optionally its subtree and SRS
 /// state (D-026).
@@ -51,22 +49,19 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
         );
         if (mounted) setState(() => _message = l10n.exportCopied);
       case TransferFormat.csv:
-        final path = await _writeFile(
-          'memox_export.csv',
-          utf8.encode(codec.toDelimited(rows, Separator.comma.char)),
-        );
+        final path = await ref
+            .read(fileSaveServiceProvider)
+            .save(
+              'memox_export.csv',
+              utf8.encode(codec.toDelimited(rows, Separator.comma.char)),
+            );
         if (mounted) setState(() => _message = l10n.exportSavedTo(path));
       case TransferFormat.excel:
-        final path = await _writeFile('memox_export.xlsx', codec.toExcel(rows));
+        final path = await ref
+            .read(fileSaveServiceProvider)
+            .save('memox_export.xlsx', codec.toExcel(rows));
         if (mounted) setState(() => _message = l10n.exportSavedTo(path));
     }
-  }
-
-  Future<String> _writeFile(String name, List<int> bytes) async {
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/$name');
-    await file.writeAsBytes(bytes);
-    return file.path;
   }
 
   @override

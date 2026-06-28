@@ -63,12 +63,14 @@ class BackupRepositoryImpl implements BackupRepository {
 
   @override
   Future<Result<void>> deserialize(String json) => _guard('restore', () async {
-    final raw = jsonDecode(json) as Map<String, dynamic>;
-    // Guard against wiping the DB from an empty/corrupt snapshot: a valid
-    // snapshot always carries the root table, even when it has no rows.
-    if (!raw.containsKey('language_pair')) {
-      throw const FormatException('snapshot missing core tables');
+    // Guard against wiping the DB from an empty/corrupt snapshot: the payload
+    // must be a JSON object carrying the root table, even when it has no rows.
+    final decoded = jsonDecode(json);
+    if (decoded is! Map<String, dynamic> ||
+        !decoded.containsKey('language_pair')) {
+      throw const FormatException('not a valid MemoX backup snapshot');
     }
+    final raw = decoded;
     await _db.transaction(() async {
       for (final table in _tables.reversed) {
         await _db.customStatement('DELETE FROM $table');

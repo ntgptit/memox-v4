@@ -441,7 +441,7 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
       key: const Key('editorDuplicateBanner'),
       decoration: BoxDecoration(
         color: colors.warningSoft,
-        borderRadius: const BorderRadius.all(Radius.circular(MxRadius.md)),
+        borderRadius: MxRadius.fieldRadius,
       ),
       child: Padding(
         padding: const EdgeInsets.all(MxSpacing.space4),

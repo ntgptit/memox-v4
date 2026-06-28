@@ -63,7 +63,7 @@ final class StudySessionNotifierProvider
 }
 
 String _$studySessionNotifierHash() =>
-    r'17445907fd08a4f40a4e9410ab03453687735ed3';
+    r'2acac4c340e8a2aeb1f34d6d92bb7b6885539dac';
 
 /// Drives a scheduled session (NewLearn / DueReview). DueReview grades each card
 /// into SRS (W3); NewLearn schedules cards into box 1 only after all 5 stages
