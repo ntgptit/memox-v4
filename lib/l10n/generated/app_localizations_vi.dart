@@ -614,6 +614,17 @@ class AppLocalizationsVi extends AppLocalizations {
       'Thông báo sắp ra mắt — lịch nhắc đã được lưu.';
 
   @override
+  String get reminderActiveHint =>
+      'Bạn sẽ được nhắc vào giờ đã đặt trong các ngày đã chọn.';
+
+  @override
+  String get reminderNotificationTitle => 'MemoX';
+
+  @override
+  String get reminderNotificationBody =>
+      'Đến giờ học rồi — giữ chuỗi streak nhé!';
+
+  @override
   String get weekdayMon => 'T2';
 
   @override

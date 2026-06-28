@@ -619,6 +619,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Notifications are coming soon — the schedule is saved.';
 
   @override
+  String get reminderActiveHint =>
+      'You\'ll be reminded at the set time on the selected days.';
+
+  @override
+  String get reminderNotificationTitle => 'MemoX';
+
+  @override
+  String get reminderNotificationBody =>
+      'Time to study — keep your streak alive!';
+
+  @override
   String get weekdayMon => 'Mon';
 
   @override

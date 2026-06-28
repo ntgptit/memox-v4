@@ -1,3 +1,4 @@
+import 'package:memox_v4/app/di/notification_providers.dart';
 import 'package:memox_v4/app/di/settings_providers.dart';
 import 'package:memox_v4/core/constants/settings_keys.dart';
 import 'package:memox_v4/domain/models/app_settings.dart';
@@ -59,7 +60,11 @@ class SettingsNotifier extends _$SettingsNotifier {
   Future<void> setAutoBackup(bool value) =>
       _set(SettingsKeys.autoBackup, '$value');
 
-  Future<void> setReminder(Reminder reminder) async {
+  Future<void> setReminder(
+    Reminder reminder, {
+    required String notificationTitle,
+    required String notificationBody,
+  }) async {
     if (!reminder.enabled) {
       await _update.call(SettingsKeys.reminderTime, null);
     } else {
@@ -68,6 +73,9 @@ class SettingsNotifier extends _$SettingsNotifier {
       await _update.call(SettingsKeys.reminderWeekdays, weekdays);
     }
     state = await AsyncValue.guard(_load);
+    await ref
+        .read(notificationServiceProvider)
+        .sync(reminder, title: notificationTitle, body: notificationBody);
   }
 
   /// Snapshot all data to the documents directory; returns the file path.

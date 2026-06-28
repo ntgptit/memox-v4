@@ -6,7 +6,7 @@
 | --- | --- |
 | Mã tính năng | `settings/settings` |
 | Gói công việc (WBS) | W12 |
-| Trạng thái | Implemented (kho cài đặt k-v + đọc/ghi; số từ/ván feed game D-008; mục tiêu ngày kích hoạt dashboard W11; sao lưu/khôi phục file JSON cục bộ; lịch nhắc lưu được. Hoãn: lên lịch thông báo OS (gated dep — xem NIGHT-LOG), theme picker (W13), TTS/STT, hiển thị-từ ngữ. Premium hoãn D-012) |
+| Trạng thái | Implemented (kho cài đặt k-v + đọc/ghi; số từ/ván feed game D-008; mục tiêu ngày kích hoạt dashboard W11; sao lưu/khôi phục file JSON cục bộ; **nhắc học lên lịch thông báo OS** qua `NotificationService` (flutter_local_notifications + timezone), 1 thông báo/ngày-trong-tuần đã chọn. Theme picker đã làm ở W13. Hoãn: TTS/STT, hiển thị-từ ngữ. Premium hoãn D-012) |
 | Người phụ trách | TBD |
 | Dòng quyết định liên quan | D-008, D-012 |
 | Phiên bản | 1.0 |

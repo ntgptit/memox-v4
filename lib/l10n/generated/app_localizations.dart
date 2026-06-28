@@ -1208,6 +1208,24 @@ abstract class AppLocalizations {
   /// **'Notifications are coming soon — the schedule is saved.'**
   String get reminderComingSoon;
 
+  /// No description provided for @reminderActiveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll be reminded at the set time on the selected days.'**
+  String get reminderActiveHint;
+
+  /// No description provided for @reminderNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MemoX'**
+  String get reminderNotificationTitle;
+
+  /// No description provided for @reminderNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to study — keep your streak alive!'**
+  String get reminderNotificationBody;
+
   /// No description provided for @weekdayMon.
   ///
   /// In en, this message translates to:

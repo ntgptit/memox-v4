@@ -1,6 +1,6 @@
 /// A daily study reminder: a time of day + the weekdays it fires
 /// (`docs/contracts/types-catalog.md`). Weekdays use `DateTime` numbering
-/// (1 = Monday … 7 = Sunday). The OS scheduling is gated (W12 only persists it).
+/// (1 = Monday … 7 = Sunday). Scheduled to the OS via `NotificationService` (W12).
 class Reminder {
   const Reminder({
     required this.enabled,

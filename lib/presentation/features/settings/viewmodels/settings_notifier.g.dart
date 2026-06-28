@@ -39,7 +39,7 @@ final class SettingsNotifierProvider
   SettingsNotifier create() => SettingsNotifier();
 }
 
-String _$settingsNotifierHash() => r'ccc4a6e54c17d31347a6e0d085b961cdb4fd325e';
+String _$settingsNotifierHash() => r'1430f076abe2801a6baddeb18e66b5c991e86263';
 
 /// User settings (kept alive). Persists each change, then refreshes the
 /// dashboard goal when the daily goal changes.

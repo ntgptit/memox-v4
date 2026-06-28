@@ -7,8 +7,8 @@ import 'package:memox_v4/domain/types/reminder.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/viewmodels/settings_notifier.dart';
 
-/// Reminder schedule (`18-reminder.md`): enable + time + weekdays. The schedule
-/// persists; OS notification scheduling is gated (deferred — see NIGHT-LOG).
+/// Reminder schedule (`18-reminder.md`): enable + time + weekdays. Persists and
+/// schedules an OS notification per selected weekday (W12).
 class ReminderScreen extends ConsumerWidget {
   const ReminderScreen({super.key});
 
@@ -41,14 +41,14 @@ class ReminderScreen extends ConsumerWidget {
           title: Text(l10n.reminderEnable),
           value: reminder.enabled,
           onChanged: (value) =>
-              notifier.setReminder(reminder.copyWith(enabled: value)),
+              _save(l10n, notifier, reminder.copyWith(enabled: value)),
         ),
         ListTile(
           enabled: reminder.enabled,
           title: Text(l10n.reminderTimeLabel),
           trailing: Text(reminder.timeText),
           onTap: reminder.enabled
-              ? () => _pickTime(context, notifier, reminder)
+              ? () => _pickTime(context, l10n, notifier, reminder)
               : null,
         ),
         const SizedBox(height: MxSpacing.space3),
@@ -63,32 +63,46 @@ class ReminderScreen extends ConsumerWidget {
                     ? (selected) {
                         final weekdays = <int>{...reminder.weekdays};
                         selected ? weekdays.add(day) : weekdays.remove(day);
-                        unawaited(
-                          notifier.setReminder(
-                            reminder.copyWith(
-                              enabled: true,
-                              weekdays: weekdays,
-                            ),
-                          ),
+                        _save(
+                          l10n,
+                          notifier,
+                          reminder.copyWith(enabled: true, weekdays: weekdays),
                         );
                       }
                     : null,
               ),
           ],
         ),
-        const SizedBox(height: MxSpacing.space4),
-        Text(
-          l10n.reminderComingSoon,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
+        if (reminder.enabled) ...<Widget>[
+          const SizedBox(height: MxSpacing.space4),
+          Text(
+            l10n.reminderActiveHint,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
-        ),
+        ],
       ],
+    );
+  }
+
+  void _save(
+    AppLocalizations l10n,
+    SettingsNotifier notifier,
+    Reminder reminder,
+  ) {
+    unawaited(
+      notifier.setReminder(
+        reminder,
+        notificationTitle: l10n.reminderNotificationTitle,
+        notificationBody: l10n.reminderNotificationBody,
+      ),
     );
   }
 
   Future<void> _pickTime(
     BuildContext context,
+    AppLocalizations l10n,
     SettingsNotifier notifier,
     Reminder reminder,
   ) async {
@@ -97,7 +111,9 @@ class ReminderScreen extends ConsumerWidget {
       initialTime: TimeOfDay(hour: reminder.hour, minute: reminder.minute),
     );
     if (picked == null) return;
-    await notifier.setReminder(
+    _save(
+      l10n,
+      notifier,
       reminder.copyWith(
         enabled: true,
         hour: picked.hour,
