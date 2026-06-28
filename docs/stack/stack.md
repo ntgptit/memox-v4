@@ -11,6 +11,11 @@ hoàn thiện `pubspec.yaml`.
 `flutter_localizations`). Codegen: `build_runner` + `drift_dev >=2.28.1 <2.34.0` +
 `riverpod_generator ^4.0.3`. Các package còn lại (mocktail, sync…) thêm khi feature cần.
 
+**Đã duyệt + thêm (W8/W10/W12/audio):** `file_picker ^8`, `csv ^8`, `excel ^4` (W8 nhập/xuất);
+`google_sign_in ^7`, `googleapis ^16`, `flutter_secure_storage ^10` (W10 đồng bộ Google);
+`flutter_local_notifications ^22`, `timezone ^0.11` (W12 nhắc học OS); `flutter_tts ^4` (đọc thẻ).
+Tất cả là dep runtime, không codegen → không đụng ràng buộc analyzer của drift/riverpod.
+
 > **Riverpod codegen ĐÃ BẬT (nâng Riverpod 2→3):** Lúc S0, `riverpod_generator` (trần
 > `analyzer ≤9`) xung đột với `drift_dev 2.34` (`analyzer ≥10`) — `flutter pub get` thất
 > bại, không có vùng giao. Cách gỡ: **ghim `drift`/`drift_dev` ở `>=2.28.1 <2.34.0`**
