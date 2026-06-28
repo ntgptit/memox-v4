@@ -3,11 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/models/app_settings.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/types/sync.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/viewmodels/settings_notifier.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/feedback/mx_snackbar.dart';
+import 'package:memox_v4/presentation/shared/widgets/inputs/mx_switch.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Settings (`17-settings.md`): game, SRS, daily goal, reminder, backup. Theme
 /// and language-display live in W13; cloud sync in W10. No Premium lock (D-012).
@@ -21,11 +30,12 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final settings = ref.watch(settingsProvider);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.drawerSettings)),
+    return MxScaffold(
+      appBar: MxAppBar(title: l10n.drawerSettings),
+      flush: true,
       body: settings.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (_, _) => Center(child: Text(l10n.searchHint)),
+        loading: () => const MxStateView.loading(),
+        error: (_, _) => const SizedBox.shrink(),
         data: (data) => _body(context, ref, l10n, data),
       ),
     );
@@ -49,10 +59,12 @@ class SettingsScreen extends ConsumerWidget {
         keyPrefix: 'wordsPerRound',
         onChanged: _notifier(ref).setGameWordsPerRound,
       ),
-      SwitchListTile(
+      ListTile(
         title: Text(l10n.settingsGameRandom),
-        value: settings.gameRandom,
-        onChanged: _notifier(ref).setGameRandom,
+        trailing: MxSwitch(
+          value: settings.gameRandom,
+          onChanged: _notifier(ref).setGameRandom,
+        ),
       ),
       _GroupHeader(l10n.settingsGroupSrs),
       ListTile(
@@ -102,10 +114,12 @@ class SettingsScreen extends ConsumerWidget {
         onTap: () => context.push(RoutePaths.reminder),
       ),
       _GroupHeader(l10n.settingsGroupBackup),
-      SwitchListTile(
+      ListTile(
         title: Text(l10n.settingsAutoBackup),
-        value: settings.autoBackup,
-        onChanged: _notifier(ref).setAutoBackup,
+        trailing: MxSwitch(
+          value: settings.autoBackup,
+          onChanged: _notifier(ref).setAutoBackup,
+        ),
       ),
       Padding(
         padding: const EdgeInsets.symmetric(
@@ -115,17 +129,21 @@ class SettingsScreen extends ConsumerWidget {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: FilledButton.tonal(
+              child: MxButton(
                 key: const Key('settingsBackupNow'),
+                label: l10n.settingsBackupNow,
+                variant: MxButtonVariant.secondary,
+                block: true,
                 onPressed: () => _backup(context, ref, l10n),
-                child: Text(l10n.settingsBackupNow),
               ),
             ),
             const SizedBox(width: MxSpacing.space3),
             Expanded(
-              child: OutlinedButton(
+              child: MxButton(
+                label: l10n.settingsRestore,
+                variant: MxButtonVariant.outline,
+                block: true,
                 onPressed: () => _restore(context, ref, l10n),
-                child: Text(l10n.settingsRestore),
               ),
             ),
           ],
@@ -154,15 +172,22 @@ class SettingsScreen extends ConsumerWidget {
   ) async {
     final result = await _notifier(ref).syncNow();
     if (!context.mounted) return;
-    final message = switch (result) {
-      Ok(value: SyncOutcome.pushed) => l10n.settingsSyncPushed,
-      Ok(value: SyncOutcome.pulled) => l10n.settingsSyncPulled,
-      Ok(value: SyncOutcome.signInRequired) => l10n.settingsSyncSignInRequired,
-      Err() => l10n.settingsSyncError,
+    final (message, tone) = switch (result) {
+      Ok(value: SyncOutcome.pushed) => (
+        l10n.settingsSyncPushed,
+        MxSnackbarTone.success,
+      ),
+      Ok(value: SyncOutcome.pulled) => (
+        l10n.settingsSyncPulled,
+        MxSnackbarTone.success,
+      ),
+      Ok(value: SyncOutcome.signInRequired) => (
+        l10n.settingsSyncSignInRequired,
+        MxSnackbarTone.neutral,
+      ),
+      Err() => (l10n.settingsSyncError, MxSnackbarTone.error),
     };
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(message)));
+    MxSnackbar.show(context, message, tone: tone);
   }
 
   Future<void> _backup(
@@ -172,17 +197,12 @@ class SettingsScreen extends ConsumerWidget {
   ) async {
     final result = await _notifier(ref).backupNow();
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            result is Ok<String>
-                ? l10n.settingsBackupDone
-                : l10n.settingsBackupError,
-          ),
-        ),
-      );
+    final ok = result is Ok<String>;
+    MxSnackbar.show(
+      context,
+      ok ? l10n.settingsBackupDone : l10n.settingsBackupError,
+      tone: ok ? MxSnackbarTone.success : MxSnackbarTone.error,
+    );
   }
 
   Future<void> _restore(
@@ -192,17 +212,12 @@ class SettingsScreen extends ConsumerWidget {
   ) async {
     final result = await _notifier(ref).restoreNow();
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            result is Ok<void>
-                ? l10n.settingsRestoreDone
-                : l10n.settingsBackupError,
-          ),
-        ),
-      );
+    final ok = result is Ok<void>;
+    MxSnackbar.show(
+      context,
+      ok ? l10n.settingsRestoreDone : l10n.settingsBackupError,
+      tone: ok ? MxSnackbarTone.success : MxSnackbarTone.error,
+    );
   }
 }
 
@@ -212,23 +227,19 @@ class _GroupHeader extends StatelessWidget {
   final String title;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        MxSpacing.space4,
-        MxSpacing.space4,
-        MxSpacing.space4,
-        MxSpacing.space1,
-      ),
-      child: Text(
-        title,
-        style: theme.textTheme.labelLarge?.copyWith(
-          color: theme.colorScheme.primary,
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.fromLTRB(
+      MxSpacing.space4,
+      MxSpacing.space4,
+      MxSpacing.space4,
+      MxSpacing.space1,
+    ),
+    child: MxText(
+      title,
+      role: MxTextRole.labelLarge,
+      color: MxTheme.of(context).colors.primary,
+    ),
+  );
 }
 
 class _StepperRow extends StatelessWidget {
@@ -260,15 +271,15 @@ class _StepperRow extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          IconButton(
+          MxIconButton(
             key: Key('${keyPrefix}Dec'),
-            icon: const Icon(Icons.remove_circle_outline),
+            icon: Icons.remove_circle_outline,
             onPressed: value > min ? () => onChanged(value - step) : null,
           ),
           Text(display),
-          IconButton(
+          MxIconButton(
             key: Key('${keyPrefix}Inc'),
-            icon: const Icon(Icons.add_circle_outline),
+            icon: Icons.add_circle_outline,
             onPressed: value < max ? () => onChanged(value + step) : null,
           ),
         ],
