@@ -21,6 +21,13 @@ DONE entries can be a single line: `## <ts> · <step> · DONE · <hash> · <one-
 
 <!-- The overnight loop appends below this line. -->
 
+## 2026-06-28 · GAP item 3/8 · W8 import/export · DONE · de8d09a5 · verify --full GREEN (160 tests)
+
+- What: full CSV/Excel/clipboard import+export. BE plugin-free + testable: ImportCardsUseCase (map term/meaning columns, skip header, soft-dup D-020 counted not blocked), ExportCardsUseCase (deck or subtree → header + rows, optional box/due_at). TableCodec (data) wraps csv 8 (CsvDecoder/CsvEncoder) + excel 4 (XLSX). FE: ImportScreen (/deck/:id/import — file_picker or paste → separator/header/column pickers → preview → import) + ExportScreen (/deck/:id/export — subtree+SRS toggles + format → save to documents or clipboard), reachable from deck-detail AppBar.
+- Tests (+8): D-025/D-026 use cases + TableCodec CSV & XLSX round-trips (excel is pure Dart → round-trip unit-tested).
+- Gotcha logged: csv resolved to 8.0.0 (NOT 6) — v8 API is CsvDecoder/CsvEncoder, not CsvToListConverter. file_picker 8 prints a harmless federated-plugin warning. File pick itself (file_picker) is the only untestable edge.
+- Next: GAP item 4 = W4 RoundController — extract a shared round controller so NewLearn stages 2–5 reuse the real game widgets instead of the unified self-grade.
+
 ## 2026-06-28 · GAP item 2/8 · Audio/TTS · DONE · 3c847223 · verify --full GREEN (152 tests)
 
 - What: TtsService interface (domain) + FlutterTtsService (flutter_tts: stop→setLanguage→speak, blank=no-op) behind an interface; @riverpod ttsServiceProvider. Flashcard editor audio button speaks the term in the pair's source language (was "coming soon"); PlayerScreen speaks each term as it auto-advances + a manual speaker button.
