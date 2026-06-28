@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 13ab5a66 · 2026-06-29 · W7 · parity loop màn 6/22 (search): key 3/3 node (screen/appbar/dock; đổi searchField→search/dock + cập nhật test); 0 exempt; extend verify parity cho search
 - 5936c6ee · 2026-06-29 · W12 · parity loop màn 5/22 (settings): key settings/screen+appbar; 2 exempt (profile→app local không có account, srs-notif-switch→màn /reminder riêng); extend verify parity cho settings
 - aa59387f · 2026-06-29 · W9 · parity loop màn 4/22 (statistics): key 7 node (screen/appbar/overview-head/accuracy-head/leitner-head/weekly-head/heatmap-head; thêm headKey vào _StatsCard; weekly→due-forecast 7 ngày) + 2 exempt (streak-current/longest→dashboard); extend verify parity cho statistics
 - 7b833db0 · 2026-06-29 · W6 · parity loop màn 3/22 (deck-detail): key 10 node contract (screen/appbar/menu/add/empty-add/empty-subdeck/empty-import/retry/deck-delete-cancel/ok) + thêm empty Add-word/Import + error retry; 7 intent-ledger exception (card delete/audio→editor, reset→engine SRS, search-dock→/search, move-apply→áp dụng khi chạm đích); extend verify parity cho deck-detail
