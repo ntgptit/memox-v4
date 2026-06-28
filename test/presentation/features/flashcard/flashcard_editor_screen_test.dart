@@ -7,6 +7,7 @@ import 'package:memox_v4/data/datasources/local/connection/database_connection.d
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
 
 void main() {
   late AppDatabase db;
@@ -36,9 +37,7 @@ void main() {
   );
 
   bool saveEnabled(WidgetTester tester) =>
-      tester
-          .widget<FilledButton>(find.byKey(const Key('editorSave')))
-          .onPressed !=
+      tester.widget<MxButton>(find.byKey(const Key('editorSave'))).onPressed !=
       null;
 
   testWidgets('Save is disabled until a valid term + meaning exist', (

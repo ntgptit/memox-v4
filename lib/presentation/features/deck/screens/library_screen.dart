@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/entities/deck.dart';
 import 'package:memox_v4/domain/models/deck_node.dart';
 import 'package:memox_v4/domain/types/sort.dart';
@@ -12,7 +13,11 @@ import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/viewmodels/library_notifier.dart';
 import 'package:memox_v4/presentation/features/deck/widgets/deck_actions.dart';
 import 'package:memox_v4/presentation/shared/layouts/responsive.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
 import 'package:memox_v4/presentation/shared/widgets/mx_deck_tile.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
 
 /// Library home — the Library tab body: the active pair's root deck tree, with
 /// sort + create-deck, and per-node rename/move/delete (`01-library.md`).
@@ -33,7 +38,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         _toolbar(l10n),
         Expanded(
           child: asyncNodes.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const MxStateView.loading(),
             error: (error, stack) => _error(l10n),
             data: (nodes) => nodes.isEmpty ? _empty(l10n) : _list(nodes),
           ),
@@ -51,29 +56,26 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     ),
     child: Row(
       children: <Widget>[
-        Expanded(
-          child: Text(
-            l10n.tabLibrary,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-        IconButton(
+        Expanded(child: MxText.title(l10n.tabLibrary)),
+        MxIconButton(
           key: const Key('librarySearch'),
-          icon: const Icon(Icons.search),
+          icon: Icons.search,
           tooltip: l10n.searchHint,
           onPressed: () => context.push(RoutePaths.search),
         ),
-        IconButton(
+        MxIconButton(
           key: const Key('librarySort'),
-          icon: const Icon(Icons.sort),
+          icon: Icons.sort,
           tooltip: l10n.sortLabel,
           onPressed: () => unawaited(_showSortSheet()),
         ),
-        TextButton.icon(
+        MxButton(
           key: const Key('libraryNewDeck'),
+          label: l10n.libraryCreateDeck,
+          icon: Icons.create_new_folder_outlined,
+          variant: MxButtonVariant.ghost,
+          size: MxButtonSize.sm,
           onPressed: () => unawaited(_createRootDeck()),
-          icon: const Icon(Icons.create_new_folder_outlined),
-          label: Text(l10n.libraryCreateDeck),
         ),
       ],
     ),
@@ -92,64 +94,54 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     },
   );
 
-  Widget _empty(AppLocalizations l10n) {
-    final theme = Theme.of(context);
-    return MxContentBounds(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(
-              Icons.library_books_outlined,
-              size: MxSpacing.space10,
-              color: theme.colorScheme.primary,
-            ),
-            const SizedBox(height: MxSpacing.space4),
-            Text(l10n.libraryEmptyTitle, style: theme.textTheme.headlineSmall),
-            const SizedBox(height: MxSpacing.space2),
-            Text(
-              l10n.libraryEmptySubtitle,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium,
-            ),
-            const SizedBox(height: MxSpacing.space5),
-            FilledButton.icon(
-              key: const Key('libraryCreateDeck'),
-              onPressed: () => unawaited(_createRootDeck()),
-              icon: const Icon(Icons.add),
-              label: Text(l10n.libraryCreateDeck),
-            ),
-          ],
-        ),
+  Widget _empty(AppLocalizations l10n) => MxContentBounds(
+    child: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Icon(
+            Icons.library_books_outlined,
+            size: MxSpacing.space10,
+            color: MxTheme.of(context).colors.primary,
+          ),
+          const SizedBox(height: MxSpacing.space4),
+          MxText.headline(l10n.libraryEmptyTitle),
+          const SizedBox(height: MxSpacing.space2),
+          MxText.body(l10n.libraryEmptySubtitle, textAlign: TextAlign.center),
+          const SizedBox(height: MxSpacing.space5),
+          MxButton(
+            key: const Key('libraryCreateDeck'),
+            label: l10n.libraryCreateDeck,
+            icon: Icons.add,
+            onPressed: () => unawaited(_createRootDeck()),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 
-  Widget _error(AppLocalizations l10n) {
-    final theme = Theme.of(context);
-    return MxContentBounds(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(
-              Icons.error_outline,
-              size: MxSpacing.space9,
-              color: theme.colorScheme.error,
-            ),
-            const SizedBox(height: MxSpacing.space3),
-            Text(l10n.libraryError),
-            const SizedBox(height: MxSpacing.space4),
-            FilledButton(
-              onPressed: () =>
-                  unawaited(ref.read(libraryProvider.notifier).refresh()),
-              child: Text(l10n.commonRetry),
-            ),
-          ],
-        ),
+  Widget _error(AppLocalizations l10n) => MxContentBounds(
+    child: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Icon(
+            Icons.error_outline,
+            size: MxSpacing.space9,
+            color: MxTheme.of(context).colors.error,
+          ),
+          const SizedBox(height: MxSpacing.space3),
+          MxText(l10n.libraryError),
+          const SizedBox(height: MxSpacing.space4),
+          MxButton(
+            label: l10n.commonRetry,
+            onPressed: () =>
+                unawaited(ref.read(libraryProvider.notifier).refresh()),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 
   Future<void> _createRootDeck() async {
     final name = await promptDeckName(

@@ -17,6 +17,15 @@ import 'package:memox_v4/domain/usecases/flashcard/get_card.dart';
 import 'package:memox_v4/domain/usecases/flashcard/update_card.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/language_pair/viewmodels/language_pair_notifier.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/buttons/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_chip.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/feedback/mx_snackbar.dart';
+import 'package:memox_v4/presentation/shared/widgets/inputs/mx_switch.dart';
+import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// One editable meaning row: a language + its text controller.
 class _MeaningField {
@@ -240,55 +249,45 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
     }
   }
 
-  void _showSaveError() {
-    final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(l10n.editorSaveError)));
-  }
+  void _showSaveError() => MxSnackbar.show(
+    context,
+    AppLocalizations.of(context).editorSaveError,
+    tone: MxSnackbarTone.error,
+  );
 
-  void _comingSoon() {
-    final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(l10n.comingSoon)));
-  }
+  void _comingSoon() =>
+      MxSnackbar.show(context, AppLocalizations.of(context).comingSoon);
 
   // ── build ────────────────────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     if (_loading) {
-      return Scaffold(
-        appBar: AppBar(title: Text(l10n.editorTitleEdit)),
-        body: const Center(child: CircularProgressIndicator()),
+      return MxScaffold(
+        appBar: MxAppBar(title: l10n.editorTitleEdit),
+        body: const MxStateView.loading(),
       );
     }
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
+    return MxScaffold(
+      appBar: MxAppBar(
+        leading: MxIconButton(
           key: const Key('editorClose'),
-          icon: const Icon(Icons.close),
+          icon: Icons.close,
           tooltip: l10n.commonCancel,
           onPressed: () => unawaited(Navigator.of(context).maybePop()),
         ),
-        title: Text(
-          widget.isEditing ? l10n.editorTitleEdit : l10n.editorTitleNew,
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: MxSpacing.space3),
-            child: FilledButton(
-              key: const Key('editorSave'),
-              onPressed: (_canSave && !_saving) ? _onSave : null,
-              child: Text(l10n.editorSave),
-            ),
+        title: widget.isEditing ? l10n.editorTitleEdit : l10n.editorTitleNew,
+        trailing: <Widget>[
+          MxButton(
+            key: const Key('editorSave'),
+            label: l10n.editorSave,
+            size: MxButtonSize.sm,
+            onPressed: (_canSave && !_saving) ? _onSave : null,
           ),
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(MxSpacing.space5),
+        padding: const EdgeInsets.symmetric(vertical: MxSpacing.space5),
         children: <Widget>[
           if (_duplicateTerm != null) ...<Widget>[
             _buildDuplicateBanner(l10n),
@@ -305,37 +304,41 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
             textInputAction: TextInputAction.next,
           ),
           const SizedBox(height: MxSpacing.space4),
-          ..._buildMeaningFields(l10n, theme),
+          ..._buildMeaningFields(l10n),
           Align(
             alignment: AlignmentDirectional.centerStart,
-            child: TextButton.icon(
+            child: MxButton(
               key: const Key('editorAddMeaning'),
+              label: l10n.editorAddMeaning,
+              icon: Icons.add,
+              variant: MxButtonVariant.ghost,
+              size: MxButtonSize.sm,
               onPressed: _addSecondaryMeaning,
-              icon: const Icon(Icons.add),
-              label: Text(l10n.editorAddMeaning),
             ),
           ),
           const SizedBox(height: MxSpacing.space4),
-          Text(l10n.editorGenderLabel, style: theme.textTheme.labelMedium),
+          MxText.label(l10n.editorGenderLabel),
           const SizedBox(height: MxSpacing.space2),
           _buildGenderChips(l10n),
           const SizedBox(height: MxSpacing.space4),
-          _buildAudioRow(l10n, theme),
+          _buildAudioRow(l10n),
           const SizedBox(height: MxSpacing.space2),
-          SwitchListTile(
-            key: const Key('editorHiddenSwitch'),
+          ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(l10n.editorHiddenLabel),
             subtitle: Text(l10n.editorHiddenSubtitle),
-            value: _hidden,
-            onChanged: (value) => setState(() => _hidden = value),
+            trailing: MxSwitch(
+              key: const Key('editorHiddenSwitch'),
+              value: _hidden,
+              onChanged: (value) => setState(() => _hidden = value),
+            ),
           ),
         ],
       ),
     );
   }
 
-  List<Widget> _buildMeaningFields(AppLocalizations l10n, ThemeData theme) {
+  List<Widget> _buildMeaningFields(AppLocalizations l10n) {
     final widgets = <Widget>[];
     for (var i = 0; i < _meanings.length; i++) {
       final field = _meanings[i];
@@ -349,16 +352,13 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
               Row(
                 children: <Widget>[
                   if (isPrimary)
-                    Text(
-                      endonymOf(field.lang),
-                      style: theme.textTheme.labelMedium,
-                    )
+                    MxText.label(endonymOf(field.lang))
                   else
                     _buildLanguageDropdown(l10n, field),
                   const Spacer(),
                   if (field.removable)
-                    IconButton(
-                      icon: const Icon(Icons.remove_circle_outline),
+                    MxIconButton(
+                      icon: Icons.remove_circle_outline,
                       tooltip: l10n.commonDelete,
                       onPressed: () => _removeMeaning(field),
                     ),
@@ -411,26 +411,28 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
       spacing: MxSpacing.space2,
       children: options
           .map(
-            (o) => ChoiceChip(
-              label: Text(o.$2),
+            (o) => MxChip(
+              label: o.$2,
               selected: _gender == o.$1,
-              onSelected: (selected) =>
-                  setState(() => _gender = selected ? o.$1 : null),
+              onTap: () =>
+                  setState(() => _gender = _gender == o.$1 ? null : o.$1),
             ),
           )
           .toList(),
     );
   }
 
-  Widget _buildAudioRow(AppLocalizations l10n, ThemeData theme) => Row(
+  Widget _buildAudioRow(AppLocalizations l10n) => Row(
     children: <Widget>[
-      Text(l10n.editorAudioLabel, style: theme.textTheme.labelMedium),
+      MxText.label(l10n.editorAudioLabel),
       const Spacer(),
-      OutlinedButton.icon(
+      MxButton(
         key: const Key('editorAudioPlay'),
+        label: l10n.audioSpeak,
+        icon: Icons.volume_up_outlined,
+        variant: MxButtonVariant.outline,
+        size: MxButtonSize.sm,
         onPressed: _speakTerm,
-        icon: const Icon(Icons.volume_up_outlined),
-        label: Text(l10n.audioSpeak),
       ),
     ],
   );
@@ -448,21 +450,25 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
+            MxText(
               l10n.editorDuplicateMessage(_duplicateTerm!),
-              style: TextStyle(color: colors.onWarningSoft),
+              color: colors.onWarningSoft,
             ),
             const SizedBox(height: MxSpacing.space2),
             Row(
               children: <Widget>[
-                TextButton(
+                MxButton(
                   key: const Key('editorDuplicateAddAnyway'),
+                  label: l10n.editorDuplicateAddAnyway,
+                  variant: MxButtonVariant.ghost,
+                  size: MxButtonSize.sm,
                   onPressed: _addAnyway,
-                  child: Text(l10n.editorDuplicateAddAnyway),
                 ),
-                TextButton(
+                MxButton(
+                  label: l10n.editorDuplicateViewExisting,
+                  variant: MxButtonVariant.ghost,
+                  size: MxButtonSize.sm,
                   onPressed: _comingSoon,
-                  child: Text(l10n.editorDuplicateViewExisting),
                 ),
               ],
             ),
