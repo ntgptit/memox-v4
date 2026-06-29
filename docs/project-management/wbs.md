@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- cb22dea1 · 2026-06-29 · W4,W14 · style-parity loop màn 14 (study-result): harness drive 1-card DueReview tới finished (seed srs_state due_at:0, tap reveal+remembered); nút result đổi nhấn mạnh theo kit: continue outline→primary (bg:primary/surface), library→secondary (soft); exempt continue font (15 vs 20) + library (FE secondary primary-soft vs kit accent-soft, không có variant accent-soft); SCREENS+=study-result
 - 77f04229 · 2026-06-29 · W4,W14 · style-parity loop màn 13 (player): card Column→MxCard (surface, cardRadius r:20) + term→displayLarge(48) khớp kit; exempt playpause font (icon kit 26 vs MxIconSize.md 22, 26 không phải token); prev/next icon tròn 9999 đã khớp; SCREENS+=player
 - 0869555f · 2026-06-29 · W4,W14 · style-parity loop màn 12 (review): term card→displayLarge(48) + meaning→bodySmall text-tertiary (kit term nổi/meaning mờ); exempt prev/next (FE nút Back/Continue có nhãn vs kit nút icon tròn); SCREENS+=review
 - 0df12bc1 · 2026-06-29 · W4,W14 · style-parity loop màn 11 (study-session): term card learn-stage MxText.headline(20)→displayLarge(48) khớp kit (font 48/800); exempt next font (button label 15 vs kit 20); harness seed deck+3 card; in-game stage controls ở state khác (node-parity phủ); SCREENS+=study-session
