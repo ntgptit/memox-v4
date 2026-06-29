@@ -520,6 +520,20 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "export",
+      "node": "incl-srs-switch",
+      "field": "*",
+      "reason": "MxSwitch is custom-painted and not introspectable by the flat exporter; its styling follows the MxSwitch design-system component, not the kit's primary-fill pill.",
+      "source": "lib/presentation/shared/widgets/inputs/mx_switch.dart"
+    },
+    {
+      "screen": "export",
+      "node": "do-export",
+      "field": "font",
+      "reason": "The kit's export button label is 20px; the FE uses the design-system's standard MxButton label size (labelLarge, 15px) consistently across all action buttons.",
+      "source": "docs/business/import-export/import-export.md"
+    },
+    {
       "screen": "flashcard-editor",
       "node": "hidden-switch",
       "field": "*",
