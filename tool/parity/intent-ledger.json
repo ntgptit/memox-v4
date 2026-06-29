@@ -288,6 +288,24 @@
       "exceptionKind": "behavior",
       "reason": "The kit splits SRS finalize failures into later/retry recovery. v1 persists SRS grades automatically as the session runs, so the result has no finalize-later/finalize-retry recovery UI.",
       "source": "docs/business/srs/srs-review.md"
+    },
+    {
+      "screen": "game-matching",
+      "node": "next",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit matching game has an explicit next control. The FE matching game auto-progresses — a correct pair disappears and the round advances on its own (D-015) — so there is no manual next button.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-matching",
+      "node": "options",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a per-game options menu. The FE matching game is a minimal pair-the-tiles board with no in-game options control.",
+      "source": "docs/business/game/game-modes.md"
     }
   ],
   "coverageExempt": []

@@ -31,7 +31,11 @@ class GameScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final async = ref.watch(gameSessionProvider(request));
     return MxScaffold(
-      appBar: MxAppBar(title: _gameName(l10n, request.type)),
+      key: _screenKey(request.type),
+      appBar: MxAppBar(
+        key: _appbarKey(request.type),
+        title: _gameName(l10n, request.type),
+      ),
       flush: true,
       body: async.when(
         loading: () => const MxStateView.loading(),
@@ -122,6 +126,22 @@ class GameScreen extends ConsumerWidget {
       ),
     ),
   );
+
+  // The shared game scaffold carries the per-type kit node identity so each
+  // game-* screen contract resolves to a static ValueKey.
+  Key _screenKey(GameType type) => switch (type) {
+    GameType.matching => const ValueKey('mx-node:game-matching/screen'),
+    GameType.multipleChoice => const ValueKey('mx-node:game-mc/screen'),
+    GameType.recall => const ValueKey('mx-node:game-recall/screen'),
+    GameType.typing => const ValueKey('mx-node:game-typing/screen'),
+  };
+
+  Key _appbarKey(GameType type) => switch (type) {
+    GameType.matching => const ValueKey('mx-node:game-matching/appbar'),
+    GameType.multipleChoice => const ValueKey('mx-node:game-mc/appbar'),
+    GameType.recall => const ValueKey('mx-node:game-recall/appbar'),
+    GameType.typing => const ValueKey('mx-node:game-typing/appbar'),
+  };
 
   String _gameName(AppLocalizations l10n, GameType type) => switch (type) {
     GameType.matching => l10n.gameMatching,
