@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/app/di/database_provider.dart';
@@ -67,6 +68,7 @@ Future<void> _pumpAndExport(
       overrides: [databaseProvider.overrideWithValue(db)],
       child: MaterialApp(
         theme: AppTheme.light(),
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: child,
@@ -78,9 +80,37 @@ Future<void> _pumpAndExport(
   // frame) — rendering still produces sizes/styles, which is all we export.
   while (tester.takeException() != null) {}
   _exportScreen(tester, screen);
+  await _maybeShot(tester, screen);
+}
+
+/// When MEMOX_SHOT=1 (run with `flutter test --update-goldens`), captures a PNG
+/// of the rendered screen under `test/parity/shots/<screen>.png`.
+Future<void> _maybeShot(WidgetTester tester, String screen) async {
+  if (Platform.environment['MEMOX_SHOT'] != '1') return;
+  await expectLater(
+    find.byType(MaterialApp).first,
+    matchesGoldenFile('shots/$screen.png'),
+  );
 }
 
 void main() {
+  // Load the app's bundled font so golden shots (MEMOX_SHOT=1) render real text
+  // instead of the test environment's box glyphs. No-op for the spec export.
+  setUpAll(() async {
+    final bytes = File('assets/fonts/PlusJakartaSans.ttf').readAsBytesSync();
+    final loader = FontLoader('Plus Jakarta Sans')
+      ..addFont(Future<ByteData>.value(bytes.buffer.asByteData()));
+    await loader.load();
+    // Material icons (env path to the SDK font) so glyphs render, not boxes.
+    final iconPath = Platform.environment['MEMOX_ICON_FONT'];
+    if (iconPath != null && File(iconPath).existsSync()) {
+      final icons = File(iconPath).readAsBytesSync();
+      final iconLoader = FontLoader('MaterialIcons')
+        ..addFont(Future<ByteData>.value(icons.buffer.asByteData()));
+      await iconLoader.load();
+    }
+  });
+
   testWidgets('export FE spec — library (empty state)', (tester) async {
     await _pumpAndExport(
       tester,
@@ -384,6 +414,7 @@ void main() {
         overrides: [databaseProvider.overrideWithValue(db)],
         child: MaterialApp(
           theme: AppTheme.light(),
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: StudySessionScreen(nodeId: deckId, entry: StudyEntry.dueReview),
@@ -404,6 +435,7 @@ void main() {
     }
     while (tester.takeException() != null) {}
     _exportScreen(tester, 'study-result');
+    await _maybeShot(tester, 'study-result');
   });
 
   // Dashboard: the today/start hero renders in every state and is what we gate.
@@ -447,6 +479,7 @@ void main() {
         overrides: [databaseProvider.overrideWithValue(db)],
         child: MaterialApp(
           theme: AppTheme.light(),
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: const Scaffold(body: DashboardScreen()),
@@ -456,6 +489,7 @@ void main() {
     await tester.pumpAndSettle();
     while (tester.takeException() != null) {}
     _exportScreen(tester, 'dashboard');
+    await _maybeShot(tester, 'dashboard');
   });
 
   // The drawer's keyed mx-nodes live in its add-language view (add-screen,
@@ -478,6 +512,7 @@ void main() {
         overrides: [databaseProvider.overrideWithValue(db)],
         child: MaterialApp(
           theme: AppTheme.light(),
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: const Scaffold(body: AppDrawer()),
@@ -493,6 +528,7 @@ void main() {
     }
     while (tester.takeException() != null) {}
     _exportScreen(tester, 'drawer');
+    await _maybeShot(tester, 'drawer');
   });
 }
 
