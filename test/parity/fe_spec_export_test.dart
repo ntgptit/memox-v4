@@ -23,6 +23,7 @@ import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
+import 'package:memox_v4/presentation/features/engagement/screens/dashboard_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.dart';
 import 'package:memox_v4/presentation/features/game/screens/game_screen.dart';
@@ -403,6 +404,58 @@ void main() {
     }
     while (tester.takeException() != null) {}
     _exportScreen(tester, 'study-result');
+  });
+
+  // Dashboard: the today/start hero renders in every state and is what we gate.
+  // The goal/streak/mastered stat cards only appear once there is logged study
+  // activity (status != empty) — a state the minimal card seed doesn't reproduce
+  // — so they fall under "state not exported", like other screens' deeper states.
+  testWidgets('export FE spec — dashboard', (tester) async {
+    final db = AppDatabase.forTesting(openInMemoryDatabase());
+    addTearDown(db.close);
+    final pairId = await db
+        .into(db.languagePair)
+        .insert(
+          LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
+        );
+    final deckId = await db
+        .into(db.deck)
+        .insert(DeckCompanion.insert(pairId: pairId, name: 'Deck'));
+    for (var i = 0; i < 6; i++) {
+      final cardId = await db
+          .into(db.card)
+          .insert(
+            CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+          );
+      await db
+          .into(db.srsState)
+          .insert(
+            SrsStateCompanion.insert(
+              cardId: Value(cardId),
+              box: Value(i == 0 ? 8 : 1),
+              dueAt: const Value(0),
+            ),
+          );
+    }
+
+    tester.view.physicalSize = const Size(390, 1800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [databaseProvider.overrideWithValue(db)],
+        child: MaterialApp(
+          theme: AppTheme.light(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const Scaffold(body: DashboardScreen()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    while (tester.takeException() != null) {}
+    _exportScreen(tester, 'dashboard');
   });
 
   // The drawer's keyed mx-nodes live in its add-language view (add-screen,
