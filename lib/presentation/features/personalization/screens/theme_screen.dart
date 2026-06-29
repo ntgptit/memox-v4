@@ -142,7 +142,7 @@ class _Preview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MxCard(
-    variant: MxCardVariant.muted,
+    variant: MxCardVariant.flat,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

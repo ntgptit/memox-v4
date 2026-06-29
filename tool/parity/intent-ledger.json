@@ -511,6 +511,20 @@
       "field": "r",
       "reason": "The kit's time-edit is a fully-rounded pill row (r:9999). The FE uses a standard rectangular settings ListTile for consistency with the rest of the settings screens.",
       "source": "docs/business/settings/settings.md"
+    },
+    {
+      "screen": "theme",
+      "node": "accent-head",
+      "field": "*",
+      "reason": "The kit wraps only the accent section in a surface card (bg:surface r:20) while mode/size heads are flat. The FE renders all three personalization section heads as uniform flat labels (MxText.title), so accent-head has no card fill/radius.",
+      "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "theme",
+      "node": "preview",
+      "field": "color",
+      "reason": "The kit's first preview text run is a muted caption (text-tertiary). The FE preview card leads with a normal-weight title (MxText.title, text colour) followed by body/sample controls, so the first text run is `text` not `text-tertiary`.",
+      "source": "docs/business/personalization/personalization.md"
     }
   ]
 }

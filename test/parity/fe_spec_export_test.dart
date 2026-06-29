@@ -19,6 +19,7 @@ import 'package:memox_v4/data/datasources/local/connection/database_connection.d
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
+import 'package:memox_v4/presentation/features/personalization/screens/theme_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
 
@@ -88,6 +89,10 @@ void main() {
             );
       },
     );
+  });
+
+  testWidgets('export FE spec — theme', (tester) async {
+    await _pumpAndExport(tester, 'theme', const ThemeScreen());
   });
 }
 
