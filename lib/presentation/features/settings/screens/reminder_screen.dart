@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/types/reminder.dart';
@@ -45,6 +46,7 @@ class ReminderScreen extends ConsumerWidget {
     Reminder reminder,
   ) {
     final notifier = ref.read(settingsProvider.notifier);
+    final colors = MxTheme.of(context).colors;
     return ListView(
       padding: const EdgeInsets.all(MxSpacing.space4),
       children: <Widget>[
@@ -61,9 +63,21 @@ class ReminderScreen extends ConsumerWidget {
           key: const ValueKey('mx-node:reminder/time-edit'),
           enabled: reminder.enabled,
           title: Text(l10n.reminderTimeLabel),
-          trailing: Text(
-            reminder.timeText,
+          trailing: Container(
             key: const ValueKey('mx-node:reminder/time'),
+            padding: const EdgeInsets.symmetric(
+              horizontal: MxSpacing.space3,
+              vertical: MxSpacing.space1,
+            ),
+            decoration: BoxDecoration(
+              color: colors.surface,
+              borderRadius: MxRadius.cardRadius,
+            ),
+            child: MxText(
+              reminder.timeText,
+              role: MxTextRole.labelLarge,
+              color: colors.textTertiary,
+            ),
           ),
           onTap: reminder.enabled
               ? () => _pickTime(context, l10n, notifier, reminder)

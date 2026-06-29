@@ -497,6 +497,20 @@
       "field": "*",
       "reason": "The kit's library/create is an icon-only primary '+' button (bg:primary, r:24). The FE uses a labelled ghost 'Create deck' action in the toolbar (clearer affordance) and keeps the high-emphasis primary create in the empty state (library/empty-deck), so create's fill/colour/size intentionally differ.",
       "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "reminder",
+      "node": "time-edit",
+      "field": "font",
+      "reason": "The kit shows the reminder time as a 24px element inside a pill row. The FE uses a standard settings ListTile row (consistent with every other settings row) with the time value rendered as a surface chip (reminder/time), so the row title keeps the standard list-title size.",
+      "source": "docs/business/settings/settings.md"
+    },
+    {
+      "screen": "reminder",
+      "node": "time-edit",
+      "field": "r",
+      "reason": "The kit's time-edit is a fully-rounded pill row (r:9999). The FE uses a standard rectangular settings ListTile for consistency with the rest of the settings screens.",
+      "source": "docs/business/settings/settings.md"
     }
   ]
 }

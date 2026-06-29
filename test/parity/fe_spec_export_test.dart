@@ -7,6 +7,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
+import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
 
 const String _prefix = 'mx-node:';
 
@@ -67,6 +69,25 @@ void main() {
 
   testWidgets('export FE spec — search', (tester) async {
     await _pumpAndExport(tester, 'search', const SearchScreen());
+  });
+
+  testWidgets('export FE spec — reminder', (tester) async {
+    await _pumpAndExport(
+      tester,
+      'reminder',
+      const ReminderScreen(),
+      // Enable the reminder so the time row isn't disabled/faded.
+      seed: (db) async {
+        await db
+            .into(db.settings)
+            .insert(
+              SettingsCompanion.insert(
+                key: 'reminder_time',
+                value: const Value('08:00'),
+              ),
+            );
+      },
+    );
   });
 }
 
