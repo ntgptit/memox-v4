@@ -520,6 +520,13 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "study-session",
+      "node": "next",
+      "field": "font",
+      "reason": "The kit's continue/next button label is 20px; the FE uses the design-system's standard MxButton label size (labelLarge, 15px) consistently across all action buttons.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
       "screen": "export",
       "node": "incl-srs-switch",
       "field": "*",

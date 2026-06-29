@@ -17,6 +17,7 @@ import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
+import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
@@ -28,6 +29,7 @@ import 'package:memox_v4/presentation/features/search/screens/search_screen.dart
 import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
 import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
+import 'package:memox_v4/presentation/features/study/screens/study_session_screen.dart';
 
 const String _prefix = 'mx-node:';
 
@@ -175,6 +177,23 @@ void main() {
             CardCompanion.insert(deckId: deckId, term: 'mesa', createdAt: 1),
           );
       return DeckDetailScreen(deckId: deckId);
+    });
+  });
+
+  testWidgets('export FE spec — study-session', (tester) async {
+    await _pumpAndExport(tester, 'study-session', (db) async {
+      final pair = await db.select(db.languagePair).getSingle();
+      final deckId = await db
+          .into(db.deck)
+          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+      for (var i = 0; i < 3; i++) {
+        await db
+            .into(db.card)
+            .insert(
+              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+            );
+      }
+      return StudySessionScreen(nodeId: deckId, entry: StudyEntry.newLearn);
     });
   });
 }

@@ -135,7 +135,11 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
             key: const ValueKey('mx-node:study-session/card'),
             padding: MxCardPadding.lg,
             child: Center(
-              child: MxText.headline(current.term, textAlign: TextAlign.center),
+              child: MxText(
+                current.term,
+                role: MxTextRole.displayLarge,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
           const SizedBox(height: MxSpacing.space4),
