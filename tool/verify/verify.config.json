@@ -18,6 +18,9 @@
     "parity_contract": {
       "cmd": "node tool/parity/gen_parity_contract.mjs --check"
     },
+    "style_parity": {
+      "cmd": "node tool/parity/run_style_parity.mjs"
+    },
     "parity_fe_keys": {
       "cmd": "node tool/parity/fe_node_usage.mjs --check --screen dashboard && node tool/parity/fe_node_usage.mjs --check --screen library && node tool/parity/fe_node_usage.mjs --check --screen deck-detail && node tool/parity/fe_node_usage.mjs --check --screen statistics && node tool/parity/fe_node_usage.mjs --check --screen settings && node tool/parity/fe_node_usage.mjs --check --screen search && node tool/parity/fe_node_usage.mjs --check --screen study-session && node tool/parity/fe_node_usage.mjs --check --screen review && node tool/parity/fe_node_usage.mjs --check --screen player && node tool/parity/fe_node_usage.mjs --check --screen study-result && node tool/parity/fe_node_usage.mjs --check --screen game-picker && node tool/parity/fe_node_usage.mjs --check --screen game-matching && node tool/parity/fe_node_usage.mjs --check --screen game-mc && node tool/parity/fe_node_usage.mjs --check --screen game-recall && node tool/parity/fe_node_usage.mjs --check --screen game-typing && node tool/parity/fe_node_usage.mjs --check --screen flashcard-editor && node tool/parity/fe_node_usage.mjs --check --screen import && node tool/parity/fe_node_usage.mjs --check --screen export && node tool/parity/fe_node_usage.mjs --check --screen reminder && node tool/parity/fe_node_usage.mjs --check --screen theme && node tool/parity/fe_node_usage.mjs --check --screen account && node tool/parity/fe_node_usage.mjs --check --screen drawer"
     }
@@ -41,7 +44,8 @@
       "format",
       "parity_contract",
       "parity_fe_keys",
-      "test"
+      "test",
+      "style_parity"
     ],
     "docs": [
       "doc_guard",

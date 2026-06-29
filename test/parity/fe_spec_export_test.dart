@@ -18,37 +18,55 @@ import 'package:memox_v4/data/datasources/local/connection/database_connection.d
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
+import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 
 const String _prefix = 'mx-node:';
 
+/// Pumps [child] at the kit's 390-wide frame with a seeded in-memory DB, then
+/// exports its mx-node style record.
+Future<void> _pumpAndExport(
+  WidgetTester tester,
+  String screen,
+  Widget child, {
+  Future<void> Function(AppDatabase db)? seed,
+}) async {
+  final db = AppDatabase.forTesting(openInMemoryDatabase());
+  addTearDown(db.close);
+  await db
+      .into(db.languagePair)
+      .insert(LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'));
+  if (seed != null) await seed(db);
+
+  tester.view.physicalSize = const Size(390, 844);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
+
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [databaseProvider.overrideWithValue(db)],
+      child: MaterialApp(
+        theme: AppTheme.light(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: child,
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
+  _exportScreen(tester, screen);
+}
+
 void main() {
   testWidgets('export FE spec — library (empty state)', (tester) async {
-    final db = AppDatabase.forTesting(openInMemoryDatabase());
-    addTearDown(db.close);
-    await db
-        .into(db.languagePair)
-        .insert(
-          LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
-        );
-
-    tester.view.physicalSize = const Size(390, 844);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.reset);
-
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [databaseProvider.overrideWithValue(db)],
-        child: MaterialApp(
-          theme: AppTheme.light(),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: const Scaffold(body: LibraryScreen()),
-        ),
-      ),
+    await _pumpAndExport(
+      tester,
+      'library',
+      const Scaffold(body: LibraryScreen()),
     );
-    await tester.pumpAndSettle();
+  });
 
-    _exportScreen(tester, 'library');
+  testWidgets('export FE spec — search', (tester) async {
+    await _pumpAndExport(tester, 'search', const SearchScreen());
   });
 }
 
