@@ -180,7 +180,21 @@ Map<String, Object?> _styleOf(Element root, Map<Color, String> tokens) {
         decoration,
       _ => null,
     };
-    if (widget is Material) {
+    if (widget is TextField) {
+      // InputDecoration fill/border are painted, not child widgets — read them off
+      // the declared decoration.
+      final dec = widget.decoration;
+      if (dec != null) {
+        if ((dec.filled ?? false) && bg == null) {
+          final b = _color(tokens, dec.fillColor);
+          if (b.isNotEmpty) bg = b;
+        }
+        final border = dec.border;
+        if (border is OutlineInputBorder) {
+          radius ??= _radiusStr(border.borderRadius);
+        }
+      }
+    } else if (widget is Material) {
       radius ??= _materialRadius(widget);
       final b = _color(tokens, widget.color);
       if (b.isNotEmpty && bg == null) bg = b;

@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
+import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/models/search_result.dart';
 import 'package:memox_v4/domain/types/card_status.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
@@ -40,19 +42,39 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final l10n = AppLocalizations.of(context);
     final state = ref.watch(searchProvider);
     final now = ref.read(clockProvider).now().millisecondsSinceEpoch;
+    final colors = MxTheme.of(context).colors;
     return MxScaffold(
       key: const ValueKey('mx-node:search/screen'),
       flush: true,
       appBar: AppBar(
         key: const ValueKey('mx-node:search/appbar'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
         title: TextField(
           key: const ValueKey('mx-node:search/dock'),
           controller: _controller,
           autofocus: true,
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w400),
           onChanged: (value) => unawaited(_notifier.search(value)),
           decoration: InputDecoration(
             hintText: l10n.searchHint,
-            border: InputBorder.none,
+            hintStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: colors.textTertiary,
+            ),
+            filled: true,
+            fillColor: colors.surface,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: MxSpacing.space4,
+              vertical: MxSpacing.space2,
+            ),
+            border: const OutlineInputBorder(
+              borderRadius: MxRadius.pillRadius,
+              borderSide: BorderSide.none,
+            ),
             suffixIcon: state.query.isEmpty
                 ? null
                 : IconButton(
