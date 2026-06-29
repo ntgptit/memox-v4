@@ -531,6 +531,6 @@ Gate `style_parity` đã nối vào verify (run_style_parity.mjs → spec_diff <
 3. Mỗi DIFF: **sửa FE cho khớp token kit** (mặc định — kit is source of truth) HOẶC thêm styleExempt (intent-ledger) cho divergence có chủ đích (kèm source).
 4. Thêm <màn> vào SCREENS trong tool/parity/run_style_parity.mjs.
 5. spec_diff <màn> --check = 0 mismatch; dart format; verify --full GREEN (đã gồm style_parity); commit+push; NIGHT-LOG/WBS §10; schedule.
-- DONE: library (3eaf0f55) · search (93bfc353 — dock→filled pill) · reminder (da8b1b2f — time→chip) · theme (dfe8e29f — _Preview→flat) · settings (643c5a47 — appbar large) · statistics (38a84765 — heads→card) · flashcard-editor (b93aaad4 — **fix MxButton label contrast** (chữ foreground thay onSurface); harness build child sau seed (deckId); exempt hidden-switch/add-meaning/audio-play).
-- QUEUE (15): export · import · deck-detail · study-session · review · player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing · account · drawer · dashboard.
-- NEXT = export.
+- DONE: library (3eaf0f55) · search (93bfc353 — dock→filled pill) · reminder (da8b1b2f — time→chip) · theme (dfe8e29f — _Preview→flat) · settings (643c5a47 — appbar large) · statistics (38a84765 — heads→card) · flashcard-editor (b93aaad4 — **fix MxButton label contrast** (chữ foreground thay onSurface); harness build child sau seed (deckId); exempt hidden-switch/add-meaning/audio-play) · export (44c2572c — exempt incl-srs-switch (MxSwitch)/do-export font (kit 20 vs labelLarge 15)).
+- QUEUE (14): import · deck-detail · study-session · review · player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing · account · drawer · dashboard.
+- NEXT = import.
