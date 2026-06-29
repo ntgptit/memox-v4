@@ -1,0 +1,175 @@
+// Generates a FLAT per-mx-node style record from the real Flutter render tree,
+// in a token-aware form that mirrors the kit `specs/*.md` style fields, so
+// `tool/parity/spec_diff.mjs` can compare design-kit-intended vs FE-rendered
+// style (bg/color/font/radius/size) WITHOUT pixel diffing. One file per screen
+// under `tool/parity/fe-specs/<screen>.json`. Not a behavioural test — a spec
+// exporter run as a widget test (it needs a rendered tree).
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:memox_v4/app/di/database_provider.dart';
+import 'package:memox_v4/core/theme/app_theme.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
+import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
+import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
+import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
+
+const String _prefix = 'mx-node:';
+
+void main() {
+  testWidgets('export FE spec — library (empty state)', (tester) async {
+    final db = AppDatabase.forTesting(openInMemoryDatabase());
+    addTearDown(db.close);
+    await db
+        .into(db.languagePair)
+        .insert(
+          LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
+        );
+
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [databaseProvider.overrideWithValue(db)],
+        child: MaterialApp(
+          theme: AppTheme.light(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const Scaffold(body: LibraryScreen()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    _exportScreen(tester, 'library');
+  });
+}
+
+/// Reverse map: a resolved [Color] → its `--memox-*` token name (kebab-case, the
+/// kit spec's vocabulary). Keyed by Color (Color's == is value-based).
+Map<Color, String> _tokenMap(BuildContext context) {
+  final c = MxTheme.of(context).colors;
+  final m = <Color, String>{};
+  void put(Color color, String name) => m.putIfAbsent(color, () => name);
+  put(c.bg, 'bg');
+  put(c.surface, 'surface');
+  put(c.surfaceMuted, 'surface-muted');
+  put(c.surfaceRaised, 'surface-raised');
+  put(c.surfaceSunken, 'surface-sunken');
+  put(c.text, 'text');
+  put(c.textSecondary, 'text-secondary');
+  put(c.textTertiary, 'text-tertiary');
+  put(c.primary, 'primary');
+  put(c.primaryStrong, 'primary-strong');
+  put(c.onPrimary, 'on-primary');
+  put(c.primarySoft, 'primary-soft');
+  put(c.onPrimarySoft, 'on-primary-soft');
+  put(c.accent, 'accent');
+  put(c.onAccent, 'on-accent');
+  put(c.accentSoft, 'accent-soft');
+  put(c.success, 'success');
+  put(c.warning, 'warning');
+  put(c.warningSoft, 'warning-soft');
+  put(c.onWarningSoft, 'on-warning-soft');
+  put(c.error, 'error');
+  return m;
+}
+
+String _color(Map<Color, String> tokens, Color? color) {
+  if (color == null || color == const Color(0x00000000)) return '';
+  return tokens[color] ?? color.toString();
+}
+
+void _exportScreen(WidgetTester tester, String screen) {
+  final context = tester.element(find.byType(Scaffold).first);
+  final tokens = _tokenMap(context);
+
+  final nodes = <Map<String, Object?>>[];
+  for (final element in tester.allElements) {
+    final key = element.widget.key;
+    if (key is! ValueKey) continue;
+    final value = key.value;
+    if (value is! String || !value.startsWith(_prefix)) continue;
+    final render = element.renderObject;
+    if (render is! RenderBox || !render.hasSize) continue;
+
+    final style = _styleOf(element, tokens);
+    nodes.add(<String, Object?>{
+      'id': value.substring(_prefix.length),
+      'w': render.size.width.round(),
+      'h': render.size.height.round(),
+      ...style,
+    });
+  }
+  nodes.sort((a, b) => (a['id']! as String).compareTo(b['id']! as String));
+
+  // Only write the artifact when explicitly exporting (MEMOX_EXPORT_SPEC=1), so a
+  // normal `flutter test` run (e.g. inside verify) renders + walks the tree but
+  // does NOT mutate the working tree.
+  if (Platform.environment['MEMOX_EXPORT_SPEC'] != '1') return;
+  final file = File('tool/parity/fe-specs/$screen.json');
+  file.parent.createSync(recursive: true);
+  file.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(nodes));
+  // ignore: avoid_print
+  print('wrote ${file.path} (${nodes.length} nodes)');
+}
+
+/// Flattens the effective style of a keyed node: the first colored box (bg +
+/// radius) and the first text run (font + color) inside its subtree, stopping at
+/// any nested mx-node (those own their own record).
+Map<String, Object?> _styleOf(Element root, Map<Color, String> tokens) {
+  String? bg;
+  String? color;
+  String? font;
+  String? radius;
+
+  void visit(Element element) {
+    if (!identical(element, root)) {
+      final key = element.widget.key;
+      if (key is ValueKey &&
+          key.value is String &&
+          (key.value! as String).startsWith(_prefix)) {
+        return; // nested keyed node owns its style
+      }
+    }
+    final render = element.renderObject;
+    if (render is RenderParagraph && font == null) {
+      final style = render.text.style;
+      final size = style?.fontSize;
+      if (size != null) {
+        final weight = style?.fontWeight;
+        final w = weight == null ? '' : weight.value.toString();
+        font = '${size.round()}/$w';
+        color = _color(tokens, style?.color);
+      }
+    } else if (render is RenderDecoratedBox && bg == null) {
+      final decoration = render.decoration;
+      if (decoration is BoxDecoration) {
+        final b = _color(tokens, decoration.color);
+        if (b.isNotEmpty) bg = b;
+        final br = decoration.borderRadius;
+        if (br is BorderRadius && radius == null) {
+          radius = br.topLeft.x.round().toString();
+        }
+      }
+    } else if (render is RenderPhysicalShape && bg == null) {
+      final b = _color(tokens, render.color);
+      if (b.isNotEmpty) bg = b;
+    } else if (render is RenderPhysicalModel && bg == null) {
+      final b = _color(tokens, render.color);
+      if (b.isNotEmpty) bg = b;
+      radius ??= render.borderRadius?.topLeft.x.round().toString();
+    }
+    element.visitChildren(visit);
+  }
+
+  visit(root);
+  return <String, Object?>{'bg': bg, 'color': color, 'font': font, 'r': radius};
+}
