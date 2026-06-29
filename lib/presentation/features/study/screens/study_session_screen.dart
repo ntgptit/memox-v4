@@ -58,11 +58,13 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
           content: Text(l10n.studyExitBody),
           actions: <Widget>[
             MxButton(
+              key: const ValueKey('mx-node:study-session/exit-cancel'),
               label: l10n.commonCancel,
               variant: MxButtonVariant.ghost,
               onPressed: () => Navigator.of(ctx).pop(false),
             ),
             MxButton(
+              key: const ValueKey('mx-node:study-session/exit-ok'),
               label: l10n.studyExitConfirm,
               onPressed: () => Navigator.of(ctx).pop(true),
             ),
@@ -79,7 +81,9 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
     final l10n = AppLocalizations.of(context);
     final async = ref.watch(studySessionProvider(_request));
     return MxScaffold(
+      key: const ValueKey('mx-node:study-session/screen'),
       appBar: MxAppBar(
+        key: const ValueKey('mx-node:study-session/appbar'),
         leading: MxIconButton(
           key: const Key('studyExit'),
           icon: Icons.close,
@@ -128,6 +132,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
       child: Column(
         children: <Widget>[
           MxCard(
+            key: const ValueKey('mx-node:study-session/card'),
             padding: MxCardPadding.lg,
             child: Center(
               child: MxText.headline(current.term, textAlign: TextAlign.center),
@@ -137,7 +142,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
           MxText(current.meaning, role: MxTextRole.bodyLarge),
           const Spacer(),
           MxButton(
-            key: const Key('studyLearnNext'),
+            key: const ValueKey('mx-node:study-session/next'),
             label: l10n.studyContinue,
             block: true,
             onPressed: () => _notifier.markCorrect(current.cardId),

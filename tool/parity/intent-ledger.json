@@ -117,6 +117,69 @@
       "exceptionKind": "behavior",
       "reason": "The kit offers a single inline SRS-notification switch. The FE configures study reminders on a dedicated /reminder screen (enable + time + weekdays), which is richer than a single switch, so settings has a reminder navigation row instead of an inline toggle.",
       "source": "docs/business/settings/settings.md"
+    },
+    {
+      "screen": "study-session",
+      "node": "reveal",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "Stages 2-5 of NewLearn (and DueReview) reuse the shared W5 game widgets (recall/typing/guess/matching). The in-card controls reveal/check/hint/options/due-next/due-relearn are rendered by those widgets and carry their own game-* node identity, so the study session does not re-key them under study-session/*.",
+      "source": "lib/presentation/features/study/screens/study_session_screen.dart"
+    },
+    {
+      "screen": "study-session",
+      "node": "check",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "Control provided by the shared W5 typing game widget (game-typing/*), reused by the study session.",
+      "source": "lib/presentation/features/study/screens/study_session_screen.dart"
+    },
+    {
+      "screen": "study-session",
+      "node": "hint",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "Control provided by the shared W5 game widgets, reused by the study session.",
+      "source": "lib/presentation/features/study/screens/study_session_screen.dart"
+    },
+    {
+      "screen": "study-session",
+      "node": "options",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The multiple-choice options are provided by the shared W5 guess game widget (game-mc/*), reused by the study session.",
+      "source": "lib/presentation/features/study/screens/study_session_screen.dart"
+    },
+    {
+      "screen": "study-session",
+      "node": "due",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "DueReview grading (due-next / due-relearn) is provided by the shared recall game widget driving the SRS grade, not by study-session-owned buttons.",
+      "source": "lib/presentation/features/study/screens/study_session_screen.dart"
+    },
+    {
+      "screen": "study-session",
+      "node": "resume",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit has a dedicated resume-session prompt (resume-back/resume-retry). v1 has no mid-session resume prompt; an interrupted session simply re-enters fresh, so there is no resume state.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "study-session",
+      "node": "save-error",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit splits load vs save failures into distinct recovery screens (save-error-back/retry). v1 surfaces any session load/persist failure as a single message state, so there are no separate save-error affordances.",
+      "source": "docs/business/study/study-flow.md"
     }
   ],
   "coverageExempt": []
