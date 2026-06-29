@@ -14,7 +14,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(HERE, '..', '..');
 
 // Screens with a render harness + clean style parity. Append as the loop advances.
-const SCREENS = ['library', 'search', 'reminder', 'theme', 'settings', 'statistics', 'flashcard-editor', 'export', 'import', 'deck-detail', 'study-session', 'review', 'player', 'study-result', 'game-picker'];
+const SCREENS = ['library', 'search', 'reminder', 'theme', 'settings', 'statistics', 'flashcard-editor', 'export', 'import', 'deck-detail', 'study-session', 'review', 'player', 'study-result', 'game-picker', 'game-matching'];
 
 function sh(cmd, args, env) {
   const r = spawnSync(cmd, args, { cwd: repoRoot, shell: true, stdio: 'inherit', env: { ...process.env, ...env } });

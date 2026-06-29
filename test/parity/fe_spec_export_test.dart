@@ -17,12 +17,16 @@ import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
+import 'package:memox_v4/domain/types/game_scope.dart';
+import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.dart';
+import 'package:memox_v4/presentation/features/game/screens/game_screen.dart';
+import 'package:memox_v4/presentation/features/game/viewmodels/game_session_notifier.dart';
 import 'package:memox_v4/presentation/features/import_export/screens/export_screen.dart';
 import 'package:memox_v4/presentation/features/import_export/screens/import_screen.dart';
 import 'package:memox_v4/presentation/features/personalization/screens/theme_screen.dart';
@@ -231,6 +235,29 @@ void main() {
             );
       }
       return PlayerScreen(nodeId: deckId);
+    });
+  });
+
+  testWidgets('export FE spec — game-matching', (tester) async {
+    await _pumpAndExport(tester, 'game-matching', (db) async {
+      final pair = await db.select(db.languagePair).getSingle();
+      final deckId = await db
+          .into(db.deck)
+          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+      for (var i = 0; i < 12; i++) {
+        await db
+            .into(db.card)
+            .insert(
+              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+            );
+      }
+      return GameScreen(
+        request: GameRequest(
+          nodeId: deckId,
+          type: GameType.matching,
+          scope: GameScope.all,
+        ),
+      );
     });
   });
 
