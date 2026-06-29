@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- aafa7dbc · 2026-06-29 · W13 · parity loop màn 20/22 (theme): key 6/6 node (screen/appbar/mode-head/accent-head/size-head/preview; +super.key cho _Preview); 0 exempt; extend verify parity
 - df7eeb99 · 2026-06-29 · W12 · parity loop màn 19/22 (reminder): key 4 node (screen/appbar/time=trailing Text giá trị giờ/time-edit=ListTile bấm sửa); 1 exempt (picker-done→showTimePicker native, nút OK do OS); extend verify parity
 - fa260bb4 · 2026-06-29 · W8 · parity loop màn 18/22 (export): key 5 node (screen/appbar/incl-srs-switch/do-export/progress; đổi exportIncludeSrs/Run→mx-node, result→progress); 2 exempt (save/share→ghi file trực tiếp khi do-export, không có nút save/share riêng); extend verify parity
 - 68ac4773 · 2026-06-29 · W8 · parity loop màn 17/22 (import): key 6 node (screen/appbar/map-term-pick/map-meaning-pick/do-import/go-deck; đổi importTermColumn/MeaningColumn/Run→mx-node + thêm nút go-deck về deck); 1 exempt (to-preview→preview inline 1 trang); extend verify parity
