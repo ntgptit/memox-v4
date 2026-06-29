@@ -9,6 +9,7 @@ import 'package:memox_v4/app/di/deck_providers.dart';
 import 'package:memox_v4/app/di/srs_providers.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/models/game_card.dart';
 import 'package:memox_v4/domain/types/result.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
@@ -100,13 +101,17 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                 MxCard(
                   key: const ValueKey('mx-node:review/meaning'),
                   padding: MxCardPadding.lg,
-                  child: MxText(card.meaning, role: MxTextRole.bodyLarge),
+                  child: MxText(
+                    card.meaning,
+                    role: MxTextRole.bodySmall,
+                    color: MxTheme.of(context).colors.textTertiary,
+                  ),
                 ),
                 const SizedBox(height: MxSpacing.space4),
                 MxCard(
                   key: const ValueKey('mx-node:review/term'),
                   padding: MxCardPadding.lg,
-                  child: MxText.headline(card.term),
+                  child: MxText(card.term, role: MxTextRole.displayLarge),
                 ),
                 const Spacer(),
                 Row(

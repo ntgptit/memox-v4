@@ -520,6 +520,20 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "review",
+      "node": "prev",
+      "field": "*",
+      "reason": "The kit's review browse uses circular icon nav buttons (r:9999, 24px). The FE uses labelled Back/Continue MxButtons (control radius, labelLarge) for clearer affordance, consistent with the design-system button variants.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "review",
+      "node": "next",
+      "field": "*",
+      "reason": "The kit's review browse uses circular icon nav buttons (r:9999, 24px). The FE uses labelled Back/Continue MxButtons (control radius, labelLarge) for clearer affordance, consistent with the design-system button variants.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
       "screen": "study-session",
       "node": "next",
       "field": "font",
