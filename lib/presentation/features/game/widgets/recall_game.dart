@@ -29,6 +29,7 @@ class _RecallGameState extends State<RecallGame> {
       child: Column(
         children: <Widget>[
           Card(
+            key: const ValueKey('mx-node:game-recall/term'),
             child: Padding(
               padding: const EdgeInsets.all(MxSpacing.space6),
               child: Center(
@@ -38,11 +39,15 @@ class _RecallGameState extends State<RecallGame> {
           ),
           const SizedBox(height: MxSpacing.space4),
           if (_revealed)
-            Text(current.meaning, style: theme.textTheme.bodyLarge),
+            Text(
+              current.meaning,
+              key: const ValueKey('mx-node:game-recall/meaning'),
+              style: theme.textTheme.bodyLarge,
+            ),
           const Spacer(),
           if (!_revealed)
             FilledButton(
-              key: const Key('recallShow'),
+              key: const ValueKey('mx-node:game-recall/reveal'),
               onPressed: () => setState(() => _revealed = true),
               child: Text(l10n.gameShow),
             )
@@ -51,7 +56,7 @@ class _RecallGameState extends State<RecallGame> {
               children: <Widget>[
                 Expanded(
                   child: OutlinedButton(
-                    key: const Key('recallForgot'),
+                    key: const ValueKey('mx-node:game-recall/forgot'),
                     onPressed: () {
                       widget.actions.markWrong(current.cardId);
                       setState(() => _revealed = false);
@@ -62,7 +67,7 @@ class _RecallGameState extends State<RecallGame> {
                 const SizedBox(width: MxSpacing.space3),
                 Expanded(
                   child: FilledButton(
-                    key: const Key('recallRemembered'),
+                    key: const ValueKey('mx-node:game-recall/remembered'),
                     onPressed: () {
                       widget.actions.markCorrect(current.cardId);
                       setState(() => _revealed = false);

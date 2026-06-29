@@ -51,9 +51,11 @@ void main() {
     final fake = _FakeActions();
     await tester.pumpWidget(_host(RecallGame(round: _round, actions: fake)));
 
-    await tester.tap(find.byKey(const Key('recallShow')));
+    await tester.tap(find.byKey(const ValueKey('mx-node:game-recall/reveal')));
     await tester.pump();
-    await tester.tap(find.byKey(const Key('recallRemembered')));
+    await tester.tap(
+      find.byKey(const ValueKey('mx-node:game-recall/remembered')),
+    );
     await tester.pump();
     expect(fake.corrected, 1);
   });

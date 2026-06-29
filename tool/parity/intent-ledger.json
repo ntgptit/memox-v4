@@ -333,6 +333,42 @@
       "exceptionKind": "behavior",
       "reason": "The kit lets you edit the card from the guess game. Card editing is done in the flashcard editor, not mid-game, so there is no in-game edit control.",
       "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "game-recall",
+      "node": "next",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit recall game has a next control. The FE recall game auto-advances after self-grading (forgot/remembered grade and move on, D-015), so there is no manual next button.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-recall",
+      "node": "options",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a per-game options menu. The FE recall game is a minimal reveal-and-grade card with no in-game options control.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-recall",
+      "node": "audio",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "Audio playback lives in the flashcard editor; the recall card is a minimal term/meaning reveal with no audio control.",
+      "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "game-recall",
+      "node": "edit",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "Card editing is done in the flashcard editor, not mid-game, so there is no in-game edit control.",
+      "source": "docs/business/flashcard/flashcard-management.md"
     }
   ],
   "coverageExempt": []
