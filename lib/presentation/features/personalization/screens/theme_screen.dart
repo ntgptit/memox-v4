@@ -26,12 +26,19 @@ class ThemeScreen extends ConsumerWidget {
     final prefs =
         ref.watch(personalizationProvider).value ?? const ThemePrefs();
     return MxScaffold(
-      appBar: MxAppBar(title: l10n.drawerTheme),
+      key: const ValueKey('mx-node:theme/screen'),
+      appBar: MxAppBar(
+        key: const ValueKey('mx-node:theme/appbar'),
+        title: l10n.drawerTheme,
+      ),
       body: ListView(
         key: const Key('theme'),
         padding: const EdgeInsets.symmetric(vertical: MxSpacing.space4),
         children: <Widget>[
-          MxText.title(l10n.themeModeLabel),
+          MxText.title(
+            l10n.themeModeLabel,
+            key: const ValueKey('mx-node:theme/mode-head'),
+          ),
           const SizedBox(height: MxSpacing.space2),
           MxSegmentedControl(
             segments: <MxSegment>[
@@ -56,7 +63,10 @@ class ThemeScreen extends ConsumerWidget {
                 _notifier(ref).setMode(ThemeMode.values.byName(v)),
           ),
           const SizedBox(height: MxSpacing.space5),
-          MxText.title(l10n.themeAccentLabel),
+          MxText.title(
+            l10n.themeAccentLabel,
+            key: const ValueKey('mx-node:theme/accent-head'),
+          ),
           const SizedBox(height: MxSpacing.space2),
           Wrap(
             spacing: MxSpacing.space2,
@@ -73,7 +83,10 @@ class ThemeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: MxSpacing.space5),
-          MxText.title(l10n.themeFontLabel),
+          MxText.title(
+            l10n.themeFontLabel,
+            key: const ValueKey('mx-node:theme/size-head'),
+          ),
           const SizedBox(height: MxSpacing.space2),
           MxSegmentedControl(
             segments: <MxSegment>[
@@ -98,7 +111,11 @@ class ThemeScreen extends ConsumerWidget {
                 _notifier(ref).setFontScale(FontScale.values.byName(v)),
           ),
           const SizedBox(height: MxSpacing.space6),
-          _Preview(title: l10n.themePreview, body: l10n.themePreviewBody),
+          _Preview(
+            key: const ValueKey('mx-node:theme/preview'),
+            title: l10n.themePreview,
+            body: l10n.themePreviewBody,
+          ),
         ],
       ),
     );
@@ -118,7 +135,7 @@ class ThemeScreen extends ConsumerWidget {
 }
 
 class _Preview extends StatelessWidget {
-  const _Preview({required this.title, required this.body});
+  const _Preview({super.key, required this.title, required this.body});
 
   final String title;
   final String body;
