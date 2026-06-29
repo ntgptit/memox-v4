@@ -369,6 +369,24 @@
       "exceptionKind": "behavior",
       "reason": "Card editing is done in the flashcard editor, not mid-game, so there is no in-game edit control.",
       "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "next",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit fill-in game has a next control. The FE typing game auto-advances after a correct check or accept/retry (D-015), so there is no manual next button.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "options",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a per-game options menu. The FE typing game is a minimal type-the-term card with hint/check/retry/accept controls and no options menu.",
+      "source": "docs/business/game/game-modes.md"
     }
   ],
   "coverageExempt": []

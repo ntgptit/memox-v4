@@ -56,6 +56,7 @@ class _TypingGameState extends State<TypingGame> {
       child: Column(
         children: <Widget>[
           Card(
+            key: const ValueKey('mx-node:game-typing/meaning'),
             child: Padding(
               padding: const EdgeInsets.all(MxSpacing.space6),
               child: Center(
@@ -92,7 +93,7 @@ class _TypingGameState extends State<TypingGame> {
               children: <Widget>[
                 Expanded(
                   child: OutlinedButton(
-                    key: const Key('typingHelp'),
+                    key: const ValueKey('mx-node:game-typing/hint'),
                     onPressed: () => setState(() => _showHint = true),
                     child: Text(l10n.gameHelp),
                   ),
@@ -100,7 +101,7 @@ class _TypingGameState extends State<TypingGame> {
                 const SizedBox(width: MxSpacing.space3),
                 Expanded(
                   child: FilledButton(
-                    key: const Key('typingCheck'),
+                    key: const ValueKey('mx-node:game-typing/check'),
                     onPressed: () => _check(current.cardId, current.term),
                     child: Text(l10n.gameCheck),
                   ),
@@ -112,7 +113,7 @@ class _TypingGameState extends State<TypingGame> {
               children: <Widget>[
                 Expanded(
                   child: OutlinedButton(
-                    key: const Key('typingRetry'),
+                    key: const ValueKey('mx-node:game-typing/retry'),
                     onPressed: () {
                       widget.actions.markWrong(current.cardId);
                       _reset();
@@ -123,7 +124,7 @@ class _TypingGameState extends State<TypingGame> {
                 const SizedBox(width: MxSpacing.space3),
                 Expanded(
                   child: FilledButton(
-                    key: const Key('typingAccept'),
+                    key: const ValueKey('mx-node:game-typing/accept'),
                     onPressed: () {
                       widget.actions.markCorrect(current.cardId);
                       _reset();
