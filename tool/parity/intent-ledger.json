@@ -423,6 +423,60 @@
       "exceptionKind": "behavior",
       "reason": "The kit has an in-screen time picker with its own done button. The FE uses the platform showTimePicker dialog whose OK/confirm button is OS-provided and not a keyable FE widget, so there is no reminder/picker-done node.",
       "source": "docs/business/settings/settings.md"
+    },
+    {
+      "screen": "account",
+      "node": "screen",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "W10 is alpha: the cloud-sync orchestration (CloudSyncService + SyncNow LWW) is built and reachable from a single Sync tile in /settings (keyed account/sync), but there is no dedicated account screen. The full account UI is gated on the GCP/OAuth human gap (client id, Drive API, per-platform config).",
+      "source": "docs/business/account-sync/account-sync.md"
+    },
+    {
+      "screen": "account",
+      "node": "appbar",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "No dedicated account screen exists (W10 alpha); sync is a /settings tile, so there is no account app bar.",
+      "source": "docs/business/account-sync/account-sync.md"
+    },
+    {
+      "screen": "account",
+      "node": "profile",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "MemoX is local-first with no user account/identity; there is no profile surface (W10 alpha, GCP human gap).",
+      "source": "docs/business/account-sync/account-sync.md"
+    },
+    {
+      "screen": "account",
+      "node": "sign",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "Sign-in/sign-out UI (signin/signout) is part of the W10 GCP/OAuth human gap; v1 triggers sign-in implicitly via SyncNow (signInRequired) with no standalone auth buttons yet.",
+      "source": "docs/business/account-sync/account-sync.md"
+    },
+    {
+      "screen": "account",
+      "node": "google",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The Google-connect control is part of the W10 GCP/OAuth human gap (client id, Drive API enablement, per-platform config), not yet surfaced in the FE.",
+      "source": "docs/business/account-sync/account-sync.md"
+    },
+    {
+      "screen": "account",
+      "node": "sync-now",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "A standalone sync-now button belongs to the (unbuilt) account screen; v1 runs SyncNow from the /settings sync tile's onTap (account/sync), so there is no separate sync-now control.",
+      "source": "docs/business/account-sync/account-sync.md"
     }
   ],
   "coverageExempt": []

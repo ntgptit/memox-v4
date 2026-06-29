@@ -154,7 +154,7 @@ class SettingsScreen extends ConsumerWidget {
         ),
       ),
       ListTile(
-        key: const Key('settingsSyncRow'),
+        key: const ValueKey('mx-node:account/sync'),
         leading: const Icon(Icons.cloud_sync_outlined),
         title: Text(l10n.settingsSyncTitle),
         subtitle: Text(l10n.settingsSyncSubtitle),
