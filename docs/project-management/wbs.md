@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- dfe8e29f · 2026-06-29 · W14 · style-parity loop màn 4 (theme): _Preview MxCardVariant.muted→flat (surface khớp kit preview bg); exempt accent-head (kit chỉ bọc section accent trong card surface r:20, FE heads phẳng đều) + preview color (text title vs caption tertiary kit); SCREENS+=theme; 0 mismatch
 - da8b1b2f · 2026-06-29 · W14 · style-parity loop màn 3 (reminder): time→chip surface r:20 (cardRadius) text-tertiary thay plain text; harness seed reminder_time để row không bị disabled/mờ; exempt time-edit font(24)+r(9999) (FE dùng ListTile settings chuẩn); SCREENS+=reminder; 0 mismatch
 - 93bfc353 · 2026-06-29 · W14 · style-parity loop màn 2 (search): appbar nền trang (transparent) + dock = filled pill (surface, OutlineInputBorder pillRadius, headlineSmall ~20≈22, hint text-tertiary); extractor đọc TextField InputDecoration fill+border; SCREENS+=search; spec_diff search --check = 0 mismatch
 - 3eaf0f55 · 2026-06-29 · W14 · style-parity (tầng 2, màu/cỡ/bo góc — spec-vs-spec không pixel): tool export FE-spec từ render tree (token-aware) + spec_diff per node (--check, đọc styleExempt); ÁP DỤNG library = 0 mismatch (5 OK+1 documented); fix MxButton radius pill→control(12) + MxIconButton icon 20→22 (MxIconSize.md) app-wide
