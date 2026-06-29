@@ -119,7 +119,11 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     final rows = _rows;
     final columns = (rows != null && rows.isNotEmpty) ? rows.first.length : 0;
     return MxScaffold(
-      appBar: MxAppBar(title: l10n.importTitle),
+      key: const ValueKey('mx-node:import/screen'),
+      appBar: MxAppBar(
+        key: const ValueKey('mx-node:import/appbar'),
+        title: l10n.importTitle,
+      ),
       body: ListView(
         key: const Key('import'),
         padding: const EdgeInsets.symmetric(vertical: MxSpacing.space4),
@@ -174,7 +178,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               (v) {
                 setState(() => _termColumn = v);
               },
-              const Key('importTermColumn'),
+              const ValueKey('mx-node:import/map-term-pick'),
             ),
             _columnPicker(
               l10n.importMeaningColumn,
@@ -183,7 +187,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               (v) {
                 setState(() => _meaningColumn = v);
               },
-              const Key('importMeaningColumn'),
+              const ValueKey('mx-node:import/map-meaning-pick'),
             ),
             const SizedBox(height: MxSpacing.space3),
             MxText(l10n.importPreview, role: MxTextRole.titleSmall),
@@ -196,7 +200,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               ),
             const SizedBox(height: MxSpacing.space4),
             MxButton(
-              key: const Key('importRun'),
+              key: const ValueKey('mx-node:import/do-import'),
               label: l10n.importRun,
               block: true,
               onPressed: () => unawaited(_import()),
@@ -207,6 +211,13 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
             Text(
               l10n.importDone(r.imported, r.duplicates),
               key: const Key('importResult'),
+            ),
+            const SizedBox(height: MxSpacing.space3),
+            MxButton(
+              key: const ValueKey('mx-node:import/go-deck'),
+              label: l10n.commonBack,
+              block: true,
+              onPressed: () => unawaited(Navigator.of(context).maybePop()),
             ),
           ],
           if (_error case final e?) ...<Widget>[

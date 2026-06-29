@@ -387,6 +387,15 @@
       "exceptionKind": "behavior",
       "reason": "The kit offers a per-game options menu. The FE typing game is a minimal type-the-term card with hint/check/retry/accept controls and no options menu.",
       "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "import",
+      "node": "to-preview",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit has a discrete 'to preview' step. The FE import is a single page: once a source is picked/pasted, the column mapping and a live preview render inline, so there is no separate to-preview navigation step.",
+      "source": "docs/business/import-export/import-export.md"
     }
   ],
   "coverageExempt": []
