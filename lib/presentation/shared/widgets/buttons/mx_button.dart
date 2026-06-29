@@ -79,7 +79,10 @@ class MxButton extends StatelessWidget {
           Icon(i, size: iconSize),
           const SizedBox(width: MxSpacing.space2),
         ],
-        Text(label, style: theme.textTheme.labelLarge),
+        Text(
+          label,
+          style: theme.textTheme.labelLarge?.copyWith(color: foreground),
+        ),
         if (trailingIcon case final t?) ...<Widget>[
           const SizedBox(width: MxSpacing.space2),
           Icon(t, size: iconSize),

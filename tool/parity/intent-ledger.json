@@ -520,6 +520,27 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "flashcard-editor",
+      "node": "hidden-switch",
+      "field": "*",
+      "reason": "MxSwitch is a custom-painted control (not a Material/Container/TextField box), so the flat style exporter reads no bg/color/font/r for it. Its styling follows the MxSwitch design-system component (covered by its own widget smoke test), not the kit's surface-sunken pill.",
+      "source": "lib/presentation/shared/widgets/inputs/mx_switch.dart"
+    },
+    {
+      "screen": "flashcard-editor",
+      "node": "add-meaning",
+      "field": "*",
+      "reason": "The kit renders 'add secondary meaning' as a surface chip (bg:surface, primary-strong, r). The FE editor uses a ghost MxButton for this low-emphasis secondary action, consistent with the design-system button variants used across forms.",
+      "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "flashcard-editor",
+      "node": "audio-play",
+      "field": "*",
+      "reason": "The kit renders the audio control as a circular surface chip (bg:surface, r:9999). The FE editor uses an outline MxButton ('Speak') consistent with the design-system button variants, so its fill/radius differ.",
+      "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
       "screen": "statistics",
       "node": "appbar",
       "field": "*",

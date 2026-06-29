@@ -19,6 +19,7 @@ import 'package:memox_v4/data/datasources/local/connection/database_connection.d
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
+import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/features/personalization/screens/theme_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
@@ -32,7 +33,7 @@ const String _prefix = 'mx-node:';
 Future<void> _pumpAndExport(
   WidgetTester tester,
   String screen,
-  Widget child, {
+  Future<Widget> Function(AppDatabase db) buildChild, {
   Future<void> Function(AppDatabase db)? seed,
 }) async {
   final db = AppDatabase.forTesting(openInMemoryDatabase());
@@ -41,6 +42,7 @@ Future<void> _pumpAndExport(
       .into(db.languagePair)
       .insert(LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'));
   if (seed != null) await seed(db);
+  final child = await buildChild(db);
 
   tester.view.physicalSize = const Size(390, 844);
   tester.view.devicePixelRatio = 1.0;
@@ -69,19 +71,19 @@ void main() {
     await _pumpAndExport(
       tester,
       'library',
-      const Scaffold(body: LibraryScreen()),
+      (db) async => const Scaffold(body: LibraryScreen()),
     );
   });
 
   testWidgets('export FE spec — search', (tester) async {
-    await _pumpAndExport(tester, 'search', const SearchScreen());
+    await _pumpAndExport(tester, 'search', (db) async => const SearchScreen());
   });
 
   testWidgets('export FE spec — reminder', (tester) async {
     await _pumpAndExport(
       tester,
       'reminder',
-      const ReminderScreen(),
+      (db) async => const ReminderScreen(),
       // Enable the reminder so the time row isn't disabled/faded.
       seed: (db) async {
         await db
@@ -97,18 +99,22 @@ void main() {
   });
 
   testWidgets('export FE spec — theme', (tester) async {
-    await _pumpAndExport(tester, 'theme', const ThemeScreen());
+    await _pumpAndExport(tester, 'theme', (db) async => const ThemeScreen());
   });
 
   testWidgets('export FE spec — settings', (tester) async {
-    await _pumpAndExport(tester, 'settings', const SettingsScreen());
+    await _pumpAndExport(
+      tester,
+      'settings',
+      (db) async => const SettingsScreen(),
+    );
   });
 
   testWidgets('export FE spec — statistics', (tester) async {
     await _pumpAndExport(
       tester,
       'statistics',
-      const Scaffold(body: StatisticsScreen()),
+      (db) async => const Scaffold(body: StatisticsScreen()),
       // Seed a deck + card so words > 0 (hasEnoughData) → the overview renders.
       seed: (db) async {
         final pair = await db.select(db.languagePair).getSingle();
@@ -122,6 +128,16 @@ void main() {
             );
       },
     );
+  });
+
+  testWidgets('export FE spec — flashcard-editor', (tester) async {
+    await _pumpAndExport(tester, 'flashcard-editor', (db) async {
+      final pair = await db.select(db.languagePair).getSingle();
+      final deckId = await db
+          .into(db.deck)
+          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+      return FlashcardEditorScreen(deckId: deckId);
+    });
   });
 }
 
