@@ -71,7 +71,11 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return MxScaffold(
-      appBar: MxAppBar(title: l10n.gameTitle),
+      key: const ValueKey('mx-node:game-picker/screen'),
+      appBar: MxAppBar(
+        key: const ValueKey('mx-node:game-picker/appbar'),
+        title: l10n.gameTitle,
+      ),
       flush: true,
       body: switch (_count) {
         null => const MxStateView.loading(),
@@ -95,6 +99,7 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
           MxText(l10n.gameNotEnoughTitle),
           const SizedBox(height: MxSpacing.space4),
           MxButton(
+            key: const ValueKey('mx-node:game-picker/add-cards'),
             label: l10n.deckAddWord,
             icon: Icons.add,
             onPressed: () =>
@@ -115,7 +120,7 @@ class _GamePickerScreenState extends ConsumerState<GamePickerScreen> {
         MxText.label(l10n.gameScopeLabel),
         const SizedBox(height: MxSpacing.space2),
         DropdownButton<GameScope>(
-          key: const Key('gameScope'),
+          key: const ValueKey('mx-node:game-picker/scope'),
           isExpanded: true,
           value: _scope,
           onChanged: (value) {
