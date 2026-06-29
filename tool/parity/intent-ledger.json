@@ -520,6 +520,13 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "game-picker",
+      "node": "scope",
+      "field": "*",
+      "reason": "The kit styles the repeat-mode scope selector as a surface chip (bg:surface r:20). The FE uses a standard Material DropdownButton for scope selection, which the flat exporter reads as an unfilled control.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
       "screen": "study-result",
       "node": "continue",
       "field": "font",
