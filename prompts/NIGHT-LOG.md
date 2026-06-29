@@ -531,6 +531,44 @@ Gate `style_parity` đã nối vào verify (run_style_parity.mjs → spec_diff <
 3. Mỗi DIFF: **sửa FE cho khớp token kit** (mặc định — kit is source of truth) HOẶC thêm styleExempt (intent-ledger) cho divergence có chủ đích (kèm source).
 4. Thêm <màn> vào SCREENS trong tool/parity/run_style_parity.mjs.
 5. spec_diff <màn> --check = 0 mismatch; dart format; verify --full GREEN (đã gồm style_parity); commit+push; NIGHT-LOG/WBS §10; schedule.
-- DONE: library (3eaf0f55) · search (93bfc353 — dock→filled pill) · reminder (da8b1b2f — time→chip) · theme (dfe8e29f — _Preview→flat) · settings (643c5a47 — appbar large) · statistics (38a84765 — heads→card) · flashcard-editor (b93aaad4 — **fix MxButton label contrast** (chữ foreground thay onSurface); harness build child sau seed (deckId); exempt hidden-switch/add-meaning/audio-play) · export (44c2572c — exempt switch/button-font) · import (9b9074bd — appbar/screen OK) · deck-detail (65458ff5 — add FAB khớp) · study-session (0df12bc1 — term→48) · review (0869555f — term/meaning) · player (77f04229 — card MxCard) · study-result (cb22dea1 — drive finished) · game-picker (823c2a00 — exempt scope) · game-matching (25ea449c — screen/appbar) · game-mc (20baa7d9 — prompt→48) · game-recall (9d746b1e — term→48) · game-typing (389c834f — 4-game DONE) · account (DEFERRED W10) · drawer (3bad099d — mở add-language view; add-screen OK; exempt add-confirm Material FilledButton r/font).
-- QUEUE (1): dashboard [CUỐI].
-- NEXT = dashboard.
+- DONE: library (3eaf0f55) · search (93bfc353 — dock→filled pill) · reminder (da8b1b2f — time→chip) · theme (dfe8e29f — _Preview→flat) · settings (643c5a47 — appbar large) · statistics (38a84765 — heads→card) · flashcard-editor (b93aaad4 — **fix MxButton label contrast** (chữ foreground thay onSurface); harness build child sau seed (deckId); exempt hidden-switch/add-meaning/audio-play) · export (44c2572c — exempt switch/button-font) · import (9b9074bd — appbar/screen OK) · deck-detail (65458ff5 — add FAB khớp) · study-session (0df12bc1 — term→48) · review (0869555f — term/meaning) · player (77f04229 — card MxCard) · study-result (cb22dea1 — drive finished) · game-picker (823c2a00 — exempt scope) · game-matching (25ea449c — screen/appbar) · game-mc (20baa7d9 — prompt→48) · game-recall (9d746b1e — term→48) · game-typing (389c834f — 4-game DONE) · account (DEFERRED W10) · drawer (3bad099d — add-language view) · dashboard (c14c4a80 — today/start hero khớp; goal/streak/mastered là activity-state).
+- QUEUE: ✅ HẾT — toàn bộ 22 màn xong.
+- NEXT = — (loop kết thúc).
+
+
+## ✅ STYLE-PARITY LOOP — FINAL SUMMARY (2026-06-29)
+
+**HOÀN TẤT: 21/21 màn buildable đã style-gated + account deferred (W10) = 22 màn phủ.**
+Gate `style_parity` (verify --full, chain `full`) chạy spec-vs-spec token-aware (KHÔNG pixel)
+cho mọi màn; pre-commit marker chặn commit khi đỏ.
+
+### Cơ chế
+- Exporter `test/parity/fe_spec_export_test.dart` đi render-tree thật → ghi `fe-specs/<màn>.json`
+  (bg/color/font/radius/size dưới dạng TÊN TOKEN `--memox-*`), env-gated `MEMOX_EXPORT_SPEC=1`.
+- Differ `tool/parity/spec_diff.mjs` so với kit `specs/<màn>.md` theo từng mx-node, chỉ field kit khai báo;
+  rules: `bg:bg + FE ∅ = inherit OK`, font ±2, `r≥999 = pill tương đương`, `styleExempt` (per-node-field).
+- `tool/parity/run_style_parity.mjs` SCREENS = 21 màn; wired vào verify step `style_parity`.
+
+### Fix THẬT do style-parity phát hiện (kit là chuẩn)
+- **MxButton**: `pillRadius→controlRadius` (12) + label `copyWith(color: foreground)` (sửa lỗi chữ tối trên nền primary, vd nút Save).
+- **MxIconButton**: icon 20→22 (MxIconSize.md).
+- **search**: AppBar trong suốt + TextField filled-pill (surface, hint tertiary).
+- **reminder**: time → chip surface r:card.
+- **settings**: MxAppBar large (title 30/800).
+- **statistics**: head-cards (key về DecoratedBox root, bg surface).
+- **chữ term lớn → displayLarge (48)**: study-session learn, review, player (MxCard), game-recall, game-mc.
+- **typing**: meaning prompt → bodySmall + text-tertiary.
+- **study-result**: nút continue outline→primary, library→secondary (nhấn mạnh theo kit).
+- **differ**: thêm rule `r≥999 = pill`.
+
+### Divergence có chủ đích (styleExempt, mỗi cái có `source` doc)
+- Nút label-font (MxButton 15 vs kit 20) — kích thước label chuẩn của design-system.
+- Material game/form buttons (game-recall/reveal, game-typing/check+hint, drawer/add-confirm): stadium vs kit r:12, fill/màu khớp.
+- MxSwitch (không introspect được), Dropdown (game-picker/scope, FE Dropdown vs kit chip), game-mc/options (OutlinedButton vs kit pill 24px).
+- icon non-token (notifications/audio…), library/create (labelled ghost vs icon primary).
+
+### Deferred
+- **account** (W10 Google account-sync): màn chưa build (node-parity đã behavior-exception); chỉ stub `account/sync` = settings-tile; build cần `google_sign_in` (dependency phải hỏi) — KHÔNG gate.
+- dashboard goal/streak/mastered: activity-state (status≠empty) — "state not exported", giống các deeper-state màn khác.
+
+Loop DỪNG ở đây.
