@@ -520,6 +520,20 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "statistics",
+      "node": "appbar",
+      "field": "*",
+      "reason": "Statistics is a tab body under the shared AppShell chrome — it has no per-screen large title bar. The statistics/appbar node is keyed on the screen's top control (the current-pair ↔ all-app scope toggle), whose own segmented-control style is intentionally not the kit's 30/800 title.",
+      "source": "lib/presentation/shared/navigation/app_shell.dart"
+    },
+    {
+      "screen": "statistics",
+      "node": "screen",
+      "field": "bg",
+      "reason": "statistics/screen is a tab-body layout container (Column) with no own fill; its background is the page bg supplied by the shell Scaffold. The flat exporter captures the first descendant box (the scope toggle) instead, so the screen-bg comparison is not meaningful here.",
+      "source": "lib/presentation/shared/navigation/app_shell.dart"
+    },
+    {
       "screen": "theme",
       "node": "preview",
       "field": "color",

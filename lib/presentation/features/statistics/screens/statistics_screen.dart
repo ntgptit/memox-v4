@@ -137,8 +137,11 @@ class _StatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
+    // The kit treats each section head as its surface card (bg:surface r:20), so
+    // the head node identity lives on the card root.
+    key: headKey,
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.surfaceContainerHighest,
+      color: MxTheme.of(context).colors.surface,
       borderRadius: MxRadius.cardRadius,
     ),
     child: Padding(
@@ -146,7 +149,7 @@ class _StatsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          MxText.title(title, key: headKey),
+          MxText.title(title),
           const SizedBox(height: MxSpacing.space3),
           child,
         ],

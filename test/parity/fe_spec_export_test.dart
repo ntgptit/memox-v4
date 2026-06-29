@@ -23,6 +23,7 @@ import 'package:memox_v4/presentation/features/personalization/screens/theme_scr
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
+import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
 
 const String _prefix = 'mx-node:';
 
@@ -101,6 +102,26 @@ void main() {
 
   testWidgets('export FE spec — settings', (tester) async {
     await _pumpAndExport(tester, 'settings', const SettingsScreen());
+  });
+
+  testWidgets('export FE spec — statistics', (tester) async {
+    await _pumpAndExport(
+      tester,
+      'statistics',
+      const Scaffold(body: StatisticsScreen()),
+      // Seed a deck + card so words > 0 (hasEnoughData) → the overview renders.
+      seed: (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        await db
+            .into(db.card)
+            .insert(
+              CardCompanion.insert(deckId: deckId, term: 'mesa', createdAt: 1),
+            );
+      },
+    );
   });
 }
 
