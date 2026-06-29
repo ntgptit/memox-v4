@@ -18,6 +18,7 @@ import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
+import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/features/import_export/screens/export_screen.dart';
@@ -159,6 +160,21 @@ void main() {
           .into(db.deck)
           .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
       return ImportScreen(deckId: deckId);
+    });
+  });
+
+  testWidgets('export FE spec — deck-detail', (tester) async {
+    await _pumpAndExport(tester, 'deck-detail', (db) async {
+      final pair = await db.select(db.languagePair).getSingle();
+      final deckId = await db
+          .into(db.deck)
+          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+      await db
+          .into(db.card)
+          .insert(
+            CardCompanion.insert(deckId: deckId, term: 'mesa', createdAt: 1),
+          );
+      return DeckDetailScreen(deckId: deckId);
     });
   });
 }
