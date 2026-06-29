@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 873ef1c0 · 2026-06-29 · W5 · parity loop màn 14/22 (game-recall): key 5 node (term/meaning/reveal/forgot/remembered; đổi recallShow/Forgot/Remembered→mx-node + cập nhật round_actions_test); 4 exempt (next→auto-advance D-015, options/audio/edit); extend verify parity
 - f11f0e55 · 2026-06-29 · W5 · parity loop màn 13/22 (game-mc): key prompt (Card term) + options (bọc list choices); screen/appbar đã có từ GameScreen switch; 3 exempt (next→auto-advance D-015, audio/edit→editor); extend verify parity
 - 821f4801 · 2026-06-29 · W5 · parity loop màn 12/22 (game-matching): GameScreen dùng chung key screen+appbar bằng switch ValueKey tĩnh per-type (phủ trước screen/appbar cho cả game-matching/mc/recall/typing); 2 exempt matching (next→auto-progress D-015, options→none); extend verify parity
 - 03f9ffcb · 2026-06-29 · W5 · parity loop màn 11/22 (game-picker): key 4/4 node (screen/appbar/scope/add-cards; đổi gameScope→game-picker/scope); 0 exempt; extend verify parity
