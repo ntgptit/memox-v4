@@ -37,6 +37,7 @@ import 'package:memox_v4/presentation/features/statistics/screens/statistics_scr
 import 'package:memox_v4/presentation/features/study/screens/player_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/review_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/study_session_screen.dart';
+import 'package:memox_v4/presentation/shared/navigation/app_drawer.dart';
 
 const String _prefix = 'mx-node:';
 
@@ -402,6 +403,43 @@ void main() {
     }
     while (tester.takeException() != null) {}
     _exportScreen(tester, 'study-result');
+  });
+
+  // The drawer's keyed mx-nodes live in its add-language view (add-screen,
+  // add-confirm); open the drawer and switch into that view, then export.
+  testWidgets('export FE spec — drawer', (tester) async {
+    final db = AppDatabase.forTesting(openInMemoryDatabase());
+    addTearDown(db.close);
+    await db
+        .into(db.languagePair)
+        .insert(
+          LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
+        );
+
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [databaseProvider.overrideWithValue(db)],
+        child: MaterialApp(
+          theme: AppTheme.light(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const Scaffold(body: AppDrawer()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final addLang = find.byKey(const Key('drawerAddLanguage'));
+    if (addLang.evaluate().isNotEmpty) {
+      await tester.tap(addLang);
+      await tester.pumpAndSettle();
+    }
+    while (tester.takeException() != null) {}
+    _exportScreen(tester, 'drawer');
   });
 }
 

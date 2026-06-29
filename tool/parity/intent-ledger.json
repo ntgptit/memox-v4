@@ -492,6 +492,20 @@
   "$styleExemptDoc": "Per-node STYLE divergences for tool/parity/spec_diff.mjs (bg/color/font/r). Match by screen == entry.screen AND (entry.node == '*' OR node startsWith entry.node) AND (entry.field == '*' OR entry.field == finding field). Keep MINIMAL — fix the FE to the kit by default; each entry needs a `source`.",
   "styleExempt": [
     {
+      "screen": "drawer",
+      "node": "add-confirm",
+      "field": "r",
+      "reason": "The kit's add-language submit is r:12; the FE drawer uses a Material FilledButton (default stadium radius). Fill matches (primary).",
+      "source": "docs/business/navigation/navigation-flow.md"
+    },
+    {
+      "screen": "drawer",
+      "node": "add-confirm",
+      "field": "font",
+      "reason": "The kit's add-language submit label is 20px; the FE Material FilledButton uses the standard label size (labelLarge, 15px).",
+      "source": "docs/business/navigation/navigation-flow.md"
+    },
+    {
       "screen": "library",
       "node": "create",
       "field": "*",
