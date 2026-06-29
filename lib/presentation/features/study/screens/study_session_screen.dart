@@ -154,6 +154,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
 
   Widget _result(AppLocalizations l10n, StudySessionState state) =>
       MxContentBounds(
+        key: const ValueKey('mx-node:study-result/screen'),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -173,7 +174,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   MxButton(
-                    key: const Key('studyContinue'),
+                    key: const ValueKey('mx-node:study-result/continue'),
                     label: l10n.studyContinue,
                     variant: MxButtonVariant.outline,
                     onPressed: () =>
@@ -181,6 +182,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
                   ),
                   const SizedBox(width: MxSpacing.space3),
                   MxButton(
+                    key: const ValueKey('mx-node:study-result/library'),
                     label: l10n.studyToLibrary,
                     onPressed: () => context.go(RoutePaths.root),
                   ),

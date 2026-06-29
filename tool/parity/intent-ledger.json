@@ -243,6 +243,51 @@
       "exceptionKind": "behavior",
       "reason": "Font scale is a global personalization setting (applied live app-wide from the /theme screen), not a per-player control.",
       "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "study-result",
+      "node": "appbar",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The result is a finished-state of the study-session screen, not a separate route; it reuses the study-session MxScaffold and app bar (keyed study-session/appbar), so there is no separate study-result app bar.",
+      "source": "lib/presentation/features/study/screens/study_session_screen.dart"
+    },
+    {
+      "screen": "study-result",
+      "node": "goal",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit shows daily-goal progress on the session result. Goal status is surfaced on the dashboard Today tab; the result reports words + accuracy only.",
+      "source": "docs/business/engagement/dashboard-engagement.md"
+    },
+    {
+      "screen": "study-result",
+      "node": "review-wrong",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a 'review wrong answers' action on the result. v1 re-queues missed cards within the session itself (D-016) and keeps no post-session wrong list, so there is no review-wrong action.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "study-result",
+      "node": "later",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a 'finish later' action. v1 finishes the session in place (continue or to library); there is no defer-session action.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "study-result",
+      "node": "finalize",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit splits SRS finalize failures into later/retry recovery. v1 persists SRS grades automatically as the session runs, so the result has no finalize-later/finalize-retry recovery UI.",
+      "source": "docs/business/srs/srs-review.md"
     }
   ],
   "coverageExempt": []
