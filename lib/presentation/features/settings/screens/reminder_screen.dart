@@ -24,7 +24,11 @@ class ReminderScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final settings = ref.watch(settingsProvider);
     return MxScaffold(
-      appBar: MxAppBar(title: l10n.settingsGroupReminder),
+      key: const ValueKey('mx-node:reminder/screen'),
+      appBar: MxAppBar(
+        key: const ValueKey('mx-node:reminder/appbar'),
+        title: l10n.settingsGroupReminder,
+      ),
       flush: true,
       body: settings.when(
         loading: () => const MxStateView.loading(),
@@ -54,9 +58,13 @@ class ReminderScreen extends ConsumerWidget {
           ),
         ),
         ListTile(
+          key: const ValueKey('mx-node:reminder/time-edit'),
           enabled: reminder.enabled,
           title: Text(l10n.reminderTimeLabel),
-          trailing: Text(reminder.timeText),
+          trailing: Text(
+            reminder.timeText,
+            key: const ValueKey('mx-node:reminder/time'),
+          ),
           onTap: reminder.enabled
               ? () => _pickTime(context, l10n, notifier, reminder)
               : null,
