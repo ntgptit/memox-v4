@@ -180,6 +180,42 @@
       "exceptionKind": "behavior",
       "reason": "The kit splits load vs save failures into distinct recovery screens (save-error-back/retry). v1 surfaces any session load/persist failure as a single message state, so there are no separate save-error affordances.",
       "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "review",
+      "node": "edit",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit lets you edit a card inline while browsing (edit / edit-cancel / edit-save). Review is a strictly read-only browse that never mutates cards or the schedule (D-007); edits go through the flashcard editor screen, so there is no inline edit dialog.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "review",
+      "node": "audio",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit plays card audio from the review browser. Audio playback/generation lives in the flashcard editor; the review browse is read-only term+meaning, so there is no audio control here.",
+      "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "review",
+      "node": "options",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a per-card options menu in review. The read-only browse has no per-card actions, so there is no options control.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "review",
+      "node": "text-size",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit has an in-review text-size control. Font scale is a global personalization setting (applied live app-wide from the /theme screen), not a per-browse control, so review has no local text-size affordance.",
+      "source": "docs/business/personalization/personalization.md"
     }
   ],
   "coverageExempt": []

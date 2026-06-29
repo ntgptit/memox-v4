@@ -73,7 +73,11 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     final l10n = AppLocalizations.of(context);
     final cards = _cards;
     return MxScaffold(
-      appBar: MxAppBar(title: l10n.studyReview),
+      key: const ValueKey('mx-node:review/screen'),
+      appBar: MxAppBar(
+        key: const ValueKey('mx-node:review/appbar'),
+        title: l10n.studyReview,
+      ),
       flush: true,
       body: cards == null
           ? const MxStateView.loading()
@@ -94,11 +98,13 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
             child: Column(
               children: <Widget>[
                 MxCard(
+                  key: const ValueKey('mx-node:review/meaning'),
                   padding: MxCardPadding.lg,
                   child: MxText(card.meaning, role: MxTextRole.bodyLarge),
                 ),
                 const SizedBox(height: MxSpacing.space4),
                 MxCard(
+                  key: const ValueKey('mx-node:review/term'),
                   padding: MxCardPadding.lg,
                   child: MxText.headline(card.term),
                 ),
@@ -107,6 +113,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   children: <Widget>[
                     Expanded(
                       child: MxButton(
+                        key: const ValueKey('mx-node:review/prev'),
                         label: l10n.commonBack,
                         variant: MxButtonVariant.outline,
                         block: true,
@@ -118,7 +125,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                     const SizedBox(width: MxSpacing.space3),
                     Expanded(
                       child: MxButton(
-                        key: const Key('reviewNext'),
+                        key: const ValueKey('mx-node:review/next'),
                         label: l10n.studyContinue,
                         block: true,
                         onPressed: () => setState(() => _index++),
@@ -145,6 +152,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               MxButton(
+                key: const ValueKey('mx-node:review/study-now'),
                 label: l10n.reviewStudyNow,
                 variant: MxButtonVariant.outline,
                 onPressed: () => context.push(
@@ -153,6 +161,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
               ),
               const SizedBox(width: MxSpacing.space3),
               MxButton(
+                key: const ValueKey('mx-node:review/back-deck'),
                 label: l10n.studyToLibrary,
                 onPressed: () => context.go(RoutePaths.root),
               ),
