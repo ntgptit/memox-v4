@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 65458ff5 · 2026-06-29 · W6,W14 · style-parity loop màn 10 (deck-detail): screen/appbar/menu/add FAB (bg:primary surface r:24) khớp kit 0 mismatch; node empty-state/dialog/per-row ở state khác (node-parity phủ); SCREENS+=deck-detail
 - 9b9074bd · 2026-06-29 · W8,W14 · style-parity loop màn 9 (import): appbar/screen khớp (0 mismatch); node mapping/do-import/go-deck chỉ hiện sau khi pick/parse file (không reach base state) → identity đã do node-parity phủ; SCREENS+=import
 - 44c2572c · 2026-06-29 · W8,W14 · style-parity loop màn 8 (export): exempt incl-srs-switch (MxSwitch custom-paint không introspect) + do-export font (kit 20px vs MxButton labelLarge 15 chuẩn); appbar/screen OK; SCREENS+=export; 0 mismatch
 - b93aaad4 · 2026-06-29 · W2,W14 · style-parity loop màn 7 (flashcard-editor): FIX bug MxButton — label Text dùng labelLarge.copyWith(color:foreground) thay labelLarge thô (mang màu onSurface) → nút primary không icon trước đây chữ đen trên nền primary (vd Save); app-wide. Harness build child async sau seed (deckId). Exempt hidden-switch (MxSwitch custom-paint không introspect được)/add-meaning (ghost vs chip)/audio-play (outline vs circular chip); SCREENS+=flashcard-editor; 0 mismatch
