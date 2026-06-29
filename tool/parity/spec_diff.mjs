@@ -112,7 +112,9 @@ for (const id of ids) {
   if (k.bg && k.bg !== f.bg && !bgInherits && !exemptField(id, 'bg')) diffs.push(`bg: kit ${k.bg} vs FE ${f.bg ?? '∅'}`);
   if (k.color && k.color !== f.color && !exemptField(id, 'color')) diffs.push(`color: kit ${k.color} vs FE ${f.color ?? '∅'}`);
   if (k.font && !fontEq(k.font, f.font) && !exemptField(id, 'font')) diffs.push(`font: kit ${k.font} vs FE ${f.font ?? '∅'}`);
-  if (k.r && k.r !== f.r && !exemptField(id, 'r')) diffs.push(`r: kit ${k.r} vs FE ${f.r ?? '∅'}`);
+  // radii >= 999 are both "fully rounded" (pill) — treat as equivalent.
+  const rEq = k.r === f.r || (parseInt(k.r, 10) >= 999 && parseInt(f.r ?? '0', 10) >= 999);
+  if (k.r && !rEq && !exemptField(id, 'r')) diffs.push(`r: kit ${k.r} vs FE ${f.r ?? '∅'}`);
   compared++;
   const exemptNode = exemptField(id, '*');
   if (diffs.length === 0 && exemptNode && (k.bg !== f.bg || k.color !== f.color)) {

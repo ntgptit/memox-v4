@@ -29,7 +29,7 @@ class MultipleChoiceGame extends StatelessWidget {
             child: Center(
               child: Text(
                 current.term,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
             ),
           ),

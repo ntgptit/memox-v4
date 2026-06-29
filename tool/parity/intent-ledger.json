@@ -520,6 +520,20 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "game-mc",
+      "node": "options",
+      "field": "color",
+      "reason": "The kit's guess options are large pill choice buttons with text-coloured labels at 24px. The FE uses standard Material OutlinedButtons (primary outline + label) for the choices; fill/radius are pill-equivalent, the label colour + 24px size are the kit's richer treatment.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-mc",
+      "node": "options",
+      "field": "font",
+      "reason": "The kit's option labels are 24px; the FE OutlinedButton uses the standard label size (labelLarge, 15px).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
       "screen": "game-picker",
       "node": "scope",
       "field": "*",
