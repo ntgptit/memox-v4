@@ -520,6 +520,20 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "study-result",
+      "node": "continue",
+      "field": "font",
+      "reason": "The kit's continue button label is 20px; the FE uses the standard MxButton label size (labelLarge, 15px). Fill/colour now match (primary).",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "study-result",
+      "node": "library",
+      "field": "*",
+      "reason": "The kit's secondary result action uses an accent-soft fill with primary-strong text. The FE uses the MxButton secondary variant (primary-soft / on-primary-soft) — the design system has no accent-soft button variant; the emphasis (primary continue + soft library) matches the kit.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
       "screen": "player",
       "node": "playpause",
       "field": "font",

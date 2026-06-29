@@ -180,7 +180,6 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
                   MxButton(
                     key: const ValueKey('mx-node:study-result/continue'),
                     label: l10n.studyContinue,
-                    variant: MxButtonVariant.outline,
                     onPressed: () =>
                         ref.invalidate(studySessionProvider(_request)),
                   ),
@@ -188,6 +187,7 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
                   MxButton(
                     key: const ValueKey('mx-node:study-result/library'),
                     label: l10n.studyToLibrary,
+                    variant: MxButtonVariant.secondary,
                     onPressed: () => context.go(RoutePaths.root),
                   ),
                 ],

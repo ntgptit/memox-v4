@@ -232,6 +232,63 @@ void main() {
       return PlayerScreen(nodeId: deckId);
     });
   });
+
+  // study-result is the finished state of the study session; drive a 1-card
+  // DueReview session to completion, then export the result.
+  testWidgets('export FE spec — study-result', (tester) async {
+    final db = AppDatabase.forTesting(openInMemoryDatabase());
+    addTearDown(db.close);
+    final pairId = await db
+        .into(db.languagePair)
+        .insert(
+          LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
+        );
+    final deckId = await db
+        .into(db.deck)
+        .insert(DeckCompanion.insert(pairId: pairId, name: 'Deck'));
+    final cardId = await db
+        .into(db.card)
+        .insert(CardCompanion.insert(deckId: deckId, term: 'w', createdAt: 1));
+    await db
+        .into(db.srsState)
+        .insert(
+          SrsStateCompanion.insert(
+            cardId: Value(cardId),
+            box: const Value(1),
+            dueAt: const Value(0),
+          ),
+        );
+
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [databaseProvider.overrideWithValue(db)],
+        child: MaterialApp(
+          theme: AppTheme.light(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: StudySessionScreen(nodeId: deckId, entry: StudyEntry.dueReview),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // DueReview = recall: reveal then grade "remembered" → 1-card session finishes.
+    final reveal = find.byKey(const ValueKey('mx-node:game-recall/reveal'));
+    if (reveal.evaluate().isNotEmpty) {
+      await tester.tap(reveal);
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.byKey(const ValueKey('mx-node:game-recall/remembered')),
+      );
+      await tester.pumpAndSettle();
+    }
+    while (tester.takeException() != null) {}
+    _exportScreen(tester, 'study-result');
+  });
 }
 
 /// Reverse map: a resolved [Color] → its `--memox-*` token name (kebab-case, the
