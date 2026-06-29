@@ -33,7 +33,7 @@ class _RecallGameState extends State<RecallGame> {
             child: Padding(
               padding: const EdgeInsets.all(MxSpacing.space6),
               child: Center(
-                child: Text(current.term, style: theme.textTheme.headlineSmall),
+                child: Text(current.term, style: theme.textTheme.displayLarge),
               ),
             ),
           ),

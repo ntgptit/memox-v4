@@ -520,6 +520,13 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "game-recall",
+      "node": "reveal",
+      "field": "*",
+      "reason": "The kit's reveal button is r:12 with a 20px label. The FE recall game uses a Material FilledButton (default stadium radius + labelLarge 15px); fill/colour match (primary/surface), the radius + label size are the kit's button treatment not adopted by the plain game button.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
       "screen": "game-mc",
       "node": "options",
       "field": "color",
