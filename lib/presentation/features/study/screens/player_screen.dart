@@ -20,6 +20,7 @@ import 'package:memox_v4/presentation/shared/widgets/buttons/mx_icon_button.dart
 import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
 import 'package:memox_v4/presentation/shared/widgets/states/mx_state_view.dart';
 import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_app_bar.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_card.dart';
 import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_scaffold.dart';
 
 /// Auto-play through cards (term + meaning); never changes the schedule (D-014).
@@ -138,13 +139,16 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
       children: <Widget>[
         MxText.label('${_index + 1} / ${cards.length}'),
         const Spacer(),
-        Column(
+        MxCard(
           key: const ValueKey('mx-node:player/card'),
-          children: <Widget>[
-            MxText(card.term, role: MxTextRole.headlineMedium),
-            const SizedBox(height: MxSpacing.space3),
-            MxText(card.meaning, role: MxTextRole.bodyLarge),
-          ],
+          padding: MxCardPadding.lg,
+          child: Column(
+            children: <Widget>[
+              MxText(card.term, role: MxTextRole.displayLarge),
+              const SizedBox(height: MxSpacing.space3),
+              MxText(card.meaning, role: MxTextRole.bodyLarge),
+            ],
+          ),
         ),
         const Spacer(),
         Row(

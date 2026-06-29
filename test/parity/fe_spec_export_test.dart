@@ -29,6 +29,7 @@ import 'package:memox_v4/presentation/features/search/screens/search_screen.dart
 import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
 import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
+import 'package:memox_v4/presentation/features/study/screens/player_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/review_screen.dart';
 import 'package:memox_v4/presentation/features/study/screens/study_session_screen.dart';
 
@@ -212,6 +213,23 @@ void main() {
             );
       }
       return ReviewScreen(nodeId: deckId);
+    });
+  });
+
+  testWidgets('export FE spec — player', (tester) async {
+    await _pumpAndExport(tester, 'player', (db) async {
+      final pair = await db.select(db.languagePair).getSingle();
+      final deckId = await db
+          .into(db.deck)
+          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+      for (var i = 0; i < 3; i++) {
+        await db
+            .into(db.card)
+            .insert(
+              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+            );
+      }
+      return PlayerScreen(nodeId: deckId);
     });
   });
 }

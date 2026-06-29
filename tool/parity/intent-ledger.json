@@ -520,6 +520,13 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "player",
+      "node": "playpause",
+      "field": "font",
+      "reason": "The kit's play/pause icon is 26px (between icon-size-md 22 and lg 28). The FE uses the MxIconButton primary icon size (MxIconSize.md, 22px); 26 is not an icon-size token.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
       "screen": "review",
       "node": "prev",
       "field": "*",
