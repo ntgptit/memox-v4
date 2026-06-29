@@ -516,3 +516,10 @@ GREEN; commit+push; then ScheduleWakeup to continue.
 - `verify` enforce parity_fe_keys cho cả 22 màn; mọi commit verify --full GREEN, push origin main, không lần nào push đỏ.
 - ~20 commit feat(parity) + ~20 commit docs(parity-loop). Loop chạy cadence 1 phút, mỗi vòng 1 màn.
 - Cải tiến phụ kèm theo: nút prev/next cho player, Add-word/Import/retry empty&error state cho deck-detail, go-deck cho import, headKey cho _StatsCard, super.key cho _Preview, MxText kế thừa màu DefaultTextStyle.
+
+## STYLE-PARITY (tầng 2 — màu/cỡ/bo góc, spec-vs-spec không pixel) — 2026-06-29
+Ý tưởng user: gen spec từ Flutter render tree (per mx-node, token-aware) rồi diff với kit spec — robust hơn so ảnh.
+- Tool: test/parity/fe_spec_export_test.dart (walk render tree → fe-specs/<màn>.json, màu→--memox-* token, ghi khi MEMOX_EXPORT_SPEC=1) + tool/parity/spec_diff.mjs (diff per node, --check gate, đọc styleExempt từ intent-ledger).
+- ÁP DỤNG library (3eaf0f55): spec_diff library --check = **0 mismatch** (5 OK + 1 documented).
+  Fix FE do tool chỉ ra: MxButton radius pill→control(12); MxIconButton icon 20(space5)→22(MxIconSize.md). styleExempt: library/create (ghost vs primary +).
+- NEXT (nếu nhân rộng): mỗi màn dựng harness pump đủ state → export → spec_diff → fix/ledger → wire spec_diff --check vào verify cho màn đó. Khi đủ 22 màn, verify chặn cả lệch style.
