@@ -502,8 +502,17 @@ GREEN; commit+push; then ScheduleWakeup to continue.
   card/next/exit-cancel/exit-ok, 10 exempt: in-game controls→game widgets, resume/save-error→1 msg) ·
   review (98d99b7d — 8 keyed, 6 exempt: edit/audio/options→editor read-only D-007, text-size→/theme) ·
   player (3adc4c82 — 8 keyed +prev/next mới, 3 exempt: speed/options→minimal v1, text-size→/theme) ·
-  study-result (736f7276 — 3 keyed, 6 exempt) · game-picker (03f9ffcb — 4/4 keyed, 0 exempt) · game-matching (821f4801 — switch tĩnh phủ 4 game, 2 exempt) · game-mc (f11f0e55 — 2 keyed, 3 exempt) · game-recall (873ef1c0 — 5 keyed, 4 exempt) · game-typing (64dc72dc — 5 keyed, 2 exempt) [xong cụm 4 game] · flashcard-editor (2556f999 — 8/8 keyed, 0 exempt) · import (68ac4773 — 6 keyed, 1 exempt) · export (fa260bb4 — 5 keyed, 2 exempt) · reminder (df7eeb99 — 4 keyed, 1 exempt) · theme (aafa7dbc — 6/6 keyed, 0 exempt) · account (2bac4026 — 1 keyed sync tile, 7 exempt: màn account = human gap GCP W10 alpha).
-- QUEUE (1 left):
+  study-result (736f7276 — 3 keyed, 6 exempt) · game-picker (03f9ffcb — 4/4 keyed, 0 exempt) · game-matching (821f4801 — switch tĩnh phủ 4 game, 2 exempt) · game-mc (f11f0e55 — 2 keyed, 3 exempt) · game-recall (873ef1c0 — 5 keyed, 4 exempt) · game-typing (64dc72dc — 5 keyed, 2 exempt) [xong cụm 4 game] · flashcard-editor (2556f999 — 8/8 keyed, 0 exempt) · import (68ac4773 — 6 keyed, 1 exempt) · export (fa260bb4 — 5 keyed, 2 exempt) · reminder (df7eeb99 — 4 keyed, 1 exempt) · theme (aafa7dbc — 6/6 keyed, 0 exempt) · account (2bac4026 — 1 keyed, 7 exempt) · drawer (ae41628b — 5 keyed add/remove screens+confirm, 2 exempt: pair-0/1-del→delete theo id).
+- QUEUE: 0 — XONG.
   player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing ·
   flashcard-editor · import · export · reminder · theme · account-sync · drawer.
-- NEXT ITERATION = drawer (cuối).
+- NEXT ITERATION = (không còn — loop dừng).
+
+
+### FINAL SUMMARY — PARITY LOOP HOÀN TẤT (2026-06-29)
+- **22/22 màn** kit có node-parity với FE: dashboard(shell) · library · deck-detail · statistics · settings · search · study-session · review · player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing · flashcard-editor · import · export · reminder · theme · account · drawer.
+- `node tool/parity/fe_node_usage.mjs --check` (mọi màn): **186 node kit · 122 keyed · 0 missing · 0 orphan · 64 exempt**.
+- 64 exempt đều có doc trong `tool/parity/intent-ledger.json` (divergence kiến trúc thật: shared shell/scaffold, control trong game widget dùng chung, audio/edit ở editor, các tính năng v1 chưa có, account = human gap GCP).
+- `verify` enforce parity_fe_keys cho cả 22 màn; mọi commit verify --full GREEN, push origin main, không lần nào push đỏ.
+- ~20 commit feat(parity) + ~20 commit docs(parity-loop). Loop chạy cadence 1 phút, mỗi vòng 1 màn.
+- Cải tiến phụ kèm theo: nút prev/next cho player, Add-word/Import/retry empty&error state cho deck-detail, go-deck cho import, headKey cho _StatsCard, super.key cho _Preview, MxText kế thừa màu DefaultTextStyle.
