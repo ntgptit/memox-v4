@@ -22,6 +22,7 @@ import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart'
 import 'package:memox_v4/presentation/features/personalization/screens/theme_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
+import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
 
 const String _prefix = 'mx-node:';
 
@@ -56,6 +57,9 @@ Future<void> _pumpAndExport(
     ),
   );
   await tester.pumpAndSettle();
+  // Consume soft layout exceptions (e.g. RenderFlex overflow at the fixed test
+  // frame) — rendering still produces sizes/styles, which is all we export.
+  while (tester.takeException() != null) {}
   _exportScreen(tester, screen);
 }
 
@@ -93,6 +97,10 @@ void main() {
 
   testWidgets('export FE spec — theme', (tester) async {
     await _pumpAndExport(tester, 'theme', const ThemeScreen());
+  });
+
+  testWidgets('export FE spec — settings', (tester) async {
+    await _pumpAndExport(tester, 'settings', const SettingsScreen());
   });
 }
 

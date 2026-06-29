@@ -34,6 +34,7 @@ class SettingsScreen extends ConsumerWidget {
       key: const ValueKey('mx-node:settings/screen'),
       appBar: MxAppBar(
         key: const ValueKey('mx-node:settings/appbar'),
+        large: true,
         title: l10n.drawerSettings,
       ),
       flush: true,
