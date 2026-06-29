@@ -502,8 +502,8 @@ GREEN; commit+push; then ScheduleWakeup to continue.
   card/next/exit-cancel/exit-ok, 10 exempt: in-game controls→game widgets, resume/save-error→1 msg) ·
   review (98d99b7d — 8 keyed, 6 exempt: edit/audio/options→editor read-only D-007, text-size→/theme) ·
   player (3adc4c82 — 8 keyed +prev/next mới, 3 exempt: speed/options→minimal v1, text-size→/theme) ·
-  study-result (736f7276 — 3 keyed screen/continue/library, 6 exempt: appbar dùng chung, goal→dashboard, review-wrong/later/finalize→v1 tối giản).
-- QUEUE (12 left):
+  study-result (736f7276 — 3 keyed, 6 exempt) · game-picker (03f9ffcb — 4/4 keyed screen/appbar/scope/add-cards, 0 exempt).
+- QUEUE (11 left):
   player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing ·
   flashcard-editor · import · export · reminder · theme · account-sync · drawer.
-- NEXT ITERATION = game-picker.
+- NEXT ITERATION = game-matching.
