@@ -396,6 +396,24 @@
       "exceptionKind": "behavior",
       "reason": "The kit has a discrete 'to preview' step. The FE import is a single page: once a source is picked/pasted, the column mapping and a live preview render inline, so there is no separate to-preview navigation step.",
       "source": "docs/business/import-export/import-export.md"
+    },
+    {
+      "screen": "export",
+      "node": "save",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit splits export into generate then a separate save action. The FE writes the file directly when do-export runs (platform file-save / web download via FileSaveService), so there is no separate save button.",
+      "source": "docs/business/import-export/import-export.md"
+    },
+    {
+      "screen": "export",
+      "node": "share",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a share action for the exported file. v1 export writes the file to disk (or downloads on web) with no OS share-sheet integration, so there is no share control.",
+      "source": "docs/business/import-export/import-export.md"
     }
   ],
   "coverageExempt": []

@@ -72,7 +72,11 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return MxScaffold(
-      appBar: MxAppBar(title: l10n.exportTitle),
+      key: const ValueKey('mx-node:export/screen'),
+      appBar: MxAppBar(
+        key: const ValueKey('mx-node:export/appbar'),
+        title: l10n.exportTitle,
+      ),
       body: ListView(
         key: const Key('export'),
         padding: const EdgeInsets.symmetric(vertical: MxSpacing.space4),
@@ -88,7 +92,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
           ListTile(
             title: Text(l10n.exportIncludeSrs),
             trailing: MxSwitch(
-              key: const Key('exportIncludeSrs'),
+              key: const ValueKey('mx-node:export/incl-srs-switch'),
               value: _includeSrs,
               onChanged: (v) => setState(() => _includeSrs = v),
             ),
@@ -105,14 +109,14 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
           ),
           const SizedBox(height: MxSpacing.space4),
           MxButton(
-            key: const Key('exportRun'),
+            key: const ValueKey('mx-node:export/do-export'),
             label: l10n.exportRun,
             block: true,
             onPressed: () => unawaited(_export()),
           ),
           if (_message case final m?) ...<Widget>[
             const SizedBox(height: MxSpacing.space4),
-            Text(m, key: const Key('exportResult')),
+            Text(m, key: const ValueKey('mx-node:export/progress')),
           ],
         ],
       ),
