@@ -531,6 +531,6 @@ Gate `style_parity` đã nối vào verify (run_style_parity.mjs → spec_diff <
 3. Mỗi DIFF: **sửa FE cho khớp token kit** (mặc định — kit is source of truth) HOẶC thêm styleExempt (intent-ledger) cho divergence có chủ đích (kèm source).
 4. Thêm <màn> vào SCREENS trong tool/parity/run_style_parity.mjs.
 5. spec_diff <màn> --check = 0 mismatch; dart format; verify --full GREEN (đã gồm style_parity); commit+push; NIGHT-LOG/WBS §10; schedule.
-- DONE: library (3eaf0f55 — 0 mismatch; fix MxButton radius + MxIconButton icon).
-- QUEUE (21): search · reminder · theme · settings · statistics · flashcard-editor · export · import · deck-detail · study-session · review · player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing · account · drawer · dashboard.
-- NEXT = search.
+- DONE: library (3eaf0f55) · search (93bfc353 — appbar trong suốt, dock→filled pill surface/r:999/20px; extractor đọc InputDecoration fill+border).
+- QUEUE (20): reminder · theme · settings · statistics · flashcard-editor · export · import · deck-detail · study-session · review · player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing · account · drawer · dashboard.
+- NEXT = reminder.
