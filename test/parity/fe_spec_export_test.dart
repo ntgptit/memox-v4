@@ -21,6 +21,7 @@ import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/features/import_export/screens/export_screen.dart';
+import 'package:memox_v4/presentation/features/import_export/screens/import_screen.dart';
 import 'package:memox_v4/presentation/features/personalization/screens/theme_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.dart';
@@ -148,6 +149,16 @@ void main() {
           .into(db.deck)
           .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
       return ExportScreen(deckId: deckId);
+    });
+  });
+
+  testWidgets('export FE spec — import', (tester) async {
+    await _pumpAndExport(tester, 'import', (db) async {
+      final pair = await db.select(db.languagePair).getSingle();
+      final deckId = await db
+          .into(db.deck)
+          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+      return ImportScreen(deckId: deckId);
     });
   });
 }
