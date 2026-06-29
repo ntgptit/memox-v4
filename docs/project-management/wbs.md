@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 389c834f · 2026-06-29 · W5,W14 · style-parity loop màn 19 (game-typing, game cuối): meaning prompt titleLarge→bodySmall+text-tertiary khớp kit; exempt check (r) + hint (*) (FE Material button stadium/label vs kit r:12 chip); SCREENS+=game-typing — HOÀN TẤT cụm 4 game
 - 9d746b1e · 2026-06-29 · W5,W14 · style-parity loop màn 18 (game-recall): term card→displayLarge(48) khớp kit; exempt reveal (FE Material FilledButton stadium/label 15 vs kit r:12/20; fill/color khớp); SCREENS+=game-recall
 - 20baa7d9 · 2026-06-29 · W5,W14 · style-parity loop màn 17 (game-mc): prompt term headlineSmall(20)→displayLarge(48) khớp kit; spec_diff coi r≥999 là pill tương đương; exempt options color+font (FE OutlinedButton vs kit pill 24px); SCREENS+=game-mc
 - 25ea449c · 2026-06-29 · W5,W14 · style-parity loop màn 16 (game-matching): screen/appbar (GameScreen scaffold dùng chung) khớp kit; board matching không có text style node, next/options là node-parity exempt; harness pump GameScreen(GameRequest matching, 12 card); SCREENS+=game-matching
