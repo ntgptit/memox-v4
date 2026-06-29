@@ -523,3 +523,14 @@ GREEN; commit+push; then ScheduleWakeup to continue.
 - ÁP DỤNG library (3eaf0f55): spec_diff library --check = **0 mismatch** (5 OK + 1 documented).
   Fix FE do tool chỉ ra: MxButton radius pill→control(12); MxIconButton icon 20(space5)→22(MxIconSize.md). styleExempt: library/create (ghost vs primary +).
 - NEXT (nếu nhân rộng): mỗi màn dựng harness pump đủ state → export → spec_diff → fix/ledger → wire spec_diff --check vào verify cho màn đó. Khi đủ 22 màn, verify chặn cả lệch style.
+
+## STYLE-PARITY LOOP — bắt đầu 2026-06-29
+Gate `style_parity` đã nối vào verify (run_style_parity.mjs → spec_diff <màn> --check cho các màn trong SCREENS). Mỗi vòng 1 màn:
+1. Thêm harness pump màn vào test/parity/fe_spec_export_test.dart (dùng _pumpAndExport; seed data + route args để node hiện).
+2. `MEMOX_EXPORT_SPEC=1 flutter test test/parity/fe_spec_export_test.dart` + `node tool/parity/spec_diff.mjs <màn>`.
+3. Mỗi DIFF: **sửa FE cho khớp token kit** (mặc định — kit is source of truth) HOẶC thêm styleExempt (intent-ledger) cho divergence có chủ đích (kèm source).
+4. Thêm <màn> vào SCREENS trong tool/parity/run_style_parity.mjs.
+5. spec_diff <màn> --check = 0 mismatch; dart format; verify --full GREEN (đã gồm style_parity); commit+push; NIGHT-LOG/WBS §10; schedule.
+- DONE: library (3eaf0f55 — 0 mismatch; fix MxButton radius + MxIconButton icon).
+- QUEUE (21): search · reminder · theme · settings · statistics · flashcard-editor · export · import · deck-detail · study-session · review · player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing · account · drawer · dashboard.
+- NEXT = search.
