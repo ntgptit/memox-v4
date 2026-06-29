@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 0869555f · 2026-06-29 · W4,W14 · style-parity loop màn 12 (review): term card→displayLarge(48) + meaning→bodySmall text-tertiary (kit term nổi/meaning mờ); exempt prev/next (FE nút Back/Continue có nhãn vs kit nút icon tròn); SCREENS+=review
 - 0df12bc1 · 2026-06-29 · W4,W14 · style-parity loop màn 11 (study-session): term card learn-stage MxText.headline(20)→displayLarge(48) khớp kit (font 48/800); exempt next font (button label 15 vs kit 20); harness seed deck+3 card; in-game stage controls ở state khác (node-parity phủ); SCREENS+=study-session
 - 65458ff5 · 2026-06-29 · W6,W14 · style-parity loop màn 10 (deck-detail): screen/appbar/menu/add FAB (bg:primary surface r:24) khớp kit 0 mismatch; node empty-state/dialog/per-row ở state khác (node-parity phủ); SCREENS+=deck-detail
 - 9b9074bd · 2026-06-29 · W8,W14 · style-parity loop màn 9 (import): appbar/screen khớp (0 mismatch); node mapping/do-import/go-deck chỉ hiện sau khi pick/parse file (không reach base state) → identity đã do node-parity phủ; SCREENS+=import
