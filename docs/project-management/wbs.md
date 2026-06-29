@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 25ea449c · 2026-06-29 · W5,W14 · style-parity loop màn 16 (game-matching): screen/appbar (GameScreen scaffold dùng chung) khớp kit; board matching không có text style node, next/options là node-parity exempt; harness pump GameScreen(GameRequest matching, 12 card); SCREENS+=game-matching
 - 823c2a00 · 2026-06-29 · W5,W14 · style-parity loop màn 15 (game-picker): appbar/screen khớp; exempt scope (FE DropdownButton Material vs kit chip surface r:20); harness seed deck+12 card (picker state); SCREENS+=game-picker
 - cb22dea1 · 2026-06-29 · W4,W14 · style-parity loop màn 14 (study-result): harness drive 1-card DueReview tới finished (seed srs_state due_at:0, tap reveal+remembered); nút result đổi nhấn mạnh theo kit: continue outline→primary (bg:primary/surface), library→secondary (soft); exempt continue font (15 vs 20) + library (FE secondary primary-soft vs kit accent-soft, không có variant accent-soft); SCREENS+=study-result
 - 77f04229 · 2026-06-29 · W4,W14 · style-parity loop màn 13 (player): card Column→MxCard (surface, cardRadius r:20) + term→displayLarge(48) khớp kit; exempt playpause font (icon kit 26 vs MxIconSize.md 22, 26 không phải token); prev/next icon tròn 9999 đã khớp; SCREENS+=player
