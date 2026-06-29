@@ -499,8 +499,9 @@ GREEN; commit+push; then ScheduleWakeup to continue.
   7 keyed, 2 exempt: streak-current/longest→dashboard) · settings (5936c6ee — screen/appbar
   keyed, 2 exempt: profile→no-account, srs-notif-switch→/reminder screen) · search (13ab5a66 —
   3/3 keyed screen/appbar/dock, 0 exempt) · study-session (5dc40d10 — 6 keyed screen/appbar/
-  card/next/exit-cancel/exit-ok, 10 exempt: in-game controls→game widgets, resume/save-error→1 msg).
-- QUEUE (15 left): review ·
+  card/next/exit-cancel/exit-ok, 10 exempt: in-game controls→game widgets, resume/save-error→1 msg) ·
+  review (98d99b7d — 8 keyed, 6 exempt: edit/audio/options→editor read-only D-007, text-size→/theme).
+- QUEUE (14 left):
   player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing ·
   flashcard-editor · import · export · reminder · theme · account-sync · drawer.
-- NEXT ITERATION = review.
+- NEXT ITERATION = player.
