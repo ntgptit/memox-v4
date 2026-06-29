@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/usecases/game/evaluate_typing.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/game/round.dart';
@@ -60,7 +61,12 @@ class _TypingGameState extends State<TypingGame> {
             child: Padding(
               padding: const EdgeInsets.all(MxSpacing.space6),
               child: Center(
-                child: Text(current.meaning, style: theme.textTheme.titleLarge),
+                child: Text(
+                  current.meaning,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: MxTheme.of(context).colors.textTertiary,
+                  ),
+                ),
               ),
             ),
           ),

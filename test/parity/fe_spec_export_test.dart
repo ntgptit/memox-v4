@@ -261,6 +261,29 @@ void main() {
     });
   });
 
+  testWidgets('export FE spec — game-typing', (tester) async {
+    await _pumpAndExport(tester, 'game-typing', (db) async {
+      final pair = await db.select(db.languagePair).getSingle();
+      final deckId = await db
+          .into(db.deck)
+          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+      for (var i = 0; i < 12; i++) {
+        await db
+            .into(db.card)
+            .insert(
+              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+            );
+      }
+      return GameScreen(
+        request: GameRequest(
+          nodeId: deckId,
+          type: GameType.typing,
+          scope: GameScope.all,
+        ),
+      );
+    });
+  });
+
   testWidgets('export FE spec — game-recall', (tester) async {
     await _pumpAndExport(tester, 'game-recall', (db) async {
       final pair = await db.select(db.languagePair).getSingle();

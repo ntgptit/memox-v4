@@ -520,6 +520,20 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "game-typing",
+      "node": "check",
+      "field": "r",
+      "reason": "The kit's check button is r:12; the FE typing game uses a Material FilledButton (default stadium radius). Fill/colour match.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "hint",
+      "field": "*",
+      "reason": "The kit's hint button is r:12 / 20px / primary-strong; the FE typing game uses a Material OutlinedButton (stadium radius, primary outline, labelLarge 15px). A plain game button, not the kit's chip treatment.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
       "screen": "game-recall",
       "node": "reveal",
       "field": "*",
