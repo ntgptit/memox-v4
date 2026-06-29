@@ -502,8 +502,8 @@ GREEN; commit+push; then ScheduleWakeup to continue.
   card/next/exit-cancel/exit-ok, 10 exempt: in-game controls→game widgets, resume/save-error→1 msg) ·
   review (98d99b7d — 8 keyed, 6 exempt: edit/audio/options→editor read-only D-007, text-size→/theme) ·
   player (3adc4c82 — 8 keyed +prev/next mới, 3 exempt: speed/options→minimal v1, text-size→/theme) ·
-  study-result (736f7276 — 3 keyed, 6 exempt) · game-picker (03f9ffcb — 4/4 keyed, 0 exempt) · game-matching (821f4801 — switch tĩnh phủ 4 game, 2 exempt) · game-mc (f11f0e55 — 2 keyed, 3 exempt) · game-recall (873ef1c0 — 5 keyed, 4 exempt) · game-typing (64dc72dc — 5 keyed, 2 exempt) [xong cụm 4 game] · flashcard-editor (2556f999 — 8/8 keyed, 0 exempt) · import (68ac4773 — 6 keyed, 1 exempt) · export (fa260bb4 — 5 keyed screen/appbar/incl-srs-switch/do-export/progress, 2 exempt: save/share→ghi file trực tiếp).
-- QUEUE (4 left):
+  study-result (736f7276 — 3 keyed, 6 exempt) · game-picker (03f9ffcb — 4/4 keyed, 0 exempt) · game-matching (821f4801 — switch tĩnh phủ 4 game, 2 exempt) · game-mc (f11f0e55 — 2 keyed, 3 exempt) · game-recall (873ef1c0 — 5 keyed, 4 exempt) · game-typing (64dc72dc — 5 keyed, 2 exempt) [xong cụm 4 game] · flashcard-editor (2556f999 — 8/8 keyed, 0 exempt) · import (68ac4773 — 6 keyed, 1 exempt) · export (fa260bb4 — 5 keyed, 2 exempt) · reminder (df7eeb99 — 4 keyed screen/appbar/time/time-edit, 1 exempt: picker-done→native picker).
+- QUEUE (3 left):
   player · study-result · game-picker · game-matching · game-mc · game-recall · game-typing ·
   flashcard-editor · import · export · reminder · theme · account-sync · drawer.
-- NEXT ITERATION = reminder.
+- NEXT ITERATION = theme.
