@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 
@@ -68,7 +69,7 @@ class MxIconButton extends StatelessWidget {
           height: diameter,
           child: Icon(
             icon,
-            size: small ? MxSpacing.space4 : MxSpacing.space5,
+            size: small ? MxIconSize.sm : MxIconSize.md,
             color: foreground,
           ),
         ),

@@ -87,6 +87,18 @@ String _color(Map<Color, String> tokens, Color? color) {
   return tokens[color] ?? color.toString();
 }
 
+String? _radiusStr(BorderRadiusGeometry? br) =>
+    br is BorderRadius ? br.topLeft.x.round().toString() : null;
+
+String? _materialRadius(Material material) {
+  final direct = material.borderRadius;
+  if (direct is BorderRadius) return direct.topLeft.x.round().toString();
+  final shape = material.shape;
+  if (shape is RoundedRectangleBorder) return _radiusStr(shape.borderRadius);
+  if (shape is StadiumBorder || shape is CircleBorder) return '9999';
+  return null;
+}
+
 void _exportScreen(WidgetTester tester, String screen) {
   final context = tester.element(find.byType(Scaffold).first);
   final tokens = _tokenMap(context);
@@ -139,6 +151,30 @@ Map<String, Object?> _styleOf(Element root, Map<Color, String> tokens) {
         return; // nested keyed node owns its style
       }
     }
+    // bg (first non-transparent fill) + radius (first shaped box) from the first
+    // painted box: Material / Container / DecoratedBox. Radius is captured even
+    // when the fill is transparent (e.g. a plain icon button's CircleBorder).
+    final widget = element.widget;
+    BoxDecoration? boxOf(Widget w) => switch (w) {
+      Container(:final decoration) when decoration is BoxDecoration =>
+        decoration,
+      DecoratedBox(:final decoration) when decoration is BoxDecoration =>
+        decoration,
+      _ => null,
+    };
+    if (widget is Material) {
+      radius ??= _materialRadius(widget);
+      final b = _color(tokens, widget.color);
+      if (b.isNotEmpty && bg == null) bg = b;
+    } else {
+      final d = boxOf(widget);
+      if (d != null) {
+        radius ??= _radiusStr(d.borderRadius);
+        final b = _color(tokens, d.color);
+        if (b.isNotEmpty && bg == null) bg = b;
+      }
+    }
+    // font + color from the first resolved text run.
     final render = element.renderObject;
     if (render is RenderParagraph && font == null) {
       final style = render.text.style;
@@ -149,23 +185,6 @@ Map<String, Object?> _styleOf(Element root, Map<Color, String> tokens) {
         font = '${size.round()}/$w';
         color = _color(tokens, style?.color);
       }
-    } else if (render is RenderDecoratedBox && bg == null) {
-      final decoration = render.decoration;
-      if (decoration is BoxDecoration) {
-        final b = _color(tokens, decoration.color);
-        if (b.isNotEmpty) bg = b;
-        final br = decoration.borderRadius;
-        if (br is BorderRadius && radius == null) {
-          radius = br.topLeft.x.round().toString();
-        }
-      }
-    } else if (render is RenderPhysicalShape && bg == null) {
-      final b = _color(tokens, render.color);
-      if (b.isNotEmpty) bg = b;
-    } else if (render is RenderPhysicalModel && bg == null) {
-      final b = _color(tokens, render.color);
-      if (b.isNotEmpty) bg = b;
-      radius ??= render.borderRadius?.topLeft.x.round().toString();
     }
     element.visitChildren(visit);
   }

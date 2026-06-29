@@ -91,7 +91,7 @@ class MxButton extends StatelessWidget {
       opacity: disabled ? 0.5 : 1,
       child: Material(
         color: background,
-        borderRadius: MxRadius.pillRadius,
+        borderRadius: MxRadius.controlRadius,
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onPressed,
@@ -99,7 +99,7 @@ class MxButton extends StatelessWidget {
             decoration: border == null
                 ? null
                 : BoxDecoration(
-                    borderRadius: MxRadius.pillRadius,
+                    borderRadius: MxRadius.controlRadius,
                     border: Border.all(color: border),
                   ),
             padding: EdgeInsets.symmetric(

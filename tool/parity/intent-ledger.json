@@ -488,5 +488,15 @@
       "source": "docs/business/navigation/navigation-flow.md"
     }
   ],
-  "coverageExempt": []
+  "coverageExempt": [],
+  "$styleExemptDoc": "Per-node STYLE divergences for tool/parity/spec_diff.mjs (bg/color/font/r). Match by screen == entry.screen AND (entry.node == '*' OR node startsWith entry.node) AND (entry.field == '*' OR entry.field == finding field). Keep MINIMAL — fix the FE to the kit by default; each entry needs a `source`.",
+  "styleExempt": [
+    {
+      "screen": "library",
+      "node": "create",
+      "field": "*",
+      "reason": "The kit's library/create is an icon-only primary '+' button (bg:primary, r:24). The FE uses a labelled ghost 'Create deck' action in the toolbar (clearer affordance) and keeps the high-emphasis primary create in the empty state (library/empty-deck), so create's fill/colour/size intentionally differ.",
+      "source": "docs/business/deck/deck-management.md"
+    }
+  ]
 }
