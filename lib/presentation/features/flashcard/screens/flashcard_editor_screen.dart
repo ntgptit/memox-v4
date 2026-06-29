@@ -269,7 +269,9 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
       );
     }
     return MxScaffold(
+      key: const ValueKey('mx-node:flashcard-editor/screen'),
       appBar: MxAppBar(
+        key: const ValueKey('mx-node:flashcard-editor/appbar'),
         leading: MxIconButton(
           key: const Key('editorClose'),
           icon: Icons.close,
@@ -279,7 +281,7 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
         title: widget.isEditing ? l10n.editorTitleEdit : l10n.editorTitleNew,
         trailing: <Widget>[
           MxButton(
-            key: const Key('editorSave'),
+            key: const ValueKey('mx-node:flashcard-editor/save'),
             label: l10n.editorSave,
             size: MxButtonSize.sm,
             onPressed: (_canSave && !_saving) ? _onSave : null,
@@ -308,7 +310,7 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: MxButton(
-              key: const Key('editorAddMeaning'),
+              key: const ValueKey('mx-node:flashcard-editor/add-meaning'),
               label: l10n.editorAddMeaning,
               icon: Icons.add,
               variant: MxButtonVariant.ghost,
@@ -328,7 +330,7 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
             title: Text(l10n.editorHiddenLabel),
             subtitle: Text(l10n.editorHiddenSubtitle),
             trailing: MxSwitch(
-              key: const Key('editorHiddenSwitch'),
+              key: const ValueKey('mx-node:flashcard-editor/hidden-switch'),
               value: _hidden,
               onChanged: (value) => setState(() => _hidden = value),
             ),
@@ -427,7 +429,7 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
       MxText.label(l10n.editorAudioLabel),
       const Spacer(),
       MxButton(
-        key: const Key('editorAudioPlay'),
+        key: const ValueKey('mx-node:flashcard-editor/audio-play'),
         label: l10n.audioSpeak,
         icon: Icons.volume_up_outlined,
         variant: MxButtonVariant.outline,
@@ -458,13 +460,14 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
             Row(
               children: <Widget>[
                 MxButton(
-                  key: const Key('editorDuplicateAddAnyway'),
+                  key: const ValueKey('mx-node:flashcard-editor/dup-add'),
                   label: l10n.editorDuplicateAddAnyway,
                   variant: MxButtonVariant.ghost,
                   size: MxButtonSize.sm,
                   onPressed: _addAnyway,
                 ),
                 MxButton(
+                  key: const ValueKey('mx-node:flashcard-editor/dup-view'),
                   label: l10n.editorDuplicateViewExisting,
                   variant: MxButtonVariant.ghost,
                   size: MxButtonSize.sm,

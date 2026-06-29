@@ -37,7 +37,11 @@ void main() {
   );
 
   bool saveEnabled(WidgetTester tester) =>
-      tester.widget<MxButton>(find.byKey(const Key('editorSave'))).onPressed !=
+      tester
+          .widget<MxButton>(
+            find.byKey(const ValueKey('mx-node:flashcard-editor/save')),
+          )
+          .onPressed !=
       null;
 
   testWidgets('Save is disabled until a valid term + meaning exist', (
@@ -83,11 +87,15 @@ void main() {
     await tester.enterText(find.byKey(const Key('editorMeaningField')), 'bàn');
     await tester.pump();
 
-    await tester.tap(find.byKey(const Key('editorSave')));
+    await tester.tap(
+      find.byKey(const ValueKey('mx-node:flashcard-editor/save')),
+    );
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('editorDuplicateBanner')), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('editorDuplicateAddAnyway')));
+    await tester.tap(
+      find.byKey(const ValueKey('mx-node:flashcard-editor/dup-add')),
+    );
     await tester.pumpAndSettle();
 
     final cards = await db.select(db.card).get();

@@ -64,7 +64,9 @@ void main() {
 
     await tester.enterText(find.byKey(const Key('editorTermField')), 'mesa');
     await tester.pump();
-    await tester.tap(find.byKey(const Key('editorAudioPlay')));
+    await tester.tap(
+      find.byKey(const ValueKey('mx-node:flashcard-editor/audio-play')),
+    );
     await tester.pump();
 
     expect(fake.spokenText, 'mesa');
@@ -75,7 +77,9 @@ void main() {
     await tester.pumpWidget(host());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(const Key('editorAudioPlay')));
+    await tester.tap(
+      find.byKey(const ValueKey('mx-node:flashcard-editor/audio-play')),
+    );
     await tester.pump();
 
     expect(fake.spokenText, isNull);
