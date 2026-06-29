@@ -54,7 +54,10 @@ void main() {
 
     expect(find.byKey(const Key('addLanguageSource')), findsOneWidget);
     expect(find.byKey(const Key('addLanguageTarget')), findsOneWidget);
-    expect(find.byKey(const Key('addLanguageSubmit')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('mx-node:drawer/add-confirm')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('remove-language view lists pairs to delete', (tester) async {

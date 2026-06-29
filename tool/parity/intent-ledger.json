@@ -477,6 +477,15 @@
       "exceptionKind": "behavior",
       "reason": "A standalone sync-now button belongs to the (unbuilt) account screen; v1 runs SyncNow from the /settings sync tile's onTap (account/sync), so there is no separate sync-now control.",
       "source": "docs/business/account-sync/account-sync.md"
+    },
+    {
+      "screen": "drawer",
+      "node": "pair-",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit's remove view shows two fixed sample rows (pair-0-del / pair-1-del). The FE renders a per-pair delete affordance for every language pair, keyed dynamically by pair id (removeTile-<id>), not by fixed index, so there are no fixed pair-0/pair-1 nodes.",
+      "source": "docs/business/navigation/navigation-flow.md"
     }
   ],
   "coverageExempt": []

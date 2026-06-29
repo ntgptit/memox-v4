@@ -238,6 +238,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     return ListView(
+      key: const ValueKey('mx-node:drawer/add-screen'),
       padding: const EdgeInsets.all(MxSpacing.space5),
       children: <Widget>[
         _viewHeader(context, l10n.addLanguageTitle, const Key('addBack')),
@@ -276,7 +277,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         ],
         const SizedBox(height: MxSpacing.space5),
         FilledButton(
-          key: const Key('addLanguageSubmit'),
+          key: const ValueKey('mx-node:drawer/add-confirm'),
           onPressed: () => _submitAdd(context),
           child: Text(l10n.addLanguageSubmit),
         ),
@@ -326,6 +327,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     return ListView(
+      key: const ValueKey('mx-node:drawer/remove-screen'),
       padding: const EdgeInsets.all(MxSpacing.space5),
       children: <Widget>[
         _viewHeader(context, l10n.removeLanguageTitle, const Key('removeBack')),
@@ -361,10 +363,12 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           content: Text(l10n.removeLanguageConfirmBody),
           actions: <Widget>[
             TextButton(
+              key: const ValueKey('mx-node:drawer/remove-cancel'),
               onPressed: () => Navigator.of(dialogContext).pop(),
               child: Text(l10n.commonCancel),
             ),
             FilledButton(
+              key: const ValueKey('mx-node:drawer/remove-ok'),
               onPressed: () {
                 Navigator.of(dialogContext).pop();
                 _remove(pair.id);
