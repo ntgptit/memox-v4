@@ -23,6 +23,7 @@ class MultipleChoiceGame extends StatelessWidget {
       padding: const EdgeInsets.all(MxSpacing.space5),
       children: <Widget>[
         Card(
+          key: const ValueKey('mx-node:game-mc/prompt'),
           child: Padding(
             padding: const EdgeInsets.all(MxSpacing.space6),
             child: Center(
@@ -34,21 +35,28 @@ class MultipleChoiceGame extends StatelessWidget {
           ),
         ),
         const SizedBox(height: MxSpacing.space4),
-        for (final option in options)
-          Padding(
-            padding: const EdgeInsets.only(bottom: MxSpacing.space2),
-            child: OutlinedButton(
-              key: option == current.meaning ? const Key('mcCorrect') : null,
-              onPressed: () {
-                if (option == current.meaning) {
-                  actions.markCorrect(current.cardId);
-                } else {
-                  actions.markWrong(current.cardId);
-                }
-              },
-              child: Text(option),
-            ),
-          ),
+        Column(
+          key: const ValueKey('mx-node:game-mc/options'),
+          children: <Widget>[
+            for (final option in options)
+              Padding(
+                padding: const EdgeInsets.only(bottom: MxSpacing.space2),
+                child: OutlinedButton(
+                  key: option == current.meaning
+                      ? const Key('mcCorrect')
+                      : null,
+                  onPressed: () {
+                    if (option == current.meaning) {
+                      actions.markCorrect(current.cardId);
+                    } else {
+                      actions.markWrong(current.cardId);
+                    }
+                  },
+                  child: Text(option),
+                ),
+              ),
+          ],
+        ),
       ],
     );
   }
