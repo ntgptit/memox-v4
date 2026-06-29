@@ -119,7 +119,11 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     final l10n = AppLocalizations.of(context);
     final cards = _cards;
     return MxScaffold(
-      appBar: MxAppBar(title: l10n.studyPlayer),
+      key: const ValueKey('mx-node:player/screen'),
+      appBar: MxAppBar(
+        key: const ValueKey('mx-node:player/appbar'),
+        title: l10n.studyPlayer,
+      ),
       body: cards == null
           ? const MxStateView.loading()
           : cards.isEmpty || _index >= cards.length
@@ -134,18 +138,37 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
       children: <Widget>[
         MxText.label('${_index + 1} / ${cards.length}'),
         const Spacer(),
-        MxText(card.term, role: MxTextRole.headlineMedium),
-        const SizedBox(height: MxSpacing.space3),
-        MxText(card.meaning, role: MxTextRole.bodyLarge),
+        Column(
+          key: const ValueKey('mx-node:player/card'),
+          children: <Widget>[
+            MxText(card.term, role: MxTextRole.headlineMedium),
+            const SizedBox(height: MxSpacing.space3),
+            MxText(card.meaning, role: MxTextRole.bodyLarge),
+          ],
+        ),
         const Spacer(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             MxIconButton(
-              key: const Key('playerToggle'),
+              key: const ValueKey('mx-node:player/prev'),
+              icon: Icons.skip_previous,
+              onPressed: _index == 0 ? null : () => setState(() => _index--),
+            ),
+            const SizedBox(width: MxSpacing.space4),
+            MxIconButton(
+              key: const ValueKey('mx-node:player/playpause'),
               icon: _playing ? Icons.pause : Icons.play_arrow,
               variant: MxIconButtonVariant.primary,
               onPressed: _togglePlay,
+            ),
+            const SizedBox(width: MxSpacing.space4),
+            MxIconButton(
+              key: const ValueKey('mx-node:player/next'),
+              icon: Icons.skip_next,
+              onPressed: _index >= cards.length - 1
+                  ? null
+                  : () => setState(() => _index++),
             ),
             const SizedBox(width: MxSpacing.space4),
             MxIconButton(
@@ -171,6 +194,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               MxButton(
+                key: const ValueKey('mx-node:player/replay'),
                 label: l10n.playerReplay,
                 variant: MxButtonVariant.outline,
                 onPressed: () => setState(() {
@@ -180,6 +204,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
               ),
               const SizedBox(width: MxSpacing.space3),
               MxButton(
+                key: const ValueKey('mx-node:player/close'),
                 label: l10n.commonClose,
                 onPressed: () => unawaited(Navigator.of(context).maybePop()),
               ),

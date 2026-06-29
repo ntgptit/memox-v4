@@ -216,6 +216,33 @@
       "exceptionKind": "behavior",
       "reason": "The kit has an in-review text-size control. Font scale is a global personalization setting (applied live app-wide from the /theme screen), not a per-browse control, so review has no local text-size affordance.",
       "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "player",
+      "node": "speed",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a playback-speed control. v1 auto-play advances on a fixed interval with no speed adjustment, so there is no speed control.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "player",
+      "node": "options",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit offers a player options menu. v1 auto-play is a minimal term+meaning playback with no per-session options, so there is no options control.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "player",
+      "node": "text-size",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "Font scale is a global personalization setting (applied live app-wide from the /theme screen), not a per-player control.",
+      "source": "docs/business/personalization/personalization.md"
     }
   ],
   "coverageExempt": []
