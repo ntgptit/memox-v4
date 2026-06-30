@@ -1,7 +1,9 @@
-/* MemoX — Import cards. States: source · mapping · preview · dup-warning · done */
+/* MemoX — Import cards. States: source · mapping · preview · dup-warning · done
+   Feature-local components: components/{Table,SourceCard}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton, MxChip, MxIconTile } = NS;
+const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton, MxChip } = NS;
+const { Table, SourceCard } = window.MemoXImport;
 
 const SOURCES = [
   { icon: 'description', name: 'CSV file', desc: 'Import from a .csv file' },
@@ -10,19 +12,6 @@ const SOURCES = [
 ];
 const SEPS = ['Tab', 'Comma', 'Semicolon'];
 const ROWS = [['Term', 'Meaning'], ['안녕하세요', 'Hello'], ['감사합니다', 'Thank you'], ['사랑', 'love'], ['학교', 'school']];
-
-function Table({ rows }) {
-  return (
-    <div style={{ border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', overflow: 'hidden' }}>
-      {rows.map((r, i) => (
-        <div key={i} style={{ display: 'flex', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderTop: i ? 'var(--memox-stroke-hairline) solid var(--memox-divider)' : 'none', background: i === 0 ? 'var(--memox-surface-sunken)' : 'transparent', fontSize: 'var(--memox-font-size-sm)' }}>
-          <span style={{ flex: 1, fontWeight: 'var(--memox-font-weight-bold)' }}>{r[0]}</span>
-          <span style={{ flex: 1.4, fontWeight: i === 0 ? 'var(--memox-font-weight-bold)' : 'var(--memox-font-weight-regular)', color: i === 0 ? 'inherit' : 'var(--memox-text-secondary)' }}>{r[1]}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 const SectionLabel = window.SectionLabel;
 
@@ -43,18 +32,7 @@ function Import({ state = 'source' }) {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
         <SectionLabel>CHOOSE SOURCE</SectionLabel>
-        {SOURCES.map((s, i) => (
-          <MxCard key={i} interactive padding="sm" node={'import/source-' + i}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
-              <MxIconTile icon={s.icon} tone={i === 2 ? 'accent' : null} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>{s.name}</div>
-                <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>{s.desc}</div>
-              </div>
-              <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-tertiary)' }}>chevron_right</span>
-            </div>
-          </MxCard>
-        ))}
+        {SOURCES.map((s, i) => <SourceCard key={i} source={s} index={i} />)}
         <div data-mx-node="import/paste" style={{ border: 'var(--memox-stroke-hairline) dashed var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', minHeight: 'var(--memox-size-xl)', padding: 'var(--memox-space-4)', color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)' }}>Paste your data here (one card per line: term[tab]meaning)…</div>
       </MxScaffold>
     );
