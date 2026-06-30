@@ -5,13 +5,14 @@
 //
 // Inputs (generated outputs are intentionally excluded):
 //   <uiKitDir>/index.html
-//   <uiKitDir>/*.jsx            (screens + kit-helpers.jsx; top-level only)
+//   <uiKitDir>/**/*.jsx         (kit-helpers.jsx + _features/**, _shared/**; recursive)
 //   <designSystemDir>/components.css
 //   <designSystemDir>/styles.css
 //   <designSystemDir>/tokens/**       (recursive)
 //   <designSystemDir>/components/**    (recursive)
-// Excluded: <uiKitDir>/specs/** and <uiKitDir>/shots/** (generated), plus
-// anything not in the list above (fonts, uploads, screenshots, the bundle…).
+// Excluded: <uiKitDir>/specs/** and <uiKitDir>/shots/** (generated outputs — never
+// hashed) and node_modules/**, plus anything not in the list above (fonts, uploads,
+// screenshots, the bundle…).
 //
 // Determinism: repo-relative paths normalised to "/" separators, sorted
 // lexicographically, then path + content folded into one hash. Node built-ins
@@ -36,11 +37,24 @@ function walk(dir, acc) {
   return acc;
 }
 
-function topLevelFiles(dir, ext) {
-  if (!existsSync(dir)) return [];
-  return readdirSync(dir)
-    .map((name) => join(dir, name))
-    .filter((p) => statSync(p).isFile() && p.endsWith(ext));
+// Recursive *.ext collector that skips generated/dependency dirs — screen entries
+// now live in _features/<screen>/, feature-local components in
+// _features/<screen>/components/, and shared composites in _shared/, so a flat
+// top-level scan would miss every screen. specs/ and shots/ hold generated output
+// and must never feed the hash (else export → hash → "stale" forever).
+const SKIP_DIRS = new Set(['specs', 'shots', 'node_modules']);
+function walkFilesByExt(dir, ext, acc) {
+  if (!existsSync(dir)) return acc;
+  for (const name of readdirSync(dir)) {
+    const full = join(dir, name);
+    if (statSync(full).isDirectory()) {
+      if (SKIP_DIRS.has(name)) continue;
+      walkFilesByExt(full, ext, acc);
+    } else if (full.endsWith(ext)) {
+      acc.push(full);
+    }
+  }
+  return acc;
 }
 
 const toRel = (abs) => relative(repoRoot, abs).split(/[\\/]/).join('/');
@@ -49,7 +63,7 @@ const toRel = (abs) => relative(repoRoot, abs).split(/[\\/]/).join('/');
 export function uiKitSourceFiles() {
   const candidates = [
     join(kitDir, 'index.html'),
-    ...topLevelFiles(kitDir, '.jsx'), // every screen module + kit-helpers.jsx
+    ...walkFilesByExt(kitDir, '.jsx', []), // kit-helpers.jsx + _features/** + _shared/**
     join(designRoot, 'components.css'),
     join(designRoot, 'styles.css'),
     ...walk(join(designRoot, 'tokens'), []),

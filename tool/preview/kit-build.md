@@ -5,6 +5,41 @@ Prompt + quy ước + hàng đợi để **dựng toàn bộ màn của UI kit**
 **đúng 1 màn**, verify, rồi tick vào Hàng đợi bên dưới. Tự-chứa: một vòng lặp "nguội"
 chỉ cần đọc file này + spec màn tương ứng.
 
+## Kiến trúc thư mục (feature folders)
+
+Mỗi màn là một **feature folder** dưới `_features/`; KHÔNG còn JSX màn ở top-level.
+
+```
+ui_kits/memox-app/
+├── index.html                      # gallery + SCREENS registry + thẻ <script> nạp màn
+├── kit-helpers.jsx                 # lớp helper/compat dùng chung (composite nhỏ)
+├── _shared/                        # composite cấp app dùng bởi ≥2 màn (xem _shared/README.md)
+│   └── README.md
+├── _features/                      # 1 thư mục / màn (xem _features/README.md)
+│   ├── dashboard/
+│   │   ├── Dashboard.jsx           # screen ENTRY — index.html nạp, expose window.Dashboard
+│   │   └── components/             # component cục bộ chỉ màn này dùng (tuỳ chọn)
+│   ├── deck-detail/
+│   │   └── DeckDetail.jsx
+│   └── …                           # study-session/, library/, … (theo screen id)
+├── specs/                          # SINH TỰ ĐỘNG — không sửa tay
+└── shots/                          # SINH TỰ ĐỘNG — không sửa tay
+```
+
+Quy tắc đặt file:
+
+- **Top-level `memox-app/` KHÔNG có JSX màn** — chỉ `index.html`, `kit-helpers.jsx`,
+  và `specs/` + `shots/` (sinh tự động).
+- **Screen entry** ở `_features/<screen>/<ScreenName>.jsx` (`<screen>` = screen id
+  kebab trong `SCREENS`, vd `deck-detail`, `study-session`).
+- **Component cục bộ của màn** ở `_features/<screen>/components/*.jsx` — chỉ màn đó dùng.
+- **Composite cấp app** ở `_shared/*.jsx` **chỉ khi ≥2 màn dùng**; 1 màn dùng → để ở
+  `components/` của màn đó.
+- **Primitive design-system** (`Mx*`) ở `docs/design/MemoX Design System/components/`,
+  KHÔNG đặt trong kit màn.
+- **`specs/**` và `shots/**` sinh tự động** bởi `tool/ui_kit_shots` (`npm run export:all`)
+  — không bao giờ sửa tay.
+
 ## Prompt để chạy loop
 
 > Đọc `tool/preview/kit-build.md`. Trong **Hàng đợi**, chọn màn **pending** đầu tiên
@@ -19,9 +54,10 @@ chỉ cần đọc file này + spec màn tương ứng.
 1. Chọn màn pending đầu tiên trong Hàng đợi.
 2. Đọc spec màn đó: `docs/design/screens/` (file `NN-*.md`) — lấy state + copy.
 3. Tham chiếu pattern: `kit-helpers.jsx` (API helper) + 1 module đã có (vd `DeckDetail.jsx`).
-4. Viết/realign `ui_kits/memox-app/<TênPascal>.jsx` theo **Quy ước**.
-5. Đăng ký trong `index.html`: thêm `<script type="text/babel" src="<Tên>.jsx"></script>`
-   và một mục trong mảng `SCREENS`.
+4. Viết/realign `ui_kits/memox-app/_features/<screen>/<TênPascal>.jsx` theo **Quy ước**.
+5. Đăng ký trong `index.html`: thêm
+   `<script type="text/babel" src="_features/<screen>/<Tên>.jsx"></script>` (sau
+   `kit-helpers.jsx` / `_shared`) và một mục trong mảng `SCREENS`.
 6. **Verify:** đảm bảo server `memox-kit` chạy (nếu chưa: preview_start "memox-kit"),
    rồi preview_screenshot + preview_console_logs(level error) → **0 lỗi**.
 7. Tick ô màn đó `[x]` trong Hàng đợi (ghi prefix node đã dùng).
@@ -29,7 +65,7 @@ chỉ cần đọc file này + spec màn tương ứng.
 
 ## Quy ước (bắt buộc)
 
-- **Module:** mỗi màn là `ui_kits/memox-app/<Tên>.jsx`, dạng IIFE:
+- **Module:** mỗi màn là `ui_kits/memox-app/_features/<screen>/<Tên>.jsx`, dạng IIFE:
   `(function(){ const NS = window.MemoXDesignSystem_2ffa54; const { Mx... } = NS; … window.<Tên> = <Tên>; })();`
   Component nhận prop `state` và nhánh theo state, trả `MxScaffold`.
 - **Chỉ lắp từ** `Mx*` + helper `window.*` (xem dưới). KHÔNG markup card/button rời, KHÔNG
@@ -64,6 +100,13 @@ chỉ cần đọc file này + spec màn tương ứng.
 - `MxBottomNav({ items: [{id,label,icon}], value, node })`
 - `tone`: `accent` | `success` | `warning` | `error` | null
 
+### Thứ tự nạp script trong `index.html`
+1. React / vendor / `_ds_bundle.js` (base design-system).
+2. `kit-helpers.jsx` (+ `_shared/*.jsx` nếu có) — helper/composite dùng chung.
+3. `_features/<screen>/<ScreenName>.jsx` — các screen entry.
+4. Mảng `SCREENS` (registry). Mọi màn đang đăng ký phải còn nguyên; không xoá state,
+   không đổi `data-mx-node` id.
+
 ### Helper `window.*` (trong `kit-helpers.jsx` — thêm composite mới nếu thực sự tái dùng)
 - `ProgressBar({ value, tone, height, node })`
 - `Skeleton({ w, h, r, style })`
@@ -84,7 +127,7 @@ chỉ cần đọc file này + spec màn tương ứng.
 
 Server tĩnh `memox-kit` (`tool/preview/kit-server.mjs`, cổng 4599) phục vụ kit qua HTTP
 (Babel không nạp được `.jsx` qua `file://`). Mỗi vòng: preview_screenshot +
-preview_console_logs(error) phải **sạch lỗi**; verify mỗi màn bằng `preview_eval`: `fetch('<Tên>.jsx')` → `Babel.transform(src,{presets:['react']})` → `eval` → render mọi state qua `ReactDOM.render(React.createElement(window.<Tên>,{state}),div)` trong try/catch. Kết quả phải `OK … rendered=<đủ state>`, không `RENDER ERROR`/`LOAD ERROR`.
+preview_console_logs(error) phải **sạch lỗi**; verify mỗi màn bằng `preview_eval`: `fetch('_features/<screen>/<Tên>.jsx')` → `Babel.transform(src,{presets:['react']})` → `eval` → render mọi state qua `ReactDOM.render(React.createElement(window.<Tên>,{state}),div)` trong try/catch. Kết quả phải `OK … rendered=<đủ state>`, không `RENDER ERROR`/`LOAD ERROR`.
 
 ## Hàng đợi (state — tick khi xong)
 
