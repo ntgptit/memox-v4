@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 9ae59c09 · 2026-06-30 · design-kit · tách feature-local components (loop toàn bộ màn — batch 6/CUỐI): export (ExportingCard/FormatList) + review (MeaningCard/TermCard) + reminder (TimeCol/TimePickerSheet) + theme (PreviewCard/AccentPicker); HOÀN TẤT 22/22 màn có feature-local components; DOM specs byte-identical; verify code/full pass
 - ba651ac2 · 2026-06-30 · design-kit · tách feature-local components (loop toàn bộ màn — batch 5): account-sync (SyncBlock/SignInCard/ProfileCard) + game-picker (GameOption/ScopeCard/ScopeSheet) + game-matching (Tile) + player (Dots/PlayerCard); DOM specs byte-identical; verify code/full pass
 - c2319142 · 2026-06-30 · design-kit · tách feature-local components (loop toàn bộ màn — batch 4): game-typing (CharCompare/InputBox) + game-recall (TermCard/MeaningPanel) + game-mc (PromptCard); DOM specs byte-identical; verify code/full pass
 - aaf7abfb · 2026-06-30 · design-kit · tách feature-local components (loop toàn bộ màn — batch 3): search (ResultRow/Chips) + import (Table/SourceCard) + flashcard-editor (Field/DupBanner); DOM specs byte-identical; verify code/full pass
