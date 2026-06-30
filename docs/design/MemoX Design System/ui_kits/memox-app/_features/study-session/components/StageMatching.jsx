@@ -1,7 +1,7 @@
 /* MemoX — Study-session local: StageMatching (stage 2 — two columns of tiles).
-   `Tile` is used only here, so it stays inside this file. */
+   `Tile` is used only here, so it stays inside this file. It is a plain styled
+   div — no Mx* primitive needed, so this file intentionally reads no NS. */
 (function () {
-const NS = window.MemoXDesignSystem_2ffa54;
 
 function Tile({ text }) {
   return <div style={{ border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4) var(--memox-space-2)', textAlign: 'center', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>{text}</div>;

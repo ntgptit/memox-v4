@@ -54,10 +54,12 @@ Quy tắc đặt file:
 1. Chọn màn pending đầu tiên trong Hàng đợi.
 2. Đọc spec màn đó: `docs/design/screens/` (file `NN-*.md`) — lấy state + copy.
 3. Tham chiếu pattern: `kit-helpers.jsx` (API helper) + 1 module đã có (vd `DeckDetail.jsx`).
-4. Viết/realign `ui_kits/memox-app/_features/<screen>/<TênPascal>.jsx` theo **Quy ước**.
-5. Đăng ký trong `index.html`: thêm
-   `<script type="text/babel" src="_features/<screen>/<Tên>.jsx"></script>` (sau
-   `kit-helpers.jsx` / `_shared`) và một mục trong mảng `SCREENS`.
+4. Viết/realign `ui_kits/memox-app/_features/<screen>/<TênPascal>.jsx` theo **Quy ước**
+   (tách chunk cục bộ vào `_features/<screen>/components/*.jsx` khi cần).
+5. Đăng ký trong `index.html`: thêm một `<script type="text/babel" src="…">` cho **mỗi**
+   `components/*.jsx` (nếu có), rồi cho screen entry
+   `_features/<screen>/<Tên>.jsx` (sau `kit-helpers.jsx` / `_shared`, component trước
+   entry) và một mục trong mảng `SCREENS`.
 6. **Verify:** đảm bảo server `memox-kit` chạy (nếu chưa: preview_start "memox-kit"),
    rồi preview_screenshot + preview_console_logs(level error) → **0 lỗi**.
 7. Tick ô màn đó `[x]` trong Hàng đợi (ghi prefix node đã dùng).
@@ -103,8 +105,13 @@ Quy tắc đặt file:
 ### Thứ tự nạp script trong `index.html`
 1. React / vendor / `_ds_bundle.js` (base design-system).
 2. `kit-helpers.jsx` (+ `_shared/*.jsx` nếu có) — helper/composite dùng chung.
-3. `_features/<screen>/<ScreenName>.jsx` — các screen entry.
-4. Mảng `SCREENS` (registry). Mọi màn đang đăng ký phải còn nguyên; không xoá state,
+3. `_features/<screen>/components/*.jsx` — component cục bộ của màn: **mỗi file một thẻ
+   `<script type="text/babel">`**, theo thứ tự phụ thuộc, **trước** screen entry. Mỗi
+   component expose qua namespace per-screen `window.MemoX<PascalScreen>.<Name>`
+   (vd `dashboard` → `MemoXDashboard`, `study-session` → `MemoXStudySession`).
+4. `_features/<screen>/<ScreenName>.jsx` — screen entry (destructure component từ
+   `window.MemoX<PascalScreen>`).
+5. Mảng `SCREENS` (registry). Mọi màn đang đăng ký phải còn nguyên; không xoá state,
    không đổi `data-mx-node` id.
 
 ### Helper `window.*` (trong `kit-helpers.jsx` — thêm composite mới nếu thực sự tái dùng)

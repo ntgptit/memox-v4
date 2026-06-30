@@ -13,13 +13,22 @@ _features/<screen>/
 
 ## Rules
 
-- **Screen entry** (`<ScreenName>.jsx`) is the only file `index.html` loads for the
-  screen. It is an IIFE that reads `window.MemoXDesignSystem_2ffa54` + `window.*`
-  helpers and assigns `window.<ScreenName>`. Keep it short — compose from `Mx*`
-  primitives, shared helpers, and this folder's `components/`.
+- **Screen entry** (`<ScreenName>.jsx`) is an IIFE that reads
+  `window.MemoXDesignSystem_2ffa54` + `window.*` helpers and assigns
+  `window.<ScreenName>`. Keep it short — compose from `Mx*` primitives, shared
+  helpers, and this folder's `components/`.
 - **Feature-local components** go in `components/` and are used by **this screen
   only**. The moment a component is needed by a 2nd screen, promote it to
   `../_shared/` (see `../_shared/README.md`).
+  - Each component file is an IIFE that exposes itself on a **per-screen namespace**:
+    `window.MemoX<PascalScreen> = window.MemoX<PascalScreen> || {}; window.MemoX<PascalScreen>.<Name> = <Name>;`
+    where `<PascalScreen>` is the screen id in PascalCase (`dashboard` →
+    `MemoXDashboard`, `study-session` → `MemoXStudySession`, `game-mc` →
+    `MemoXGameMC`). The screen entry destructures what it needs from that namespace
+    (`const { GoalCard } = window.MemoXDashboard;`).
+  - **`index.html` loads them explicitly.** A screen's `components/*.jsx` each get
+    their own `<script type="text/babel">` tag, in dependency order, **before** the
+    screen-entry `<script>` (a component used by another component loads first).
 - **No screen JSX at the kit top level.** Only `kit-helpers.jsx`, `index.html`, and
   the generated `specs/` + `shots/` dirs stay at the top.
 - **Stable `data-mx-node` ids.** Moving a file must never rename or drop a
