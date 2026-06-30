@@ -77,6 +77,8 @@ chỉ cần đọc file này + spec màn tương ứng.
 - `Dialog({ icon, tone, title, text, actions, node })`
 - `Note({ icon, text, tone: accent|success|warning|error })` — callout tint mềm (icon + text)
 - `SectionLabel({ children })` — overline label nhỏ phía trên nhóm row/card
+- `Ring({ pct, size, tone, inset, children })` — vòng tiến độ conic-gradient, punch-out giữa chứa children
+- `ChoiceOption({ text, tone: correct|wrong, node })` — ô đáp án chọn (idle / đúng / sai)
 
 ## Verify
 

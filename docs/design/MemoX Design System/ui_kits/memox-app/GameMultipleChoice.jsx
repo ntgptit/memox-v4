@@ -5,19 +5,7 @@ const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxButton } = NS;
 
 const CHOICES = ['school', 'hospital', 'park', 'restaurant'];
 
-function Choice({ text, tone, node }) {
-  const skin = {
-    correct: { border: 'var(--memox-stroke-emphasis) solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
-    wrong: { border: 'var(--memox-stroke-emphasis) solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
-  }[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
-  return (
-    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4)', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', cursor: 'pointer' }}>
-      <span style={{ flex: 1 }}>{text}</span>
-      {tone === 'correct' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-success)' }}>check_circle</span> : null}
-      {tone === 'wrong' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-error)' }}>cancel</span> : null}
-    </div>
-  );
-}
+const Choice = window.ChoiceOption;
 
 function toneFor(state, i) {
   if (state === 'correct') return i === 0 ? 'correct' : undefined;

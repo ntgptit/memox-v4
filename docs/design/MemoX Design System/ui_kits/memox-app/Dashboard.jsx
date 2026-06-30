@@ -19,9 +19,9 @@ const DECKS = [
 
 function GoalRing({ pct }) {
   return (
-    <div style={{ position: 'relative', width: 'var(--memox-size-lg)', height: 'var(--memox-size-lg)', borderRadius: '50%', background: 'conic-gradient(var(--memox-primary) ' + pct + '%, var(--memox-surface-sunken) 0)', flexShrink: 0 }}>
-      <div style={{ position: 'absolute', inset: 'var(--memox-space-2)', borderRadius: '50%', background: 'var(--memox-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-base)' }}>{pct}%</div>
-    </div>
+    <window.Ring pct={pct}>
+      <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-base)' }}>{pct}%</div>
+    </window.Ring>
   );
 }
 

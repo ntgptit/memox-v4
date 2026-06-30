@@ -3,7 +3,8 @@ export interface MxAvatarProps {
   name?: string;
   /** Image URL. */
   src?: string;
-  size?: 'sm' | 'lg';
+  /** Size step. `md` is the base (omit the prop). @default 'md' */
+  size?: 'sm' | 'md' | 'lg';
   variant?: 'accent';
   /** Primary ring around the avatar. */
   ring?: boolean;

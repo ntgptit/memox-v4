@@ -22,9 +22,7 @@ function Tile({ text }) {
   return <div style={{ border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4) var(--memox-space-2)', textAlign: 'center', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>{text}</div>;
 }
 
-function Opt({ text }) {
-  return <div style={{ border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4)', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>{text}</div>;
-}
+const Opt = window.ChoiceOption;
 
 function PromptCard({ term, sub }) {
   return (

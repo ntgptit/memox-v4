@@ -68,6 +68,7 @@ DI. Codegen Riverpod hoãn (xung đột `drift_dev`, xem `docs/stack/stack.md`).
 Append-only, newest first. One line per commit that touches a WBS work package:
 `<8-char hash> · <YYYY-MM-DD> · <WBS IDs> · <summary>`.
 
+- 6cadb67f · 2026-06-30 · design-kit · chuẩn hóa kit (Phase 2–4): gom conic-gradient ring trùng vào helper `Ring` (GoalRing/Dashboard + Donut/Statistics thành wrapper mỏng) + gom ô đáp án vào `ChoiceOption` (Choice/GameMC + Opt/StudySession); đồng bộ .d.ts additive ghi default khớp Flutter (MxCard variant=elevated/padding=md, MxAvatar size=md, MxIconButton variant=plain); cập nhật kit-build helper API
 - e571d927 · 2026-06-30 · design-kit · chuẩn hóa kit-helpers: gom local component trùng vào helper chung (Note ×4 screen — hợp nhất tone accent/success/warning/error; SectionLabel ×4 screen) + sửa rò token scrim (rgba cứng→var(--memox-overlay)) ở Scrim helper + Drawer; cập nhật kit-build helper API
 - c14c4a80 · 2026-06-29 · W11,W14 · style-parity loop màn 22/CUỐI (dashboard): today/start hero khớp kit (today bg:primary r:20, start bg:surface r:12); goal/streak/mastered là activity-state (status≠empty) → state-not-exported; SCREENS+=dashboard — HOÀN TẤT 21/21 màn buildable gated + account deferred (W10). Style-parity loop kết thúc.
 - 3bad099d · 2026-06-29 · W11,W14 · style-parity loop màn 21 (drawer): harness mở drawer + chuyển add-language view; add-screen khớp (page bg); exempt add-confirm r+font (FE Material FilledButton stadium/label 15 vs kit r:12/20; fill primary khớp); SCREENS+=drawer

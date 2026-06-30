@@ -43,12 +43,10 @@ function Heatmap() {
 function Donut({ pct }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--memox-space-1) 0' }}>
-      <div style={{ position: 'relative', width: 'var(--memox-size-2xl)', height: 'var(--memox-size-2xl)', borderRadius: '50%', background: 'conic-gradient(var(--memox-success) ' + pct + '%, var(--memox-surface-sunken) 0)' }}>
-        <div style={{ position: 'absolute', inset: 'var(--memox-space-4)', borderRadius: '50%', background: 'var(--memox-surface)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>{pct}%</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>accuracy</div>
-        </div>
-      </div>
+      <window.Ring pct={pct} size="var(--memox-size-2xl)" tone="var(--memox-success)" inset="var(--memox-space-4)">
+        <div style={{ fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>{pct}%</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>accuracy</div>
+      </window.Ring>
     </div>
   );
 }

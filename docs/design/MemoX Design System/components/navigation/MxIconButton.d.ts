@@ -1,7 +1,8 @@
 export interface MxIconButtonProps {
   /** Material Symbols Rounded ligature name. */
   icon: string;
-  variant?: 'filled' | 'primary';
+  /** Emphasis. `plain` is the base (omit the prop). @default 'plain' */
+  variant?: 'plain' | 'filled' | 'primary';
   size?: 'sm';
   node?: string;
   className?: string;

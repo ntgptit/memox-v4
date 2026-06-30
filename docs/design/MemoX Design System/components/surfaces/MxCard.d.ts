@@ -5,12 +5,12 @@ import type { ReactNode, CSSProperties } from 'react';
  * @startingPoint section="Surfaces" subtitle="Rounded content surface with variants" viewport="360x180"
  */
 export interface MxCardProps {
-  /** Surface treatment. */
-  variant?: 'flat' | 'muted' | 'primary' | 'primary-soft';
+  /** Surface treatment. `elevated` is the base (omit the prop). @default 'elevated' */
+  variant?: 'elevated' | 'flat' | 'muted' | 'primary' | 'primary-soft';
   /** Adds hover/press affordance. */
   interactive?: boolean;
-  /** Padding override. */
-  padding?: 'sm' | 'lg';
+  /** Padding step. `md` is the base (omit the prop). @default 'md' */
+  padding?: 'sm' | 'md' | 'lg';
   node?: string;
   className?: string;
   children?: ReactNode;
