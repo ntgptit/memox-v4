@@ -1,7 +1,10 @@
-/* MemoX — Library. States: loaded · search-active · pair-picker · sort-menu · overflow-menu · play-sheet · drawer · empty · loading · error */
+/* MemoX — Library. States: loaded · search-active · pair-picker · sort-menu · overflow-menu · play-sheet · drawer · empty · loading · error
+   Feature-local components: components/{LibraryHeader,ContextBar,PairPickerSheet,SortSheet,OverflowMenuSheet,PlaySheet}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxIconButton, MxSearchDock, MxFab, MxButton } = NS;
+const { MxScaffold, MxBottomNav, MxCard, MxIconButton, MxSearchDock, MxFab, MxButton } = NS;
+const LIB = window.MemoXLibrary;
+const { LibraryHeader, ContextBar, PairPickerSheet, SortSheet, OverflowMenuSheet, PlaySheet } = LIB;
 
 const NAV = [
   { id: 'home', label: 'Today', icon: 'today' },
@@ -19,27 +22,6 @@ const TREE = [
   { icon: 'style', tone: null, name: 'Daily Conversation', meta: '150 words · mastered', due: 0, progress: 100 },
 ];
 
-function Bar() {
-  return (
-    <MxAppBar title="Library" node="library/appbar"
-      leading={<MxIconButton icon="menu" node="library/menu-open" />}
-      trailing={<MxIconButton icon="more_vert" node="library/overflow" />} />
-  );
-}
-
-function ContextBar() {
-  return (
-    <div data-mx-node="library/context" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)' }}>
-      <MxIconButton icon="search" node="library/search-btn" />
-      <button data-mx-node="library/pair" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--memox-space-2)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-pill)', padding: 'var(--memox-space-3) var(--memox-space-4)', font: 'inherit', fontWeight: 'var(--memox-font-weight-bold)', cursor: 'pointer', color: 'inherit' }}>
-        한국어 <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)', color: 'var(--memox-text-tertiary)' }}>swap_horiz</span> English
-        <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)', color: 'var(--memox-text-tertiary)' }}>expand_more</span>
-      </button>
-      <MxIconButton icon="swap_vert" node="library/sort-btn" />
-    </div>
-  );
-}
-
 function Tree() {
   return TREE.map((d, i) => (
     <MxCard key={i} padding="sm" interactive node={'library/node-' + i}><window.DeckRow {...d} /></MxCard>
@@ -48,7 +30,7 @@ function Tree() {
 
 function base() {
   return (
-    <MxScaffold node="library/screen" appBar={<Bar />} bottomNav={<MxBottomNav items={NAV} value="library" node="shell/bottom-nav" />} fab={<MxFab icon="add" label="New" node="library/create" />}>
+    <MxScaffold node="library/screen" appBar={<LibraryHeader />} bottomNav={<MxBottomNav items={NAV} value="library" node="shell/bottom-nav" />} fab={<MxFab icon="add" label="New" node="library/create" />}>
       <ContextBar />
       <Tree />
     </MxScaffold>
@@ -65,7 +47,7 @@ function Library({ state = 'loaded' }) {
   if (state === 'loading') {
     const S = window.Skeleton;
     return (
-      <MxScaffold node="library/screen" appBar={<Bar />} bottomNav={nav}>
+      <MxScaffold node="library/screen" appBar={<LibraryHeader />} bottomNav={nav}>
         <S h={48} r={999} />
         {[0, 1, 2, 3].map((i) => (
           <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><S w={48} h={48} r={16} /><div style={{ flex: 1 }}><S w="55%" h={14} /><S w="38%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>
@@ -76,7 +58,7 @@ function Library({ state = 'loaded' }) {
 
   if (state === 'empty') {
     return (
-      <MxScaffold node="library/screen" appBar={<Bar />} bottomNav={nav}>
+      <MxScaffold node="library/screen" appBar={<LibraryHeader />} bottomNav={nav}>
         <ContextBar />
         <window.EmptyState node="library/empty" icon="style" title="Your library is empty"
           text="Decks and words you add will show up here. Start with a deck or import a CSV."
@@ -90,7 +72,7 @@ function Library({ state = 'loaded' }) {
 
   if (state === 'error') {
     return (
-      <MxScaffold node="library/screen" appBar={<Bar />} bottomNav={nav}>
+      <MxScaffold node="library/screen" appBar={<LibraryHeader />} bottomNav={nav}>
         <window.EmptyState node="library/error" icon="cloud_off" tone="error" title="Couldn't load your library"
           text="Something went wrong loading data. Check your connection and try again."
           action={<MxButton variant="primary" icon="refresh" node="library/retry">Retry</MxButton>} />
@@ -100,7 +82,7 @@ function Library({ state = 'loaded' }) {
 
   if (state === 'search-active') {
     return (
-      <MxScaffold node="library/screen" appBar={<Bar />} bottomNav={nav}>
+      <MxScaffold node="library/screen" appBar={<LibraryHeader />} bottomNav={nav}>
         <MxSearchDock focused placeholder="Search by word or meaning" node="library/search-dock"
           trailing={<MxIconButton icon="close" size="sm" node="library/search-clear" />} />
         <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>RECENT</div>
@@ -114,52 +96,19 @@ function Library({ state = 'loaded' }) {
   }
 
   if (state === 'pair-picker') {
-    return overlay(
-      <window.Sheet title="Language pair" node="library/pair-sheet">
-        <window.MenuItem icon="check" label="한국어 → English" node="library/pair-ko-en"
-          trailing={<span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span>} />
-        <window.MenuItem icon="translate" label="日本語 → English" node="library/pair-ja-en" />
-        <window.MenuItem icon="add" label="Add language" node="library/pair-add" />
-      </window.Sheet>
-    );
+    return overlay(<PairPickerSheet />);
   }
 
   if (state === 'sort-menu') {
-    const opts = [
-      ['sort_by_alpha', 'Alphabetical A → Z', true], ['sort_by_alpha', 'Alphabetical Z → A', false],
-      ['schedule', 'Date created (newest)', false], ['history', 'Last studied', false],
-    ];
-    return overlay(
-      <window.Sheet title="Sort by" node="library/sort-sheet">
-        {opts.map((o, i) => (
-          <window.MenuItem key={i} icon={o[0]} label={o[1]} node={'library/sort-' + i}
-            trailing={o[2] ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : null} />
-        ))}
-      </window.Sheet>
-    );
+    return overlay(<SortSheet />);
   }
 
   if (state === 'overflow-menu') {
-    return overlay(
-      <window.Sheet title="Library" node="library/overflow-sheet">
-        <window.MenuItem icon="upload_file" label="Import cards" node="library/of-import" />
-        <window.MenuItem icon="download" label="Export cards" node="library/of-export" />
-        <window.MenuItem icon="checklist" label="Select multiple" node="library/of-select" />
-        <window.MenuItem icon="settings" label="Settings" node="library/of-settings" />
-      </window.Sheet>
-    );
+    return overlay(<OverflowMenuSheet />);
   }
 
   if (state === 'play-sheet') {
-    return overlay(
-      <window.Sheet title="TOPIK I — Vocabulary" node="library/play-sheet">
-        <window.MenuItem icon="school" label="Learn · 20 new" node="library/play-learn" />
-        <window.MenuItem icon="replay" label="Review · 48 due" node="library/play-review" />
-        <window.MenuItem icon="visibility" label="Browse cards" node="library/play-browse" />
-        <window.MenuItem icon="sports_esports" label="Single game · due 48 / new 20" node="library/play-game" />
-        <window.MenuItem icon="play_circle" label="Player" node="library/play-player" />
-      </window.Sheet>
-    );
+    return overlay(<PlaySheet />);
   }
 
   if (state === 'drawer') {

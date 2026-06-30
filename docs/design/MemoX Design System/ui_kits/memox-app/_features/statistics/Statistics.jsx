@@ -1,7 +1,9 @@
-/* MemoX — Statistics (Stats). States: loading · loaded · insufficient · scope-switch */
+/* MemoX — Statistics (Stats). States: loading · loaded · insufficient · scope-switch
+   Feature-local components: components/{Bars,Heatmap,Donut}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxSegmentedControl } = NS;
+const { Bars, Heatmap, Donut } = window.MemoXStatistics;
 
 const NAV = [
   { id: 'home', label: 'Today', icon: 'today' },
@@ -10,46 +12,6 @@ const NAV = [
   { id: 'stats', label: 'Stats', icon: 'insights' },
   { id: 'me', label: 'Profile', icon: 'person' },
 ];
-
-function Bars({ data, labels, tone }) {
-  const max = Math.max.apply(null, data);
-  return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'var(--memox-space-2)', height: 'var(--memox-size-2xl)' }}>
-      {data.map((v, i) => (
-        <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--memox-space-1)', height: '100%', justifyContent: 'flex-end' }}>
-          <div style={{ width: '100%', height: (v / max * 100) + '%', background: tone || 'var(--memox-primary)', borderRadius: 'var(--memox-radius-xs)', minHeight: 'var(--memox-size-3xs)' }} />
-          <span style={{ fontSize: 'var(--memox-font-size-xs)', color: 'var(--memox-text-tertiary)' }}>{labels[i]}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Heatmap() {
-  return (
-    <div style={{ display: 'flex', gap: 'var(--memox-space-1)', overflowX: 'auto' }}>
-      {Array.from({ length: 14 }).map((_, w) => (
-        <div key={w} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
-          {Array.from({ length: 7 }).map((_, d) => {
-            const op = [0.08, 0.25, 0.45, 0.7, 1][(w * 7 + d * 3) % 5];
-            return <div key={d} style={{ width: 'var(--memox-size-xs)', height: 'var(--memox-size-xs)', borderRadius: 'var(--memox-radius-xs)', background: 'var(--memox-primary)', opacity: op }} />;
-          })}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Donut({ pct }) {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--memox-space-1) 0' }}>
-      <window.Ring pct={pct} size="var(--memox-size-2xl)" tone="var(--memox-success)" inset="var(--memox-space-4)">
-        <div style={{ fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>{pct}%</div>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>accuracy</div>
-      </window.Ring>
-    </div>
-  );
-}
 
 function Statistics({ state = 'loaded' }) {
   const bar = <MxAppBar large title="Stats" node="statistics/appbar" />;
