@@ -1,4 +1,5 @@
-/* MemoX — Dashboard (Today). States: loaded · empty · loading · goal-met · streak-reset */
+/* MemoX — Dashboard (Today). States: loaded · empty · loading · goal-met · streak-reset
+   Feature-local components: components/{TodaySummary,GoalCard,StreakCard,ContinueCard}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar } = NS;
@@ -17,17 +18,10 @@ const DECKS = [
   { icon: 'record_voice_over', tone: 'success', name: 'Daily Conversation', meta: '150 cards · 6 due', due: 6, progress: 88 },
 ];
 
-function GoalRing({ pct }) {
-  return (
-    <window.Ring pct={pct}>
-      <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-base)' }}>{pct}%</div>
-    </window.Ring>
-  );
-}
-
 const Note = window.Note;
 
 function Dashboard({ state = 'loaded' }) {
+  const { TodaySummary, GoalCard, StreakCard, ContinueCard } = window.MemoXDashboard;
   const nav = <MxBottomNav items={NAV} value="home" node="shell/bottom-nav" />;
   const bar = (
     <MxAppBar large eyebrow="Saturday · 27 Jun" title="Good evening, Linh" node="dashboard/appbar"
@@ -53,14 +47,9 @@ function Dashboard({ state = 'loaded' }) {
     return (
       <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}>
         <Note icon="bolt" tone="accent" text="You haven't studied today — start to keep your streak!" />
-        <MxCard variant="primary" node="dashboard/today">
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', opacity: .9, letterSpacing: 'var(--memox-letter-spacing-wide)' }}>TODAY</div>
-          <div style={{ display: 'flex', gap: 'var(--memox-space-7)', marginTop: 'var(--memox-space-2)' }}>
-            <div><div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>00:00</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>time studied</div></div>
-            <div><div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>0</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>words learned</div></div>
-          </div>
+        <TodaySummary time="00:00" words="0">
           <MxButton variant="contrast" icon="play_arrow" block node="dashboard/start">Start studying</MxButton>
-        </MxCard>
+        </TodaySummary>
       </MxScaffold>
     );
   }
@@ -76,30 +65,12 @@ function Dashboard({ state = 'loaded' }) {
       {met ? <Note icon="celebration" tone="success" text="Daily goal reached! Streak +1." /> : null}
       {reset ? <Note icon="local_fire_department" tone="warning" text="Streak reset — study today to start again." /> : null}
 
-      <MxCard variant="primary" node="dashboard/today">
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', opacity: .9, letterSpacing: 'var(--memox-letter-spacing-wide)' }}>TODAY</div>
-        <div style={{ display: 'flex', gap: 'var(--memox-space-7)', marginTop: 'var(--memox-space-2)' }}>
-          <div><div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>12:30</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>time studied</div></div>
-          <div><div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>24</div><div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9 }}>words learned</div></div>
-        </div>
-      </MxCard>
+      <TodaySummary time="12:30" words="24" />
 
-      <MxCard node="dashboard/goal" style={{ flexDirection: 'row', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
-        <GoalRing pct={goalPct} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-md)' }}>Daily goal</div>
-          <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>{met ? '20/20 min · complete' : '14/20 min'}</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', marginTop: 'var(--memox-space-1)' }}>Met when minutes OR words reached</div>
-        </div>
-      </MxCard>
+      <GoalCard pct={goalPct} met={met} />
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
-        <MxCard variant="primary-soft" padding="sm" node="dashboard/streak">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
-            <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xl)' }}>local_fire_department</span>
-            <div><div style={{ fontSize: 'var(--memox-icon-size-md)', fontWeight: 'var(--memox-font-weight-extrabold)', lineHeight: 'var(--memox-line-height-none)' }}>{streak}</div><div style={{ fontSize: 'var(--memox-font-size-xs)', opacity: .85 }}>day streak</div></div>
-          </div>
-        </MxCard>
+        <StreakCard streak={streak} />
         <MxCard variant="muted" padding="sm" node="dashboard/mastered">
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
             <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xl)', color: 'var(--memox-success)' }}>verified</span>
@@ -109,7 +80,7 @@ function Dashboard({ state = 'loaded' }) {
       </div>
 
       <MxSectionHeader title="Continue studying" caption="3 decks due today" action="See all" node="dashboard/decks-head" />
-      {DECKS.map((d, i) => <MxCard key={i} padding="sm" interactive node={'dashboard/deck-' + i}><window.DeckRow {...d} /></MxCard>)}
+      {DECKS.map((d, i) => <ContinueCard key={i} deck={d} index={i} />)}
     </MxScaffold>
   );
 }
