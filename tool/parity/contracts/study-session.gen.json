@@ -1,27 +1,17 @@
 {
   "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
   "screen": "study-session",
-  "source": "docs/design/MemoX Design System/ui_kits/memox-app/StudySession.jsx",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/study-session",
   "nodes": [
+    {
+      "key": "mx-node:study-session/appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
     {
       "key": "mx-node:study-session/card",
       "component": "MxCard",
       "variant": "elevated"
-    },
-    {
-      "key": "mx-node:study-session/next",
-      "component": "MxButton",
-      "variant": "primary"
-    },
-    {
-      "key": "mx-node:study-session/reveal",
-      "component": "MxButton",
-      "variant": "primary"
-    },
-    {
-      "key": "mx-node:study-session/hint",
-      "component": "MxButton",
-      "variant": "ghost"
     },
     {
       "key": "mx-node:study-session/check",
@@ -29,39 +19,14 @@
       "variant": "primary"
     },
     {
-      "key": "mx-node:study-session/due-relearn",
-      "component": "MxButton",
-      "variant": "ghost"
-    },
-    {
       "key": "mx-node:study-session/due-next",
       "component": "MxButton",
       "variant": "primary"
     },
     {
-      "key": "mx-node:study-session/appbar",
-      "component": "MxAppBar",
-      "variant": null
-    },
-    {
-      "key": "mx-node:study-session/screen",
-      "component": "MxScaffold",
-      "variant": null
-    },
-    {
-      "key": "mx-node:study-session/resume-retry",
-      "component": "MxButton",
-      "variant": "primary"
-    },
-    {
-      "key": "mx-node:study-session/resume-back",
+      "key": "mx-node:study-session/due-relearn",
       "component": "MxButton",
       "variant": "ghost"
-    },
-    {
-      "key": "mx-node:study-session/options",
-      "component": "MxIconButton",
-      "variant": null
     },
     {
       "key": "mx-node:study-session/exit-cancel",
@@ -74,6 +39,36 @@
       "variant": "primary"
     },
     {
+      "key": "mx-node:study-session/hint",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:study-session/next",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:study-session/options",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:study-session/resume-back",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:study-session/resume-retry",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:study-session/reveal",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
       "key": "mx-node:study-session/save-error-back",
       "component": "MxButton",
       "variant": "ghost"
@@ -82,6 +77,11 @@
       "key": "mx-node:study-session/save-error-retry",
       "component": "MxButton",
       "variant": "primary"
+    },
+    {
+      "key": "mx-node:study-session/screen",
+      "component": "MxScaffold",
+      "variant": null
     }
   ]
 }

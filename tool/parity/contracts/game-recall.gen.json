@@ -1,32 +1,12 @@
 {
   "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
   "screen": "game-recall",
-  "source": "docs/design/MemoX Design System/ui_kits/memox-app/GameRecall.jsx",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/game-recall",
   "nodes": [
     {
       "key": "mx-node:game-recall/appbar",
       "component": "MxAppBar",
       "variant": null
-    },
-    {
-      "key": "mx-node:game-recall/options",
-      "component": "MxIconButton",
-      "variant": null
-    },
-    {
-      "key": "mx-node:game-recall/screen",
-      "component": "MxScaffold",
-      "variant": null
-    },
-    {
-      "key": "mx-node:game-recall/next",
-      "component": "MxButton",
-      "variant": "primary"
-    },
-    {
-      "key": "mx-node:game-recall/term",
-      "component": "MxCard",
-      "variant": "elevated"
     },
     {
       "key": "mx-node:game-recall/audio",
@@ -39,9 +19,29 @@
       "variant": null
     },
     {
+      "key": "mx-node:game-recall/forgot",
+      "component": "MxButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:game-recall/meaning",
       "component": "MxCard",
       "variant": "elevated"
+    },
+    {
+      "key": "mx-node:game-recall/next",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:game-recall/options",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-recall/remembered",
+      "component": "MxButton",
+      "variant": null
     },
     {
       "key": "mx-node:game-recall/reveal",
@@ -49,14 +49,14 @@
       "variant": "primary"
     },
     {
-      "key": "mx-node:game-recall/forgot",
-      "component": "MxButton",
+      "key": "mx-node:game-recall/screen",
+      "component": "MxScaffold",
       "variant": null
     },
     {
-      "key": "mx-node:game-recall/remembered",
-      "component": "MxButton",
-      "variant": null
+      "key": "mx-node:game-recall/term",
+      "component": "MxCard",
+      "variant": "elevated"
     }
   ]
 }

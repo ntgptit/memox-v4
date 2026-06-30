@@ -1,7 +1,7 @@
 {
   "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
   "screen": "player",
-  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Player.jsx",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/player",
   "nodes": [
     {
       "key": "mx-node:player/appbar",
@@ -9,7 +9,17 @@
       "variant": null
     },
     {
-      "key": "mx-node:player/text-size",
+      "key": "mx-node:player/card",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:player/close",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
+      "key": "mx-node:player/next",
       "component": "MxIconButton",
       "variant": null
     },
@@ -19,8 +29,13 @@
       "variant": null
     },
     {
-      "key": "mx-node:player/screen",
-      "component": "MxScaffold",
+      "key": "mx-node:player/playpause",
+      "component": "MxFab",
+      "variant": null
+    },
+    {
+      "key": "mx-node:player/prev",
+      "component": "MxIconButton",
       "variant": null
     },
     {
@@ -29,34 +44,19 @@
       "variant": "primary"
     },
     {
-      "key": "mx-node:player/close",
-      "component": "MxButton",
-      "variant": "ghost"
-    },
-    {
-      "key": "mx-node:player/card",
-      "component": "MxCard",
-      "variant": "elevated"
-    },
-    {
-      "key": "mx-node:player/prev",
-      "component": "MxIconButton",
-      "variant": null
-    },
-    {
-      "key": "mx-node:player/playpause",
-      "component": "MxFab",
-      "variant": null
-    },
-    {
-      "key": "mx-node:player/next",
-      "component": "MxIconButton",
+      "key": "mx-node:player/screen",
+      "component": "MxScaffold",
       "variant": null
     },
     {
       "key": "mx-node:player/speed",
       "component": "MxButton",
       "variant": "ghost"
+    },
+    {
+      "key": "mx-node:player/text-size",
+      "component": "MxIconButton",
+      "variant": null
     }
   ]
 }

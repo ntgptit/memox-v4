@@ -1,11 +1,31 @@
 {
   "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
   "screen": "import",
-  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Import.jsx",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/import",
   "nodes": [
     {
       "key": "mx-node:import/appbar",
       "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:import/do-import",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:import/go-deck",
+      "component": "MxButton",
+      "variant": "primary"
+    },
+    {
+      "key": "mx-node:import/map-meaning-pick",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:import/map-term-pick",
+      "component": "MxIconButton",
       "variant": null
     },
     {
@@ -14,27 +34,7 @@
       "variant": null
     },
     {
-      "key": "mx-node:import/go-deck",
-      "component": "MxButton",
-      "variant": "primary"
-    },
-    {
-      "key": "mx-node:import/map-term-pick",
-      "component": "MxIconButton",
-      "variant": null
-    },
-    {
-      "key": "mx-node:import/map-meaning-pick",
-      "component": "MxIconButton",
-      "variant": null
-    },
-    {
       "key": "mx-node:import/to-preview",
-      "component": "MxButton",
-      "variant": "primary"
-    },
-    {
-      "key": "mx-node:import/do-import",
       "component": "MxButton",
       "variant": "primary"
     }

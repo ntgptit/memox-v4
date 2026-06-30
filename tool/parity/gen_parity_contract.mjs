@@ -84,20 +84,55 @@ function screenOf(nodes) {
   return prefixes.size === 1 ? [...prefixes][0] : null;
 }
 
-const files = readdirSync(KIT).filter(
-  (f) => f.endsWith('.jsx') && !/kit-helpers|_shared/.test(f),
-);
+// A screen's nodes are spread across its entry (_features/<screen>/<Name>.jsx) AND
+// its feature-local components (_features/<screen>/components/*.jsx), so we walk the
+// kit recursively and GROUP by screen before emitting one contract per screen.
+// Excluded: kit-helpers.jsx, _shared/** (cross-screen composites — not screen-owned),
+// and the generated specs/ + shots/ dirs.
+const SKIP_DIRS = new Set(['specs', 'shots', '_shared', 'node_modules']);
+function collectKitJsx(dir, acc = []) {
+  if (!existsSync(dir)) return acc;
+  for (const d of readdirSync(dir, { withFileTypes: true })) {
+    if (d.isDirectory()) {
+      if (!SKIP_DIRS.has(d.name)) collectKitJsx(join(dir, d.name), acc);
+    } else if (d.name.endsWith('.jsx') && d.name !== 'kit-helpers.jsx') {
+      acc.push(join(dir, d.name));
+    }
+  }
+  return acc;
+}
 
-const built = [];
-for (const f of files) {
-  const nodes = parseScreen(readFileSync(join(KIT, f), 'utf8'));
+// screen -> Map(node-key -> {key, component, variant[, conflict]}), merged across
+// the screen's entry + component files. A node id lives in exactly one file, but we
+// still flag any cross-file variant disagreement the same way parseScreen does.
+const byScreen = new Map();
+for (const abs of collectKitJsx(KIT)) {
+  const nodes = parseScreen(readFileSync(abs, 'utf8'));
   if (!nodes.length) continue;
   const screen = screenOf(nodes);
-  if (!screen) continue; // skip files that mix prefixes (helpers/composites)
+  if (!screen) continue; // file mixes prefixes (a shared helper/composite)
   // Scope to this screen's own nodes; shared chrome (shell/*) lives elsewhere.
   const scoped = nodes.filter((n) => prefixOf(n) === screen);
-  const conflicts = scoped.filter((n) => n.conflict);
-  built.push({ screen, source: `${PATHS.uiKitDir}/${f}`, nodes: scoped, conflicts });
+  if (!scoped.length) continue;
+  const seen = byScreen.get(screen) || new Map();
+  for (const n of scoped) {
+    const prev = seen.get(n.key);
+    if (prev) {
+      if (prev.variant !== n.variant) prev.conflict = [prev.variant, n.variant];
+      continue;
+    }
+    seen.set(n.key, { ...n });
+  }
+  byScreen.set(screen, seen);
+}
+
+// One contract per screen; screens and nodes sorted by key for deterministic output
+// (nodes now come from multiple files, so source order is not stable — sort instead).
+const built = [];
+for (const [screen, seen] of [...byScreen].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
+  const nodes = [...seen.values()].sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+  const conflicts = nodes.filter((n) => n.conflict);
+  built.push({ screen, source: `${PATHS.uiKitDir}/_features/${screen}`, nodes, conflicts });
 }
 
 if (asJson) {
