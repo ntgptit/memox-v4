@@ -484,26 +484,47 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + layout: flex:col gap:12
 + flex: shrink:0
 + - node: div
-+ text: school
 + box:
 + abs: [20,260 350x57]
 + rel: [0,0 350x57]
++ layout: flex:row gap:12 align:center
 + spacing: pad:16
-+ style: bg:surface font:15/700/23 color:text r:12 border:1px divider
++ style: bg:surface r:12 border:1px divider
++ - node: span
++ text: school
++ box:
++ abs: [37,277 316x23]
++ rel: [17,17 316x23]
++ flex: grow:1 basis:0 layout_hint:expanded
++ style: font:15/700/23 color:text
 + - node: div
-+ text: hospital
 + box:
 + abs: [20,328 350x57]
 + rel: [0,69 350x57]
++ layout: flex:row gap:12 align:center
 + spacing: pad:16
-+ style: bg:surface font:15/700/23 color:text r:12 border:1px divider
++ style: bg:surface r:12 border:1px divider
++ - node: span
++ text: hospital
++ box:
++ abs: [37,345 316x23]
++ rel: [17,17 316x23]
++ flex: grow:1 basis:0 layout_hint:expanded
++ style: font:15/700/23 color:text
 + - node: div
-+ text: park
 + box:
 + abs: [20,397 350x57]
 + rel: [0,137 350x57]
++ layout: flex:row gap:12 align:center
 + spacing: pad:16
-+ style: bg:surface font:15/700/23 color:text r:12 border:1px divider
++ style: bg:surface r:12 border:1px divider
++ - node: span
++ text: park
++ box:
++ abs: [37,414 316x23]
++ rel: [17,17 316x23]
++ flex: grow:1 basis:0 layout_hint:expanded
++ style: font:15/700/23 color:text
 ```
 
 ## State: stage4 recall (ordered diff vs stage1 review)
@@ -986,26 +1007,47 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + layout: flex:col gap:12
 + flex: shrink:0
 + - node: div
-+ text: school
 + box:
 + abs: [20,343 350x57]
 + rel: [0,0 350x57]
++ layout: flex:row gap:12 align:center
 + spacing: pad:16
-+ style: bg:surface font:15/700/23 color:text r:12 border:1px divider
++ style: bg:surface r:12 border:1px divider
++ - node: span
++ text: school
++ box:
++ abs: [37,360 316x23]
++ rel: [17,17 316x23]
++ flex: grow:1 basis:0 layout_hint:expanded
++ style: font:15/700/23 color:text
 + - node: div
-+ text: hospital
 + box:
 + abs: [20,411 350x57]
 + rel: [0,69 350x57]
++ layout: flex:row gap:12 align:center
 + spacing: pad:16
-+ style: bg:surface font:15/700/23 color:text r:12 border:1px divider
++ style: bg:surface r:12 border:1px divider
++ - node: span
++ text: hospital
++ box:
++ abs: [37,428 316x23]
++ rel: [17,17 316x23]
++ flex: grow:1 basis:0 layout_hint:expanded
++ style: font:15/700/23 color:text
 + - node: div
-+ text: park
 + box:
 + abs: [20,480 350x57]
 + rel: [0,137 350x57]
++ layout: flex:row gap:12 align:center
 + spacing: pad:16
-+ style: bg:surface font:15/700/23 color:text r:12 border:1px divider
++ style: bg:surface r:12 border:1px divider
++ - node: span
++ text: park
++ box:
++ abs: [37,497 316x23]
++ rel: [17,17 316x23]
++ flex: grow:1 basis:0 layout_hint:expanded
++ style: font:15/700/23 color:text
 ```
 
 ## State: due review (ordered diff vs stage1 review)
@@ -1224,7 +1266,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + layout: flex:col justify:center align:center
 + spacing: pad:24
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: study-session/exit-dialog
 + box:
@@ -1611,7 +1653,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   layout: flex:col justify:center align:center
   spacing: pad:24
   position: pos:absolute z:60
-  style: bg:#080b18@50
+  style: bg:overlay
   - node: div
     id: study-session/save-error-dialog
     box:

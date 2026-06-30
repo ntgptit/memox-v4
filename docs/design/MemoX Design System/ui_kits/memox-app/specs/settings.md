@@ -1423,7 +1423,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: settings/picker-sheet
 + box:

@@ -14,9 +14,11 @@
 //
 // Design intent (hierarchy, layout direction, repetition) is what an agent needs
 // to write correct Flutter — the renderer already knows it, so we stop discarding
-// it (T1/T2). A sha256 of index.html is written to specs/.source-hash so the
-// freshness check (tool/ui_kit_shots/check_specs_fresh.mjs, run by verify) fails
-// when the mock changes but the specs were not re-exported (T5).
+// it (T1/T2). A sha256 of ALL UI-kit source inputs (index.html, screen *.jsx,
+// kit-helpers.jsx, components.css, styles.css, tokens/** and components/** — see
+// source_hash.mjs) is written to specs/.source-hash so the freshness check
+// (tool/ui_kit_shots/check_specs_fresh.mjs, run by verify) fails when any of that
+// source changes but the specs were not re-exported (T5).
 //
 // The render and measurement are done by Chrome; this script only orchestrates
 // the same row/stepper navigation as export_shots.mjs and serializes the result.
