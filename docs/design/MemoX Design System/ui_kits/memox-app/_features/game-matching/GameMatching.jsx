@@ -1,24 +1,12 @@
-/* MemoX — Game: Matching. States: playing · selected · correct · wrong · almost · complete */
+/* MemoX — Game: Matching. States: playing · selected · correct · wrong · almost · complete
+   Feature-local component: components/Tile.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
+const { Tile } = window.MemoXGameMatching;
 
 const LEFT = ['time', 'love', 'friend', 'food', 'school'];
 const RIGHT = ['사랑', '학교', '음식', '시간', '친구'];
-
-const TONE = {
-  selected: { border: 'var(--memox-stroke-emphasis) solid var(--memox-primary)', background: 'var(--memox-primary-soft)', color: 'var(--memox-on-primary-soft)' },
-  correct: { border: 'var(--memox-stroke-emphasis) solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
-  wrong: { border: 'var(--memox-stroke-emphasis) solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
-};
-
-function Tile({ text, tone, node }) {
-  if (tone === 'matched') return <div style={{ minHeight: 'var(--memox-size-md)', visibility: 'hidden' }} />;
-  const skin = TONE[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
-  return (
-    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4) var(--memox-space-3)', minHeight: 'var(--memox-size-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', cursor: 'pointer' }}>{text}</div>
-  );
-}
 
 function toneFor(state, side, i) {
   if (state === 'selected') return side === 'L' && i === 1 ? 'selected' : undefined;

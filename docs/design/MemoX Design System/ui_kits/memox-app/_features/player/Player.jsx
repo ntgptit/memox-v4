@@ -1,17 +1,9 @@
-/* MemoX — Player (auto-play). States: playing · paused · speed · end */
+/* MemoX — Player (auto-play). States: playing · paused · speed · end
+   Feature-local components: components/{Dots,PlayerCard}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxFab, MxButton, MxSegmentedControl } = NS;
-
-function Dots() {
-  return (
-    <div data-mx-node="player/progress" style={{ display: 'flex', gap: 'var(--memox-space-2)', justifyContent: 'center' }}>
-      {Array.from({ length: 8 }).map((_, i) => (
-        <div key={i} style={{ width: i === 3 ? 'var(--memox-size-xs)' : 'var(--memox-size-2xs)', height: 'var(--memox-size-2xs)', borderRadius: 'var(--memox-radius-pill)', background: i <= 3 ? 'var(--memox-primary)' : 'var(--memox-surface-sunken)' }} />
-      ))}
-    </div>
-  );
-}
+const { MxScaffold, MxAppBar, MxIconButton, MxFab, MxButton, MxSegmentedControl } = NS;
+const { Dots, PlayerCard } = window.MemoXPlayer;
 
 function Player({ state = 'playing' }) {
   const playing = state !== 'paused';
@@ -40,11 +32,7 @@ function Player({ state = 'playing' }) {
   return (
     <MxScaffold node="player/screen" appBar={bar}>
       <Dots />
-      <MxCard node="player/card" style={{ flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', minHeight: 'var(--memox-size-4xl)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
-        <div style={{ width: 'var(--memox-size-md)', height: 'var(--memox-size-3xs)', background: 'var(--memox-divider)', borderRadius: 'var(--memox-radius-xs)' }} />
-        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>school</div>
-      </MxCard>
+      <PlayerCard />
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--memox-space-6)' }}>
         <MxIconButton icon="skip_previous" node="player/prev" />

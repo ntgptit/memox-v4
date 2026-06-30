@@ -1,0 +1,21 @@
+/* MemoX — Game-matching local: Tile (a match tile; tone tints the skin, matched hides it).
+   Owns its TONE → skin map. */
+(function () {
+
+const TONE = {
+  selected: { border: 'var(--memox-stroke-emphasis) solid var(--memox-primary)', background: 'var(--memox-primary-soft)', color: 'var(--memox-on-primary-soft)' },
+  correct: { border: 'var(--memox-stroke-emphasis) solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
+  wrong: { border: 'var(--memox-stroke-emphasis) solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
+};
+
+function Tile({ text, tone, node }) {
+  if (tone === 'matched') return <div style={{ minHeight: 'var(--memox-size-md)', visibility: 'hidden' }} />;
+  const skin = TONE[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
+  return (
+    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4) var(--memox-space-3)', minHeight: 'var(--memox-size-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', cursor: 'pointer' }}>{text}</div>
+  );
+}
+
+window.MemoXGameMatching = window.MemoXGameMatching || {};
+window.MemoXGameMatching.Tile = Tile;
+})();
