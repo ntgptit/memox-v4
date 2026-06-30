@@ -1,0 +1,20 @@
+/* MemoX — Game-recall local: TermCard (prompt term + audio/edit controls). */
+(function () {
+const NS = window.MemoXDesignSystem_2ffa54;
+const { MxCard, MxIconButton } = NS;
+
+function TermCard() {
+  return (
+    <MxCard node="game-recall/term" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-6)' }}>
+      <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>친구</div>
+      <div style={{ display: 'flex', gap: 'var(--memox-space-2)' }}>
+        <MxIconButton icon="volume_up" node="game-recall/audio" />
+        <MxIconButton icon="edit" size="sm" node="game-recall/edit" />
+      </div>
+    </MxCard>
+  );
+}
+
+window.MemoXGameRecall = window.MemoXGameRecall || {};
+window.MemoXGameRecall.TermCard = TermCard;
+})();

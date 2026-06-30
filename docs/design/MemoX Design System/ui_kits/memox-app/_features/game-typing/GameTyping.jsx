@@ -1,31 +1,11 @@
-/* MemoX — Game: Typing. States: waiting · typing · hint · correct · wrong · complete */
+/* MemoX — Game: Typing. States: waiting · typing · hint · correct · wrong · complete
+   Feature-local components: components/{CharCompare,InputBox}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxButton } = NS;
+const { CharCompare, InputBox } = window.MemoXGameTyping;
 
 const Note = window.Note;
-
-function CharCompare() {
-  const typed = ['친', '고'];
-  const correct = ['친', '구'];
-  return (
-    <div style={{ display: 'flex', gap: 'var(--memox-space-2)', justifyContent: 'center' }}>
-      {correct.map((c, i) => {
-        const ok = typed[i] === c;
-        return <span key={i} style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)', color: ok ? 'var(--memox-success)' : 'var(--memox-error)' }}>{typed[i] || '_'}</span>;
-      })}
-    </div>
-  );
-}
-
-function InputBox({ content, tone, placeholder }) {
-  const border = tone === 'correct' ? 'var(--memox-stroke-emphasis) solid var(--memox-success)' : tone === 'wrong' ? 'var(--memox-stroke-emphasis) solid var(--memox-error)' : 'var(--memox-stroke-hairline) solid var(--memox-divider)';
-  return (
-    <div data-mx-node="game-typing/input" style={{ border, borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', padding: 'var(--memox-space-4)', minHeight: 'var(--memox-size-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>
-      {content != null ? content : <span style={{ color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)', fontWeight: 'var(--memox-font-weight-semibold)' }}>{placeholder}</span>}
-    </div>
-  );
-}
 
 const INPUT = {
   waiting: { content: null, placeholder: 'Type the Korean word…' },

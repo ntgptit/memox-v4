@@ -1,7 +1,9 @@
-/* MemoX — Game: Multiple choice. States: waiting · correct · wrong · complete */
+/* MemoX — Game: Multiple choice. States: waiting · correct · wrong · complete
+   Feature-local component: components/PromptCard.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxButton } = NS;
+const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
+const { PromptCard } = window.MemoXGameMC;
 
 const CHOICES = ['school', 'hospital', 'park', 'restaurant'];
 
@@ -34,13 +36,7 @@ function GameMultipleChoice({ state = 'waiting' }) {
   return (
     <MxScaffold node="game-mc/screen" appBar={bar}>
       <window.ProgressBar value={40} height={8} node="game-mc/progress" />
-      <MxCard node="game-mc/prompt" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-6)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
-        <div style={{ display: 'flex', gap: 'var(--memox-space-2)' }}>
-          <MxIconButton icon="volume_up" node="game-mc/audio" />
-          <MxIconButton icon="edit" size="sm" node="game-mc/edit" />
-        </div>
-      </MxCard>
+      <PromptCard />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
         {CHOICES.map((c, i) => <Choice key={i} text={c} tone={toneFor(state, i)} node={'game-mc/choice-' + i} />)}
       </div>
