@@ -58,7 +58,7 @@ function Drawer({ state = 'open' }) {
             {ITEMS.map((it, i) => <DrawerItem key={i} icon={it.icon} label={it.label} node={'drawer/item-' + i} />)}
           </div>
         </div>
-        <div style={{ flex: 1, background: 'rgba(8,11,24,.5)' }} />
+        <div style={{ flex: 1, background: 'var(--memox-overlay)' }} />
       </div>
     );
   }

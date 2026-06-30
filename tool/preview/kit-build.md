@@ -75,6 +75,8 @@ chỉ cần đọc file này + spec màn tương ứng.
 - `Sheet({ title, children, node })`
 - `MenuItem({ icon, label, tone, danger, trailing, node, onClick })`
 - `Dialog({ icon, tone, title, text, actions, node })`
+- `Note({ icon, text, tone: accent|success|warning|error })` — callout tint mềm (icon + text)
+- `SectionLabel({ children })` — overline label nhỏ phía trên nhóm row/card
 
 ## Verify
 

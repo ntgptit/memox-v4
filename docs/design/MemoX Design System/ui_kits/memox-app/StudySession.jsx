@@ -16,10 +16,7 @@ const META = {
   'answer-save-error': { label: 'Stage 5 · Typing', pct: 84 },
 };
 
-function Note({ icon, text, tone }) {
-  const c = tone === 'success' ? ['var(--memox-success-soft)', 'var(--memox-on-success-soft)'] : ['var(--memox-warning-soft)', 'var(--memox-on-warning-soft)'];
-  return <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)' }}><span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{icon}</span>{text}</div>;
-}
+const Note = window.Note;
 
 function Tile({ text }) {
   return <div style={{ border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4) var(--memox-space-2)', textAlign: 'center', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>{text}</div>;

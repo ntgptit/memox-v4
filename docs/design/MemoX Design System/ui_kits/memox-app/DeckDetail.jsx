@@ -26,9 +26,7 @@ const STATUS = {
   mastered: { label: 'Mastered', tone: 'success' },
 };
 
-function SectionLabel({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-2) 0 0 var(--memox-space-1)' }}>{children}</div>;
-}
+const SectionLabel = window.SectionLabel;
 
 function CardRow({ term, meaning, status, hidden, node, onClick }) {
   const s = STATUS[status];

@@ -24,9 +24,7 @@ function Table({ rows }) {
   );
 }
 
-function SectionLabel({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
-}
+const SectionLabel = window.SectionLabel;
 
 function Import({ state = 'source' }) {
   const bar = <MxAppBar title="Import cards" node="import/appbar" leading={<MxIconButton icon="arrow_back" node="import/back" />} />;

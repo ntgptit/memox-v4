@@ -32,9 +32,7 @@ function Val({ v }) {
   );
 }
 
-function Label({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
-}
+const Label = window.SectionLabel;
 
 function Profile() {
   return (

@@ -10,9 +10,7 @@ const FORMATS = [
 ];
 const SEPS = ['Tab', 'Comma', 'Semicolon'];
 
-function SectionLabel({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
-}
+const SectionLabel = window.SectionLabel;
 
 function Export({ state = 'config' }) {
   const [incl, setIncl] = React.useState(true);

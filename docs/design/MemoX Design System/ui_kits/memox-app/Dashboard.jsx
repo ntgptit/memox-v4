@@ -25,19 +25,7 @@ function GoalRing({ pct }) {
   );
 }
 
-function Note({ icon, text, tone }) {
-  const map = {
-    success: ['var(--memox-success-soft)', 'var(--memox-on-success-soft)'],
-    warning: ['var(--memox-warning-soft)', 'var(--memox-on-warning-soft)'],
-    accent: ['var(--memox-primary-soft)', 'var(--memox-on-primary-soft)'],
-  };
-  const c = map[tone] || map.accent;
-  return (
-    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)' }}>
-      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{icon}</span>{text}
-    </div>
-  );
-}
+const Note = window.Note;
 
 function Dashboard({ state = 'loaded' }) {
   const nav = <MxBottomNav items={NAV} value="home" node="shell/bottom-nav" />;
