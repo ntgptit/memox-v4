@@ -1,7 +1,9 @@
-/* MemoX — Settings. States: loaded · group-expanded · value-picker. (No Premium in v1.) */
+/* MemoX — Settings. States: loaded · group-expanded · value-picker. (No Premium in v1.)
+   Feature-local components: components/{Profile,ValuePickerSheet}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxAvatar, MxSwitch } = NS;
+const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSwitch } = NS;
+const { Profile, ValuePickerSheet } = window.MemoXSettings;
 
 const NAV = [
   { id: 'home', label: 'Today', icon: 'today' },
@@ -33,18 +35,6 @@ function Val({ v }) {
 }
 
 const Label = window.SectionLabel;
-
-function Profile() {
-  return (
-    <MxCard node="settings/profile" style={{ flexDirection: 'row', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
-      <MxAvatar name="Linh Tran" size="lg" ring />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-md)' }}>Linh Tran</div>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>linh@memox.app</div>
-      </div>
-    </MxCard>
-  );
-}
 
 function Settings({ state = 'loaded' }) {
   const [notif, setNotif] = React.useState(true);
@@ -93,14 +83,7 @@ function Settings({ state = 'loaded' }) {
     return (
       <React.Fragment>
         {loaded}
-        <window.Scrim node="settings/picker-scrim">
-          <window.Sheet title="Words per round" node="settings/picker-sheet">
-            {['5', '10', '20'].map((v, i) => (
-              <window.MenuItem key={v} icon={i === 0 ? 'check' : 'circle'} label={v + ' words'} node={'settings/words-' + v}
-                trailing={i === 0 ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : null} />
-            ))}
-          </window.Sheet>
-        </window.Scrim>
+        <ValuePickerSheet />
       </React.Fragment>
     );
   }

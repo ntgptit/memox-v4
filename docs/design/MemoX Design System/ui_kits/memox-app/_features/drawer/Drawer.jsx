@@ -1,66 +1,13 @@
-/* MemoX — Drawer & language pairs. States: open · add-language · remove-language */
+/* MemoX — Drawer & language pairs. States: open · add-language · remove-language
+   Feature-local components: components/{DrawerItem,LangCard,DrawerPanel,RemoveLanguageDialog}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton } = NS;
-
-const ITEMS = [
-  { icon: 'add', label: 'Add language' },
-  { icon: 'delete', label: 'Remove language' },
-  { icon: 'upload_file', label: 'Import' },
-  { icon: 'download', label: 'Export' },
-  { icon: 'insights', label: 'Stats' },
-  { icon: 'palette', label: 'Theme' },
-  { icon: 'settings', label: 'Settings' },
-  { icon: 'help', label: 'FAQ' },
-  { icon: 'mail', label: 'Email us' },
-  { icon: 'cloud_sync', label: 'Sync (alpha)' },
-];
-
-function DrawerItem({ icon, label, node }) {
-  return (
-    <button data-mx-node={node} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', width: '100%', border: 'none', background: 'transparent', cursor: 'pointer', font: 'inherit', padding: 'var(--memox-space-3) var(--memox-space-2)', borderRadius: 'var(--memox-radius-control)', textAlign: 'left', color: 'inherit' }}>
-      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: 'var(--memox-text-secondary)' }}>{icon}</span>
-      <span style={{ flex: 1, fontWeight: 'var(--memox-font-weight-semibold)', fontSize: 'var(--memox-font-size-base)' }}>{label}</span>
-    </button>
-  );
-}
-
-function LangCard({ icon, name, sub, node }) {
-  return (
-    <MxCard interactive padding="sm" node={node}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
-        <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-lg)', color: 'var(--memox-text-secondary)' }}>{icon}</span>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)' }}>{name}</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>{sub}</div>
-        </div>
-        <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-tertiary)' }}>expand_more</span>
-      </div>
-    </MxCard>
-  );
-}
+const { LangCard, DrawerPanel, RemoveLanguageDialog } = window.MemoXDrawer;
 
 function Drawer({ state = 'open' }) {
   if (state === 'open') {
-    return (
-      <div data-mx-node="drawer/overlay" style={{ position: 'absolute', inset: 0, zIndex: 60, display: 'flex' }}>
-        <div data-mx-node="drawer/panel" style={{ width: '82%', maxWidth: 'var(--memox-size-5xl)', height: '100%', background: 'var(--memox-surface)', color: 'var(--memox-text)', display: 'flex', flexDirection: 'column', padding: 'var(--memox-space-5) var(--memox-space-4)', boxShadow: 'var(--memox-shadow-lg)' }}>
-          <div style={{ padding: '0 var(--memox-space-2) var(--memox-space-4)', borderBottom: 'var(--memox-stroke-hairline) solid var(--memox-divider)', marginBottom: 'var(--memox-space-2)' }}>
-            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>TODAY'S ACTIVITY</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', marginTop: 'var(--memox-space-2)', fontWeight: 'var(--memox-font-weight-bold)' }}>
-              <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-lg)', color: 'var(--memox-primary)' }}>schedule</span>
-              <span style={{ fontSize: 'var(--memox-font-size-md)' }}>12:45</span>
-              <span style={{ color: 'var(--memox-text-tertiary)' }}>·</span>
-              <span style={{ fontSize: 'var(--memox-font-size-md)' }}>24 words</span>
-            </div>
-          </div>
-          <div style={{ flex: 1, overflowY: 'auto' }}>
-            {ITEMS.map((it, i) => <DrawerItem key={i} icon={it.icon} label={it.label} node={'drawer/item-' + i} />)}
-          </div>
-        </div>
-        <div style={{ flex: 1, background: 'var(--memox-overlay)' }} />
-      </div>
-    );
+    return <DrawerPanel />;
   }
 
   if (state === 'add-language') {
@@ -87,15 +34,7 @@ function Drawer({ state = 'open' }) {
             trailing={<MxIconButton icon="delete" node="drawer/pair-1-del" />} />
         </MxCard>
       </MxScaffold>
-      <window.Scrim align="center" node="drawer/remove-scrim">
-        <window.Dialog icon="delete" tone="error" title="Remove 한국어 → English?"
-          text="All decks and cards for this pair will be deleted. This can't be undone."
-          node="drawer/remove-dialog"
-          actions={<React.Fragment>
-            <MxButton variant="ghost" block node="drawer/remove-cancel">Cancel</MxButton>
-            <MxButton variant="primary" danger block node="drawer/remove-ok">Remove</MxButton>
-          </React.Fragment>} />
-      </window.Scrim>
+      <RemoveLanguageDialog />
     </React.Fragment>
   );
 }
