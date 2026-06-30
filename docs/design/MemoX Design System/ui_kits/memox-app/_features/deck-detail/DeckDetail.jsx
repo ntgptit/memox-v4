@@ -150,15 +150,14 @@ function DeckDetail({ state = 'loaded' }) {
     return (
       <React.Fragment>
         {base}
-        <window.Scrim align="center" node="deck-detail/reset-scrim">
-          <window.Dialog icon="restart_alt" tone="warning" title="Reset progress?"
-            text="Reset all cards in this deck back to New? Their Leitner box and due dates will be cleared."
-            node="deck-detail/reset-dialog"
-            actions={<React.Fragment>
-              <MxButton variant="ghost" block node="deck-detail/reset-cancel">Cancel</MxButton>
-              <MxButton variant="primary" block node="deck-detail/reset-ok">Reset</MxButton>
-            </React.Fragment>} />
-        </window.Scrim>
+        <window.ConfirmDialog align="center" scrimNode="deck-detail/reset-scrim"
+          icon="restart_alt" tone="warning" title="Reset progress?"
+          text="Reset all cards in this deck back to New? Their Leitner box and due dates will be cleared."
+          dialogNode="deck-detail/reset-dialog"
+          actions={<React.Fragment>
+            <MxButton variant="ghost" block node="deck-detail/reset-cancel">Cancel</MxButton>
+            <MxButton variant="primary" block node="deck-detail/reset-ok">Reset</MxButton>
+          </React.Fragment>} />
       </React.Fragment>
     );
   }
@@ -176,15 +175,14 @@ function DeckDetail({ state = 'loaded' }) {
     return (
       <React.Fragment>
         {base}
-        <window.Scrim align="center" node="deck-detail/deck-delete-scrim">
-          <window.Dialog icon="delete" tone="error" title="Delete this deck?"
-            text="Deleting removes all sub-decks, cards and review state inside. This can't be undone."
-            node="deck-detail/deck-delete-dialog"
-            actions={<React.Fragment>
-              <MxButton variant="ghost" block node="deck-detail/deck-delete-cancel">Cancel</MxButton>
-              <MxButton variant="primary" danger block node="deck-detail/deck-delete-ok">Delete</MxButton>
-            </React.Fragment>} />
-        </window.Scrim>
+        <window.ConfirmDialog align="center" scrimNode="deck-detail/deck-delete-scrim"
+          icon="delete" tone="error" title="Delete this deck?"
+          text="Deleting removes all sub-decks, cards and review state inside. This can't be undone."
+          dialogNode="deck-detail/deck-delete-dialog"
+          actions={<React.Fragment>
+            <MxButton variant="ghost" block node="deck-detail/deck-delete-cancel">Cancel</MxButton>
+            <MxButton variant="primary" danger block node="deck-detail/deck-delete-ok">Delete</MxButton>
+          </React.Fragment>} />
       </React.Fragment>
     );
   }

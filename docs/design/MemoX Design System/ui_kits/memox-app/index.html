@@ -65,6 +65,8 @@
 <script src="../../_ds_bundle.js"></script>
 <!-- Shared helpers load before any screen entry (screens read them at render). -->
 <script type="text/babel" src="kit-helpers.jsx"></script>
+<!-- Shared app composites (_shared/, used by 2+ screens) load after helpers, before features. -->
+<script type="text/babel" src="_shared/ConfirmDialog.jsx"></script>
 <!-- Screen entries: one per feature folder (_features/<screen>/<ScreenName>.jsx). -->
 <script type="text/babel" src="_features/dashboard/components/TodaySummary.jsx"></script>
 <script type="text/babel" src="_features/dashboard/components/GoalCard.jsx"></script>

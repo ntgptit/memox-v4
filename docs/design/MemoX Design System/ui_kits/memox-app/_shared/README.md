@@ -4,6 +4,12 @@ Components here are **app-level composites** (assembled from `Mx*` primitives +
 helpers) that are reused by **two or more** screens. This folder is **not** a junk
 drawer:
 
+## Current members
+
+| Composite | Spec | Used by |
+| --- | --- | --- |
+| `ConfirmDialog` (`window.ConfirmDialog`) | `ConfirmDialog.md` | study-session, deck-detail, drawer (6 sites) |
+
 ## Admission rule (strict)
 
 - A component may live in `_shared/` **only when it is used by ≥ 2 screens.**

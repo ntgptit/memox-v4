@@ -5,7 +5,7 @@ UI kit for agents without strong image input: element trees with containment hie
 layout intent, repeated-item runs, bounding boxes, and `--memox-*` token-resolved styles.
 Pair with `../shots/*.png` when vision is available.
 
-UI-kit source sha256: `4214e680c9dbdb2329e44f583e65bd9895ac6b41d5f2c0b1df0f6215849dde18` (mirror of `specs/.source-hash`; covers
+UI-kit source sha256: `e4cb3644902630479a69f7eb3ebd6be81c4830cb6828cef0439f8321dea6a17d` (mirror of `specs/.source-hash`; covers
 index.html, screen `*.jsx`, `kit-helpers.jsx`, `components.css`, `styles.css`, `tokens/**`
 and `components/**`. The freshness check in `tool/verify/run.mjs` fails if any UI-kit
 source changed without re-export).
