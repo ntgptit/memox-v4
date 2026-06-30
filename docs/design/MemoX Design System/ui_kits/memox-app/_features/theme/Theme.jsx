@@ -1,7 +1,9 @@
-/* MemoX — Theme. States: light · dark · accent-size */
+/* MemoX — Theme. States: light · dark · accent-size
+   Feature-local components: components/{PreviewCard,AccentPicker}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxSegmentedControl, MxSectionHeader } = NS;
+const { MxScaffold, MxAppBar, MxIconButton, MxSegmentedControl, MxSectionHeader } = NS;
+const { PreviewCard, AccentPicker } = window.MemoXTheme;
 
 // Presentational palette samples for the accent picker.
 const SWATCHES = ['var(--memox-palette-indigo)', 'var(--memox-palette-violet)', 'var(--memox-palette-green)', 'var(--memox-palette-coral)', 'var(--memox-palette-amber)', 'var(--memox-palette-cyan)'];
@@ -17,14 +19,7 @@ function Theme({ state = 'light' }) {
 
   return (
     <MxScaffold node="theme/screen" appBar={bar}>
-      <MxCard node="theme/preview" style={{ gap: 'var(--memox-space-3)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>PREVIEW</div>
-        <div style={{ borderRadius: 'var(--memox-radius-control)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', padding: 'var(--memox-space-5)', textAlign: 'center' }}>
-          <div style={{ fontSize: termSize, fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
-          <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>school</div>
-          <div style={{ marginTop: 'var(--memox-space-4)', display: 'inline-block', padding: 'var(--memox-space-2) var(--memox-space-5)', borderRadius: 'var(--memox-radius-pill)', background: accentColor, color: 'var(--memox-on-primary)', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-sm)' }}>Study now</div>
-        </div>
-      </MxCard>
+      <PreviewCard termSize={termSize} accentColor={accentColor} />
 
       <div data-mx-node="theme/mode">
         <MxSectionHeader title="Color mode" node="theme/mode-head" />
@@ -34,15 +29,7 @@ function Theme({ state = 'light' }) {
 
       <div data-mx-node="theme/accent">
         <MxSectionHeader title="Accent color" node="theme/accent-head" />
-        <MxCard>
-          <div style={{ display: 'flex', gap: 'var(--memox-space-4)', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {SWATCHES.map((c, i) => (
-              <button key={c} data-mx-node={'theme/accent-' + i} style={{ width: 'var(--memox-size-sm)', height: 'var(--memox-size-sm)', borderRadius: '50%', background: c, border: 'none', boxShadow: i === accent ? '0 0 0 var(--memox-stroke-focus) ' + c : '0 0 0 var(--memox-stroke-hairline) var(--memox-divider)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {i === accent ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-on-primary)', fontSize: 'var(--memox-icon-size-md)' }}>check</span> : null}
-              </button>
-            ))}
-          </div>
-        </MxCard>
+        <AccentPicker swatches={SWATCHES} accent={accent} />
       </div>
 
       <div data-mx-node="theme/size">

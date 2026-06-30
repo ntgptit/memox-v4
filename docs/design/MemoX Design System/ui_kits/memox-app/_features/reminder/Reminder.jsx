@@ -1,19 +1,11 @@
-/* MemoX — Reminders. States: on · off · time-picker */
+/* MemoX — Reminders. States: on · off · time-picker
+   Feature-local components: components/{TimeCol,TimePickerSheet}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxSwitch, MxChip, MxButton } = NS;
+const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxSwitch, MxChip } = NS;
+const { TimePickerSheet } = window.MemoXReminder;
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-function TimeCol({ values, sel }) {
-  return (
-    <div style={{ flex: 1, maxHeight: 'var(--memox-size-2xl)', overflowY: 'auto', textAlign: 'center' }}>
-      {values.map((v) => (
-        <div key={v} style={{ padding: 'var(--memox-space-2) 0', fontSize: 'var(--memox-font-size-md)', fontWeight: v === sel ? 'var(--memox-font-weight-extrabold)' : 'var(--memox-font-weight-medium)', color: v === sel ? 'var(--memox-primary)' : 'var(--memox-text-tertiary)' }}>{v}</div>
-      ))}
-    </div>
-  );
-}
 
 function Reminder({ state = 'on' }) {
   const on = state !== 'off';
@@ -49,16 +41,7 @@ function Reminder({ state = 'on' }) {
     return (
       <React.Fragment>
         {base}
-        <window.Scrim node="reminder/picker-scrim">
-          <window.Sheet title="Pick reminder time" node="reminder/picker-sheet">
-            <div style={{ display: 'flex', gap: 'var(--memox-space-3)', alignItems: 'center', justifyContent: 'center' }}>
-              <TimeCol values={['11', '12', '13', '14', '15']} sel="13" />
-              <div style={{ fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>:</div>
-              <TimeCol values={['00', '15', '30', '45']} sel="00" />
-            </div>
-            <div style={{ marginTop: 'var(--memox-space-2)' }}><MxButton variant="primary" block node="reminder/picker-done">Done</MxButton></div>
-          </window.Sheet>
-        </window.Scrim>
+        <TimePickerSheet />
       </React.Fragment>
     );
   }

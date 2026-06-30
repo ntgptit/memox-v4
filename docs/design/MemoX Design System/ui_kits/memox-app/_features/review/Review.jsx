@@ -1,7 +1,9 @@
-/* MemoX — Review. States: browsing · editing · audio · end */
+/* MemoX — Review. States: browsing · editing · audio · end
+   Feature-local components: components/{MeaningCard,TermCard}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxButton } = NS;
+const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
+const { MeaningCard, TermCard } = window.MemoXReview;
 
 function Review({ state = 'browsing' }) {
   const editing = state === 'editing';
@@ -34,29 +36,9 @@ function Review({ state = 'browsing' }) {
         <span style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>7/20</span>
       </div>
 
-      <MxCard node="review/meaning" style={{ gap: 'var(--memox-space-3)' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>MEANING</span>
-          <MxIconButton icon={editing ? 'close' : 'edit'} size="sm" node="review/edit" />
-        </div>
-        {editing ? (
-          <React.Fragment>
-            <div style={{ border: 'var(--memox-stroke-emphasis) solid var(--memox-primary)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', fontSize: 'var(--memox-font-size-md)', fontWeight: 'var(--memox-font-weight-bold)' }}>school<span style={{ color: 'var(--memox-primary)' }}>|</span></div>
-            <div style={{ display: 'flex', gap: 'var(--memox-space-2)', justifyContent: 'flex-end' }}>
-              <MxButton variant="ghost" size="sm" node="review/edit-cancel">Cancel</MxButton>
-              <MxButton variant="primary" size="sm" node="review/edit-save">Save</MxButton>
-            </div>
-          </React.Fragment>
-        ) : (
-          <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>school</div>
-        )}
-      </MxCard>
+      <MeaningCard editing={editing} />
 
-      <MxCard node="review/term" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-6)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
-        <MxIconButton icon={state === 'audio' ? 'graphic_eq' : 'volume_up'} node="review/audio" />
-        {state === 'audio' ? <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-primary)', fontWeight: 'var(--memox-font-weight-semibold)' }}>Playing…</div> : null}
-      </MxCard>
+      <TermCard state={state} />
 
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'var(--memox-space-4)', color: 'var(--memox-text-tertiary)' }}>
         <MxIconButton icon="chevron_left" node="review/prev" />

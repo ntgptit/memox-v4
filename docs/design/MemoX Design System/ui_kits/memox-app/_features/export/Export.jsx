@@ -1,13 +1,10 @@
-/* MemoX — Export cards. States: config · exporting · done */
+/* MemoX — Export cards. States: config · exporting · done
+   Feature-local components: components/{ExportingCard,FormatList}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton, MxChip, MxSegmentedControl, MxSwitch } = NS;
+const { ExportingCard, FormatList } = window.MemoXExport;
 
-const FORMATS = [
-  { icon: 'description', name: 'CSV', sub: '.csv file', id: 'csv' },
-  { icon: 'table_chart', name: 'Excel', sub: '.xlsx file', id: 'xlsx' },
-  { icon: 'content_copy', name: 'Copy text', sub: 'To clipboard', id: 'copy' },
-];
 const SEPS = ['Tab', 'Comma', 'Semicolon'];
 
 const SectionLabel = window.SectionLabel;
@@ -19,11 +16,7 @@ function Export({ state = 'config' }) {
   if (state === 'exporting') {
     return (
       <MxScaffold node="export/screen" appBar={bar}>
-        <MxCard node="export/progress" style={{ alignItems: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7)' }}>
-          <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-3xl)', color: 'var(--memox-primary)' }}>sync</span>
-          <div style={{ fontWeight: 'var(--memox-font-weight-bold)' }}>Exporting…</div>
-          <div style={{ width: '100%' }}><window.ProgressBar value={70} height={8} node="export/bar" /></div>
-        </MxCard>
+        <ExportingCard />
       </MxScaffold>
     );
   }
@@ -48,12 +41,7 @@ function Export({ state = 'config' }) {
         segments={[{ value: 'deck', label: 'This deck' }, { value: 'subtree', label: 'Incl. sub-decks' }]} />
 
       <SectionLabel>FORMAT</SectionLabel>
-      <MxCard padding="sm">
-        {FORMATS.map((f, i) => (
-          <window.ListRow key={f.id} icon={f.icon} title={f.name} sub={f.sub} last={i === FORMATS.length - 1} node={'export/format-' + f.id}
-            trailing={<span className="material-symbols-rounded" style={{ color: i === 0 ? 'var(--memox-primary)' : 'var(--memox-text-tertiary)' }}>{i === 0 ? 'radio_button_checked' : 'radio_button_unchecked'}</span>} />
-        ))}
-      </MxCard>
+      <FormatList />
 
       <SectionLabel>SEPARATOR</SectionLabel>
       <div style={{ display: 'flex', gap: 'var(--memox-space-2)' }}>
