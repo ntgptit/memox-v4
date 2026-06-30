@@ -49,9 +49,9 @@ chỉ cần đọc file này + spec màn tương ứng.
 ### API component
 - `MxScaffold({ node, appBar, bottomNav, fab, flush, style, children })`
 - `MxAppBar({ title, eyebrow, large, leading, trailing, node })`
-- `MxCard({ variant: flat|muted|primary|primary-soft, interactive, padding: sm|lg, node, style, onClick })`
+- `MxCard({ variant: elevated|flat|muted|primary|primary-soft, interactive, padding: sm|md|lg, node, style, onClick })`
 - `MxButton({ variant: primary|secondary|outline|ghost|contrast, size: sm|lg, icon, trailingIcon, block, danger, disabled, node })`
-- `MxIconButton({ icon, size: sm, node })`
+- `MxIconButton({ icon, variant: plain|filled|primary, size: sm, node })`
 - `MxSearchDock({ placeholder, value, focused, trailing, node })`
 - `MxChip({ label, icon, selected, variant: accent|ghost, node })`
 - `MxFab({ icon, label, node })`
@@ -59,7 +59,7 @@ chỉ cần đọc file này + spec màn tương ứng.
 - `MxBadge({ tone: success|warning|error|undefined, soft })`
 - `MxSwitch({ checked, onChange, node })`
 - `MxSegmentedControl({ value, onChange, block, segments: [{value,label}], node })`
-- `MxAvatar({ name, size: sm|lg, ring })`
+- `MxAvatar({ name, size: sm|md|lg, ring })`
 - `MxSectionHeader({ title, caption, action, node })`
 - `MxBottomNav({ items: [{id,label,icon}], value, node })`
 - `tone`: `accent` | `success` | `warning` | `error` | null

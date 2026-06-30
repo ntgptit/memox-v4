@@ -24,13 +24,13 @@
 // Usage:  cd tool/ui_kit_shots && npm install && npm run export:specs
 // Requires: Google Chrome + network (kit loads React/Babel/Lucide from unpkg).
 
-import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, writeFileSync, readFileSync, readdirSync, unlinkSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer-core';
 import { startKitServer } from './serve_kit.mjs';
 import { PATHS } from '../_config.mjs';
+import { computeUiKitSourceHash } from './source_hash.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '..', '..');
@@ -630,7 +630,7 @@ async function main() {
     if (f.endsWith('.md')) unlinkSync(join(outDir, f));
   }
 
-  const sourceHash = createHash('sha256').update(readFileSync(kitHtml)).digest('hex');
+  const sourceHash = computeUiKitSourceHash();
 
   // classname -> Mx component map (grounded in component-visual-contract.md).
   const compMapPath = join(here, 'component-map.json');
@@ -741,8 +741,10 @@ async function main() {
     'layout intent, repeated-item runs, bounding boxes, and `--memox-*` token-resolved styles.',
     'Pair with `../shots/*.png` when vision is available.',
     '',
-    `Source \`index.html\` sha256: \`${sourceHash}\` (mirror of \`specs/.source-hash\`; the`,
-    'freshness check in `tool/verify/run.mjs` fails if `index.html` changed without re-export).',
+    `UI-kit source sha256: \`${sourceHash}\` (mirror of \`specs/.source-hash\`; covers`,
+    'index.html, screen `*.jsx`, `kit-helpers.jsx`, `components.css`, `styles.css`, `tokens/**`',
+    'and `components/**`. The freshness check in `tool/verify/run.mjs` fails if any UI-kit',
+    'source changed without re-export).',
     '',
     '| ID | Screen | Spec file | States |',
     '| --- | --- | --- | --- |',
