@@ -5,7 +5,7 @@ Cross-screen UI rules that every screen inherits. Screen-specific layout lives i
 
 ## Tokens & components
 
-- Use design tokens for all color/spacing/radius/typography — no raw values in features (hard rule).
+- Use design tokens for all color/spacing/radius/typography/motion — no raw values in features (hard rule).
 - Reach for an existing shared component before building one.
 - Tokens & components inventory: `docs/design/design-language.md`.
 
