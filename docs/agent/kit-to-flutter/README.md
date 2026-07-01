@@ -36,7 +36,7 @@ Xếp theo thứ tự chạy đề xuất: **gate mạnh/sạch trước**.
 | [x] | `game-recall.md` | **A** | 7 (2 MxCard) | done — term/meaning Card/Text→MxCard; before-reveal/revealed gated |
 | [x] | `theme.md` | **A** | 6 (1 MxCard) | done — preview identity+flat-via-ledger; 3 states non-node-distinct |
 | [x] | `deck-detail.md` | B | 10 | done — loaded/empty gated; error+overlays=gap; add-in-empty→ledger |
-| [ ] | `statistics.md` | B | 7 | 7 divergence (content); streak MxCards chưa key |
+| [x] | `statistics.md` | B | 7 | done — 5 heads gated (loaded/insufficient/loading); 6 divergence→ledger |
 | [ ] | `settings.md` | B | ~10 | key các group row; group-expanded/value-picker gap |
 | [ ] | `flashcard-editor.md` | B | 5 | form; +keyboardType note; 4 gap states |
 | [ ] | `reminder.md` | B | 2 | time=Container, time-edit=ListTile → ledger |

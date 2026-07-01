@@ -128,6 +128,60 @@
       "source": "docs/business/engagement/dashboard-engagement.md"
     },
     {
+      "screen": "statistics",
+      "node": "appbar",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit's appbar node is the large 'Stats' title. The FE keys statistics/appbar on the header-controls region (the Padding wrapping the current-pair ↔ all-app MxSegmentedControl); the large title is owned by the shell/route, so the appbar key is a proxy for the scope-control header. Intentional, not changed in the parity pass.",
+      "source": "lib/presentation/shared/navigation/app_shell.dart"
+    },
+    {
+      "screen": "statistics",
+      "node": "scope",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit keys the scope segmented control as statistics/scope. The FE renders the MxSegmentedControl (This pair / All) but does not key it with an mx-node literal (and scope is not a node in statistics.gen.json), so its identity is not rolled out; keying it would orphan against the contract.",
+      "source": "docs/business/statistics/statistics.md"
+    },
+    {
+      "screen": "statistics",
+      "node": "weekly-head",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "content",
+      "reason": "The kit's weekly section is 'Time per week (min/day)'. The FE maps this section to a due-forecast bar chart (statsForecastTitle, summary.dueForecast) because there is no time-per-week source in the domain; the head node is the same, the title/content bind to the FE truth, not the kit mock.",
+      "source": "docs/business/statistics/statistics.md"
+    },
+    {
+      "screen": "statistics",
+      "node": "heatmap-head",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "content",
+      "reason": "The kit's heatmap is a 'Study calendar (last 14 weeks)'. The FE renders an activity heatmap over a 12-week window (statsHeatmapTitle); the window size and wording differ — the FE is the source of truth.",
+      "source": "docs/business/statistics/statistics.md"
+    },
+    {
+      "screen": "statistics",
+      "node": "overview",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit's overview shows total/mastered/due keyed as ov-0/ov-1/ov-2. The FE overview card shows pairs/decks/words (+ a mastered progress bar) and does not key the three stat cells (only overview-head is keyed), so ov-0/1/2 have no FE counterpart and the metric binding differs.",
+      "source": "docs/business/statistics/statistics.md"
+    },
+    {
+      "screen": "statistics",
+      "node": "accuracy",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit's accuracy block is a donut ('88% / accuracy'). The FE renders a linear progress bar + a percent + statsAccuracyDetail (correct/total), and only when summary.hasReviews. Only accuracy-head is keyed; the body content differs from the kit mock.",
+      "source": "docs/business/statistics/statistics.md"
+    },
+    {
       "screen": "settings",
       "node": "profile",
       "kind": "*",
