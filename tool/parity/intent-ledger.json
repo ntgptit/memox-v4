@@ -883,6 +883,114 @@
       "exceptionKind": "behavior",
       "reason": "the kit lists grid tiles as literal nodes (game-matching/left-0..4, right-0..4, Tile divs). The FE renders them via a dynamic loop of OutlinedButton (unselected) / FilledButton (selected) keyed Key('matchLeft-<id>')/Key('matchRight-<id>') by runtime cardId, NOT literal mx-node ids — so gen_parity_contract.mjs never captures them and they are not gate-able. Feedback has no separate node either: a correct pair removes its tiles (pending shrinks), a wrong pair keeps them (D-015 markWrong(requeue:false)). Documentation-only (no gen node); the tile set is intact, only the key form and selected-widget differ.",
       "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "drawer",
+      "node": "add-screen",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/add-screen to MxScaffold (the kit models the add-language flow as its own screen). The FE factors the scaffold into the shared AppDrawer (a Scaffold.drawer component, not a route): add-screen is a ListView keyed mx-node:drawer/add-screen inside the Drawer, swapped in by _DrawerView.addLanguage — no MxScaffold wrapper. Composition-gated (present/absent), MxScaffold variant not asserted.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-screen",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/remove-screen to MxScaffold. The FE renders it as a ListView keyed mx-node:drawer/remove-screen inside the shared AppDrawer (_DrawerView.removeLanguage), not a wrapping MxScaffold — same shared-Drawer factoring as add-screen.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "overlay",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps mx-node:drawer/overlay + drawer/panel to the kit open-menu scrim + sliding panel, with menu items item-0..9. The FE menu is a Material Drawer (Scaffold.drawer provides its own scrim/panel) whose items are ListTiles keyed by domain (Key(drawerAddLanguage)/Key(drawerRemoveLanguage) + dynamic pairTile-<id> + unkeyed coming-soon tiles), so there is no literal mx-node:drawer/overlay|panel|item-* — the open state has 0 literal mx-node keys.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "panel",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "see drawer/overlay — the kit open-menu panel has no FE literal mx-node counterpart (Material Drawer + domain-keyed ListTiles).",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-cancel",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps mx-node:drawer/remove-cancel to a MxButton (ghost) inline in the kit remove body. The FE renders it as a Material AlertDialog TextButton (keyed mx-node:drawer/remove-cancel) opened by tapping a pair delete icon — so it is NOT in the remove-language body node-set (option A: a dialog reached by tap), and it is a Material widget, not MxButton.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-ok",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps mx-node:drawer/remove-ok to a MxButton (primary). The FE renders it as a Material AlertDialog FilledButton (keyed mx-node:drawer/remove-ok) in the same delete-confirm dialog as remove-cancel — reached by tap, not in the remove-language body node-set.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "add-appbar",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/add-appbar to MxAppBar (the kit add-language screen has its own app bar). The shared AppDrawer has no MxAppBar — the add view uses a lightweight _viewHeader Row (title + back), so there is no mx-node:drawer/add-appbar. Structural, intended-never-keyed.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-appbar",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/remove-appbar to MxAppBar. The FE remove view uses the same _viewHeader Row, no MxAppBar — no mx-node:drawer/remove-appbar node.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "add-back",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps mx-node:drawer/add-back to the kit add-screen back MxIconButton. The FE _viewHeader back button is keyed Key(addBack) (a domain key, returns _view to menu), not a literal mx-node:drawer/add-back. Intended-never-keyed.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-back",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps mx-node:drawer/remove-back to the kit remove-screen back MxIconButton. The FE _viewHeader back is keyed Key(removeBack), not a literal mx-node:drawer/remove-back.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "learn-lang",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/learn-lang to a LangCard (the kit picks the learning language via a card). The FE add view uses a Material DropdownButton keyed Key(addLanguageSource), not a LangCard node — so there is no mx-node:drawer/learn-lang.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "native-lang",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/native-lang to a LangCard. The FE uses a Material DropdownButton keyed Key(addLanguageTarget), not a LangCard — no mx-node:drawer/native-lang node.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
     }
   ],
   "coverageExempt": [],
@@ -1129,16 +1237,6 @@
       "no-results",
       "search-clear",
       "sort"
-    ],
-    "drawer": [
-      "add-appbar",
-      "add-back",
-      "learn-lang",
-      "native-lang",
-      "overlay",
-      "panel",
-      "remove-appbar",
-      "remove-back"
     ],
     "export": [
       "back",
