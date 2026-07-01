@@ -802,6 +802,15 @@
       "exceptionKind": "component",
       "reason": "gen maps accept to MxButton (outline); the FE typing game uses a Material FilledButton with the correct key. Identity is keyed and composition-gated; the MxButton variant map is deferred.",
       "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "check",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps check to MxButton (primary); the FE typing game uses a Material FilledButton with the correct key. Identity is keyed and composition-gated; the MxButton variant map is deferred (same class as retry/accept/meaning — see game-modes.md §6 parity note). check also has a styleExempt for its border radius.",
+      "source": "docs/business/game/game-modes.md"
     }
   ],
   "coverageExempt": [],

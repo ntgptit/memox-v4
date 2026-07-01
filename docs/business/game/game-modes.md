@@ -65,6 +65,17 @@ phạm vi lấy từ; quy tắc học-lại-khi-sai trong ván.
 | Nhớ lại | Hiện term, bấm "Hiển thị" lộ nghĩa, rồi tự chấm "Đã quên"/"Nhớ được". | term → nghĩa |
 | Điền | Hiện nghĩa, gõ lại term; có "Kiểm tra"/"Trợ giúp", chấp nhận dung sai. | nghĩa → term |
 
+**Ghi chú giao diện (parity — divergence có chủ đích):** bốn game widget dùng chung một
+tầng render bằng **widget Material thô** (`Card`, `OutlinedButton`, `FilledButton`) thay vì
+các primitive của design system (`MxCard`, `MxButton`). Ví dụ ở game Điền: ô nghĩa là
+`Card` (không `MxCard`), các nút Trợ giúp/Kiểm tra/Thử lại/Chấp nhận là `OutlinedButton`/
+`FilledButton` (không `MxButton`) — tất cả vẫn giữ đúng `mx-node:` identity key. Việc chuyển
+tầng game sang `MxCard`/`MxButton` (kit-fit) là **task riêng** đụng cả bốn game, **hoãn
+post-v1**; đến khi đó parity chỉ gate theo composition (node present/absent), KHÔNG assert
+`MxCard` variant hay `MxButton` variant. Khác biệt FE↔kit này được ghi tại
+`tool/parity/intent-ledger.json` (`game-typing/meaning`, `/check`, `/retry`, `/accept` =
+`exceptionKind: component`).
+
 ## 7. Quy tắc nghiệp vụ (Business rules)
 
 | Mã | Quy tắc | Lý do | Truy vết |

@@ -100,8 +100,9 @@ void main() {
     ),
   );
 
-  // Provider load is async and the typing TextField autofocuses, so pump a fixed
-  // budget of frames rather than pumpAndSettle (the review-parity pattern).
+  // Provider load is async and the typing TextField autofocuses — the focused
+  // field keeps an ongoing cursor-blink animation, so pumpAndSettle would time
+  // out. Pump a fixed budget of frames instead (the review-parity pattern).
   Future<void> drain(WidgetTester tester) async {
     for (var i = 0; i < 6; i++) {
       await tester.pump(const Duration(milliseconds: 50));
