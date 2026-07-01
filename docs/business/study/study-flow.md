@@ -74,6 +74,13 @@ thuật toán lập lịch (xem `docs/business/srs/srs-review.md`); học trộn
 ### UC-4: Luyện tập (Xem lại / Trò chơi / Trình phát)
 - **Luồng chính:** người học chọn một trong ba; hệ thống chạy trên cùng tập thẻ nhưng
   **không** thay đổi lịch ôn và **không** cộng hoạt động.
+- **Trình phát — lựa chọn điều khiển (UI ruling):** cụm 4 nút transport
+  (trước / phát-tạm dừng / sau / đọc) là một hàng nút biểu tượng đồng nhất
+  (`MxIconButton`) thay vì tách nút phát-tạm dừng thành nút hành động nổi (FAB) như
+  mock; nút phát-tạm dừng dùng biến thể `primary`. Ở trạng thái kết thúc, cặp nút
+  **Replay (outline)** + **Đóng (default)**: Replay để nhấn phụ (hành động khởi động
+  lại tùy chọn), không nhấn mạnh bằng `primary`. Đây là chệch có chủ đích ghi ở
+  `tool/parity/intent-ledger.json` (player/playpause, player/replay). ↔ D-014
 
 ## 6. Quy tắc nghiệp vụ (Business rules)
 

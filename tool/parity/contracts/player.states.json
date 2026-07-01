@@ -1,0 +1,10 @@
+{
+  "$curated": "Per-state BODY node set for player — the keyed body nodes the FE renders in each state (appbar / screen / prev / playpause / next chrome excluded, matching review.states.json). State ids match the kit SCREENS registry (playing / paused / speed / end) — NOT review's `browsing`. Curated from player.states.skeleton.json (gen_states.mjs). Cross-checked by player_parity_test.dart, which drives the states it can reach (playing = 1-card queue, end = 0-card queue) and asserts each MxCard is present/absent per this set. `paused` and `speed` are documented-not-driven coverage gaps: `paused` renders the SAME node-set as `playing` (_playing only swaps the play/pause icon, not identity), and the FE has no speed control (player/speed / player/speed-control absent) so `speed` is unreachable. Template A loops only MxCard nodes (player/card), so it effectively gates player/card present in playing and absent in end; replay/close (non-MxCard) are listed here for completeness but not asserted by Template A (per-state coverage note).",
+  "screen": "player",
+  "states": {
+    "playing": ["mx-node:player/card"],
+    "paused": ["mx-node:player/card"],
+    "speed": ["mx-node:player/card"],
+    "end": ["mx-node:player/replay", "mx-node:player/close"]
+  }
+}
