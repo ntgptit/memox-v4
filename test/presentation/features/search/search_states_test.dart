@@ -102,9 +102,10 @@ void main() {
         find.byKey(const ValueKey('mx-node:search/dock')),
         entry.value,
       );
-      for (var i = 0; i < 5; i++) {
-        await tester.pump(const Duration(milliseconds: 50));
-      }
+      // search() fires an async chain (languagePair future + a Drift query);
+      // settle it fully rather than budgeting a fixed pump — the FE has no
+      // lingering loading spinner on this path (matches search_screen_test).
+      await tester.pumpAndSettle();
 
       final allowed = states[state]!;
       for (final key in universe) {
