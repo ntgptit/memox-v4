@@ -62,10 +62,7 @@ function Import({ state = 'source' }) {
   return (
     <MxScaffold node="import/screen" appBar={bar}>
       {state === 'dup-warning' ? (
-        <div data-mx-node="import/dup-warning" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
-          <span className="material-symbols-rounded">warning</span>
-          <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>8 cards already exist — import anyway?</span>
-        </div>
+        <window.ActionCallout node="import/dup-warning" icon="warning" text="8 cards already exist — import anyway?" />
       ) : null}
       <SectionLabel>PREVIEW · 124 CARDS</SectionLabel>
       <Table rows={ROWS} />

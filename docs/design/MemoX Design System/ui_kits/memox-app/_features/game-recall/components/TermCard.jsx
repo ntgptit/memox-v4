@@ -1,4 +1,7 @@
-/* MemoX — Game-recall local: TermCard (prompt term + audio/edit controls). */
+/* MemoX — Game-recall local: TermCard (prompt term + audio/edit controls).
+   NOTE: kept inline (not promoted to a shared card): its MxCard/MxIconButton carry
+   literal node ids the static parity generator must see. Hoisting them behind a
+   shared component with dynamic node props would drop them from the contract. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxCard, MxIconButton } = NS;

@@ -19,11 +19,8 @@ function GamePicker({ state = 'default' }) {
   const base = (
     <MxScaffold node="game-picker/screen" appBar={bar}>
       {notEnough ? (
-        <div data-mx-node="game-picker/not-enough" style={{ background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
-          <span className="material-symbols-rounded">info</span>
-          <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>This deck needs at least 4 words to play.</span>
-          <MxButton variant="primary" size="sm" node="game-picker/add-cards">Add words</MxButton>
-        </div>
+        <window.ActionCallout node="game-picker/not-enough" icon="info" text="This deck needs at least 4 words to play."
+          action={<MxButton variant="primary" size="sm" node="game-picker/add-cards">Add words</MxButton>} />
       ) : null}
 
       <ScopeCard />

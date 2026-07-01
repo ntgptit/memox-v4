@@ -9,6 +9,8 @@ drawer:
 | Composite | Spec | Used by |
 | --- | --- | --- |
 | `ConfirmDialog` (`window.ConfirmDialog`) | `ConfirmDialog.md` | study-session, deck-detail, drawer (6 sites) |
+| `StatusCardRow` (`window.StatusCardRow`) | `StatusCardRow.md` | deck-detail, search |
+| `ActionCallout` (`window.ActionCallout`) | `ActionCallout.md` | import, game-picker |
 
 ## Admission rule (strict)
 
