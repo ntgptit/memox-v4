@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/game/round.dart';
+import 'package:memox_v4/presentation/shared/widgets/display/mx_text.dart';
+import 'package:memox_v4/presentation/shared/widgets/surfaces/mx_card.dart';
 
 /// Recall: show a term, reveal the meaning, then self-grade. "Forgot" re-queues
 /// the card (D-015).
@@ -21,28 +23,29 @@ class _RecallGameState extends State<RecallGame> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final current = widget.round.current;
     if (current == null) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.all(MxSpacing.space5),
       child: Column(
         children: <Widget>[
-          Card(
+          MxCard(
             key: const ValueKey('mx-node:game-recall/term'),
-            child: Padding(
-              padding: const EdgeInsets.all(MxSpacing.space6),
-              child: Center(
-                child: Text(current.term, style: theme.textTheme.displayLarge),
+            padding: MxCardPadding.lg,
+            child: Center(
+              child: MxText(
+                current.term,
+                role: MxTextRole.displayLarge,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
           const SizedBox(height: MxSpacing.space4),
           if (_revealed)
-            Text(
-              current.meaning,
+            MxCard(
               key: const ValueKey('mx-node:game-recall/meaning'),
-              style: theme.textTheme.bodyLarge,
+              padding: MxCardPadding.lg,
+              child: MxText(current.meaning, role: MxTextRole.bodyLarge),
             ),
           const Spacer(),
           if (!_revealed)

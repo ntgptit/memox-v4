@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/domain/models/game_card.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/game/round.dart';
@@ -29,6 +30,7 @@ const _round = RoundState(
 );
 
 Widget _host(Widget child) => MaterialApp(
+  theme: AppTheme.light(),
   localizationsDelegates: AppLocalizations.localizationsDelegates,
   supportedLocales: AppLocalizations.supportedLocales,
   home: Scaffold(body: child),

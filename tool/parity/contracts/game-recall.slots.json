@@ -1,0 +1,12 @@
+{
+  "$curated": "Slot bindings for game-recall — the FE-side truth for the two keyed MxCard nodes (game-recall/term, game-recall/meaning) in game-recall.gen.json, cross-checked live by test/presentation/features/game/game_recall_parity_test.dart. `role` is the MxTextRole the FE renders; `bind` is the domain value (card data — NOT l10n, user content). Curated from game-recall.slots.skeleton.json: `term` kept as proposed (displayLarge). `meaning` = bodyLarge — the FE truth (recall_game.dart), NOT the skeleton's before-reveal hint 'Recall the meaning, then tap Show' (that is kit MOCK COPY with no l10n key; the meaning card only renders after reveal and shows the card's actual meaning). Non-MxCard skeleton node (reveal) dropped — Template A loops only MxCard. State scope: a 1-card recall round; meaning renders only when revealed.",
+  "screen": "game-recall",
+  "slots": {
+    "mx-node:game-recall/term": [
+      { "name": "term", "role": "displayLarge", "bind": "card.term" }
+    ],
+    "mx-node:game-recall/meaning": [
+      { "name": "meaning", "role": "bodyLarge", "bind": "card.meaning" }
+    ]
+  }
+}
