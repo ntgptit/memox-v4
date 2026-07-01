@@ -658,15 +658,6 @@
       "exceptionKind": "component",
       "reason": "kit models audio-play as MxIconButton (icon-only volume_up); the FE uses a labelled outline MxButton (Speak) for a clearer affordance in the form, consistent with the design-system button variants. Composition gate only asserts present/absent by key, not component, so this does not fail the gate.",
       "source": "docs/business/flashcard/flashcard-management.md"
-    },
-    {
-      "screen": "flashcard-editor",
-      "node": "term",
-      "kind": "*",
-      "verdict": "exception",
-      "exceptionKind": "behavior",
-      "reason": "The kit field-block is identity-only (its flat DOM declares no keyboardType/IME). The FE Term field is a Material TextField for source-language entry (e.g. Korean) — it SHOULD declare keyboardType (Term=TextInputType.text with OS-locale IME per _sourceLang(); Meaning=TextInputType.multiline). Kept as a documented note (kit has no IME to parity against); the FE is source of truth for IME.",
-      "source": "docs/business/flashcard/flashcard-management.md"
     }
   ],
   "coverageExempt": [],
@@ -874,6 +865,13 @@
       "field": "color",
       "reason": "The kit's first preview text run is a muted caption (text-tertiary). The FE preview card leads with a normal-weight title (MxText.title, text colour) followed by body/sample controls, so the first text run is `text` not `text-tertiary`.",
       "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "flashcard-editor",
+      "node": "dup-add",
+      "field": "*",
+      "reason": "The kit soft-duplicate banner primary CTA is MxButton primary; the FE renders dup-add as a ghost MxButton (low-emphasis inline banner action next to dup-view), so its fill/emphasis differ.",
+      "source": "docs/business/flashcard/flashcard-management.md"
     }
   ],
   "$identityRolloutDoc": "Kit nodes present in contracts/<screen>.gen.json but NOT yet keyed with ValueKey(mx-node:...) in lib/** — the identity-rollout backlog (fe_node_usage exempts these from MISSING). Distinct from `exceptions` (intentional FE↔kit divergences): these are simply not-keyed-yet, or a structural difference noted in the screen contract. Ratchet target: move nodes OUT of here into real FE keys over time. Regenerate after keying: remove the keyed segment.",
@@ -926,7 +924,8 @@
       "cancel",
       "hidden",
       "meaning",
-      "meaning-2"
+      "meaning-2",
+      "term"
     ],
     "game-matching": [
       "back",
