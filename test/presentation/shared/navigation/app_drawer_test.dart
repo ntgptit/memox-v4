@@ -115,7 +115,9 @@ void main() {
     testWidgets('state "$state": drawer renders exactly the kit node set', (
       tester,
     ) async {
-      await _seedPair(db); // a pair is needed for the remove action to appear
+      // a pair is needed so the remove driver finds drawerRemoveLanguage;
+      // harmless for the open/add states (clean DB per setUp).
+      await _seedPair(db);
       await tester.pumpWidget(_host(db));
       await _openDrawer(tester);
       await entry.value(tester);

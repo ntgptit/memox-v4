@@ -339,8 +339,8 @@ node tool/parity/fe_node_usage.mjs --check    # exit 1 nếu có missing/orphan 
 node tool/parity/fe_node_usage.mjs --json
 ```
 
-Hiện **326 kit node · 128 keyed · 0 missing (blocking) · 0 orphan** — 103 documented
-`exceptions` + **111 `identityRollout`** (chưa key, backlog) đều `exempt`. `--check` ĐÃ
+Hiện **326 kit node · 128 keyed · 0 missing (blocking) · 0 orphan** — 109 documented
+`exceptions` + **105 `identityRollout`** (chưa key, backlog) đều `exempt`. `--check` ĐÃ
 wired vào `verify` (step `parity_fe_keys`) và xanh: contract đã đủ node, mọi MISSING còn
 lại đều nằm trong `identityRollout`/`exceptions`. Ratchet: key dần → bỏ khỏi
 `identityRollout` cho tới rỗng.

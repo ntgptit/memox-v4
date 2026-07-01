@@ -937,6 +937,60 @@
       "exceptionKind": "behavior",
       "reason": "gen maps mx-node:drawer/remove-ok to a MxButton (primary). The FE renders it as a Material AlertDialog FilledButton (keyed mx-node:drawer/remove-ok) in the same delete-confirm dialog as remove-cancel — reached by tap, not in the remove-language body node-set.",
       "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "add-appbar",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/add-appbar to MxAppBar (the kit add-language screen has its own app bar). The shared AppDrawer has no MxAppBar — the add view uses a lightweight _viewHeader Row (title + back), so there is no mx-node:drawer/add-appbar. Structural, intended-never-keyed.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-appbar",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/remove-appbar to MxAppBar. The FE remove view uses the same _viewHeader Row, no MxAppBar — no mx-node:drawer/remove-appbar node.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "add-back",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps mx-node:drawer/add-back to the kit add-screen back MxIconButton. The FE _viewHeader back button is keyed Key(addBack) (a domain key, returns _view to menu), not a literal mx-node:drawer/add-back. Intended-never-keyed.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-back",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps mx-node:drawer/remove-back to the kit remove-screen back MxIconButton. The FE _viewHeader back is keyed Key(removeBack), not a literal mx-node:drawer/remove-back.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "learn-lang",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/learn-lang to a LangCard (the kit picks the learning language via a card). The FE add view uses a Material DropdownButton keyed Key(addLanguageSource), not a LangCard node — so there is no mx-node:drawer/learn-lang.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
+    },
+    {
+      "screen": "drawer",
+      "node": "native-lang",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:drawer/native-lang to a LangCard. The FE uses a Material DropdownButton keyed Key(addLanguageTarget), not a LangCard — no mx-node:drawer/native-lang node.",
+      "source": "lib/presentation/shared/navigation/app_drawer.dart"
     }
   ],
   "coverageExempt": [],
@@ -1183,14 +1237,6 @@
       "no-results",
       "search-clear",
       "sort"
-    ],
-    "drawer": [
-      "add-appbar",
-      "add-back",
-      "learn-lang",
-      "native-lang",
-      "remove-appbar",
-      "remove-back"
     ],
     "export": [
       "back",
