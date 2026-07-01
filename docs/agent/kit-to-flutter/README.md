@@ -49,7 +49,7 @@ Xếp theo thứ tự chạy đề xuất: **gate mạnh/sạch trước**.
 | [x] | `game-picker.md` | B | 2 | ⚠ DRIFT? not-enough tại count==0 vs kit "<4 words" |
 | [x] | `game-matching.md` | B | ~1 | gate mỏng nhất (shared GameScreen scaffold) |
 | [x] | `drawer.md` | B | 5 | shared component (Scaffold.drawer), không phải route |
-| [ ] | `study-result.md` | B | 3 | goal MxCard chưa key; 6/7 states là gap |
+| [x] | `study-result.md` | B | 3 | goal MxCard chưa key; 6/7 states là gap |
 | [~] | `account-sync.md` | — | — | **DEFERRED / BLOCKED** — W10 alpha + `google_sign_in` (cần duyệt dependency) |
 
 ⚠ = prompt gắn cờ khả năng DRIFT (business-rule / structural) → **DỪNG** và xác nhận với người.
