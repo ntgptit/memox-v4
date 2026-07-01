@@ -676,6 +676,15 @@
       "exceptionKind": "structure",
       "reason": "kit models reminder/time-edit as a standalone MxIconButton (schedule icon); the FE uses a full ListTile row (tap-to-edit opens showTimePicker) so the whole row is the edit target, not a separate icon button.",
       "source": "docs/business/settings/settings.md"
+    },
+    {
+      "screen": "export",
+      "node": "progress",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "kit models export/progress as an MxCard (elevated) transient exporting card (spinner + bar). The FE has no transient exporting UI (export() runs synchronously) and keys export/progress on a bare Text that shows the RESULT message (exportCopied / exportSavedTo(path) / transferError) after the export completes. This is why the parity test is Template B (present/absent), not Template A (a widget<MxCard> cast on this Text would crash).",
+      "source": "docs/business/import-export/import-export.md"
     }
   ],
   "coverageExempt": [],
