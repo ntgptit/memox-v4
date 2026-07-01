@@ -838,6 +838,42 @@
       "exceptionKind": "component",
       "reason": "gen maps mx-node:game-mc/options to MxIconButton (the app-bar 3-dot options menu, present in every kit state incl. complete). The FE has no such menu (game actions are minimal) and instead RE-USES this key on the Column wrapping the four answer OutlinedButtons (multiple_choice_game.dart:39) — a structurally different, in-game-only element. The Column carries the key purely as a composition anchor; the MxIconButton identity/variant is not asserted. Re-keying the answer group to its own node id (and making the absent 3-dot menu a plain behavior exception like game-typing/options) is a deferred kit-fit cleanup, not this composition-parity pass.",
       "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-picker",
+      "node": "not-enough",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps game-picker/not-enough to an ActionCallout (warning-soft banner shown when the deck has fewer than 4 words). The FE has no such banner: it renders an empty-state Center(Column) icon+text+add-cards CTA, and it triggers ONLY at count==0 (an empty deck) — a 1..3-card deck still opens the picker. The <4-words threshold is a kit design detail; docs/business/game/game-modes.md sets no minimum-words rule (D-008 = 5 per round, D-013 = picker; neither mandates a minimum to play), so this is an intentional FE divergence, not a rule violation. Only the add-cards button inside is keyed; the ActionCallout container identity is intentionally not replicated. Also: the FE body swap means scope is entirely ABSENT in the not-enough state (a standalone Center column replaces the picker), whereas the kit not-enough state still renders the scope card — hence scope is gated only in default.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-picker",
+      "node": "scope-sheet",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps game-picker/scope-sheet to a bottom Sheet (the kit scope selector opens a bottom-sheet with keyed scope-srs/all/unlearned items). The FE uses a Material DropdownButton whose overlay is a menu of DropdownMenuItems, not a sheet — so there is no scope-sheet node. A compact single control replaces the sheet by design.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-picker",
+      "node": "scope-scrim",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "gen maps game-picker/scope-scrim to a Scrim behind the kit scope bottom-sheet. The FE Material DropdownButton menu has no scrim overlay, so there is no scope-scrim node (see scope-sheet).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-picker",
+      "node": "game-rows",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "the kit lists the four game rows as literal nodes (game-picker/game-matching|game-mc|game-recall|game-typing, MxCard). The FE renders them via a fixed loop of Material ListTiles keyed dynamically by enum (Key(gamePick-<type.name>)), NOT literal mx-node ids — so gen_parity_contract.mjs never captures them and they are not gate-able. Documentation-only entry (no gen node); the fixed set of four games is intact, only the key form differs.",
+      "source": "docs/business/game/game-modes.md"
     }
   ],
   "coverageExempt": [],
@@ -1123,10 +1159,7 @@
       "progress"
     ],
     "game-picker": [
-      "back",
-      "not-enough",
-      "scope-scrim",
-      "scope-sheet"
+      "back"
     ],
     "game-recall": [
       "back",
