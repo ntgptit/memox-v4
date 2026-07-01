@@ -42,10 +42,10 @@ function walk(dir, out = []) {
 }
 
 const docFiles = () => [
-  // `docs/agent/kit-to-flutter/**` are GENERATED per-screen conversion prompts
-  // (tool/parity/gen_convert_prompts.mjs) that intentionally reference artifacts a
-  // run will CREATE (`<screen>.slots.json`, `<screen>_parity_test.dart`) — not doc
-  // contracts, so they are exempt from the ref-existence lint.
+  // `docs/agent/kit-to-flutter/**` are AI-authored per-screen conversion prompts
+  // that intentionally reference artifacts a run will CREATE (`<screen>.slots.json`,
+  // `<screen>_parity_test.dart`) — not doc contracts, so they are exempt from the
+  // ref-existence lint.
   ...walk(join(repoRoot, 'docs'))
     .filter((p) => p.endsWith('.md') && !p.split(/[\\/]/).join('/').includes('docs/agent/kit-to-flutter/')),
   ...(existsSync(join(repoRoot, 'CLAUDE.md')) ? [join(repoRoot, 'CLAUDE.md')] : []),
