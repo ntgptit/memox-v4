@@ -1,0 +1,13 @@
+{
+  "$curated": "State-composition gate for deck-detail (Template B — deck-detail.gen.json has 0 MxCard, so this asserts the keyed node SET per state, not MxCard identity). Only literal-keyed control nodes are gated; chrome (screen/appbar) is excluded (matches dashboard.states.json), and sub-deck / card rows use DYNAMIC keys (deckTile-<id> / cardRow-<id>, covered by the screen's own test) so are not literal-gateable here. `menu` renders in both gated states (spec + FE agree). `add` (FAB) is EXCLUDED from the gate: the FE renders it in BOTH loaded and empty (the deck node exists), but the kit's empty state hides the FAB (only the empty-add CTA) — a documented FE divergence (intent-ledger deck-detail/add), and since `add` is non-distinct between the two gated states it adds no composition signal. The state-distinct nodes are the empty-* CTAs (empty-only in both spec and FE). Cross-checked by test/presentation/features/deck/deck_detail_states_test.dart. Gated states: loaded / empty (DB-seed driven, deterministic) — together they catch the primary THỪA bug (empty-state controls leaking into the populated list, and vice-versa). COVERAGE GAPS (not gated): error (reached only by forcing the async provider to throw — no clean widget-test override for this codegen family notifier; retry stays ungated); deck-delete-confirm (2 keyed dialog buttons via a menu→sheet→dialog tap chain); loading (MxStateView skeleton, no keyed body node); search / no-results (FE routes to /search — ledger search-dock); add-menu (FE add FAB pushes the editor route — ledger add-word); card-actions / delete-confirm (cards managed in the editor — ledger delete); reset-confirm (v1 has no manual reset — ledger reset); deck-menu (Material bottom-sheet keyed deckAction*, not mx-node — ledger deck-rename/deck-move); move (SimpleDialog, applies immediately — ledger move-apply). deck-detail.slots.json intentionally omitted: the keyed nodes are controls with no bound text slot.",
+  "screen": "deck-detail",
+  "states": {
+    "loaded": ["mx-node:deck-detail/menu"],
+    "empty": [
+      "mx-node:deck-detail/menu",
+      "mx-node:deck-detail/empty-add",
+      "mx-node:deck-detail/empty-subdeck",
+      "mx-node:deck-detail/empty-import"
+    ]
+  }
+}
