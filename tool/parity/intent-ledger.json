@@ -92,6 +92,42 @@
       "source": "docs/business/deck/deck-management.md"
     },
     {
+      "screen": "deck-detail",
+      "node": "add-word",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit opens an add bottom-sheet (add word / sub-deck / import) from the FAB. The FE add FAB pushes the flashcard editor route directly (_addWord → context.push), so there is no intermediate add-menu sheet or its keyed items.",
+      "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "deck-rename",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit's deck-actions menu keys rename/move/reset/delete as mx-node literals. The FE renders deck actions as a Material bottom-sheet whose items are keyed deckActionRename/deckActionMove/deckActionDelete (not mx-node), and has no reset item (v1), so there is no mx-node:deck-detail/deck-rename literal.",
+      "source": "docs/business/navigation/navigation-flow.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "deck-move",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "As with deck-rename: the FE deck-actions bottom-sheet keys its move item deckActionMove (Material ListTile), not the kit's mx-node:deck-detail/deck-move literal.",
+      "source": "docs/business/navigation/navigation-flow.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "add",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit hides the add FAB in the empty state (only the empty-add CTA is shown). The FE keeps the add FAB visible whenever the deck node exists — i.e. in BOTH loaded and empty — so the FAB and the empty-add CTA co-exist in the empty state. Harmless (both open the editor); the FAB is excluded from the deck-detail.states.json composition gate as non-distinct.",
+      "source": "docs/business/deck/deck-management.md"
+    },
+    {
       "screen": "statistics",
       "node": "streak",
       "kind": "*",
@@ -582,6 +618,13 @@
   "coverageExempt": [],
   "$styleExemptDoc": "Per-node STYLE divergences for tool/parity/spec_diff.mjs (bg/color/font/r). Match by screen == entry.screen AND (entry.node == '*' OR node startsWith entry.node) AND (entry.field == '*' OR entry.field == finding field). Keep MINIMAL — fix the FE to the kit by default; each entry needs a `source`.",
   "styleExempt": [
+    {
+      "screen": "deck-detail",
+      "node": "empty-subdeck",
+      "field": "*",
+      "reason": "The empty state uses a 3-tier emphasis: primary 'Add word' / outline 'New sub-deck' / ghost 'Import'. The FE renders the secondary 'new sub-deck' CTA as MxButtonVariant.outline; the kit models it as a ghost button, so its border/fill differ.",
+      "source": "docs/business/deck/deck-management.md"
+    },
     {
       "screen": "drawer",
       "node": "add-confirm",
