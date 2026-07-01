@@ -756,7 +756,7 @@
       "verdict": "exception",
       "exceptionKind": "behavior",
       "reason": "kit scopes the search control into library/context (the with-data body, shown only when the library has decks). The FE renders the search button in a stable toolbar that is drawn in EVERY state (loaded/empty/error/loading), so search-btn is present outside the with-data body — a deliberate always-visible toolbar. The node IS keyed (library/search-btn); this documents why it is excluded from the state-composition gate universe (it is not state-discriminating).",
-      "source": "docs/business/search/global-search.md"
+      "source": "docs/business/deck/deck-management.md"
     },
     {
       "screen": "library",
@@ -765,6 +765,15 @@
       "verdict": "exception",
       "exceptionKind": "behavior",
       "reason": "kit scopes the sort control into library/context (the with-data body). The FE renders the sort button in the always-visible toolbar (drawn in every state), so sort-btn is not scoped to the with-data body. The node IS keyed (library/sort-btn); documents why it is excluded from the state-composition gate universe. (The sort SHEET itself uses a showModalBottomSheet of ListTiles, not keyed sort-0..3 — a separate identity-rollout gap.)",
+      "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "library",
+      "node": "create",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "kit derives the create control only in the loaded state (and scopes search/sort into library/context). The FE renders create in the always-visible toolbar, so it also appears in empty/error/loading. This is the same toolbar-always divergence as search-btn/sort-btn; create additionally has a styleExempt for its icon-only-vs-labelled form. The node IS keyed (library/create); documents why it is excluded from the state-composition gate universe.",
       "source": "docs/business/deck/deck-management.md"
     }
   ],

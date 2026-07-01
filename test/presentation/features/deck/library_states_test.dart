@@ -66,10 +66,13 @@ void main() {
     ),
   );
 
-  // State -> how to drive the FE into it. `loaded` seeds a root deck (data
-  // non-empty); `empty` pumps with only a languagePair; `error` forces the
-  // provider to throw via an override (the notifier folds repo Result.err into an
-  // empty list, so a thrown build is the only clean path to the error branch).
+  // State -> how to drive the FE into it. `loaded` seeds a root deck so neither
+  // CTA (empty-deck/retry) appears; the deck tile itself uses a dynamic
+  // deckTile-<id> key (identity-rollout gap, covered by library_screen_test), so
+  // it is not in the gate universe. `empty` pumps with only a languagePair;
+  // `error` forces the provider to throw via an override (the notifier folds repo
+  // Result.err into an empty list, so a thrown build is the only clean path to the
+  // error branch).
   final recipes =
       <String, ({Future<void> Function() seed, List<Override> extra})>{
         'loaded': (
