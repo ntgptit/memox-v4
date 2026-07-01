@@ -22,11 +22,13 @@ import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.d
 ///     the populated list — the bug this layer exists to catch);
 ///   - a node absent that the state REQUIRES = THIẾU.
 ///
-/// Gated states: loaded / empty (both DB-seed driven, deterministic). The kit's other
-/// 11 states are coverage gaps documented in deck-detail.states.json — notably `error`
-/// (no clean widget-test override for this codegen family notifier) and
-/// `deck-delete-confirm` (a menu→sheet→dialog tap chain); the rest are unkeyed overlays
-/// / other routes / v1-absent features already recorded in the intent-ledger.
+/// Gated states: loaded / empty (both DB-seed driven, deterministic) — together they
+/// gate `add` (loaded-only; the FE hides the FAB in empty to match the kit) and the
+/// `empty-*` CTAs (empty-only). The kit's other 11 states are coverage gaps documented
+/// in deck-detail.states.json — notably `error` (the notifier is Result-based, so its
+/// _error() branch is unreachable without a provider override that does not apply to
+/// this codegen family here) and `deck-delete-confirm` (a fragile menu→sheet→dialog
+/// tap chain); the rest are unkeyed overlays / other routes / v1-absent features.
 class _FixedClock implements Clock {
   const _FixedClock(this._ms);
   final int _ms;
