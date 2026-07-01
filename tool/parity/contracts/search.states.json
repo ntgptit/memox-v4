@@ -1,0 +1,8 @@
+{
+  "$curated": "State-composition gate for search (Template B — search.gen.json has 0 MxCard; the result/recent tiles are dynamic runtime lists, so assert the keyed CONTAINER SET per state). Chrome (screen/appbar/dock) excluded (matches dashboard.states.json). Body identity was rolled out in this pass: search/filters (the always-on filter-chip row) and search/no-results (the empty-state) are now keyed in search_screen.dart; both are kit-anchored (search.gen.json, search/filters via the div's data-mx-node). The recent list and the result list are NOT keyed — the kit models them as dynamic recent-N/result-N tiles (not stable container nodes), and the FE keeps runtime keys (searchResult-<id>), so they stay identity-rollout gaps. Gated states: `results` (filters present, no-results absent) + `no-results` (filters + no-results present) — the no-results container is the real state discriminator (catches the empty-state message leaking into a populated result list, or missing when there are no matches). COVERAGE GAPS (not gated): empty-recent — the FE renders the filter row ALWAYS (divergence #1: intent-ledger), but the kit hides filters on empty-recent, so filters ∉ derived[empty-recent] and it cannot be loop-asserted; filtered = same node-set as results (only the chip selection / tile count changes); loading = MxStateView skeleton with no keyed body node. Cross-checked by test/presentation/features/search/search_states_test.dart.",
+  "screen": "search",
+  "states": {
+    "results": ["mx-node:search/filters"],
+    "no-results": ["mx-node:search/filters", "mx-node:search/no-results"]
+  }
+}

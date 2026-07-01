@@ -106,6 +106,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       ),
     );
     return SingleChildScrollView(
+      key: const ValueKey('mx-node:search/filters'),
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(
         horizontal: MxSpacing.space4,
@@ -133,6 +134,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     ];
     if (filtered.isEmpty) {
       return MxContentBounds(
+        key: const ValueKey('mx-node:search/no-results'),
         child: Center(child: MxText(l10n.searchNoResults(state.query.trim()))),
       );
     }
