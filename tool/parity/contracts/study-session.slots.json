@@ -1,0 +1,9 @@
+{
+  "$curated": "Slot bindings for study-session — the FE-side truth for the one keyed MxCard node (study-session/card) in study-session.gen.json, cross-checked live by test/presentation/features/study/study_session_parity_test.dart. `role` is the MxTextRole the FE renders inside the card; `bind` is the domain value (card data — NOT l10n, user content). Curated from study-session.slots.skeleton.json: the FE learn card (study_session_screen.dart:134-144) contains ONLY the term (displayLarge, centered). The meaning is rendered as a SIBLING below the card (study_session_screen.dart:146, MxText bodyLarge) — NOT a descendant of the MxCard — so it is NOT a card slot here (unlike review/player, where both sit inside the card). The kit mock's extra lines (meaning 30/700 + 'noun · a place of learning' POS) are not rendered by the FE. A slot-binding truth, not drift, so no intent-ledger entry. Non-MxCard skeleton nodes (progress / screen / next) dropped — Template A loops only MxCard. State scope: a 1-card NewLearn stage-1 learn pass.",
+  "screen": "study-session",
+  "slots": {
+    "mx-node:study-session/card": [
+      { "name": "term", "role": "displayLarge", "bind": "card.term" }
+    ]
+  }
+}

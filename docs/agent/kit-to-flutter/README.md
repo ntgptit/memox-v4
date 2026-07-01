@@ -32,7 +32,7 @@ Xếp theo thứ tự chạy đề xuất: **gate mạnh/sạch trước**.
 | [x] | dashboard | A | 4 MxCard | done (POC) |
 | [x] | review | A | 2 MxCard | done (template) |
 | [x] | `player.md` | **A** | 8 (1 MxCard) | done — playing+end gated; paused/speed gap; 2 divergence→ledger |
-| [ ] | `study-session.md` | **A** | 6 (1 MxCard) | 0 new divergence (ledger đủ); 4 gap states |
+| [x] | `study-session.md` | **A** | 6 (1 MxCard) | done — stage1 present / stages+due absent; slot=term-only (meaning là sibling) |
 | [ ] | `game-recall.md` | **A** | 7 (2 MxCard) | ⚠ align term/meaning `Card`→`MxCard` trước |
 | [ ] | `theme.md` | **A** | 6 (1 MxCard) | variant flat≠elevated + content≠sample → ledger |
 | [ ] | `deck-detail.md` | B | 10 | composition giàu nhất; 9–10 overlay gap states |
