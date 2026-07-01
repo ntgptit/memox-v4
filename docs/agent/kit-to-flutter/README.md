@@ -38,7 +38,7 @@ Xếp theo thứ tự chạy đề xuất: **gate mạnh/sạch trước**.
 | [x] | `deck-detail.md` | B | 10 | done — loaded/empty gated; error+overlays=gap; add-in-empty→ledger |
 | [x] | `statistics.md` | B | 7 | done — 5 heads gated (loaded/insufficient/loading); 6 divergence→ledger |
 | [x] | `settings.md` | B | chrome | done via generator fix — kit summary-row model ≠ FE flat rows, so body nodes (games/srs-*/theme) are identity-rollout gaps (not 1:1 mappable); no per-state gate |
-| [ ] | `flashcard-editor.md` | B | 5 | form; +keyboardType note; 4 gap states |
+| [x] | `flashcard-editor.md` | B | 5 | done — create/duplicate gated; 4 gap states; audio-play+term→ledger |
 | [ ] | `reminder.md` | B | 2 | time=Container, time-edit=ListTile → ledger |
 | [ ] | `export.md` | B | 3 | progress key trên Text≠MxCard; exporting gap |
 | [ ] | `import.md` | B | 4 | ⚠ DRIFT? FE single-scroll vs kit 5-step wizard |
