@@ -1,0 +1,12 @@
+{
+  "$curated": "State-composition gate for game-matching (Template B — game-matching.gen.json has 0 MxCard; the tiles are dynamic-keyed matchLeft-<id>/matchRight-<id> OutlinedButton/FilledButton, not literal mx-node grid nodes, so a Template-A cast<MxCard>() would find nothing). Assert the keyed CONTAINER set per state; never cast. Chrome (screen/appbar, carried by the SHARED game_screen.dart per request.type) is excluded from the gate universe (matches dashboard.states.json). This screen is the THINNEST gate: after excluding chrome, the dynamic-keyed tiles, and the not-yet-keyed shared-scaffold nodes, the ONLY literal keyed body discriminator is complete (this pass rolled it out — game_screen.dart:_completeKey(type) keys mx-node:game-matching/complete on the _complete() container, per-type like _screenKey/_appbarKey, so it is safe for the other three games which get their own game-*/complete key). So complete is gated (present at complete, absent at playing); playing/selected/correct/wrong/almost are COVERAGE GAPS at the identity layer — they render the same dynamic-keyed tile grid (selected only swaps OutlinedButton->FilledButton on a tile; correct removes a tile as pending shrinks; wrong keeps the tile, D-015 markWrong(requeue:false); almost is a smaller grid), none of which changes a literal keyed node. Identity-rollout / dynamic-key gaps: game-matching/left-0..4 + right-0..4 (dynamic matchLeft/right-<id> tiles), next (the FE _complete shows gamePlayAgain(outline)+gameDone, not a single 'Next round' primary), options (no app-bar menu in the FE), back (MxAppBar default leading), progress (LinearProgressIndicator, not keyed). Cross-checked by test/presentation/features/game/game_matching_states_test.dart.",
+  "screen": "game-matching",
+  "states": {
+    "playing": [],
+    "selected": [],
+    "correct": [],
+    "wrong": [],
+    "almost": [],
+    "complete": ["mx-node:game-matching/complete"]
+  }
+}
