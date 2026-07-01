@@ -31,7 +31,7 @@ Xếp theo thứ tự chạy đề xuất: **gate mạnh/sạch trước**.
 | --- | --- | --- | --- | --- |
 | [x] | dashboard | A | 4 MxCard | done (POC) |
 | [x] | review | A | 2 MxCard | done (template) |
-| [ ] | `player.md` | **A** | 8 (1 MxCard) | clean pilot; 2 divergence (playpause/replay) |
+| [x] | `player.md` | **A** | 8 (1 MxCard) | done — playing+end gated; paused/speed gap; 2 divergence→ledger |
 | [ ] | `study-session.md` | **A** | 6 (1 MxCard) | 0 new divergence (ledger đủ); 4 gap states |
 | [ ] | `game-recall.md` | **A** | 7 (2 MxCard) | ⚠ align term/meaning `Card`→`MxCard` trước |
 | [ ] | `theme.md` | **A** | 6 (1 MxCard) | variant flat≠elevated + content≠sample → ledger |

@@ -1,0 +1,10 @@
+{
+  "$curated": "Slot bindings for player — the FE-side truth for each keyed MxCard node in player.gen.json, cross-checked live by test/presentation/features/study/player_parity_test.dart. `role` is the MxTextRole the FE renders; `bind` is the domain value (card data — NOT l10n, this is user content, not UI copy). Curated from player.slots.skeleton.json: `term` kept as proposed (displayLarge); `meaning` corrected to the FE's actual bodyLarge (player_screen.dart:149), NOT the kit mock's displaySmall + MEANING label (divergence #3, WBS player màn 11) — a slot-binding truth, not drift, so no intent-ledger entry. Dropped skeleton's player/speed (no MxCard, and the FE renders no speed control) and player/appbar (chrome, not looped by Template A). State scope: a 1-card player queue.",
+  "screen": "player",
+  "slots": {
+    "mx-node:player/card": [
+      { "name": "term", "role": "displayLarge", "bind": "card.term" },
+      { "name": "meaning", "role": "bodyLarge", "bind": "card.meaning" }
+    ]
+  }
+}

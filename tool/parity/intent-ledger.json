@@ -245,6 +245,24 @@
       "source": "docs/business/personalization/personalization.md"
     },
     {
+      "screen": "player",
+      "node": "playpause",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit models the play/pause control as an MxFab. The FE renders it as MxIconButton(primary) so the four transport controls (prev / playpause / next / speak) form one consistent icon-button row, rather than a floating action button breaking the row.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "player",
+      "node": "replay",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "The kit's end-state Replay button is the primary variant. The FE pairs Replay(outline) + Close(default), giving Replay secondary emphasis as the optional restart action; kit primary would over-weight it against Close.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
       "screen": "study-result",
       "node": "appbar",
       "kind": "*",
