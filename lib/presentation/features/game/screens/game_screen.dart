@@ -94,6 +94,7 @@ class GameScreen extends ConsumerWidget {
     WidgetRef ref,
     AppLocalizations l10n,
   ) => MxContentBounds(
+    key: _completeKey(request.type),
     child: Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -141,6 +142,15 @@ class GameScreen extends ConsumerWidget {
     GameType.multipleChoice => const ValueKey('mx-node:game-mc/appbar'),
     GameType.recall => const ValueKey('mx-node:game-recall/appbar'),
     GameType.typing => const ValueKey('mx-node:game-typing/appbar'),
+  };
+
+  // The complete-round container carries the per-type kit node identity too, so
+  // each game-* screen contract can gate the finished-round state.
+  Key _completeKey(GameType type) => switch (type) {
+    GameType.matching => const ValueKey('mx-node:game-matching/complete'),
+    GameType.multipleChoice => const ValueKey('mx-node:game-mc/complete'),
+    GameType.recall => const ValueKey('mx-node:game-recall/complete'),
+    GameType.typing => const ValueKey('mx-node:game-typing/complete'),
   };
 
   String _gameName(AppLocalizations l10n, GameType type) => switch (type) {

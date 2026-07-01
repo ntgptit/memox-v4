@@ -385,7 +385,7 @@
       "kind": "*",
       "verdict": "exception",
       "exceptionKind": "behavior",
-      "reason": "The kit matching game has an explicit next control. The FE matching game auto-progresses — a correct pair disappears and the round advances on its own (D-015) — so there is no manual next button.",
+      "reason": "kit shows a single 'Next round' MxButton (primary) on the complete state. The FE _complete() shows two actions instead — gamePlayAgain (outline, Key('gamePlayAgain')) + gameDone — so there is no single next node; labels come from ARB.",
       "source": "docs/business/game/game-modes.md"
     },
     {
@@ -874,6 +874,15 @@
       "exceptionKind": "behavior",
       "reason": "the kit lists the four game rows as literal nodes (game-picker/game-matching|game-mc|game-recall|game-typing, MxCard). The FE renders them via a fixed loop of Material ListTiles keyed dynamically by enum (Key(gamePick-<type.name>)), NOT literal mx-node ids — so gen_parity_contract.mjs never captures them and they are not gate-able. Documentation-only entry (no gen node); the fixed set of four games is intact, only the key form differs.",
       "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-matching",
+      "node": "tiles",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "the kit lists grid tiles as literal nodes (game-matching/left-0..4, right-0..4, Tile divs). The FE renders them via a dynamic loop of OutlinedButton (unselected) / FilledButton (selected) keyed Key('matchLeft-<id>')/Key('matchRight-<id>') by runtime cardId, NOT literal mx-node ids — so gen_parity_contract.mjs never captures them and they are not gate-able. Feedback has no separate node either: a correct pair removes its tiles (pending shrinks), a wrong pair keeps them (D-015 markWrong(requeue:false)). Documentation-only (no gen node); the tile set is intact, only the key form and selected-widget differ.",
+      "source": "docs/business/game/game-modes.md"
     }
   ],
   "coverageExempt": [],
@@ -1150,12 +1159,10 @@
     ],
     "game-matching": [
       "back",
-      "complete",
       "progress"
     ],
     "game-mc": [
       "back",
-      "complete",
       "progress"
     ],
     "game-picker": [
@@ -1163,12 +1170,10 @@
     ],
     "game-recall": [
       "back",
-      "complete",
       "progress"
     ],
     "game-typing": [
       "back",
-      "complete",
       "input",
       "progress"
     ],
