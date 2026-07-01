@@ -52,6 +52,14 @@ nút; bộ lọc theo trạng thái thẻ.
 | BR-2 | Kết quả bao gồm cả thẻ ẩn; có bộ lọc theo trạng thái (mới / đến hạn / đã thuộc). | Người học vẫn cần tìm thấy thẻ đã ẩn. | D-028 |
 | BR-3 | Chỉ tìm trong cặp ngôn ngữ đang chọn; phạm vi là toàn thư viện hoặc trong nút đang mở. | Kết quả đúng ngữ cảnh. | — |
 
+**Ghi chú giao diện (parity — divergence có chủ đích):** hàng chip lọc trạng thái được
+render ở **mọi trạng thái** của màn (kể cả màn gợi ý khi chưa gõ — empty-recent), như một
+thanh cố định đầu body. Design-kit ẩn hàng lọc ở empty-recent và chỉ hiện khi có truy vấn;
+FE giữ nó luôn hiển thị để bố cục ổn định (không nhảy khi bắt đầu gõ). Đây là khác biệt
+FE↔kit đã ghi nhận tại `tool/parity/intent-ledger.json` (`search/filters`, `exceptionKind:
+behavior`); nút `mx-node:search/filters` vẫn được key nên gate parity không assert nó vắng
+mặt ở empty-recent.
+
 ## 7. Tiêu chí chấp nhận (Acceptance criteria)
 
 - **AC-1** — *Cho* một từ khoá khớp nghĩa của một thẻ, *khi* tìm, *thì* thẻ đó xuất hiện

@@ -42,7 +42,7 @@ Xếp theo thứ tự chạy đề xuất: **gate mạnh/sạch trước**.
 | [x] | `reminder.md` | B | 2 | time=Container, time-edit=ListTile → ledger |
 | [x] | `export.md` | B | 3 | progress key trên Text≠MxCard; exporting gap |
 | [x] | `import.md` | B | 4 | ⚠ DRIFT? FE single-scroll vs kit 5-step wizard |
-| [ ] | `search.md` | B | 4 | ⚠ FE chỉ key chrome → roll out 4 body key |
+| [x] | `search.md` | B | 4 | ⚠ FE chỉ key chrome → roll out 4 body key |
 | [ ] | `library.md` | B | 7 | deck card key động; 7 overlay gap states |
 | [ ] | `game-typing.md` | B | 7 | meaning=Card≠MxCard; 4 gap states |
 | [ ] | `game-mc.md` | B | 4 | prompt=Card; D-015 no feedback frame |
