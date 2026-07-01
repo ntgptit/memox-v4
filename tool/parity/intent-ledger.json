@@ -775,6 +775,42 @@
       "exceptionKind": "behavior",
       "reason": "kit derives the create control only in the loaded state (and scopes search/sort into library/context). The FE renders create in the always-visible toolbar, so it also appears in empty/error/loading. This is the same toolbar-always divergence as search-btn/sort-btn; create additionally has a styleExempt for its icon-only-vs-labelled form. The node IS keyed (library/create); documents why it is excluded from the state-composition gate universe.",
       "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "meaning",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:game-typing/meaning to MxCard (elevated), but the shared typing game widget renders it as a Material Card carrying the same key. Keeping the Material Card is intentional for this composition-parity pass (converting the game widgets to the Mx design system is a separate kit-fit task touching all four games); the node is composition-gated (present/absent), its MxCard variant is not asserted.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "retry",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps retry to MxButton (primary); the FE typing game uses a Material OutlinedButton with the correct key. Identity is keyed and composition-gated; the MxButton variant map is deferred (game widgets use raw Material buttons, same class as hint/check styleExempt).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "accept",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps accept to MxButton (outline); the FE typing game uses a Material FilledButton with the correct key. Identity is keyed and composition-gated; the MxButton variant map is deferred.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "check",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps check to MxButton (primary); the FE typing game uses a Material FilledButton with the correct key. Identity is keyed and composition-gated; the MxButton variant map is deferred (same class as retry/accept/meaning — see game-modes.md §6 parity note). check also has a styleExempt for its border radius.",
+      "source": "docs/business/game/game-modes.md"
     }
   ],
   "coverageExempt": [],

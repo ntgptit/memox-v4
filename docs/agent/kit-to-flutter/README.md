@@ -44,7 +44,7 @@ Xếp theo thứ tự chạy đề xuất: **gate mạnh/sạch trước**.
 | [x] | `import.md` | B | 4 | ⚠ DRIFT? FE single-scroll vs kit 5-step wizard |
 | [x] | `search.md` | B | 4 | ⚠ FE chỉ key chrome → roll out 4 body key |
 | [x] | `library.md` | B | 7 | deck card key động; 7 overlay gap states |
-| [ ] | `game-typing.md` | B | 7 | meaning=Card≠MxCard; 4 gap states |
+| [x] | `game-typing.md` | B | 7 | meaning=Card≠MxCard; 4 gap states |
 | [ ] | `game-mc.md` | B | 4 | prompt=Card; D-015 no feedback frame |
 | [ ] | `game-picker.md` | B | 2 | ⚠ DRIFT? not-enough tại count==0 vs kit "<4 words" |
 | [ ] | `game-matching.md` | B | ~1 | gate mỏng nhất (shared GameScreen scaffold) |
