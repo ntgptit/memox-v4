@@ -76,57 +76,56 @@ void main() {
     await db.close();
   });
 
-  testWidgets(
-    'state "standard": finished result renders exactly the kit node set',
-    (tester) async {
-      // Seed a single DueReview card that is due now (dueAt:0 < clock 10000).
-      final cardId = await db
-          .into(db.card)
-          .insert(
-            CardCompanion.insert(deckId: deckId, term: '학교', createdAt: 1),
-          );
-      await SrsRepositoryImpl(
-        SrsDao(db),
-      ).upsert(SrsState(cardId: cardId, box: 1, dueAt: 0));
+  testWidgets('state "standard": finished result renders exactly the kit node set', (
+    tester,
+  ) async {
+    // Seed a single DueReview card that is due now (dueAt:0 < clock 10000).
+    final cardId = await db
+        .into(db.card)
+        .insert(CardCompanion.insert(deckId: deckId, term: '학교', createdAt: 1));
+    await SrsRepositoryImpl(
+      SrsDao(db),
+    ).upsert(SrsState(cardId: cardId, box: 1, dueAt: 0));
 
-      final req = StudyRequest(nodeId: deckId, entry: StudyEntry.dueReview);
-      await container.read(languagePairProvider.future);
-      await container.read(studySessionProvider(req).future);
+    // `req` must equal the screen's own StudyRequest(nodeId: deckId, entry:
+    // dueReview) — StudyRequest has value equality, so studySessionProvider(req)
+    // resolves to the SAME family instance the widget watches. That is what lets
+    // grade(true) below drive the screen (mismatched args → a phantom second
+    // provider and the result never appears).
+    final req = StudyRequest(nodeId: deckId, entry: StudyEntry.dueReview);
+    await container.read(languagePairProvider.future);
+    await container.read(studySessionProvider(req).future);
 
-      await tester.pumpWidget(
-        UncontrolledProviderScope(
-          container: container,
-          child: MaterialApp(
-            theme: AppTheme.light(),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            home: StudySessionScreen(
-              nodeId: deckId,
-              entry: StudyEntry.dueReview,
-            ),
-          ),
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          theme: AppTheme.light(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: StudySessionScreen(nodeId: deckId, entry: StudyEntry.dueReview),
         ),
-      );
-      await tester.pumpAndSettle();
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      // Grade the single card correct → pending empties → _finalize() → finished →
-      // _result(). Drive via the notifier (the same provider the screen watches).
-      await container.read(studySessionProvider(req).notifier).grade(true);
-      await tester.pumpAndSettle();
+    // Grade the single card correct → pending empties → _finalize() → finished →
+    // _result(). Drive via the notifier (the same provider the screen watches).
+    await container.read(studySessionProvider(req).notifier).grade(true);
+    await tester.pumpAndSettle();
 
-      final allowed = states['standard']!;
-      for (final key in universe) {
-        final finder = find.byKey(ValueKey(key));
-        if (allowed.contains(key)) {
-          expect(finder, findsOneWidget, reason: 'standard: $key THIẾU');
-        } else {
-          expect(
-            finder,
-            findsNothing,
-            reason: 'standard: $key present but kit omits it here (THỪA)',
-          );
-        }
+    final allowed = states['standard']!;
+    for (final key in universe) {
+      final finder = find.byKey(ValueKey(key));
+      if (allowed.contains(key)) {
+        expect(finder, findsOneWidget, reason: 'standard: $key THIẾU');
+      } else {
+        expect(
+          finder,
+          findsNothing,
+          reason: 'standard: $key present but kit omits it here (THỪA)',
+        );
       }
-    },
-  );
+    }
+  });
 }
