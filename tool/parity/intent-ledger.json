@@ -532,6 +532,51 @@
       "exceptionKind": "behavior",
       "reason": "fe accent = 3 MxChip (AccentChoice brand/warm/cool, keyed dynamically accent-<name>), kit = 6 literal swatches (accent-0..5). v1 exposes three accent choices, not a six-colour palette.",
       "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "theme",
+      "node": "mode-head",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "fe section heads = MxText.title (single-line label), kit = MxSectionHeader. The FE renders all three personalization heads as simple one-line titles (no trailing action), a component-type divergence separate from the accent-head style styleExempt.",
+      "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "theme",
+      "node": "accent-head",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "fe section heads = MxText.title (single-line label), kit = MxSectionHeader. Component-type divergence (the accent-head styleExempt only documents the card-surface style delta, not the component choice).",
+      "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "theme",
+      "node": "size-head",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "fe section heads = MxText.title (single-line label), kit = MxSectionHeader. The FE renders all three personalization heads as simple one-line titles (no trailing action).",
+      "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "theme",
+      "node": "mode-control",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "fe mode/size = MxSegmentedControl without a literal mx-node key (identity not rolled out); kit = keyed segmented control. Widget is correct; the mx-node identity for the segmented controls is not yet keyed in the FE.",
+      "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "theme",
+      "node": "size-control",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "fe mode/size = MxSegmentedControl without a literal mx-node key (identity not rolled out); kit = keyed segmented control. Widget is correct; the mx-node identity for the segmented controls is not yet keyed in the FE.",
+      "source": "docs/business/personalization/personalization.md"
     }
   ],
   "coverageExempt": [],
