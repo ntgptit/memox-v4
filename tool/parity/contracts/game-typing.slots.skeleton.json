@@ -1,0 +1,67 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "game-typing",
+  "slots": {
+    "mx-node:game-typing/appbar": [
+      {
+        "name": "typing",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "Typing",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-typing/meaning": [
+      {
+        "name": "meaning",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "MEANING",
+        "l10n": "TODO"
+      },
+      {
+        "name": "friend",
+        "role": "displaySmall",
+        "font": "30/800",
+        "text": "friend",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-typing/screen": [
+      {
+        "name": "typeTheTermKorean",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "Type the term (Korean)",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-typing/input": [
+      {
+        "name": "typeTheKoreanWord",
+        "role": "bodyMedium",
+        "font": "15/600",
+        "text": "Type the Korean word…",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-typing/hint": [
+      {
+        "name": "help",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Help",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-typing/check": [
+      {
+        "name": "check",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Check",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}

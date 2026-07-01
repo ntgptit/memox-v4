@@ -1,0 +1,119 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "reminder",
+  "slots": {
+    "mx-node:reminder/appbar": [
+      {
+        "name": "reminders",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "Reminders",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/toggle": [
+      {
+        "name": "studyReminders",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Study reminders",
+        "l10n": "TODO"
+      },
+      {
+        "name": "remindYouToReviewEveryDay",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Remind you to review every day",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/time": [
+      {
+        "name": "reminderTime",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "REMINDER TIME",
+        "l10n": "TODO"
+      },
+      {
+        "name": "1300",
+        "role": "displayLarge",
+        "font": "38/800",
+        "text": "13:00",
+        "bind": "TODO"
+      }
+    ],
+    "mx-node:reminder/days": [
+      {
+        "name": "repeat",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "REPEAT",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/day-0": [
+      {
+        "name": "mon",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Mon",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/day-1": [
+      {
+        "name": "tue",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Tue",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/day-2": [
+      {
+        "name": "wed",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Wed",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/day-3": [
+      {
+        "name": "thu",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Thu",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/day-4": [
+      {
+        "name": "fri",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Fri",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/day-5": [
+      {
+        "name": "sat",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Sat",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:reminder/day-6": [
+      {
+        "name": "sun",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Sun",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}

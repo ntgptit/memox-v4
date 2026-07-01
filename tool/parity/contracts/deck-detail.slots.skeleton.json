@@ -1,0 +1,224 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "deck-detail",
+  "slots": {
+    "mx-node:deck-detail/appbar": [
+      {
+        "name": "koreanBasics",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "Korean Basics",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/screen": [
+      {
+        "name": "subDecks",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "SUB-DECKS",
+        "l10n": "TODO"
+      },
+      {
+        "name": "cards",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "CARDS",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/subdeck-0": [
+      {
+        "name": "beginnerGrammar",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Beginner Grammar",
+        "l10n": "TODO"
+      },
+      {
+        "name": "3Decks412Words",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "3 decks · 412 words",
+        "bind": "TODO"
+      },
+      {
+        "name": "28",
+        "role": "labelSmall",
+        "font": "11/700",
+        "text": "28",
+        "bind": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/subdeck-1": [
+      {
+        "name": "topicFamily",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Topic: Family",
+        "l10n": "TODO"
+      },
+      {
+        "name": "180WordsMastered",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "180 words · mastered",
+        "bind": "TODO"
+      },
+      {
+        "name": "slot2",
+        "role": "labelSmall",
+        "font": "11/700",
+        "text": "✓",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/card-0": [
+      {
+        "name": "slot0",
+        "role": "titleMedium",
+        "font": "17/800",
+        "text": "안녕하세요",
+        "l10n": "TODO"
+      },
+      {
+        "name": "helloFormal",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Hello (formal)",
+        "l10n": "TODO"
+      },
+      {
+        "name": "due",
+        "role": "labelSmall",
+        "font": "11/700",
+        "text": "Due",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/card-1": [
+      {
+        "name": "slot0",
+        "role": "titleMedium",
+        "font": "17/800",
+        "text": "감사합니다",
+        "l10n": "TODO"
+      },
+      {
+        "name": "thankYou",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Thank you",
+        "l10n": "TODO"
+      },
+      {
+        "name": "mastered",
+        "role": "labelSmall",
+        "font": "11/700",
+        "text": "Mastered",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/card-2": [
+      {
+        "name": "slot0",
+        "role": "titleMedium",
+        "font": "17/800",
+        "text": "사랑",
+        "l10n": "TODO"
+      },
+      {
+        "name": "loveAffection",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "love; affection",
+        "l10n": "TODO"
+      },
+      {
+        "name": "new",
+        "role": "labelSmall",
+        "font": "11/700",
+        "text": "New",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/card-3": [
+      {
+        "name": "slot0",
+        "role": "titleMedium",
+        "font": "17/800",
+        "text": "공부하다",
+        "l10n": "TODO"
+      },
+      {
+        "name": "toStudy",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "to study",
+        "l10n": "TODO"
+      },
+      {
+        "name": "due",
+        "role": "labelSmall",
+        "font": "11/700",
+        "text": "Due",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/card-4": [
+      {
+        "name": "slot0",
+        "role": "titleMedium",
+        "font": "17/800",
+        "text": "맛있다",
+        "l10n": "TODO"
+      },
+      {
+        "name": "deliciousFood",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "delicious (food)",
+        "l10n": "TODO"
+      },
+      {
+        "name": "mastered",
+        "role": "labelSmall",
+        "font": "11/700",
+        "text": "Mastered",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/card-5": [
+      {
+        "name": "slot0",
+        "role": "titleMedium",
+        "font": "17/800",
+        "text": "어렵다",
+        "l10n": "TODO"
+      },
+      {
+        "name": "difficultHard",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "difficult, hard",
+        "l10n": "TODO"
+      },
+      {
+        "name": "new",
+        "role": "labelSmall",
+        "font": "11/700",
+        "text": "New",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:deck-detail/add": [
+      {
+        "name": "add",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Add",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "theme",
+  "slots": {
+    "mx-node:theme/appbar": [
+      {
+        "name": "theme",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "Theme",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:theme/preview": [
+      {
+        "name": "preview",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "PREVIEW",
+        "l10n": "TODO"
+      },
+      {
+        "name": "slot1",
+        "role": "displaySmall",
+        "font": "30/800",
+        "text": "학교",
+        "l10n": "TODO"
+      },
+      {
+        "name": "school",
+        "role": "bodyMedium",
+        "font": "15/400",
+        "text": "school",
+        "l10n": "TODO"
+      },
+      {
+        "name": "studyNow",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "Study now",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:theme/mode-head": [
+      {
+        "name": "colorMode",
+        "role": "titleMedium",
+        "font": "17/700",
+        "text": "Color mode",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:theme/mode-control": [
+      {
+        "name": "light",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Light",
+        "l10n": "TODO"
+      },
+      {
+        "name": "dark",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Dark",
+        "l10n": "TODO"
+      },
+      {
+        "name": "system",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "System",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:theme/accent-head": [
+      {
+        "name": "accentColor",
+        "role": "titleMedium",
+        "font": "17/700",
+        "text": "Accent color",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:theme/size-head": [
+      {
+        "name": "textSize",
+        "role": "titleMedium",
+        "font": "17/700",
+        "text": "Text size",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:theme/size-control": [
+      {
+        "name": "small",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Small",
+        "l10n": "TODO"
+      },
+      {
+        "name": "medium",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Medium",
+        "l10n": "TODO"
+      },
+      {
+        "name": "large",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "Large",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}

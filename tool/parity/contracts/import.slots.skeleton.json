@@ -1,0 +1,81 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "import",
+  "slots": {
+    "mx-node:import/appbar": [
+      {
+        "name": "importCards",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "Import cards",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:import/screen": [
+      {
+        "name": "chooseSource",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "CHOOSE SOURCE",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:import/source-0": [
+      {
+        "name": "csvFile",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "CSV file",
+        "l10n": "TODO"
+      },
+      {
+        "name": "importFromACsvFile",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Import from a .csv file",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:import/source-1": [
+      {
+        "name": "excel",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Excel",
+        "l10n": "TODO"
+      },
+      {
+        "name": "importFromAnXlsxFile",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Import from an .xlsx file",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:import/source-2": [
+      {
+        "name": "pasteText",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Paste text",
+        "l10n": "TODO"
+      },
+      {
+        "name": "copyFromSomewhereElse",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Copy from somewhere else",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:import/paste": [
+      {
+        "name": "pasteYourDataHereOneCardPerLineTermTabMe",
+        "role": "bodyMedium",
+        "font": "15/400",
+        "text": "Paste your data here (one card per line: term[tab]meaning)…",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}

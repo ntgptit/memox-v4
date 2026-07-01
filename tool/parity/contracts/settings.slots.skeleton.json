@@ -1,0 +1,242 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "settings",
+  "slots": {
+    "mx-node:settings/appbar": [
+      {
+        "name": "settings",
+        "role": "displaySmall",
+        "font": "30/800",
+        "text": "Settings",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/profile": [
+      {
+        "name": "lt",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "LT",
+        "l10n": "TODO"
+      },
+      {
+        "name": "linhTran",
+        "role": "titleMedium",
+        "font": "17/800",
+        "text": "Linh Tran",
+        "l10n": "TODO"
+      },
+      {
+        "name": "linhMemoxApp",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "linh@memox.app",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/screen": [
+      {
+        "name": "studying",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "STUDYING",
+        "l10n": "TODO"
+      },
+      {
+        "name": "app",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "APP",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/g-0": [
+      {
+        "name": "language",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Language",
+        "l10n": "TODO"
+      },
+      {
+        "name": "english",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "한국어 → English",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/g-1": [
+      {
+        "name": "wordDisplay",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Word display",
+        "l10n": "TODO"
+      },
+      {
+        "name": "nativeMeaningColorByGender",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Native meaning · color by gender",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/g-2": [
+      {
+        "name": "spacedRepetition",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Spaced repetition",
+        "l10n": "TODO"
+      },
+      {
+        "name": "boxes8NotificationsOn",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Boxes: 8 · Notifications on",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/g-3": [
+      {
+        "name": "gameSettings",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Game settings",
+        "l10n": "TODO"
+      },
+      {
+        "name": "5WordsRoundShuffle",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "5 words/round · shuffle",
+        "bind": "TODO"
+      },
+      {
+        "name": "5",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "5",
+        "bind": "TODO"
+      }
+    ],
+    "mx-node:settings/g-4": [
+      {
+        "name": "voice",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Voice",
+        "l10n": "TODO"
+      },
+      {
+        "name": "ttsOnSttOff",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "TTS on · STT off",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/g-5": [
+      {
+        "name": "reminders",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Reminders",
+        "l10n": "TODO"
+      },
+      {
+        "name": "1300MonSun",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "13:00 · Mon–Sun",
+        "bind": "TODO"
+      }
+    ],
+    "mx-node:settings/g-6": [
+      {
+        "name": "backupRestore",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Backup / Restore",
+        "l10n": "TODO"
+      },
+      {
+        "name": "autoLastToday",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Auto · last today",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/g-7": [
+      {
+        "name": "cloudSync",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Cloud sync",
+        "l10n": "TODO"
+      },
+      {
+        "name": "linhMemoxAppAlpha",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "linh@memox.app · alpha",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:settings/g-8": [
+      {
+        "name": "theme",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Theme",
+        "l10n": "TODO"
+      },
+      {
+        "name": "lightDefaultAccent",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Light · default accent",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:shell/bottom-nav": [
+      {
+        "name": "today",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Today",
+        "l10n": "TODO"
+      },
+      {
+        "name": "library",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Library",
+        "l10n": "TODO"
+      },
+      {
+        "name": "add",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Add",
+        "l10n": "TODO"
+      },
+      {
+        "name": "stats",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Stats",
+        "l10n": "TODO"
+      },
+      {
+        "name": "profile",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Profile",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}
