@@ -4,6 +4,11 @@
   "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/statistics",
   "nodes": [
     {
+      "key": "mx-node:statistics/accuracy",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:statistics/accuracy-head",
       "component": "MxSectionHeader",
       "variant": null
@@ -11,6 +16,11 @@
     {
       "key": "mx-node:statistics/appbar",
       "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:statistics/heatmap",
+      "component": "div",
       "variant": null
     },
     {
@@ -24,8 +34,18 @@
       "variant": null
     },
     {
+      "key": "mx-node:statistics/leitner",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:statistics/leitner-head",
       "component": "MxSectionHeader",
+      "variant": null
+    },
+    {
+      "key": "mx-node:statistics/overview",
+      "component": "div",
       "variant": null
     },
     {
@@ -52,6 +72,11 @@
       "key": "mx-node:statistics/streak-longest",
       "component": "MxCard",
       "variant": "muted"
+    },
+    {
+      "key": "mx-node:statistics/weekly",
+      "component": "div",
+      "variant": null
     },
     {
       "key": "mx-node:statistics/weekly-head",

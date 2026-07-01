@@ -98,15 +98,18 @@ function parseScreen(jsx) {
   const src = jsx;
   const nodes = [];
   const seen = new Map();
-  // Opening tags: <MxCard, <window.ListRow, <Foo, <div … (filtered to those with node=).
+  // Opening tags: <MxCard, <window.ListRow, <Foo, <div … (filtered to those carrying a
+  // node identity). The kit writes it two ways: the `node=` React prop on Mx*/helper
+  // components, and the raw `data-mx-node=` HTML attribute on plain <div> containers —
+  // both denote the same mx-node identity, so capture either.
   const open = /<([A-Za-z][\w.]*)\b/g;
   let m;
   while ((m = open.exec(src)) !== null) {
     const end = tagEnd(src, m.index + m[0].length);
     if (end < 0) continue;
     const attr = topAttrs(src.slice(m.index + m[0].length, end));
-    if (!attr.node) continue;
-    const node = attr.node;
+    const node = attr.node ?? attr['data-mx-node'];
+    if (!node) continue;
     const raw = m[1];
     const component = raw.startsWith('window.') ? raw.slice(7) : raw;
     const variant = attr.variant

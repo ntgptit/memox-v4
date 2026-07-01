@@ -144,6 +144,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:deck-detail/filters",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:deck-detail/menu",
       "component": "MxIconButton",
       "variant": null

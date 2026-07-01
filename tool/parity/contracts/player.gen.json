@@ -49,6 +49,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:player/progress",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:player/replay",
       "component": "MxButton",
       "variant": "primary"

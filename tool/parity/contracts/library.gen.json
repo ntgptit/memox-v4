@@ -9,6 +9,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:library/context",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:library/create",
       "component": "MxFab",
       "variant": null
@@ -66,6 +71,11 @@
     {
       "key": "mx-node:library/overflow-sheet",
       "component": "Sheet",
+      "variant": null
+    },
+    {
+      "key": "mx-node:library/pair",
+      "component": "button",
       "variant": null
     },
     {

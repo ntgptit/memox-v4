@@ -961,6 +961,7 @@
       "deck-sheet",
       "empty",
       "error",
+      "filters",
       "move-scrim",
       "move-sheet",
       "no-results",
@@ -972,6 +973,8 @@
       "add-back",
       "learn-lang",
       "native-lang",
+      "overlay",
+      "panel",
       "remove-appbar",
       "remove-back"
     ],
@@ -985,6 +988,8 @@
     "flashcard-editor": [
       "audio",
       "cancel",
+      "dup-warning",
+      "gender",
       "hidden",
       "meaning",
       "meaning-2",
@@ -1014,15 +1019,18 @@
     "game-typing": [
       "back",
       "complete",
+      "input",
       "progress"
     ],
     "import": [
       "back",
       "done",
       "map-meaning",
-      "map-term"
+      "map-term",
+      "paste"
     ],
     "library": [
+      "context",
       "empty",
       "error",
       "menu-open",
@@ -1030,6 +1038,7 @@
       "of-import",
       "of-select",
       "of-settings",
+      "pair",
       "pair-add",
       "pair-ja-en",
       "pair-ko-en",
@@ -1046,10 +1055,12 @@
     ],
     "player": [
       "back",
-      "end"
+      "end",
+      "progress"
     ],
     "reminder": [
       "back",
+      "days",
       "picker-scrim",
       "picker-sheet",
       "toggle",
@@ -1063,6 +1074,7 @@
     "search": [
       "back",
       "clear",
+      "filters",
       "no-results"
     ],
     "settings": [
@@ -1075,17 +1087,23 @@
       "theme"
     ],
     "statistics": [
+      "heatmap",
       "insufficient",
-      "scope"
+      "leitner",
+      "scope",
+      "weekly"
     ],
     "study-result": [
       "close"
     ],
     "study-session": [
-      "close"
+      "close",
+      "progress"
     ],
     "theme": [
-      "back"
+      "back",
+      "mode",
+      "size"
     ]
   }
 }

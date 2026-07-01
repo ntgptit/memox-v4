@@ -54,6 +54,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:import/paste",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:import/screen",
       "component": "MxScaffold",
       "variant": null

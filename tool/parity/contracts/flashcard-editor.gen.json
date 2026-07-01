@@ -39,6 +39,16 @@
       "variant": "ghost"
     },
     {
+      "key": "mx-node:flashcard-editor/dup-warning",
+      "component": "div",
+      "variant": null
+    },
+    {
+      "key": "mx-node:flashcard-editor/gender",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:flashcard-editor/hidden",
       "component": "ListRow",
       "variant": null
