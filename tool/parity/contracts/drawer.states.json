@@ -1,0 +1,9 @@
+{
+  "$curated": "State-composition parity for the SHARED AppDrawer (a component wired to Scaffold.drawer, NOT a route/MxScaffold). drawer.gen.json has 0 MxCard, so this is Template B — assert the keyed CONTAINER set per state; never cast. The three kit states map to one FE widget (AppDrawer) that swaps _DrawerView { menu, addLanguage, removeLanguage } in place (no route push), so all three are reachable in one test host via tap. Only the literal mx-node:drawer/ keys the FE actually renders are listed; excluded (see intent-ledger.json drawer entries): kit chrome the FE does not build (overlay/panel, add-appbar/add-back/remove-appbar/remove-back — the FE uses _viewHeader with Key('addBack')/Key('removeBack'), remove-scrim/remove-dialog — the FE uses a Material AlertDialog), kit cards (learn-lang/native-lang — the FE uses DropdownButtons keyed addLanguageSource/addLanguageTarget), the menu items item-0..9 (the FE keys them by domain: drawerAddLanguage/drawerRemoveLanguage + unkeyed coming-soon tiles), and the pair rows pair-0/1(-del) (the FE keys them dynamically pairTile-<id>/removeTile-<id>). OPTION A (default): remove-language gates only remove-screen; remove-cancel/remove-ok live in a Material AlertDialog opened by tapping a pair's delete icon, so they are a coverage gap at the state-set layer (documented, not driven). COVERAGE GAP: open (the menu view) has 0 literal mx-node:drawer/ keys, so it gates the empty set here — a real THỪA guard (add-screen/remove-screen must NOT leak into the menu); the menu's positive coverage lives in the pre-existing app_drawer_test assertions (Key('drawerAddLanguage'/'drawerRemoveLanguage'/'pairTile-*')). Cross-checked by the state-composition block in test/presentation/shared/navigation/app_drawer_test.dart.",
+  "screen": "drawer",
+  "states": {
+    "open": [],
+    "add-language": ["mx-node:drawer/add-screen", "mx-node:drawer/add-confirm"],
+    "remove-language": ["mx-node:drawer/remove-screen"]
+  }
+}
