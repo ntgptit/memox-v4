@@ -73,8 +73,10 @@ các primitive của design system (`MxCard`, `MxButton`). Ví dụ ở game Đi
 tầng game sang `MxCard`/`MxButton` (kit-fit) là **task riêng** đụng cả bốn game, **hoãn
 post-v1**; đến khi đó parity chỉ gate theo composition (node present/absent), KHÔNG assert
 `MxCard` variant hay `MxButton` variant. Khác biệt FE↔kit này được ghi tại
-`tool/parity/intent-ledger.json` (`game-typing/meaning`, `/check`, `/retry`, `/accept` =
-`exceptionKind: component`).
+`tool/parity/intent-ledger.json` với `exceptionKind: component` cho từng game:
+`game-typing/meaning`, `/check`, `/retry`, `/accept`; `game-mc/prompt` (Card),
+`game-mc/options` (Column bọc nhóm đáp án tái dùng key của MxIconButton 3-chấm mà FE
+không có — realign key là kit-fit hoãn post-v1).
 
 ## 7. Quy tắc nghiệp vụ (Business rules)
 

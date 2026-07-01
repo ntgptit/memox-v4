@@ -1,0 +1,10 @@
+{
+  "$curated": "State-composition gate for game-mc (Template B — game-mc.gen.json maps mx-node:game-mc/prompt to MxCard, but the FE renders it as a Material Card (multiple_choice_game.dart), so there is 0 real MxCard-keyed widget here — like library/game-typing; a Template-A cast<MxCard>() would throw). Assert the keyed CONTAINER set per state; never cast. Chrome (screen/appbar, carried by the SHARED game_screen.dart per request.type) is excluded from the gate universe (matches dashboard.states.json). The in-game body has exactly two keyed nodes: prompt (the term Card) and options (the Column wrapping the four OutlinedButton choices). waiting/correct/wrong SHARE this node-set: the kit shows post-answer color+icon feedback on the choices for correct/wrong, but the FE has NO feedback frame — tapping a choice auto-advances (markCorrect → next card or complete; markWrong → re-queue, D-015), so the keyed node-set never changes. Only waiting is driven in the test; correct/wrong are documented-not-driven coverage gaps (same node-set, no reachable distinct frame). complete = [] : the _complete() branch is shared game_screen chrome (gamePlayAgain uses Key('gamePlayAgain'), gameDone), carrying no keyed game-mc body node — the test asserts prompt+options ABSENT there (the THỪA guard: catches the mc body leaking into the finished round). Behavior exceptions (ledger, not identity-rollout): game-mc/next (auto-advance), /audio, /edit. Identity-rollout gap: game-mc/progress (LinearProgressIndicator, not keyed). NOTE: options is keyed in the FE but on the answer Column, NOT the kit's MxIconButton 3-dot menu (documented as a component exception in the ledger). choice-0..3 are NOT in gen.json/identityRollout at all (dynamic repeat OutlinedButtons inside options). Cross-checked by test/presentation/features/game/game_mc_states_test.dart.",
+  "screen": "game-mc",
+  "states": {
+    "waiting": ["mx-node:game-mc/prompt", "mx-node:game-mc/options"],
+    "correct": ["mx-node:game-mc/prompt", "mx-node:game-mc/options"],
+    "wrong": ["mx-node:game-mc/prompt", "mx-node:game-mc/options"],
+    "complete": []
+  }
+}
