@@ -573,6 +573,20 @@
       "source": "docs/business/game/game-modes.md"
     },
     {
+      "screen": "game-recall",
+      "node": "forgot",
+      "field": "*",
+      "reason": "The kit's 'Forgot' grade button is an MxButton. The FE recall game uses a Material OutlinedButton (default stadium radius + labelLarge); the outline/secondary emphasis matches the kit's intent, the radius + label size are the kit's button treatment not adopted by the plain game button.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-recall",
+      "node": "remembered",
+      "field": "*",
+      "reason": "The kit's 'Remembered' grade button is an MxButton. The FE recall game uses a Material FilledButton (default stadium radius + labelLarge); fill/emphasis (filled primary) matches the kit's intent, the radius + label size are the kit's button treatment not adopted by the plain game button.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
       "screen": "game-mc",
       "node": "options",
       "field": "color",
