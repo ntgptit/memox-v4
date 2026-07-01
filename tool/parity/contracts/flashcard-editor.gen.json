@@ -11,12 +11,22 @@
     {
       "key": "mx-node:flashcard-editor/appbar",
       "component": "MxAppBar",
-      "variant": "ghost"
+      "variant": null
+    },
+    {
+      "key": "mx-node:flashcard-editor/audio",
+      "component": "Field",
+      "variant": null
     },
     {
       "key": "mx-node:flashcard-editor/audio-play",
       "component": "MxIconButton",
       "variant": null
+    },
+    {
+      "key": "mx-node:flashcard-editor/cancel",
+      "component": "MxButton",
+      "variant": "ghost"
     },
     {
       "key": "mx-node:flashcard-editor/dup-add",
@@ -29,8 +39,23 @@
       "variant": "ghost"
     },
     {
+      "key": "mx-node:flashcard-editor/hidden",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
       "key": "mx-node:flashcard-editor/hidden-switch",
       "component": "MxSwitch",
+      "variant": null
+    },
+    {
+      "key": "mx-node:flashcard-editor/meaning",
+      "component": "Field",
+      "variant": null
+    },
+    {
+      "key": "mx-node:flashcard-editor/meaning-2",
+      "component": "Field",
       "variant": null
     },
     {
@@ -41,6 +66,11 @@
     {
       "key": "mx-node:flashcard-editor/screen",
       "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:flashcard-editor/term",
+      "component": "Field",
       "variant": null
     }
   ]

@@ -9,6 +9,16 @@
       "variant": null
     },
     {
+      "key": "mx-node:game-matching/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-matching/complete",
+      "component": "EmptyState",
+      "variant": null
+    },
+    {
       "key": "mx-node:game-matching/next",
       "component": "MxButton",
       "variant": "primary"
@@ -16,6 +26,11 @@
     {
       "key": "mx-node:game-matching/options",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-matching/progress",
+      "component": "ProgressBar",
       "variant": null
     },
     {

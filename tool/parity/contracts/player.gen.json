@@ -9,6 +9,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:player/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:player/card",
       "component": "MxCard",
       "variant": "elevated"
@@ -17,6 +22,11 @@
       "key": "mx-node:player/close",
       "component": "MxButton",
       "variant": "ghost"
+    },
+    {
+      "key": "mx-node:player/end",
+      "component": "EmptyState",
+      "variant": null
     },
     {
       "key": "mx-node:player/next",
@@ -52,6 +62,11 @@
       "key": "mx-node:player/speed",
       "component": "MxButton",
       "variant": "ghost"
+    },
+    {
+      "key": "mx-node:player/speed-control",
+      "component": "MxSegmentedControl",
+      "variant": null
     },
     {
       "key": "mx-node:player/text-size",

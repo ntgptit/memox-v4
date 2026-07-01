@@ -9,9 +9,29 @@
       "variant": null
     },
     {
+      "key": "mx-node:export/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:export/bar",
+      "component": "ProgressBar",
+      "variant": null
+    },
+    {
       "key": "mx-node:export/do-export",
       "component": "MxButton",
       "variant": "primary"
+    },
+    {
+      "key": "mx-node:export/done",
+      "component": "EmptyState",
+      "variant": null
+    },
+    {
+      "key": "mx-node:export/incl-srs",
+      "component": "ListRow",
+      "variant": null
     },
     {
       "key": "mx-node:export/incl-srs-switch",
@@ -27,6 +47,11 @@
       "key": "mx-node:export/save",
       "component": "MxButton",
       "variant": "ghost"
+    },
+    {
+      "key": "mx-node:export/scope",
+      "component": "MxSegmentedControl",
+      "variant": null
     },
     {
       "key": "mx-node:export/screen",

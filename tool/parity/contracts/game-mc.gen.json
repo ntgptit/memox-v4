@@ -14,6 +14,16 @@
       "variant": null
     },
     {
+      "key": "mx-node:game-mc/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-mc/complete",
+      "component": "EmptyState",
+      "variant": null
+    },
+    {
       "key": "mx-node:game-mc/edit",
       "component": "MxIconButton",
       "variant": null
@@ -26,6 +36,11 @@
     {
       "key": "mx-node:game-mc/options",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-mc/progress",
+      "component": "ProgressBar",
       "variant": null
     },
     {

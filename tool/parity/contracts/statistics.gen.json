@@ -19,6 +19,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:statistics/insufficient",
+      "component": "EmptyState",
+      "variant": null
+    },
+    {
       "key": "mx-node:statistics/leitner-head",
       "component": "MxSectionHeader",
       "variant": null
@@ -26,6 +31,11 @@
     {
       "key": "mx-node:statistics/overview-head",
       "component": "MxSectionHeader",
+      "variant": null
+    },
+    {
+      "key": "mx-node:statistics/scope",
+      "component": "MxSegmentedControl",
       "variant": null
     },
     {

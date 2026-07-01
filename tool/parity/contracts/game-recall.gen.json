@@ -14,6 +14,16 @@
       "variant": null
     },
     {
+      "key": "mx-node:game-recall/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-recall/complete",
+      "component": "EmptyState",
+      "variant": null
+    },
+    {
       "key": "mx-node:game-recall/edit",
       "component": "MxIconButton",
       "variant": null
@@ -36,6 +46,11 @@
     {
       "key": "mx-node:game-recall/options",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-recall/progress",
+      "component": "ProgressBar",
       "variant": null
     },
     {

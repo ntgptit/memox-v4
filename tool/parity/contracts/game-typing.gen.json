@@ -14,9 +14,19 @@
       "variant": null
     },
     {
+      "key": "mx-node:game-typing/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:game-typing/check",
       "component": "MxButton",
       "variant": "primary"
+    },
+    {
+      "key": "mx-node:game-typing/complete",
+      "component": "EmptyState",
+      "variant": null
     },
     {
       "key": "mx-node:game-typing/hint",
@@ -36,6 +46,11 @@
     {
       "key": "mx-node:game-typing/options",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-typing/progress",
+      "component": "ProgressBar",
       "variant": null
     },
     {

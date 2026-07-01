@@ -40,28 +40,83 @@ const asJson = args.includes('--json');
 const camel = (s) => s.replace(/-(\w)/g, (_, c) => c.toUpperCase());
 const DEFAULT_VARIANT = { MxCard: 'elevated' };
 
-/** Parse one screen JSX into ordered, deduped {key, component, variant} nodes. */
+// Find the end index of a JSX opening tag that starts right after `<Name`, so a
+// `>` inside an attribute value (a string, or a `{v => …}` arrow / JSX expression)
+// does not terminate the tag early. Tracks `{}` depth and skips quoted strings.
+function tagEnd(src, from) {
+  let i = from;
+  let depth = 0;
+  while (i < src.length) {
+    const ch = src[i];
+    if (ch === '"' || ch === "'" || ch === '`') {
+      const q = ch;
+      i++;
+      while (i < src.length && src[i] !== q) {
+        if (src[i] === '\\') i++;
+        i++;
+      }
+    } else if (ch === '{') depth++;
+    else if (ch === '}') depth--;
+    else if (ch === '>' && depth === 0) return i;
+    i++;
+  }
+  return -1;
+}
+
+// Extract the tag's OWN top-level `name="value"` string attributes (depth 0 only),
+// so a nested attribute inside a JSX-expression prop — e.g. `trailing={<Val
+// variant="outline"/>}` on a ListRow — is NOT mistaken for the tag's own attribute.
+function topAttrs(attrs) {
+  const out = {};
+  let i = 0;
+  let depth = 0;
+  while (i < attrs.length) {
+    if (depth === 0 && /[A-Za-z]/.test(attrs[i])) {
+      const kv = /^([A-Za-z][\w-]*)\s*=\s*"([^"]*)"/.exec(attrs.slice(i));
+      if (kv) {
+        if (!(kv[1] in out)) out[kv[1]] = kv[2];
+        i += kv[0].length;
+        continue;
+      }
+      i += /^[A-Za-z][\w-]*/.exec(attrs.slice(i))[0].length; // bare / {…} prop name
+      continue;
+    }
+    if (attrs[i] === '{') depth++;
+    else if (attrs[i] === '}') depth--;
+    i++;
+  }
+  return out;
+}
+
+/**
+ * Parse one screen JSX into ordered, deduped {key, component, variant} nodes.
+ * Captures a LITERAL node="…" on ANY component tag — Mx* primitives AND helper
+ * components like `window.ListRow` — not just Mx*. The component name is the tag
+ * identifier (`window.ListRow` → `ListRow`); tests only special-case `MxCard`.
+ */
 function parseScreen(jsx) {
-  // Drop inline `style={{ … }}` so a '>' inside a style can't end a tag early.
-  const src = jsx.replace(/style=\{\{[^{}]*\}\}/g, '');
+  const src = jsx;
   const nodes = [];
   const seen = new Map();
-  // Opening tags of Mx* components that carry a LITERAL node="…" attribute.
-  const tag = /<Mx(\w+)\b([^>]*?)\bnode="([^"]+)"([^>]*?)\/?>/g;
+  // Opening tags: <MxCard, <window.ListRow, <Foo, <div … (filtered to those with node=).
+  const open = /<([A-Za-z][\w.]*)\b/g;
   let m;
-  while ((m = tag.exec(src)) !== null) {
-    const component = `Mx${m[1]}`;
-    const node = m[3];
-    const attrs = `${m[2]} ${m[4]}`;
-    const vm = /\bvariant="([^"]+)"/.exec(attrs);
-    const variant = vm ? camel(vm[1]) : DEFAULT_VARIANT[component] ?? null;
+  while ((m = open.exec(src)) !== null) {
+    const end = tagEnd(src, m.index + m[0].length);
+    if (end < 0) continue;
+    const attr = topAttrs(src.slice(m.index + m[0].length, end));
+    if (!attr.node) continue;
+    const node = attr.node;
+    const raw = m[1];
+    const component = raw.startsWith('window.') ? raw.slice(7) : raw;
+    const variant = attr.variant
+      ? camel(attr.variant)
+      : DEFAULT_VARIANT[component] ?? null;
     const key = `mx-node:${node}`;
     if (seen.has(key)) {
       // Same node may recur across states; flag a real variant disagreement.
       const prev = seen.get(key);
-      if (prev.variant !== variant) {
-        prev.conflict = [prev.variant, variant];
-      }
+      if (prev.variant !== variant) prev.conflict = [prev.variant, variant];
       continue;
     }
     const entry = { key, component, variant };

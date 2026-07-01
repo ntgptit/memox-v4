@@ -9,8 +9,23 @@
       "variant": null
     },
     {
+      "key": "mx-node:search/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:search/clear",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:search/dock",
       "component": "MxSearchDock",
+      "variant": null
+    },
+    {
+      "key": "mx-node:search/no-results",
+      "component": "EmptyState",
       "variant": null
     },
     {

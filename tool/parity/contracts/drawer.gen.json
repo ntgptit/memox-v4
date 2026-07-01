@@ -4,6 +4,16 @@
   "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/drawer",
   "nodes": [
     {
+      "key": "mx-node:drawer/add-appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/add-back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:drawer/add-confirm",
       "component": "MxButton",
       "variant": "primary"
@@ -14,12 +24,42 @@
       "variant": null
     },
     {
+      "key": "mx-node:drawer/learn-lang",
+      "component": "LangCard",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/native-lang",
+      "component": "LangCard",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/pair-0",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
       "key": "mx-node:drawer/pair-0-del",
       "component": "MxIconButton",
       "variant": null
     },
     {
+      "key": "mx-node:drawer/pair-1",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
       "key": "mx-node:drawer/pair-1-del",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/remove-appbar",
+      "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/remove-back",
       "component": "MxIconButton",
       "variant": null
     },

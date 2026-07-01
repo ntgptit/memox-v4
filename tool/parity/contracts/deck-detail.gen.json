@@ -4,13 +4,73 @@
   "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/deck-detail",
   "nodes": [
     {
+      "key": "mx-node:deck-detail/action-delete",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/action-edit",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/action-hide",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/actions-scrim",
+      "component": "Scrim",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/actions-sheet",
+      "component": "Sheet",
+      "variant": null
+    },
+    {
       "key": "mx-node:deck-detail/add",
       "component": "MxFab",
       "variant": null
     },
     {
+      "key": "mx-node:deck-detail/add-import",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/add-scrim",
+      "component": "Scrim",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/add-sheet",
+      "component": "Sheet",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/add-subdeck",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/add-word",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
       "key": "mx-node:deck-detail/appbar",
       "component": "MxAppBar",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/deck-delete",
+      "component": "MenuItem",
       "variant": null
     },
     {
@@ -24,6 +84,31 @@
       "variant": "primary"
     },
     {
+      "key": "mx-node:deck-detail/deck-move",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/deck-rename",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/deck-reset",
+      "component": "MenuItem",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/deck-scrim",
+      "component": "Scrim",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/deck-sheet",
+      "component": "Sheet",
+      "variant": null
+    },
+    {
       "key": "mx-node:deck-detail/delete-cancel",
       "component": "MxButton",
       "variant": "ghost"
@@ -32,6 +117,11 @@
       "key": "mx-node:deck-detail/delete-ok",
       "component": "MxButton",
       "variant": "primary"
+    },
+    {
+      "key": "mx-node:deck-detail/empty",
+      "component": "EmptyState",
+      "variant": null
     },
     {
       "key": "mx-node:deck-detail/empty-add",
@@ -49,6 +139,11 @@
       "variant": "ghost"
     },
     {
+      "key": "mx-node:deck-detail/error",
+      "component": "EmptyState",
+      "variant": null
+    },
+    {
       "key": "mx-node:deck-detail/menu",
       "component": "MxIconButton",
       "variant": null
@@ -57,6 +152,21 @@
       "key": "mx-node:deck-detail/move-apply",
       "component": "MxButton",
       "variant": "primary"
+    },
+    {
+      "key": "mx-node:deck-detail/move-scrim",
+      "component": "Scrim",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/move-sheet",
+      "component": "Sheet",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/no-results",
+      "component": "EmptyState",
+      "variant": null
     },
     {
       "key": "mx-node:deck-detail/play-audio",
@@ -84,8 +194,18 @@
       "variant": null
     },
     {
+      "key": "mx-node:deck-detail/search-clear",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:deck-detail/search-dock",
       "component": "MxSearchDock",
+      "variant": null
+    },
+    {
+      "key": "mx-node:deck-detail/sort",
+      "component": "MxIconButton",
       "variant": null
     }
   ]

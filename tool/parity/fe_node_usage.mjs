@@ -114,12 +114,26 @@ function missingExemption(id) {
 }
 const orphanExemption = (id) => excMatch(null, id)[0] ?? null;
 
+// `identityRollout` (screen -> [node segments]) tracks kit nodes NOT YET keyed in the
+// FE — the identity-rollout backlog. Unlike `exceptions` (the FE INTENTIONALLY diverges),
+// these are just not-done-yet (or a structural difference documented per-screen). They
+// exempt MISSING so the completed contract doesn't block, while staying visible/countable.
+const ROLLOUT = (LEDGER.identityRollout && typeof LEDGER.identityRollout === 'object')
+  ? LEDGER.identityRollout
+  : {};
+function rolloutExemption(id) {
+  const screens = [...(idScreens.get(id) ?? [])];
+  if (!screens.length) return null;
+  const all = screens.every((s) => (ROLLOUT[s] ?? []).includes(seg(id)));
+  return all ? { exceptionKind: 'identity-rollout', source: 'intent-ledger.identityRollout' } : null;
+}
+
 // --- Classify ----------------------------------------------------------------
 const missing = []; // {id, screens, exempt?}
 for (const id of [...contractIds].sort()) {
   if (feIds.has(id)) continue;
   if (onlyScreen && !(idScreens.get(id) ?? new Set()).has(onlyScreen)) continue;
-  missing.push({ id, screens: [...(idScreens.get(id) ?? [])].sort(), exempt: missingExemption(id) });
+  missing.push({ id, screens: [...(idScreens.get(id) ?? [])].sort(), exempt: missingExemption(id) ?? rolloutExemption(id) });
 }
 const orphan = []; // {id, files, exempt?}
 for (const id of [...feIds].sort()) {

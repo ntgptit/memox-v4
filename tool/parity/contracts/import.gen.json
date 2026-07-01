@@ -9,9 +9,24 @@
       "variant": null
     },
     {
+      "key": "mx-node:import/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:import/do-import",
       "component": "MxButton",
       "variant": "primary"
+    },
+    {
+      "key": "mx-node:import/done",
+      "component": "EmptyState",
+      "variant": null
+    },
+    {
+      "key": "mx-node:import/dup-warning",
+      "component": "ActionCallout",
+      "variant": null
     },
     {
       "key": "mx-node:import/go-deck",
@@ -19,8 +34,18 @@
       "variant": "primary"
     },
     {
+      "key": "mx-node:import/map-meaning",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
       "key": "mx-node:import/map-meaning-pick",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:import/map-term",
+      "component": "ListRow",
       "variant": null
     },
     {

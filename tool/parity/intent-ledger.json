@@ -138,15 +138,6 @@
     },
     {
       "screen": "statistics",
-      "node": "scope",
-      "kind": "*",
-      "verdict": "exception",
-      "exceptionKind": "behavior",
-      "reason": "The kit keys the scope segmented control as statistics/scope. The FE renders the MxSegmentedControl (This pair / All) but does not key it with an mx-node literal (and scope is not a node in statistics.gen.json), so its identity is not rolled out; keying it would orphan against the contract.",
-      "source": "docs/business/statistics/statistics.md"
-    },
-    {
-      "screen": "statistics",
       "node": "weekly-head",
       "kind": "*",
       "verdict": "exception",
@@ -866,5 +857,157 @@
       "reason": "The kit's first preview text run is a muted caption (text-tertiary). The FE preview card leads with a normal-weight title (MxText.title, text colour) followed by body/sample controls, so the first text run is `text` not `text-tertiary`.",
       "source": "docs/business/personalization/personalization.md"
     }
-  ]
+  ],
+  "$identityRolloutDoc": "Kit nodes present in contracts/<screen>.gen.json but NOT yet keyed with ValueKey(mx-node:...) in lib/** — the identity-rollout backlog (fe_node_usage exempts these from MISSING). Distinct from `exceptions` (intentional FE↔kit divergences): these are simply not-keyed-yet, or a structural difference noted in the screen contract. Ratchet target: move nodes OUT of here into real FE keys over time. Regenerate after keying: remove the keyed segment.",
+  "identityRollout": {
+    "account": [
+      "back",
+      "sync-bar",
+      "sync-status"
+    ],
+    "deck-detail": [
+      "action-delete",
+      "action-edit",
+      "action-hide",
+      "actions-scrim",
+      "actions-sheet",
+      "add-import",
+      "add-scrim",
+      "add-sheet",
+      "add-subdeck",
+      "back",
+      "deck-delete",
+      "deck-reset",
+      "deck-scrim",
+      "deck-sheet",
+      "empty",
+      "error",
+      "move-scrim",
+      "move-sheet",
+      "no-results",
+      "search-clear",
+      "sort"
+    ],
+    "drawer": [
+      "add-appbar",
+      "add-back",
+      "learn-lang",
+      "native-lang",
+      "remove-appbar",
+      "remove-back"
+    ],
+    "export": [
+      "back",
+      "bar",
+      "done",
+      "incl-srs",
+      "scope"
+    ],
+    "flashcard-editor": [
+      "audio",
+      "cancel",
+      "hidden",
+      "meaning",
+      "meaning-2",
+      "term"
+    ],
+    "game-matching": [
+      "back",
+      "complete",
+      "progress"
+    ],
+    "game-mc": [
+      "back",
+      "complete",
+      "progress"
+    ],
+    "game-picker": [
+      "back",
+      "not-enough",
+      "scope-scrim",
+      "scope-sheet"
+    ],
+    "game-recall": [
+      "back",
+      "complete",
+      "progress"
+    ],
+    "game-typing": [
+      "back",
+      "complete",
+      "progress"
+    ],
+    "import": [
+      "back",
+      "done",
+      "dup-warning",
+      "map-meaning",
+      "map-term"
+    ],
+    "library": [
+      "empty",
+      "error",
+      "menu-open",
+      "of-export",
+      "of-import",
+      "of-select",
+      "of-settings",
+      "pair-add",
+      "pair-ja-en",
+      "pair-ko-en",
+      "pair-sheet",
+      "play-browse",
+      "play-game",
+      "play-learn",
+      "play-player",
+      "play-review",
+      "play-sheet",
+      "scrim",
+      "search-clear",
+      "sort-sheet"
+    ],
+    "player": [
+      "back",
+      "end"
+    ],
+    "reminder": [
+      "back",
+      "picker-scrim",
+      "picker-sheet",
+      "toggle",
+      "toggle-switch"
+    ],
+    "review": [
+      "back",
+      "end",
+      "progress"
+    ],
+    "search": [
+      "back",
+      "clear",
+      "no-results"
+    ],
+    "settings": [
+      "games",
+      "picker-scrim",
+      "picker-sheet",
+      "srs-boxes",
+      "srs-intervals",
+      "srs-notif",
+      "theme"
+    ],
+    "statistics": [
+      "insufficient",
+      "scope"
+    ],
+    "study-result": [
+      "close"
+    ],
+    "study-session": [
+      "close"
+    ],
+    "theme": [
+      "back"
+    ]
+  }
 }
