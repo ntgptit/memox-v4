@@ -811,6 +811,24 @@
       "exceptionKind": "component",
       "reason": "gen maps check to MxButton (primary); the FE typing game uses a Material FilledButton with the correct key. Identity is keyed and composition-gated; the MxButton variant map is deferred (same class as retry/accept/meaning — see game-modes.md §6 parity note). check also has a styleExempt for its border radius.",
       "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-mc",
+      "node": "prompt",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:game-mc/prompt to MxCard (elevated), but the shared guess game widget renders it as a Material Card carrying the same key. Keeping the Material Card is intentional (the four game widgets deliberately use raw Material widgets, not Mx* — see game-modes.md §6 parity note; kit-fit migration is deferred post-v1). The node is composition-gated (present/absent), its MxCard variant is not asserted.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-mc",
+      "node": "options",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "the kit gives the answer choices a post-answer feedback frame (correct/wrong states recolour the tapped choice success-soft/error-soft with a check/cancel icon). The FE has no feedback frame — a tap grades and auto-advances (markCorrect → next card/complete; markWrong → re-queue, D-015/BR-3), so the correct/wrong kit states are not reachable as a distinct node-set (documented coverage gap in game-mc.states.json). options keeps its styleExempt for the choice color/font.",
+      "source": "docs/business/game/game-modes.md"
     }
   ],
   "coverageExempt": [],
