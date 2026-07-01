@@ -46,7 +46,7 @@ Xếp theo thứ tự chạy đề xuất: **gate mạnh/sạch trước**.
 | [x] | `library.md` | B | 7 | deck card key động; 7 overlay gap states |
 | [x] | `game-typing.md` | B | 7 | meaning=Card≠MxCard; 4 gap states |
 | [x] | `game-mc.md` | B | 4 | prompt=Card; D-015 no feedback frame |
-| [ ] | `game-picker.md` | B | 2 | ⚠ DRIFT? not-enough tại count==0 vs kit "<4 words" |
+| [x] | `game-picker.md` | B | 2 | ⚠ DRIFT? not-enough tại count==0 vs kit "<4 words" |
 | [ ] | `game-matching.md` | B | ~1 | gate mỏng nhất (shared GameScreen scaffold) |
 | [ ] | `drawer.md` | B | 5 | shared component (Scaffold.drawer), không phải route |
 | [ ] | `study-result.md` | B | 3 | goal MxCard chưa key; 6/7 states là gap |
