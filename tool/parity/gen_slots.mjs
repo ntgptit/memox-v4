@@ -37,6 +37,7 @@ const args = process.argv.slice(2);
 const only = args.includes('--screen') ? args[args.indexOf('--screen') + 1] : null;
 const toStdout = args.includes('--stdout');
 const force = args.includes('--force'); // also (re)build screens that already have a curated .slots.json
+const check = args.includes('--check'); // gate: curated .slots.json must only bind nodes the spec still has
 
 // Proposed MxTextRole from the rendered font. Size drives it; at 13px the
 // weight splits label (bold caption) from body (regular). Boundaries mirror the
@@ -113,6 +114,33 @@ function screensToDo() {
   const files = readdirSync(SPECS).filter((f) => f.endsWith('.md') && f !== 'INDEX.md');
   const ids = files.map((f) => f.replace(/\.md$/, ''));
   return only ? ids.filter((s) => s === only) : ids;
+}
+
+// Every `mx-node:<id>` that appears anywhere in a screen's spec (base + diffs).
+function specNodeKeys(md) {
+  const keys = new Set();
+  for (const m of md.matchAll(/^\s*id: (.+)$/gm)) keys.add('mx-node:' + m[1].trim());
+  return keys;
+}
+
+// --check: each curated <screen>.slots.json may only bind nodes the spec still has.
+// Catches a slot left dangling after the kit renamed/removed a node.
+if (check) {
+  let stale = 0;
+  for (const screen of screensToDo()) {
+    const curated = join(OUT, `${screen}.slots.json`);
+    if (!existsSync(curated)) continue;
+    const keys = specNodeKeys(readFileSync(join(SPECS, `${screen}.md`), 'utf8'));
+    for (const key of Object.keys(JSON.parse(readFileSync(curated, 'utf8')).slots || {})) {
+      if (!keys.has(key)) {
+        console.error(`STALE ${screen}.slots.json: binds ${key} — not in specs/${screen}.md (kit renamed/removed it?)`);
+        stale++;
+      }
+    }
+  }
+  if (stale) { console.error(`slots: ${stale} dangling binding(s). Re-curate the .slots.json.`); process.exit(1); }
+  console.log('slots: curated bindings fresh');
+  process.exit(0);
 }
 
 if (!existsSync(OUT)) mkdirSync(OUT, { recursive: true });

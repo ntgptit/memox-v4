@@ -34,6 +34,7 @@ const args = process.argv.slice(2);
 const only = args.includes('--screen') ? args[args.indexOf('--screen') + 1] : null;
 const toStdout = args.includes('--stdout');
 const force = args.includes('--force'); // also (re)build screens that already have a curated .states.json
+const check = args.includes('--check'); // gate: curated .states.json nodes must match the spec's per-state set
 
 // screen id -> ordered state ids, from the SCREENS registry literal in index.html.
 function screenStates() {
@@ -99,7 +100,51 @@ const banner =
   'dashboard.states.json). Then rename to <screen>.states.json and add a per-state ' +
   'test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.';
 
+// Spec-derived per-state membership: { state id -> [mx-node keys] }. `mx-node:`
+// prefix + drop shell/* chrome, matching the curated convention. null if no spec.
+function deriveStates(screen) {
+  const specPath = join(SPECS, `${screen}.md`);
+  if (!existsSync(specPath) || !registry[screen]) return null;
+  const secs = sections(readFileSync(specPath, 'utf8'));
+  const ids = registry[screen];
+  const base = presentOf(secs[0] || { kind: 'base', body: '' }, new Set());
+  const emit = (set) => [...set].filter((id) => !id.startsWith('shell/')).map((id) => `mx-node:${id}`).sort();
+  const states = {};
+  for (let i = 0; i < ids.length; i++) {
+    const sec = secs[i] || { kind: 'diff', body: '' };
+    states[ids[i]] = emit(i === 0 ? base : presentOf(sec, base));
+  }
+  return states;
+}
+
 const wanted = only ? [only] : Object.keys(registry).sort();
+
+// --check: every node a curated <screen>.states.json lists for a state must be
+// present in that state per the fresh spec. Catches a curated node the kit dropped
+// from a state (the "extra in this state" drift the per-state test also guards).
+if (check) {
+  let stale = 0;
+  for (const screen of wanted) {
+    const curatedPath = join(OUT, `${screen}.states.json`);
+    if (!existsSync(curatedPath)) continue;
+    const derived = deriveStates(screen);
+    if (!derived) continue;
+    const curated = JSON.parse(readFileSync(curatedPath, 'utf8')).states || {};
+    for (const [state, keys] of Object.entries(curated)) {
+      const set = new Set(derived[state] || []);
+      for (const key of keys) {
+        if (!set.has(key)) {
+          console.error(`STALE ${screen}.states.json: state "${state}" lists ${key} — not in that state per specs/${screen}.md`);
+          stale++;
+        }
+      }
+    }
+  }
+  if (stale) { console.error(`states: ${stale} drifted membership(s). Re-curate the .states.json.`); process.exit(1); }
+  console.log('states: curated membership fresh');
+  process.exit(0);
+}
+
 let wrote = 0;
 for (const screen of wanted) {
   // A curated <screen>.states.json is the source of truth (a per-state test reads
@@ -108,22 +153,12 @@ for (const screen of wanted) {
     console.log(`skip ${screen}: curated ${screen}.states.json exists`);
     continue;
   }
-  const specPath = join(SPECS, `${screen}.md`);
-  if (!existsSync(specPath) || !registry[screen]) { console.warn(`skip ${screen}: no spec or registry entry`); continue; }
-  const secs = sections(readFileSync(specPath, 'utf8'));
-  const ids = registry[screen];
-  const base = presentOf(secs[0] || { kind: 'base', body: '' }, new Set());
-  // `mx-node:` prefix + drop shell/* chrome, matching the curated convention.
-  const emit = (set) => [...set].filter((id) => !id.startsWith('shell/')).map((id) => `mx-node:${id}`).sort();
-  const states = {};
-  for (let i = 0; i < ids.length; i++) {
-    const sec = secs[i] || { kind: 'diff', body: '' };
-    states[ids[i]] = emit(i === 0 ? base : presentOf(sec, base));
-  }
+  const states = deriveStates(screen);
+  if (!states) { console.warn(`skip ${screen}: no spec or registry entry`); continue; }
   const doc = { $skeleton: banner, screen, states };
   if (toStdout) { console.log(JSON.stringify(doc, null, 2)); continue; }
   writeFileSync(join(OUT, `${screen}.states.skeleton.json`), JSON.stringify(doc, null, 2) + '\n');
-  console.log(`wrote contracts/${screen}.states.skeleton.json (${ids.length} states)`);
+  console.log(`wrote contracts/${screen}.states.skeleton.json (${Object.keys(states).length} states)`);
   wrote++;
 }
 if (!toStdout) console.log(`done: ${wrote} skeleton(s)`);
