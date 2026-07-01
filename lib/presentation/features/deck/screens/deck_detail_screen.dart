@@ -40,7 +40,12 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final async = ref.watch(deckDetailProvider(widget.deckId));
-    final node = async.value?.node;
+    final state = async.value;
+    final node = state?.node;
+    // The kit hides the add FAB in the empty state (the empty-add CTA covers it);
+    // only show it when the node has content.
+    final hasContent =
+        node != null && (node.children.isNotEmpty || state!.cards.isNotEmpty);
     return MxScaffold(
       key: const ValueKey('mx-node:deck-detail/screen'),
       appBar: MxAppBar(
@@ -80,7 +85,7 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
         ],
       ),
       flush: true,
-      fab: node == null
+      fab: !hasContent
           ? null
           : MxFab(
               key: const ValueKey('mx-node:deck-detail/add'),

@@ -119,15 +119,6 @@
       "source": "docs/business/navigation/navigation-flow.md"
     },
     {
-      "screen": "deck-detail",
-      "node": "add",
-      "kind": "*",
-      "verdict": "exception",
-      "exceptionKind": "behavior",
-      "reason": "The kit hides the add FAB in the empty state (only the empty-add CTA is shown). The FE keeps the add FAB visible whenever the deck node exists — i.e. in BOTH loaded and empty — so the FAB and the empty-add CTA co-exist in the empty state. Harmless (both open the editor); the FAB is excluded from the deck-detail.states.json composition gate as non-distinct.",
-      "source": "docs/business/deck/deck-management.md"
-    },
-    {
       "screen": "statistics",
       "node": "streak",
       "kind": "*",
