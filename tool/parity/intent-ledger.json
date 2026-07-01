@@ -504,6 +504,34 @@
       "exceptionKind": "behavior",
       "reason": "The kit's remove view shows two fixed sample rows (pair-0-del / pair-1-del). The FE renders a per-pair delete affordance for every language pair, keyed dynamically by pair id (removeTile-<id>), not by fixed index, so there are no fixed pair-0/pair-1 nodes.",
       "source": "docs/business/navigation/navigation-flow.md"
+    },
+    {
+      "screen": "theme",
+      "node": "preview",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "variant",
+      "feVariant": "flat",
+      "reason": "fe preview = flat (a demo surface inside the settings list, deliberately not competing with primary elevated cards), kit = elevated. theme_parity_test.dart reads this exceptionKind:variant + feVariant to assert flat instead of the gen.json elevated.",
+      "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "theme",
+      "node": "preview",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "content",
+      "reason": "fe preview content = l10n themePreview / themePreviewBody (real UI copy), kit = 학교 / school / 'Study now' sample copy. The slot bindings follow the FE truth (theme.slots.json), not the kit mock.",
+      "source": "docs/business/personalization/personalization.md"
+    },
+    {
+      "screen": "theme",
+      "node": "accent",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "behavior",
+      "reason": "fe accent = 3 MxChip (AccentChoice brand/warm/cool, keyed dynamically accent-<name>), kit = 6 literal swatches (accent-0..5). v1 exposes three accent choices, not a six-colour palette.",
+      "source": "docs/business/personalization/personalization.md"
     }
   ],
   "coverageExempt": [],

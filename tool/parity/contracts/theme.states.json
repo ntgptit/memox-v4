@@ -1,0 +1,9 @@
+{
+  "$curated": "Per-state node set for theme — the keyed body MxCard node the FE renders in each state (appbar / screen / heads / controls chrome excluded, matching review.states.json). IMPORTANT: theme's 3 kit states (light / dark / accent-size) are NOT node-distinct — they only remap ThemePrefs (color-mode token remap / accent choice / font scale). The node-set is identical across all three: theme/preview (MxCard) always renders. Cross-checked by theme_parity_test.dart, which pumps each state (a different ThemePrefs override) and asserts theme/preview is present in all three (identity stable across every ThemePrefs) — there is no absent-node to catch THỪA/THIẾU here, so dark/accent-size are a natural coverage gap of a settings screen, not a driveable node difference. The gate is 'the preview MxCard identity + variant(flat, via intent-ledger) + slots(title/body) hold across every ThemePrefs remap'.",
+  "screen": "theme",
+  "states": {
+    "light": ["mx-node:theme/preview"],
+    "dark": ["mx-node:theme/preview"],
+    "accent-size": ["mx-node:theme/preview"]
+  }
+}
