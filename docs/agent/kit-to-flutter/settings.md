@@ -1,5 +1,17 @@
 # Kit → Flutter — SETTINGS conversion prompt
 
+> **STATUS: DONE (2026-07-02) — resolved differently from the workflow below.** During
+> the loop it emerged that the kit models settings as *summary rows that expand*
+> (`settings/games`, `srs-boxes`, `srs-intervals`, `srs-notif`, `theme`) while the FE is a
+> *flat* list of detailed rows — they do NOT map 1:1, so there is no gate-able body node
+> and the `settings/g-<feName>` keying below was NOT done (it would orphan). Instead the
+> `gen_parity_contract` generator was fixed to capture `<window.ListRow node="…">` (was
+> Mx*-only), so settings' real kit nodes now live in `settings.gen.json`; the FE-unmapped
+> body nodes are tracked in `intent-ledger.json` → `identityRollout.settings` (not a
+> per-state gate). Chrome (`settings/screen`, `settings/appbar`) is keyed. Skeletons
+> deleted; no `settings_parity_test.dart`. See the loop queue README + WBS §10. The
+> workflow below is retained as historical context only.
+>
 > **PROMPT ID:** `kit-to-flutter/settings` (queue item `22-settings.md`)
 > Self-contained. Chuyển **một** màn: `settings`. KHÔNG chuyển màn khác.
 > Ngôn ngữ làm việc: Việt/Anh đều được. Mọi path repo-root tuyệt đối (không leading slash).

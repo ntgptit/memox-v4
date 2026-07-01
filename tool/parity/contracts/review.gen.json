@@ -14,6 +14,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:review/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:review/back-deck",
       "component": "MxButton",
       "variant": "ghost"
@@ -34,6 +39,11 @@
       "variant": "primary"
     },
     {
+      "key": "mx-node:review/end",
+      "component": "EmptyState",
+      "variant": null
+    },
+    {
       "key": "mx-node:review/meaning",
       "component": "MxCard",
       "variant": "elevated"
@@ -51,6 +61,11 @@
     {
       "key": "mx-node:review/prev",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:review/progress",
+      "component": "ProgressBar",
       "variant": null
     },
     {

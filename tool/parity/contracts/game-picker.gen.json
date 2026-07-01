@@ -14,9 +14,29 @@
       "variant": null
     },
     {
+      "key": "mx-node:game-picker/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-picker/not-enough",
+      "component": "ActionCallout",
+      "variant": null
+    },
+    {
       "key": "mx-node:game-picker/scope",
       "component": "MxCard",
       "variant": "elevated"
+    },
+    {
+      "key": "mx-node:game-picker/scope-scrim",
+      "component": "Scrim",
+      "variant": null
+    },
+    {
+      "key": "mx-node:game-picker/scope-sheet",
+      "component": "Sheet",
+      "variant": null
     },
     {
       "key": "mx-node:game-picker/screen",

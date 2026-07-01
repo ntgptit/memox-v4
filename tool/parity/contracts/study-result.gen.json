@@ -9,9 +9,19 @@
       "variant": null
     },
     {
+      "key": "mx-node:study-result/close",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:study-result/continue",
       "component": "MxButton",
       "variant": "primary"
+    },
+    {
+      "key": "mx-node:study-result/finalize-error",
+      "component": "EmptyState",
+      "variant": null
     },
     {
       "key": "mx-node:study-result/finalize-later",
@@ -27,6 +37,11 @@
       "key": "mx-node:study-result/goal",
       "component": "MxCard",
       "variant": "primarySoft"
+    },
+    {
+      "key": "mx-node:study-result/goal-bar",
+      "component": "ProgressBar",
+      "variant": null
     },
     {
       "key": "mx-node:study-result/later",

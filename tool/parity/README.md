@@ -97,9 +97,15 @@ node tool/parity/gen_bindings.mjs --check  # gate freshness (đỏ nếu binding
 ## `gen_parity_contract.mjs` — contract từ kit JSX TĨNH (không Chrome)
 
 `gen_contract`/`gen_bindings` đọc `specs/*.md` — chỉ có sau khi `export_specs` (Chrome) render kit, **chưa
-chạy** ở layout hiện hành nên cả hai inert. Tool này **parse thẳng JSX** (`<Mx* node="…" variant="…">` là
-literal) → de-inert lớp **identity + styling** từ CÙNG nguồn design mà không cần Chrome. Sinh
+chạy** ở layout hiện hành nên cả hai inert. Tool này **parse thẳng JSX** (`node="…" variant="…"` là literal)
+→ de-inert lớp **identity + styling** từ CÙNG nguồn design mà không cần Chrome. Sinh
 `contracts/<screen>.gen.json` = `key + component + variant` cho mọi screen.
+
+Bắt `node="…"` trên **MỌI** tag component — cả `Mx*` primitive LẪN helper như `<window.ListRow node="…">`
+(không chỉ `Mx*`). Parser quét tag an-toàn với `{}`/string (một `>` bên trong attr như `onChange={v => …}`
+không kết thúc tag sớm) và chỉ lấy attribute **depth-0** (một `variant="…"` lồng trong `trailing={<Val
+variant="…"/>}` KHÔNG bị nhầm là variant của tag). Nhờ vậy contract phủ đủ node của kit (hiện 305 node/22
+screen). `component` = tên tag (`window.ListRow` → `ListRow`); chỉ `MxCard` được test Template A xử lý đặc biệt.
 
 ```bash
 node tool/parity/gen_parity_contract.mjs            # write contracts/<screen>.gen.json
@@ -318,6 +324,13 @@ là key-level rẻ chạy-mọi-lần, widget test là state-level.
 node-segment + screen khớp một entry rớt xuống `exempt` (vẫn hiện) thay vì block. Với
 MISSING, **mọi** screen sở hữu phải được except; ORPHAN match theo node-segment.
 
+**`identityRollout` (backlog chưa key)**: khi `gen_parity_contract` bắt đủ node kit
+(186→305), nhiều node kit CHƯA được key `ValueKey('mx-node:…')` trong `lib/**` — đó là
+**backlog identity-rollout**, KHÁC với `exceptions` (FE chệch có chủ đích). `intent-ledger.json`
+→ `identityRollout` (`screen -> [node segment]`) liệt kê các node này; `fe_node_usage` coi chúng
+là `exempt` (vẫn đếm được) để contract-đã-đủ không block `verify`. **Ratchet:** key dần từng node
+trong FE rồi bỏ khỏi `identityRollout` cho tới rỗng.
+
 ```bash
 node tool/parity/fe_node_usage.mjs            # missing / orphan / exempt
 node tool/parity/fe_node_usage.mjs --screen dashboard
@@ -325,11 +338,11 @@ node tool/parity/fe_node_usage.mjs --check    # exit 1 nếu có missing/orphan 
 node tool/parity/fe_node_usage.mjs --json
 ```
 
-Hiện **186 kit node · 6 keyed · 180 missing · 0 orphan** (rollout identity mới bắt
-đầu; dashboard body đã đủ key, còn shell chrome `dashboard/{appbar,notifications,
-quick-review,screen}` chờ key ở `app_shell`). **Report-first** — chưa wired `--check`
-vào `verify` tới khi rollout key xong (180 missing sẽ chặn mọi commit). Lên gate
-ratchet per-screen khi từng màn đạt 0 missing.
+Hiện **305 kit node · 122 keyed · 0 missing (blocking) · 0 orphan** — 76 documented
+`exceptions` + **107 `identityRollout`** (chưa key, backlog) đều `exempt`. `--check` ĐÃ
+wired vào `verify` (step `parity_fe_keys`) và xanh: contract đã đủ node, mọi MISSING còn
+lại đều nằm trong `identityRollout`/`exceptions`. Ratchet: key dần → bỏ khỏi
+`identityRollout` cho tới rỗng.
 
 Exit: `0` ok · `1` gate fail (`--check`) · `2` IO error (thiếu `contracts/*.gen.json`
 → chạy `gen_parity_contract.mjs` trước).

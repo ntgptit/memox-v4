@@ -9,9 +9,24 @@
       "variant": null
     },
     {
+      "key": "mx-node:reminder/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:reminder/picker-done",
       "component": "MxButton",
       "variant": "primary"
+    },
+    {
+      "key": "mx-node:reminder/picker-scrim",
+      "component": "Scrim",
+      "variant": null
+    },
+    {
+      "key": "mx-node:reminder/picker-sheet",
+      "component": "Sheet",
+      "variant": null
     },
     {
       "key": "mx-node:reminder/screen",
@@ -26,6 +41,16 @@
     {
       "key": "mx-node:reminder/time-edit",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:reminder/toggle",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
+      "key": "mx-node:reminder/toggle-switch",
+      "component": "MxSwitch",
       "variant": null
     }
   ]

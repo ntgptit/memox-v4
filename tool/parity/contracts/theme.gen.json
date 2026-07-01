@@ -14,6 +14,16 @@
       "variant": null
     },
     {
+      "key": "mx-node:theme/back",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:theme/mode-control",
+      "component": "MxSegmentedControl",
+      "variant": null
+    },
+    {
       "key": "mx-node:theme/mode-head",
       "component": "MxSectionHeader",
       "variant": null
@@ -26,6 +36,11 @@
     {
       "key": "mx-node:theme/screen",
       "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:theme/size-control",
+      "component": "MxSegmentedControl",
       "variant": null
     },
     {

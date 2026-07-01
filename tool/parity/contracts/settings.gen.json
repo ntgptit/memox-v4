@@ -9,6 +9,21 @@
       "variant": null
     },
     {
+      "key": "mx-node:settings/games",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
+      "key": "mx-node:settings/picker-scrim",
+      "component": "Scrim",
+      "variant": null
+    },
+    {
+      "key": "mx-node:settings/picker-sheet",
+      "component": "Sheet",
+      "variant": null
+    },
+    {
       "key": "mx-node:settings/profile",
       "component": "MxCard",
       "variant": "elevated"
@@ -19,8 +34,28 @@
       "variant": null
     },
     {
+      "key": "mx-node:settings/srs-boxes",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
+      "key": "mx-node:settings/srs-intervals",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
+      "key": "mx-node:settings/srs-notif",
+      "component": "ListRow",
+      "variant": null
+    },
+    {
       "key": "mx-node:settings/srs-notif-switch",
       "component": "MxSwitch",
+      "variant": null
+    },
+    {
+      "key": "mx-node:settings/theme",
+      "component": "ListRow",
       "variant": null
     }
   ]
