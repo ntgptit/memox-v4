@@ -5,10 +5,8 @@ import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/database_provider.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
-import 'package:memox_v4/core/util/clock.dart';
 import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
@@ -25,15 +23,6 @@ import 'package:memox_v4/presentation/features/settings/screens/reminder_screen.
 /// this layer does NOT distinguish on vs off (a documented gap). Its value is catching a
 /// keyed node disappearing (THIẾU) or a stray one appearing (THỪA). The kit's `time-picker`
 /// state is a framework showTimePicker dialog with no keyed node → coverage gap, not driven.
-class _FixedClock implements Clock {
-  const _FixedClock(this._ms);
-  final int _ms;
-  @override
-  DateTime now() => DateTime.fromMillisecondsSinceEpoch(_ms);
-  @override
-  DateTime nowUtc() => now().toUtc();
-}
-
 Map<String, dynamic> _readJson(String path) =>
     jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
 
@@ -54,10 +43,7 @@ void main() {
   tearDown(() => db.close());
 
   Widget host() => ProviderScope(
-    overrides: [
-      databaseProvider.overrideWithValue(db),
-      clockProvider.overrideWithValue(const _FixedClock(10000)),
-    ],
+    overrides: [databaseProvider.overrideWithValue(db)],
     child: MaterialApp(
       theme: AppTheme.light(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
