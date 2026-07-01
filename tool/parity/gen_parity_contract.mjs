@@ -161,6 +161,7 @@ function collectKitJsx(dir, acc = []) {
 // the screen's entry + component files. A node id lives in exactly one file, but we
 // still flag any cross-file variant disagreement the same way parseScreen does.
 const byScreen = new Map();
+const screenDir = new Map(); // screen id -> its _features/<dir> (may differ, e.g. account → account-sync)
 for (const abs of collectKitJsx(KIT)) {
   const nodes = parseScreen(readFileSync(abs, 'utf8'));
   if (!nodes.length) continue;
@@ -169,6 +170,9 @@ for (const abs of collectKitJsx(KIT)) {
   // Scope to this screen's own nodes; shared chrome (shell/*) lives elsewhere.
   const scoped = nodes.filter((n) => prefixOf(n) === screen);
   if (!scoped.length) continue;
+  // Record the real feature dir (node prefix can differ from it — account/ vs account-sync/).
+  const fd = /_features[/\\]([^/\\]+)/.exec(abs);
+  if (fd && !screenDir.has(screen)) screenDir.set(screen, fd[1]);
   const seen = byScreen.get(screen) || new Map();
   for (const n of scoped) {
     const prev = seen.get(n.key);
@@ -187,7 +191,8 @@ const built = [];
 for (const [screen, seen] of [...byScreen].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
   const nodes = [...seen.values()].sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
   const conflicts = nodes.filter((n) => n.conflict);
-  built.push({ screen, source: `${PATHS.uiKitDir}/_features/${screen}`, nodes, conflicts });
+  const source = `${PATHS.uiKitDir}/_features/${screenDir.get(screen) ?? screen}`;
+  built.push({ screen, source, nodes, conflicts });
 }
 
 if (asJson) {
