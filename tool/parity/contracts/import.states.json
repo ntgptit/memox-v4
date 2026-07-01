@@ -1,0 +1,11 @@
+{
+  "$curated": "State-composition gate for import (Template B — import.gen.json has 0 MxCard; the kit's source cards + preview table are custom markup, so assert the keyed control SET per state). Chrome (screen/appbar/back) excluded (matches dashboard.states.json). The kit models import as a 5-step WIZARD (source→mapping→preview→dup-warning→done) with the controls SPLIT across steps (column pickers in `mapping`, do-import in `preview`/`dup-warning`, go-deck in `done`); the FE is a SINGLE scrolling screen (intended v1 divergence — intent-ledger; consistent with the business doc BR-2 preview-before-write + soft-dup non-blocking, D-025) that renders map-picks + do-import TOGETHER once _rows is set, and keeps them after import while appending go-deck. So the FE's node-sets map to NONE of the kit's split wizard states 1:1. The per-state node membership here follows the KIT derivation (so states_check passes: each set ⊆ the spec's per-state set). The composition test therefore drives ONLY `source` through the universe loop (asserting every body node — map-term-pick, map-meaning-pick, do-import, go-deck — is ABSENT on the initial screen, catching any leak); the FE's combined mapping/preview states and its rows-kept done state are documented coverage gaps, covered instead by two TARGETED tests: after paste → map-picks + do-import present; after do-import → go-deck present. dup-warning is a soft-dup count in the result line, not a keyed pre-import callout (intent-ledger). Cross-checked by test/presentation/features/import_export/import_states_test.dart.",
+  "screen": "import",
+  "states": {
+    "source": [],
+    "mapping": ["mx-node:import/map-term-pick", "mx-node:import/map-meaning-pick"],
+    "preview": ["mx-node:import/do-import"],
+    "dup-warning": ["mx-node:import/do-import"],
+    "done": ["mx-node:import/go-deck"]
+  }
+}
