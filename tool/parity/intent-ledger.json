@@ -829,6 +829,15 @@
       "exceptionKind": "behavior",
       "reason": "the kit gives the answer choices a post-answer feedback frame (correct/wrong states recolour the tapped choice success-soft/error-soft with a check/cancel icon). The FE has no feedback frame — a tap grades and auto-advances (markCorrect → next card/complete; markWrong → re-queue, D-015/BR-3), so the correct/wrong kit states are not reachable as a distinct node-set (documented coverage gap in game-mc.states.json). options keeps its styleExempt for the choice color/font.",
       "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-mc",
+      "node": "options",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "component",
+      "reason": "gen maps mx-node:game-mc/options to MxIconButton (the app-bar 3-dot options menu, present in every kit state incl. complete). The FE has no such menu (game actions are minimal) and instead RE-USES this key on the Column wrapping the four answer OutlinedButtons (multiple_choice_game.dart:39) — a structurally different, in-game-only element. The Column carries the key purely as a composition anchor; the MxIconButton identity/variant is not asserted. Re-keying the answer group to its own node id (and making the absent 3-dot menu a plain behavior exception like game-typing/options) is a deferred kit-fit cleanup, not this composition-parity pass.",
+      "source": "docs/business/game/game-modes.md"
     }
   ],
   "coverageExempt": [],

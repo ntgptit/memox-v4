@@ -127,6 +127,8 @@ void main() {
       await drain(tester);
     },
     'complete': (tester) async {
+      // wordsPerRound defaults to 5 but only 1 card is seeded → min(5,1)=1 card
+      // enters pending, so its sole choice always carries Key('mcCorrect').
       await seedCard('학교', '학교-nghĩa');
       await tester.pumpWidget(host());
       await drain(tester);
