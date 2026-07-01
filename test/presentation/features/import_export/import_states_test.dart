@@ -17,14 +17,19 @@ import 'package:memox_v4/presentation/features/import_export/screens/import_scre
 /// `tool/parity/contracts/import.states.json`. import.gen.json has 0 MxCard, so — like
 /// dashboard_states_test — we assert keyed-node present/absent, never casting.
 ///
-/// The kit is a 5-step WIZARD with controls SPLIT across steps; the FE is a single
-/// scrolling screen that renders map-picks + do-import together once _rows is set (and
-/// keeps them after import while appending go-deck). So the FE's node-sets map to no
-/// single kit state. The composition loop therefore drives only `source` (asserting
-/// every body node is ABSENT on the initial screen — catches a leak); the combined
-/// mapping/preview and rows-kept done states are documented gaps, covered by two
-/// TARGETED tests: after paste → map-picks + do-import present; after do-import →
-/// go-deck present.
+/// The kit is a 5-step WIZARD with controls SPLIT across steps (map-picks in `mapping`,
+/// do-import in `preview`/`dup-warning`, go-deck in `done`); the FE is a single scrolling
+/// screen that renders map-picks + do-import TOGETHER once _rows is set (and keeps them
+/// after import while appending go-deck). Because no single kit state name holds
+/// {map-picks, do-import} together, import.states.json follows the KIT per-state
+/// membership (so states_check — curated ⊆ derived — passes); the FE's COMBINED node-sets
+/// therefore cannot be asserted through the universe loop. So the loop drives only
+/// `source` (every body node ABSENT — catches a leak onto the initial screen), and the
+/// FE's real body states are fully composition-checked by two TARGETED tests below:
+///   - loaded (_rows set): map-term-pick + map-meaning-pick + do-import present, go-deck absent;
+///   - done (_result set): the FE KEEPS all three + appends go-deck → all four present.
+/// This is the FE-faithful composition gate, expressed as targeted asserts rather than
+/// the states.json loop (which states_check forces to the kit's split membership).
 Map<String, dynamic> _readJson(String path) =>
     jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
 
@@ -86,12 +91,6 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
   }
 
-  Future<void> settle(WidgetTester tester) async {
-    for (var i = 0; i < 5; i++) {
-      await tester.pump(const Duration(milliseconds: 50));
-    }
-  }
-
   // Composition loop: only `source` is drivable cleanly (initial screen, _rows == null).
   testWidgets('state "source": FE body renders exactly the kit node set', (
     tester,
@@ -124,7 +123,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('importPaste')));
-    await settle(tester);
+    await tester.pumpAndSettle();
 
     for (final key in <String>[
       'mx-node:import/map-term-pick',
@@ -141,21 +140,32 @@ void main() {
     expect(find.byKey(const ValueKey('mx-node:import/go-deck')), findsNothing);
   });
 
-  testWidgets('after do-import: go-deck appears (_result set)', (tester) async {
+  testWidgets('after do-import: FE done keeps the controls + appends go-deck', (
+    tester,
+  ) async {
     bigViewport(tester);
     mockClipboard(tester, 'term,meaning\n학교,school');
     await tester.pumpWidget(host());
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('importPaste')));
-    await settle(tester);
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('mx-node:import/do-import')));
-    await settle(tester);
+    await tester.pumpAndSettle();
 
-    expect(
-      find.byKey(const ValueKey('mx-node:import/go-deck')),
-      findsOneWidget,
-      reason: 'go-deck must appear after the import completes',
-    );
+    // The FE does NOT clear _rows on import (documented divergence from the kit's
+    // separate `done` step), so the full done composition is all four body nodes.
+    for (final key in <String>[
+      'mx-node:import/map-term-pick',
+      'mx-node:import/map-meaning-pick',
+      'mx-node:import/do-import',
+      'mx-node:import/go-deck',
+    ]) {
+      expect(
+        find.byKey(ValueKey(key)),
+        findsOneWidget,
+        reason: '$key must be present in the FE done state',
+      );
+    }
   });
 }
