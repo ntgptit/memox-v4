@@ -126,6 +126,8 @@ void main() {
       final ids = await seedCards(2);
       await tester.pumpWidget(host());
       await tester.pumpAndSettle();
+      // ids drive key lookups (matchLeft-<id>), not positions — the initState
+      // shuffle of tile order is irrelevant to find.byKey.
       for (final id in ids) {
         await tester.tap(find.byKey(Key('matchLeft-$id')));
         await tester.pumpAndSettle();
