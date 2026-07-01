@@ -59,6 +59,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:study-session/progress",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:study-session/resume-back",
       "component": "MxButton",
       "variant": "ghost"

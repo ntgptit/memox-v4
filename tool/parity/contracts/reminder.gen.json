@@ -14,6 +14,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:reminder/days",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:reminder/picker-done",
       "component": "MxButton",
       "variant": "primary"

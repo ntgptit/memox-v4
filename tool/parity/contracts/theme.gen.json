@@ -4,6 +4,11 @@
   "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/theme",
   "nodes": [
     {
+      "key": "mx-node:theme/accent",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:theme/accent-head",
       "component": "MxSectionHeader",
       "variant": null
@@ -16,6 +21,11 @@
     {
       "key": "mx-node:theme/back",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:theme/mode",
+      "component": "div",
       "variant": null
     },
     {
@@ -36,6 +46,11 @@
     {
       "key": "mx-node:theme/screen",
       "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:theme/size",
+      "component": "div",
       "variant": null
     },
     {

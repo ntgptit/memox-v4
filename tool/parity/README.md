@@ -101,11 +101,12 @@ chạy** ở layout hiện hành nên cả hai inert. Tool này **parse thẳng 
 → de-inert lớp **identity + styling** từ CÙNG nguồn design mà không cần Chrome. Sinh
 `contracts/<screen>.gen.json` = `key + component + variant` cho mọi screen.
 
-Bắt `node="…"` trên **MỌI** tag component — cả `Mx*` primitive LẪN helper như `<window.ListRow node="…">`
-(không chỉ `Mx*`). Parser quét tag an-toàn với `{}`/string (một `>` bên trong attr như `onChange={v => …}`
-không kết thúc tag sớm) và chỉ lấy attribute **depth-0** (một `variant="…"` lồng trong `trailing={<Val
-variant="…"/>}` KHÔNG bị nhầm là variant của tag). Nhờ vậy contract phủ đủ node của kit (hiện 305 node/22
-screen). `component` = tên tag (`window.ListRow` → `ListRow`); chỉ `MxCard` được test Template A xử lý đặc biệt.
+Bắt node identity trên **MỌI** tag component, ở **CẢ HAI** cú pháp kit dùng: prop `node="…"` (trên
+`Mx*`/helper như `<window.ListRow node="…">`) LẪN attribute thô `data-mx-node="…"` (trên `<div>` container).
+Parser quét tag an-toàn với `{}`/string (một `>` bên trong attr như `onChange={v => …}` không kết thúc tag
+sớm) và chỉ lấy attribute **depth-0** (một `variant="…"` lồng trong `trailing={<Val variant="…"/>}` KHÔNG bị
+nhầm là variant của tag). Nhờ vậy contract phủ đủ node của kit (hiện 326 node/22 screen). `component` = tên
+tag (`window.ListRow` → `ListRow`, `<div data-mx-node>` → `div`); chỉ `MxCard` được test Template A xử lý đặc biệt.
 
 ```bash
 node tool/parity/gen_parity_contract.mjs            # write contracts/<screen>.gen.json
@@ -338,8 +339,8 @@ node tool/parity/fe_node_usage.mjs --check    # exit 1 nếu có missing/orphan 
 node tool/parity/fe_node_usage.mjs --json
 ```
 
-Hiện **305 kit node · 122 keyed · 0 missing (blocking) · 0 orphan** — 76 documented
-`exceptions` + **107 `identityRollout`** (chưa key, backlog) đều `exempt`. `--check` ĐÃ
+Hiện **326 kit node · 122 keyed · 0 missing (blocking) · 0 orphan** — 80 documented
+`exceptions` + **124 `identityRollout`** (chưa key, backlog) đều `exempt`. `--check` ĐÃ
 wired vào `verify` (step `parity_fe_keys`) và xanh: contract đã đủ node, mọi MISSING còn
 lại đều nằm trong `identityRollout`/`exceptions`. Ratchet: key dần → bỏ khỏi
 `identityRollout` cho tới rỗng.

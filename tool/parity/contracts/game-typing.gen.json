@@ -34,6 +34,11 @@
       "variant": "ghost"
     },
     {
+      "key": "mx-node:game-typing/input",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:game-typing/meaning",
       "component": "MxCard",
       "variant": "elevated"

@@ -24,6 +24,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:search/filters",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:search/no-results",
       "component": "EmptyState",
       "variant": null

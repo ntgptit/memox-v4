@@ -34,6 +34,11 @@
       "variant": null
     },
     {
+      "key": "mx-node:drawer/overlay",
+      "component": "div",
+      "variant": null
+    },
+    {
       "key": "mx-node:drawer/pair-0",
       "component": "ListRow",
       "variant": null
@@ -51,6 +56,11 @@
     {
       "key": "mx-node:drawer/pair-1-del",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:drawer/panel",
+      "component": "div",
       "variant": null
     },
     {
