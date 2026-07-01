@@ -658,6 +658,24 @@
       "exceptionKind": "component",
       "reason": "kit models audio-play as MxIconButton (icon-only volume_up); the FE uses a labelled outline MxButton (Speak) for a clearer affordance in the form, consistent with the design-system button variants. Composition gate only asserts present/absent by key, not component, so this does not fail the gate.",
       "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "reminder",
+      "node": "time",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "structure",
+      "reason": "kit models the reminder time as a standalone MxCard (elevated); the FE renders reminder/time as a Container (surface bg + cardRadius) that is the trailing value of a settings-row ListTile, not a full-width standalone card.",
+      "source": "docs/business/settings/settings.md"
+    },
+    {
+      "screen": "reminder",
+      "node": "time-edit",
+      "kind": "*",
+      "verdict": "exception",
+      "exceptionKind": "structure",
+      "reason": "kit models reminder/time-edit as a standalone MxIconButton (schedule icon); the FE uses a full ListTile row (tap-to-edit opens showTimePicker) so the whole row is the edit target, not a separate icon button.",
+      "source": "docs/business/settings/settings.md"
     }
   ],
   "coverageExempt": [],

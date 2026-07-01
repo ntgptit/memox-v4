@@ -1,0 +1,8 @@
+{
+  "$curated": "Per-state BODY keyed-node set for reminder (Template B — the one gen MxCard node reminder/time is rendered as a Container in the FE, so there is no MxCard to loop; assert the keyed SET per state). Chrome (screen/appbar) excluded (matches dashboard.states.json); the kit's toggle / toggle-switch / back / picker-* nodes are not keyed in the FE (identity-rollout gaps — see intent-ledger.identityRollout.reminder + picker-done exception). IMPORTANT: the FE renders the SAME keyed node-set in `on` and `off` — reminder/time + reminder/time-edit are present in both; the on↔off difference is only the `enabled` flag / opacity / active-hint block, NOT the node-set, so this layer does NOT distinguish on vs off (a documented gap — see style-parity-blind-spots). The gate's value here is catching a THIẾU (a keyed node disappearing) or THỪA (a stray keyed node) against the fixed set. `time-picker` is a framework-owned showTimePicker dialog (no keyed node) → coverage gap, not driven. Cross-checked by test/presentation/features/settings/reminder_states_test.dart.",
+  "screen": "reminder",
+  "states": {
+    "on": ["mx-node:reminder/time", "mx-node:reminder/time-edit"],
+    "off": ["mx-node:reminder/time", "mx-node:reminder/time-edit"]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "$curated": "Slot binding for reminder — the one keyed node carrying text is reminder/time (a Container wrapping one MxText). `role` is the MxTextRole the FE renders; `bind` is the domain value (card/reminder data — NOT l10n). Curated from reminder.slots.skeleton.json: timeValue = labelLarge (the FE truth, reminder_screen.dart:76-80 — a compact settings-row trailing value with text-tertiary), NOT the kit mock's displayLarge 38/800 standalone-card time. The skeleton's other slots (toggle / days / day-* / appbar) are dropped — those kit nodes are not keyed in the FE (identity-rollout gaps), so there is no keyed node to bind. reminder/time-edit is a ListTile control with no bound text slot.",
+  "screen": "reminder",
+  "slots": {
+    "mx-node:reminder/time": [
+      { "name": "timeValue", "role": "labelLarge", "bind": "reminder.timeText" }
+    ]
+  }
+}
