@@ -111,11 +111,7 @@ class ThemeScreen extends ConsumerWidget {
                 _notifier(ref).setFontScale(FontScale.values.byName(v)),
           ),
           const SizedBox(height: MxSpacing.space6),
-          _Preview(
-            key: const ValueKey('mx-node:theme/preview'),
-            title: l10n.themePreview,
-            body: l10n.themePreviewBody,
-          ),
+          _Preview(title: l10n.themePreview, body: l10n.themePreviewBody),
         ],
       ),
     );
@@ -135,13 +131,14 @@ class ThemeScreen extends ConsumerWidget {
 }
 
 class _Preview extends StatelessWidget {
-  const _Preview({super.key, required this.title, required this.body});
+  const _Preview({required this.title, required this.body});
 
   final String title;
   final String body;
 
   @override
   Widget build(BuildContext context) => MxCard(
+    key: const ValueKey('mx-node:theme/preview'),
     variant: MxCardVariant.flat,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
