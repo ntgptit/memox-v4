@@ -1,0 +1,55 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "player",
+  "states": {
+    "playing": [
+      "mx-node:player/appbar",
+      "mx-node:player/back",
+      "mx-node:player/card",
+      "mx-node:player/next",
+      "mx-node:player/options",
+      "mx-node:player/playpause",
+      "mx-node:player/prev",
+      "mx-node:player/progress",
+      "mx-node:player/screen",
+      "mx-node:player/speed",
+      "mx-node:player/text-size"
+    ],
+    "paused": [
+      "mx-node:player/appbar",
+      "mx-node:player/back",
+      "mx-node:player/card",
+      "mx-node:player/next",
+      "mx-node:player/options",
+      "mx-node:player/playpause",
+      "mx-node:player/prev",
+      "mx-node:player/progress",
+      "mx-node:player/screen",
+      "mx-node:player/speed",
+      "mx-node:player/text-size"
+    ],
+    "speed": [
+      "mx-node:player/appbar",
+      "mx-node:player/back",
+      "mx-node:player/card",
+      "mx-node:player/next",
+      "mx-node:player/options",
+      "mx-node:player/playpause",
+      "mx-node:player/prev",
+      "mx-node:player/progress",
+      "mx-node:player/screen",
+      "mx-node:player/speed-control",
+      "mx-node:player/text-size"
+    ],
+    "end": [
+      "mx-node:player/appbar",
+      "mx-node:player/back",
+      "mx-node:player/close",
+      "mx-node:player/end",
+      "mx-node:player/options",
+      "mx-node:player/replay",
+      "mx-node:player/screen",
+      "mx-node:player/text-size"
+    ]
+  }
+}

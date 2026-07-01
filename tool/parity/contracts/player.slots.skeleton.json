@@ -1,0 +1,40 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "player",
+  "slots": {
+    "mx-node:player/appbar": [
+      {
+        "name": "topikIVocabulary",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "TOPIK I — Vocabulary",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:player/card": [
+      {
+        "name": "slot0",
+        "role": "displayLarge",
+        "font": "48/800",
+        "text": "학교",
+        "l10n": "TODO"
+      },
+      {
+        "name": "school",
+        "role": "displaySmall",
+        "font": "30/700",
+        "text": "school",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:player/speed": [
+      {
+        "name": "1",
+        "role": "labelMedium",
+        "font": "13/700",
+        "text": "×1",
+        "bind": "TODO"
+      }
+    ]
+  }
+}

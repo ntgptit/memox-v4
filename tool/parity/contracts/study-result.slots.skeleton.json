@@ -1,0 +1,127 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "study-result",
+  "slots": {
+    "mx-node:study-result/appbar": [
+      {
+        "name": "results",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "Results",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:study-result/screen": [
+      {
+        "name": "sessionComplete",
+        "role": "titleLarge",
+        "font": "20/800",
+        "text": "Session complete",
+        "l10n": "TODO"
+      },
+      {
+        "name": "youReviewed24CardsThisSession",
+        "role": "bodyMedium",
+        "font": "15/400",
+        "text": "You reviewed 24 cards this session.",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:study-result/stat-0": [
+      {
+        "name": "24",
+        "role": "titleLarge",
+        "font": "22/800",
+        "text": "24",
+        "bind": "TODO"
+      },
+      {
+        "name": "cards",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "cards",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:study-result/stat-1": [
+      {
+        "name": "88",
+        "role": "titleLarge",
+        "font": "22/800",
+        "text": "88%",
+        "bind": "TODO"
+      },
+      {
+        "name": "correct",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "correct",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:study-result/stat-2": [
+      {
+        "name": "630",
+        "role": "titleLarge",
+        "font": "22/800",
+        "text": "6:30",
+        "bind": "TODO"
+      },
+      {
+        "name": "min",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "min",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:study-result/goal": [
+      {
+        "name": "12Days",
+        "role": "titleMedium",
+        "font": "17/800",
+        "text": "12 days",
+        "bind": "TODO"
+      },
+      {
+        "name": "dayStreak",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "day streak",
+        "l10n": "TODO"
+      },
+      {
+        "name": "todaySGoal",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "Today's goal",
+        "l10n": "TODO"
+      },
+      {
+        "name": "1420Min",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "14/20 min",
+        "bind": "TODO"
+      }
+    ],
+    "mx-node:study-result/continue": [
+      {
+        "name": "keepStudying",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Keep studying",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:study-result/library": [
+      {
+        "name": "backToLibrary",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "Back to library",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}

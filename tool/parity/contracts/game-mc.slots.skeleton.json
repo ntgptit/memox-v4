@@ -1,0 +1,60 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "game-mc",
+  "slots": {
+    "mx-node:game-mc/appbar": [
+      {
+        "name": "multipleChoice",
+        "role": "titleLarge",
+        "font": "20/700",
+        "text": "Multiple choice",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-mc/prompt": [
+      {
+        "name": "slot0",
+        "role": "displayLarge",
+        "font": "48/800",
+        "text": "학교",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-mc/choice-0": [
+      {
+        "name": "school",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "school",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-mc/choice-1": [
+      {
+        "name": "hospital",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "hospital",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-mc/choice-2": [
+      {
+        "name": "park",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "park",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:game-mc/choice-3": [
+      {
+        "name": "restaurant",
+        "role": "bodyMedium",
+        "font": "15/700",
+        "text": "restaurant",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}

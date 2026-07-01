@@ -66,7 +66,8 @@ match your layout; the right column is what to keep in sync.
 | UI screens | matching `docs/design/*` + `docs/ui-ux/ui-ux-contract.md` |
 | schema / migration | `docs/database/{schema,migration,storage-boundaries}-*.md` + decision table |
 | new dependency | **Stop and ask. Approval needed.** |
-| theme / design tokens | `docs/ui-ux/ui-ux-contract.md` |
+| theme / design tokens | `docs/ui-ux/ui-ux-contract.md` (+ `tokens/*.css` ↔ `lib/core/theme/mx_*.dart` mirror + `mx_tokens_test.dart`) |
+| UI-kit source (`ui_kits/memox-app/**/*.jsx`, `index.html`, `tokens/**`, `components.css`, `styles.css`) | **Re-export** `cd tool/ui_kit_shots && npm run export:all` (specs + shots) **and regenerate** `node tool/parity/gen_parity_contract.mjs`; then **re-curate** any affected `<screen>.slots.json` / `<screen>.states.json`. Enforced by `verify`: `kit_fresh` (freshness), `parity_contract`, `slots_check`, `states_check`, `parity_fe_keys`. |
 <!-- FILL: add one row per code area that has a doc contract. -->
 
 If a change hits several rows, check them all.

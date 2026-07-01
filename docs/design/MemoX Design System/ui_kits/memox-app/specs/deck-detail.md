@@ -126,7 +126,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     flex: grow:1 basis:0 layout_hint:expanded
     spacing: pad:16/20/96/20
     position: layout_hint:scroll
-    scroll: scrollh:1089
+    scroll: scrollh:1081
     - node: search-dock
       id: deck-detail/search-dock
       box:
@@ -166,16 +166,16 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: div
       text: SUB-DECKS
       box:
-        abs: [24,160 346x20]
-        rel: [24,96 346x20]
+        abs: [24,156 346x20]
+        rel: [24,92 346x20]
       flex: shrink:0
-      spacing: margin:8/0/0/4
+      spacing: margin:4/0/0/4
       style: font:13/700/20 color:text-tertiary tracking:0.5
     - node: card
       id: deck-detail/subdeck-0
       box:
-        abs: [20,200 350x92]
-        rel: [20,136 350x92]
+        abs: [20,196 350x92]
+        rel: [20,132 350x92]
       layout: flex:col gap:12
       flex: shrink:0
       spacing: pad:16
@@ -183,12 +183,12 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface r:20 shadow:9/16
       - node: div
         box:
-          abs: [36,216 318x60]
+          abs: [36,212 318x60]
           rel: [16,16 318x60]
         layout: flex:row gap:16 align:center
         - node: icon-tile
           box:
-            abs: [36,222 48x48]
+            abs: [36,218 48x48]
             rel: [0,6 48x48]
           layout: flex:row justify:center align:center
           flex: shrink:0
@@ -196,43 +196,43 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
           - node: icon:stacks
             text: stacks
             box:
-              abs: [47,233 26x26]
+              abs: [47,229 26x26]
               rel: [11,11 26x26]
             style: font:26/400 color:on-accent
         - node: div
           box:
-            abs: [100,216 212x60]
+            abs: [100,212 212x60]
             rel: [64,0 212x60]
           flex: grow:1 basis:0 layout_hint:expanded
           - node: div
             text: Beginner Grammar
             box:
-              abs: [100,216 212x23]
+              abs: [100,212 212x23]
               rel: [0,0 212x23]
             position: clip
             style: font:15/700/23 color:text
           - node: div
             text: 3 decks · 412 words
             box:
-              abs: [100,242 212x20]
+              abs: [100,238 212x20]
               rel: [0,27 212x20]
             spacing: margin:4/0/0/0
             style: font:13/400/20 color:text-secondary
           - node: div
             box:
-              abs: [100,270 212x6]
+              abs: [100,266 212x6]
               rel: [0,54 212x6]
             position: clip
             style: bg:surface-sunken r:999
             - node: div
               box:
-                abs: [100,270 136x6]
+                abs: [100,266 136x6]
                 rel: [0,0 136x6]
               style: bg:primary r:999
         - node: badge
           text: 28
           box:
-            abs: [328,236 26x20]
+            abs: [328,232 26x20]
             rel: [292,20 26x20]
           layout: flex:row gap:4 justify:center align:center
           spacing: pad:0/6
@@ -241,8 +241,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: card
       id: deck-detail/subdeck-1
       box:
-        abs: [20,312 350x92]
-        rel: [20,248 350x92]
+        abs: [20,308 350x92]
+        rel: [20,244 350x92]
       layout: flex:col gap:12
       flex: shrink:0
       spacing: pad:16
@@ -250,12 +250,12 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface r:20 shadow:9/16
       - node: div
         box:
-          abs: [36,328 318x60]
+          abs: [36,324 318x60]
           rel: [16,16 318x60]
         layout: flex:row gap:16 align:center
         - node: icon-tile
           box:
-            abs: [36,334 48x48]
+            abs: [36,330 48x48]
             rel: [0,6 48x48]
           layout: flex:row justify:center align:center
           flex: shrink:0
@@ -263,43 +263,43 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
           - node: icon:style
             text: style
             box:
-              abs: [47,345 26x26]
+              abs: [47,341 26x26]
               rel: [11,11 26x26]
             style: font:26/400 color:on-primary-soft
         - node: div
           box:
-            abs: [100,328 218x60]
+            abs: [100,324 218x60]
             rel: [64,0 218x60]
           flex: grow:1 basis:0 layout_hint:expanded
           - node: div
             text: Topic: Family
             box:
-              abs: [100,328 218x23]
+              abs: [100,324 218x23]
               rel: [0,0 218x23]
             position: clip
             style: font:15/700/23 color:text
           - node: div
             text: 180 words · mastered
             box:
-              abs: [100,354 218x20]
+              abs: [100,350 218x20]
               rel: [0,27 218x20]
             spacing: margin:4/0/0/0
             style: font:13/400/20 color:text-secondary
           - node: div
             box:
-              abs: [100,382 218x6]
+              abs: [100,378 218x6]
               rel: [0,54 218x6]
             position: clip
             style: bg:surface-sunken r:999
             - node: div
               box:
-                abs: [100,382 218x6]
+                abs: [100,378 218x6]
                 rel: [0,0 218x6]
               style: bg:primary r:999
         - node: badge
           text: ✓
           box:
-            abs: [334,348 20x20]
+            abs: [334,344 20x20]
             rel: [298,20 20x20]
           layout: flex:row gap:4 justify:center align:center
           spacing: pad:0/6
@@ -308,16 +308,16 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: div
       text: CARDS
       box:
-        abs: [24,432 346x20]
-        rel: [24,368 346x20]
+        abs: [24,424 346x20]
+        rel: [24,360 346x20]
       flex: shrink:0
-      spacing: margin:8/0/0/4
+      spacing: margin:4/0/0/4
       style: font:13/700/20 color:text-tertiary tracking:0.5
     - node: card
       id: deck-detail/card-0
       box:
-        abs: [20,471 350x81]
-        rel: [20,407 350x81]
+        abs: [20,463 350x81]
+        rel: [20,399 350x81]
       layout: flex:col gap:12
       flex: shrink:0
       spacing: pad:16
@@ -325,29 +325,29 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface r:20 shadow:9/16
       - node: div
         box:
-          abs: [36,487 318x49]
+          abs: [36,479 318x49]
           rel: [16,16 318x49]
         layout: flex:row gap:16 align:center
         - node: div
           box:
-            abs: [36,487 269x49]
+            abs: [36,479 269x49]
             rel: [0,0 269x49]
           flex: grow:1 basis:0 layout_hint:expanded
           - node: div
             box:
-              abs: [36,487 269x26]
+              abs: [36,479 269x26]
               rel: [0,0 269x26]
             layout: flex:row gap:8 align:center
             - node: span
               text: 안녕하세요
               box:
-                abs: [36,487 77x26]
+                abs: [36,479 77x26]
                 rel: [0,0 77x26]
               style: font:17/800/26 color:text tracking:-0.3
           - node: div
             text: Hello (formal)
             box:
-              abs: [36,517 269x20]
+              abs: [36,509 269x20]
               rel: [0,30 269x20]
             spacing: margin:4/0/0/0
             position: clip
@@ -355,7 +355,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         - node: badge
           text: Due
           box:
-            abs: [321,502 33x20]
+            abs: [321,494 33x20]
             rel: [285,15 33x20]
           layout: flex:row gap:4 justify:center align:center
           spacing: pad:0/6
@@ -364,8 +364,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: card
       id: deck-detail/card-1
       box:
-        abs: [20,572 350x81]
-        rel: [20,508 350x81]
+        abs: [20,564 350x81]
+        rel: [20,500 350x81]
       layout: flex:col gap:12
       flex: shrink:0
       spacing: pad:16
@@ -373,29 +373,29 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface r:20 shadow:9/16
       - node: div
         box:
-          abs: [36,588 318x49]
+          abs: [36,580 318x49]
           rel: [16,16 318x49]
         layout: flex:row gap:16 align:center
         - node: div
           box:
-            abs: [36,588 239x49]
+            abs: [36,580 239x49]
             rel: [0,0 239x49]
           flex: grow:1 basis:0 layout_hint:expanded
           - node: div
             box:
-              abs: [36,588 239x26]
+              abs: [36,580 239x26]
               rel: [0,0 239x26]
             layout: flex:row gap:8 align:center
             - node: span
               text: 감사합니다
               box:
-                abs: [36,588 77x26]
+                abs: [36,580 77x26]
                 rel: [0,0 77x26]
               style: font:17/800/26 color:text tracking:-0.3
           - node: div
             text: Thank you
             box:
-              abs: [36,618 239x20]
+              abs: [36,610 239x20]
               rel: [0,30 239x20]
             spacing: margin:4/0/0/0
             position: clip
@@ -403,7 +403,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         - node: badge
           text: Mastered
           box:
-            abs: [291,603 63x20]
+            abs: [291,595 63x20]
             rel: [255,15 63x20]
           layout: flex:row gap:4 justify:center align:center
           spacing: pad:0/6
@@ -412,8 +412,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: card
       id: deck-detail/card-2
       box:
-        abs: [20,673 350x81]
-        rel: [20,609 350x81]
+        abs: [20,665 350x81]
+        rel: [20,601 350x81]
       layout: flex:col gap:12
       flex: shrink:0
       spacing: pad:16
@@ -421,29 +421,29 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface r:20 shadow:9/16
       - node: div
         box:
-          abs: [36,689 318x49]
+          abs: [36,681 318x49]
           rel: [16,16 318x49]
         layout: flex:row gap:16 align:center
         - node: div
           box:
-            abs: [36,689 265x49]
+            abs: [36,681 265x49]
             rel: [0,0 265x49]
           flex: grow:1 basis:0 layout_hint:expanded
           - node: div
             box:
-              abs: [36,689 265x26]
+              abs: [36,681 265x26]
               rel: [0,0 265x26]
             layout: flex:row gap:8 align:center
             - node: span
               text: 사랑
               box:
-                abs: [36,689 31x26]
+                abs: [36,681 31x26]
                 rel: [0,0 31x26]
               style: font:17/800/26 color:text tracking:-0.3
           - node: div
             text: love; affection
             box:
-              abs: [36,719 265x20]
+              abs: [36,711 265x20]
               rel: [0,30 265x20]
             spacing: margin:4/0/0/0
             position: clip
@@ -451,7 +451,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         - node: badge
           text: New
           box:
-            abs: [317,704 37x20]
+            abs: [317,696 37x20]
             rel: [281,15 37x20]
           layout: flex:row gap:4 justify:center align:center
           spacing: pad:0/6
@@ -460,8 +460,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: card
       id: deck-detail/card-3
       box:
-        abs: [20,774 350x81]
-        rel: [20,710 350x81]
+        abs: [20,766 350x81]
+        rel: [20,702 350x81]
       layout: flex:col gap:12
       flex: shrink:0
       spacing: pad:16
@@ -469,29 +469,29 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface r:20 shadow:9/16
       - node: div
         box:
-          abs: [36,790 318x49]
+          abs: [36,782 318x49]
           rel: [16,16 318x49]
         layout: flex:row gap:16 align:center
         - node: div
           box:
-            abs: [36,790 269x49]
+            abs: [36,782 269x49]
             rel: [0,0 269x49]
           flex: grow:1 basis:0 layout_hint:expanded
           - node: div
             box:
-              abs: [36,790 269x26]
+              abs: [36,782 269x26]
               rel: [0,0 269x26]
             layout: flex:row gap:8 align:center
             - node: span
               text: 공부하다
               box:
-                abs: [36,790 61x26]
+                abs: [36,782 61x26]
                 rel: [0,0 61x26]
               style: font:17/800/26 color:text tracking:-0.3
           - node: div
             text: to study
             box:
-              abs: [36,820 269x20]
+              abs: [36,812 269x20]
               rel: [0,30 269x20]
             spacing: margin:4/0/0/0
             position: clip
@@ -499,7 +499,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         - node: badge
           text: Due
           box:
-            abs: [321,805 33x20]
+            abs: [321,797 33x20]
             rel: [285,15 33x20]
           layout: flex:row gap:4 justify:center align:center
           spacing: pad:0/6
@@ -508,8 +508,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: card
       id: deck-detail/card-4
       box:
-        abs: [20,875 350x81]
-        rel: [20,811 350x81]
+        abs: [20,867 350x81]
+        rel: [20,803 350x81]
       layout: flex:col gap:12
       flex: shrink:0
       spacing: pad:16
@@ -517,29 +517,29 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface r:20 shadow:9/16
       - node: div
         box:
-          abs: [36,891 318x49]
+          abs: [36,883 318x49]
           rel: [16,16 318x49]
         layout: flex:row gap:16 align:center
         - node: div
           box:
-            abs: [36,891 239x49]
+            abs: [36,883 239x49]
             rel: [0,0 239x49]
           flex: grow:1 basis:0 layout_hint:expanded
           - node: div
             box:
-              abs: [36,891 239x26]
+              abs: [36,883 239x26]
               rel: [0,0 239x26]
             layout: flex:row gap:8 align:center
             - node: span
               text: 맛있다
               box:
-                abs: [36,891 46x26]
+                abs: [36,883 46x26]
                 rel: [0,0 46x26]
               style: font:17/800/26 color:text tracking:-0.3
           - node: div
             text: delicious (food)
             box:
-              abs: [36,921 239x20]
+              abs: [36,913 239x20]
               rel: [0,30 239x20]
             spacing: margin:4/0/0/0
             position: clip
@@ -547,7 +547,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         - node: badge
           text: Mastered
           box:
-            abs: [291,906 63x20]
+            abs: [291,898 63x20]
             rel: [255,15 63x20]
           layout: flex:row gap:4 justify:center align:center
           spacing: pad:0/6
@@ -556,8 +556,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: card
       id: deck-detail/card-5
       box:
-        abs: [20,976 350x81]
-        rel: [20,912 350x81]
+        abs: [20,968 350x81]
+        rel: [20,904 350x81]
       layout: flex:col gap:12
       flex: shrink:0
       spacing: pad:16
@@ -565,36 +565,36 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface r:20 shadow:9/16
       - node: div
         box:
-          abs: [36,992 318x49]
+          abs: [36,984 318x49]
           rel: [16,16 318x49]
         layout: flex:row gap:16 align:center
         style: op:0.5
         - node: div
           box:
-            abs: [36,992 265x49]
+            abs: [36,984 265x49]
             rel: [0,0 265x49]
           flex: grow:1 basis:0 layout_hint:expanded
           - node: div
             box:
-              abs: [36,992 265x26]
+              abs: [36,984 265x26]
               rel: [0,0 265x26]
             layout: flex:row gap:8 align:center
             - node: span
               text: 어렵다
               box:
-                abs: [36,992 46x26]
+                abs: [36,984 46x26]
                 rel: [0,0 46x26]
               style: font:17/800/26 color:text tracking:-0.3
             - node: icon:visibility_off
               text: visibility_off
               box:
-                abs: [90,997 15x15]
+                abs: [90,989 15x15]
                 rel: [54,5 15x15]
               style: font:15/400 color:text-tertiary
           - node: div
             text: difficult, hard
             box:
-              abs: [36,1022 265x20]
+              abs: [36,1014 265x20]
               rel: [0,30 265x20]
             spacing: margin:4/0/0/0
             position: clip
@@ -602,7 +602,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         - node: badge
           text: New
           box:
-            abs: [317,1007 37x20]
+            abs: [317,999 37x20]
             rel: [281,15 37x20]
           layout: flex:row gap:4 justify:center align:center
           spacing: pad:0/6
@@ -649,7 +649,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - flex: grow:1 basis:0 layout_hint:expanded
 - spacing: pad:16/20/96/20
 - position: layout_hint:scroll
-- scroll: scrollh:1089
+- scroll: scrollh:1081
 + - node: app__body
 + box:
 + abs: [0,64 390x716]
@@ -692,16 +692,16 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: div
 - text: SUB-DECKS
 - box:
-- abs: [24,160 346x20]
-- rel: [24,96 346x20]
+- abs: [24,156 346x20]
+- rel: [24,92 346x20]
 - flex: shrink:0
-- spacing: margin:8/0/0/4
+- spacing: margin:4/0/0/4
 - style: font:13/700/20 color:text-tertiary tracking:0.5
 - - node: card
 - id: deck-detail/subdeck-0
 - box:
-- abs: [20,200 350x92]
-- rel: [20,136 350x92]
+- abs: [20,196 350x92]
+- rel: [20,132 350x92]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -709,12 +709,12 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,216 318x60]
+- abs: [36,212 318x60]
 - rel: [16,16 318x60]
 - layout: flex:row gap:16 align:center
 - - node: icon-tile
 - box:
-- abs: [36,222 48x48]
+- abs: [36,218 48x48]
 - rel: [0,6 48x48]
 - layout: flex:row justify:center align:center
 - flex: shrink:0
@@ -722,43 +722,43 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: icon:stacks
 - text: stacks
 - box:
-- abs: [47,233 26x26]
+- abs: [47,229 26x26]
 - rel: [11,11 26x26]
 - style: font:26/400 color:on-accent
 - - node: div
 - box:
-- abs: [100,216 212x60]
+- abs: [100,212 212x60]
 - rel: [64,0 212x60]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - text: Beginner Grammar
 - box:
-- abs: [100,216 212x23]
+- abs: [100,212 212x23]
 - rel: [0,0 212x23]
 - position: clip
 - style: font:15/700/23 color:text
 - - node: div
 - text: 3 decks · 412 words
 - box:
-- abs: [100,242 212x20]
+- abs: [100,238 212x20]
 - rel: [0,27 212x20]
 - spacing: margin:4/0/0/0
 - style: font:13/400/20 color:text-secondary
 - - node: div
 - box:
-- abs: [100,270 212x6]
+- abs: [100,266 212x6]
 - rel: [0,54 212x6]
 - position: clip
 - style: bg:surface-sunken r:999
 - - node: div
 - box:
-- abs: [100,270 136x6]
+- abs: [100,266 136x6]
 - rel: [0,0 136x6]
 - style: bg:primary r:999
 - - node: badge
 - text: 28
 - box:
-- abs: [328,236 26x20]
+- abs: [328,232 26x20]
 - rel: [292,20 26x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -767,8 +767,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: card
 - id: deck-detail/subdeck-1
 - box:
-- abs: [20,312 350x92]
-- rel: [20,248 350x92]
+- abs: [20,308 350x92]
+- rel: [20,244 350x92]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -776,12 +776,12 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,328 318x60]
+- abs: [36,324 318x60]
 - rel: [16,16 318x60]
 - layout: flex:row gap:16 align:center
 - - node: icon-tile
 - box:
-- abs: [36,334 48x48]
+- abs: [36,330 48x48]
 - rel: [0,6 48x48]
 - layout: flex:row justify:center align:center
 - flex: shrink:0
@@ -789,43 +789,43 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: icon:style
 - text: style
 - box:
-- abs: [47,345 26x26]
+- abs: [47,341 26x26]
 - rel: [11,11 26x26]
 - style: font:26/400 color:on-primary-soft
 - - node: div
 - box:
-- abs: [100,328 218x60]
+- abs: [100,324 218x60]
 - rel: [64,0 218x60]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - text: Topic: Family
 - box:
-- abs: [100,328 218x23]
+- abs: [100,324 218x23]
 - rel: [0,0 218x23]
 - position: clip
 - style: font:15/700/23 color:text
 - - node: div
 - text: 180 words · mastered
 - box:
-- abs: [100,354 218x20]
+- abs: [100,350 218x20]
 - rel: [0,27 218x20]
 - spacing: margin:4/0/0/0
 - style: font:13/400/20 color:text-secondary
 - - node: div
 - box:
-- abs: [100,382 218x6]
+- abs: [100,378 218x6]
 - rel: [0,54 218x6]
 - position: clip
 - style: bg:surface-sunken r:999
 - - node: div
 - box:
-- abs: [100,382 218x6]
+- abs: [100,378 218x6]
 - rel: [0,0 218x6]
 - style: bg:primary r:999
 - - node: badge
 - text: ✓
 - box:
-- abs: [334,348 20x20]
+- abs: [334,344 20x20]
 - rel: [298,20 20x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -834,10 +834,10 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: div
 - text: CARDS
 - box:
-- abs: [24,432 346x20]
-- rel: [24,368 346x20]
+- abs: [24,424 346x20]
+- rel: [24,360 346x20]
 - flex: shrink:0
-- spacing: margin:8/0/0/4
+- spacing: margin:4/0/0/4
 - style: font:13/700/20 color:text-tertiary tracking:0.5
 + - node: icon-button:close
 + id: deck-detail/search-clear
@@ -927,13 +927,13 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: span
 - text: 감사합니다
 - box:
-- abs: [36,588 77x26]
+- abs: [36,580 77x26]
 - rel: [0,0 77x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: div
 - text: Thank you
 - box:
-- abs: [36,618 239x20]
+- abs: [36,610 239x20]
 - rel: [0,30 239x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -941,7 +941,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: Mastered
 - box:
-- abs: [291,603 63x20]
+- abs: [291,595 63x20]
 - rel: [255,15 63x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -950,8 +950,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: card
 - id: deck-detail/card-2
 - box:
-- abs: [20,673 350x81]
-- rel: [20,609 350x81]
+- abs: [20,665 350x81]
+- rel: [20,601 350x81]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -959,29 +959,29 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,689 318x49]
+- abs: [36,681 318x49]
 - rel: [16,16 318x49]
 - layout: flex:row gap:16 align:center
 - - node: div
 - box:
-- abs: [36,689 265x49]
+- abs: [36,681 265x49]
 - rel: [0,0 265x49]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,689 265x26]
+- abs: [36,681 265x26]
 - rel: [0,0 265x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 사랑
 - box:
-- abs: [36,689 31x26]
+- abs: [36,681 31x26]
 - rel: [0,0 31x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: div
 - text: love; affection
 - box:
-- abs: [36,719 265x20]
+- abs: [36,711 265x20]
 - rel: [0,30 265x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -989,7 +989,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: New
 - box:
-- abs: [317,704 37x20]
+- abs: [317,696 37x20]
 - rel: [281,15 37x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -998,8 +998,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: card
 - id: deck-detail/card-3
 - box:
-- abs: [20,774 350x81]
-- rel: [20,710 350x81]
+- abs: [20,766 350x81]
+- rel: [20,702 350x81]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -1007,17 +1007,17 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,790 318x49]
+- abs: [36,782 318x49]
 - rel: [16,16 318x49]
 - layout: flex:row gap:16 align:center
 - - node: div
 - box:
-- abs: [36,790 269x49]
+- abs: [36,782 269x49]
 - rel: [0,0 269x49]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,790 269x26]
+- abs: [36,782 269x26]
 - rel: [0,0 269x26]
 - layout: flex:row gap:8 align:center
   - node: span
@@ -1039,8 +1039,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: card
 - id: deck-detail/card-4
 - box:
-- abs: [20,875 350x81]
-- rel: [20,811 350x81]
+- abs: [20,867 350x81]
+- rel: [20,803 350x81]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -1048,29 +1048,29 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,891 318x49]
+- abs: [36,883 318x49]
 - rel: [16,16 318x49]
 - layout: flex:row gap:16 align:center
 - - node: div
 - box:
-- abs: [36,891 239x49]
+- abs: [36,883 239x49]
 - rel: [0,0 239x49]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,891 239x26]
+- abs: [36,883 239x26]
 - rel: [0,0 239x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 맛있다
 - box:
-- abs: [36,891 46x26]
+- abs: [36,883 46x26]
 - rel: [0,0 46x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: div
 - text: delicious (food)
 - box:
-- abs: [36,921 239x20]
+- abs: [36,913 239x20]
 - rel: [0,30 239x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -1078,7 +1078,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: Mastered
 - box:
-- abs: [291,906 63x20]
+- abs: [291,898 63x20]
 - rel: [255,15 63x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -1087,8 +1087,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: card
 - id: deck-detail/card-5
 - box:
-- abs: [20,976 350x81]
-- rel: [20,912 350x81]
+- abs: [20,968 350x81]
+- rel: [20,904 350x81]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -1096,36 +1096,36 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,992 318x49]
+- abs: [36,984 318x49]
 - rel: [16,16 318x49]
 - layout: flex:row gap:16 align:center
 - style: op:0.5
 - - node: div
 - box:
-- abs: [36,992 265x49]
+- abs: [36,984 265x49]
 - rel: [0,0 265x49]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,992 265x26]
+- abs: [36,984 265x26]
 - rel: [0,0 265x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 어렵다
 - box:
-- abs: [36,992 46x26]
+- abs: [36,984 46x26]
 - rel: [0,0 46x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: icon:visibility_off
 - text: visibility_off
 - box:
-- abs: [90,997 15x15]
+- abs: [90,989 15x15]
 - rel: [54,5 15x15]
 - style: font:15/400 color:text-tertiary
 - - node: div
 - text: difficult, hard
 - box:
-- abs: [36,1022 265x20]
+- abs: [36,1014 265x20]
 - rel: [0,30 265x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -1133,7 +1133,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: New
 - box:
-- abs: [317,1007 37x20]
+- abs: [317,999 37x20]
 - rel: [281,15 37x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -1604,7 +1604,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: deck-detail/add-sheet
 + box:
@@ -1710,7 +1710,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: deck-detail/actions-sheet
 + box:
@@ -1817,7 +1817,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + layout: flex:col justify:center align:center
 + spacing: pad:24
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: deck-detail/delete-dialog
 + box:
@@ -1914,7 +1914,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + layout: flex:col justify:center align:center
 + spacing: pad:24
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: deck-detail/reset-dialog
 + box:
@@ -2010,7 +2010,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: deck-detail/deck-sheet
 + box:
@@ -2139,7 +2139,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + layout: flex:col justify:center align:center
 + spacing: pad:24
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: deck-detail/deck-delete-dialog
 + box:
@@ -2235,7 +2235,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: deck-detail/move-sheet
 + box:
@@ -2438,7 +2438,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - flex: grow:1 basis:0 layout_hint:expanded
 - spacing: pad:16/20/96/20
 - position: layout_hint:scroll
-- scroll: scrollh:1089
+- scroll: scrollh:1081
 - - node: search-dock
 - id: deck-detail/search-dock
 - box:
@@ -2478,16 +2478,16 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: div
 - text: SUB-DECKS
 - box:
-- abs: [24,160 346x20]
-- rel: [24,96 346x20]
+- abs: [24,156 346x20]
+- rel: [24,92 346x20]
 - flex: shrink:0
-- spacing: margin:8/0/0/4
+- spacing: margin:4/0/0/4
 - style: font:13/700/20 color:text-tertiary tracking:0.5
 - - node: card
 - id: deck-detail/subdeck-0
 - box:
-- abs: [20,200 350x92]
-- rel: [20,136 350x92]
+- abs: [20,196 350x92]
+- rel: [20,132 350x92]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -2495,12 +2495,12 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,216 318x60]
+- abs: [36,212 318x60]
 - rel: [16,16 318x60]
 - layout: flex:row gap:16 align:center
 - - node: icon-tile
 - box:
-- abs: [36,222 48x48]
+- abs: [36,218 48x48]
 - rel: [0,6 48x48]
 - layout: flex:row justify:center align:center
 - flex: shrink:0
@@ -2508,43 +2508,43 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: icon:stacks
 - text: stacks
 - box:
-- abs: [47,233 26x26]
+- abs: [47,229 26x26]
 - rel: [11,11 26x26]
 - style: font:26/400 color:on-accent
 - - node: div
 - box:
-- abs: [100,216 212x60]
+- abs: [100,212 212x60]
 - rel: [64,0 212x60]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - text: Beginner Grammar
 - box:
-- abs: [100,216 212x23]
+- abs: [100,212 212x23]
 - rel: [0,0 212x23]
 - position: clip
 - style: font:15/700/23 color:text
 - - node: div
 - text: 3 decks · 412 words
 - box:
-- abs: [100,242 212x20]
+- abs: [100,238 212x20]
 - rel: [0,27 212x20]
 - spacing: margin:4/0/0/0
 - style: font:13/400/20 color:text-secondary
 - - node: div
 - box:
-- abs: [100,270 212x6]
+- abs: [100,266 212x6]
 - rel: [0,54 212x6]
 - position: clip
 - style: bg:surface-sunken r:999
 - - node: div
 - box:
-- abs: [100,270 136x6]
+- abs: [100,266 136x6]
 - rel: [0,0 136x6]
 - style: bg:primary r:999
 - - node: badge
 - text: 28
 - box:
-- abs: [328,236 26x20]
+- abs: [328,232 26x20]
 - rel: [292,20 26x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -2553,8 +2553,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: card
 - id: deck-detail/subdeck-1
 - box:
-- abs: [20,312 350x92]
-- rel: [20,248 350x92]
+- abs: [20,308 350x92]
+- rel: [20,244 350x92]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -2562,12 +2562,12 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,328 318x60]
+- abs: [36,324 318x60]
 - rel: [16,16 318x60]
 - layout: flex:row gap:16 align:center
 - - node: icon-tile
 - box:
-- abs: [36,334 48x48]
+- abs: [36,330 48x48]
 - rel: [0,6 48x48]
 - layout: flex:row justify:center align:center
 - flex: shrink:0
@@ -2575,43 +2575,43 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: icon:style
 - text: style
 - box:
-- abs: [47,345 26x26]
+- abs: [47,341 26x26]
 - rel: [11,11 26x26]
 - style: font:26/400 color:on-primary-soft
 - - node: div
 - box:
-- abs: [100,328 218x60]
+- abs: [100,324 218x60]
 - rel: [64,0 218x60]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - text: Topic: Family
 - box:
-- abs: [100,328 218x23]
+- abs: [100,324 218x23]
 - rel: [0,0 218x23]
 - position: clip
 - style: font:15/700/23 color:text
 - - node: div
 - text: 180 words · mastered
 - box:
-- abs: [100,354 218x20]
+- abs: [100,350 218x20]
 - rel: [0,27 218x20]
 - spacing: margin:4/0/0/0
 - style: font:13/400/20 color:text-secondary
 - - node: div
 - box:
-- abs: [100,382 218x6]
+- abs: [100,378 218x6]
 - rel: [0,54 218x6]
 - position: clip
 - style: bg:surface-sunken r:999
 - - node: div
 - box:
-- abs: [100,382 218x6]
+- abs: [100,378 218x6]
 - rel: [0,0 218x6]
 - style: bg:primary r:999
 - - node: badge
 - text: ✓
 - box:
-- abs: [334,348 20x20]
+- abs: [334,344 20x20]
 - rel: [298,20 20x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -2620,10 +2620,10 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: div
 - text: CARDS
 - box:
-- abs: [24,432 346x20]
-- rel: [24,368 346x20]
+- abs: [24,424 346x20]
+- rel: [24,360 346x20]
 - flex: shrink:0
-- spacing: margin:8/0/0/4
+- spacing: margin:4/0/0/4
 - style: font:13/700/20 color:text-tertiary tracking:0.5
 + - node: app__body
 + box:
@@ -2656,19 +2656,19 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,487 269x26]
+- abs: [36,479 269x26]
 - rel: [0,0 269x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 안녕하세요
 - box:
-- abs: [36,487 77x26]
+- abs: [36,479 77x26]
 - rel: [0,0 77x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: div
 - text: Hello (formal)
 - box:
-- abs: [36,517 269x20]
+- abs: [36,509 269x20]
 - rel: [0,30 269x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -2676,7 +2676,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: Due
 - box:
-- abs: [321,502 33x20]
+- abs: [321,494 33x20]
 - rel: [285,15 33x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -2715,19 +2715,19 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,588 239x26]
+- abs: [36,580 239x26]
 - rel: [0,0 239x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 감사합니다
 - box:
-- abs: [36,588 77x26]
+- abs: [36,580 77x26]
 - rel: [0,0 77x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: div
 - text: Thank you
 - box:
-- abs: [36,618 239x20]
+- abs: [36,610 239x20]
 - rel: [0,30 239x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -2735,7 +2735,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: Mastered
 - box:
-- abs: [291,603 63x20]
+- abs: [291,595 63x20]
 - rel: [255,15 63x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -2774,19 +2774,19 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,689 265x26]
+- abs: [36,681 265x26]
 - rel: [0,0 265x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 사랑
 - box:
-- abs: [36,689 31x26]
+- abs: [36,681 31x26]
 - rel: [0,0 31x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: div
 - text: love; affection
 - box:
-- abs: [36,719 265x20]
+- abs: [36,711 265x20]
 - rel: [0,30 265x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -2794,7 +2794,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: New
 - box:
-- abs: [317,704 37x20]
+- abs: [317,696 37x20]
 - rel: [281,15 37x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -2833,19 +2833,19 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,790 269x26]
+- abs: [36,782 269x26]
 - rel: [0,0 269x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 공부하다
 - box:
-- abs: [36,790 61x26]
+- abs: [36,782 61x26]
 - rel: [0,0 61x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: div
 - text: to study
 - box:
-- abs: [36,820 269x20]
+- abs: [36,812 269x20]
 - rel: [0,30 269x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -2853,7 +2853,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: Due
 - box:
-- abs: [321,805 33x20]
+- abs: [321,797 33x20]
 - rel: [285,15 33x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -2892,19 +2892,19 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,891 239x26]
+- abs: [36,883 239x26]
 - rel: [0,0 239x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 맛있다
 - box:
-- abs: [36,891 46x26]
+- abs: [36,883 46x26]
 - rel: [0,0 46x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: div
 - text: delicious (food)
 - box:
-- abs: [36,921 239x20]
+- abs: [36,913 239x20]
 - rel: [0,30 239x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -2912,7 +2912,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: Mastered
 - box:
-- abs: [291,906 63x20]
+- abs: [291,898 63x20]
 - rel: [255,15 63x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6
@@ -2921,8 +2921,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: card
 - id: deck-detail/card-5
 - box:
-- abs: [20,976 350x81]
-- rel: [20,912 350x81]
+- abs: [20,968 350x81]
+- rel: [20,904 350x81]
 - layout: flex:col gap:12
 - flex: shrink:0
 - spacing: pad:16
@@ -2930,36 +2930,36 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - style: bg:surface r:20 shadow:9/16
 - - node: div
 - box:
-- abs: [36,992 318x49]
+- abs: [36,984 318x49]
 - rel: [16,16 318x49]
 - layout: flex:row gap:16 align:center
 - style: op:0.5
 - - node: div
 - box:
-- abs: [36,992 265x49]
+- abs: [36,984 265x49]
 - rel: [0,0 265x49]
 - flex: grow:1 basis:0 layout_hint:expanded
 - - node: div
 - box:
-- abs: [36,992 265x26]
+- abs: [36,984 265x26]
 - rel: [0,0 265x26]
 - layout: flex:row gap:8 align:center
 - - node: span
 - text: 어렵다
 - box:
-- abs: [36,992 46x26]
+- abs: [36,984 46x26]
 - rel: [0,0 46x26]
 - style: font:17/800/26 color:text tracking:-0.3
 - - node: icon:visibility_off
 - text: visibility_off
 - box:
-- abs: [90,997 15x15]
+- abs: [90,989 15x15]
 - rel: [54,5 15x15]
 - style: font:15/400 color:text-tertiary
 - - node: div
 - text: difficult, hard
 - box:
-- abs: [36,1022 265x20]
+- abs: [36,1014 265x20]
 - rel: [0,30 265x20]
 - spacing: margin:4/0/0/0
 - position: clip
@@ -2967,7 +2967,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - - node: badge
 - text: New
 - box:
-- abs: [317,1007 37x20]
+- abs: [317,999 37x20]
 - rel: [281,15 37x20]
 - layout: flex:row gap:4 justify:center align:center
 - spacing: pad:0/6

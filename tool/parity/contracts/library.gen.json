@@ -1,31 +1,11 @@
 {
   "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
   "screen": "library",
-  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Library.jsx",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/library",
   "nodes": [
     {
       "key": "mx-node:library/appbar",
       "component": "MxAppBar",
-      "variant": null
-    },
-    {
-      "key": "mx-node:library/overflow",
-      "component": "MxIconButton",
-      "variant": null
-    },
-    {
-      "key": "mx-node:library/search-btn",
-      "component": "MxIconButton",
-      "variant": null
-    },
-    {
-      "key": "mx-node:library/sort-btn",
-      "component": "MxIconButton",
-      "variant": null
-    },
-    {
-      "key": "mx-node:library/screen",
-      "component": "MxScaffold",
       "variant": null
     },
     {
@@ -34,14 +14,19 @@
       "variant": null
     },
     {
+      "key": "mx-node:library/empty-add",
+      "component": "MxButton",
+      "variant": "ghost"
+    },
+    {
       "key": "mx-node:library/empty-deck",
       "component": "MxButton",
       "variant": "primary"
     },
     {
-      "key": "mx-node:library/empty-add",
-      "component": "MxButton",
-      "variant": "ghost"
+      "key": "mx-node:library/overflow",
+      "component": "MxIconButton",
+      "variant": null
     },
     {
       "key": "mx-node:library/retry",
@@ -49,8 +34,23 @@
       "variant": "primary"
     },
     {
+      "key": "mx-node:library/screen",
+      "component": "MxScaffold",
+      "variant": null
+    },
+    {
+      "key": "mx-node:library/search-btn",
+      "component": "MxIconButton",
+      "variant": null
+    },
+    {
       "key": "mx-node:library/search-dock",
       "component": "MxSearchDock",
+      "variant": null
+    },
+    {
+      "key": "mx-node:library/sort-btn",
+      "component": "MxIconButton",
       "variant": null
     }
   ]

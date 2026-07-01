@@ -1,0 +1,78 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "study-result",
+  "states": {
+    "standard": [
+      "mx-node:study-result/appbar",
+      "mx-node:study-result/close",
+      "mx-node:study-result/continue",
+      "mx-node:study-result/goal",
+      "mx-node:study-result/goal-bar",
+      "mx-node:study-result/library",
+      "mx-node:study-result/screen",
+      "mx-node:study-result/stat-0",
+      "mx-node:study-result/stat-1",
+      "mx-node:study-result/stat-2"
+    ],
+    "goal-met": [
+      "mx-node:study-result/appbar",
+      "mx-node:study-result/close",
+      "mx-node:study-result/continue",
+      "mx-node:study-result/goal",
+      "mx-node:study-result/goal-bar",
+      "mx-node:study-result/library",
+      "mx-node:study-result/screen",
+      "mx-node:study-result/stat-0",
+      "mx-node:study-result/stat-1",
+      "mx-node:study-result/stat-2"
+    ],
+    "goal-missed": [
+      "mx-node:study-result/appbar",
+      "mx-node:study-result/close",
+      "mx-node:study-result/continue",
+      "mx-node:study-result/goal",
+      "mx-node:study-result/goal-bar",
+      "mx-node:study-result/library",
+      "mx-node:study-result/screen",
+      "mx-node:study-result/stat-0",
+      "mx-node:study-result/stat-1",
+      "mx-node:study-result/stat-2"
+    ],
+    "many-wrong": [
+      "mx-node:study-result/appbar",
+      "mx-node:study-result/close",
+      "mx-node:study-result/continue",
+      "mx-node:study-result/goal",
+      "mx-node:study-result/goal-bar",
+      "mx-node:study-result/library",
+      "mx-node:study-result/screen",
+      "mx-node:study-result/stat-0",
+      "mx-node:study-result/stat-1",
+      "mx-node:study-result/stat-2"
+    ],
+    "finalizing": [
+      "mx-node:study-result/appbar",
+      "mx-node:study-result/close",
+      "mx-node:study-result/finalizing-stat-0",
+      "mx-node:study-result/finalizing-stat-1",
+      "mx-node:study-result/finalizing-stat-2",
+      "mx-node:study-result/screen"
+    ],
+    "retry-finalize": [
+      "mx-node:study-result/appbar",
+      "mx-node:study-result/close",
+      "mx-node:study-result/finalizing-stat-0",
+      "mx-node:study-result/finalizing-stat-1",
+      "mx-node:study-result/finalizing-stat-2",
+      "mx-node:study-result/screen"
+    ],
+    "finalize-error": [
+      "mx-node:study-result/appbar",
+      "mx-node:study-result/close",
+      "mx-node:study-result/finalize-error",
+      "mx-node:study-result/finalize-later",
+      "mx-node:study-result/finalize-retry",
+      "mx-node:study-result/screen"
+    ]
+  }
+}

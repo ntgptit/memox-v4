@@ -3,7 +3,7 @@ import React from 'react';
 /* MxIconButton — icon-only button. Base class: icon-btn */
 export function MxIconButton({ icon, variant, size, node, className = '', onClick, ariaLabel }) {
   const cls = ['icon-btn'];
-  if (variant) cls.push('icon-btn--' + variant);
+  if (variant && variant !== 'plain') cls.push('icon-btn--' + variant);
   if (size === 'sm') cls.push('icon-btn--sm');
   if (className) cls.push(className);
   return (

@@ -1254,7 +1254,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: library/pair-sheet
 + box:
@@ -1366,7 +1366,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: library/sort-sheet
 + box:
@@ -1500,7 +1500,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: library/overflow-sheet
 + box:
@@ -1628,7 +1628,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + rel: [0,0 390x780]
 + layout: flex:col justify:end
 + position: pos:absolute z:60
-+ style: bg:#080b18@50
++ style: bg:overlay
 + - node: div
 + id: library/play-sheet
 + box:
@@ -2071,7 +2071,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 + abs: [352,0 38x780]
 + rel: [352,0 38x780]
 + flex: grow:1 basis:0 layout_hint:expanded
-+ style: bg:#080b18@50
++ style: bg:overlay
 ```
 
 ## State: empty (ordered diff vs loaded)

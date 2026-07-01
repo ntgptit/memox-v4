@@ -18,6 +18,7 @@ ghi chú `$pointsAt` trong `tool/tool.config.json`).
 | `MxTypography` (`mx_typography.dart`) | `tokens/typography.css` | family, cỡ, weight, line-height, tracking (em) |
 | `MxSizes`/`MxIconSize`/`MxStroke` (`mx_sizes.dart`) | `tokens/{size,icon-size,stroke}.css` | kích thước cố định, cỡ icon, độ rộng nét |
 | `MxShadows` (`mx_elevation.dart`) | `tokens/elevation.css` | shadow `light`/`dark` |
+| `MxMotion` (`mx_motion.dart`) | `tokens/motion.css` | thang duration + easing (standard / enter / exit) |
 
 `AppTheme.light()/dark()` (`app_theme.dart`) dựng Material 3 `ThemeData` từ các token này
 (`ColorScheme` + `TextTheme` + component themes). Các token Material không biểu diễn được

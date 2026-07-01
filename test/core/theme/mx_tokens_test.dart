@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/core/theme/mx_colors.dart';
 import 'package:memox_v4/core/theme/mx_elevation.dart';
+import 'package:memox_v4/core/theme/mx_motion.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
@@ -80,6 +81,28 @@ void main() {
     test('alpha-bearing roles preserve their opacity', () {
       // text-secondary light = rgba(29,34,64,0.62) → 0x9E in the alpha byte.
       expect((MxColors.light.textSecondary.a * 255).round(), 0x9E);
+    });
+  });
+
+  group('MxMotion', () {
+    test('duration scale (ms) matches the motion tokens', () {
+      expect(MxMotion.instant.inMilliseconds, 80);
+      expect(MxMotion.fast.inMilliseconds, 140);
+      expect(MxMotion.base.inMilliseconds, 220);
+      expect(MxMotion.slow.inMilliseconds, 320);
+    });
+
+    test('easings mirror the cubic-bezier control points', () {
+      expect(
+        [
+          MxMotion.standard.a,
+          MxMotion.standard.b,
+          MxMotion.standard.c,
+          MxMotion.standard.d,
+        ],
+        [0.2, 0, 0, 1],
+      );
+      expect([MxMotion.accelerate.a, MxMotion.accelerate.d], [0.3, 1]);
     });
   });
 

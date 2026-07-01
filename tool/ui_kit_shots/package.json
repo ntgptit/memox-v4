@@ -6,7 +6,8 @@
   "scripts": {
     "export": "node export_shots.mjs",
     "export:specs": "node export_specs.mjs",
-    "export:all": "node export_shots.mjs && node export_specs.mjs"
+    "export:all": "node export_shots.mjs && node export_specs.mjs",
+    "check:fresh": "node check_specs_fresh.mjs"
   },
   "devDependencies": {
     "puppeteer-core": "^24.0.0"

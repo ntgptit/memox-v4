@@ -17,7 +17,7 @@ bottom nav **5 mục** (Today · Library · **Add** ở giữa · Stats · Profi
 `Add` là action ở giữa, không trở thành route/tab riêng và không bao giờ active. Tab Today
 mang thêm **Review FAB** (icon `bolt`, ôn nhanh) đúng `MxFabReview` của kit. Visual Dashboard
 lấy token/component/state từ UI kit
-`docs/design/MemoX Design System/ui_kits/memox-app/Dashboard.jsx`.
+`docs/design/MemoX Design System/ui_kits/memox-app/_features/dashboard/Dashboard.jsx`.
 
 **Thiết kế các state sau — mỗi state một frame:**
 

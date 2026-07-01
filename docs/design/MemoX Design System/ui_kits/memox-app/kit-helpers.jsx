@@ -71,7 +71,7 @@ function Stat({ n, l, tone, node }) {
 /* Modal scrim — absolute over the device frame; align 'end' (sheet) or 'center' (dialog). */
 function Scrim({ children, align = 'end', node }) {
   return (
-    <div data-mx-node={node} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'rgba(8,11,24,.5)', display: 'flex', flexDirection: 'column', justifyContent: align === 'center' ? 'center' : 'flex-end', alignItems: align === 'center' ? 'center' : 'stretch', padding: align === 'center' ? 'var(--memox-space-6)' : 0 }}>
+    <div data-mx-node={node} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'var(--memox-overlay)', display: 'flex', flexDirection: 'column', justifyContent: align === 'center' ? 'center' : 'flex-end', alignItems: align === 'center' ? 'center' : 'stretch', padding: align === 'center' ? 'var(--memox-space-6)' : 0 }}>
       {children}
     </div>
   );
@@ -115,4 +115,51 @@ function Dialog({ icon, tone, title, text, actions, node }) {
   );
 }
 
-Object.assign(window, { ProgressBar, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, Dialog });
+/* Inline tinted callout — icon + text on a soft tonal background. */
+function Note({ icon, text, tone = 'accent' }) {
+  const map = {
+    accent: ['var(--memox-primary-soft)', 'var(--memox-on-primary-soft)'],
+    success: ['var(--memox-success-soft)', 'var(--memox-on-success-soft)'],
+    warning: ['var(--memox-warning-soft)', 'var(--memox-on-warning-soft)'],
+    error: ['var(--memox-error-soft)', 'var(--memox-on-error-soft)'],
+  };
+  const c = map[tone] || map.accent;
+  return (
+    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)' }}>
+      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{icon}</span>{text}
+    </div>
+  );
+}
+
+/* Small overline label above a group of rows/cards. */
+function SectionLabel({ children }) {
+  return <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
+}
+
+/* Conic-gradient progress ring with a centered surface punch-out (holds children). */
+function Ring({ pct, size = 'var(--memox-size-lg)', tone = 'var(--memox-primary)', inset = 'var(--memox-space-2)', children }) {
+  return (
+    <div style={{ position: 'relative', width: size, height: size, borderRadius: '50%', background: 'conic-gradient(' + tone + ' ' + pct + '%, var(--memox-surface-sunken) 0)', flexShrink: 0 }}>
+      <div style={{ position: 'absolute', inset, borderRadius: '50%', background: 'var(--memox-surface)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* Selectable answer-option box — idle, or a correct/wrong feedback skin. */
+function ChoiceOption({ text, tone, node }) {
+  const skin = {
+    correct: { border: 'var(--memox-stroke-emphasis) solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
+    wrong: { border: 'var(--memox-stroke-emphasis) solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
+  }[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
+  return (
+    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4)', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', cursor: 'pointer' }}>
+      <span style={{ flex: 1 }}>{text}</span>
+      {tone === 'correct' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-success)' }}>check_circle</span> : null}
+      {tone === 'wrong' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-error)' }}>cancel</span> : null}
+    </div>
+  );
+}
+
+Object.assign(window, { ProgressBar, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, Dialog, Note, SectionLabel, Ring, ChoiceOption });

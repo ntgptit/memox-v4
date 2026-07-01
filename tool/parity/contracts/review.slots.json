@@ -1,0 +1,12 @@
+{
+  "$curated": "Slot bindings for review — the FE-side truth for each keyed MxCard node in review.gen.json, cross-checked live by test/presentation/features/study/review_parity_test.dart. `role` is the MxTextRole the FE renders; `bind` is the domain value (card data — NOT l10n, this is user content, not UI copy). Curated from review.slots.skeleton.json: `review/term` kept as proposed (displayLarge); `review/meaning` corrected to the FE's intentional bodySmall / text-tertiary 'mờ' treatment (WBS review màn 12), NOT the kit mock's displaySmall + MEANING label. State scope: a 1-card review queue.",
+  "screen": "review",
+  "slots": {
+    "mx-node:review/term": [
+      { "name": "term", "role": "displayLarge", "bind": "card.term" }
+    ],
+    "mx-node:review/meaning": [
+      { "name": "meaning", "role": "bodySmall", "bind": "card.meaning" }
+    ]
+  }
+}

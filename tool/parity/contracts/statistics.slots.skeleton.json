@@ -1,0 +1,346 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_slots.mjs from specs/<screen>.md. role = heuristic from font size+weight — VERIFY (esp. label vs body at 13px). l10n/bind = TODO: curate (ARB key or domain binding). Superset of gated nodes — trim to what the FE keys. Do NOT ship as the curated <screen>.slots.json; hand-curate from this skeleton.",
+  "screen": "statistics",
+  "slots": {
+    "mx-node:statistics/appbar": [
+      {
+        "name": "stats",
+        "role": "displaySmall",
+        "font": "30/800",
+        "text": "Stats",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/scope": [
+      {
+        "name": "thisPair",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "This pair",
+        "l10n": "TODO"
+      },
+      {
+        "name": "all",
+        "role": "labelMedium",
+        "font": "13/600",
+        "text": "All",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/streak-current": [
+      {
+        "name": "12",
+        "role": "titleLarge",
+        "font": "22/800",
+        "text": "12",
+        "bind": "TODO"
+      },
+      {
+        "name": "currentStreak",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "current streak",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/streak-longest": [
+      {
+        "name": "28",
+        "role": "titleLarge",
+        "font": "22/800",
+        "text": "28",
+        "bind": "TODO"
+      },
+      {
+        "name": "longest",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "longest",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/heatmap-head": [
+      {
+        "name": "studyCalendar",
+        "role": "titleMedium",
+        "font": "17/700",
+        "text": "Study calendar",
+        "l10n": "TODO"
+      },
+      {
+        "name": "last14Weeks",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "last 14 weeks",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/weekly-head": [
+      {
+        "name": "timePerWeek",
+        "role": "titleMedium",
+        "font": "17/700",
+        "text": "Time per week",
+        "l10n": "TODO"
+      },
+      {
+        "name": "minDay",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "min / day",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/weekly": [
+      {
+        "name": "m",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "M",
+        "l10n": "TODO"
+      },
+      {
+        "name": "t",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "T",
+        "l10n": "TODO"
+      },
+      {
+        "name": "w",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "W",
+        "l10n": "TODO"
+      },
+      {
+        "name": "t",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "T",
+        "l10n": "TODO"
+      },
+      {
+        "name": "f",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "F",
+        "l10n": "TODO"
+      },
+      {
+        "name": "s",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "S",
+        "l10n": "TODO"
+      },
+      {
+        "name": "s",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "S",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/leitner-head": [
+      {
+        "name": "leitnerBoxDistribution",
+        "role": "titleMedium",
+        "font": "17/700",
+        "text": "Leitner box distribution",
+        "l10n": "TODO"
+      },
+      {
+        "name": "cardsInBoxes18",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "cards in boxes 1–8",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/leitner": [
+      {
+        "name": "1",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "1",
+        "bind": "TODO"
+      },
+      {
+        "name": "2",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "2",
+        "bind": "TODO"
+      },
+      {
+        "name": "3",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "3",
+        "bind": "TODO"
+      },
+      {
+        "name": "4",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "4",
+        "bind": "TODO"
+      },
+      {
+        "name": "5",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "5",
+        "bind": "TODO"
+      },
+      {
+        "name": "6",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "6",
+        "bind": "TODO"
+      },
+      {
+        "name": "7",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "7",
+        "bind": "TODO"
+      },
+      {
+        "name": "8",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "8",
+        "bind": "TODO"
+      }
+    ],
+    "mx-node:statistics/accuracy-head": [
+      {
+        "name": "accuracy",
+        "role": "titleMedium",
+        "font": "17/700",
+        "text": "Accuracy",
+        "l10n": "TODO"
+      },
+      {
+        "name": "30Days",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "30 days",
+        "bind": "TODO"
+      }
+    ],
+    "mx-node:statistics/accuracy": [
+      {
+        "name": "88",
+        "role": "titleLarge",
+        "font": "24/800",
+        "text": "88%",
+        "bind": "TODO"
+      },
+      {
+        "name": "accuracy",
+        "role": "bodySmall",
+        "font": "13/400",
+        "text": "accuracy",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/overview-head": [
+      {
+        "name": "libraryOverview",
+        "role": "titleMedium",
+        "font": "17/700",
+        "text": "Library overview",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/ov-0": [
+      {
+        "name": "1240",
+        "role": "titleLarge",
+        "font": "22/800",
+        "text": "1240",
+        "bind": "TODO"
+      },
+      {
+        "name": "total",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "total",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/ov-1": [
+      {
+        "name": "680",
+        "role": "titleLarge",
+        "font": "22/800",
+        "text": "680",
+        "bind": "TODO"
+      },
+      {
+        "name": "mastered",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "mastered",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:statistics/ov-2": [
+      {
+        "name": "96",
+        "role": "titleLarge",
+        "font": "22/800",
+        "text": "96",
+        "bind": "TODO"
+      },
+      {
+        "name": "due",
+        "role": "labelSmall",
+        "font": "12/400",
+        "text": "due",
+        "l10n": "TODO"
+      }
+    ],
+    "mx-node:shell/bottom-nav": [
+      {
+        "name": "today",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Today",
+        "l10n": "TODO"
+      },
+      {
+        "name": "library",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Library",
+        "l10n": "TODO"
+      },
+      {
+        "name": "add",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Add",
+        "l10n": "TODO"
+      },
+      {
+        "name": "stats",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Stats",
+        "l10n": "TODO"
+      },
+      {
+        "name": "profile",
+        "role": "labelSmall",
+        "font": "11/600",
+        "text": "Profile",
+        "l10n": "TODO"
+      }
+    ]
+  }
+}

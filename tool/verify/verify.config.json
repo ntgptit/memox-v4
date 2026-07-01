@@ -18,6 +18,15 @@
     "parity_contract": {
       "cmd": "node tool/parity/gen_parity_contract.mjs --check"
     },
+    "kit_fresh": {
+      "cmd": "node tool/ui_kit_shots/check_specs_fresh.mjs"
+    },
+    "slots_check": {
+      "cmd": "node tool/parity/gen_slots.mjs --check"
+    },
+    "states_check": {
+      "cmd": "node tool/parity/gen_states.mjs --check"
+    },
     "style_parity": {
       "cmd": "node tool/parity/run_style_parity.mjs"
     },
@@ -35,6 +44,9 @@
       "analyze",
       "format",
       "parity_contract",
+      "kit_fresh",
+      "slots_check",
+      "states_check",
       "parity_fe_keys"
     ],
     "full": [
@@ -43,13 +55,19 @@
       "analyze",
       "format",
       "parity_contract",
+      "kit_fresh",
+      "slots_check",
+      "states_check",
       "parity_fe_keys",
       "test",
       "style_parity"
     ],
     "docs": [
       "doc_guard",
-      "parity_contract"
+      "parity_contract",
+      "kit_fresh",
+      "slots_check",
+      "states_check"
     ]
   },
   "docGuard": "node tool/doc_guard/run.mjs check"

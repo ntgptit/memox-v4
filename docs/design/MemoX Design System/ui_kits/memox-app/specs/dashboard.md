@@ -171,13 +171,18 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       position: pos:relative
       style: bg:surface r:20 shadow:9/16
       - node: div
-        text: 70%
         box:
           abs: [48,365 58x58]
           rel: [28,39 58x58]
-        layout: flex:row justify:center align:center
+        layout: flex:col justify:center align:center
         position: pos:absolute
-        style: bg:surface font:15/800/23 color:text r:50
+        style: bg:surface r:50
+        - node: div
+          text: 70%
+          box:
+            abs: [59,382 35x23]
+            rel: [11,18 35x23]
+          style: font:15/800/23 color:text
       - node: div
         box:
           abs: [130,346 220x95]
@@ -736,32 +741,25 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   position: pos:relative
   style: bg:primary r:20 shadow:8/18
   ...
-  - node: card
-  id: dashboard/goal
+  - node: div
   box:
-  abs: [20,390 350x135]
-  rel: [20,244 350x135]
-  layout: flex:row gap:16 align:center
-  flex: shrink:0
-  spacing: pad:20
-  position: pos:relative
-  style: bg:surface r:20 shadow:9/16
+  abs: [48,428 58x58]
+  rel: [28,39 58x58]
+  layout: flex:col justify:center align:center
+  position: pos:absolute
+  style: bg:surface r:50
 - - node: div
 - text: 70%
 - box:
-- abs: [48,365 58x58]
-- rel: [28,39 58x58]
-- layout: flex:row justify:center align:center
-- position: pos:absolute
-- style: bg:surface font:15/800/23 color:text r:50
+- abs: [59,382 35x23]
+- rel: [11,18 35x23]
+- style: font:15/800/23 color:text
 + - node: div
 + text: 100%
 + box:
-+ abs: [48,428 58x58]
-+ rel: [28,39 58x58]
-+ layout: flex:row justify:center align:center
-+ position: pos:absolute
-+ style: bg:surface font:15/800/23 color:text r:50
++ abs: [55,446 43x23]
++ rel: [7,18 43x23]
++ style: font:15/800/23 color:text
   - node: div
   box:
   abs: [130,410 220x95]
@@ -1005,13 +1003,18 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - position: pos:relative
 - style: bg:surface r:20 shadow:9/16
 - - node: div
-- text: 70%
 - box:
 - abs: [48,365 58x58]
 - rel: [28,39 58x58]
-- layout: flex:row justify:center align:center
+- layout: flex:col justify:center align:center
 - position: pos:absolute
-- style: bg:surface font:15/800/23 color:text r:50
+- style: bg:surface r:50
+- - node: div
+- text: 70%
+- box:
+- abs: [59,382 35x23]
+- rel: [11,18 35x23]
+- style: font:15/800/23 color:text
 - - node: div
 - box:
 - abs: [130,346 220x95]
@@ -1488,13 +1491,18 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - position: pos:relative
 - style: bg:surface r:20 shadow:9/16
 - - node: div
-- text: 70%
 - box:
 - abs: [48,365 58x58]
 - rel: [28,39 58x58]
-- layout: flex:row justify:center align:center
+- layout: flex:col justify:center align:center
 - position: pos:absolute
-- style: bg:surface font:15/800/23 color:text r:50
+- style: bg:surface r:50
+- - node: div
+- text: 70%
+- box:
+- abs: [59,382 35x23]
+- rel: [11,18 35x23]
+- style: font:15/800/23 color:text
 - - node: div
 - box:
 - abs: [130,346 220x95]

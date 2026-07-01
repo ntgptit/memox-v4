@@ -1,0 +1,97 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "study-session",
+  "states": {
+    "stage1-review": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/card",
+      "mx-node:study-session/close",
+      "mx-node:study-session/next",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/screen"
+    ],
+    "stage2-matching": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/close",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/screen"
+    ],
+    "stage3-choice": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/close",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/screen"
+    ],
+    "stage4-recall": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/close",
+      "mx-node:study-session/next",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/screen"
+    ],
+    "stage5-typing": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/check",
+      "mx-node:study-session/close",
+      "mx-node:study-session/hint",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/screen"
+    ],
+    "relearn": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/close",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/screen"
+    ],
+    "due-review": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/card",
+      "mx-node:study-session/close",
+      "mx-node:study-session/due-next",
+      "mx-node:study-session/due-relearn",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/screen"
+    ],
+    "exit": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/card",
+      "mx-node:study-session/close",
+      "mx-node:study-session/exit-cancel",
+      "mx-node:study-session/exit-dialog",
+      "mx-node:study-session/exit-ok",
+      "mx-node:study-session/exit-scrim",
+      "mx-node:study-session/next",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/screen"
+    ],
+    "resume-error": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/close",
+      "mx-node:study-session/resume-back",
+      "mx-node:study-session/resume-error",
+      "mx-node:study-session/resume-retry",
+      "mx-node:study-session/screen"
+    ],
+    "answer-save-error": [
+      "mx-node:study-session/appbar",
+      "mx-node:study-session/check",
+      "mx-node:study-session/close",
+      "mx-node:study-session/hint",
+      "mx-node:study-session/options",
+      "mx-node:study-session/progress",
+      "mx-node:study-session/save-error-back",
+      "mx-node:study-session/save-error-dialog",
+      "mx-node:study-session/save-error-retry",
+      "mx-node:study-session/save-error-scrim",
+      "mx-node:study-session/screen"
+    ]
+  }
+}

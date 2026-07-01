@@ -1,7 +1,7 @@
 {
   "$generated": "tool/parity/gen_parity_contract.mjs — static kit-JSX parse (no Chrome). key+component+variant only; slots are curated in <screen>.slots.json until export_specs fills role/layout.",
   "screen": "dashboard",
-  "source": "docs/design/MemoX Design System/ui_kits/memox-app/Dashboard.jsx",
+  "source": "docs/design/MemoX Design System/ui_kits/memox-app/_features/dashboard",
   "nodes": [
     {
       "key": "mx-node:dashboard/appbar",
@@ -9,8 +9,28 @@
       "variant": null
     },
     {
+      "key": "mx-node:dashboard/decks-head",
+      "component": "MxSectionHeader",
+      "variant": null
+    },
+    {
+      "key": "mx-node:dashboard/goal",
+      "component": "MxCard",
+      "variant": "elevated"
+    },
+    {
+      "key": "mx-node:dashboard/mastered",
+      "component": "MxCard",
+      "variant": "muted"
+    },
+    {
       "key": "mx-node:dashboard/notifications",
       "component": "MxIconButton",
+      "variant": null
+    },
+    {
+      "key": "mx-node:dashboard/quick-review",
+      "component": "MxFab",
       "variant": null
     },
     {
@@ -19,19 +39,9 @@
       "variant": null
     },
     {
-      "key": "mx-node:dashboard/today",
-      "component": "MxCard",
-      "variant": "primary"
-    },
-    {
       "key": "mx-node:dashboard/start",
       "component": "MxButton",
       "variant": "contrast"
-    },
-    {
-      "key": "mx-node:dashboard/goal",
-      "component": "MxCard",
-      "variant": "elevated"
     },
     {
       "key": "mx-node:dashboard/streak",
@@ -39,19 +49,9 @@
       "variant": "primarySoft"
     },
     {
-      "key": "mx-node:dashboard/mastered",
+      "key": "mx-node:dashboard/today",
       "component": "MxCard",
-      "variant": "muted"
-    },
-    {
-      "key": "mx-node:dashboard/decks-head",
-      "component": "MxSectionHeader",
-      "variant": null
-    },
-    {
-      "key": "mx-node:dashboard/quick-review",
-      "component": "MxFab",
-      "variant": null
+      "variant": "primary"
     }
   ]
 }
