@@ -103,11 +103,14 @@ ${list(deletes)}
 Do nothing else.`;
 
 const claudeBin = process.env.CLAUDE_BIN || 'claude';
-console.log(`sync-design: pushing via nested \`${claudeBin} -p\` (needs a design-authorized CLI login)…`);
+// A large delta needs more turns for the nested agent to batch all writes; keep the
+// small default but let SYNC_MAX_TURNS widen it for a full-range catch-up sync.
+const maxTurns = process.env.SYNC_MAX_TURNS || '12';
+console.log(`sync-design: pushing via nested \`${claudeBin} -p\` (max-turns ${maxTurns}; needs a design-authorized CLI login)…`);
 const res = spawnSync(
   claudeBin,
-  ['--dangerously-skip-permissions', '--max-turns', '12', '-p', prompt],
-  { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 6 * 60_000 },
+  ['--dangerously-skip-permissions', '--max-turns', maxTurns, '-p', prompt],
+  { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 12 * 60_000 },
 );
 const out = `${res.stdout || ''}${res.stderr || ''}`.trim();
 const lastLine = out.split('\n').filter(Boolean).pop() || '';
