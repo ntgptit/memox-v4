@@ -74,7 +74,7 @@ void main() {
             );
       }
     },
-    'not-enough': () async {},
+    'not-enough': () async {}, // empty deck → _count == 0 → _notEnough
   };
 
   for (final entry in recipes.entries) {
