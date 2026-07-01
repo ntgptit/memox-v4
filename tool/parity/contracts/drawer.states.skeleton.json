@@ -1,0 +1,41 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "drawer",
+  "states": {
+    "open": [
+      "mx-node:drawer/item-0",
+      "mx-node:drawer/item-1",
+      "mx-node:drawer/item-2",
+      "mx-node:drawer/item-3",
+      "mx-node:drawer/item-4",
+      "mx-node:drawer/item-5",
+      "mx-node:drawer/item-6",
+      "mx-node:drawer/item-7",
+      "mx-node:drawer/item-8",
+      "mx-node:drawer/item-9",
+      "mx-node:drawer/overlay",
+      "mx-node:drawer/panel"
+    ],
+    "add-language": [
+      "mx-node:drawer/add-appbar",
+      "mx-node:drawer/add-back",
+      "mx-node:drawer/add-confirm",
+      "mx-node:drawer/add-screen",
+      "mx-node:drawer/learn-lang",
+      "mx-node:drawer/native-lang"
+    ],
+    "remove-language": [
+      "mx-node:drawer/pair-0",
+      "mx-node:drawer/pair-0-del",
+      "mx-node:drawer/pair-1",
+      "mx-node:drawer/pair-1-del",
+      "mx-node:drawer/remove-appbar",
+      "mx-node:drawer/remove-back",
+      "mx-node:drawer/remove-cancel",
+      "mx-node:drawer/remove-dialog",
+      "mx-node:drawer/remove-ok",
+      "mx-node:drawer/remove-screen",
+      "mx-node:drawer/remove-scrim"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "$curated": "Per-state BODY node set for review — the keyed body nodes the FE renders in each state (appbar / screen / prev-next / progress chrome excluded, matching dashboard.states.json). Curated from review.states.skeleton.json (gen_states.mjs). Cross-checked by review_parity_test.dart, which drives the states it can reach (browsing, end) and asserts each MxCard is present/absent per this set. `editing` / `audio` are kit states this browse-only FE screen does not render as distinct node sets — listed for completeness, not yet driven (per-state coverage gap).",
+  "screen": "review",
+  "states": {
+    "browsing": ["mx-node:review/term", "mx-node:review/meaning"],
+    "editing": ["mx-node:review/term", "mx-node:review/meaning"],
+    "audio": ["mx-node:review/term", "mx-node:review/meaning"],
+    "end": ["mx-node:review/end"]
+  }
+}

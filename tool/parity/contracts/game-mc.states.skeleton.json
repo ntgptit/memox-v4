@@ -1,0 +1,57 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "game-mc",
+  "states": {
+    "waiting": [
+      "mx-node:game-mc/appbar",
+      "mx-node:game-mc/audio",
+      "mx-node:game-mc/back",
+      "mx-node:game-mc/choice-0",
+      "mx-node:game-mc/choice-1",
+      "mx-node:game-mc/choice-2",
+      "mx-node:game-mc/choice-3",
+      "mx-node:game-mc/edit",
+      "mx-node:game-mc/options",
+      "mx-node:game-mc/progress",
+      "mx-node:game-mc/prompt",
+      "mx-node:game-mc/screen"
+    ],
+    "correct": [
+      "mx-node:game-mc/appbar",
+      "mx-node:game-mc/audio",
+      "mx-node:game-mc/back",
+      "mx-node:game-mc/choice-0",
+      "mx-node:game-mc/choice-1",
+      "mx-node:game-mc/choice-2",
+      "mx-node:game-mc/choice-3",
+      "mx-node:game-mc/edit",
+      "mx-node:game-mc/options",
+      "mx-node:game-mc/progress",
+      "mx-node:game-mc/prompt",
+      "mx-node:game-mc/screen"
+    ],
+    "wrong": [
+      "mx-node:game-mc/appbar",
+      "mx-node:game-mc/audio",
+      "mx-node:game-mc/back",
+      "mx-node:game-mc/choice-0",
+      "mx-node:game-mc/choice-1",
+      "mx-node:game-mc/choice-2",
+      "mx-node:game-mc/choice-3",
+      "mx-node:game-mc/edit",
+      "mx-node:game-mc/options",
+      "mx-node:game-mc/progress",
+      "mx-node:game-mc/prompt",
+      "mx-node:game-mc/screen"
+    ],
+    "complete": [
+      "mx-node:game-mc/appbar",
+      "mx-node:game-mc/back",
+      "mx-node:game-mc/complete",
+      "mx-node:game-mc/next",
+      "mx-node:game-mc/options",
+      "mx-node:game-mc/progress",
+      "mx-node:game-mc/screen"
+    ]
+  }
+}

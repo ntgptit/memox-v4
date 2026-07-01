@@ -1,0 +1,48 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "import",
+  "states": {
+    "source": [
+      "mx-node:import/appbar",
+      "mx-node:import/back",
+      "mx-node:import/paste",
+      "mx-node:import/screen",
+      "mx-node:import/source-0",
+      "mx-node:import/source-1",
+      "mx-node:import/source-2"
+    ],
+    "mapping": [
+      "mx-node:import/appbar",
+      "mx-node:import/back",
+      "mx-node:import/map-meaning",
+      "mx-node:import/map-meaning-pick",
+      "mx-node:import/map-term",
+      "mx-node:import/map-term-pick",
+      "mx-node:import/screen",
+      "mx-node:import/sep-0",
+      "mx-node:import/sep-1",
+      "mx-node:import/sep-2",
+      "mx-node:import/to-preview"
+    ],
+    "preview": [
+      "mx-node:import/appbar",
+      "mx-node:import/back",
+      "mx-node:import/do-import",
+      "mx-node:import/screen"
+    ],
+    "dup-warning": [
+      "mx-node:import/appbar",
+      "mx-node:import/back",
+      "mx-node:import/do-import",
+      "mx-node:import/dup-warning",
+      "mx-node:import/screen"
+    ],
+    "done": [
+      "mx-node:import/appbar",
+      "mx-node:import/back",
+      "mx-node:import/done",
+      "mx-node:import/go-deck",
+      "mx-node:import/screen"
+    ]
+  }
+}

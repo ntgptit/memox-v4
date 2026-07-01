@@ -1,0 +1,50 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "settings",
+  "states": {
+    "loaded": [
+      "mx-node:settings/appbar",
+      "mx-node:settings/g-0",
+      "mx-node:settings/g-1",
+      "mx-node:settings/g-2",
+      "mx-node:settings/g-3",
+      "mx-node:settings/g-4",
+      "mx-node:settings/g-5",
+      "mx-node:settings/g-6",
+      "mx-node:settings/g-7",
+      "mx-node:settings/g-8",
+      "mx-node:settings/profile",
+      "mx-node:settings/screen"
+    ],
+    "group-expanded": [
+      "mx-node:settings/appbar",
+      "mx-node:settings/games",
+      "mx-node:settings/profile",
+      "mx-node:settings/screen",
+      "mx-node:settings/srs-boxes",
+      "mx-node:settings/srs-intervals",
+      "mx-node:settings/srs-notif",
+      "mx-node:settings/srs-notif-switch",
+      "mx-node:settings/theme"
+    ],
+    "value-picker": [
+      "mx-node:settings/appbar",
+      "mx-node:settings/g-0",
+      "mx-node:settings/g-1",
+      "mx-node:settings/g-2",
+      "mx-node:settings/g-3",
+      "mx-node:settings/g-4",
+      "mx-node:settings/g-5",
+      "mx-node:settings/g-6",
+      "mx-node:settings/g-7",
+      "mx-node:settings/g-8",
+      "mx-node:settings/picker-scrim",
+      "mx-node:settings/picker-sheet",
+      "mx-node:settings/profile",
+      "mx-node:settings/screen",
+      "mx-node:settings/words-10",
+      "mx-node:settings/words-20",
+      "mx-node:settings/words-5"
+    ]
+  }
+}

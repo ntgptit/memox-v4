@@ -1,0 +1,51 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "account-sync",
+  "states": {
+    "signed-out": [
+      "mx-node:account/appbar",
+      "mx-node:account/back",
+      "mx-node:account/google",
+      "mx-node:account/screen",
+      "mx-node:account/signin"
+    ],
+    "signed-in": [
+      "mx-node:account/appbar",
+      "mx-node:account/back",
+      "mx-node:account/profile",
+      "mx-node:account/screen",
+      "mx-node:account/signout",
+      "mx-node:account/sync",
+      "mx-node:account/sync-now",
+      "mx-node:account/sync-status"
+    ],
+    "syncing": [
+      "mx-node:account/appbar",
+      "mx-node:account/back",
+      "mx-node:account/profile",
+      "mx-node:account/screen",
+      "mx-node:account/signout",
+      "mx-node:account/sync",
+      "mx-node:account/sync-bar",
+      "mx-node:account/sync-status"
+    ],
+    "conflict": [
+      "mx-node:account/appbar",
+      "mx-node:account/back",
+      "mx-node:account/profile",
+      "mx-node:account/screen",
+      "mx-node:account/signout",
+      "mx-node:account/sync",
+      "mx-node:account/sync-status"
+    ],
+    "offline": [
+      "mx-node:account/appbar",
+      "mx-node:account/back",
+      "mx-node:account/profile",
+      "mx-node:account/screen",
+      "mx-node:account/signout",
+      "mx-node:account/sync",
+      "mx-node:account/sync-status"
+    ]
+  }
+}

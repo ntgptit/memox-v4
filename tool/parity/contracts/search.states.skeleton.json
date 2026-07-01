@@ -1,0 +1,71 @@
+{
+  "$skeleton": "AUTO-PROPOSED by tool/parity/gen_states.mjs from specs/<screen>.md + the SCREENS registry. Per-state node membership: state id -> `mx-node:` keys present in that state (base tree, then the ordered +/- diff). SUPERSET — includes chrome (appbar/screen); curate down to the state-driven BODY nodes (see the curated dashboard.states.json). Then rename to <screen>.states.json and add a per-state test (review_parity_test.dart / dashboard_states_test.dart). Do NOT ship as-is.",
+  "screen": "search",
+  "states": {
+    "empty-recent": [
+      "mx-node:search/appbar",
+      "mx-node:search/back",
+      "mx-node:search/dock",
+      "mx-node:search/recent-0",
+      "mx-node:search/recent-1",
+      "mx-node:search/recent-2",
+      "mx-node:search/recent-fill-0",
+      "mx-node:search/recent-fill-1",
+      "mx-node:search/recent-fill-2",
+      "mx-node:search/screen"
+    ],
+    "results": [
+      "mx-node:search/appbar",
+      "mx-node:search/back",
+      "mx-node:search/clear",
+      "mx-node:search/dock",
+      "mx-node:search/filter-0",
+      "mx-node:search/filter-1",
+      "mx-node:search/filter-2",
+      "mx-node:search/filter-3",
+      "mx-node:search/filters",
+      "mx-node:search/result-0",
+      "mx-node:search/result-1",
+      "mx-node:search/result-2",
+      "mx-node:search/screen"
+    ],
+    "filtered": [
+      "mx-node:search/appbar",
+      "mx-node:search/back",
+      "mx-node:search/clear",
+      "mx-node:search/dock",
+      "mx-node:search/filter-0",
+      "mx-node:search/filter-1",
+      "mx-node:search/filter-2",
+      "mx-node:search/filter-3",
+      "mx-node:search/filters",
+      "mx-node:search/recent-2",
+      "mx-node:search/screen"
+    ],
+    "no-results": [
+      "mx-node:search/appbar",
+      "mx-node:search/back",
+      "mx-node:search/clear",
+      "mx-node:search/dock",
+      "mx-node:search/filter-0",
+      "mx-node:search/filter-1",
+      "mx-node:search/filter-2",
+      "mx-node:search/filter-3",
+      "mx-node:search/filters",
+      "mx-node:search/no-results",
+      "mx-node:search/screen"
+    ],
+    "loading": [
+      "mx-node:search/appbar",
+      "mx-node:search/back",
+      "mx-node:search/clear",
+      "mx-node:search/dock",
+      "mx-node:search/filter-0",
+      "mx-node:search/filter-1",
+      "mx-node:search/filter-2",
+      "mx-node:search/filter-3",
+      "mx-node:search/filters",
+      "mx-node:search/screen"
+    ]
+  }
+}
