@@ -7,7 +7,8 @@ data layers). Built so the **FE track** (design-system → components → screen
 and the **BE track** (domain → SRS engine → Drift data) proceed **in parallel**
 once shared foundations land.
 
-Confirmed decisions (v1):
+Confirmed decisions (v1) — summary; full rules in
+[`docs/business/`](../business/index.md):
 8-box single-direction SRS · 20 new cards/day · nested decks · search term+meaning
 · soft-dup · goal + streak · Premium/account-sync **deferred**. Stack: **Riverpod
 Annotation** (state + DI) · **Drift/SQLite** (persistence) · **go_router** ·
@@ -80,9 +81,10 @@ implements Drift + real repositories. Neither blocks the other.
 ## Conventions
 
 - **ID**: `<phase>.<n>`. **Status**: ☐ · ◐ · ☑ · ⊘ deferred. **Size**: S/M/L.
-- **Source of truth**: the kit is frozen (design); v1 product rules are the
-  **Confirmed decisions** above (this doc is their in-repo home). Never edit the
-  kit to fit Flutter. If a rule is missing, STOP and confirm — don't invent.
+- **Source of truth**: the kit is frozen (design); v1 product rules live in
+  **`docs/business/`** (BRD-lite `index.md` + per-feature specs) — the DM/domain
+  tasks read them. Never edit the kit to fit Flutter. If a rule is missing, STOP
+  and confirm — don't invent.
 - **Codegen**: Riverpod + Drift use `build_runner`. Generated `*.g.dart` /
   `*.drift.dart` are build outputs; a CI gate checks they're up to date.
 - **Strings** from ARB, never hardcoded.
