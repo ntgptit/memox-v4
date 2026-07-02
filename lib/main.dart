@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'core/theme/mx_colors.dart';
-import 'core/theme/mx_elevation.dart';
-import 'core/theme/mx_radius.dart';
-import 'core/theme/mx_spacing.dart';
-import 'core/theme/mx_typography.dart';
+import 'package:memox_v4/core/theme/mx_colors.dart';
+import 'package:memox_v4/core/theme/mx_elevation.dart';
+import 'package:memox_v4/core/theme/mx_radius.dart';
+import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_typography.dart';
 
 void main() => runApp(const MemoxApp());
 
