@@ -3,8 +3,10 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
-  plugins:
-    - custom_lint            # runs riverpod_lint (Riverpod best-practice checks)
+  # NOTE: riverpod_lint/custom_lint are NOT usable with Riverpod 3.x + drift on
+  # this SDK (riverpod_generator 4.x needs analyzer ^9, custom_lint needs ^7.5/^8
+  # — a hard conflict; the backup pubspec omits them too). Riverpod best-practice
+  # rules are enforced instead by the I.10 architecture-guard test.
   language:
     strict-casts: true
     strict-inference: true

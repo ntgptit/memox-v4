@@ -77,11 +77,16 @@ lib/
 
 ## Coding conventions (non-negotiable)
 
-- **State = Riverpod Annotation only.** All state/mutation lives in `@riverpod`
-  providers/notifiers (codegen). **`setState` is banned in feature UI** — widgets
-  render and dispatch intent; they never own mutable state. Read async state with
-  `AsyncValue.when`/`.guard`; use `ref.watch`/`ref.read`, `ref.mounted`,
+- **State = Riverpod Annotation only — Riverpod 3.x** (`flutter_riverpod ^3.3.1`,
+  `riverpod_annotation ^4.0.2`, `riverpod_generator ^4.0.3`). All state/mutation
+  lives in `@riverpod` providers/notifiers (codegen). Use **Riverpod 3 idioms**:
+  the untyped `Ref` (not the old per-provider `FooRef`), `Notifier`/`AsyncNotifier`
+  via `@riverpod`, auto-dispose by default. **`setState` is banned in feature UI**
+  — widgets render and dispatch intent, never own mutable state. Read async state
+  with `AsyncValue.when`/`.guard`; use `ref.watch`/`ref.read`, `ref.mounted`,
   `ref.onDispose`. No `ChangeNotifier`/`setState`/`ValueNotifier` as app state.
+  (Note: `riverpod_lint` can't resolve with this R3 + drift set on Dart 3.11 — the
+  I.10 architecture-guard test enforces the Riverpod rules instead.)
 - **SQL lives in `*.drift` files.** All queries are declared in Drift `.drift`
   files (or typed Drift APIs) — **no hand-written/inline/hardcoded SQL strings in
   Dart, no raw `sqflite`.** Data access goes through generated DAOs.
