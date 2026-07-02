@@ -328,6 +328,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(CI + pre-push gate)_ | `.github/workflows/verify.yml` · `.githooks/pre-push` | self-validated (CI runs the gate; hook `sh -n`) | I.8 | #63 |
 | _(architecture guard)_ | `importViolations` / `navLiteralViolations` (source-scanning; custom_lint N/A on R3) | `test/architecture/layer_boundaries_test.dart` | I.10 | #64 |
 | _(theme assembly)_ | `core/theme/app_theme.dart` (`AppTheme`) · `mx_theme.dart` (`MxTheme` ThemeExtension) | `test/core/theme/theme_test.dart` | T.1 | #65 |
+| _(foundation seal)_ | `app_router.dart` `errorBuilder` → `RouteErrorScreen` (fallback route) | `test/foundation/boot_smoke_test.dart` | I.9 | #66 |
 
 ---
 
