@@ -26,7 +26,8 @@ route constants in the SAME commit (CLAUDE.md hard rule).
 | `theme` | `/settings/theme` | — | push | Cá nhân hoá (W13): chế độ màu + màu nhấn + cỡ chữ, áp dụng live |
 | (settings tile) | — | — | inline | Đồng bộ Google (W10 alpha): tile trong `/settings`, không route riêng |
 
-Hằng route đặt ở `lib/app/router/` (`route_paths.dart` / `app_router.dart`). S0 dựng
+Hằng route đặt ở `lib/core/routes/` (`route_paths.dart` / `app_router.dart`) — theo
+kiến trúc hiện hành (AGENTS.md + WBS §Architecture). S0 dựng
 **app shell** bằng `StatefulShellRoute.indexedStack` với **4 nhánh tab** (Today · Library ·
 Stats · Profile). Bottom nav theo design kit có **5 mục**: Today · Library · **Add** (mục
 giữa) · Stats · Profile — `Add` là **action** (không phải route/nhánh), chạm mở luồng thêm

@@ -1,41 +1,37 @@
-# P.05 — MxChip
+# H.05 — MxSheet
 
-> **Loop task** (primitive component). Self-contained — execute fully in one iteration, then tick `P.05` in `docs/agent/build/README.md`. One task per iteration.
+> **Loop task** (shared helper (composite)). Self-contained — execute fully in one iteration, then tick `H.05` in `docs/agent/build/README.md`. One task per iteration.
 >
-> Size **S–M** · Deps **Phase T** · Branch `build/p05`
+> Size **S** · Deps **Phase T** · Branch `build/h05`
 
 
 ## Goal
 
-Build the Flutter widget **MxChip** mirroring the kit component, driven entirely by design tokens + `MxTheme` (primitive layer).
+Build **MxSheet** — the Flutter port of the kit's `Sheet + MenuItem + Scrim` helper — as a reusable composite, token-driven. These helpers are reused across many screens; building them shared avoids per-screen re-derivation.
 
-## Inputs — READ ALL IN FULL (do not infer)
+## Inputs — READ IN FULL
 
-- `docs/design/MemoX Design System/components/core/MxChip.d.ts` — typed prop contract (variants, sizes, flags).
-- `docs/design/MemoX Design System/components/core/MxChip.prompt.md` — intent + JSX usage examples.
-- `docs/design/MemoX Design System/components/core/MxChip.jsx` — class→CSS mapping.
-- `docs/design/MemoX Design System/components.css` — the base class + modifier styling for **MxChip**.
-- `lib/core/theme/` — tokens + `MxTheme` extension.
+- `docs/design/MemoX Design System/ui_kits/memox-app/kit-helpers.jsx` — find `function Sheet + MenuItem + Scrim` (the exact styling + tokens).
+- `docs/design/MemoX Design System/components.css` — any `.mxg-*` class it uses.
+- `lib/core/theme/` — tokens + `MxTheme`.
 
 ## Output
 
-- `lib/presentation/shared/primitives/mx_chip.dart`
-- `test/presentation/shared/primitives/mx_chip_test.dart`
+- `lib/presentation/shared/composites/mx_sheet.dart`
+- `test/presentation/shared/composites/mx_sheet_test.dart`
 
 ## Steps
 
-1. **Baseline**: `git checkout main && git pull`, `git checkout -b build/p05`.
-2. Read the `.d.ts` → constructor: each prop → param; string-union → Dart `enum`; flags → `bool`.
-3. Read `.jsx` + the `components.css` slice → map each variant/modifier to token styling via the theme. **No raw `Color(0x..)`/px.**
-4. Reproduce **every** variant/size/state the contract lists.
-5. Widget + golden test: each variant in light+dark; assert token values reach the tree.
-6. Run Verify; add §Ledger row(s); Finish.
+1. **Baseline**: `git checkout main && git pull`, `git checkout -b build/h05`.
+2. Read `function Sheet + MenuItem + Scrim` in `kit-helpers.jsx` → derive props + token-based styling. **No raw `Color(0x..)`/px.**
+3. bottom sheet (radius-2xl top, shadow-nav) + MenuItem rows + Scrim overlay (overlay token). Powers every overflow/sort/play/picker sheet.
+4. Widget + golden test (light+dark, each tone/variant).
+5. Run Verify; add §Ledger row(s); Finish.
 
 ## Notes
 
-- Primitive: wrap Material, **no** business logic / provider / feature imports.
-- Kit name + base class are **frozen contract** — keep `MxChip` + variant identifiers aligned.
-- Strings from ARB. If `.d.ts` lists a variant the CSS never styles, note it in §Ledger — don't invent.
+- Composite: compose primitives; feature-independent; no provider usage.
+- Name it `MxSheet` (Mx-prefixed shared widget). Strings from ARB.
 
 ## Definition of Done
 
@@ -67,6 +63,6 @@ node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 ## Finish
 
 1. Commit(s): implementation + test(s). End messages with the Co-Authored-By trailer.
-2. Push `build/p05`; open a PR; merge to main; `git checkout main && git pull`.
+2. Push `build/h05`; open a PR; merge to main; `git checkout main && git pull`.
    > From an agent session without a design-authorized TTY, prefix: `MEMOX_SKIP_DESIGN_SYNC=1 git push …`.
-3. Tick `P.05` → `[x]` in `docs/agent/build/README.md`, small commit.
+3. Tick `H.05` → `[x]` in `docs/agent/build/README.md`, small commit.

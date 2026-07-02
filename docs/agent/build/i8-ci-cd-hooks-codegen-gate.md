@@ -2,17 +2,17 @@
 
 > **Loop task** (infrastructure). Self-contained — execute fully in one iteration, then tick `I.8` in `docs/agent/build/README.md`. One task per iteration.
 >
-> Size **M** · Deps **I.1** · Branch `build/i8`
+> Size **M** · Deps **I.0** · Branch `build/i8`
 
 
 ## Goal
 
-Gate every push: analyze, test, gen_tokens --check, and build_runner freshness.
+Wire CI + git hooks to run the single verifier `node tool/verify/run.mjs` — do NOT duplicate raw command lists.
 
 ## Inputs — read first
 
 - `.githooks/`
-- `tool/design/gen_tokens.mjs`
+- `tool/verify/run.mjs (I.0)`
 
 ## Output
 
@@ -30,8 +30,8 @@ Gate every push: analyze, test, gen_tokens --check, and build_runner freshness.
 
 ## Notes
 
-- Codegen freshness: run build_runner then fail if git is dirty.
-- Compose with the existing design-sync pre-push step.
+- CI + pre-push call `node tool/verify/run.mjs` (full in CI, `--quick` or `--docs` on pre-push as suits).
+- Compose with the existing design-sync pre-push step; keep `MEMOX_SKIP_DESIGN_SYNC` escape hatch.
 
 ## Definition of Done
 
@@ -39,17 +39,20 @@ Gate every push: analyze, test, gen_tokens --check, and build_runner freshness.
 - [ ] **Analyzes** — `dart analyze lib test` → 0 issues; codegen (build_runner) up to date.
 - [ ] **Tested** at the right level — domain = pure unit · data = Drift integration · primitives/composites = widget+golden (light+dark) · screens = provider-state widget tests + golden vs `shots/*.png`.
 - [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in `docs/business/` with edge cases.
-- [ ] **Ledger** — row(s) added to `docs/project-management/wbs.md §Ledger`.
-- [ ] **Gates green** — `gen_tokens --check` + `dart analyze` + `flutter test` + codegen check.
+- [ ] **Decision Table** — every `D-xxx` row in `docs/decision-tables/core-decision-table.md` this task touches has a covering test; cite the `D-xxx` id(s) in the Ledger. (Deferred rows: D-012 Premium, D-022 REMOVED, D-027 sync.)
+- [ ] **Ledger** — row(s) added to `docs/project-management/wbs.md §Ledger` (kit/D-xxx node → Dart symbol → test).
+- [ ] **Gates green** — `node tool/verify/run.mjs` passes (codegen freshness + `gen_tokens --check` + analyze + test). (I.0 not done yet → fall back to the raw commands.)
 
 ## Verify (must pass before commit)
 
 ```bash
-dart run build_runner build --delete-conflicting-outputs
-node tool/design/gen_tokens.mjs --check
-dart analyze lib test
-flutter test
+node tool/verify/run.mjs          # full gate: codegen freshness + gen_tokens --check + analyze + test
+node tool/verify/run.mjs --quick  # analyze + test only (fast, while iterating)
+node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 ```
+
+> Until **I.0** creates the runner, fall back to the raw commands:
+> `dart run build_runner build --delete-conflicting-outputs && node tool/design/gen_tokens.mjs --check && dart analyze lib test && flutter test`.
 
 ## STOP conditions (do not push through)
 

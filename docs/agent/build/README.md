@@ -10,17 +10,19 @@ in parallel once the shared foundation (I, T, DM contracts) lands.
 > `/loop` Đọc `docs/agent/build/README.md`, chọn task **pending** đầu tiên (`[ ]`)
 > tôn trọng thứ tự phase + deps (I → T/DM → {FE: P→K→S | BE: DM→DT} → V). Đọc + thực
 > thi ĐẦY ĐỦ file prompt của task đó (baseline → đọc source → build đúng layer →
-> test đúng tầng (domain unit / data integration / widget+golden) → `build_runner`
-> + `gen_tokens --check` + `dart analyze` + `flutter test` → §Ledger → commit →
-> push → PR → merge), rồi đổi ô đó thành `[x]`. Mỗi vòng đúng 1 task. Nếu prompt bảo
-> **STOP** (drift / ambiguity cần người quyết) → dừng, báo, chờ. `[~]` = deferred,
-> bỏ qua. Hết pending → báo HOÀN TẤT.
+> test đúng tầng (domain unit / data integration / widget+golden) →
+> `node tool/verify/run.mjs` (gate duy nhất, do **I.0** tạo) → §Ledger (cite D-xxx) →
+> commit → push → PR → merge), rồi đổi ô đó thành `[x]`. Mỗi vòng đúng 1 task. Nếu
+> prompt bảo **STOP** (drift / ambiguity cần người quyết) → dừng, báo, chờ.
+> `[~]` = deferred, bỏ qua. Hết pending → báo HOÀN TẤT.
 
-**Order & parallelism**: Phase **I** unblocks everything. Then **T** (theme) and
-**DM** (domain contracts) open the two tracks. FE: **P → K → S** (K shells unblock
-screens). BE: **DM.4 SRS → DT** (Drift). Screens use in-memory fakes until **DT.5**
-wires real repositories. **S.01 dashboard is the pilot** — do it, pause for review,
-then fan out.
+**Order & parallelism**: **I.0 verify runner** first, then Phase **I** unblocks
+everything. **T** (theme) + **DM** (domain contracts incl. DM.8 service contracts)
+open the two tracks. FE: **P → K → H → S** (K shells + H helpers unblock screens).
+BE: **DM.4 SRS → DT.0 schema contract → DT** (Drift) + **DT.7** service adapters.
+Screens use in-memory fakes until **DT.5** wires real repositories. **S.01 dashboard
+is the pilot** — do it, pause for review, then fan out. Every behaviour traces to a
+`D-xxx` row in `docs/decision-tables/core-decision-table.md`.
 
 ## Queue
 
@@ -28,6 +30,7 @@ then fan out.
 
 | done | id | task |
 | --- | --- | --- |
+| [ ] | I.0 | [Verify runner bootstrap](i0-verify-runner-bootstrap.md) |
 | [ ] | I.1 | [Dependencies](i1-dependencies.md) |
 | [ ] | I.2 | [Lint and format config](i2-lint-and-format-config.md) |
 | [ ] | I.3 | [Folder architecture scaffold](i3-folder-architecture-scaffold.md) |
@@ -59,17 +62,20 @@ then fan out.
 | [ ] | DM.5 | [Study use cases](dm5-study-use-cases.md) |
 | [ ] | DM.6 | [Library use cases](dm6-library-use-cases.md) |
 | [ ] | DM.7 | [Import/export + stats use cases](dm7-import-export-stats-use-cases.md) |
+| [ ] | DM.8 | [Device / service contracts](dm8-device-service-contracts.md) |
 
 ### DT — Data (BE impl)
 
 | done | id | task |
 | --- | --- | --- |
+| [ ] | DT.0 | [Database schema contract](dt0-database-schema-contract.md) |
 | [ ] | DT.1 | [Drift schema & tables](dt1-drift-schema-tables.md) |
 | [ ] | DT.2 | [Migrations & versioning](dt2-migrations-versioning.md) |
 | [ ] | DT.3 | [DAOs](dt3-daos.md) |
 | [ ] | DT.4 | [Repository impls + mappers](dt4-repository-impls-mappers.md) |
 | [ ] | DT.5 | [DI wiring (providers)](dt5-di-wiring-providers.md) |
 | [ ] | DT.6 | [Seed / sample data](dt6-seed-sample-data.md) |
+| [ ] | DT.7 | [Service adapters (device/plugins)](dt7-service-adapters-device-plugins.md) |
 
 ### P — Primitives
 
@@ -98,6 +104,18 @@ then fan out.
 | [ ] | K.09 | [ActionCallout](k09-actioncallout.md) |
 | [ ] | K.10 | [ConfirmDialog](k10-confirmdialog.md) |
 | [ ] | K.11 | [StatusCardRow](k11-statuscardrow.md) |
+
+### H — Shared helpers
+
+| done | id | task |
+| --- | --- | --- |
+| [ ] | H.01 | [MxProgressBar](h01-mxprogressbar.md) |
+| [ ] | H.02 | [MxSkeleton](h02-mxskeleton.md) |
+| [ ] | H.03 | [MxEmptyState](h03-mxemptystate.md) |
+| [ ] | H.04 | [MxListRow](h04-mxlistrow.md) |
+| [ ] | H.05 | [MxSheet](h05-mxsheet.md) |
+| [ ] | H.06 | [MxStatRing](h06-mxstatring.md) |
+| [ ] | H.07 | [MxChoiceOption](h07-mxchoiceoption.md) |
 
 ### S — Screens
 

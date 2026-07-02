@@ -98,19 +98,26 @@ implements Drift + real repositories. Neither blocks the other.
    · **primitives/composites** = widget + golden (light+dark) · **screens** =
    widget tests over provider states + golden vs `shots/*.png`.
 4. **Parity / correctness** — UI matches the kit for every state; domain matches
-   the v1 product rules (Confirmed decisions, above) with edge cases covered.
-5. **Ledger** — row(s) in §Ledger.
-6. **Gates green** — `gen_tokens --check` + `dart analyze` + `flutter test` +
-   codegen check.
+   the v1 rules in `docs/business/` with edge cases covered.
+5. **Decision Table** — every `D-xxx` row this task touches
+   ([`core-decision-table.md`](../decision-tables/core-decision-table.md)) has a
+   covering test; cite the `D-xxx` id(s) in the Ledger. See §Decision trace.
+6. **Ledger** — row(s) in §Ledger (kit/`D-xxx` node → Dart symbol → test).
+7. **Gates green** — `node tool/verify/run.mjs` passes.
 
 ### Verify
 
+The single gate is **`tool/verify/run.mjs`** (created in **I.0**); tasks call it,
+not the raw commands.
+
 ```bash
-dart run build_runner build --delete-conflicting-outputs   # riverpod + drift codegen
-node tool/design/gen_tokens.mjs --check
-dart analyze lib test
-flutter test
+node tool/verify/run.mjs          # full: codegen freshness + gen_tokens --check + analyze + test
+node tool/verify/run.mjs --quick  # analyze + test only
+node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 ```
+
+Before I.0 lands, fall back to:
+`dart run build_runner build --delete-conflicting-outputs && node tool/design/gen_tokens.mjs --check && dart analyze lib test && flutter test`.
 
 ---
 
@@ -126,14 +133,15 @@ flutter test
 
 | ID | Task | Size | Deps | Output |
 |----|------|------|------|--------|
-| I.1 | **Dependencies** — add `flutter_riverpod`+`riverpod_annotation`, `drift`+`drift_flutter`, `go_router`, `equatable`/`freezed`, `build_runner`, `flutter_localizations`; pin versions | S | — | `pubspec.yaml` |
+| **I.0** | **Verify runner bootstrap** — `tool/verify/run.mjs`, the single build-loop gate (full / `--quick` / `--docs`). 23 kit specs already reference it. Every later task calls it instead of raw commands. | M | — | `tool/verify/run.mjs` |
+| I.1 | **Dependencies** — add `flutter_riverpod`+`riverpod_annotation`, `drift`+`drift_flutter`, `go_router`, `equatable`/`freezed`, `build_runner`, `flutter_localizations`; pin versions | S | I.0 | `pubspec.yaml` |
 | I.2 | **Lint & format** — strict `analysis_options.yaml` (flutter_lints + custom rules for layer contracts) | S | I.1 | `analysis_options.yaml` |
 | I.3 | **Folder architecture** — scaffold the full tree above (barrels/placeholders only) | S | — | `lib/**` dirs |
 | I.4 | **App bootstrap** — `app/`: `ProviderScope`, `MaterialApp.router`, env/flavor config, error zone | M | I.1, I.3 | `lib/app/*.dart`, `main.dart` |
 | I.5 | **Routing skeleton** — `core/routes/`: `go_router`, shell route + bottom nav, typed route stubs for all 22 features | M | I.4 | `lib/core/routes/*.dart` |
 | I.6 | **Error + Result** — `core/error/`: `Failure` hierarchy, `Result<T>`/`Either` type, guard helpers | S | I.3 | `lib/core/error/*.dart` |
 | I.7 | **Logging + utils** — `core/logging/`, `core/utils/`, `core/constants/` | S | I.3 | `lib/core/{logging,utils,constants}/*.dart` |
-| I.8 | **CI/CD + hooks + codegen gate** — analyze, test, `gen_tokens --check`, `build_runner` freshness check; pre-commit + CI | M | I.1 | `.github/`, `.githooks/` |
+| I.8 | **CI/CD + hooks** — wire CI + pre-push to run **`node tool/verify/run.mjs`** (not duplicated raw commands); compose with the design-sync step | M | I.0 | `.github/`, `.githooks/` |
 
 ---
 
@@ -161,6 +169,7 @@ flutter test
 | DM.5 | **Study use cases** — get due queue, start/resume session, grade card, finish session, goal+streak update | M | DM.3, DM.4 | `domain/usecases/study/*.dart` |
 | DM.6 | **Library use cases** — deck CRUD (nested move/rename/delete), card CRUD, **soft-dup** detection, term+meaning **search** | M | DM.3 | `domain/usecases/library/*.dart` |
 | DM.7 | **Import/export + stats use cases** — parse/emit deck formats; compute statistics/heatmap | M | DM.3 | `domain/usecases/{io,stats}/*.dart` |
+| DM.8 | **Device/service contracts** — abstract `SettingsService`, `LanguagePairService` (D-030), `DailyActivityService`, `ReminderNotificationService`, `Tts/AudioService`, `ImportExportFileService` (file+clipboard), `BackupRestoreService`. UI never touches a plugin directly | M | DM.2 | `domain/services/*.dart` |
 
 ---
 
@@ -168,12 +177,14 @@ flutter test
 
 | ID | Task | Size | Deps | Output |
 |----|------|------|------|--------|
-| DT.1 | **Drift schema** — DB class + tables (decks, cards, review_logs, sessions, settings); indices for due/search | L | DM.2 | `data/datasources/local/*.dart`, `data/models/*.dart` |
+| **DT.0** | **Database schema contract** — author the authoritative schema doc (every table/column/index/FK ↔ the rule it serves) **before** Drift, so DT.1 covers all rules | M | DM.2 | `docs/database/schema-contract.md` |
+| DT.1 | **Drift schema** — all tables per DT.0: `language_pairs`, `decks` (self FK), `cards`, `card_meanings`, `srs_state`, `review_logs`, `review_outcome`, `study_sessions`, `daily_activity`, `settings`, backup meta; indices for due/search | L | DT.0 | `data/datasources/local/*.dart`, `data/models/*.dart` |
 | DT.2 | **Migrations** — schema versioning + migration strategy + schema tests | M | DT.1 | migrations + `test/data/migration` |
-| DT.3 | **DAOs** — due-cards query, search query, deck tree, stats aggregations | M | DT.1 | `data/datasources/local/dao/*.dart` |
-| DT.4 | **Repository impls + mappers** — implement DM.3 interfaces over DAOs; row↔entity mappers | L | DT.3, DM.3 | `data/repositories/*.dart`, `data/models/mappers/*` |
+| DT.3 | **DAOs** — due-cards query, search (term+meaning, incl. hidden, D-028), deck tree, stats aggregations | M | DT.1 | `data/datasources/local/dao/*.dart` |
+| DT.4 | **Repository impls + mappers** — implement DM.3 interfaces over DAOs; cascade delete (D-024); row↔entity mappers | L | DT.3, DM.3 | `data/repositories/*.dart`, `data/models/mappers/*` |
 | DT.5 | **DI wiring** — `@riverpod` providers exposing repositories/usecases; swap in-memory fakes → Drift | M | DT.4 | `**/providers/*.dart` |
 | DT.6 | **Seed / sample data** — realistic decks/cards for dev + first-run empty state | S | DT.4 | `data/seed/*` |
+| DT.7 | **Service adapters** — implement DM.8 over plugins/local: settings persistence, local notifications, TTS/audio, file+clipboard import/export, backup/restore. UI never imports plugins | L | DT.4 | `data/services/*.dart` |
 
 ---
 
@@ -209,7 +220,22 @@ flutter test
 | K.10 | ConfirmDialog | `composites/confirm_dialog.dart` |
 | K.11 | StatusCardRow | `composites/status_card_row.dart` |
 
-**Phase P+K exit**: a component gallery renders all 18 in light+dark; each golden.
+## Phase H — Shared kit-helpers — from `kit-helpers.jsx`
+
+Reused helpers ported to shared widgets so screens don't re-derive them.
+
+| ID | Widget | Kit fn | Output |
+|----|--------|--------|--------|
+| H.01 | MxProgressBar | `ProgressBar` | `primitives/mx_progress_bar.dart` |
+| H.02 | MxSkeleton | `Skeleton` | `primitives/mx_skeleton.dart` |
+| H.03 | MxEmptyState | `EmptyState` | `composites/mx_empty_state.dart` |
+| H.04 | MxListRow | `ListRow`+`DeckRow` | `composites/mx_list_row.dart` |
+| H.05 | MxSheet | `Sheet`+`MenuItem`+`Scrim` | `composites/mx_sheet.dart` |
+| H.06 | MxStatRing | `Stat`+`Ring` | `composites/mx_stat_ring.dart` |
+| H.07 | MxChoiceOption | `ChoiceOption` | `primitives/mx_choice_option.dart` |
+
+**Phase P+K+H exit**: a component gallery renders all 25 shared widgets in
+light+dark; each golden.
 
 ---
 
@@ -221,27 +247,27 @@ cases. Feature-local components built here.
 
 | ID | Feature | Local comps | Size | Deps |
 |----|---------|:-----------:|------|------|
-| S.01 | **dashboard** (pilot) | 4 | L | P,K + DM.5 |
-| S.02 | library | 6 | L | P,K + DM.6 |
-| S.03 | deck-detail | 5 | L | P,K + DM.6 |
-| S.04 | search | 2 | M | P,K + DM.6 |
-| S.05 | settings | 2 | M | P,K |
-| S.06 | drawer | 4 | M | P,K |
-| S.07 | reminder | 2 | M | P,K |
-| S.08 | theme | 2 | M | P,K |
-| S.09 | statistics | 3 | L | P,K + DM.7 |
-| S.10 | import | 2 | M | P,K + DM.7 |
-| S.11 | export | 2 | M | P,K + DM.7 |
-| S.12 | flashcard-editor | 2 | M | P,K + DM.6 |
-| S.13 | game-picker | 3 | M | P,K + DM.5 |
-| S.14 | game-matching | 1 | M | P,K + DM.5, S.13 |
-| S.15 | game-mc | 1 | M | P,K + DM.5, S.13 |
-| S.16 | game-recall | 2 | M | P,K + DM.5, S.13 |
-| S.17 | game-typing | 2 | M | P,K + DM.5, S.13 |
-| S.18 | review | 2 | M | P,K + DM.5 |
-| S.19 | player | 2 | M | P,K + DM.5 |
-| S.20 | study-session | 9 | L | P,K + DM.5, S.18 |
-| S.21 | study-result | 4 | M | P,K + DM.5, S.20 |
+| S.01 | **dashboard** (pilot) | 4 | L | P,K,H + DM.5 |
+| S.02 | library | 6 | L | P,K,H + DM.6 |
+| S.03 | deck-detail | 5 | L | P,K,H + DM.6 |
+| S.04 | search | 2 | M | P,K,H + DM.6 |
+| S.05 | settings | 2 | M | P,K,H + DM.8 |
+| S.06 | drawer | 4 | M | P,K,H + DM.8 |
+| S.07 | reminder | 2 | M | P,K,H + DM.8 |
+| S.08 | theme | 2 | M | P,K,H + DM.8 |
+| S.09 | statistics | 3 | L | P,K,H + DM.7 |
+| S.10 | import | 2 | M | P,K,H + DM.7, DM.8 |
+| S.11 | export | 2 | M | P,K,H + DM.7, DM.8 |
+| S.12 | flashcard-editor | 2 | M | P,K,H + DM.6, DM.8 |
+| S.13 | game-picker | 3 | M | P,K,H + DM.5 |
+| S.14 | game-matching | 1 | M | P,K,H + DM.5, S.13 |
+| S.15 | game-mc | 1 | M | P,K,H + DM.5, S.13 |
+| S.16 | game-recall | 2 | M | P,K,H + DM.5, S.13 |
+| S.17 | game-typing | 2 | M | P,K,H + DM.5, S.13 |
+| S.18 | review | 2 | M | P,K,H + DM.5 |
+| S.19 | player | 2 | M | P,K,H + DM.5, DM.8 |
+| S.20 | study-session | 9 | L | P,K,H + DM.5, S.18 |
+| S.21 | study-result | 4 | M | P,K,H + DM.5, S.20 |
 | S.22 | account-sync | 3 | L | ⊘ DEFERRED (v1) |
 
 ---
@@ -250,27 +276,28 @@ cases. Feature-local components built here.
 
 | ID | Task | Size | Notes |
 |----|------|------|-------|
-| V.1 | Golden suite (components + screen states, light+dark) | L | parity gate at component layer [[style-parity-blind-spots]] |
+| V.1 | Golden suite (components + screen states, light+dark) | L | parity gate at the ~25-component + per-state layer, not per-pixel-per-screen |
 | V.2 | Domain test sweep — SRS engine edge cases, scheduler invariants | M | property-style where useful |
 | V.3 | Data integration — Drift queries, migration round-trips, seed load | M | in-memory DB |
 | V.4 | End-to-end study flow — due → grade → box move → goal/streak, over a real Drift DB | L | ties FE+BE |
 | V.5 | Accessibility (touch targets, contrast, semantics) | M | WCAG AA |
 | V.6 | Responsive check (phone-first; large-screen graceful) | M | — |
-| V.7 | design-sync → regenerate → gate loop in CI | S | [[design-sync-headless-invocation]] |
+| V.7 | design-sync → regenerate → gate loop in CI | S | `MSYS_NO_PATHCONV=1 claude -p "/design-sync"` then `gen_tokens --check` (see `.design-sync/NOTES.md`) |
 
 ---
 
 ## Critical path
 
 ```
-I.1→I.3→I.4→I.5 ─┬─► T.1→T.3 ─────────────► P.* → K.* ─┐
-                 ├─► DM.1→DM.2→DM.3 ──┬──► S.01 pilot ─┼─► V.*
-                 └─► DM.4 (SRS) ──────┴──► DT.1→DT.4→DT.5 (BE) ─┘
+I.0→I.1→I.3→I.4→I.5 ─┬─► T.1→T.3 ───────────► P.* → K.* → H.* ─┐
+                     ├─► DM.1→DM.2→DM.3/DM.8 ──┬──► S.01 pilot ─┼─► V.*
+                     └─► DM.4 (SRS) ─► DT.0→DT.1→DT.4→DT.5/DT.7 ┘
 ```
 
-Bottlenecks: **I.4/I.5** (bootstrap+routing, everything mounts here) · **T.1**
-(all UI needs it) · **DM.2/DM.3** (contracts unblock both tracks) · **DM.4** (SRS
-engine, the product's core logic) · **K shells** (all screens need them).
+Bottlenecks: **I.0** (the gate every task calls) · **I.4/I.5** (bootstrap+routing)
+· **T.1** (all UI needs it) · **DM.2/DM.3** (contracts unblock both tracks) ·
+**DM.4** (SRS engine, the product's core logic) · **DT.0** (schema contract gates
+all Drift) · **K shells + H helpers** (all screens need them).
 
 ---
 
@@ -279,6 +306,25 @@ engine, the product's core logic) · **K shells** (all screens need them).
 | Node | Dart symbol | Test | Task | PR |
 |------|-------------|------|------|----|
 | _(tokens)_ | `core/theme/mx_*.dart` | `widget_test.dart` | P0.* | #33–36 |
+
+---
+
+## Decision trace (D-xxx → task)
+
+Every behaviour row in
+[`core-decision-table.md`](../decision-tables/core-decision-table.md) must map to
+a task + a covering test (the table already carries the Spec + Test path). DoD
+step 5 enforces citing the `D-xxx` in the Ledger.
+
+| Task | Decision rows covered |
+|------|-----------------------|
+| DM.4 (SRS engine) | D-002, D-003, D-004, D-005, D-011, D-015, D-018 |
+| DM.5 (study) | D-001, D-007, D-008, D-009, D-010, D-013, D-014, D-016, D-017, D-021, D-029 |
+| DM.6 (library) | D-006, D-019, D-020, D-023, D-024, D-028 |
+| DM.7 (import/export) | D-025, D-026 |
+| DM.8 (services) | D-030 (LanguagePair validation) |
+| DT.3/DT.4 (data) | D-006, D-019, D-024, D-028 (query/cascade impl) |
+| ⊘ Deferred (v1) | D-012 (Premium), D-022 (REMOVED folder), D-027 (sync) |
 
 ---
 
@@ -294,6 +340,8 @@ engine, the product's core logic) · **K shells** (all screens need them).
   against them → treat DM.3 as a frozen contract; version changes explicitly.
 - **R5 — Feature-local scope creep** (65 local components) → pilot dashboard,
   size-check each screen.
-- **R6 — Undrivable kit states** (error/loading) → document as gaps, don't fake
-  [[kit-to-flutter-error-state-unreachable]].
+- **R6 — Undrivable kit states** (error/loading behind a Result-based notifier)
+  → document as gaps in the Ledger, don't fake.
 - **R7 — Kit drift mid-build** → `gen_tokens --check` surfaces it; regenerate.
+- **R8 — Decision coverage** — a behaviour rule with no test silently regresses
+  → every `D-xxx` maps to a task+test (§Decision trace); DoD enforces it.
