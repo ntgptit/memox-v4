@@ -15,7 +15,7 @@
  * Regenerate: node tool/design/gen_task_prompts.mjs
  */
 
-import { writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -411,7 +411,7 @@ const finish = (id) => `## Finish
 1. Commit(s): implementation + test(s). End messages with the Co-Authored-By trailer.
 2. Push \`${branchFor(id)}\`; open a PR; merge to main; \`git checkout main && git pull\`.
    > From an agent session without a design-authorized TTY, prefix: \`MEMOX_SKIP_DESIGN_SYNC=1 git push …\`.
-3. Tick \`${id}\` → \`[x]\` in \`docs/agent/build/README.md\`, small commit.`;
+3. Mark done: append \`${id}\` to \`docs/agent/build/DONE.txt\`, run \`node tool/design/gen_task_prompts.mjs\` (renders \`[x]\` in the queue), commit.`;
 
 const header = (id, title, size, deps, kind) => `# ${id} — ${title}
 
@@ -498,11 +498,22 @@ add(SCREEN_MATRIX.id, SCREEN_MATRIX.title, renderGeneric(SCREEN_MATRIX, 'screen 
 for (const s of SCREENS) add(s[0], s[1], renderScreen(s), 'S — Screens', s[5]);
 for (const t of VERIFY) add(t.id, t.title, renderGeneric(t, 'verification'), 'V — Verification');
 
+// Completed task IDs — durable across regeneration (one id per line in DONE.txt).
+function readDone() {
+  try {
+    return new Set(readFileSync(join(OUT, 'DONE.txt'), 'utf8').split(/\r?\n/).map((s) => s.trim()).filter(Boolean));
+  } catch {
+    return new Set();
+  }
+}
+
 function renderReadme() {
+  const done = readDone();
+  const box = (r) => (r.deferred ? '[~]' : done.has(r.id) ? '[x]' : '[ ]');
   const byPhase = {};
   for (const r of rows) (byPhase[r.phase] ||= []).push(r);
   const tables = Object.entries(byPhase).map(([phase, rs]) => {
-    const body = rs.map((r) => `| ${r.deferred ? '[~]' : '[ ]'} | ${r.id} | [${r.title}](${r.file}) |`).join('\n');
+    const body = rs.map((r) => `| ${box(r)} | ${r.id} | [${r.title}](${r.file}) |`).join('\n');
     return `### ${phase}\n\n| done | id | task |\n| --- | --- | --- |\n${body}`;
   }).join('\n\n');
   return `# Build queue — MemoX v1 loop prompts
@@ -519,7 +530,8 @@ in parallel once the shared foundation (I, T, DM contracts) lands.
 > thi ĐẦY ĐỦ file prompt của task đó (baseline → đọc source → build đúng layer →
 > test đúng tầng (domain unit / data integration / widget+golden) →
 > \`node tool/verify/run.mjs\` (gate duy nhất, do **I.0** tạo) → §Ledger (cite D-xxx) →
-> commit → push → PR → merge), rồi đổi ô đó thành \`[x]\`. Mỗi vòng đúng 1 task. Nếu
+> commit → push → PR → merge), rồi **đánh dấu xong**: append \`<id>\` vào \`DONE.txt\` +
+> \`node tool/design/gen_task_prompts.mjs\` (queue tự render \`[x]\`). Mỗi vòng đúng 1 task. Nếu
 > prompt bảo **STOP** (drift / ambiguity cần người quyết) → dừng, báo, chờ.
 > \`[~]\` = deferred, bỏ qua. Hết pending → báo HOÀN TẤT.
 
