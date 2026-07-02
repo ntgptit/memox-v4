@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/app/di/database_provider.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
+import 'package:memox_v4/core/util/day_key.dart';
 import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/domain/types/game_scope.dart';
@@ -469,6 +470,29 @@ void main() {
             ),
           );
     }
+    // Seed today's activity + an unmet daily goal so the dashboard renders its
+    // POPULATED state (goal ring / streak / mastered / decks stack), not the
+    // minimal empty state — otherwise only today+start export and the rest go
+    // unchecked (style-parity blind spot). Goal (40) > words (24) → the goal card
+    // shows the progress-ring variant, matching the kit's `loaded` spec.
+    await db
+        .into(db.settings)
+        .insert(
+          SettingsCompanion.insert(
+            key: 'daily_goal_words',
+            value: const Value('40'),
+          ),
+        );
+    await db
+        .into(db.dailyActivity)
+        .insert(
+          DailyActivityCompanion.insert(
+            day: dayKey(DateTime.now()),
+            pairId: pairId,
+            seconds: const Value(750),
+            words: const Value(24),
+          ),
+        );
 
     tester.view.physicalSize = const Size(390, 1800);
     tester.view.devicePixelRatio = 1.0;
