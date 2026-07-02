@@ -11,6 +11,12 @@ Local source of truth: `docs/design/MemoX Design System/` (hand-authored / off-s
 - **Intentionally kept** `templates/memox-dashboard/.thumbnail` — it is an app-generated preview for the still-present `MemoxDashboard.dc.html` template, not a stale source file (never tracked in git).
 - Re-armed `_ds_needs_recompile` so the app rebuilds its card index and drops any orphan cards.
 
+## Sync of 2026-07-03 (HEAD ad480d7)
+- Design dir byte-identical since prior `lastSyncedCommit` (bd50005); only `.design-sync/` bookkeeping changed in between. **0 uploads, 0 deletions.**
+- Structural diff (local tree vs `list_files`): local 445 files all present remote; remote is an exact superset with the 2 expected app-generated extras (`templates/memox-dashboard/.thumbnail`, `_ds_needs_recompile`). Shots parity 234==234.
+- Content spot-check `components/core/MxButton.jsx`: identical (md5 match after CRLF→LF normalize; local is CRLF, remote LF — cosmetic, not a drift, same state as prior 0-upload sync).
+- No plan opened / no sentinel re-arm — with zero writes/deletes the app card index is already correct.
+
 ## Standing facts for next sync
 - No `_ds_sync.json` anchor is produced for this hand-authored layout, so each sync re-verifies by comparing the local tree against `list_files` (this is expected/correct).
 - Shots parity check: `ui_kits/memox-app/shots/` = 234 files, matched exactly.
