@@ -322,6 +322,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | Node | Dart symbol | Test | Task | PR |
 |------|-------------|------|------|----|
 | _(tokens)_ | `core/theme/mx_*.dart` | `widget_test.dart` | P0.* | #33–36 |
+| _(verify gate)_ | `tool/verify/run.mjs` | self-tested (docs/quick/full) | I.0 | #50 |
 
 ---
 

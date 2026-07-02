@@ -12,7 +12,8 @@ in parallel once the shared foundation (I, T, DM contracts) lands.
 > thi ĐẦY ĐỦ file prompt của task đó (baseline → đọc source → build đúng layer →
 > test đúng tầng (domain unit / data integration / widget+golden) →
 > `node tool/verify/run.mjs` (gate duy nhất, do **I.0** tạo) → §Ledger (cite D-xxx) →
-> commit → push → PR → merge), rồi đổi ô đó thành `[x]`. Mỗi vòng đúng 1 task. Nếu
+> commit → push → PR → merge), rồi **đánh dấu xong**: append `<id>` vào `DONE.txt` +
+> `node tool/design/gen_task_prompts.mjs` (queue tự render `[x]`). Mỗi vòng đúng 1 task. Nếu
 > prompt bảo **STOP** (drift / ambiguity cần người quyết) → dừng, báo, chờ.
 > `[~]` = deferred, bỏ qua. Hết pending → báo HOÀN TẤT.
 
@@ -30,7 +31,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 
 | done | id | task |
 | --- | --- | --- |
-| [ ] | I.0 | [Verify runner bootstrap](i0-verify-runner-bootstrap.md) |
+| [x] | I.0 | [Verify runner bootstrap](i0-verify-runner-bootstrap.md) |
 | [ ] | I.1 | [Dependencies](i1-dependencies.md) |
 | [ ] | I.2 | [Lint and format config](i2-lint-and-format-config.md) |
 | [ ] | I.3 | [Folder architecture scaffold](i3-folder-architecture-scaffold.md) |

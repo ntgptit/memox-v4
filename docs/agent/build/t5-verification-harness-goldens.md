@@ -61,4 +61,4 @@ node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 1. Commit(s): implementation + test(s). End messages with the Co-Authored-By trailer.
 2. Push `build/t5`; open a PR; merge to main; `git checkout main && git pull`.
    > From an agent session without a design-authorized TTY, prefix: `MEMOX_SKIP_DESIGN_SYNC=1 git push …`.
-3. Tick `T.5` → `[x]` in `docs/agent/build/README.md`, small commit.
+3. Mark done: append `T.5` to `docs/agent/build/DONE.txt`, run `node tool/design/gen_task_prompts.mjs` (renders `[x]` in the queue), commit.
