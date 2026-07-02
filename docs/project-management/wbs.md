@@ -326,6 +326,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(app bootstrap)_ | `app/bootstrap.dart` · `app/app.dart` · `core/routes/app_router.dart` | `widget_test.dart` (boot + router) | I.4 | #61 |
 | _(routing skeleton)_ | `core/routes/app_routes.dart` (`Routes`, `AppTab`) · `app_router.dart` (StatefulShellRoute + 21 stubs) | `core/routes/app_router_test.dart` | I.5 | #62 |
 | _(CI + pre-push gate)_ | `.github/workflows/verify.yml` · `.githooks/pre-push` | self-validated (CI runs the gate; hook `sh -n`) | I.8 | #63 |
+| _(architecture guard)_ | `importViolations` / `navLiteralViolations` (source-scanning; custom_lint N/A on R3) | `test/architecture/layer_boundaries_test.dart` | I.10 | #64 |
 
 ---
 
