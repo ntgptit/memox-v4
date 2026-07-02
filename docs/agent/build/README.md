@@ -51,7 +51,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | T.2 | [Font wiring (Plus Jakarta Sans)](t2-font-wiring-plus-jakarta-sans.md) |
 | [x] | T.3 | [Material component themes](t3-material-component-themes.md) |
 | [x] | T.4 | [l10n / ARB scaffold](t4-l10n-arb-scaffold.md) |
-| [ ] | T.5 | [Verification harness (goldens)](t5-verification-harness-goldens.md) |
+| [x] | T.5 | [Verification harness (goldens)](t5-verification-harness-goldens.md) |
 | [ ] | T.6 | [Responsive foundation](t6-responsive-foundation.md) |
 
 ### DM — Domain (BE core)
