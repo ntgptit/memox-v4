@@ -23,6 +23,17 @@ if ! command -v node >/dev/null 2>&1; then
   exit 0
 fi
 
+# code gate ------------------------------------------------------------------
+# Last local safety net before code leaves the machine: the single verifier
+# (analyze + test). CI re-runs the FULL gate on the PR, so this is --quick.
+# Skipped for automated pushes that already gate themselves (the loop pushes with
+# MEMOX_SKIP_DESIGN_SYNC=1 after running the full verifier in-task), or via an
+# explicit MEMOX_SKIP_VERIFY=1 bypass.
+if [ "$MEMOX_SKIP_VERIFY" != "1" ] && [ "$MEMOX_SKIP_DESIGN_SYNC" != "1" ]; then
+  echo "pre-push: running verify (--quick)…"
+  node tool/verify/run.mjs --quick
+fi
+
 # design sync on push --------------------------------------------------------
 [ "$MEMOX_SKIP_DESIGN_SYNC" = "1" ] && exit 0
 [ -f .design-sync/config.json ] || exit 0

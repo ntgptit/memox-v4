@@ -1,0 +1,37 @@
+name: verify
+
+# The single build gate — CI runs exactly the same verifier as the loop and the
+# pre-push hook (`node tool/verify/run.mjs`), never a duplicated command list.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Cancel superseded runs on the same ref (e.g. a force-push to a PR branch).
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          # Pinned to the toolchain this repo builds with (Dart SDK ^3.11.5).
+          flutter-version: 3.41.7
+          channel: stable
+          cache: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Full gate: codegen (build_runner) + gen_tokens --check + analyze + test.
+      - name: Verify
+        run: node tool/verify/run.mjs
