@@ -320,6 +320,24 @@ node tool/verify/run.mjs --quick  # analyze + test only (fast, while iterating)
 node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 \`\`\``;
 
+const A11Y = `## Accessibility (build it right — don't port JSX shortcuts)
+
+The kit's JSX takes web a11y shortcuts (\`div onClick\`, \`disabled\` = class only,
+icon ligature as the label). **Do NOT mirror those.** Build the proper accessible
+Flutter widget:
+
+- Interactive surfaces (cards/rows/tiles/options) = \`InkWell\`/\`GestureDetector\`
+  wrapped in \`Semantics(button: true, …)\` — Flutter gives focus + Enter/Space
+  free; never a bare tap on a plain container.
+- Disabled = a **real** disabled state (e.g. \`onChanged: null\`, \`onPressed: null\`),
+  not just a dimmed style; the control must not fire when disabled.
+- Every icon-only button needs a \`Semantics\`/\`tooltip\` label **from ARB**
+  (Back, Close, More options, Play audio, Clear search…) — never the Material
+  icon name.
+- Selection groups (segmented / choice) = \`Semantics(inMutuallyExclusiveGroup:
+  true, selected: …)\` (radio semantics), each option individually addressable.
+- Touch targets ≥ \`MxSpacing.minTouchTarget\` (48).`;
+
 const STOP = `## STOP conditions (do not push through)
 
 - Source is **ambiguous or looks wrong** / a business or structural **drift** needs a human decision → STOP, report the exact mismatch, wait.
@@ -369,7 +387,7 @@ function renderComponent([id, name, src, out], layer) {
     `## Output\n\n- \`${out}\`\n- \`${testFor(out)}\``,
     `## Steps\n\n1. **Baseline**: \`git checkout main && git pull\`, \`git checkout -b ${branchFor(id)}\`.\n2. Read the \`.d.ts\` → constructor: each prop → param; string-union → Dart \`enum\`; flags → \`bool\`.\n3. Read \`.jsx\` + the \`components.css\` slice → map each variant/modifier to token styling via the theme. **No raw \`Color(0x..)\`/px.**\n4. Reproduce **every** variant/size/state the contract lists.\n5. Widget + golden test: each variant in light+dark; assert token values reach the tree.\n6. Run Verify; add §Ledger row(s); Finish.`,
     `## Notes\n\n- ${layer === 'primitive' ? 'Primitive: wrap Material, **no** business logic / provider / feature imports.' : 'Composite: compose primitives; feature-independent; no provider usage.'}\n- Kit name + base class are **frozen contract** — keep \`${name}\` + variant identifiers aligned.\n- Strings from ARB. If \`.d.ts\` lists a variant the CSS never styles, note it in §Ledger — don't invent.`,
-    DOD, VERIFY_CMDS, STOP, finish(id),
+    A11Y, DOD, VERIFY_CMDS, STOP, finish(id),
   ].join('\n\n');
 }
 
@@ -384,8 +402,8 @@ function renderScreen([id, feature, screenFile, locals, size, deferred, dm]) {
     `## Inputs — READ ALL IN FULL\n\n- \`${base}/${screenFile}\` — screen composition (components, states, state machine).\n- Feature-local components (build here):\n${locals.map((c) => `  - \`${base}/components/${c}.jsx\``).join('\n')}\n- \`${KIT}/ui_kits/memox-app/specs/${feature}.md\` — contract (states, copy, behaviour).\n- \`${KIT}/ui_kits/memox-app/shots/${feature}--*--{light,dark}.png\` — visual reference per state.\n- Shared widgets in \`lib/presentation/shared/{primitives,composites}/\`${dm !== '—' ? `\n- Domain use cases: \`lib/domain/usecases/\` (**${dm}**)` : ''}`,
     `## Output\n\n- \`${feat}/screens/${snake(feature)}_screen.dart\`\n- \`${feat}/providers/*.dart\` — \`@riverpod\` notifier(s) (own mutation; call use cases)\n- \`${feat}/widgets/*.dart\` — the ${locals.length} feature-local component(s)\n- \`test/presentation/features/${feature}/*_test.dart\``,
     `## Steps\n\n1. **Baseline**: \`git checkout main && git pull\`, \`git checkout -b ${branchFor(id)}\`.\n2. Read \`${screenFile}\` → enumerate **states** (screen + \`specs/${feature}.md\` + \`shots/\` filenames) and the components each renders.\n3. Build feature-local components (token-only; compose shared \`Mx*\`).\n4. ${dm !== '—' ? `Build the \`@riverpod\` provider(s) calling **${dm}** use cases (use in-memory fakes until DT.5 lands); render with \`AsyncValue.when\`.` : 'Wire local UI state via a provider/notifier — no logic in build().'}\n5. Compose the screen; strings from ARB.\n6. Test **every state** (light+dark golden vs \`shots/*.png\`; provider-state widget tests).\n7. Run Verify; add §Ledger rows; Finish.`,
-    `## Notes\n\n- Reuse shared components; build only genuinely screen-specific pieces locally.\n- Feature UI must **not** import \`data/\` or \`dart:io\` — go through providers → use cases.\n- Undrivable kit states → document as a gap; if FE structure diverges from the kit → **STOP** (possible drift).`,
-    DOD, VERIFY_CMDS, STOP, finish(id),
+    `## Notes\n\n- Reuse shared components; build only genuinely screen-specific pieces locally.\n- Feature UI must **not** import \`data/\` or \`dart:io\` — go through providers → use cases.\n- **v1 scope**: no cloud/account sync — any kit "Cloud sync / Sync (alpha)" element renders as **local Backup / Restore** (or is omitted); save/load errors say **local persistence**, not cloud/offline sync. \`account-sync\` is deferred.\n- Undrivable kit states → document as a gap; if FE structure diverges from the kit → **STOP** (possible drift).`,
+    A11Y, DOD, VERIFY_CMDS, STOP, finish(id),
   ].join('\n\n');
 }
 
@@ -397,7 +415,7 @@ function renderHelper([id, name, out, layer, kitFn, note]) {
     `## Output\n\n- \`${out}\`\n- \`${testFor(out)}\``,
     `## Steps\n\n1. **Baseline**: \`git checkout main && git pull\`, \`git checkout -b ${branchFor(id)}\`.\n2. Read \`function ${kitFn}\` in \`kit-helpers.jsx\` → derive props + token-based styling. **No raw \`Color(0x..)\`/px.**\n3. ${note}\n4. Widget + golden test (light+dark, each tone/variant).\n5. Run Verify; add §Ledger row(s); Finish.`,
     `## Notes\n\n- ${layer === 'primitive' ? 'Primitive: no business logic / provider / feature imports.' : 'Composite: compose primitives; feature-independent; no provider usage.'}\n- Name it \`${name}\` (Mx-prefixed shared widget). Strings from ARB.`,
-    DOD, VERIFY_CMDS, STOP, finish(id),
+    A11Y, DOD, VERIFY_CMDS, STOP, finish(id),
   ].join('\n\n');
 }
 

@@ -20,8 +20,7 @@ const GROUPS = [
   { icon: 'sports_esports', title: 'Game settings', sub: '5 words/round · shuffle', val: '5' },
   { icon: 'record_voice_over', title: 'Voice', sub: 'TTS on · STT off' },
   { icon: 'notifications', title: 'Reminders', sub: '13:00 · Mon–Sun' },
-  { icon: 'backup', title: 'Backup / Restore', sub: 'Auto · last today' },
-  { icon: 'cloud_sync', title: 'Cloud sync', sub: 'linh@memox.app · alpha' },
+  { icon: 'backup', title: 'Backup / Restore', sub: 'Local file · on device' },
   { icon: 'palette', title: 'Theme', sub: 'Light · default accent' },
 ];
 

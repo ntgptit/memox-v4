@@ -1,6 +1,18 @@
 /* MemoX UI-kit shared helpers — exported to window for screen modules. */
 const NS = window.MemoXDesignSystem_2ffa54;
 
+/* Give a clickable non-button surface real button semantics + keyboard (Enter/Space)
+   without changing its tag (keeps the visual identical). */
+function clickA11y(onClick, label) {
+  if (typeof onClick !== 'function') return {};
+  return {
+    role: 'button',
+    tabIndex: 0,
+    'aria-label': label,
+    onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(e); } },
+  };
+}
+
 function ProgressBar({ value = 0, tone, height = 8, node }) {
   return (
     <div data-mx-node={node} style={{ height, borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-surface-sunken)', overflow: 'hidden' }}>
@@ -31,7 +43,7 @@ function EmptyState({ icon, tone, title, text, action, node }) {
 function DeckRow({ icon, tone, name, meta, due, progress, node, onClick }) {
   const { MxIconTile, MxBadge } = NS;
   return (
-    <div data-mx-node={node} onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
+    <div data-mx-node={node} onClick={onClick} {...clickA11y(onClick, name)} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
       <MxIconTile icon={icon} tone={tone} />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
@@ -47,7 +59,7 @@ function DeckRow({ icon, tone, name, meta, due, progress, node, onClick }) {
 function ListRow({ icon, tone, title, sub, trailing, node, last, muted, onClick }) {
   const { MxIconTile } = NS;
   return (
-    <div data-mx-node={node} onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', opacity: muted ? .55 : 1, paddingBottom: last ? 0 : 'var(--memox-space-4)', marginBottom: last ? 0 : 'var(--memox-space-4)', borderBottom: last ? 'none' : 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+    <div data-mx-node={node} onClick={onClick} {...clickA11y(onClick, title)} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', opacity: muted ? .55 : 1, paddingBottom: last ? 0 : 'var(--memox-space-4)', marginBottom: last ? 0 : 'var(--memox-space-4)', borderBottom: last ? 'none' : 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
       {icon ? <MxIconTile icon={icon} tone={tone} /> : null}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
@@ -148,13 +160,13 @@ function Ring({ pct, size = 'var(--memox-size-lg)', tone = 'var(--memox-primary)
 }
 
 /* Selectable answer-option box — idle, or a correct/wrong feedback skin. */
-function ChoiceOption({ text, tone, node }) {
+function ChoiceOption({ text, tone, node, onClick }) {
   const skin = {
     correct: { border: 'var(--memox-stroke-emphasis) solid var(--memox-success)', background: 'var(--memox-success-soft)', color: 'var(--memox-on-success-soft)' },
     wrong: { border: 'var(--memox-stroke-emphasis) solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
   }[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
   return (
-    <div data-mx-node={node} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4)', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', cursor: 'pointer' }}>
+    <div data-mx-node={node} onClick={onClick} {...clickA11y(onClick, text)} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4)', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', cursor: 'pointer' }}>
       <span style={{ flex: 1 }}>{text}</span>
       {tone === 'correct' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-success)' }}>check_circle</span> : null}
       {tone === 'wrong' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-error)' }}>cancel</span> : null}

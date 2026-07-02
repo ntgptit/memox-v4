@@ -12,7 +12,7 @@ const ITEMS = [
   { icon: 'settings', label: 'Settings' },
   { icon: 'help', label: 'FAQ' },
   { icon: 'mail', label: 'Email us' },
-  { icon: 'cloud_sync', label: 'Sync (alpha)' },
+  { icon: 'backup', label: 'Backup' },
 ];
 
 function DrawerPanel() {
