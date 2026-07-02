@@ -143,7 +143,13 @@ class MxButton extends StatelessWidget {
         danger ? c.error : c.text,
         c.borderStrong,
       ),
-      MxButtonVariant.ghost => (Colors.transparent, accent, null),
+      // kit `.btn.ghost` reads `--memox-primary-strong`, not primary
+      // (components.css) — the stronger hue keeps text-only actions legible.
+      MxButtonVariant.ghost => (
+        Colors.transparent,
+        danger ? c.error : c.primaryStrong,
+        null,
+      ),
       MxButtonVariant.contrast => (c.surface, accent, null),
     };
   }

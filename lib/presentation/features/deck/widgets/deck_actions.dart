@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/entities/deck.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 
@@ -92,6 +93,7 @@ Future<String?> promptDeckName(
 /// Confirmation for deleting a deck (cascades the subtree — D-024).
 Future<bool> confirmDeleteDeck(BuildContext context) async {
   final l10n = AppLocalizations.of(context);
+  final colors = MxTheme.of(context).colors;
   final result = await showDialog<bool>(
     context: context,
     builder: (ctx) => AlertDialog(
@@ -100,11 +102,18 @@ Future<bool> confirmDeleteDeck(BuildContext context) async {
       actions: <Widget>[
         TextButton(
           key: const ValueKey('mx-node:deck-detail/deck-delete-cancel'),
+          // kit ghost actions read primary-strong (components.css .btn.ghost).
+          style: TextButton.styleFrom(foregroundColor: colors.primaryStrong),
           onPressed: () => Navigator.of(ctx).pop(false),
           child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('mx-node:deck-detail/deck-delete-ok'),
+          // destructive confirm — kit `.btn.danger`: bg error / color on-error.
+          style: FilledButton.styleFrom(
+            backgroundColor: colors.error,
+            foregroundColor: colors.onError,
+          ),
           onPressed: () => Navigator.of(ctx).pop(true),
           child: Text(l10n.commonDelete),
         ),
