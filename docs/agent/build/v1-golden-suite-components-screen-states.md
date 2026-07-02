@@ -2,7 +2,7 @@
 
 > **Loop task** (verification). Self-contained — execute fully in one iteration, then tick `V.1` in `docs/agent/build/README.md`. One task per iteration.
 >
-> Size **L** · Deps **Phase P,K,S** · Branch `build/v1`
+> Size **L** · Deps **Phase P,K,H,S** · Branch `build/v1`
 
 
 ## Goal

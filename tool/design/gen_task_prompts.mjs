@@ -270,7 +270,7 @@ const SCREENS = [
 
 /** @type {T[]} */
 const VERIFY = [
-  { id: 'V.1', title: 'Golden suite (components + screen states)', size: 'L', deps: 'Phase P,K,S',
+  { id: 'V.1', title: 'Golden suite (components + screen states)', size: 'L', deps: 'Phase P,K,H,S',
     goal: 'A golden per component + per screen-state (light+dark) — parity gate at the component layer.',
     inputs: ['test/', `${KIT}/ui_kits/memox-app/shots/*.png`], outputs: ['test/golden/**'],
     notes: ['Verify at the ~25 shared-widget (P+K+H) + per-screen-state layer, not per-pixel-per-screen.'] },
@@ -283,7 +283,7 @@ const VERIFY = [
   { id: 'V.4', title: 'End-to-end study flow', size: 'L', deps: 'S.20,DT.5',
     goal: 'due → grade → box move → goal/streak over a real Drift DB, through providers.',
     inputs: ['lib/domain/', 'lib/data/', 'lib/presentation/features/study-session/'], outputs: ['test/e2e/**'], notes: ['Ties FE + BE.'] },
-  { id: 'V.5', title: 'Accessibility pass', size: 'M', deps: 'Phase P,K',
+  { id: 'V.5', title: 'Accessibility pass', size: 'M', deps: 'Phase P,K,H',
     goal: 'Touch targets, contrast, semantics labels to WCAG AA.',
     inputs: ['MxSpacing.minTouchTarget'], outputs: ['a11y coverage'] },
   { id: 'V.6', title: 'Responsive check', size: 'M', deps: 'T.6',
