@@ -1,42 +1,136 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:memox_v4/core/constants/app_constants.dart';
+import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
 
-/// The app router. A single placeholder route for now; the routing skeleton
-/// (I.5) grows this into the shell + typed routes to the real screens.
+/// The app router: a [StatefulShellRoute.indexedStack] hosting the five bottom-nav
+/// tabs (state preserved per branch), plus full-screen route stubs for the rest of
+/// the v1 screens. Every destination renders a [RouteStub] until Phase S builds the
+/// real screens.
 ///
-/// Riverpod owns the router so features can read/refresh it without a global
-/// singleton (`ref.watch(routerProvider)` from [MemoxApp]).
+/// Riverpod owns the router so it can later depend on auth/onboarding state via
+/// `ref.watch` without a global singleton.
 @riverpod
 GoRouter router(Ref ref) {
   return GoRouter(
-    initialLocation: '/',
+    initialLocation: Routes.today,
+    routes: [
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            _ShellScaffold(navigationShell: navigationShell),
+        branches: [
+          _branch(Routes.today, extra: [
+            GoRoute(
+              path: Routes.deckDetailPattern,
+              builder: (context, state) =>
+                  RouteStub(Routes.deckDetail(state.pathParameters['deckId'] ?? '')),
+            ),
+          ]),
+          _branch(Routes.library),
+          _branch(Routes.add),
+          _branch(Routes.stats),
+          _branch(Routes.profile),
+        ],
+      ),
+      // Full-screen routes (rendered above the shell — no bottom nav).
+      ..._fullScreenRoutes,
+    ],
+  );
+}
+
+/// A shell branch whose root path renders its [RouteStub]; [extra] are nested
+/// sub-routes under that root.
+StatefulShellBranch _branch(String path, {List<RouteBase> extra = const []}) {
+  return StatefulShellBranch(
     routes: [
       GoRoute(
-        path: '/',
-        builder: (context, state) => const _BootstrapHome(),
+        path: path,
+        builder: (context, state) => RouteStub(path),
+        routes: extra,
       ),
     ],
   );
 }
 
-/// Temporary landing surface — proof the router + [ProviderScope] + the guarded
-/// error zone are wired end-to-end. Replaced by real screens once I.5 lands, so
-/// it carries only the brand name (a constant, not localizable copy).
-class _BootstrapHome extends StatelessWidget {
-  const _BootstrapHome();
+/// The v1 screens with no fixed path parameters, as top-level stub routes.
+const _fullScreenPaths = [
+  Routes.search,
+  Routes.drawer,
+  Routes.reminder,
+  Routes.theme,
+  Routes.import_,
+  Routes.export_,
+  Routes.games,
+  Routes.gameMatching,
+  Routes.gameMc,
+  Routes.gameRecall,
+  Routes.gameTyping,
+  Routes.review,
+  Routes.player,
+  Routes.study,
+  Routes.studyResult,
+];
+
+/// Every remaining v1 screen as a top-level stub route (above the shell).
+final List<GoRoute> _fullScreenRoutes = [
+  for (final p in _fullScreenPaths)
+    GoRoute(path: p, builder: (context, state) => RouteStub(p)),
+  GoRoute(
+    path: Routes.editCardPattern,
+    builder: (context, state) =>
+        RouteStub(Routes.editCard(state.pathParameters['cardId'] ?? '')),
+  ),
+];
+
+/// Bottom-nav scaffold for the tab shell. Holds no state of its own — the
+/// [StatefulNavigationShell] owns the selected branch, so there is no `setState`.
+class _ShellScaffold extends StatelessWidget {
+  const _ShellScaffold({required this.navigationShell});
+
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(
-          AppConstants.appName,
-          style: Theme.of(context).textTheme.headlineMedium,
+      body: navigationShell,
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: navigationShell.currentIndex,
+        // Labels are deferred to T.4 (l10n); hide them so no copy is hardcoded.
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        onDestinationSelected: (index) => navigationShell.goBranch(
+          index,
+          // Re-tapping the active tab returns it to its root.
+          initialLocation: index == navigationShell.currentIndex,
         ),
+        destinations: [
+          for (final tab in AppTab.values)
+            NavigationDestination(
+              icon: Icon(tab.icon),
+              selectedIcon: Icon(tab.selectedIcon),
+              // Technical placeholder (route path), hidden; T.4 localizes.
+              label: tab.path,
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Placeholder screen for a not-yet-built route. Shows the route's technical path
+/// (not localizable copy) — Phase S replaces each with the real screen.
+class RouteStub extends StatelessWidget {
+  const RouteStub(this.path, {super.key});
+
+  final String path;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(path)),
+      body: Center(
+        child: Text(path, style: Theme.of(context).textTheme.titleMedium),
       ),
     );
   }
