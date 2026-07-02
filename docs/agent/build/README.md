@@ -41,7 +41,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | I.7 | [Logging, utils, constants](i7-logging-utils-constants.md) |
 | [x] | I.8 | [CI/CD, hooks, codegen gate](i8-ci-cd-hooks-codegen-gate.md) |
 | [x] | I.10 | [Architecture guard rules](i10-architecture-guard-rules.md) |
-| [ ] | I.9 | [Foundation exit gate](i9-foundation-exit-gate.md) |
+| [x] | I.9 | [Foundation exit gate](i9-foundation-exit-gate.md) |
 
 ### T — Theme foundation
 
