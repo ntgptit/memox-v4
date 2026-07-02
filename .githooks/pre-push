@@ -12,6 +12,9 @@
 # design-sync CLI came back. Re-add the doc_guard step once tool/doc_guard/ is
 # restored (see branch backup/pre-flutter-reset-2026-07-02).
 #
+# Server-side PR merges + agent pushes (MEMOX_SKIP_DESIGN_SYNC=1) skip this hook;
+# `.githooks/post-merge` catches kit changes when `main` updates and syncs them.
+#
 # Bypass design sync with `MEMOX_SKIP_DESIGN_SYNC=1 git push` or `git push --no-verify`.
 set -e
 
