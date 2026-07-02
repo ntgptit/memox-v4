@@ -331,6 +331,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(foundation seal)_ | `app_router.dart` `errorBuilder` → `RouteErrorScreen` (fallback route) | `test/foundation/boot_smoke_test.dart` | I.9 | #66 |
 | _(font wiring)_ | `assets/fonts/PlusJakartaSans.ttf` + pubspec `fonts:` (400–800) | `test/core/theme/font_wiring_test.dart` (golden distinctness → T.5) | T.2 | #67 |
 | _(component themes)_ | `app_theme.dart` — Button/Card/AppBar/NavigationBar/Chip/Switch/Dialog/Input themes | `theme_test.dart` (component themes group) | T.3 | #68 |
+| _(l10n scaffold)_ | `l10n.yaml` · `lib/l10n/app_en.arb` · `AppLocalizations` delegate wired in `app.dart`; nav labels + not-found now from ARB | `test/l10n/localization_test.dart` | T.4 | #69 |
 
 ---
 

@@ -6,6 +6,7 @@ import 'package:memox_v4/app/app.dart';
 import 'package:memox_v4/core/routes/app_router.dart';
 import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
+import 'package:memox_v4/l10n/app_localizations.dart';
 
 /// Foundation exit gate (WBS I.9) — the "foundation usable" seal. The empty app
 /// must boot with the correct architecture and degrade gracefully BEFORE any
@@ -49,7 +50,11 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: MaterialApp.router(routerConfig: router),
+        child: MaterialApp.router(
+          routerConfig: router,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+        ),
       ),
     );
     await tester.pumpAndSettle();
