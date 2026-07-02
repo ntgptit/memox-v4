@@ -35,7 +35,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | I.1 | [Dependencies](i1-dependencies.md) |
 | [x] | I.2 | [Lint and format config](i2-lint-and-format-config.md) |
 | [x] | I.3 | [Folder architecture scaffold](i3-folder-architecture-scaffold.md) |
-| [ ] | I.4 | [App bootstrap](i4-app-bootstrap.md) |
+| [x] | I.4 | [App bootstrap](i4-app-bootstrap.md) |
 | [ ] | I.5 | [Routing skeleton](i5-routing-skeleton.md) |
 | [x] | I.6 | [Error and Result type](i6-error-and-result-type.md) |
 | [x] | I.7 | [Logging, utils, constants](i7-logging-utils-constants.md) |
