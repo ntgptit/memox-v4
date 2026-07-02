@@ -65,7 +65,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | DM.5 | [Study use cases](dm5-study-use-cases.md) |
 | [x] | DM.6 | [Library use cases](dm6-library-use-cases.md) |
 | [x] | DM.7 | [Import/export + stats use cases](dm7-import-export-stats-use-cases.md) |
-| [ ] | DM.8 | [Device / service contracts](dm8-device-service-contracts.md) |
+| [x] | DM.8 | [Device / service contracts](dm8-device-service-contracts.md) |
 | [ ] | DM.9 | [In-memory fakes + provider test harness](dm9-in-memory-fakes-provider-test-harness.md) |
 
 ### DT — Data (BE impl)
