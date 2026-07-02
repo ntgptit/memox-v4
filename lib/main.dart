@@ -1,121 +1,211 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'core/theme/mx_colors.dart';
+import 'core/theme/mx_elevation.dart';
+import 'core/theme/mx_radius.dart';
+import 'core/theme/mx_spacing.dart';
+import 'core/theme/mx_typography.dart';
+
+void main() => runApp(const MemoxApp());
+
+/// Builds a Material [ThemeData] from the generated design tokens ([MxColors] +
+/// [MxTypography]) for one brightness. This is the seam where the Tier-0 token
+/// mirrors become the app's actual theme — a full Tier-1 theme (extensions for
+/// the non-Material roles) will grow from here.
+ThemeData _themeFrom(MxColors c, Brightness brightness) {
+  final scheme = ColorScheme.fromSeed(
+    seedColor: MxColors.seed,
+    brightness: brightness,
+  ).copyWith(
+    primary: c.primary,
+    onPrimary: c.onPrimary,
+    primaryContainer: c.primarySoft,
+    onPrimaryContainer: c.onPrimarySoft,
+    secondary: c.accent,
+    onSecondary: c.onAccent,
+    secondaryContainer: c.accentSoft,
+    error: c.error,
+    onError: c.onError,
+    surface: c.surface,
+    onSurface: c.text,
+  );
+  return ThemeData(
+    useMaterial3: true,
+    colorScheme: scheme,
+    scaffoldBackgroundColor: c.bg,
+    fontFamily: MxTypography.fontFamily,
+    textTheme: const TextTheme().apply(
+      bodyColor: c.text,
+      displayColor: c.text,
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MemoxApp extends StatefulWidget {
+  const MemoxApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MemoxApp> createState() => _MemoxAppState();
+}
+
+class _MemoxAppState extends State<MemoxApp> {
+  ThemeMode _mode = ThemeMode.light;
+
+  void _toggle() => setState(
+    () => _mode = _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light,
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+      title: 'MemoX',
+      debugShowCheckedModeBanner: false,
+      theme: _themeFrom(MxColors.light, Brightness.light),
+      darkTheme: _themeFrom(MxColors.dark, Brightness.dark),
+      themeMode: _mode,
+      home: _TokenShowcase(
+        isDark: _mode == ThemeMode.dark,
+        onToggle: _toggle,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+/// A throwaway screen that renders directly from the tokens — proof the Tier-0
+/// mirrors drive real pixels (color, type, spacing, radius, shadow) in both
+/// themes. Replaced by real screens once Tier 1/2 land.
+class _TokenShowcase extends StatelessWidget {
+  const _TokenShowcase({required this.isDark, required this.onToggle});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final bool isDark;
+  final VoidCallback onToggle;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    final c = isDark ? MxColors.dark : MxColors.light;
+    final shadows = isDark ? MxShadows.dark : MxShadows.light;
+
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(MxSpacing.gutter),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'MemoX',
+                    style: TextStyle(
+                      fontSize: MxTypography.size2xl,
+                      fontWeight: MxTypography.extrabold,
+                      letterSpacing: MxTypography.size2xl * MxTypography.trackingTight,
+                      color: c.text,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: onToggle,
+                    icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+                    color: c.primary,
+                  ),
+                ],
+              ),
+              const SizedBox(height: MxSpacing.space2),
+              Text(
+                'Tier-0 design tokens, applied.',
+                style: TextStyle(
+                  fontSize: MxTypography.sizeBase,
+                  color: c.textSecondary,
+                ),
+              ),
+              const SizedBox(height: MxSpacing.space6),
+
+              // A card surface: radius + shadow + surface color from tokens.
+              Container(
+                padding: const EdgeInsets.all(MxSpacing.space5),
+                decoration: BoxDecoration(
+                  color: c.surface,
+                  borderRadius: MxRadius.cardRadius,
+                  boxShadow: shadows.card,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Card surface',
+                      style: TextStyle(
+                        fontSize: MxTypography.sizeLg,
+                        fontWeight: MxTypography.bold,
+                        color: c.text,
+                      ),
+                    ),
+                    const SizedBox(height: MxSpacing.space1),
+                    Text(
+                      'MxRadius.card · MxShadows.card · MxColors.surface',
+                      style: TextStyle(
+                        fontSize: MxTypography.sizeSm,
+                        color: c.textTertiary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: MxSpacing.space6),
+
+              Text(
+                'Semantic palette',
+                style: TextStyle(
+                  fontSize: MxTypography.sizeMd,
+                  fontWeight: MxTypography.semibold,
+                  color: c.text,
+                ),
+              ),
+              const SizedBox(height: MxSpacing.space3),
+              Wrap(
+                spacing: MxSpacing.space3,
+                runSpacing: MxSpacing.space3,
+                children: [
+                  _Swatch('primary', c.primary, c.onPrimary),
+                  _Swatch('accent', c.accent, c.onAccent),
+                  _Swatch('success', c.success, c.onSuccess),
+                  _Swatch('warning', c.warning, c.onWarning),
+                  _Swatch('error', c.error, c.onError),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+    );
+  }
+}
+
+class _Swatch extends StatelessWidget {
+  const _Swatch(this.label, this.bg, this.fg);
+
+  final String label;
+  final Color bg;
+  final Color fg;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: MxSpacing.space4,
+        vertical: MxSpacing.space3,
+      ),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: MxRadius.controlRadius,
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: MxTypography.sizeSm,
+          fontWeight: MxTypography.semibold,
+          color: fg,
+        ),
       ),
     );
   }
