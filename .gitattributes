@@ -15,3 +15,6 @@ docs/agent/build/**      text eol=lf
 linux/flutter/generated_*        text eol=lf
 macos/Flutter/GeneratedPluginRegistrant.swift text eol=lf
 windows/flutter/generated_*      text eol=lf
+# Codegen outputs — LF (keep the build_runner freshness gate stable).
+*.g.dart      text eol=lf
+*.drift.dart  text eol=lf
