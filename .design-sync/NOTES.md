@@ -20,3 +20,11 @@ Local source of truth: `docs/design/MemoX Design System/` (hand-authored / off-s
 ## Standing facts for next sync
 - No `_ds_sync.json` anchor is produced for this hand-authored layout, so each sync re-verifies by comparing the local tree against `list_files` (this is expected/correct).
 - Shots parity check: `ui_kits/memox-app/shots/` = 234 files, matched exactly.
+- **Headless invocation (proven 2026-07-03):** `/design-sync` runs fully non-interactive as a nested CLI —
+  `MSYS_NO_PATHCONV=1 claude -p "/design-sync" --dangerously-skip-permissions --max-turns 40`.
+  The `MSYS_NO_PATHCONV=1` is REQUIRED on Git Bash / Windows: without it, Git Bash rewrites the `/design-sync`
+  argument into a Windows path (`C:/Program Files/Git/design-sync`) before it reaches claude, so the slash
+  command never runs and the nested session just asks "what do you want?". The nested CLI inherits the
+  machine's own claude.ai design-system authorization (granted once via interactive `/design-login`), so no
+  interactive terminal is needed per-run — this makes design-sync automatable from a hook/cron/agent Bash call.
+  (Note: an agent session's own DesignSync *tool* may still lack design auth — delegate to this subprocess instead.)
