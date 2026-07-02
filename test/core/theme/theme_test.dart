@@ -53,6 +53,37 @@ void main() {
     expect(mx.cardRadius, isA<BorderRadius>());
   });
 
+  group('component themes map onto the tokens', () {
+    test('stock FilledButton matches the kit primary', () {
+      final style = AppTheme.light.filledButtonTheme.style!;
+      expect(style.backgroundColor!.resolve({}), MxColors.light.primary);
+      expect(style.foregroundColor!.resolve({}), MxColors.light.onPrimary);
+    });
+
+    test('Card / AppBar / NavigationBar / Input pull from tokens', () {
+      final t = AppTheme.light;
+      expect(t.cardTheme.color, MxColors.light.surfaceRaised);
+      expect(t.appBarTheme.backgroundColor, MxColors.light.bg);
+      expect(t.navigationBarTheme.backgroundColor, MxColors.light.surface);
+      expect(t.navigationBarTheme.indicatorColor, MxColors.light.primarySoft);
+      expect(t.inputDecorationTheme.fillColor, MxColors.light.surfaceMuted);
+    });
+
+    test('Switch selected track uses primary; unselected uses a sunken surface', () {
+      final track = AppTheme.light.switchTheme.trackColor!;
+      expect(track.resolve({WidgetState.selected}), MxColors.light.primary);
+      expect(track.resolve({}), MxColors.light.surfaceSunken);
+    });
+
+    test('dark component themes pull from the dark tokens', () {
+      expect(AppTheme.dark.cardTheme.color, MxColors.dark.surfaceRaised);
+      expect(
+        AppTheme.dark.filledButtonTheme.style!.backgroundColor!.resolve({}),
+        MxColors.dark.primary,
+      );
+    });
+  });
+
   group('MxTheme.lerp', () {
     test('is identity at the endpoints and blends in between', () {
       final a = AppTheme.light.extension<MxTheme>()!;
