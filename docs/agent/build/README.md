@@ -37,7 +37,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | I.3 | [Folder architecture scaffold](i3-folder-architecture-scaffold.md) |
 | [ ] | I.4 | [App bootstrap](i4-app-bootstrap.md) |
 | [ ] | I.5 | [Routing skeleton](i5-routing-skeleton.md) |
-| [ ] | I.6 | [Error and Result type](i6-error-and-result-type.md) |
+| [x] | I.6 | [Error and Result type](i6-error-and-result-type.md) |
 | [ ] | I.7 | [Logging, utils, constants](i7-logging-utils-constants.md) |
 | [ ] | I.8 | [CI/CD, hooks, codegen gate](i8-ci-cd-hooks-codegen-gate.md) |
 | [ ] | I.10 | [Architecture guard rules](i10-architecture-guard-rules.md) |
