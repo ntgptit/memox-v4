@@ -32,7 +32,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | done | id | task |
 | --- | --- | --- |
 | [x] | I.0 | [Verify runner bootstrap](i0-verify-runner-bootstrap.md) |
-| [ ] | I.1 | [Dependencies](i1-dependencies.md) |
+| [x] | I.1 | [Dependencies](i1-dependencies.md) |
 | [ ] | I.2 | [Lint and format config](i2-lint-and-format-config.md) |
 | [ ] | I.3 | [Folder architecture scaffold](i3-folder-architecture-scaffold.md) |
 | [ ] | I.4 | [App bootstrap](i4-app-bootstrap.md) |
