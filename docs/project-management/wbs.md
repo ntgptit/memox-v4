@@ -333,6 +333,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(component themes)_ | `app_theme.dart` — Button/Card/AppBar/NavigationBar/Chip/Switch/Dialog/Input themes | `theme_test.dart` (component themes group) | T.3 | #68 |
 | _(l10n scaffold)_ | `l10n.yaml` · `lib/l10n/app_en.arb` · `AppLocalizations` delegate wired in `app.dart`; nav labels + not-found now from ARB | `test/l10n/localization_test.dart` | T.4 | #69 |
 | _(golden harness)_ | `test/flutter_test_config.dart` (font load) · `test/support/golden.dart` (`pumpForGolden`) · font-free swatch golden (cross-platform stable) | `test/golden/token_swatch_golden_test.dart` | T.5 | #70 |
+| _(responsive foundation)_ | `core/theme/responsive.dart` (`Breakpoints`, `FormFactor`, `Responsive`, `ResponsiveContext`) | `test/core/theme/responsive_test.dart` | T.6 | #71 |
 
 ---
 
