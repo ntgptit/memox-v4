@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/core/routes/app_routes.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
+import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -16,6 +18,9 @@ part 'app_router.g.dart';
 GoRouter router(Ref ref) {
   return GoRouter(
     initialLocation: Routes.today,
+    // Unknown / malformed locations render a graceful fallback instead of a
+    // red-screen crash — a foundation guarantee (I.9).
+    errorBuilder: (context, state) => RouteErrorScreen(state.uri.toString()),
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -113,6 +118,33 @@ class _ShellScaffold extends StatelessWidget {
               label: tab.path,
             ),
         ],
+      ),
+    );
+  }
+}
+
+/// Fallback for an unknown or malformed location (go_router `errorBuilder`).
+/// Shows the attempted location (technical, not localizable copy) so the app never
+/// hard-crashes on a bad route. Localized copy arrives with T.4.
+class RouteErrorScreen extends StatelessWidget {
+  const RouteErrorScreen(this.location, {super.key});
+
+  final String location;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.error_outline, color: theme.colorScheme.error, size: MxIconSize.lg),
+            const SizedBox(height: MxSpacing.space2),
+            Text(location, style: theme.textTheme.titleMedium),
+          ],
+        ),
       ),
     );
   }
