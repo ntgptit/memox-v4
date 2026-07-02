@@ -1,11 +1,16 @@
 #!/bin/sh
 # pre-push — last gate before code leaves the machine.
 #
-#  1) doc_guard — a push can never carry doc-code drift (doc referencing a
-#     path/symbol that no longer exists). Cheap, deterministic, no network.
-#  2) design sync — if the push includes changes under the design-kit localDir
-#     (.design-sync/config.json), push that delta to the Claude Design project
-#     via tool/parity/sync-design.mjs (drives the design-authorized `claude` CLI).
+#  design sync — if the push includes changes under the design-kit localDir
+#  (.design-sync/config.json), push that delta to the Claude Design project via
+#  tool/parity/sync-design.mjs (drives the design-authorized `claude` CLI).
+#
+# NOTE: this hook previously also ran `tool/doc_guard/run.mjs check` (doc-code
+# parity). That gate — and the rest of the MemoX V4 app (lib/, test/,
+# docs/business/**, most of tool/parity/**) — was intentionally NOT restored in
+# this pass (2026-07-02 design-kit-only restore); only docs/design/ + the
+# design-sync CLI came back. Re-add the doc_guard step once tool/doc_guard/ is
+# restored (see branch backup/pre-flutter-reset-2026-07-02).
 #
 # Bypass design sync with `MEMOX_SKIP_DESIGN_SYNC=1 git push` or `git push --no-verify`.
 set -e
@@ -15,10 +20,7 @@ if ! command -v node >/dev/null 2>&1; then
   exit 0
 fi
 
-# 1) doc/code parity
-node tool/doc_guard/run.mjs check
-
-# 2) design sync on push -----------------------------------------------------
+# design sync on push --------------------------------------------------------
 [ "$MEMOX_SKIP_DESIGN_SYNC" = "1" ] && exit 0
 [ -f .design-sync/config.json ] || exit 0
 if ! command -v claude >/dev/null 2>&1; then
