@@ -5,6 +5,9 @@
 
 * text=auto
 
-# Generated Dart token mirrors + the generator itself — LF everywhere.
+# Generated Dart token mirrors + the generators — LF everywhere.
 lib/core/theme/mx_*.dart text eol=lf
 tool/design/*.mjs        text eol=lf
+tool/verify/*.mjs        text eol=lf
+# Generated loop prompts + queue — LF (stops CRLF churn on every regeneration).
+docs/agent/build/**      text eol=lf
