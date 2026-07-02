@@ -1,41 +1,35 @@
-# P.05 — MxChip
+# I.0 — Verify runner bootstrap
 
-> **Loop task** (primitive component). Self-contained — execute fully in one iteration, then tick `P.05` in `docs/agent/build/README.md`. One task per iteration.
+> **Loop task** (infrastructure). Self-contained — execute fully in one iteration, then tick `I.0` in `docs/agent/build/README.md`. One task per iteration.
 >
-> Size **S–M** · Deps **Phase T** · Branch `build/p05`
+> Size **M** · Deps **—** · Branch `build/i0`
 
 
 ## Goal
 
-Build the Flutter widget **MxChip** mirroring the kit component, driven entirely by design tokens + `MxTheme` (primitive layer).
+Create the single build-loop gate `tool/verify/run.mjs` that every later task calls instead of raw commands. 23 kit specs already reference it.
 
-## Inputs — READ ALL IN FULL (do not infer)
+## Inputs — read first
 
-- `docs/design/MemoX Design System/components/core/MxChip.d.ts` — typed prop contract (variants, sizes, flags).
-- `docs/design/MemoX Design System/components/core/MxChip.prompt.md` — intent + JSX usage examples.
-- `docs/design/MemoX Design System/components/core/MxChip.jsx` — class→CSS mapping.
-- `docs/design/MemoX Design System/components.css` — the base class + modifier styling for **MxChip**.
-- `lib/core/theme/` — tokens + `MxTheme` extension.
+- `tool/design/gen_tokens.mjs`
+- `docs/design/MemoX Design System/ui_kits/memox-app/specs/ (freshness check refs)`
 
 ## Output
 
-- `lib/presentation/shared/primitives/mx_chip.dart`
-- `test/presentation/shared/primitives/mx_chip_test.dart`
+- `tool/verify/run.mjs`
 
 ## Steps
 
-1. **Baseline**: `git checkout main && git pull`, `git checkout -b build/p05`.
-2. Read the `.d.ts` → constructor: each prop → param; string-union → Dart `enum`; flags → `bool`.
-3. Read `.jsx` + the `components.css` slice → map each variant/modifier to token styling via the theme. **No raw `Color(0x..)`/px.**
-4. Reproduce **every** variant/size/state the contract lists.
-5. Widget + golden test: each variant in light+dark; assert token values reach the tree.
-6. Run Verify; add §Ledger row(s); Finish.
+1. **Baseline**: `git checkout main && git pull`, `git checkout -b build/i0`.
+2. Write `tool/verify/run.mjs` (Node) as the umbrella gate. Modes: no-arg = FULL (codegen freshness `dart run build_runner build` + git-clean check, `node tool/design/gen_tokens.mjs --check`, `dart analyze lib test`, `flutter test`); `--quick` = analyze + test only; `--docs` = doc/spec freshness + `gen_tokens --check` only. Exit non-zero on the first failing step; print which step failed.
+3. This task is the ONLY one whose Verify uses raw commands (bootstrap exception) — everything after calls `node tool/verify/run.mjs`.
+4. Test the runner on the current repo (should pass: tokens up to date, analyze clean).
+5. Finish (commit → PR → merge → tick).
 
 ## Notes
 
-- Primitive: wrap Material, **no** business logic / provider / feature imports.
-- Kit name + base class are **frozen contract** — keep `MxChip` + variant identifiers aligned.
-- Strings from ARB. If `.d.ts` lists a variant the CSS never styles, note it in §Ledger — don't invent.
+- Do not duplicate command lists elsewhere — this file is the single source for the gate.
+- Until this lands, tasks fall back to the raw commands; after it, they must call the runner.
 
 ## Definition of Done
 
@@ -67,6 +61,6 @@ node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 ## Finish
 
 1. Commit(s): implementation + test(s). End messages with the Co-Authored-By trailer.
-2. Push `build/p05`; open a PR; merge to main; `git checkout main && git pull`.
+2. Push `build/i0`; open a PR; merge to main; `git checkout main && git pull`.
    > From an agent session without a design-authorized TTY, prefix: `MEMOX_SKIP_DESIGN_SYNC=1 git push …`.
-3. Tick `P.05` → `[x]` in `docs/agent/build/README.md`, small commit.
+3. Tick `I.0` → `[x]` in `docs/agent/build/README.md`, small commit.

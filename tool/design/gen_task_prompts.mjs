@@ -9,7 +9,7 @@
  * can execute end-to-end, plus a queue README with tick boxes.
  *
  * Prompts name the exact source to read (kit .d.ts/.prompt.md/.jsx for UI;
- * product-decision memories + reference-app domain for BE) and tell the loop to
+ * docs/business/ specs + docs/decision-tables for BE rules) and tell the loop to
  * read it at execution time, so they can't drift from the source of truth.
  *
  * Regenerate: node tool/design/gen_task_prompts.mjs
@@ -31,7 +31,19 @@ const kc = (p) => `${KIT}/components/${p}`;
 // ── Phase I — infrastructure ────────────────────────────────────────────────
 /** @type {T[]} */
 const INFRA = [
-  { id: 'I.1', title: 'Dependencies', size: 'S', deps: '—',
+  { id: 'I.0', title: 'Verify runner bootstrap', size: 'M', deps: '—',
+    goal: 'Create the single build-loop gate `tool/verify/run.mjs` that every later task calls instead of raw commands. 23 kit specs already reference it.',
+    inputs: ['tool/design/gen_tokens.mjs', 'docs/design/MemoX Design System/ui_kits/memox-app/specs/ (freshness check refs)'],
+    outputs: ['tool/verify/run.mjs'],
+    steps: [
+      '**Baseline**: `git checkout main && git pull`, `git checkout -b build/i0`.',
+      'Write `tool/verify/run.mjs` (Node) as the umbrella gate. Modes: no-arg = FULL (codegen freshness `dart run build_runner build` + git-clean check, `node tool/design/gen_tokens.mjs --check`, `dart analyze lib test`, `flutter test`); `--quick` = analyze + test only; `--docs` = doc/spec freshness + `gen_tokens --check` only. Exit non-zero on the first failing step; print which step failed.',
+      'This task is the ONLY one whose Verify uses raw commands (bootstrap exception) — everything after calls `node tool/verify/run.mjs`.',
+      'Test the runner on the current repo (should pass: tokens up to date, analyze clean).',
+      'Finish (commit → PR → merge → tick).',
+    ],
+    notes: ['Do not duplicate command lists elsewhere — this file is the single source for the gate.', 'Until this lands, tasks fall back to the raw commands; after it, they must call the runner.'] },
+  { id: 'I.1', title: 'Dependencies', size: 'S', deps: 'I.0',
     goal: 'Add and pin the v1 stack dependencies.',
     inputs: ['pubspec.yaml', 'docs/project-management/wbs.md (Architecture)'],
     outputs: ['pubspec.yaml'],
@@ -65,11 +77,11 @@ const INFRA = [
     goal: 'Cross-cutting core: logger, utils, app constants.',
     inputs: ['core/logging/', 'core/utils/', 'core/constants/'],
     outputs: ['lib/core/{logging,utils,constants}/*.dart'], notes: ['Keep tiny; no feature logic.'] },
-  { id: 'I.8', title: 'CI/CD, hooks, codegen gate', size: 'M', deps: 'I.1',
-    goal: 'Gate every push: analyze, test, gen_tokens --check, and build_runner freshness.',
-    inputs: ['.githooks/', 'tool/design/gen_tokens.mjs'],
+  { id: 'I.8', title: 'CI/CD, hooks, codegen gate', size: 'M', deps: 'I.0',
+    goal: 'Wire CI + git hooks to run the single verifier `node tool/verify/run.mjs` — do NOT duplicate raw command lists.',
+    inputs: ['.githooks/', 'tool/verify/run.mjs (I.0)'],
     outputs: ['.github/workflows/*', '.githooks/pre-push'],
-    notes: ['Codegen freshness: run build_runner then fail if git is dirty.', 'Compose with the existing design-sync pre-push step.'] },
+    notes: ['CI + pre-push call `node tool/verify/run.mjs` (full in CI, `--quick` or `--docs` on pre-push as suits).', 'Compose with the existing design-sync pre-push step; keep `MEMOX_SKIP_DESIGN_SYNC` escape hatch.'] },
 ];
 
 // ── Phase T — theme / UI foundation ─────────────────────────────────────────
@@ -136,6 +148,10 @@ const DOMAIN = [
   { id: 'DM.7', title: 'Import/export + stats use cases', size: 'M', deps: 'DM.3',
     goal: 'Parse/emit deck formats; compute statistics + heatmap.',
     inputs: ['docs/business/import-export/import-export.md', 'docs/business/statistics/statistics.md'], outputs: ['lib/domain/usecases/{io,stats}/*.dart'], steps: DOMAIN_STEPS },
+  { id: 'DM.8', title: 'Device / service contracts', size: 'M', deps: 'DM.2',
+    goal: 'Abstract service interfaces so feature UI never touches a plugin directly: SettingsService, LanguagePairService, DailyActivityService, ReminderNotificationService, Tts/AudioService, ImportExportFileService (file + clipboard), BackupRestoreService.',
+    inputs: ['docs/business/settings/settings.md', 'docs/business/personalization/personalization.md', 'docs/business/import-export/import-export.md', 'docs/business/engagement/dashboard-engagement.md', 'docs/business/glossary.md (LanguagePair D-030)'], outputs: ['lib/domain/services/*.dart'], steps: DOMAIN_STEPS,
+    notes: ['Contracts only (abstract) — the plugin adapters land in DT.7.', 'LanguagePair create/validate (D-030: source==target or empty → ValidationFailure) belongs here.', 'TTS/audio generation may be deferred (see flashcard-editor brief) — define the contract, mark impl gaps.'] },
 ];
 
 // ── Phase DT — data (Drift) ─────────────────────────────────────────────────
@@ -149,9 +165,14 @@ const DATA_STEPS = [
 ];
 /** @type {T[]} */
 const DATA = [
-  { id: 'DT.1', title: 'Drift schema & tables', size: 'L', deps: 'DM.2',
-    goal: 'DB class + tables (decks, cards, review_logs, sessions, settings) + indices for due/search.',
-    inputs: ['lib/domain/entities/'], outputs: ['lib/data/datasources/local/*.dart', 'lib/data/models/*.dart'], steps: DATA_STEPS },
+  { id: 'DT.0', title: 'Database schema contract', size: 'M', deps: 'DM.2',
+    goal: 'Author the authoritative schema contract doc — every table, column, index, FK, and the business rule each supports — BEFORE writing Drift. Ensures DT.1 covers all rules, not a partial set.',
+    inputs: ['docs/business/ (all specs)', 'docs/decision-tables/core-decision-table.md', 'lib/domain/entities/'], outputs: ['docs/database/schema-contract.md'], steps: DATA_STEPS,
+    notes: ['Cover: language_pairs, decks (self-nesting FK), cards, card_meanings, srs_state, review_logs, review_outcome, study_sessions, daily_activity, settings, local backup metadata.', 'Map each table/column to the D-xxx / spec it serves. This doc gates DT.1.'] },
+  { id: 'DT.1', title: 'Drift schema & tables', size: 'L', deps: 'DT.0',
+    goal: 'Implement every table in the schema contract: language_pairs, decks (self-referencing tree), cards, card_meanings, srs_state, review_logs, review_outcome, study_sessions, daily_activity, settings, backup metadata — with indices for due-queue + term/meaning search.',
+    inputs: ['docs/database/schema-contract.md (DT.0)', 'lib/domain/entities/'], outputs: ['lib/data/datasources/local/*.dart', 'lib/data/models/*.dart'], steps: DATA_STEPS,
+    notes: ['Table set must match DT.0 exactly. Deck tree = self FK; cascade delete covers sub-decks + cards + meanings + srs_state (D-024).'] },
   { id: 'DT.2', title: 'Migrations & versioning', size: 'M', deps: 'DT.1',
     goal: 'Schema versioning + migration strategy + schema round-trip tests.',
     inputs: ['lib/data/datasources/local/'], outputs: ['migrations', 'test/data/migration/*'], steps: DATA_STEPS,
@@ -169,6 +190,10 @@ const DATA = [
   { id: 'DT.6', title: 'Seed / sample data', size: 'S', deps: 'DT.4',
     goal: 'Realistic dev decks/cards + a clean first-run empty state.',
     inputs: ['lib/data/repositories/'], outputs: ['lib/data/seed/*.dart'], steps: DATA_STEPS },
+  { id: 'DT.7', title: 'Service adapters (device/plugins)', size: 'L', deps: 'DT.4',
+    goal: 'Implement the DM.8 service contracts over real plugins/local storage: settings persistence, local notifications (reminder), TTS/audio, file + clipboard import/export, backup/restore to a local file.',
+    inputs: ['lib/domain/services/ (DM.8)', 'docs/business/{settings,import-export}/*.md'], outputs: ['lib/data/services/*.dart', 'lib/data/datasources/local/settings_*.dart'], steps: DATA_STEPS,
+    notes: ['Adapters wrap plugins (flutter_local_notifications, file_picker/share_plus, path_provider, a TTS plugin); UI never imports them directly.', 'Wire via @riverpod providers (DT.5 pattern). Deferred impls (e.g. TTS generation) → mark as a gap, keep the contract satisfied by a no-op/failure Result.'] },
 ];
 
 // ── Phase P — primitives / K — composites ───────────────────────────────────
@@ -196,27 +221,40 @@ const COMPOSITES = [
   ['K.11', 'StatusCardRow', `${KIT}/ui_kits/memox-app/_shared/StatusCardRow`, `${COMP}/status_card_row.dart`],
 ];
 
+// ── Phase H — shared kit-helpers (from kit-helpers.jsx) ─────────────────────
+const KH = `${KIT}/ui_kits/memox-app/kit-helpers.jsx`;
+/** [id, Name, outPath, layer, kitFn, note] */
+const HELPERS = [
+  ['H.01', 'MxProgressBar', `${PRIM}/mx_progress_bar.dart`, 'primitive', 'ProgressBar', 'value + tone + height; track = surface-sunken, fill = tone, radius pill.'],
+  ['H.02', 'MxSkeleton', `${PRIM}/mx_skeleton.dart`, 'primitive', 'Skeleton', 'w/h/r shimmer placeholder (`.mxg-skel`). Drives every loading state.'],
+  ['H.03', 'MxEmptyState', `${COMP}/mx_empty_state.dart`, 'composite', 'EmptyState', 'icon + title + text + optional action, centered. Every empty state.'],
+  ['H.04', 'MxListRow', `${COMP}/mx_list_row.dart`, 'composite', 'ListRow + DeckRow', 'icon-tile + title/sub + trailing + hairline divider; DeckRow = variant with progress + due badge.'],
+  ['H.05', 'MxSheet', `${COMP}/mx_sheet.dart`, 'composite', 'Sheet + MenuItem + Scrim', 'bottom sheet (radius-2xl top, shadow-nav) + MenuItem rows + Scrim overlay (overlay token). Powers every overflow/sort/play/picker sheet.'],
+  ['H.06', 'MxStatRing', `${COMP}/mx_stat_ring.dart`, 'composite', 'Stat + Ring', 'Stat = big number + small label; Ring = progress ring (pct/size/tone) with centered child. Dashboard/statistics/study-result.'],
+  ['H.07', 'MxChoiceOption', `${PRIM}/mx_choice_option.dart`, 'primitive', 'ChoiceOption', 'answer option; tone default/correct/wrong with check/cancel icon. Game MC/choice.'],
+];
+
 /** [id, feature, ScreenFile, [locals], size, deferred, domainDep] */
 const SCREENS = [
   ['S.01', 'dashboard', 'Dashboard.jsx', ['ContinueCard', 'GoalCard', 'StreakCard', 'TodaySummary'], 'L', false, 'DM.5'],
   ['S.02', 'library', 'Library.jsx', ['ContextBar', 'LibraryHeader', 'OverflowMenuSheet', 'PairPickerSheet', 'PlaySheet', 'SortSheet'], 'L', false, 'DM.6'],
   ['S.03', 'deck-detail', 'DeckDetail.jsx', ['DeckHeader', 'DeckMenu', 'DeleteConfirmDialog', 'FlashcardRow', 'SubDeckCard'], 'L', false, 'DM.6'],
   ['S.04', 'search', 'Search.jsx', ['Chips', 'ResultRow'], 'M', false, 'DM.6'],
-  ['S.05', 'settings', 'Settings.jsx', ['Profile', 'ValuePickerSheet'], 'M', false, '—'],
-  ['S.06', 'drawer', 'Drawer.jsx', ['DrawerItem', 'DrawerPanel', 'LangCard', 'RemoveLanguageDialog'], 'M', false, '—'],
-  ['S.07', 'reminder', 'Reminder.jsx', ['TimeCol', 'TimePickerSheet'], 'M', false, '—'],
-  ['S.08', 'theme', 'Theme.jsx', ['AccentPicker', 'PreviewCard'], 'M', false, '—'],
+  ['S.05', 'settings', 'Settings.jsx', ['Profile', 'ValuePickerSheet'], 'M', false, 'DM.8'],
+  ['S.06', 'drawer', 'Drawer.jsx', ['DrawerItem', 'DrawerPanel', 'LangCard', 'RemoveLanguageDialog'], 'M', false, 'DM.8'],
+  ['S.07', 'reminder', 'Reminder.jsx', ['TimeCol', 'TimePickerSheet'], 'M', false, 'DM.8'],
+  ['S.08', 'theme', 'Theme.jsx', ['AccentPicker', 'PreviewCard'], 'M', false, 'DM.8'],
   ['S.09', 'statistics', 'Statistics.jsx', ['Bars', 'Donut', 'Heatmap'], 'L', false, 'DM.7'],
-  ['S.10', 'import', 'Import.jsx', ['SourceCard', 'Table'], 'M', false, 'DM.7'],
-  ['S.11', 'export', 'Export.jsx', ['ExportingCard', 'FormatList'], 'M', false, 'DM.7'],
-  ['S.12', 'flashcard-editor', 'FlashcardEditor.jsx', ['DupBanner', 'Field'], 'M', false, 'DM.6'],
+  ['S.10', 'import', 'Import.jsx', ['SourceCard', 'Table'], 'M', false, 'DM.7, DM.8'],
+  ['S.11', 'export', 'Export.jsx', ['ExportingCard', 'FormatList'], 'M', false, 'DM.7, DM.8'],
+  ['S.12', 'flashcard-editor', 'FlashcardEditor.jsx', ['DupBanner', 'Field'], 'M', false, 'DM.6, DM.8'],
   ['S.13', 'game-picker', 'GamePicker.jsx', ['GameOption', 'ScopeCard', 'ScopeSheet'], 'M', false, 'DM.5'],
   ['S.14', 'game-matching', 'GameMatching.jsx', ['Tile'], 'M', false, 'DM.5'],
   ['S.15', 'game-mc', 'GameMultipleChoice.jsx', ['PromptCard'], 'M', false, 'DM.5'],
   ['S.16', 'game-recall', 'GameRecall.jsx', ['MeaningPanel', 'TermCard'], 'M', false, 'DM.5'],
   ['S.17', 'game-typing', 'GameTyping.jsx', ['CharCompare', 'InputBox'], 'M', false, 'DM.5'],
   ['S.18', 'review', 'Review.jsx', ['MeaningCard', 'TermCard'], 'M', false, 'DM.5'],
-  ['S.19', 'player', 'Player.jsx', ['Dots', 'PlayerCard'], 'M', false, 'DM.5'],
+  ['S.19', 'player', 'Player.jsx', ['Dots', 'PlayerCard'], 'M', false, 'DM.5, DM.8'],
   ['S.20', 'study-session', 'StudySession.jsx', ['AnswerSaveErrorDialog', 'ExitDialog', 'PromptCard', 'ResumeErrorState', 'StageChoice', 'StageMatching', 'StageRecall', 'StageReview', 'StageTyping'], 'L', false, 'DM.5'],
   ['S.21', 'study-result', 'StudyResult.jsx', ['Cta', 'FinalizingView', 'ResultHero', 'StreakGoalCard'], 'M', false, 'DM.5'],
   ['S.22', 'account-sync', 'AccountSync.jsx', ['ProfileCard', 'SignInCard', 'SyncBlock'], 'L', true, '—'],
@@ -262,17 +300,20 @@ const DOD = `## Definition of Done
 - [ ] **Analyzes** — \`dart analyze lib test\` → 0 issues; codegen (build_runner) up to date.
 - [ ] **Tested** at the right level — domain = pure unit · data = Drift integration · primitives/composites = widget+golden (light+dark) · screens = provider-state widget tests + golden vs \`shots/*.png\`.
 - [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in \`docs/business/\` with edge cases.
-- [ ] **Ledger** — row(s) added to \`docs/project-management/wbs.md §Ledger\`.
-- [ ] **Gates green** — \`gen_tokens --check\` + \`dart analyze\` + \`flutter test\` + codegen check.`;
+- [ ] **Decision Table** — every \`D-xxx\` row in \`docs/decision-tables/core-decision-table.md\` this task touches has a covering test; cite the \`D-xxx\` id(s) in the Ledger. (Deferred rows: D-012 Premium, D-022 REMOVED, D-027 sync.)
+- [ ] **Ledger** — row(s) added to \`docs/project-management/wbs.md §Ledger\` (kit/D-xxx node → Dart symbol → test).
+- [ ] **Gates green** — \`node tool/verify/run.mjs\` passes (codegen freshness + \`gen_tokens --check\` + analyze + test). (I.0 not done yet → fall back to the raw commands.)`;
 
 const VERIFY_CMDS = `## Verify (must pass before commit)
 
 \`\`\`bash
-dart run build_runner build --delete-conflicting-outputs
-node tool/design/gen_tokens.mjs --check
-dart analyze lib test
-flutter test
-\`\`\``;
+node tool/verify/run.mjs          # full gate: codegen freshness + gen_tokens --check + analyze + test
+node tool/verify/run.mjs --quick  # analyze + test only (fast, while iterating)
+node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
+\`\`\`
+
+> Until **I.0** creates the runner, fall back to the raw commands:
+> \`dart run build_runner build --delete-conflicting-outputs && node tool/design/gen_tokens.mjs --check && dart analyze lib test && flutter test\`.`;
 
 const STOP = `## STOP conditions (do not push through)
 
@@ -343,6 +384,18 @@ function renderScreen([id, feature, screenFile, locals, size, deferred, dm]) {
   ].join('\n\n');
 }
 
+function renderHelper([id, name, out, layer, kitFn, note]) {
+  return [
+    header(id, name, 'S', 'Phase T', `shared helper (${layer})`),
+    `## Goal\n\nBuild **${name}** — the Flutter port of the kit's \`${kitFn}\` helper — as a reusable ${layer}, token-driven. These helpers are reused across many screens; building them shared avoids per-screen re-derivation.`,
+    `## Inputs — READ IN FULL\n\n- \`${KH}\` — find \`function ${kitFn}\` (the exact styling + tokens).\n- \`${KIT}/components.css\` — any \`.mxg-*\` class it uses.\n- \`lib/core/theme/\` — tokens + \`MxTheme\`.`,
+    `## Output\n\n- \`${out}\`\n- \`${testFor(out)}\``,
+    `## Steps\n\n1. **Baseline**: \`git checkout main && git pull\`, \`git checkout -b ${branchFor(id)}\`.\n2. Read \`function ${kitFn}\` in \`kit-helpers.jsx\` → derive props + token-based styling. **No raw \`Color(0x..)\`/px.**\n3. ${note}\n4. Widget + golden test (light+dark, each tone/variant).\n5. Run Verify; add §Ledger row(s); Finish.`,
+    `## Notes\n\n- ${layer === 'primitive' ? 'Primitive: no business logic / provider / feature imports.' : 'Composite: compose primitives; feature-independent; no provider usage.'}\n- Name it \`${name}\` (Mx-prefixed shared widget). Strings from ARB.`,
+    DOD, VERIFY_CMDS, STOP, finish(id),
+  ].join('\n\n');
+}
+
 // ── assemble ────────────────────────────────────────────────────────────────
 /** @type {{id:string,title:string,file:string,md:string,phase:string,deferred?:boolean}[]} */
 const rows = [];
@@ -354,6 +407,7 @@ for (const t of DOMAIN) add(t.id, t.title, renderGeneric(t, 'domain (BE core)'),
 for (const t of DATA) add(t.id, t.title, renderGeneric(t, 'data (Drift)'), 'DT — Data (BE impl)');
 for (const c of PRIMITIVES) add(c[0], c[1], renderComponent(c, 'primitive'), 'P — Primitives');
 for (const c of COMPOSITES) add(c[0], c[1], renderComponent(c, 'composite'), 'K — Composites');
+for (const h of HELPERS) add(h[0], h[1], renderHelper(h), 'H — Shared helpers');
 for (const s of SCREENS) add(s[0], s[1], renderScreen(s), 'S — Screens', s[5]);
 for (const t of VERIFY) add(t.id, t.title, renderGeneric(t, 'verification'), 'V — Verification');
 
@@ -376,17 +430,19 @@ in parallel once the shared foundation (I, T, DM contracts) lands.
 > \`/loop\` Đọc \`docs/agent/build/README.md\`, chọn task **pending** đầu tiên (\`[ ]\`)
 > tôn trọng thứ tự phase + deps (I → T/DM → {FE: P→K→S | BE: DM→DT} → V). Đọc + thực
 > thi ĐẦY ĐỦ file prompt của task đó (baseline → đọc source → build đúng layer →
-> test đúng tầng (domain unit / data integration / widget+golden) → \`build_runner\`
-> + \`gen_tokens --check\` + \`dart analyze\` + \`flutter test\` → §Ledger → commit →
-> push → PR → merge), rồi đổi ô đó thành \`[x]\`. Mỗi vòng đúng 1 task. Nếu prompt bảo
-> **STOP** (drift / ambiguity cần người quyết) → dừng, báo, chờ. \`[~]\` = deferred,
-> bỏ qua. Hết pending → báo HOÀN TẤT.
+> test đúng tầng (domain unit / data integration / widget+golden) →
+> \`node tool/verify/run.mjs\` (gate duy nhất, do **I.0** tạo) → §Ledger (cite D-xxx) →
+> commit → push → PR → merge), rồi đổi ô đó thành \`[x]\`. Mỗi vòng đúng 1 task. Nếu
+> prompt bảo **STOP** (drift / ambiguity cần người quyết) → dừng, báo, chờ.
+> \`[~]\` = deferred, bỏ qua. Hết pending → báo HOÀN TẤT.
 
-**Order & parallelism**: Phase **I** unblocks everything. Then **T** (theme) and
-**DM** (domain contracts) open the two tracks. FE: **P → K → S** (K shells unblock
-screens). BE: **DM.4 SRS → DT** (Drift). Screens use in-memory fakes until **DT.5**
-wires real repositories. **S.01 dashboard is the pilot** — do it, pause for review,
-then fan out.
+**Order & parallelism**: **I.0 verify runner** first, then Phase **I** unblocks
+everything. **T** (theme) + **DM** (domain contracts incl. DM.8 service contracts)
+open the two tracks. FE: **P → K → H → S** (K shells + H helpers unblock screens).
+BE: **DM.4 SRS → DT.0 schema contract → DT** (Drift) + **DT.7** service adapters.
+Screens use in-memory fakes until **DT.5** wires real repositories. **S.01 dashboard
+is the pilot** — do it, pause for review, then fan out. Every behaviour traces to a
+\`D-xxx\` row in \`docs/decision-tables/core-decision-table.md\`.
 
 ## Queue
 

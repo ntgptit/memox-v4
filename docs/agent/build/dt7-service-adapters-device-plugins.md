@@ -1,41 +1,37 @@
-# P.05 — MxChip
+# DT.7 — Service adapters (device/plugins)
 
-> **Loop task** (primitive component). Self-contained — execute fully in one iteration, then tick `P.05` in `docs/agent/build/README.md`. One task per iteration.
+> **Loop task** (data (Drift)). Self-contained — execute fully in one iteration, then tick `DT.7` in `docs/agent/build/README.md`. One task per iteration.
 >
-> Size **S–M** · Deps **Phase T** · Branch `build/p05`
+> Size **L** · Deps **DT.4** · Branch `build/dt7`
 
 
 ## Goal
 
-Build the Flutter widget **MxChip** mirroring the kit component, driven entirely by design tokens + `MxTheme` (primitive layer).
+Implement the DM.8 service contracts over real plugins/local storage: settings persistence, local notifications (reminder), TTS/audio, file + clipboard import/export, backup/restore to a local file.
 
-## Inputs — READ ALL IN FULL (do not infer)
+## Inputs — read first
 
-- `docs/design/MemoX Design System/components/core/MxChip.d.ts` — typed prop contract (variants, sizes, flags).
-- `docs/design/MemoX Design System/components/core/MxChip.prompt.md` — intent + JSX usage examples.
-- `docs/design/MemoX Design System/components/core/MxChip.jsx` — class→CSS mapping.
-- `docs/design/MemoX Design System/components.css` — the base class + modifier styling for **MxChip**.
-- `lib/core/theme/` — tokens + `MxTheme` extension.
+- `lib/domain/services/ (DM.8)`
+- `docs/business/{settings,import-export}/*.md`
 
 ## Output
 
-- `lib/presentation/shared/primitives/mx_chip.dart`
-- `test/presentation/shared/primitives/mx_chip_test.dart`
+- `lib/data/services/*.dart`
+- `lib/data/datasources/local/settings_*.dart`
 
 ## Steps
 
-1. **Baseline**: `git checkout main && git pull`, `git checkout -b build/p05`.
-2. Read the `.d.ts` → constructor: each prop → param; string-union → Dart `enum`; flags → `bool`.
-3. Read `.jsx` + the `components.css` slice → map each variant/modifier to token styling via the theme. **No raw `Color(0x..)`/px.**
-4. Reproduce **every** variant/size/state the contract lists.
-5. Widget + golden test: each variant in light+dark; assert token values reach the tree.
-6. Run Verify; add §Ledger row(s); Finish.
+1. **Baseline**: `git checkout main && git pull`, branch.
+2. Read the domain entities/repositories (DM.2/DM.3) this implements against.
+3. Implement in the **data layer only**; keep Drift row models separate from domain entities (map at the boundary).
+4. Run `dart run build_runner build --delete-conflicting-outputs` for Drift codegen.
+5. **Integration test** against an in-memory Drift DB.
+6. Run Verify; add §Ledger rows; Finish.
 
 ## Notes
 
-- Primitive: wrap Material, **no** business logic / provider / feature imports.
-- Kit name + base class are **frozen contract** — keep `MxChip` + variant identifiers aligned.
-- Strings from ARB. If `.d.ts` lists a variant the CSS never styles, note it in §Ledger — don't invent.
+- Adapters wrap plugins (flutter_local_notifications, file_picker/share_plus, path_provider, a TTS plugin); UI never imports them directly.
+- Wire via @riverpod providers (DT.5 pattern). Deferred impls (e.g. TTS generation) → mark as a gap, keep the contract satisfied by a no-op/failure Result.
 
 ## Definition of Done
 
@@ -67,6 +63,6 @@ node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 ## Finish
 
 1. Commit(s): implementation + test(s). End messages with the Co-Authored-By trailer.
-2. Push `build/p05`; open a PR; merge to main; `git checkout main && git pull`.
+2. Push `build/dt7`; open a PR; merge to main; `git checkout main && git pull`.
    > From an agent session without a design-authorized TTY, prefix: `MEMOX_SKIP_DESIGN_SYNC=1 git push …`.
-3. Tick `P.05` → `[x]` in `docs/agent/build/README.md`, small commit.
+3. Tick `DT.7` → `[x]` in `docs/agent/build/README.md`, small commit.

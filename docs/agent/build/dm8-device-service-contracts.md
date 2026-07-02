@@ -1,41 +1,39 @@
-# P.05 — MxChip
+# DM.8 — Device / service contracts
 
-> **Loop task** (primitive component). Self-contained — execute fully in one iteration, then tick `P.05` in `docs/agent/build/README.md`. One task per iteration.
+> **Loop task** (domain (BE core)). Self-contained — execute fully in one iteration, then tick `DM.8` in `docs/agent/build/README.md`. One task per iteration.
 >
-> Size **S–M** · Deps **Phase T** · Branch `build/p05`
+> Size **M** · Deps **DM.2** · Branch `build/dm8`
 
 
 ## Goal
 
-Build the Flutter widget **MxChip** mirroring the kit component, driven entirely by design tokens + `MxTheme` (primitive layer).
+Abstract service interfaces so feature UI never touches a plugin directly: SettingsService, LanguagePairService, DailyActivityService, ReminderNotificationService, Tts/AudioService, ImportExportFileService (file + clipboard), BackupRestoreService.
 
-## Inputs — READ ALL IN FULL (do not infer)
+## Inputs — read first
 
-- `docs/design/MemoX Design System/components/core/MxChip.d.ts` — typed prop contract (variants, sizes, flags).
-- `docs/design/MemoX Design System/components/core/MxChip.prompt.md` — intent + JSX usage examples.
-- `docs/design/MemoX Design System/components/core/MxChip.jsx` — class→CSS mapping.
-- `docs/design/MemoX Design System/components.css` — the base class + modifier styling for **MxChip**.
-- `lib/core/theme/` — tokens + `MxTheme` extension.
+- `docs/business/settings/settings.md`
+- `docs/business/personalization/personalization.md`
+- `docs/business/import-export/import-export.md`
+- `docs/business/engagement/dashboard-engagement.md`
+- `docs/business/glossary.md (LanguagePair D-030)`
 
 ## Output
 
-- `lib/presentation/shared/primitives/mx_chip.dart`
-- `test/presentation/shared/primitives/mx_chip_test.dart`
+- `lib/domain/services/*.dart`
 
 ## Steps
 
-1. **Baseline**: `git checkout main && git pull`, `git checkout -b build/p05`.
-2. Read the `.d.ts` → constructor: each prop → param; string-union → Dart `enum`; flags → `bool`.
-3. Read `.jsx` + the `components.css` slice → map each variant/modifier to token styling via the theme. **No raw `Color(0x..)`/px.**
-4. Reproduce **every** variant/size/state the contract lists.
-5. Widget + golden test: each variant in light+dark; assert token values reach the tree.
-6. Run Verify; add §Ledger row(s); Finish.
+1. **Baseline**: `git checkout main && git pull`, branch.
+2. Read the authoritative v1 product rules in `docs/business/` (start at `index.md`; this task names its specific spec) + the relevant kit `specs/*.md` for UI shape. If a rule is not stated in-repo, **STOP and ask** — do not invent domain behaviour.
+3. Model as **pure Dart** — no Flutter, no Drift imports. Immutable, `Result`-returning.
+4. Exhaustive **unit tests** (deterministic, edge cases). This is BE core — correctness first.
+5. Run Verify; add §Ledger rows; Finish.
 
 ## Notes
 
-- Primitive: wrap Material, **no** business logic / provider / feature imports.
-- Kit name + base class are **frozen contract** — keep `MxChip` + variant identifiers aligned.
-- Strings from ARB. If `.d.ts` lists a variant the CSS never styles, note it in §Ledger — don't invent.
+- Contracts only (abstract) — the plugin adapters land in DT.7.
+- LanguagePair create/validate (D-030: source==target or empty → ValidationFailure) belongs here.
+- TTS/audio generation may be deferred (see flashcard-editor brief) — define the contract, mark impl gaps.
 
 ## Definition of Done
 
@@ -67,6 +65,6 @@ node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 ## Finish
 
 1. Commit(s): implementation + test(s). End messages with the Co-Authored-By trailer.
-2. Push `build/p05`; open a PR; merge to main; `git checkout main && git pull`.
+2. Push `build/dm8`; open a PR; merge to main; `git checkout main && git pull`.
    > From an agent session without a design-authorized TTY, prefix: `MEMOX_SKIP_DESIGN_SYNC=1 git push …`.
-3. Tick `P.05` → `[x]` in `docs/agent/build/README.md`, small commit.
+3. Tick `DM.8` → `[x]` in `docs/agent/build/README.md`, small commit.
