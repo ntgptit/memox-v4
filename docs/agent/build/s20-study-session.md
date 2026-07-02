@@ -48,7 +48,26 @@ Build the **study-session** screen + its 9 feature-local component(s), composed 
 
 - Reuse shared components; build only genuinely screen-specific pieces locally.
 - Feature UI must **not** import `data/` or `dart:io` — go through providers → use cases.
+- **v1 scope**: no cloud/account sync — any kit "Cloud sync / Sync (alpha)" element renders as **local Backup / Restore** (or is omitted); save/load errors say **local persistence**, not cloud/offline sync. `account-sync` is deferred.
 - Undrivable kit states → document as a gap; if FE structure diverges from the kit → **STOP** (possible drift).
+
+## Accessibility (build it right — don't port JSX shortcuts)
+
+The kit's JSX takes web a11y shortcuts (`div onClick`, `disabled` = class only,
+icon ligature as the label). **Do NOT mirror those.** Build the proper accessible
+Flutter widget:
+
+- Interactive surfaces (cards/rows/tiles/options) = `InkWell`/`GestureDetector`
+  wrapped in `Semantics(button: true, …)` — Flutter gives focus + Enter/Space
+  free; never a bare tap on a plain container.
+- Disabled = a **real** disabled state (e.g. `onChanged: null`, `onPressed: null`),
+  not just a dimmed style; the control must not fire when disabled.
+- Every icon-only button needs a `Semantics`/`tooltip` label **from ARB**
+  (Back, Close, More options, Play audio, Clear search…) — never the Material
+  icon name.
+- Selection groups (segmented / choice) = `Semantics(inMutuallyExclusiveGroup:
+  true, selected: …)` (radio semantics), each option individually addressable.
+- Touch targets ≥ `MxSpacing.minTouchTarget` (48).
 
 ## Definition of Done
 

@@ -5,14 +5,14 @@ export function MxSegmentedControl({ segments = [], value, onChange, block = fal
   const cls = ['segmented'];
   if (block) cls.push('segmented--block');
   return (
-    <div className={cls.join(' ')} data-mx-node={node}>
+    <div className={cls.join(' ')} data-mx-node={node} role="radiogroup">
       {segments.map((s) => {
         const v = typeof s === 'string' ? s : s.value;
         const label = typeof s === 'string' ? s : s.label;
         const icon = typeof s === 'object' ? s.icon : null;
         const active = v === value;
         return (
-          <button key={v} type="button" className={['segmented__seg', active ? 'segmented__seg--active' : ''].filter(Boolean).join(' ')} onClick={() => onChange && onChange(v)}>
+          <button key={v} type="button" role="radio" aria-checked={active} aria-label={label} data-mx-node={node ? `${node}/${v}` : undefined} className={['segmented__seg', active ? 'segmented__seg--active' : ''].filter(Boolean).join(' ')} onClick={() => onChange && onChange(v)}>
             {icon ? <span className="material-symbols-rounded">{icon}</span> : null}
             {label}
           </button>

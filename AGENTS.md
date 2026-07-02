@@ -31,6 +31,15 @@ Stack: **Riverpod Annotation** (state + DI) · **Drift / SQLite** (persistence) 
    datasources, or `dart:io`; go through providers → use cases.
 6. **Verify before claiming done** (see Commands). Don't say "done" if a gate was
    skipped or failed.
+7. **Accessible by construction — don't port the kit's JSX a11y shortcuts.** The
+   kit uses `div onClick`, class-only `disabled`, and icon ligatures as labels;
+   the Flutter port must use proper widgets: `InkWell`/`GestureDetector` +
+   `Semantics(button:true)` for taps, real disabled (`onPressed/onChanged: null`),
+   a `Semantics` label **from ARB** for every icon-only button, radio semantics
+   for selection groups, and ≥ `MxSpacing.minTouchTarget` targets.
+8. **v1 is local-only — no cloud/account sync.** Any kit "Cloud sync / Sync
+   (alpha)" element renders as **local Backup / Restore** or is omitted; save/load
+   errors say local persistence, not cloud/offline sync. `account-sync` deferred.
 
 ## Architecture (clean, local-first)
 

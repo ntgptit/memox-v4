@@ -8,12 +8,16 @@ A high-fidelity, click-through recreation of the MemoX mobile app (local-first f
 
 ## Screens & states
 
-- **Dashboard.jsx** — `dashboard/screen`. States: `loaded` (due summary, streak/accuracy, deck list), `empty`, `loading` (skeleton).
-- **Library.jsx** — `library/screen`. States: `loaded`, `no-results`, `empty`, `loading`.
-- **StudySession.jsx** — `study-session/screen`. States: `front` (prompt), `back` (revealed + Again/Hard/Good/Easy), `done` (session summary).
-- **Settings.jsx** — `settings/screen`. State: `loaded` (profile, preference switches, study segmented control).
+The full, authoritative list of screens and their states lives in
+[`specs/INDEX.md`](specs/INDEX.md) (generated from the registry — do not restate
+counts here, they drift). Each screen has a feature module under
+[`_features/<screen>/`](./_features/) and per-state DOM specs + rendered PNGs
+under [`specs/`](./specs/) and [`shots/`](./shots/).
 
-`kit-helpers.jsx` holds kit-only composites built from primitives + tokens (`ProgressBar`, `Skeleton`, `EmptyState`, `DeckRow`) and exports them to `window`.
+`kit-helpers.jsx` holds kit-only composites built from primitives + tokens
+(`ProgressBar`, `Skeleton`, `EmptyState`, `DeckRow`, `ListRow`, `Stat`, `Scrim`,
+`Sheet`, `MenuItem`, `Dialog`, `Note`, `SectionLabel`, `Ring`, `ChoiceOption`)
+and exports them to `window`.
 
 ## Identity contract
 
