@@ -82,6 +82,28 @@ const INFRA = [
     inputs: ['.githooks/', 'tool/verify/run.mjs (I.0)'],
     outputs: ['.github/workflows/*', '.githooks/pre-push'],
     notes: ['CI + pre-push call `node tool/verify/run.mjs` (full in CI, `--quick` or `--docs` on pre-push as suits).', 'Compose with the existing design-sync pre-push step; keep `MEMOX_SKIP_DESIGN_SYNC` escape hatch.'] },
+  { id: 'I.10', title: 'Architecture guard rules', size: 'M', deps: 'I.2,I.3',
+    goal: 'Enforce the layer boundaries by code (lint + a guard test) so a feature can never quietly break the architecture.',
+    inputs: ['analysis_options.yaml', 'AGENTS.md (layer contracts)', 'lib/ tree'],
+    outputs: ['analysis_options.yaml (import rules)', 'test/architecture/layer_boundaries_test.dart'],
+    steps: [
+      '**Baseline**: `git checkout main && git pull`, `git checkout -b build/i10`.',
+      'Add import/boundary rules (custom_lint / a source-scanning test) for: `domain/` imports **no** `data/` / `presentation/` / Flutter; `presentation/` imports **no** Drift / datasource / plugin; routes use typed constants (no raw path strings); providers do **no** navigation side-effects; generated files (`mx_*.dart`, `*.g.dart`) are never hand-edited; user-facing text comes from ARB.',
+      'Prove each rule fails on a deliberate violation, then remove the violation.',
+      'Run Verify; add §Ledger row(s); Finish.',
+    ],
+    notes: ['This is the gate that keeps 22 screens from eroding the layering.'] },
+  { id: 'I.9', title: 'Foundation exit gate', size: 'M', deps: 'I.4,I.5,I.6,I.7,I.8,I.10,T.1',
+    goal: 'Stamp "foundation usable": the empty app boots with the correct architecture and passes every guard, BEFORE any feature/screen work.',
+    inputs: ['lib/app/', 'lib/core/routes/', 'tool/verify/run.mjs', 'test/'],
+    outputs: ['test/foundation/boot_smoke_test.dart'],
+    steps: [
+      '**Baseline**: `git checkout main && git pull`, `git checkout -b build/i9`.',
+      'Add a boot smoke test: app boots under `ProviderScope`; router exposes the shell route + a fallback/unknown route; no exception on first frame.',
+      'Assert the exit checklist (fail loudly if any is false): `node tool/verify/run.mjs` full is green · no raw route strings (typed routes only) · no hardcoded user-facing strings outside ARB · no reverse-layer imports (I.10 rules pass) · generated files untouched · analyze + codegen clean.',
+      'Run Verify; add §Ledger row(s); Finish.',
+    ],
+    notes: ['Do NOT start Phase S/features until I.9 is green — it is the "foundation ready" seal.'] },
 ];
 
 // ── Phase T — theme / UI foundation ─────────────────────────────────────────
@@ -152,6 +174,18 @@ const DOMAIN = [
     goal: 'Abstract service interfaces so feature UI never touches a plugin directly: SettingsService, LanguagePairService, DailyActivityService, ReminderNotificationService, Tts/AudioService, ImportExportFileService (file + clipboard), BackupRestoreService.',
     inputs: ['docs/business/settings/settings.md', 'docs/business/personalization/personalization.md', 'docs/business/import-export/import-export.md', 'docs/business/engagement/dashboard-engagement.md', 'docs/business/glossary.md (LanguagePair D-030)'], outputs: ['lib/domain/services/*.dart'], steps: DOMAIN_STEPS,
     notes: ['Contracts only (abstract) — the plugin adapters land in DT.7.', 'LanguagePair create/validate (D-030: source==target or empty → ValidationFailure) belongs here.', 'TTS/audio generation may be deferred (see flashcard-editor brief) — define the contract, mark impl gaps.'] },
+  { id: 'DM.9', title: 'In-memory fakes + provider test harness', size: 'M', deps: 'DM.3,DM.8',
+    goal: 'In-memory fake implementations of every repository + service, a fake clock, deterministic fake IDs, a seeded fake SRS/due queue, and a ProviderScope-override harness — so Phase S screens build + test against fakes WITHOUT waiting for Drift (DT). This is the seam that makes FE/BE parallel real.',
+    inputs: ['lib/domain/repositories/ (DM.3)', 'lib/domain/services/ (DM.8)', 'lib/domain/usecases/srs/ (DM.4)'],
+    outputs: ['lib/data/fakes/*.dart', 'test/harness/provider_harness.dart'],
+    steps: [
+      '**Baseline**: `git checkout main && git pull`, `git checkout -b build/dm9`.',
+      'Implement fake Deck/Card/Review/Settings repos + services entirely in memory (seedable), an injectable `Clock`, deterministic ID generator, and a seeded due-queue.',
+      'Build a `providerHarness` / override bundle so a widget test can pump any screen with fakes via `ProviderScope(overrides: …)`.',
+      'Unit-test the fakes; provide a smoke widget test proving a screen renders on fakes.',
+      'Run Verify; add §Ledger row(s); Finish.',
+    ],
+    notes: ['Fakes live in `data/fakes` (they implement domain contracts) but stay test-friendly. DT.5 later swaps them for Drift-backed providers — same contract, no screen change.'] },
 ];
 
 // ── Phase DT — data (Drift) ─────────────────────────────────────────────────
@@ -177,6 +211,11 @@ const DATA = [
     goal: 'Author the authoritative schema contract DOC — every table, column, index, FK, and the business rule each supports — BEFORE writing Drift. Ensures DT.1 covers all rules, not a partial set. (This is a documentation task — no Dart, no build_runner, no Drift test.)',
     inputs: ['docs/business/ (all specs)', 'docs/decision-tables/core-decision-table.md', 'lib/domain/entities/'], outputs: ['docs/database/schema-contract.md'], steps: DOC_STEPS,
     notes: ['Cover: language_pairs, decks (self-nesting FK), cards, card_meanings, srs_state, review_logs, review_outcome, study_sessions, daily_activity, settings, local backup metadata.', 'Map each table/column to the D-xxx / spec it serves. This doc gates DT.1.'] },
+  { id: 'DT.0.1', title: 'Persistence safety policy', size: 'M', deps: 'DT.0',
+    goal: 'A DB-safety policy doc + test skeletons BEFORE Drift impl — for a local-first SRS app a DB bug is the worst failure. Locks the patterns DT.1–DT.4 must follow.',
+    inputs: ['docs/database/schema-contract.md (DT.0)', 'docs/decision-tables/core-decision-table.md (D-024 cascade)'],
+    outputs: ['docs/database/persistence-safety.md', 'test/data/_skeletons/*.dart'], steps: DOC_STEPS,
+    notes: ['Cover: transaction/rollback pattern for multi-table writes (+ a rollback test skeleton); migration-test skeleton; deterministic ordering policy; local-day/clock injection policy (no wall-clock in queries); soft-delete/cascade behaviour — each backed by a decision-table row (D-024).', 'This is a doc + test-skeleton task; the real Drift work is DT.1+.'] },
   { id: 'DT.1', title: 'Drift schema & tables', size: 'L', deps: 'DT.0',
     goal: 'Implement every table in the schema contract: language_pairs, decks (self-referencing tree), cards, card_meanings, srs_state, review_logs, review_outcome, study_sessions, daily_activity, settings, backup metadata — with indices for due-queue + term/meaning search.',
     inputs: ['docs/database/schema-contract.md (DT.0)', 'lib/domain/entities/'], outputs: ['lib/data/datasources/local/*.dart', 'lib/data/models/*.dart'], steps: DATA_STEPS,
@@ -294,6 +333,28 @@ const VERIFY = [
     inputs: ['.design-sync/NOTES.md', 'tool/design/gen_tokens.mjs --check'], outputs: ['CI step + docs'],
     notes: ['MSYS_NO_PATHCONV=1 claude -p "/design-sync" then gen_tokens --check.'] },
 ];
+
+// Gate/doc tasks placed inside the FE phases they lock.
+const SCREEN_MATRIX = {
+  id: 'S.00', title: 'Screen state matrix', size: 'M', deps: 'T.4',
+  goal: 'One authoritative table PER screen enumerating EVERY state to build — derived from the kit shots + specs — so screens are not built happy-path-only.',
+  inputs: ['docs/design/MemoX Design System/ui_kits/memox-app/specs/', 'docs/design/MemoX Design System/ui_kits/memox-app/shots/', 'docs/design/screens/*.md'],
+  outputs: ['docs/design/screen-state-matrix.md'], steps: DOC_STEPS,
+  notes: ['Columns per screen: loading · empty · error · success · partial data · disabled action · destructive confirm · local-persistence (save/load) state · navigation target. Cross-check each against the screen\'s `shots/*.png`.', 'Each Phase-S task then builds exactly the rows here — no missing states.'],
+};
+const GALLERY_GATE = {
+  id: 'H.08', title: 'Component gallery + golden gate', size: 'M', deps: 'Phase P,K,H',
+  goal: 'A gallery screen rendering all 25 shared widgets (P+K+H) in light+dark with a golden each — the lock before the 22 screens so UI cannot drift from the kit per-screen.',
+  inputs: ['lib/presentation/shared/primitives/', 'lib/presentation/shared/composites/', 'docs/design/MemoX Design System/guidelines/'],
+  outputs: ['lib/presentation/shared/screens/component_gallery.dart', 'test/golden/gallery/**'],
+  steps: [
+    '**Baseline**: `git checkout main && git pull`, `git checkout -b build/h08`.',
+    'Build a gallery screen showing every P/K/H widget in its variants/states.',
+    'Golden per widget in light **and** dark; wire into the golden suite.',
+    'Run Verify; add §Ledger row(s); Finish.',
+  ],
+  notes: ['Do NOT start Phase S until this gate is green — it proves the shared layer matches the kit before screens consume it.'],
+};
 
 // ── shared prose ────────────────────────────────────────────────────────────
 const slug = (id) => id.toLowerCase().replace(/\./g, '');
@@ -431,6 +492,8 @@ for (const t of DATA) add(t.id, t.title, renderGeneric(t, 'data (Drift)'), 'DT �
 for (const c of PRIMITIVES) add(c[0], c[1], renderComponent(c, 'primitive'), 'P — Primitives');
 for (const c of COMPOSITES) add(c[0], c[1], renderComponent(c, 'composite'), 'K — Composites');
 for (const h of HELPERS) add(h[0], h[1], renderHelper(h), 'H — Shared helpers');
+add(GALLERY_GATE.id, GALLERY_GATE.title, renderGeneric(GALLERY_GATE, 'component gallery gate'), 'H — Shared helpers');
+add(SCREEN_MATRIX.id, SCREEN_MATRIX.title, renderGeneric(SCREEN_MATRIX, 'screen state matrix (docs)'), 'S — Screens');
 for (const s of SCREENS) add(s[0], s[1], renderScreen(s), 'S — Screens', s[5]);
 for (const t of VERIFY) add(t.id, t.title, renderGeneric(t, 'verification'), 'V — Verification');
 

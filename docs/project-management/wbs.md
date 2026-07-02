@@ -142,6 +142,8 @@ Before I.0 lands, fall back to:
 | I.6 | **Error + Result** — `core/error/`: `Failure` hierarchy, `Result<T>`/`Either` type, guard helpers | S | I.3 | `lib/core/error/*.dart` |
 | I.7 | **Logging + utils** — `core/logging/`, `core/utils/`, `core/constants/` | S | I.3 | `lib/core/{logging,utils,constants}/*.dart` |
 | I.8 | **CI/CD + hooks** — wire CI + pre-push to run **`node tool/verify/run.mjs`** (not duplicated raw commands); compose with the design-sync step | M | I.0 | `.github/`, `.githooks/` |
+| **I.10** | **Architecture guard rules** — enforce layer boundaries by code (lint + guard test): domain imports no data/presentation/Flutter; presentation no Drift/datasource/plugin; typed routes only; providers no nav side-effects; generated files untouched; ARB required | M | I.2, I.3 | `analysis_options.yaml`, `test/architecture/*` |
+| **I.9** | **Foundation exit gate** — stamp "foundation usable": empty app boots under `ProviderScope`, router has shell + fallback, verify full green, no raw routes/strings, no reverse imports, generated files untouched. **Gate before any feature/screen.** | M | I.4–I.8, I.10, T.1 | `test/foundation/boot_smoke_test.dart` |
 
 ---
 
@@ -170,6 +172,7 @@ Before I.0 lands, fall back to:
 | DM.6 | **Library use cases** — deck CRUD (nested move/rename/delete), card CRUD, **soft-dup** detection, term+meaning **search** | M | DM.3 | `domain/usecases/library/*.dart` |
 | DM.7 | **Import/export + stats use cases** — parse/emit deck formats; compute statistics/heatmap | M | DM.3 | `domain/usecases/{io,stats}/*.dart` |
 | DM.8 | **Device/service contracts** — abstract `SettingsService`, `LanguagePairService` (D-030), `DailyActivityService`, `ReminderNotificationService`, `Tts/AudioService`, `ImportExportFileService` (file+clipboard), `BackupRestoreService`. UI never touches a plugin directly | M | DM.2 | `domain/services/*.dart` |
+| **DM.9** | **In-memory fakes + provider harness** — fake Deck/Card/Review/Settings repos + services, injectable clock, deterministic IDs, seeded due-queue, `ProviderScope`-override harness. **Lets Phase S build+test on fakes without waiting for Drift** — the real FE/BE parallel seam | M | DM.3, DM.8 | `data/fakes/*.dart`, `test/harness/*` |
 
 ---
 
@@ -178,6 +181,7 @@ Before I.0 lands, fall back to:
 | ID | Task | Size | Deps | Output |
 |----|------|------|------|--------|
 | **DT.0** | **Database schema contract** — author the authoritative schema doc (every table/column/index/FK ↔ the rule it serves) **before** Drift, so DT.1 covers all rules | M | DM.2 | `docs/database/schema-contract.md` |
+| **DT.0.1** | **Persistence safety policy** — doc + test skeletons before Drift: transaction/rollback pattern (+ rollback test), migration-test skeleton, deterministic ordering, clock injection, soft-delete/cascade (D-024). For local-first SRS a DB bug is the worst failure | M | DT.0 | `docs/database/persistence-safety.md`, `test/data/_skeletons/*` |
 | DT.1 | **Drift schema** — all tables per DT.0: `language_pairs`, `decks` (self FK), `cards`, `card_meanings`, `srs_state`, `review_logs`, `review_outcome`, `study_sessions`, `daily_activity`, `settings`, backup meta; indices for due/search | L | DT.0 | `data/datasources/local/*.dart`, `data/models/*.dart` |
 | DT.2 | **Migrations** — schema versioning + migration strategy + schema tests | M | DT.1 | migrations + `test/data/migration` |
 | DT.3 | **DAOs** — due-cards query, search (term+meaning, incl. hidden, D-028), deck tree, stats aggregations | M | DT.1 | `data/datasources/local/dao/*.dart` |
@@ -233,9 +237,10 @@ Reused helpers ported to shared widgets so screens don't re-derive them.
 | H.05 | MxSheet | `Sheet`+`MenuItem`+`Scrim` | `composites/mx_sheet.dart` |
 | H.06 | MxStatRing | `Stat`+`Ring` | `composites/mx_stat_ring.dart` |
 | H.07 | MxChoiceOption | `ChoiceOption` | `primitives/mx_choice_option.dart` |
+| **H.08** | **Component gallery + golden gate** — a gallery screen renders all 25 P/K/H widgets in light+dark, golden each. **Gate before Phase S** so UI can't drift from the kit per-screen | deps `Phase P,K,H` | `presentation/shared/screens/component_gallery.dart`, `test/golden/gallery/**` |
 
-**Phase P+K+H exit**: a component gallery renders all 25 shared widgets in
-light+dark; each golden.
+**Phase P+K+H exit = H.08 green**: the gallery renders all 25 shared widgets in
+light+dark with a golden each, before any screen consumes them.
 
 ---
 
@@ -247,7 +252,8 @@ cases. Feature-local components built here.
 
 | ID | Feature | Local comps | Size | Deps |
 |----|---------|:-----------:|------|------|
-| S.01 | **dashboard** (pilot) | 4 | L | P,K,H + DM.5 |
+| **S.00** | **Screen state matrix** (doc) — every state per screen (loading·empty·error·success·partial·disabled·destructive·local-persistence·nav) from shots+specs; screens build exactly these rows | — | T.4 · gates Phase S |
+| S.01 | **dashboard** (pilot) | 4 | L | P,K,H + DM.5 + **S.00** |
 | S.02 | library | 6 | L | P,K,H + DM.6 |
 | S.03 | deck-detail | 5 | L | P,K,H + DM.6 |
 | S.04 | search | 2 | M | P,K,H + DM.6 |
@@ -289,15 +295,25 @@ cases. Feature-local components built here.
 ## Critical path
 
 ```
-I.0→I.1→I.3→I.4→I.5 ─┬─► T.1→T.3 ───────────► P.* → K.* → H.* ─┐
-                     ├─► DM.1→DM.2→DM.3/DM.8 ──┬──► S.01 pilot ─┼─► V.*
-                     └─► DM.4 (SRS) ─► DT.0→DT.1→DT.4→DT.5/DT.7 ┘
+I.0→I.1→I.2→I.3→{I.4,I.5,I.6,I.7,I.8}→I.10→I.9 (foundation seal) ─┐
+   ├─► T.1→T.3→T.4 ─────────────────► P.* → K.* → H.* → H.08 gate ─┤
+   ├─► DM.1→DM.2→DM.3/DM.8→DM.9 (fakes) ───────► S.00 → S.01 pilot ┼─► V.*
+   └─► DM.4 (SRS) ─► DT.0→DT.0.1→DT.1→DT.4→DT.5/DT.7 (Drift) ───────┘
 ```
 
-Bottlenecks: **I.0** (the gate every task calls) · **I.4/I.5** (bootstrap+routing)
-· **T.1** (all UI needs it) · **DM.2/DM.3** (contracts unblock both tracks) ·
-**DM.4** (SRS engine, the product's core logic) · **DT.0** (schema contract gates
-all Drift) · **K shells + H helpers** (all screens need them).
+**Two hard gates**: **I.9** seals "foundation usable" — nothing in Phase S/features
+starts before it. **H.08** seals the shared UI layer before the 22 screens. **DM.9**
+fakes let the FE track run before Drift (DT) exists.
+
+Bottlenecks: **I.0** (the gate every task calls) · **I.9** (foundation seal) ·
+**T.1** (all UI needs it) · **DM.2/DM.3** (contracts unblock both tracks) · **DM.4**
+(SRS) · **DT.0/DT.0.1** (schema + safety gate all Drift) · **H.08** (gallery gate).
+
+### Recommended execution order
+
+`I.0 → I.1,I.2,I.3 → I.4,I.5,I.6,I.7,I.8 → I.10 → I.9` · then `T.1–T.6` · then
+`DM.1–DM.3, DM.8, DM.9` · then `P.* → K.* → H.* → H.08` · then `DT.0, DT.0.1` ·
+then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/DT/V.
 
 ---
 
