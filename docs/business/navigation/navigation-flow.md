@@ -60,5 +60,5 @@ library (/) ─▶ deckDetail (lồng nhau) ─▶ flashcardEditor
 
 ## Related
 
-- `docs/architecture/overview.md` — where routing sits
+- `AGENTS.md §Architecture + docs/project-management/wbs.md §Architecture` — where routing sits
 - `docs/business/index.md` — screens these routes reach

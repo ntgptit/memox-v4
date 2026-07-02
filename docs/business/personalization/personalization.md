@@ -55,11 +55,11 @@ lâu dài.
 
 ## 8. Yêu cầu phi chức năng
 
-- Cả chế độ sáng và tối đều đạt độ tương phản đọc được (xem `docs/ui-ux/ui-ux-contract.md`).
+- Cả chế độ sáng và tối đều đạt độ tương phản đọc được (xem `docs/design/MemoX Design System/readme.md (VISUAL FOUNDATIONS)`).
 
 ## 9. Giả định · Ràng buộc · Phụ thuộc (RAID)
 
-- **Phụ thuộc:** token thiết kế (`docs/design/design-language.md`); lưu trong cài đặt.
+- **Phụ thuộc:** token thiết kế (`docs/design/MemoX Design System/ (tokens) + AGENTS.md`); lưu trong cài đặt.
 
 ## 10. Câu hỏi mở
 
@@ -68,4 +68,4 @@ lâu dài.
 ## 11. Truy vết & liên quan
 
 - **Spec liên quan:** `docs/business/settings/settings.md`.
-- **Thiết kế:** `docs/ui-ux/ui-ux-contract.md`, `docs/design/design-language.md`.
+- **Thiết kế:** `docs/design/MemoX Design System/readme.md (VISUAL FOUNDATIONS)`, `docs/design/MemoX Design System/ (tokens) + AGENTS.md`.
