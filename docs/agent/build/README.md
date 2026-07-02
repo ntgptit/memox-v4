@@ -58,7 +58,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 
 | done | id | task |
 | --- | --- | --- |
-| [ ] | DM.1 | [Value types & IDs](dm1-value-types-ids.md) |
+| [x] | DM.1 | [Value types & IDs](dm1-value-types-ids.md) |
 | [ ] | DM.2 | [Entities](dm2-entities.md) |
 | [ ] | DM.3 | [Repository interfaces](dm3-repository-interfaces.md) |
 | [ ] | DM.4 | [SRS engine (8-box single-direction)](dm4-srs-engine-8-box-single-direction.md) |
