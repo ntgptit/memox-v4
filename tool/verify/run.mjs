@@ -45,21 +45,16 @@ function pubspecHasBuildRunner() {
   }
 }
 
-// codegen freshness: regenerate, then require the tree to stay clean (no stale
-// generated files committed). Only meaningful once build_runner is a dependency.
-function codegenFreshness() {
+// Generated files (*.g.dart / *.drift.dart / *.freezed.dart) are gitignored, so
+// they must be (re)built before analyze/test can see them. Running build_runner
+// here also fails the gate if codegen itself breaks. Skipped until build_runner
+// is a dependency (pre-I.1).
+function codegen() {
   if (!pubspecHasBuildRunner()) {
     process.stdout.write('• codegen: build_runner not a dependency yet — skipping (pre-I.1)\n');
     return;
   }
   step('codegen (build_runner)', 'dart', ['run', 'build_runner', 'build', '--delete-conflicting-outputs']);
-  // Fail only if regeneration MODIFIED an already-tracked generated file (= stale
-  // committed codegen). Brand-new generated files are untracked and expected —
-  // the task commits them. `git diff` sees only tracked, unstaged modifications.
-  const gen = spawnSync('git', ['diff', '--name-only', '--', '*.g.dart', '*.drift.dart', '*.freezed.dart'], { cwd: REPO, encoding: 'utf8' });
-  if ((gen.stdout || '').trim().length > 0) {
-    fail('codegen freshness', `committed generated files are stale — regenerate + commit:\n${gen.stdout}`);
-  }
 }
 
 const tokens = () => step('design tokens --check', 'node', ['tool/design/gen_tokens.mjs', '--check']);
@@ -72,7 +67,7 @@ if (mode === 'docs') {
   analyze();
   test();
 } else {
-  codegenFreshness();
+  codegen();
   tokens();
   analyze();
   test();
