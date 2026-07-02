@@ -1205,6 +1205,153 @@
       "field": "*",
       "reason": "The kit soft-duplicate banner primary CTA is MxButton primary; the FE renders dup-add as a ghost MxButton (low-emphasis inline banner action next to dup-view), so its fill/emphasis differ.",
       "source": "docs/business/flashcard/flashcard-management.md"
+    },
+    {
+      "screen": "game-matching",
+      "node": "complete",
+      "field": "*",
+      "reason": "The kit finished-round container is a success-soft callout (bg:success-soft, 32px, r:18). The FE _complete() is a centered celebration column (primary icon 64 + headline + actions) shared by all four games — the Mx kit-fit of the game layer is deferred post-v1 (game-modes.md §6 parity note).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-mc",
+      "node": "complete",
+      "field": "*",
+      "reason": "The kit finished-round container is a success-soft callout (bg:success-soft, 32px, r:18). The FE _complete() is a centered celebration column (primary icon 64 + headline + actions) shared by all four games — the Mx kit-fit of the game layer is deferred post-v1 (game-modes.md §6 parity note).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-recall",
+      "node": "complete",
+      "field": "*",
+      "reason": "The kit finished-round container is a success-soft callout (bg:success-soft, 32px, r:18). The FE _complete() is a centered celebration column (primary icon 64 + headline + actions) shared by all four games — the Mx kit-fit of the game layer is deferred post-v1 (game-modes.md §6 parity note).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "complete",
+      "field": "*",
+      "reason": "The kit finished-round container is a success-soft callout (bg:success-soft, 32px, r:18). The FE _complete() is a centered celebration column (primary icon 64 + headline + actions) shared by all four games — the Mx kit-fit of the game layer is deferred post-v1 (game-modes.md §6 parity note).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "retry",
+      "field": "*",
+      "reason": "kit retry is a primary-filled r:12 button; the FE wrong-branch uses Material OutlinedButton (ghost emphasis) — the typing buttons are raw Material widgets with the variant map deferred (see the component exceptions + game-modes.md §6).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-typing",
+      "node": "accept",
+      "field": "*",
+      "reason": "kit accept is a text-coloured ghost r:12 button; the FE uses Material FilledButton (primary emphasis) — emphasis swapped vs kit, variant map deferred (game-modes.md §6).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "game-recall",
+      "node": "meaning",
+      "field": "*",
+      "reason": "flat-capture asymmetry: the kit meaning block's first text is the MEANING eyebrow label (13/600 text-tertiary); the FE card's first text is the meaning VALUE (17/400 text). The FE card intentionally has no eyebrow (see the card component divergence).",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "search",
+      "node": "no-results",
+      "field": "*",
+      "reason": "the kit no-results is a warning-soft callout card (32px, r:18); the FE renders a plain centered message (minimal empty state) — the callout treatment was not adopted.",
+      "source": "docs/business/search/global-search.md"
+    },
+    {
+      "screen": "export",
+      "node": "progress",
+      "field": "*",
+      "reason": "the kit progress is a surface card with a 38px primary figure; the FE appends a plain result Text (behavior exception: no async save surface) — no card treatment.",
+      "source": "docs/business/import-export/import-export.md"
+    },
+    {
+      "screen": "import",
+      "node": "map-term-pick",
+      "field": "*",
+      "reason": "kit map picks are pill dropdown chips (bg:surface-sunken, 20px, r:9999); the FE uses Material DropdownButtons (component exception) — no pill treatment.",
+      "source": "docs/business/import-export/import-export.md"
+    },
+    {
+      "screen": "import",
+      "node": "map-meaning-pick",
+      "field": "*",
+      "reason": "see import/map-term-pick — same Material DropdownButton divergence.",
+      "source": "docs/business/import-export/import-export.md"
+    },
+    {
+      "screen": "import",
+      "node": "do-import",
+      "field": "font",
+      "reason": "kit button label is font-size-lg 20; the FE MxButton label is labelLarge 15/600 — the app-wide button-label scale (same class as study-result/continue, drawer/add-confirm).",
+      "source": "docs/business/import-export/import-export.md"
+    },
+    {
+      "screen": "import",
+      "node": "go-deck",
+      "field": "font",
+      "reason": "kit 20px button label vs FE labelLarge 15/600 — app-wide button-label scale.",
+      "source": "docs/business/import-export/import-export.md"
+    },
+    {
+      "screen": "library",
+      "node": "retry",
+      "field": "font",
+      "reason": "kit 20px button label vs FE MxButton labelLarge 15/600 — app-wide button-label scale.",
+      "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "game-picker",
+      "node": "add-cards",
+      "field": "font",
+      "reason": "capture artifact: the FE MxButton's first text-run is its 20px leading icon glyph; the kit block's first text is the 13/700 label. Not a real font divergence.",
+      "source": "docs/business/game/game-modes.md"
+    },
+    {
+      "screen": "review",
+      "node": "study-now",
+      "field": "*",
+      "reason": "end-state emphasis: kit study-now is the primary-filled 20px button; the FE renders it as the secondary of the two end actions — emphasis distribution differs (see review/next precedent).",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "review",
+      "node": "back-deck",
+      "field": "*",
+      "reason": "end-state emphasis: kit back-deck is a ghost primary-strong action; the FE renders it primary-filled (fg surface) — emphasis swapped vs kit.",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "deck-delete-cancel",
+      "field": "r",
+      "reason": "Material AlertDialog TextButton keeps the stadium radius vs kit r:12 (same class as drawer add-confirm r).",
+      "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "deck-delete-ok",
+      "field": "r",
+      "reason": "Material AlertDialog FilledButton keeps the stadium radius vs kit r:12.",
+      "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-cancel",
+      "field": "r",
+      "reason": "Material AlertDialog TextButton keeps the stadium radius vs kit r:12 (same class as deck-detail deck-delete-cancel).",
+      "source": "docs/business/navigation/navigation-flow.md"
+    },
+    {
+      "screen": "drawer",
+      "node": "remove-ok",
+      "field": "r",
+      "reason": "Material AlertDialog FilledButton keeps the stadium radius vs kit r:12.",
+      "source": "docs/business/navigation/navigation-flow.md"
     }
   ],
   "$identityRolloutDoc": "Kit nodes present in contracts/<screen>.gen.json but NOT yet keyed with ValueKey(mx-node:...) in lib/** — the identity-rollout backlog (fe_node_usage exempts these from MISSING). Distinct from `exceptions` (intentional FE↔kit divergences): these are simply not-keyed-yet, or a structural difference noted in the screen contract. Ratchet target: move nodes OUT of here into real FE keys over time. Regenerate after keying: remove the keyed segment.",
