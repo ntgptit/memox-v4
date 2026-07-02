@@ -414,7 +414,9 @@ for (const [name, content] of Object.entries(FILES)) {
   const path = join(OUT_DIR, name);
   let existing = null;
   try { existing = readFileSync(path, 'utf8'); } catch { /* new file */ }
-  if (existing === content) continue;
+  // Compare line-ending-agnostic: git may check these out as CRLF on Windows
+  // while the generator always emits LF — that must not read as drift.
+  if (existing !== null && existing.replace(/\r\n/g, '\n') === content) continue;
   drift++;
   if (CHECK) {
     console.error(`✗ out of date: lib/core/theme/${name}`);
