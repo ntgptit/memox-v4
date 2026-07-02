@@ -16,6 +16,8 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/app/di/database_provider.dart';
 import 'package:memox_v4/app/di/import_export_providers.dart';
+import 'package:memox_v4/app/router/app_router.dart';
+import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/util/day_key.dart';
@@ -29,6 +31,7 @@ import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
+import 'package:memox_v4/presentation/features/deck/viewmodels/deck_detail_notifier.dart';
 import 'package:memox_v4/presentation/features/deck/viewmodels/library_notifier.dart';
 import 'package:memox_v4/presentation/features/engagement/screens/dashboard_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
@@ -93,6 +96,15 @@ class _ThrowingLibrary extends LibraryNotifier {
   @override
   Future<List<DeckNode>> build() async =>
       throw Exception('forced library error');
+}
+
+/// Forces deck-detail into its error branch (GetDeckNodeUseCase folds a repo
+/// Result.err into node:null → the empty state, not error — a thrown build is
+/// the only clean path to deck-detail/retry).
+class _ThrowingDeckDetail extends DeckDetailNotifier {
+  @override
+  Future<DeckDetailState> build(int deckId) async =>
+      throw Exception('forced deck-detail error');
 }
 
 class _FakeFileSave implements FileSaveService {
@@ -303,6 +315,10 @@ void main() {
       },
       drives: [
         // soft-duplicate banner (D-020) → flashcard-editor/dup-add + /dup-view.
+        // A pump after enterText is required: the term/meaning controllers only
+        // recompute _canSave (which gates Save's onPressed) via a listener that
+        // calls setState — without a pump before tap, Save is still hit-tested
+        // as disabled from its pre-typing frame.
         (tester, db) async {
           await tester.enterText(
             find.byKey(const Key('editorTermField')),
@@ -312,6 +328,7 @@ void main() {
             find.byKey(const Key('editorMeaningField')),
             'bàn',
           );
+          await tester.pump();
           await tester.tap(
             find.byKey(const ValueKey('mx-node:flashcard-editor/save')),
           );
@@ -426,6 +443,18 @@ void main() {
           await tester.tap(find.byKey(const Key('deckActionDelete')));
           await tester.pumpAndSettle();
         },
+        // error branch (a thrown build) → deck-detail/retry.
+        (tester, db) async {
+          final deck = await (db.select(db.deck)..limit(1)).getSingle();
+          await _repump(
+            tester,
+            db,
+            DeckDetailScreen(deckId: deck.id),
+            extra: [
+              deckDetailProvider(deck.id).overrideWith(_ThrowingDeckDetail.new),
+            ],
+          );
+        },
       ],
     );
   });
@@ -508,14 +537,19 @@ void main() {
         return PlayerScreen(nodeId: deckId);
       },
       drives: [
-        // step past the last card → end state → player/replay + /close (bounded
-        // pumps: the player may hold an autoplay timer, pumpAndSettle could hang).
+        // end state → player/replay + /close. `next` is DISABLED at the last
+        // card (index == cards.length - 1) — it can never push past the end;
+        // only the autoplay Timer.periodic can (_advance sets index =
+        // cards.length once it fires AT the last card). Start autoplay, then
+        // pump 3s×N (the player's fixed interval) to let the timer fire
+        // through every card.
         (tester, db) async {
+          await tester.tap(
+            find.byKey(const ValueKey('mx-node:player/playpause')),
+          );
+          await tester.pump();
           for (var i = 0; i < 4; i++) {
-            final next = find.byKey(const ValueKey('mx-node:player/next'));
-            if (next.evaluate().isEmpty) break;
-            await tester.tap(next);
-            await _drain(tester);
+            await tester.pump(const Duration(seconds: 3));
           }
         },
       ],
@@ -886,7 +920,8 @@ void main() {
 
     // Empty state (a fresh db with no activity) → the dashboard/start CTA.
     // dashboard/appbar + /notifications + /quick-review live in the app shell
-    // (app_shell.dart), outside this body harness — a documented coverage gap.
+    // (app_shell.dart) — see the standalone shell test below, which merges
+    // dashboard/appbar + /notifications + /quick-review into this same file.
     final db2 = AppDatabase.forTesting(openInMemoryDatabase());
     addTearDown(db2.close);
     await db2
@@ -897,6 +932,51 @@ void main() {
     await _repump(tester, db2, const Scaffold(body: DashboardScreen()));
     while (tester.takeException() != null) {}
     _exportScreen(tester, 'dashboard', merge: true);
+  });
+
+  // dashboard/appbar + /notifications + /quick-review are app-SHELL chrome
+  // (app_shell.dart), not DashboardScreen body — only visible when pumped
+  // through the real AppRouter (StatefulShellRoute) on the Today tab, so this
+  // reuses AppRouter.create() rather than duplicating the route table. Runs
+  // after 'export FE spec — dashboard' (declaration order) and merges into the
+  // same dashboard.json.
+  testWidgets('export FE spec — dashboard (app-shell chrome)', (tester) async {
+    final db = AppDatabase.forTesting(openInMemoryDatabase());
+    addTearDown(db.close);
+    await db
+        .into(db.languagePair)
+        .insert(
+          LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
+        );
+
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    final router = AppRouter.create();
+    addTearDown(router.dispose);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [databaseProvider.overrideWithValue(db)],
+        child: MaterialApp.router(
+          theme: AppTheme.light(),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          routerConfig: router,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    // initialLocation (/) resolves to the Library branch — go to Today so the
+    // shell renders isToday chrome (appbar/notifications/quick-review).
+    router.go(RoutePaths.today);
+    await tester.pumpAndSettle();
+    while (tester.takeException() != null) {}
+    // `only: 'dashboard/'` — indexedStack keeps the initial-location Library
+    // branch mounted (Offstage) alongside Today; without the filter its
+    // library/* nodes would leak into dashboard.json.
+    _exportScreen(tester, 'dashboard', merge: true, only: 'dashboard/');
   });
 
   // The drawer's keyed mx-nodes live in its add-language view (add-screen,
@@ -1005,7 +1085,12 @@ String? _materialRadius(Material material) {
   return null;
 }
 
-void _exportScreen(WidgetTester tester, String screen, {bool merge = false}) {
+void _exportScreen(
+  WidgetTester tester,
+  String screen, {
+  bool merge = false,
+  String? only,
+}) {
   final context = tester.element(find.byType(Scaffold).first);
   final tokens = _tokenMap(context);
 
@@ -1015,12 +1100,21 @@ void _exportScreen(WidgetTester tester, String screen, {bool merge = false}) {
     if (key is! ValueKey) continue;
     final value = key.value;
     if (value is! String || !value.startsWith(_prefix)) continue;
+    final id = value.substring(_prefix.length);
+    // `only`: restrict to a node-id prefix (e.g. 'dashboard/'). Needed when the
+    // pumped tree legitimately contains OTHER screens' keyed nodes too — e.g.
+    // AppRouter's StatefulShellRoute.indexedStack keeps every visited branch
+    // mounted (Offstage, not disposed), so switching to the Today tab still
+    // carries the initial-location Library tab's nodes in the element tree.
+    // Cross-screen composition (settings/account, study-result/study-session)
+    // relies on the DEFAULT unfiltered behavior, so this only applies when set.
+    if (only != null && !id.startsWith(only)) continue;
     final render = element.renderObject;
     if (render is! RenderBox || !render.hasSize) continue;
 
     final style = _styleOf(element, tokens);
     nodes.add(<String, Object?>{
-      'id': value.substring(_prefix.length),
+      'id': id,
       'w': render.size.width.round(),
       'h': render.size.height.round(),
       ...style,

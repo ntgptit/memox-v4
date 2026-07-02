@@ -200,7 +200,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
               MxButton(
                 key: const ValueKey('mx-node:player/replay'),
                 label: l10n.playerReplay,
-                variant: MxButtonVariant.outline,
+                // kit: bg:primary — the higher-emphasis end action.
                 onPressed: () => setState(() {
                   _index = 0;
                   _playing = false;
@@ -210,6 +210,8 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
               MxButton(
                 key: const ValueKey('mx-node:player/close'),
                 label: l10n.commonClose,
+                // kit: no bg, color:primary-strong (a ghost secondary action).
+                variant: MxButtonVariant.ghost,
                 onPressed: () => unawaited(Navigator.of(context).maybePop()),
               ),
             ],
