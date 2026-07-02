@@ -1,0 +1,10 @@
+# Normalize line endings. Text files are stored LF in the repo; Git may still
+# check them out per core.autocrlf. The paths below are pinned to LF in the
+# WORKING TREE too, so tools that compare bytes (e.g. the Tier-0 token
+# generator's --check gate) don't false-positive on CRLF conversion on Windows.
+
+* text=auto
+
+# Generated Dart token mirrors + the generator itself — LF everywhere.
+lib/core/theme/mx_*.dart text eol=lf
+tool/design/*.mjs        text eol=lf
