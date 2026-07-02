@@ -39,6 +39,8 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [ ] | I.6 | [Error and Result type](i6-error-and-result-type.md) |
 | [ ] | I.7 | [Logging, utils, constants](i7-logging-utils-constants.md) |
 | [ ] | I.8 | [CI/CD, hooks, codegen gate](i8-ci-cd-hooks-codegen-gate.md) |
+| [ ] | I.10 | [Architecture guard rules](i10-architecture-guard-rules.md) |
+| [ ] | I.9 | [Foundation exit gate](i9-foundation-exit-gate.md) |
 
 ### T — Theme foundation
 
@@ -63,12 +65,14 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [ ] | DM.6 | [Library use cases](dm6-library-use-cases.md) |
 | [ ] | DM.7 | [Import/export + stats use cases](dm7-import-export-stats-use-cases.md) |
 | [ ] | DM.8 | [Device / service contracts](dm8-device-service-contracts.md) |
+| [ ] | DM.9 | [In-memory fakes + provider test harness](dm9-in-memory-fakes-provider-test-harness.md) |
 
 ### DT — Data (BE impl)
 
 | done | id | task |
 | --- | --- | --- |
 | [ ] | DT.0 | [Database schema contract](dt0-database-schema-contract.md) |
+| [ ] | DT.0.1 | [Persistence safety policy](dt01-persistence-safety-policy.md) |
 | [ ] | DT.1 | [Drift schema & tables](dt1-drift-schema-tables.md) |
 | [ ] | DT.2 | [Migrations & versioning](dt2-migrations-versioning.md) |
 | [ ] | DT.3 | [DAOs](dt3-daos.md) |
@@ -116,11 +120,13 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [ ] | H.05 | [MxSheet](h05-mxsheet.md) |
 | [ ] | H.06 | [MxStatRing](h06-mxstatring.md) |
 | [ ] | H.07 | [MxChoiceOption](h07-mxchoiceoption.md) |
+| [ ] | H.08 | [Component gallery + golden gate](h08-component-gallery-golden-gate.md) |
 
 ### S — Screens
 
 | done | id | task |
 | --- | --- | --- |
+| [ ] | S.00 | [Screen state matrix](s00-screen-state-matrix.md) |
 | [ ] | S.01 | [dashboard](s01-dashboard.md) |
 | [ ] | S.02 | [library](s02-library.md) |
 | [ ] | S.03 | [deck-detail](s03-deck-detail.md) |
