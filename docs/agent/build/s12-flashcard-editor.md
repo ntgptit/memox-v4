@@ -2,7 +2,7 @@
 
 > **Loop task** (screen). Self-contained — execute fully in one iteration, then tick `S.12` in `docs/agent/build/README.md`. One task per iteration.
 >
-> Size **M** · Deps **Phase K + DM.6, DM.8** · Branch `build/s12`
+> Size **M** · Deps **Phase K,H + DM.6, DM.8** · Branch `build/s12`
 
 
 ## Goal
@@ -51,7 +51,7 @@ Build the **flashcard-editor** screen + its 2 feature-local component(s), compos
 - [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in `docs/business/` with edge cases.
 - [ ] **Decision Table** — every `D-xxx` row in `docs/decision-tables/core-decision-table.md` this task touches has a covering test; cite the `D-xxx` id(s) in the Ledger. (Deferred rows: D-012 Premium, D-022 REMOVED, D-027 sync.)
 - [ ] **Ledger** — row(s) added to `docs/project-management/wbs.md §Ledger` (kit/D-xxx node → Dart symbol → test).
-- [ ] **Gates green** — `node tool/verify/run.mjs` passes (codegen freshness + `gen_tokens --check` + analyze + test). (I.0 not done yet → fall back to the raw commands.)
+- [ ] **Gates green** — `node tool/verify/run.mjs` passes (codegen freshness + `gen_tokens --check` + analyze + test).
 
 ## Verify (must pass before commit)
 
@@ -60,9 +60,6 @@ node tool/verify/run.mjs          # full gate: codegen freshness + gen_tokens --
 node tool/verify/run.mjs --quick  # analyze + test only (fast, while iterating)
 node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
 ```
-
-> Until **I.0** creates the runner, fall back to the raw commands:
-> `dart run build_runner build --delete-conflicting-outputs && node tool/design/gen_tokens.mjs --check && dart analyze lib test && flutter test`.
 
 ## STOP conditions (do not push through)
 

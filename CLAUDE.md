@@ -15,9 +15,10 @@ Claude-specific notes so nothing critical is missed.
 4. **Layer contracts** (clean arch): feature UI must not import `data/`/`dart:io`;
    go through `@riverpod` providers → domain use cases. Local-first, **no remote
    backend** in v1 — "BE" = the app's `domain` + `data` layers.
-5. **Verify before "done"**: `dart analyze lib test` + `flutter test` +
-   `node tool/design/gen_tokens.mjs --check` (+ `build_runner` once codegen deps
-   land). Report skipped/failed gates honestly.
+5. **Verify before "done"**: the single gate `node tool/verify/run.mjs`
+   (created in WBS I.0; wraps codegen freshness + `gen_tokens --check` + analyze +
+   test). Only I.0 may bootstrap with raw commands. Report skipped/failed gates
+   honestly.
 
 ## Build workflow
 

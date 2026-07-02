@@ -81,21 +81,25 @@ real repos. **S.01 dashboard is the pilot** — build, review, then fan out.
 
 ## Commands
 
+**The verify gate is a single command: `node tool/verify/run.mjs`** (created in
+WBS **I.0**). Tasks call it — not the raw commands. Only I.0 itself may bootstrap
+with raw commands (it's building the runner).
+
 ```bash
+# the one gate every task runs before commit
+node tool/verify/run.mjs           # full: codegen freshness + gen_tokens --check + analyze + test
+node tool/verify/run.mjs --quick   # analyze + test only
+node tool/verify/run.mjs --docs    # doc/spec freshness + gen_tokens --check only
+
 # regenerate design tokens after a kit change
 node tool/design/gen_tokens.mjs
-node tool/design/gen_tokens.mjs --check      # drift gate (CI/hooks)
 
 # regenerate the WBS loop prompts after editing the registry
 node tool/design/gen_task_prompts.mjs
-
-# codegen (once Riverpod/Drift deps land — WBS I.1)
-dart run build_runner build --delete-conflicting-outputs
-
-# verify (run the strongest available before commit)
-dart analyze lib test
-flutter test
 ```
+
+Until I.0 lands, `tool/verify/run.mjs` does not exist yet; the raw equivalent is
+`dart run build_runner build --delete-conflicting-outputs && node tool/design/gen_tokens.mjs --check && dart analyze lib test && flutter test`.
 
 **Definition of done** per task: built at the mapped path (layer-correct) ·
 analyzes clean · tested at the right level (domain = pure unit · data = Drift

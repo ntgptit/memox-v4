@@ -163,11 +163,19 @@ const DATA_STEPS = [
   '**Integration test** against an in-memory Drift DB.',
   'Run Verify; add §Ledger rows; Finish.',
 ];
+// A documentation task (writes a spec, not Dart) — no build_runner / Drift test.
+const DOC_STEPS = [
+  '**Baseline**: `git checkout main && git pull`, branch.',
+  'Read the business specs in `docs/business/` + `docs/decision-tables/core-decision-table.md` + the domain entities (DM.2) this doc must cover.',
+  'Write the doc (Markdown). Map every element to the rule / `D-xxx` it serves; no dangling links.',
+  'Self-check: every required item is covered and every reference resolves.',
+  'Run `node tool/verify/run.mjs --docs`; add §Ledger row(s); Finish.',
+];
 /** @type {T[]} */
 const DATA = [
   { id: 'DT.0', title: 'Database schema contract', size: 'M', deps: 'DM.2',
-    goal: 'Author the authoritative schema contract doc — every table, column, index, FK, and the business rule each supports — BEFORE writing Drift. Ensures DT.1 covers all rules, not a partial set.',
-    inputs: ['docs/business/ (all specs)', 'docs/decision-tables/core-decision-table.md', 'lib/domain/entities/'], outputs: ['docs/database/schema-contract.md'], steps: DATA_STEPS,
+    goal: 'Author the authoritative schema contract DOC — every table, column, index, FK, and the business rule each supports — BEFORE writing Drift. Ensures DT.1 covers all rules, not a partial set. (This is a documentation task — no Dart, no build_runner, no Drift test.)',
+    inputs: ['docs/business/ (all specs)', 'docs/decision-tables/core-decision-table.md', 'lib/domain/entities/'], outputs: ['docs/database/schema-contract.md'], steps: DOC_STEPS,
     notes: ['Cover: language_pairs, decks (self-nesting FK), cards, card_meanings, srs_state, review_logs, review_outcome, study_sessions, daily_activity, settings, local backup metadata.', 'Map each table/column to the D-xxx / spec it serves. This doc gates DT.1.'] },
   { id: 'DT.1', title: 'Drift schema & tables', size: 'L', deps: 'DT.0',
     goal: 'Implement every table in the schema contract: language_pairs, decks (self-referencing tree), cards, card_meanings, srs_state, review_logs, review_outcome, study_sessions, daily_activity, settings, backup metadata — with indices for due-queue + term/meaning search.',
@@ -265,7 +273,7 @@ const VERIFY = [
   { id: 'V.1', title: 'Golden suite (components + screen states)', size: 'L', deps: 'Phase P,K,S',
     goal: 'A golden per component + per screen-state (light+dark) — parity gate at the component layer.',
     inputs: ['test/', `${KIT}/ui_kits/memox-app/shots/*.png`], outputs: ['test/golden/**'],
-    notes: ['Verify at the ~18-component + per-state layer, not per-pixel-per-screen.'] },
+    notes: ['Verify at the ~25 shared-widget (P+K+H) + per-screen-state layer, not per-pixel-per-screen.'] },
   { id: 'V.2', title: 'Domain test sweep (SRS invariants)', size: 'M', deps: 'DM.4',
     goal: 'Edge cases + scheduler invariants for the SRS engine and study use cases.',
     inputs: ['lib/domain/usecases/'], outputs: ['test/domain/**'], notes: ['Property-style where useful.'] },
@@ -302,7 +310,7 @@ const DOD = `## Definition of Done
 - [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in \`docs/business/\` with edge cases.
 - [ ] **Decision Table** — every \`D-xxx\` row in \`docs/decision-tables/core-decision-table.md\` this task touches has a covering test; cite the \`D-xxx\` id(s) in the Ledger. (Deferred rows: D-012 Premium, D-022 REMOVED, D-027 sync.)
 - [ ] **Ledger** — row(s) added to \`docs/project-management/wbs.md §Ledger\` (kit/D-xxx node → Dart symbol → test).
-- [ ] **Gates green** — \`node tool/verify/run.mjs\` passes (codegen freshness + \`gen_tokens --check\` + analyze + test). (I.0 not done yet → fall back to the raw commands.)`;
+- [ ] **Gates green** — \`node tool/verify/run.mjs\` passes (codegen freshness + \`gen_tokens --check\` + analyze + test).`;
 
 const VERIFY_CMDS = `## Verify (must pass before commit)
 
@@ -310,10 +318,7 @@ const VERIFY_CMDS = `## Verify (must pass before commit)
 node tool/verify/run.mjs          # full gate: codegen freshness + gen_tokens --check + analyze + test
 node tool/verify/run.mjs --quick  # analyze + test only (fast, while iterating)
 node tool/verify/run.mjs --docs   # doc/spec freshness + gen_tokens --check only
-\`\`\`
-
-> Until **I.0** creates the runner, fall back to the raw commands:
-> \`dart run build_runner build --delete-conflicting-outputs && node tool/design/gen_tokens.mjs --check && dart analyze lib test && flutter test\`.`;
+\`\`\``;
 
 const STOP = `## STOP conditions (do not push through)
 
@@ -372,7 +377,7 @@ function renderScreen([id, feature, screenFile, locals, size, deferred, dm]) {
   const base = `${KIT}/ui_kits/memox-app/_features/${feature}`;
   const feat = `lib/presentation/features/${feature}`;
   const def = deferred ? `\n> ⊘ **DEFERRED (v1)** — do not build unless explicitly un-deferred.\n` : '';
-  const deps = deferred ? '⊘' : `Phase K${dm !== '—' ? ` + ${dm}` : ''}`;
+  const deps = deferred ? '⊘' : `Phase K,H${dm !== '—' ? ` + ${dm}` : ''}`;
   return [
     header(id, feature, size, deps, 'screen') + def,
     `## Goal\n\nBuild the **${feature}** screen + its ${locals.length} feature-local component(s), composed from the shared \`Mx*\` widgets, rendering ${dm !== '—' ? `**${dm}** use-case state via \`@riverpod\` providers` : 'local UI state'}, matching the kit for every state.`,

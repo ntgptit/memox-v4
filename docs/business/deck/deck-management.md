@@ -99,7 +99,7 @@ universe** (không phân biệt state) — xem `tool/parity/contracts/library.st
 ## 8. Yêu cầu phi chức năng
 
 - Tổng hợp số liệu cây con không gây giật khi mở bộ thẻ lớn.
-- Mở bộ thẻ lớn (hàng nghìn thẻ) vẫn cuộn mượt (xem `docs/quality/performance-contract.md`).
+- Mở bộ thẻ lớn (hàng nghìn thẻ) vẫn cuộn mượt (xem `docs/project-management/wbs.md §Phase V (hiệu năng/responsive)`).
 
 ## 9. Giả định · Ràng buộc · Phụ thuộc (RAID)
 
