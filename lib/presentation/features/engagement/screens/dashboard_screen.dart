@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/models/deck_node.dart';
@@ -290,7 +291,13 @@ class _GoalCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MxText.title(l10n.dashboardGoalTitle),
+            // kit: font-size-md/extrabold (17/800) — titleLarge is the same 17px
+            // step; only the weight needs the override.
+            MxText(
+              l10n.dashboardGoalTitle,
+              role: MxTextRole.titleLarge,
+              weight: FontWeight.w800,
+            ),
             const SizedBox(height: MxSpacing.space1),
             MxText(
               l10n.dashboardGoalNone,
@@ -324,7 +331,13 @@ class _GoalCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                MxText.title(l10n.dashboardGoalTitle),
+                // kit: font-size-md/extrabold (17/800) — titleLarge is the same 17px
+                // step; only the weight needs the override.
+                MxText(
+                  l10n.dashboardGoalTitle,
+                  role: MxTextRole.titleLarge,
+                  weight: FontWeight.w800,
+                ),
                 const SizedBox(height: MxSpacing.space1),
                 MxText(
                   progress,
@@ -356,9 +369,11 @@ class _GoalRing extends StatelessWidget {
     final colors = MxTheme.of(context).colors;
     // The kit ring shows the percentage in the centre for every state (no check
     // icon) — "complete" is signalled by the full ring + the success note banner.
+    // Diameter = the kit element-size token `--memox-size-md` (56), NOT a spacing
+    // step — the ring is a fixed-size visual element, not layout spacing.
     return SizedBox(
-      width: MxSpacing.space11,
-      height: MxSpacing.space11,
+      width: MxSizes.sizeMd,
+      height: MxSizes.sizeMd,
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -403,10 +418,14 @@ class _StreakCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                // kit: the stat figure borrows --memox-icon-size-md (22px), not a
+                // type-scale step — headlineSmall(20) is the nearest role for
+                // weight/line-height/tracking; fontSize overrides just the px.
                 MxText(
                   '$days',
-                  role: MxTextRole.titleLarge,
+                  role: MxTextRole.headlineSmall,
                   weight: FontWeight.w800,
+                  fontSize: MxIconSize.md,
                 ),
                 MxText(
                   l10n.dashboardDayStreak,
@@ -447,10 +466,12 @@ class _MasteredCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                // kit: same icon-size-md (22px) stat-figure borrow as streak.
                 MxText(
                   '$percent%',
-                  role: MxTextRole.titleLarge,
+                  role: MxTextRole.headlineSmall,
                   weight: FontWeight.w800,
+                  fontSize: MxIconSize.md,
                 ),
                 MxText(
                   l10n.dashboardMasteredLabel,
@@ -486,21 +507,25 @@ class _DeckRow extends StatelessWidget {
       child: Row(
         children: <Widget>[
           MxIconTile(icon: Icons.translate, tone: tone),
-          const SizedBox(width: MxSpacing.space3),
+          const SizedBox(width: MxSpacing.space4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                // kit: 15/700 — titleMedium is the same 15px step; only the
+                // weight needs the override.
                 MxText(
                   node.deck.name,
-                  role: MxTextRole.titleSmall,
+                  role: MxTextRole.titleMedium,
+                  weight: FontWeight.w700,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
+                // kit: 13/400 — bodySmall matches both size and weight exactly.
                 MxText(
                   l10n.deckCardsDue(node.stats.words, node.stats.due),
-                  role: MxTextRole.labelSmall,
+                  role: MxTextRole.bodySmall,
                   color: colors.textSecondary,
                 ),
                 const SizedBox(height: MxSpacing.space1),
@@ -515,7 +540,7 @@ class _DeckRow extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: MxSpacing.space3),
+          const SizedBox(width: MxSpacing.space4),
           MxBadge(
             label: '${node.stats.due}',
             tone: MxBadgeTone.warning,

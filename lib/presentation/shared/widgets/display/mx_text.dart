@@ -39,6 +39,9 @@ enum MxTextRole {
 /// - data: the string to render
 /// - role: the type-scale slot (default bodyMedium)
 /// - color / weight: optional overrides
+/// - fontSize: rare escape hatch for a kit value that borrows a NON-type-scale
+///   token (e.g. an icon-size step reused for a stat figure) — the role still
+///   supplies weight/line-height/tracking, only the px is overridden
 /// - maxLines / overflow / textAlign: standard text layout options
 ///
 /// States:
@@ -50,6 +53,7 @@ class MxText extends StatelessWidget {
     this.role = MxTextRole.bodyMedium,
     this.color,
     this.weight,
+    this.fontSize,
     this.maxLines,
     this.overflow,
     this.textAlign,
@@ -64,7 +68,8 @@ class MxText extends StatelessWidget {
     this.overflow,
     this.textAlign,
   }) : role = MxTextRole.headlineSmall,
-       weight = null;
+       weight = null,
+       fontSize = null;
 
   /// Title (`titleMedium`) — card/list-section title.
   const MxText.title(
@@ -75,7 +80,8 @@ class MxText extends StatelessWidget {
     this.overflow,
     this.textAlign,
   }) : role = MxTextRole.titleMedium,
-       weight = null;
+       weight = null,
+       fontSize = null;
 
   /// Body (`bodyMedium`) — default paragraph text.
   const MxText.body(
@@ -86,7 +92,8 @@ class MxText extends StatelessWidget {
     this.overflow,
     this.textAlign,
   }) : role = MxTextRole.bodyMedium,
-       weight = null;
+       weight = null,
+       fontSize = null;
 
   /// Label (`labelMedium`) — captions/metadata.
   const MxText.label(
@@ -97,12 +104,14 @@ class MxText extends StatelessWidget {
     this.overflow,
     this.textAlign,
   }) : role = MxTextRole.labelMedium,
-       weight = null;
+       weight = null,
+       fontSize = null;
 
   final String data;
   final MxTextRole role;
   final Color? color;
   final FontWeight? weight;
+  final double? fontSize;
   final int? maxLines;
   final TextOverflow? overflow;
   final TextAlign? textAlign;
@@ -132,7 +141,11 @@ class MxText extends StatelessWidget {
     final resolved = color ?? DefaultTextStyle.of(context).style.color;
     return Text(
       data,
-      style: base?.copyWith(color: resolved, fontWeight: weight),
+      style: base?.copyWith(
+        color: resolved,
+        fontWeight: weight,
+        fontSize: fontSize,
+      ),
       maxLines: maxLines,
       overflow: overflow,
       textAlign: textAlign,
