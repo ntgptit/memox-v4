@@ -47,8 +47,8 @@ Grep `mx-node:player` trong FE cho 8 node đã key:
 | `mx-node:player/prev` | MxIconButton | null | ✓ MxIconButton |
 | `mx-node:player/playpause` | MxFab | null | ⚠ MxIconButton (divergence — mục 5) |
 | `mx-node:player/next` | MxIconButton | null | ✓ MxIconButton |
-| `mx-node:player/replay` | MxButton | primary | ⚠ MxButton variant outline (divergence — mục 5) |
-| `mx-node:player/close` | MxButton | ghost | ✓ MxButton (default) |
+| `mx-node:player/replay` | MxButton | primary | ✓ MxButton `primary` (đã sửa khớp kit — PR #31, trước là outline) |
+| `mx-node:player/close` | MxButton | ghost | ✓ MxButton `ghost` (đã sửa khớp kit — PR #31, trước là default/primary) |
 
 **Chỉ `mx-node:player/card` là MxCard** → là node duy nhất Template A vòng qua (giống review chỉ vòng MxCard). Các node khác là identity đã có key nhưng không phải MxCard → test không assert variant cho chúng ở vòng MxCard; chúng được phủ ở tầng state-membership (`player.states.json`).
 
@@ -67,7 +67,7 @@ Liệt kê nguyên các gap này trong **final report** (mục "Identity-rollout
 Ghi các mục sau vào `tool/parity/intent-ledger.json` (append, giữ format hiện có; nếu file chưa có mục player → tạo entry theo cấu trúc các screen khác). **Không** sửa FE để khớp kit ở các điểm này — đây là chệch có chủ đích:
 
 1. `mx-node:player/playpause` — kit `MxFab`, FE `MxIconButton` (variant `primary`). Lý do: FE dùng MxIconButton cho cụm 4 nút transport đồng nhất (prev/playpause/next + speak). Ledger reason: `"fe uses MxIconButton(primary) not MxFab for transport-row consistency"`.
-2. `mx-node:player/replay` — kit variant `primary`, FE `MxButtonVariant.outline`. Lý do: end-state đôi nút Replay(outline)+Close(default); FE chọn outline làm hành động phụ. Ledger reason: `"fe replay = outline (secondary emphasis), kit = primary"`.
+2. ~~`mx-node:player/replay` variant outline vs kit primary~~ — **ĐÃ ĐÓNG** (PR #31, style-parity coverage): FE đổi `replay` → `primary` (bỏ outline) và `close` → `ghost` (bỏ default) để khớp đúng kit (`bg:primary` / `r:12` không-bg + `color:primary-strong`). Ledger entry `exceptions[player/replay]` cũ đã gỡ; còn lại 2 `styleExempt` font (20px icon-label kit vs FE labelLarge 15/600 — cùng class với các nút khác app-wide).
 3. Slot `player/card`.meaning — kit mock role `displaySmall`/700 + label "MEANING"; FE render `MxText(card.meaning, role: bodyLarge)`. Đây là slot binding thực của FE (giống review sửa meaning → bodySmall). Không phải drift — curate `player.slots.json` theo FE truth (`bodyLarge`), ghi 1 dòng note trong `$curated` của slots.json, KHÔNG cần ledger.
 
 Sau khi ghi ledger, các divergence này KHÔNG được làm fail parity test (test A chỉ assert variant cho MxCard = `player/card`, không cho playpause/replay).
@@ -112,7 +112,7 @@ FE là 1 `ConsumerStatefulWidget` điều khiển bởi `_cards` (load qua `Buil
    - Xác nhận 8 key hiện có đúng chính tả (grep đã confirm). KHÔNG hoist node-literal sau dynamic key.
    - Progress: FE đang `MxText.label` — token-only, không hardcode; nếu để nguyên (chưa render dot-bar) thì KHÔNG cần thêm key `player/progress` (giữ gap, note). KHÔNG hardcode màu/spacing.
    - KHÔNG thêm node mới cho appbar-actions/speed (ngoài scope style-parity).
-   - Divergence (playpause=MxIconButton, replay=outline) giữ nguyên → đã vào intent-ledger.
+   - Divergence còn lại: playpause=MxIconButton (đã vào intent-ledger). `replay`/`close` KHÔNG còn là divergence — đã sửa khớp kit (PR #31, xem mục 5 item 2).
 4. **l10n**: các key `studyPlayer`, `playerEnd`, `playerReplay`, `commonClose` đã có **cả** `app_en.arb` và `app_vi.arb` (đã verify). Nếu bạn thêm/đổi bất kỳ chuỗi user-facing nào → thêm vào **cả hai** ARB cùng lúc rồi regen. Không copy mock copy từ kit ("All played", "TOPIK I — Vocabulary"…) vào app — luôn từ ARB.
 5. **Viết test** `test/presentation/features/study/player_parity_test.dart` — COPY `review_parity_test.dart`, đổi:
    - đường dẫn contract `review.*` → `player.*`;
@@ -126,7 +126,7 @@ FE là 1 `ConsumerStatefulWidget` điều khiển bởi `_cards` (load qua `Buil
 
 - **Token-only**: không hardcode màu, radius, spacing, text style, duration, chuỗi user-facing. Dùng `Mx*` widget + theme token + `MxSpacing`.
 - **Không node-literal hoist sau dynamic key**: mỗi `ValueKey('mx-node:...')` phải là `const` gắn đúng node tĩnh; không sinh key động theo index/state.
-- **Divergence → intent-ledger**, không ép FE về kit (playpause MxFab, replay primary).
+- **Divergence → intent-ledger**, không ép FE về kit (playpause MxFab). `replay`/`close` variant đã sửa khớp kit (PR #31) — không còn là divergence cần giữ nguyên.
 - **l10n cả hai ARB**: mọi chuỗi mới vào `app_en.arb` **và** `app_vi.arb` cùng commit; regen l10n; không sửa `lib/l10n/generated/**` tay.
 - Không sửa file generated (`*.g.dart`, `*.freezed.dart`, `player.gen.json`, `docs/_generated/**`).
 - Không thêm dependency mới (Stop & ask nếu cần).

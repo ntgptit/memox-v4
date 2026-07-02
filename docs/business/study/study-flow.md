@@ -77,10 +77,10 @@ thuật toán lập lịch (xem `docs/business/srs/srs-review.md`); học trộn
 - **Trình phát — lựa chọn điều khiển (UI ruling):** cụm 4 nút transport
   (trước / phát-tạm dừng / sau / đọc) là một hàng nút biểu tượng đồng nhất
   (`MxIconButton`) thay vì tách nút phát-tạm dừng thành nút hành động nổi (FAB) như
-  mock; nút phát-tạm dừng dùng biến thể `primary`. Ở trạng thái kết thúc, cặp nút
-  **Replay (outline)** + **Đóng (default)**: Replay để nhấn phụ (hành động khởi động
-  lại tùy chọn), không nhấn mạnh bằng `primary`. Đây là chệch có chủ đích ghi ở
-  `tool/parity/intent-ledger.json` (player/playpause, player/replay). ↔ D-014
+  mock; nút phát-tạm dừng dùng biến thể `primary`. Đây là chệch có chủ đích ghi ở
+  `tool/parity/intent-ledger.json` (player/playpause). Ở trạng thái kết thúc, cặp
+  nút **Replay (primary)** + **Đóng (ghost)** khớp đúng kit (đã sửa ở PR #31 —
+  trước đó FE dùng outline/default, một chệch nay đã đóng). ↔ D-014
 
 ## 6. Quy tắc nghiệp vụ (Business rules)
 
