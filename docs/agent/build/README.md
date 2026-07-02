@@ -48,7 +48,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | done | id | task |
 | --- | --- | --- |
 | [x] | T.1 | [Theme assembly (ThemeData + MxTheme extension)](t1-theme-assembly-themedata-mxtheme-extension.md) |
-| [ ] | T.2 | [Font wiring (Plus Jakarta Sans)](t2-font-wiring-plus-jakarta-sans.md) |
+| [x] | T.2 | [Font wiring (Plus Jakarta Sans)](t2-font-wiring-plus-jakarta-sans.md) |
 | [ ] | T.3 | [Material component themes](t3-material-component-themes.md) |
 | [ ] | T.4 | [l10n / ARB scaffold](t4-l10n-arb-scaffold.md) |
 | [ ] | T.5 | [Verification harness (goldens)](t5-verification-harness-goldens.md) |
