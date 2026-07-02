@@ -39,7 +39,7 @@ dạng tĩnh chưa nối hành vi.
 
 ## Hiện thực (W6)
 
-`lib/presentation/features/deck/screens/library_screen.dart` (body tab Library; AppBar +
+`lib/presentation/features/library/screens/library_screen.dart` (body tab Library; AppBar +
 drawer + pair-switcher do app shell/Drawer S0 cung cấp). Render loading/empty/loaded/error;
 mỗi nút là `MxDeckTile` (tên · "N từ" đệ quy · 👁 ẩn · vòng % · badge đỏ đến hạn · menu ⋮
 Đổi tên/Di chuyển/Xoá). Sort (D-023) qua sheet; tạo bộ thẻ qua dialog. Mọi copy l10n

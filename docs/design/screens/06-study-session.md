@@ -38,7 +38,7 @@ Mỗi frame một bố cục riêng; thanh tiến độ luôn ở trên.
 
 ## Hiện thực (W4)
 
-`lib/presentation/features/study/` (screens: study_session/review/player + `play_menu_sheet`).
+`lib/presentation/features/study-session/` (screens: study_session/review/player + `play_menu_sheet`).
 Play menu mở từ ⋮ "Play" trên deck-detail; "Lặp lại" chỉ hiện khi due>0 (D-001/D-016). NewLearn
 chạy **5 chặng** (thanh tiến độ 0→100%), DueReview một lượt chấm; sai → thẻ quay lại hàng đợi
 (D-015); hoàn thành 5 chặng → `scheduleNewCard` ô1 (D-002), thoát giữa chừng → vẫn Mới (D-017);

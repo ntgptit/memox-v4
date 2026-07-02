@@ -30,7 +30,7 @@ badge trạng thái (mới / đến hạn / đã thuộc). Đáy: thanh hành đ
 
 ## Hiện thực (W6)
 
-`lib/presentation/features/deck/screens/deck_detail_screen.dart` (route push `/deck/:id`).
+`lib/presentation/features/deck-detail/screens/deck_detail_screen.dart` (route push `/deck/:id`).
 Node hỗn hợp: section **Bộ thẻ con** (`MxDeckTile`, menu Đổi tên/Di chuyển/Xoá) + section
 **Thẻ** (term · nghĩa rút gọn · badge trạng thái; ẩn = mờ). FAB "Thêm từ" và chạm thẻ mở
 `flashcardEditor` (W2); "Bộ thẻ con mới" qua dialog; ⋮ AppBar xoá/đổi tên/di chuyển chính

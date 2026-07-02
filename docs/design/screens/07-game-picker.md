@@ -22,7 +22,7 @@ giãn cách / Tất cả / Chỉ thẻ chưa thuộc.
 
 ## Hiện thực (W5)
 
-`lib/presentation/features/game/screens/game_picker_screen.dart` (route `/game/:nodeId`) +
+`lib/presentation/features/game-picker/screens/game_picker_screen.dart` (route `/game/:nodeId`) +
 `game_screen.dart` (route `/game/:nodeId/play`) + 4 widget game (matching/multiple_choice/
 recall/typing). `GameSessionNotifier` (family theo `GameRequest`) dựng ván (≤ `game_words_per_round`
 = 5, D-008) qua `BuildGameRoundUseCase`, lọc theo scope; **không đổi SrsState** (D-007). Sai →
