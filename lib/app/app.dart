@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/core/constants/app_constants.dart';
 import 'package:memox_v4/core/routes/app_router.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
+import 'package:memox_v4/l10n/app_localizations.dart';
 
 /// Root widget. Riverpod owns all state — no `setState` here — and the router is
 /// read from [routerProvider]. The Material theme comes from [AppTheme], assembled
@@ -19,6 +20,8 @@ class MemoxApp extends ConsumerWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router,
     );
   }

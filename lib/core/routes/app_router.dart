@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -98,12 +99,11 @@ class _ShellScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
-        // Labels are deferred to T.4 (l10n); hide them so no copy is hardcoded.
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         onDestinationSelected: (index) => navigationShell.goBranch(
           index,
           // Re-tapping the active tab returns it to its root.
@@ -114,13 +114,20 @@ class _ShellScaffold extends StatelessWidget {
             NavigationDestination(
               icon: Icon(tab.icon),
               selectedIcon: Icon(tab.selectedIcon),
-              // Technical placeholder (route path), hidden; T.4 localizes.
-              label: tab.path,
+              label: _navLabel(tab, l10n),
             ),
         ],
       ),
     );
   }
+
+  static String _navLabel(AppTab tab, AppLocalizations l10n) => switch (tab) {
+        AppTab.today => l10n.navToday,
+        AppTab.library => l10n.navLibrary,
+        AppTab.add => l10n.navAdd,
+        AppTab.stats => l10n.navStats,
+        AppTab.profile => l10n.navProfile,
+      };
 }
 
 /// Fallback for an unknown or malformed location (go_router `errorBuilder`).
@@ -134,15 +141,18 @@ class RouteErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text(l10n.routeNotFoundTitle)),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.error_outline, color: theme.colorScheme.error, size: MxIconSize.lg),
             const SizedBox(height: MxSpacing.space2),
-            Text(location, style: theme.textTheme.titleMedium),
+            Text(l10n.routeNotFoundTitle, style: theme.textTheme.titleMedium),
+            const SizedBox(height: MxSpacing.space1),
+            Text(location, style: theme.textTheme.bodySmall),
           ],
         ),
       ),

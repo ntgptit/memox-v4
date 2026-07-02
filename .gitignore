@@ -50,3 +50,7 @@ app.*.map.json
 *.drift.dart
 *.freezed.dart
 *.mocks.dart
+
+# Generated localizations (flutter gen-l10n) — regenerated from lib/l10n/*.arb.
+# Agents: do NOT read these; regenerate with `flutter gen-l10n`.
+lib/l10n/app_localizations*.dart

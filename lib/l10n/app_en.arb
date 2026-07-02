@@ -1,0 +1,29 @@
+{
+  "@@locale": "en",
+
+  "navToday": "Today",
+  "@navToday": {
+    "description": "Bottom-navigation label for the Today (dashboard) tab"
+  },
+  "navLibrary": "Library",
+  "@navLibrary": {
+    "description": "Bottom-navigation label for the Library tab"
+  },
+  "navAdd": "Add",
+  "@navAdd": {
+    "description": "Bottom-navigation label for the Add (create card) tab"
+  },
+  "navStats": "Stats",
+  "@navStats": {
+    "description": "Bottom-navigation label for the Statistics tab"
+  },
+  "navProfile": "Profile",
+  "@navProfile": {
+    "description": "Bottom-navigation label for the Profile tab"
+  },
+
+  "routeNotFoundTitle": "Page not found",
+  "@routeNotFoundTitle": {
+    "description": "Title on the fallback screen shown for an unknown or broken route"
+  }
+}

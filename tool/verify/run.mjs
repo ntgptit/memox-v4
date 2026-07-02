@@ -16,7 +16,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -57,6 +57,13 @@ function codegen() {
   step('codegen (build_runner)', 'dart', ['run', 'build_runner', 'build', '--delete-conflicting-outputs']);
 }
 
+// Generated localizations (AppLocalizations) are gitignored, so regenerate them
+// from the ARB before analyze/test can see them. Skipped until l10n.yaml exists.
+function l10n() {
+  if (!existsSync(join(REPO, 'l10n.yaml'))) return;
+  step('l10n (flutter gen-l10n)', 'flutter', ['gen-l10n']);
+}
+
 const tokens = () => step('design tokens --check', 'node', ['tool/design/gen_tokens.mjs', '--check']);
 const analyze = () => step('dart analyze', 'dart', ['analyze', 'lib', 'test']);
 const test = () => step('flutter test', 'flutter', ['test']);
@@ -68,6 +75,7 @@ if (mode === 'docs') {
   test();
 } else {
   codegen();
+  l10n();
   tokens();
   analyze();
   test();
