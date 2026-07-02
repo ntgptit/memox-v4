@@ -37,13 +37,9 @@ abstract final class MxTypography {
   // ── line heights (unitless -> Flutter `height`) ───────────────────────────
   static const double lineHeightNone = 1;
   static const double lineHeightTight = 1.15;
-  static const double lineHeightSnug = 1.32;
   static const double lineHeightNormal = 1.5;
-  static const double lineHeightRelaxed = 1.7;
 
   // ── letter spacing (em multipliers — see class doc) ───────────────────────
   static const double trackingTight = -0.02;
-  static const double trackingNormal = 0;
   static const double trackingWide = 0.04;
-  static const double trackingCaps = 0.08;
 }

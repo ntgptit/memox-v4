@@ -6,7 +6,6 @@
 abstract final class MxSpacing {
   const MxSpacing._();
 
-  static const double space0 = 0;
   static const double space1 = 4;
   static const double space2 = 8;
   static const double space3 = 12;
@@ -15,10 +14,6 @@ abstract final class MxSpacing {
   static const double space6 = 24;
   static const double space7 = 32;
   static const double space8 = 40;
-  static const double space9 = 48;
-  static const double space10 = 64;
-  static const double space11 = 80;
-  static const double space12 = 96;
 
   // ── layout rhythm ─────────────────────────────────────────────────────────
   /// Screen edge padding on phones.

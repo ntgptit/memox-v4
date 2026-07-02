@@ -32,7 +32,7 @@ files in its `globalCssPaths` and silently omits `size.css`, `icon-size.css`,
 `stroke.css`, `motion.css`, and the `--memox-palette-*` accents. Parsing CSS is
 complete; parsing the manifest would lose ~30 tokens.
 
-## What it emits (135 tokens → 7 files)
+## What it emits (116 used tokens → 6 files)
 
 | Output | From | Shape |
 |---|---|---|
@@ -42,7 +42,22 @@ complete; parsing the manifest would lose ~30 tokens.
 | `mx_radius.dart` | `radius.css` | `MxRadius` — scale + role aliases + `BorderRadius` helpers |
 | `mx_elevation.dart` | `elevation.css` | `MxShadows` (immutable) + `.light` / `.dark` `List<BoxShadow>` |
 | `mx_sizes.dart` | `size.css`, `icon-size.css`, `stroke.css` | `MxSizes` / `MxIconSize` / `MxStroke` |
-| `mx_motion.dart` | `motion.css` | `MxDurations` + `MxEasing` |
+
+## Prune: mirror only what the kit uses
+
+The kit *declares* 135 tokens but its components + screens only *use* 116. A
+token is kept iff it is referenced by some kit file outside `tokens/` (a
+component's CSS/JSX, an assembled `ui_kits/` screen, `styles.css`…); the rest
+are dropped from the Dart so the theme layer mirrors what actually renders, not
+every value the kit happens to declare. The **kit CSS is never edited** — it
+stays the frozen source of truth; only the Dart output is trimmed.
+
+Currently pruned (19): all of `motion.css` (durations + easings — the static
+kit doesn't animate, so no `mx_motion.dart` is emitted), `space-0`/`space-9..12`,
+`letter-spacing-{normal,caps}`, `line-height-{snug,relaxed}`, `radius-field`,
+`scrim`, `state-disabled`. If the Flutter app later needs one (e.g. motion for
+transitions), it becomes used the moment something references it — or add it to
+a keep-list. Every run logs exactly what it pruned.
 
 Color conversion: `#hex` and `rgb()/rgba()` → `Color(0xAARRGGBB)` with
 `alpha = round(a·255)` (matches the prior hand-verified values exactly). CSS

@@ -20,7 +20,6 @@ abstract final class MxRadius {
   static const double card = 20;
   static const double tile = 16;
   static const double control = 12;
-  static const double field = 14;
   static const double chip = 999;
   static const double pill = 999;
   static const double full = 9999;
@@ -32,8 +31,6 @@ abstract final class MxRadius {
       BorderRadius.all(Radius.circular(tile));
   static const BorderRadius controlRadius =
       BorderRadius.all(Radius.circular(control));
-  static const BorderRadius fieldRadius =
-      BorderRadius.all(Radius.circular(field));
   static const BorderRadius pillRadius =
       BorderRadius.all(Radius.circular(pill));
 }
