@@ -341,6 +341,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(FE/BE contract, frozen R4)_ | `domain/repositories/{deck,card,review,settings}_repository.dart` | `test/domain/repositories/repository_contract_test.dart` | DM.3 | #74 |
 | D-002/D-003/D-004/D-005/D-018 (SRS engine) | `domain/usecases/srs/srs_scheduler.dart` (`SrsScheduler`) · `domain/entities/srs_state.dart` (`SrsState`) | `test/domain/usecases/srs/srs_scheduler_test.dart` | DM.4 | #75 |
 | D-002/D-003/D-004 · D-018 · D-021 (study flow) | `domain/usecases/study/{graduate_card,grade_card,build_study_queue,streak_rollover}.dart` | `test/domain/usecases/study/study_use_cases_test.dart` | DM.5 | #76 |
+| deck BR-3/D-024 · flashcard D-006/D-020 · search D-019/D-028 | `domain/usecases/library/{deck_use_cases,card_use_cases,card_search}.dart` | `test/domain/usecases/library/library_use_cases_test.dart` | DM.6 | #77 |
 
 ---
 
