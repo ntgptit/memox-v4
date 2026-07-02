@@ -53,9 +53,12 @@ function codegenFreshness() {
     return;
   }
   step('codegen (build_runner)', 'dart', ['run', 'build_runner', 'build', '--delete-conflicting-outputs']);
-  const gen = spawnSync('git', ['status', '--porcelain', '--', '*.g.dart', '*.drift.dart', '*.freezed.dart'], { cwd: REPO, encoding: 'utf8' });
+  // Fail only if regeneration MODIFIED an already-tracked generated file (= stale
+  // committed codegen). Brand-new generated files are untracked and expected —
+  // the task commits them. `git diff` sees only tracked, unstaged modifications.
+  const gen = spawnSync('git', ['diff', '--name-only', '--', '*.g.dart', '*.drift.dart', '*.freezed.dart'], { cwd: REPO, encoding: 'utf8' });
   if ((gen.stdout || '').trim().length > 0) {
-    fail('codegen freshness', `generated files are stale — commit the regenerated output:\n${gen.stdout}`);
+    fail('codegen freshness', `committed generated files are stale — regenerate + commit:\n${gen.stdout}`);
   }
 }
 
