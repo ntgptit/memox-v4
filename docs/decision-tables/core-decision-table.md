@@ -1,0 +1,52 @@
+# Bảng quyết định lõi — MemoX V4
+
+Mỗi dòng là một nhánh hành vi kiểm thử được. Đây là cầu nối giữa spec và test: mỗi
+dòng nên có một test, và mỗi test hành vi nên truy ngược về một dòng.
+
+| ID | Tình huống (Given) | Hành động (When) | Kết quả mong đợi (Then) | Spec | Test |
+| --- | --- | --- | --- | --- | --- |
+| D-001 | nút có thẻ đến hạn (badge>0) | bấm Play → chọn "Lặp lại" | ôn N thẻ `due` (N = badge); mục "Lặp lại" chỉ hiện khi due>0 | `docs/business/study/study-flow.md` | `test/domain/usecases/study/study_use_cases_test.dart` |
+| D-002 | nút có thẻ mới | bấm "Học", hoàn thành đủ 5 chặng | thẻ `new` **vào ô 1** (xếp lịch); đổi `SrsState` | `docs/business/study/study-flow.md` | `test/domain/usecases/srs/srs_use_cases_test.dart` |
+| D-003 | thẻ ở ô k (<N), chấm Đúng | áp chuyển ô Leitner | thẻ → ô k+1; `due_at` theo khoảng cách mới | `docs/business/srs/srs-review.md` | `test/domain/services/srs_scheduler_test.dart` |
+| D-004 | thẻ ở ô k (>1) khi "Lặp lại", chấm Sai | áp chuyển ô Leitner | thẻ → ô k-1 (lùi 1 ô; sàn ô 1) | `docs/business/srs/srs-review.md` | `test/domain/services/srs_scheduler_test.dart` |
+| D-005 | thẻ ở ô 8, chấm Đúng | áp chuyển ô Leitner | giữ ở ô 8 (đã thuộc) | `docs/business/srs/srs-review.md` | `test/domain/services/srs_scheduler_test.dart` |
+| D-006 | thẻ bị ẩn (`hidden`) | dựng hàng đợi / tính số đến hạn | loại thẻ khỏi cả hai | `docs/business/flashcard/flashcard-management.md` | `test/data/repositories/card_repository_impl_test.dart` |
+| D-007 | chạy Review / Game / Player | kết thúc hoạt động | `SrsState` không đổi | `docs/business/study/study-flow.md` | `test/presentation/features/game/game_session_test.dart` |
+| D-008 | `game_words_per_round` = 5 | bắt đầu một ván Game | ván dùng 5 thẻ (ngẫu nhiên nếu `game_random` bật) | `docs/business/study/study-flow.md` | `test/domain/usecases/game/build_game_round_test.dart` |
+| D-009 | bắt đầu học tại một bộ thẻ cha | dựng hàng đợi | gộp **đệ quy** thẻ của mọi bộ thẻ con | `docs/business/study/study-flow.md` | `test/domain/usecases/study/study_use_cases_test.dart` |
+| D-010 | kết thúc phiên DueReview/NewLearn | chốt phiên | `DailyActivity` cộng giây + số từ (chỉ DueReview/NewLearn; Game/Review/Player không) | `docs/business/study/study-flow.md` | `test/domain/usecases/study/study_use_cases_test.dart` |
+| D-011 | đảo chiều hiển thị (KO↔VI) | lập lịch một thẻ | dùng **cùng một** `SrsState` (một chiều duy nhất) | `docs/business/srs/srs-review.md` | `test/domain/usecases/srs/srs_use_cases_test.dart` |
+| D-012 | (HOÃN v1) Premium | — | Premium chưa phát triển ở v1 — chưa có tính năng bị khoá | `docs/business/settings/settings.md` | — |
+| D-013 | bấm "Một trò chơi" tại một nút | mở picker | hiện menu chọn 1 trong 4 game (Ghép đôi/Đoán/Nhớ lại/Điền); game đã chọn chạy riêng, không đổi `SrsState` | `docs/business/game/game-modes.md` | `test/presentation/features/game/game_picker_screen_test.dart` |
+| D-014 | mở "Trình phát" tại một nút | phát tự động | lần lượt hiện term + nghĩa + audio, tự chuyển thẻ; không đổi `SrsState` | `docs/business/study/study-flow.md` | `test/domain/usecases/study/study_use_cases_test.dart` (Player → không cộng hoạt động; audio hoãn) |
+| D-015 | **bất kỳ chế độ học** (NewLearn / 4 game / Lặp lại) | trả lời sai | thẻ **học lại** (quay lại hàng đợi); phiên xong khi MỌI thẻ đã đúng | `docs/business/study/study-flow.md` | `test/presentation/features/game/game_session_test.dart` (phần game; NewLearn/DueReview ở W4) |
+| D-016 | nút có due=0 | bấm Play mở menu | menu KHÔNG có mục "Lặp lại" (chỉ Học/Xem lại/Trò chơi/Trình phát) | `docs/business/study/study-flow.md` | `test/domain/usecases/study/study_use_cases_test.dart` |
+| D-017 | NewLearn chưa xong đủ 5 chặng | thoát giữa chừng | thẻ **vẫn là mới** (chưa vào ô 1) | `docs/business/study/study-flow.md` | `test/presentation/features/study/study_session_test.dart` |
+| D-018 | NewLearn, có thẻ mới | dựng hàng đợi học mới | lấy tối đa `new_cards_per_day` thẻ mới/ngày (mặc định 20) | `docs/business/srs/srs-review.md` | `test/domain/usecases/srs/srs_use_cases_test.dart` |
+| D-019 | nhập từ khoá tìm kiếm | tìm | tách token theo khoảng trắng; **mỗi** token khớp `term` hoặc nghĩa (`card_meaning.content`) — AND giữa các token | `docs/business/search/global-search.md` | `test/data/repositories/search_repository_impl_test.dart` |
+| D-020 | tạo/nhập thẻ cùng term trong deck | lưu | **cảnh báo mềm**, vẫn cho thêm (không chặn) | `docs/business/flashcard/flashcard-management.md` | `test/presentation/features/flashcard/flashcard_editor_screen_test.dart` |
+| D-021 | ngày đạt ≥1 mục tiêu (phút HOẶC từ) | chốt ngày (nửa đêm giờ máy) | `streak +1`; ngày không đạt → streak reset 0 | `docs/business/engagement/dashboard-engagement.md` | `test/domain/usecases/engagement/compute_streak_test.dart` |
+| D-022 | (REMOVED) xoá một thư mục — bỏ khái niệm folder (pivot v1) | — | hành vi xoá lan cây con nay do D-024 phủ | — | — |
+| D-023 | đổi tiêu chí sắp xếp | sắp xếp danh sách | theo bảng chữ cái / ngày tạo / ngày học (tăng-giảm) | `docs/business/deck/deck-management.md` | `test/domain/usecases/deck/sort_deck_nodes_test.dart` |
+| D-024 | xoá một bộ thẻ | xác nhận xoá | xoá lan toàn bộ cây con (bộ thẻ con + thẻ + meaning + srs_state) | `docs/business/deck/deck-management.md` | `test/data/repositories/deck_repository_impl_test.dart` |
+| D-025 | import từ CSV/Excel/clipboard | chọn separator (tab/,/;) | tách cột đúng; preview; áp cảnh báo trùng (D-020) | `docs/business/import-export/import-export.md` | `test/domain/usecases/import_export/import_cards_test.dart` |
+| D-026 | export | chọn định dạng + có/không kèm SRS | CSV / Excel / copy text (separator cấu hình); cho chọn kèm ô/hạn ôn | `docs/business/import-export/import-export.md` | `test/domain/usecases/import_export/export_cards_test.dart` |
+| D-027 | sync gặp xung đột | hợp nhất | v1: last-write-wins **mức snapshot** theo mốc sửa của bản backup (remote mới hơn lần sync trước ⇒ pull, ngược lại push); per-record `updated_at` + tombstone hoãn | `docs/business/account-sync/account-sync.md` | `test/domain/usecases/sync/sync_now_test.dart` |
+| D-028 | tìm kiếm | hiển thị kết quả | khớp term+nghĩa; **gồm cả thẻ ẩn**; có bộ lọc trạng thái (mới/đến hạn/đã thuộc) | `docs/business/search/global-search.md` | `test/data/repositories/search_repository_impl_test.dart` |
+| D-029 | kết thúc một mode trong DueReview | chốt mode | hiện "học lại" đúng mode vừa chạy (DueReview không có UI riêng) | `docs/business/study/study-flow.md` | `test/presentation/features/study/study_session_test.dart` (result "Tiếp tục" chạy lại cùng entry) |
+| D-030 | tạo cặp ngôn ngữ với source == target hoặc mã rỗng | tạo cặp | trả `ValidationFailure`, không tạo cặp | `docs/business/glossary.md` | `test/domain/usecases/language_pair/create_language_pair_test.dart` |
+
+<!-- FILL: thêm một dòng mỗi khi thêm/đổi một nhánh (CLAUDE.md parity bước 6).
+     Giữ ID ổn định và chỉ thêm mới để test trích dẫn được. -->
+
+## Quy ước
+
+- ID ổn định, chỉ thêm mới (`D-NNN`). Không đánh số lại.
+- Một dòng được "phủ" chỉ khi có test khẳng định đúng Then cho Given/When của nó.
+- Gỡ một hành vi: đánh dấu dòng `REMOVED` kèm commit, đừng xoá.
+
+## Liên quan
+
+- `docs/business/index.md` — danh mục đặc tả nghiệp vụ (nhà rule v1)
+- `docs/project-management/wbs.md` — WBS hiện hành
+- `docs/agent/build/` — prompt loop build từng task (kèm tiêu chí Definition of Done)

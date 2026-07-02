@@ -105,7 +105,7 @@ const THEME = [
 // ── Phase DM — domain (BE core) ─────────────────────────────────────────────
 const DOMAIN_STEPS = [
   '**Baseline**: `git checkout main && git pull`, branch.',
-'Read the v1 product rules in `docs/project-management/wbs.md` (Confirmed decisions + this task row) + per-screen intent in `docs/design/screens/*.md` + the relevant kit `specs/*.md`. If a rule is not stated in-repo, **STOP and ask** — do not invent domain behaviour.',
+'Read the authoritative v1 product rules in `docs/business/` (start at `index.md`; this task names its specific spec) + the relevant kit `specs/*.md` for UI shape. If a rule is not stated in-repo, **STOP and ask** — do not invent domain behaviour.',
   'Model as **pure Dart** — no Flutter, no Drift imports. Immutable, `Result`-returning.',
   'Exhaustive **unit tests** (deterministic, edge cases). This is BE core — correctness first.',
   'Run Verify; add §Ledger rows; Finish.',
@@ -114,10 +114,10 @@ const DOMAIN_STEPS = [
 const DOMAIN = [
   { id: 'DM.1', title: 'Value types & IDs', size: 'S', deps: 'I.6',
     goal: 'Foundational domain value types: BoxLevel (0–7), CardId/DeckId, ReviewGrade, enums.',
-    inputs: ['docs/project-management/wbs.md (Confirmed decisions)', 'lib/core/error/'], outputs: ['lib/domain/entities/*.dart'], steps: DOMAIN_STEPS },
+    inputs: ['docs/business/glossary.md', 'docs/business/srs/srs-review.md', 'lib/core/error/'], outputs: ['lib/domain/entities/*.dart'], steps: DOMAIN_STEPS },
   { id: 'DM.2', title: 'Entities', size: 'M', deps: 'DM.1',
     goal: 'Immutable entities: Deck (nested), Card, LanguagePair, ReviewLog, StudySession, Goal, Streak, DeckStats.',
-    inputs: ['docs/design/screens/*.md (business intent)', `${KIT}/ui_kits/memox-app/specs/`], outputs: ['lib/domain/entities/*.dart'], steps: DOMAIN_STEPS,
+    inputs: ['docs/business/glossary.md', 'docs/business/deck/deck-management.md', 'docs/business/flashcard/flashcard-management.md'], outputs: ['lib/domain/entities/*.dart'], steps: DOMAIN_STEPS,
     notes: ['Deck nesting = parent/children. Keep domain entities separate from Drift row models.'] },
   { id: 'DM.3', title: 'Repository interfaces', size: 'S', deps: 'DM.2',
     goal: 'Abstract DeckRepository / CardRepository / ReviewRepository / SettingsRepository — the FE/BE contract.',
@@ -125,17 +125,17 @@ const DOMAIN = [
     notes: ['Explicit read source / write policy. Treat this as a FROZEN contract once screens code against it (R4).'] },
   { id: 'DM.4', title: 'SRS engine (8-box single-direction)', size: 'L', deps: 'DM.2',
     goal: 'The scheduler: 8-box single-direction progression + 20-new-cards/day intake + due calculation + grade→box transition.',
-    inputs: ['docs/project-management/wbs.md (Confirmed decisions — 8-box SRS, 20 new/day)', 'docs/design/screens/{06-study-session,12-review,13-player}.md'], outputs: ['lib/domain/usecases/srs/*.dart'], steps: DOMAIN_STEPS,
+    inputs: ['docs/business/srs/srs-review.md (the 8-box Leitner spec)', 'docs/business/study/study-flow.md'], outputs: ['lib/domain/usecases/srs/*.dart'], steps: DOMAIN_STEPS,
     notes: ['This is the product core — a bug is silent data damage. Property/exhaustive tests before any screen consumes it. Pure & deterministic (no Date.now — inject a clock).'] },
   { id: 'DM.5', title: 'Study use cases', size: 'M', deps: 'DM.3,DM.4',
     goal: 'Due queue, start/resume session, grade card, finish session, goal+streak update.',
-    inputs: ['lib/domain/usecases/srs/', `${KIT}/ui_kits/memox-app/specs/{study-session,study-result,review,player}.md`], outputs: ['lib/domain/usecases/study/*.dart'], steps: DOMAIN_STEPS },
+    inputs: ['docs/business/study/study-flow.md', 'docs/business/game/game-modes.md', 'docs/business/engagement/dashboard-engagement.md', 'lib/domain/usecases/srs/'], outputs: ['lib/domain/usecases/study/*.dart'], steps: DOMAIN_STEPS },
   { id: 'DM.6', title: 'Library use cases', size: 'M', deps: 'DM.3',
     goal: 'Deck CRUD (nested move/rename/delete), card CRUD, soft-dup detection, term+meaning search.',
-    inputs: [`${KIT}/ui_kits/memox-app/specs/{library,deck-detail,search,flashcard-editor}.md`], outputs: ['lib/domain/usecases/library/*.dart'], steps: DOMAIN_STEPS },
+    inputs: ['docs/business/deck/deck-management.md', 'docs/business/flashcard/flashcard-management.md', 'docs/business/search/global-search.md'], outputs: ['lib/domain/usecases/library/*.dart'], steps: DOMAIN_STEPS },
   { id: 'DM.7', title: 'Import/export + stats use cases', size: 'M', deps: 'DM.3',
     goal: 'Parse/emit deck formats; compute statistics + heatmap.',
-    inputs: [`${KIT}/ui_kits/memox-app/specs/{import,export,statistics}.md`], outputs: ['lib/domain/usecases/{io,stats}/*.dart'], steps: DOMAIN_STEPS },
+    inputs: ['docs/business/import-export/import-export.md', 'docs/business/statistics/statistics.md'], outputs: ['lib/domain/usecases/{io,stats}/*.dart'], steps: DOMAIN_STEPS },
 ];
 
 // ── Phase DT — data (Drift) ─────────────────────────────────────────────────
@@ -261,7 +261,7 @@ const DOD = `## Definition of Done
 - [ ] **Built** at the output path(s), respecting the layer contracts (foundation token-only · primitives no business logic · feature UI no data/ imports).
 - [ ] **Analyzes** — \`dart analyze lib test\` → 0 issues; codegen (build_runner) up to date.
 - [ ] **Tested** at the right level — domain = pure unit · data = Drift integration · primitives/composites = widget+golden (light+dark) · screens = provider-state widget tests + golden vs \`shots/*.png\`.
-- [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in \`docs/project-management/wbs.md\` with edge cases.
+- [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in \`docs/business/\` with edge cases.
 - [ ] **Ledger** — row(s) added to \`docs/project-management/wbs.md §Ledger\`.
 - [ ] **Gates green** — \`gen_tokens --check\` + \`dart analyze\` + \`flutter test\` + codegen check.`;
 

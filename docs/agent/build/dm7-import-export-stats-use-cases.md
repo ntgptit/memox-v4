@@ -11,7 +11,8 @@ Parse/emit deck formats; compute statistics + heatmap.
 
 ## Inputs — read first
 
-- `docs/design/MemoX Design System/ui_kits/memox-app/specs/{import,export,statistics}.md`
+- `docs/business/import-export/import-export.md`
+- `docs/business/statistics/statistics.md`
 
 ## Output
 
@@ -20,7 +21,7 @@ Parse/emit deck formats; compute statistics + heatmap.
 ## Steps
 
 1. **Baseline**: `git checkout main && git pull`, branch.
-2. Read the v1 product rules in `docs/project-management/wbs.md` (Confirmed decisions + this task row) + per-screen intent in `docs/design/screens/*.md` + the relevant kit `specs/*.md`. If a rule is not stated in-repo, **STOP and ask** — do not invent domain behaviour.
+2. Read the authoritative v1 product rules in `docs/business/` (start at `index.md`; this task names its specific spec) + the relevant kit `specs/*.md` for UI shape. If a rule is not stated in-repo, **STOP and ask** — do not invent domain behaviour.
 3. Model as **pure Dart** — no Flutter, no Drift imports. Immutable, `Result`-returning.
 4. Exhaustive **unit tests** (deterministic, edge cases). This is BE core — correctness first.
 5. Run Verify; add §Ledger rows; Finish.
@@ -30,7 +31,7 @@ Parse/emit deck formats; compute statistics + heatmap.
 - [ ] **Built** at the output path(s), respecting the layer contracts (foundation token-only · primitives no business logic · feature UI no data/ imports).
 - [ ] **Analyzes** — `dart analyze lib test` → 0 issues; codegen (build_runner) up to date.
 - [ ] **Tested** at the right level — domain = pure unit · data = Drift integration · primitives/composites = widget+golden (light+dark) · screens = provider-state widget tests + golden vs `shots/*.png`.
-- [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in `docs/project-management/wbs.md` with edge cases.
+- [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in `docs/business/` with edge cases.
 - [ ] **Ledger** — row(s) added to `docs/project-management/wbs.md §Ledger`.
 - [ ] **Gates green** — `gen_tokens --check` + `dart analyze` + `flutter test` + codegen check.
 
