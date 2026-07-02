@@ -1352,6 +1352,34 @@
       "field": "r",
       "reason": "Material AlertDialog FilledButton keeps the stadium radius vs kit r:12.",
       "source": "docs/business/navigation/navigation-flow.md"
+    },
+    {
+      "screen": "deck-detail",
+      "node": "retry",
+      "field": "font",
+      "reason": "kit 20px button label vs FE MxButton labelLarge 15/600 — app-wide button-label scale (same class as library/retry, import/do-import).",
+      "source": "docs/business/deck/deck-management.md"
+    },
+    {
+      "screen": "dashboard",
+      "node": "notifications",
+      "field": "bg",
+      "reason": "kit-spec parseKit capture artifact: the notifications icon-button block has no bg of its own (style: r:9999), but the immediately-following avatar node has no `id:` line to close the block, so parseKit keeps accumulating and picks up the avatar's own bg:primary-soft. The kit render has no fill on this control (a plain icon button); the FE's transparent bg is correct.",
+      "source": "lib/presentation/shared/navigation/app_shell.dart"
+    },
+    {
+      "screen": "player",
+      "node": "replay",
+      "field": "font",
+      "reason": "kit 20px button label vs FE MxButton labelLarge 15/600 — app-wide button-label scale (same class as library/retry, import/do-import, deck-detail/retry).",
+      "source": "docs/business/study/study-flow.md"
+    },
+    {
+      "screen": "player",
+      "node": "close",
+      "field": "font",
+      "reason": "kit 20px button label vs FE MxButton labelLarge 15/600 — app-wide button-label scale.",
+      "source": "docs/business/study/study-flow.md"
     }
   ],
   "$identityRolloutDoc": "Kit nodes present in contracts/<screen>.gen.json but NOT yet keyed with ValueKey(mx-node:...) in lib/** — the identity-rollout backlog (fe_node_usage exempts these from MISSING). Distinct from `exceptions` (intentional FE↔kit divergences): these are simply not-keyed-yet, or a structural difference noted in the screen contract. Ratchet target: move nodes OUT of here into real FE keys over time. Regenerate after keying: remove the keyed segment.",
