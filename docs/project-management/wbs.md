@@ -7,7 +7,7 @@ data layers). Built so the **FE track** (design-system → components → screen
 and the **BE track** (domain → SRS engine → Drift data) proceed **in parallel**
 once shared foundations land.
 
-Confirmed decisions ([[memox-v1-product-decisions]], [[reference-app-lexilize-domain]]):
+Confirmed decisions (v1):
 8-box single-direction SRS · 20 new cards/day · nested decks · search term+meaning
 · soft-dup · goal + streak · Premium/account-sync **deferred**. Stack: **Riverpod
 Annotation** (state + DI) · **Drift/SQLite** (persistence) · **go_router** ·
@@ -80,8 +80,9 @@ implements Drift + real repositories. Neither blocks the other.
 ## Conventions
 
 - **ID**: `<phase>.<n>`. **Status**: ☐ · ◐ · ☑ · ⊘ deferred. **Size**: S/M/L.
-- **Source of truth**: the kit is frozen (design); v1 product rules are in
-  [[memox-v1-product-decisions]]. Never edit the kit to fit Flutter.
+- **Source of truth**: the kit is frozen (design); v1 product rules are the
+  **Confirmed decisions** above (this doc is their in-repo home). Never edit the
+  kit to fit Flutter. If a rule is missing, STOP and confirm — don't invent.
 - **Codegen**: Riverpod + Drift use `build_runner`. Generated `*.g.dart` /
   `*.drift.dart` are build outputs; a CI gate checks they're up to date.
 - **Strings** from ARB, never hardcoded.
@@ -95,7 +96,7 @@ implements Drift + real repositories. Neither blocks the other.
    · **primitives/composites** = widget + golden (light+dark) · **screens** =
    widget tests over provider states + golden vs `shots/*.png`.
 4. **Parity / correctness** — UI matches the kit for every state; domain matches
-   the product rules ([[memox-v1-product-decisions]]) with edge cases covered.
+   the v1 product rules (Confirmed decisions, above) with edge cases covered.
 5. **Ledger** — row(s) in §Ledger.
 6. **Gates green** — `gen_tokens --check` + `dart analyze` + `flutter test` +
    codegen check.
@@ -154,7 +155,7 @@ flutter test
 | DM.1 | **Value types & IDs** — `BoxLevel` (0–7), `CardId`/`DeckId`, `ReviewGrade`, enums | S | I.6 | `domain/entities/…` |
 | DM.2 | **Entities** — `Deck` (nested parent/children), `Card` (term/meaning/example), `LanguagePair`, `ReviewLog`, `StudySession`, `Goal`, `Streak`, `DeckStats` (immutable) | M | DM.1 | `domain/entities/*.dart` |
 | DM.3 | **Repository interfaces** — `DeckRepository`, `CardRepository`, `ReviewRepository`, `SettingsRepository` (abstract; explicit read/write/sync policy) | S | DM.2 | `domain/repositories/*.dart` |
-| DM.4 | **SRS engine** — 8-box single-direction scheduler + 20-new/day intake; due calc; grade→box transition. Pure, exhaustively unit-tested. [[reference-app-lexilize-domain]] | L | DM.2 | `domain/usecases/srs/*.dart` |
+| DM.4 | **SRS engine** — 8-box single-direction scheduler + 20-new/day intake; due calc; grade→box transition. Pure, exhaustively unit-tested. | L | DM.2 | `domain/usecases/srs/*.dart` |
 | DM.5 | **Study use cases** — get due queue, start/resume session, grade card, finish session, goal+streak update | M | DM.3, DM.4 | `domain/usecases/study/*.dart` |
 | DM.6 | **Library use cases** — deck CRUD (nested move/rename/delete), card CRUD, **soft-dup** detection, term+meaning **search** | M | DM.3 | `domain/usecases/library/*.dart` |
 | DM.7 | **Import/export + stats use cases** — parse/emit deck formats; compute statistics/heatmap | M | DM.3 | `domain/usecases/{io,stats}/*.dart` |
