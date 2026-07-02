@@ -1,8 +1,0 @@
-{
-  "$curated": "Per-state BODY keyed-node set for export (Template B — the one gen MxCard node export/progress is keyed on a bare Text in the FE, NOT an MxCard, so Template A's tester.widget<MxCard>() would CRASH; use present/absent only). Chrome (screen/appbar/back) excluded (matches dashboard.states.json); kit-only nodes not keyed in the FE (scope/format-*/sep-*/incl-srs/bar/done/save/share) are identity-rollout gaps / layout divergences — see intent-ledger.identityRollout.export + the save/share exceptions. `config` is the drivable state (no export yet → progress absent). `exporting` lists progress (where the kit's transient progress card lives) but is NOT driven: the FE has no transient exporting UI (export() runs synchronously) and its POST-export state keeps the config controls AND appends a progress Text — matching neither kit `exporting` (controls hidden + bar) nor kit `done` (save/share), a documented layout divergence. So the composition loop drives only `config` (asserting progress ABSENT — catches a stray message leaking in); a separate targeted test asserts progress APPEARS after tapping do-export. Coverage gaps: exporting (no transient FE UI, export/bar absent), done (FE has no save/share). Cross-checked by test/presentation/features/import_export/export_states_test.dart.",
-  "screen": "export",
-  "states": {
-    "config": ["mx-node:export/incl-srs-switch", "mx-node:export/do-export"],
-    "exporting": ["mx-node:export/progress"]
-  }
-}

@@ -1,7 +1,0 @@
-# Normalize line endings so the toolchain behaves the same on every OS.
-* text=auto eol=lf
-
-# Shell hooks and JS tools MUST stay LF (CRLF breaks the #!/bin/sh shebang).
-.githooks/* text eol=lf
-*.sh        text eol=lf
-*.mjs       text eol=lf
