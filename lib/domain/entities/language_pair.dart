@@ -14,22 +14,31 @@ class LanguagePair extends Equatable {
     required this.nativeLanguage,
   });
 
-  /// Validated construction — both language codes must be non-empty.
+  /// Validated construction (D-030): both language codes must be non-empty and
+  /// they must differ — a pair can't learn a language into itself. Either case
+  /// yields a [ValidationFailure] and no pair is created.
   static Result<LanguagePair> create({
     required LanguagePairId id,
     required String learningLanguage,
     required String nativeLanguage,
   }) {
-    if (learningLanguage.trim().isEmpty || nativeLanguage.trim().isEmpty) {
+    final learning = learningLanguage.trim();
+    final native = nativeLanguage.trim();
+    if (learning.isEmpty || native.isEmpty) {
       return const Err(
         ValidationFailure('A language pair needs both a learning and a native language'),
+      );
+    }
+    if (learning.toLowerCase() == native.toLowerCase()) {
+      return const Err(
+        ValidationFailure('A language pair cannot learn a language into itself'),
       );
     }
     return Ok(
       LanguagePair._(
         id: id,
-        learningLanguage: learningLanguage,
-        nativeLanguage: nativeLanguage,
+        learningLanguage: learning,
+        nativeLanguage: native,
       ),
     );
   }
