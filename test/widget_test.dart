@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:memox_v4/main.dart';
 import 'package:memox_v4/core/theme/mx_colors.dart';
+import 'package:memox_v4/main.dart';
 
 /// Confirms the Tier-0 tokens are actually applied by [MemoxApp]: the app
 /// renders without error, and the scaffold background is driven by the token
