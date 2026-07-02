@@ -369,11 +369,14 @@ class _GoalRing extends StatelessWidget {
     final colors = MxTheme.of(context).colors;
     // The kit ring shows the percentage in the centre for every state (no check
     // icon) — "complete" is signalled by the full ring + the success note banner.
-    // Diameter = the kit element-size token `--memox-size-md` (56), NOT a spacing
-    // step — the ring is a fixed-size visual element, not layout spacing.
+    // Diameter = the kit element-size token `--memox-size-lg` (74) — the kit's
+    // Ring component (kit-helpers.jsx) defaults size=size-lg and GoalCard never
+    // overrides it; the kit-spec's "58x58" box is the ring's INNER surface
+    // punch-out (inset:space-2=8 on both sides: 74 − 2×8 = 58), not the ring
+    // itself. sizeMd(56) was a mis-read of that inner node — fixed.
     return SizedBox(
-      width: MxSizes.sizeMd,
-      height: MxSizes.sizeMd,
+      width: MxSizes.sizeLg,
+      height: MxSizes.sizeLg,
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -427,10 +430,15 @@ class _StreakCard extends StatelessWidget {
                   weight: FontWeight.w800,
                   fontSize: MxIconSize.md,
                 ),
+                // kit: font-size-xs/REGULAR (12/400) — labelSmall is 12/600 by
+                // default; override the weight to match (same blind-spot class
+                // as the digit above: Icon renders first, so this caption's
+                // weight was never checked by spec_diff either).
                 MxText(
                   l10n.dashboardDayStreak,
                   key: const Key('dashboardStreak'),
                   role: MxTextRole.labelSmall,
+                  weight: FontWeight.w400,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -473,9 +481,11 @@ class _MasteredCard extends StatelessWidget {
                   weight: FontWeight.w800,
                   fontSize: MxIconSize.md,
                 ),
+                // kit: font-size-xs/REGULAR (12/400) — same override as streak.
                 MxText(
                   l10n.dashboardMasteredLabel,
                   role: MxTextRole.labelSmall,
+                  weight: FontWeight.w400,
                   color: colors.textSecondary,
                 ),
               ],
