@@ -81,7 +81,7 @@ spec ở HÀNH VI (vd doc nói add-language push route riêng nhưng FE đổi `
 **Vì sao B:**
 1. `drawer.gen.json` có **0 node `MxCard`**. 7 node của nó là:
    `MxScaffold` (`drawer/add-screen`, `drawer/remove-screen`),
-   `MxButton` (`drawer/add-confirm` primary, `drawer/remove-cancel` ghost, `drawer/remove-ok` primary),
+   `MxButton` (`drawer/add-confirm` primary, `drawer/remove-cancel` ghost, `drawer/remove-ok` primary-JSX/render-danger — bg:error),
    `MxIconButton` (`drawer/pair-0-del`, `drawer/pair-1-del`).
    Không có MxCard cố định để gate kiểu review → không dùng Template A.
 2. Đây là component-with-modes (menu ↔ add ↔ remove) — đúng khuôn assert **tập keyed node render
@@ -105,7 +105,7 @@ Grep `mx-node:drawer/` trong `lib/` cho ra **ĐÚNG 5 literal keyed** (`app_draw
 | `mx-node:drawer/add-confirm` | MxButton | primary | `FilledButton` (Material, không MxButton) | `add-language` |
 | `mx-node:drawer/remove-screen` | MxScaffold | null | `ListView` (view=removeLanguage) — **KHÔNG bọc MxScaffold** (divergence) | `remove-language` |
 | `mx-node:drawer/remove-cancel` | MxButton | ghost | `TextButton` trong `AlertDialog` (chỉ hiện khi bấm delete 1 pair) | `remove-language` (dialog con) |
-| `mx-node:drawer/remove-ok` | MxButton | primary | `FilledButton` trong `AlertDialog` (chỉ hiện khi bấm delete 1 pair) | `remove-language` (dialog con) |
+| `mx-node:drawer/remove-ok` | MxButton | primary (JSX attr; render = `.btn.danger` → bg:error) | `FilledButton` **destructive** trong `AlertDialog` (bg:error/on-error khớp kit `.btn.danger`, PR #30; chỉ hiện khi bấm delete 1 pair) | `remove-language` (dialog con) |
 
 **Node trong gen.json NHƯNG KHÔNG keyed literal ở FE (identity-rollout gap / divergence):**
 - `mx-node:drawer/pair-0-del`, `mx-node:drawer/pair-1-del` — kit là 2 hàng mẫu cố định với nút delete

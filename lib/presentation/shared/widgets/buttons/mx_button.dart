@@ -145,6 +145,10 @@ class MxButton extends StatelessWidget {
       ),
       // kit `.btn.ghost` reads `--memox-primary-strong`, not primary
       // (components.css) — the stronger hue keeps text-only actions legible.
+      // NOTE ghost+danger: the kit CSS cascade composes `.btn.danger` ON TOP of
+      // `.btn.ghost` (bg:error, on-error fill) — here danger ghost stays a
+      // text-only error action. No callsite combines them today; if one appears,
+      // align with the kit cascade first.
       MxButtonVariant.ghost => (
         Colors.transparent,
         danger ? c.error : c.primaryStrong,

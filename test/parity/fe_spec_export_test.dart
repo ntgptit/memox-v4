@@ -78,7 +78,9 @@ Future<void> _repump(
 }
 
 /// Bounded frame drain for trees that never settle (TextField autofocus keeps a
-/// cursor-blink animation running — pumpAndSettle would time out).
+/// cursor-blink animation running — pumpAndSettle would time out). 6×50ms =
+/// 300ms of simulated time, enough for the in-memory DB futures + a setState
+/// round-trip (the same budget the states tests use).
 Future<void> _drain(WidgetTester tester) async {
   for (var i = 0; i < 6; i++) {
     await tester.pump(const Duration(milliseconds: 50));
@@ -974,10 +976,15 @@ Map<Color, String> _tokenMap(BuildContext context) {
   put(c.onAccent, 'on-accent');
   put(c.accentSoft, 'accent-soft');
   put(c.success, 'success');
+  put(c.successSoft, 'success-soft');
+  put(c.onSuccessSoft, 'on-success-soft');
   put(c.warning, 'warning');
   put(c.warningSoft, 'warning-soft');
   put(c.onWarningSoft, 'on-warning-soft');
   put(c.error, 'error');
+  put(c.onError, 'on-error');
+  put(c.errorSoft, 'error-soft');
+  put(c.onErrorSoft, 'on-error-soft');
   return m;
 }
 
