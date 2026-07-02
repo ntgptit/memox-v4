@@ -6,6 +6,11 @@ Verify**. Grounded in the kit audit (2026-07-03): 116 used tokens, 18 reusable
 components (15 shared + 3 cross-feature), 22 screens, 65 feature-local
 components.
 
+> **Loop execution.** Every task below has a self-contained loop prompt under
+> [`docs/agent/build/`](../agent/build/README.md) (one `.md` per task, generated
+> by `tool/design/gen_task_prompts.mjs`). Run them with `/loop` — the queue
+> README picks the next pending task by phase + deps.
+
 ## Conventions
 
 - **ID**: `<phase>.<n>` (e.g. `F.3`, `C1.04`, `S.07`). Sub-steps `a/b/c`.
