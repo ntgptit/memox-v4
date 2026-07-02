@@ -75,6 +75,39 @@ lib/
 - **Data**: Drift row models stay separate from domain entities; map at the
   boundary. Wire repositories/use cases through `@riverpod` providers.
 
+## Coding conventions (non-negotiable)
+
+- **State = Riverpod Annotation only.** All state/mutation lives in `@riverpod`
+  providers/notifiers (codegen). **`setState` is banned in feature UI** — widgets
+  render and dispatch intent; they never own mutable state. Read async state with
+  `AsyncValue.when`/`.guard`; use `ref.watch`/`ref.read`, `ref.mounted`,
+  `ref.onDispose`. No `ChangeNotifier`/`setState`/`ValueNotifier` as app state.
+- **SQL lives in `*.drift` files.** All queries are declared in Drift `.drift`
+  files (or typed Drift APIs) — **no hand-written/inline/hardcoded SQL strings in
+  Dart, no raw `sqflite`.** Data access goes through generated DAOs.
+- **Control flow:** no magic values — named constants / design tokens / enums.
+  **No unnecessary `else`** — prefer **early return**, **early throw**, or value
+  overwrite; fail fast; one responsibility per file/class.
+- **All text via l10n.** Every user-facing string **and every error message** comes
+  from ARB (`lib/l10n/`) — never a hardcoded literal. Sentence case (kit voice).
+
+## Error handling (Flutter best practices)
+
+Errors must satisfy **two audiences at once**:
+
+- **End-user** — a localized, actionable message on a standard surface (inline
+  error state / SnackBar / error `AsyncValue` view per the kit), never a raw
+  exception or stack trace. Map `Failure` → l10n message via one central mapper.
+- **Dev / monitoring** — structured logging + an error-reporting hook so failures
+  are observable. Capture uncaught errors centrally: `FlutterError.onError` +
+  a guarded zone in the app bootstrap (I.4); `PlatformDispatcher.onError`.
+
+Rules: domain returns `Result`/`Failure` (no throwing across layers for expected
+errors); providers surface errors through `AsyncValue.error` (UI renders via
+`.when`); **never swallow** an exception (no empty `catch`) — map it to a `Failure`
++ log it; catch specific types; no `print` (use the logger). A user-facing error
+always has both a localized message and a logged/reported cause.
+
 ## Build workflow
 
 The plan is **[`docs/project-management/wbs.md`](docs/project-management/wbs.md)**.

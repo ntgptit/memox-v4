@@ -22,7 +22,7 @@
 
 1. **Baseline**: `git checkout main && git pull`, branch.
 2. Read the domain entities/repositories (DM.2/DM.3) this implements against.
-3. Implement in the **data layer only**; keep Drift row models separate from domain entities (map at the boundary).
+3. Implement in the **data layer only**; keep Drift row models separate from domain entities (map at the boundary). **All SQL lives in `*.drift` files** (or typed Drift APIs) — no inline/hardcoded SQL strings, no raw sqflite.
 4. Run `dart run build_runner build --delete-conflicting-outputs` for Drift codegen.
 5. **Integration test** against an in-memory Drift DB.
 6. Run Verify; add §Ledger rows; Finish.
@@ -34,6 +34,7 @@
 ## Definition of Done
 
 - [ ] **Built** at the output path(s), respecting the layer contracts (foundation token-only · primitives no business logic · feature UI no data/ imports).
+- [ ] **Conventions** (AGENTS.md) — state via **@riverpod only, no `setState`** in feature UI · **SQL only in `*.drift`** (no inline SQL) · no magic values, **no unnecessary `else`** (early return/throw/overwrite) · all text + error messages via l10n · errors flow `Failure` → `AsyncValue.error`, shown localized to the user **and** logged/reported for devs, never swallowed.
 - [ ] **Analyzes** — `dart analyze lib test` → 0 issues; codegen (build_runner) up to date.
 - [ ] **Tested** at the right level — domain = pure unit · data = Drift integration · primitives/composites = widget+golden (light+dark) · screens = provider-state widget tests + golden vs `shots/*.png`.
 - [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in `docs/business/` with edge cases.

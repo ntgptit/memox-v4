@@ -15,7 +15,13 @@ Claude-specific notes so nothing critical is missed.
 4. **Layer contracts** (clean arch): feature UI must not import `data/`/`dart:io`;
    go through `@riverpod` providers → domain use cases. Local-first, **no remote
    backend** in v1 — "BE" = the app's `domain` + `data` layers.
-5. **Verify before "done"**: the single gate `node tool/verify/run.mjs`
+5. **Coding conventions** (see AGENTS.md): **Riverpod Annotation owns all state —
+   `setState` banned in feature UI**; **SQL only in `*.drift` files** (no inline
+   SQL); no magic values, **no unnecessary `else`** (early return/throw/overwrite);
+   all text + error messages via l10n; error handling serves **both** end-user
+   (localized surface) **and** dev (logging + reporting), errors flow
+   `Failure`→`AsyncValue.error`, never swallowed.
+6. **Verify before "done"**: the single gate `node tool/verify/run.mjs`
    (created in WBS I.0; wraps codegen freshness + `gen_tokens --check` + analyze +
    test). Only I.0 may bootstrap with raw commands. Report skipped/failed gates
    honestly.
