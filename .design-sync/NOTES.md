@@ -17,6 +17,18 @@ Local source of truth: `docs/design/MemoX Design System/` (hand-authored / off-s
 - Content spot-check `components/core/MxButton.jsx`: identical (md5 match after CRLF→LF normalize; local is CRLF, remote LF — cosmetic, not a drift, same state as prior 0-upload sync).
 - No plan opened / no sentinel re-arm — with zero writes/deletes the app card index is already correct.
 
+## Sync of 2026-07-03 (HEAD 913b4c3)
+- Design dir byte-identical since prior `lastSyncedCommit` (71e77fe); only merge +
+  `.design-sync/` bookkeeping commits in between (`git diff 71e77fe..HEAD -- localDir` empty). **0 uploads, 0 deletions.**
+- Structural diff (local tree vs `list_files`): 211 local non-shot files all present remote;
+  234 shot pngs unchanged (git-clean since lastSynced, prior parity 234==234); only remote
+  extra is the app-generated `templates/memox-dashboard/.thumbnail` (intentionally kept — preview
+  for the still-present `MemoxDashboard.dc.html`, never a source file).
+- Content spot-check `components/core/MxButton.jsx`: md5 identical after CRLF→LF normalize
+  (`bd797a06…`). No external drift on remote.
+- No plan opened / no sentinel re-arm — zero writes/deletes, app card index already correct.
+- Advanced `lastSyncedCommit` 71e77fe → 913b4c3 (current HEAD) so the next sync diffs from here.
+
 ## Sync triggers (both PUSH, repo kit → Claude Design)
 - **`.githooks/pre-push`** — on `git push` whose range touches `localDir`; runs
   `sync-design.mjs --no-record`.
