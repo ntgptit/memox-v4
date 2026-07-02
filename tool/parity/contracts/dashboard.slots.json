@@ -10,16 +10,16 @@
       { "name": "wordsLabel", "role": "bodySmall", "l10n": "dashboardWordsLearned" }
     ],
     "mx-node:dashboard/goal": [
-      { "name": "title", "role": "titleMedium", "l10n": "dashboardGoalTitle" },
+      { "name": "title", "role": "titleLarge", "l10n": "dashboardGoalTitle" },
       { "name": "progress", "role": "bodyMedium", "bind": "goalProgress (min/words · complete)" },
       { "name": "hint", "role": "bodySmall", "l10n": "dashboardGoalHint" }
     ],
     "mx-node:dashboard/streak": [
-      { "name": "count", "role": "titleLarge", "bind": "summary.streak.days" },
+      { "name": "count", "role": "headlineSmall", "bind": "summary.streak.days" },
       { "name": "label", "role": "labelSmall", "l10n": "dashboardDayStreak" }
     ],
     "mx-node:dashboard/mastered": [
-      { "name": "percent", "role": "titleLarge", "bind": "summary.masteredProgress" },
+      { "name": "percent", "role": "headlineSmall", "bind": "summary.masteredProgress" },
       { "name": "label", "role": "labelSmall", "l10n": "dashboardMasteredLabel" }
     ]
   }

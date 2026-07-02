@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/app/di/clock_provider.dart';
 import 'package:memox_v4/app/di/database_provider.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/util/clock.dart';
 import 'package:memox_v4/core/util/day_key.dart';
 import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
@@ -79,6 +80,19 @@ void main() {
     expect(find.byKey(const Key('dashboardStreak')), findsOneWidget);
     expect(find.text('1'), findsOneWidget);
     expect(find.text('Daily goal reached. Streak +1.'), findsOneWidget);
+
+    // Pin the goal ring's diameter to the kit's element-size token
+    // (--memox-size-lg = 74, kit-helpers.jsx's Ring default) — this spot has
+    // drifted twice (space11=80, then a mis-read sizeMd=56) with nothing
+    // catching either regression.
+    final ringBox = find.ancestor(
+      of: find.byType(CircularProgressIndicator),
+      matching: find.byType(SizedBox),
+    );
+    expect(
+      tester.getSize(ringBox.first),
+      const Size(MxSizes.sizeLg, MxSizes.sizeLg),
+    );
   });
 
   testWidgets('empty state is minimal — only the note + Start CTA', (

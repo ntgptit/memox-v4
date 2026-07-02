@@ -557,6 +557,26 @@ tất định fail.
 7. ✅ **Parity contract (identity by KEY)** thay structural-geometry (đã gỡ vì FE-toạ-độ ≠ kit): xem
    mục "Parity contract" ở trên. Prototype 02-dashboard xanh; bắt được FE-thiếu-element (đã chứng minh).
 
+## style_parity — blind spot: chỉ bắt text-run ĐẦU TIÊN mỗi node
+
+`node tool/parity/run_style_parity.mjs` (gate `style_parity` trong `verify`) so `bg/color/font/r`
+giữa kit-spec và FE-render per keyed node — nhưng `_styleOf()` trong `test/parity/fe_spec_export_test.dart`
+chỉ **duyệt tới text-run/box ĐẦU TIÊN** trong subtree của node rồi dừng. Nếu 1 node có **nhiều** đoạn
+text (vd icon + nhãn + SỐ liệu nổi bật), spec_diff chỉ so đoạn ĐẦU — các đoạn sau (thường là con số
+quan trọng nhất) **hoàn toàn vô hình** với gate dù coverage node đã 100%.
+
+Ví dụ thật: `dashboard/streak`/`dashboard/mastered` render `Icon(24px)` TRƯỚC số liệu (`$days`/`$percent%`,
+vốn dùng `titleLarge`=17px nhưng kit đòi 22px `icon-size-md`/extrabold) — vì icon xuất hiện trước trong
+cây widget, `_styleOf` bắt `font:24/` của ICON, khớp icon-side của kit → gate báo `OK` dù con số bên trong
+lệch nặng cả size lẫn weight (17 vs 22, 600 vs 800). Bug này chỉ lộ ra khi đọc trực tiếp kit-spec text +
+FE source, KHÔNG qua `verify` (đã sửa ở PR reconcile MxText/token — `dashboard_screen.dart` streak/mastered
+→ `headlineSmall` + `fontSize: MxIconSize.md` + `weight: w800`).
+
+**Không tự tin "gate xanh = pixel-perfect" cho node có nhiều text-run.** Khi khả nghi (nhất là số liệu nổi
+bật/stat card), đối chiếu trực tiếp kit-spec (`specs/<screen>.md`) — hoặc chính kit source `_features/**/*.jsx`
+khi spec.md mơ hồ/capture-artifact (xem mục dưới) — với role/weight FE, đừng chỉ tin `spec_diff` OK.
+Mở rộng `_styleOf` để duyệt HẾT text-run (không dừng ở cái đầu) là việc còn để ngỏ — xem "Còn để ngỏ".
+
 ## Còn để ngỏ
 - **Rollout parity-contract** ra 03–08/17: curate key `mx-node:...` bắt buộc/screen từ design + gắn key
   vào FE + 1 test contract/screen (pattern: `dashboard_parity_test.dart`).
@@ -565,3 +585,5 @@ tất định fail.
   prop-level (POC 02 — `dashboard_parity_test.dart`); còn **màu inline + spacing/size** (node không qua
   prop, vd `_DashboardNote`/`_GoalRing`) vẫn dựa pixel/SSIM + `ui-parity-checker` cho phán đoán cuối.
 - Gắn `report.mjs --check` vào `tool/verify/run.mjs` khi ổn định.
+- **`_styleOf` chỉ bắt text-run đầu** (xem mục "style_parity — blind spot" ở trên) — mở rộng để duyệt
+  TẤT CẢ text-run trong 1 node (không dừng ở cái đầu) là cải tiến gate còn để ngỏ.
