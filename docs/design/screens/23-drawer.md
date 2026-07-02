@@ -20,7 +20,7 @@ gặp · Gửi email · Đồng bộ (alpha).
 
 ## Hiện thực (S0)
 
-`lib/presentation/shared/navigation/app_drawer.dart` (+ `app_shell.dart`). Ba state qua một
+`lib/presentation/features/drawer/screens/drawer_screen.dart` (+ `app_shell.dart`). Ba state qua một
 `enum _DrawerView { menu, addLanguage, removeLanguage }`; cặp đang chọn + đảo chiều hiển thị
 đọc từ `languagePairNotifierProvider` (keepAlive). Mọi copy qua l10n key (`lib/l10n/*.arb`:
 `drawer*`, `addLanguage*`, `removeLanguage*`, `activity*`, `comingSoon`, `common*`); màu/giãn
