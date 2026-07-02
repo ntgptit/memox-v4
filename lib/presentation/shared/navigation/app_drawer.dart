@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/constants/supported_languages.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/domain/entities/language_pair.dart';
 import 'package:memox_v4/domain/models/language_pair_context.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
@@ -355,6 +356,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   void _confirmRemove(BuildContext context, LanguagePair pair) {
     final l10n = AppLocalizations.of(context);
+    final colors = MxTheme.of(context).colors;
     unawaited(
       showDialog<void>(
         context: context,
@@ -364,11 +366,20 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           actions: <Widget>[
             TextButton(
               key: const ValueKey('mx-node:drawer/remove-cancel'),
+              // kit ghost actions read primary-strong (components.css .btn.ghost).
+              style: TextButton.styleFrom(
+                foregroundColor: colors.primaryStrong,
+              ),
               onPressed: () => Navigator.of(dialogContext).pop(),
               child: Text(l10n.commonCancel),
             ),
             FilledButton(
               key: const ValueKey('mx-node:drawer/remove-ok'),
+              // destructive confirm — kit `.btn.danger`: bg error / on-error.
+              style: FilledButton.styleFrom(
+                backgroundColor: colors.error,
+                foregroundColor: colors.onError,
+              ),
               onPressed: () {
                 Navigator.of(dialogContext).pop();
                 _remove(pair.id);

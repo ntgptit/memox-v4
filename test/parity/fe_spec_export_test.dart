@@ -12,18 +12,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/app/di/database_provider.dart';
+import 'package:memox_v4/app/di/import_export_providers.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
+import 'package:memox_v4/core/util/day_key.dart';
 import 'package:memox_v4/data/datasources/local/connection/database_connection.dart';
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
+import 'package:memox_v4/domain/models/deck_node.dart';
+import 'package:memox_v4/domain/services/file_save_service.dart';
 import 'package:memox_v4/domain/types/game_scope.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
 import 'package:memox_v4/l10n/generated/app_localizations.dart';
 import 'package:memox_v4/presentation/features/deck/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck/screens/library_screen.dart';
+import 'package:memox_v4/presentation/features/deck/viewmodels/library_notifier.dart';
 import 'package:memox_v4/presentation/features/engagement/screens/dashboard_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/features/game/screens/game_picker_screen.dart';
@@ -43,13 +49,74 @@ import 'package:memox_v4/presentation/shared/navigation/app_drawer.dart';
 
 const String _prefix = 'mx-node:';
 
+/// Repump a fresh tree on the SAME tester/db (used by drives that need a
+/// different route argument or extra provider overrides, e.g. an empty deck or
+/// a throwing notifier for the error branch).
+Future<void> _repump(
+  WidgetTester tester,
+  AppDatabase db,
+  Widget home, {
+  List<Override> extra = const <Override>[],
+}) async {
+  await tester.pumpWidget(
+    ProviderScope(
+      // A fresh scope element per repump: Riverpod forbids changing the override
+      // LIST LENGTH on a reused ProviderScope, and a reused container would keep
+      // stale provider state from the base pump.
+      key: UniqueKey(),
+      overrides: [databaseProvider.overrideWithValue(db), ...extra],
+      child: MaterialApp(
+        theme: AppTheme.light(),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: home,
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
+}
+
+/// Bounded frame drain for trees that never settle (TextField autofocus keeps a
+/// cursor-blink animation running — pumpAndSettle would time out). 6×50ms =
+/// 300ms of simulated time, enough for the in-memory DB futures + a setState
+/// round-trip (the same budget the states tests use).
+Future<void> _drain(WidgetTester tester) async {
+  for (var i = 0; i < 6; i++) {
+    await tester.pump(const Duration(milliseconds: 50));
+  }
+}
+
+/// Forces the library provider into its error branch (the notifier folds repo
+/// Result.err into an empty list, so a thrown build is the only clean path).
+class _ThrowingLibrary extends LibraryNotifier {
+  @override
+  Future<List<DeckNode>> build() async =>
+      throw Exception('forced library error');
+}
+
+class _FakeFileSave implements FileSaveService {
+  @override
+  Future<String> save(String fileName, List<int> bytes) async =>
+      '/tmp/$fileName';
+}
+
 /// Pumps [child] at the kit's 390-wide frame with a seeded in-memory DB, then
 /// exports its mx-node style record.
+///
+/// [drives] extends the export beyond the base state: each drive interacts with
+/// the pumped tree (taps / text entry / re-pumps — the drive owns its own
+/// pumping), after which the screen is exported again in MERGE mode, so nodes
+/// that only render in secondary states (dialogs, error/empty branches, wrong/
+/// complete phases) join the spec instead of staying blind spots. First-wins per
+/// node id, matching spec_diff's parseKit which also keeps the FIRST style a
+/// node shows (base state first).
 Future<void> _pumpAndExport(
   WidgetTester tester,
   String screen,
   Future<Widget> Function(AppDatabase db) buildChild, {
   Future<void> Function(AppDatabase db)? seed,
+  List<Future<void> Function(WidgetTester tester, AppDatabase db)>? drives,
 }) async {
   final db = AppDatabase.forTesting(openInMemoryDatabase());
   addTearDown(db.close);
@@ -81,6 +148,12 @@ Future<void> _pumpAndExport(
   while (tester.takeException() != null) {}
   _exportScreen(tester, screen);
   await _maybeShot(tester, screen);
+
+  for (final drive in drives ?? const []) {
+    await drive(tester, db);
+    while (tester.takeException() != null) {}
+    _exportScreen(tester, screen, merge: true);
+  }
 }
 
 /// When MEMOX_SHOT=1 (run with `flutter test --update-goldens`), captures a PNG
@@ -116,11 +189,36 @@ void main() {
       tester,
       'library',
       (db) async => const Scaffold(body: LibraryScreen()),
+      drives: [
+        // error branch → library/retry (a thrown build is the only clean path).
+        (tester, db) async {
+          await _repump(
+            tester,
+            db,
+            const Scaffold(body: LibraryScreen()),
+            extra: [libraryProvider.overrideWith(_ThrowingLibrary.new)],
+          );
+        },
+      ],
     );
   });
 
   testWidgets('export FE spec — search', (tester) async {
-    await _pumpAndExport(tester, 'search', (db) async => const SearchScreen());
+    await _pumpAndExport(
+      tester,
+      'search',
+      (db) async => const SearchScreen(),
+      drives: [
+        // a non-matching query → search/no-results.
+        (tester, db) async {
+          await tester.enterText(
+            find.byKey(const ValueKey('mx-node:search/dock')),
+            'zzznomatch',
+          );
+          await _drain(tester);
+        },
+      ],
+    );
   });
 
   testWidgets('export FE spec — reminder', (tester) async {
@@ -159,8 +257,144 @@ void main() {
       tester,
       'statistics',
       (db) async => const Scaffold(body: StatisticsScreen()),
-      // Seed a deck + card so words > 0 (hasEnoughData) → the overview renders.
+      // Seed a deck + card so words > 0 (hasEnoughData) → the overview renders,
+      // and one review outcome so hasReviews → the accuracy card renders too.
       seed: (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        final cardId = await db
+            .into(db.card)
+            .insert(
+              CardCompanion.insert(deckId: deckId, term: 'mesa', createdAt: 1),
+            );
+        await db
+            .into(db.reviewOutcome)
+            .insert(
+              ReviewOutcomeCompanion.insert(
+                cardId: cardId,
+                pairId: pair.id,
+                ts: 1000,
+                correct: 1,
+                mode: 'dueReview',
+              ),
+            );
+      },
+    );
+  });
+
+  testWidgets('export FE spec — flashcard-editor', (tester) async {
+    await _pumpAndExport(
+      tester,
+      'flashcard-editor',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        // an existing card so re-entering its term triggers the soft-dup banner.
+        await db
+            .into(db.card)
+            .insert(
+              CardCompanion.insert(deckId: deckId, term: 'mesa', createdAt: 1),
+            );
+        return FlashcardEditorScreen(deckId: deckId);
+      },
+      drives: [
+        // soft-duplicate banner (D-020) → flashcard-editor/dup-add + /dup-view.
+        (tester, db) async {
+          await tester.enterText(
+            find.byKey(const Key('editorTermField')),
+            'mesa',
+          );
+          await tester.enterText(
+            find.byKey(const Key('editorMeaningField')),
+            'bàn',
+          );
+          await tester.tap(
+            find.byKey(const ValueKey('mx-node:flashcard-editor/save')),
+          );
+          await _drain(tester);
+        },
+      ],
+    );
+  });
+
+  testWidgets('export FE spec — export', (tester) async {
+    await _pumpAndExport(
+      tester,
+      'export',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        return ExportScreen(deckId: deckId);
+      },
+      drives: [
+        // run the export (fake file sink) → the export/progress result line.
+        (tester, db) async {
+          final deck = await (db.select(db.deck)..limit(1)).getSingle();
+          await _repump(
+            tester,
+            db,
+            ExportScreen(deckId: deck.id),
+            extra: [fileSaveServiceProvider.overrideWithValue(_FakeFileSave())],
+          );
+          await tester.tap(
+            find.byKey(const ValueKey('mx-node:export/do-export')),
+          );
+          await tester.pumpAndSettle();
+        },
+      ],
+    );
+  });
+
+  testWidgets('export FE spec — import', (tester) async {
+    await _pumpAndExport(
+      tester,
+      'import',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        return ImportScreen(deckId: deckId);
+      },
+      drives: [
+        // paste rows (mock clipboard) → import/map-term-pick + /map-meaning-pick +
+        // /do-import render.
+        (tester, db) async {
+          tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+            SystemChannels.platform,
+            (call) async => call.method == 'Clipboard.getData'
+                ? <String, dynamic>{'text': 'a\tb\nc\td'}
+                : null,
+          );
+          addTearDown(
+            () => tester.binding.defaultBinaryMessenger
+                .setMockMethodCallHandler(SystemChannels.platform, null),
+          );
+          await tester.tap(find.byKey(const Key('importPaste')));
+          await tester.pumpAndSettle();
+        },
+        // run the import → done → import/go-deck appears.
+        (tester, db) async {
+          await tester.tap(
+            find.byKey(const ValueKey('mx-node:import/do-import')),
+          );
+          await tester.pumpAndSettle();
+        },
+      ],
+    );
+  });
+
+  testWidgets('export FE spec — deck-detail', (tester) async {
+    await _pumpAndExport(
+      tester,
+      'deck-detail',
+      (db) async {
         final pair = await db.select(db.languagePair).getSingle();
         final deckId = await db
             .into(db.deck)
@@ -170,213 +404,349 @@ void main() {
             .insert(
               CardCompanion.insert(deckId: deckId, term: 'mesa', createdAt: 1),
             );
+        return DeckDetailScreen(deckId: deckId);
       },
+      drives: [
+        // empty state → empty-add / empty-subdeck / empty-import CTAs.
+        (tester, db) async {
+          final pair = await db.select(db.languagePair).getSingle();
+          final emptyId = await db
+              .into(db.deck)
+              .insert(DeckCompanion.insert(pairId: pair.id, name: 'Empty'));
+          await _repump(tester, db, DeckDetailScreen(deckId: emptyId));
+        },
+        // deck-delete confirm dialog → deck-delete-cancel / deck-delete-ok.
+        (tester, db) async {
+          final deck = await (db.select(db.deck)..limit(1)).getSingle();
+          await _repump(tester, db, DeckDetailScreen(deckId: deck.id));
+          await tester.tap(
+            find.byKey(const ValueKey('mx-node:deck-detail/menu')),
+          );
+          await tester.pumpAndSettle();
+          await tester.tap(find.byKey(const Key('deckActionDelete')));
+          await tester.pumpAndSettle();
+        },
+      ],
     );
   });
 
-  testWidgets('export FE spec — flashcard-editor', (tester) async {
-    await _pumpAndExport(tester, 'flashcard-editor', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      return FlashcardEditorScreen(deckId: deckId);
-    });
-  });
-
-  testWidgets('export FE spec — export', (tester) async {
-    await _pumpAndExport(tester, 'export', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      return ExportScreen(deckId: deckId);
-    });
-  });
-
-  testWidgets('export FE spec — import', (tester) async {
-    await _pumpAndExport(tester, 'import', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      return ImportScreen(deckId: deckId);
-    });
-  });
-
-  testWidgets('export FE spec — deck-detail', (tester) async {
-    await _pumpAndExport(tester, 'deck-detail', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      await db
-          .into(db.card)
-          .insert(
-            CardCompanion.insert(deckId: deckId, term: 'mesa', createdAt: 1),
-          );
-      return DeckDetailScreen(deckId: deckId);
-    });
-  });
-
   testWidgets('export FE spec — study-session', (tester) async {
-    await _pumpAndExport(tester, 'study-session', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      for (var i = 0; i < 3; i++) {
-        await db
-            .into(db.card)
-            .insert(
-              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
-            );
-      }
-      return StudySessionScreen(nodeId: deckId, entry: StudyEntry.newLearn);
-    });
+    await _pumpAndExport(
+      tester,
+      'study-session',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        for (var i = 0; i < 3; i++) {
+          await db
+              .into(db.card)
+              .insert(
+                CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+              );
+        }
+        return StudySessionScreen(nodeId: deckId, entry: StudyEntry.newLearn);
+      },
+      drives: [
+        // the exit-confirm dialog → study-session/exit-cancel + /exit-ok.
+        (tester, db) async {
+          await tester.tap(find.byIcon(Icons.close));
+          await tester.pumpAndSettle();
+        },
+      ],
+    );
   });
 
   testWidgets('export FE spec — review', (tester) async {
-    await _pumpAndExport(tester, 'review', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      for (var i = 0; i < 3; i++) {
-        await db
-            .into(db.card)
-            .insert(
-              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
-            );
-      }
-      return ReviewScreen(nodeId: deckId);
-    });
+    await _pumpAndExport(
+      tester,
+      'review',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        for (var i = 0; i < 3; i++) {
+          await db
+              .into(db.card)
+              .insert(
+                CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+              );
+        }
+        return ReviewScreen(nodeId: deckId);
+      },
+      drives: [
+        // an empty deck → end state → review/study-now + /back-deck.
+        (tester, db) async {
+          final pair = await db.select(db.languagePair).getSingle();
+          final emptyId = await db
+              .into(db.deck)
+              .insert(DeckCompanion.insert(pairId: pair.id, name: 'Empty'));
+          await _repump(tester, db, ReviewScreen(nodeId: emptyId));
+        },
+      ],
+    );
   });
 
   testWidgets('export FE spec — player', (tester) async {
-    await _pumpAndExport(tester, 'player', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      for (var i = 0; i < 3; i++) {
-        await db
-            .into(db.card)
-            .insert(
-              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
-            );
-      }
-      return PlayerScreen(nodeId: deckId);
-    });
+    await _pumpAndExport(
+      tester,
+      'player',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        for (var i = 0; i < 3; i++) {
+          await db
+              .into(db.card)
+              .insert(
+                CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+              );
+        }
+        return PlayerScreen(nodeId: deckId);
+      },
+      drives: [
+        // step past the last card → end state → player/replay + /close (bounded
+        // pumps: the player may hold an autoplay timer, pumpAndSettle could hang).
+        (tester, db) async {
+          for (var i = 0; i < 4; i++) {
+            final next = find.byKey(const ValueKey('mx-node:player/next'));
+            if (next.evaluate().isEmpty) break;
+            await tester.tap(next);
+            await _drain(tester);
+          }
+        },
+      ],
+    );
   });
 
   testWidgets('export FE spec — game-matching', (tester) async {
-    await _pumpAndExport(tester, 'game-matching', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      for (var i = 0; i < 12; i++) {
-        await db
-            .into(db.card)
-            .insert(
-              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+    await _pumpAndExport(
+      tester,
+      'game-matching',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        for (var i = 0; i < 12; i++) {
+          await db
+              .into(db.card)
+              .insert(
+                CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+              );
+        }
+        return GameScreen(
+          request: GameRequest(
+            nodeId: deckId,
+            type: GameType.matching,
+            scope: GameScope.all,
+          ),
+        );
+      },
+      drives: [
+        // complete: match every pair (tiles are keyed matchLeft/right-<id> by
+        // runtime cardId — read the first left tile's id, tap its pair, repeat).
+        (tester, db) async {
+          for (var i = 0; i < 12; i++) {
+            final lefts = find.byWidgetPredicate(
+              (w) =>
+                  w.key is ValueKey<String> &&
+                  (w.key! as ValueKey<String>).value.startsWith('matchLeft-'),
             );
-      }
-      return GameScreen(
-        request: GameRequest(
-          nodeId: deckId,
-          type: GameType.matching,
-          scope: GameScope.all,
-        ),
-      );
-    });
+            if (lefts.evaluate().isEmpty) break; // round complete
+            final key =
+                (lefts.evaluate().first.widget.key! as ValueKey<String>).value;
+            final id = key.substring('matchLeft-'.length);
+            await tester.tap(find.byKey(Key(key)));
+            await tester.pumpAndSettle();
+            await tester.tap(find.byKey(Key('matchRight-$id')));
+            await tester.pumpAndSettle();
+          }
+        },
+      ],
+    );
   });
 
   testWidgets('export FE spec — game-typing', (tester) async {
-    await _pumpAndExport(tester, 'game-typing', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      for (var i = 0; i < 12; i++) {
-        await db
-            .into(db.card)
-            .insert(
-              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+    await _pumpAndExport(
+      tester,
+      'game-typing',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        for (var i = 0; i < 12; i++) {
+          await db
+              .into(db.card)
+              .insert(
+                CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+              );
+        }
+        return GameScreen(
+          request: GameRequest(
+            nodeId: deckId,
+            type: GameType.typing,
+            scope: GameScope.all,
+          ),
+        );
+      },
+      drives: [
+        // wrong branch → game-typing/retry + /accept (bounded pumps: the focused
+        // TextField keeps a cursor-blink animation, pumpAndSettle would hang).
+        (tester, db) async {
+          await tester.enterText(find.byKey(const Key('typingField')), 'zz');
+          await tester.tap(
+            find.byKey(const ValueKey('mx-node:game-typing/check')),
+          );
+          await _drain(tester);
+        },
+        // complete: accept (= markCorrect) through every card → game-typing/complete.
+        (tester, db) async {
+          for (var i = 0; i < 12; i++) {
+            final accept = find.byKey(
+              const ValueKey('mx-node:game-typing/accept'),
             );
-      }
-      return GameScreen(
-        request: GameRequest(
-          nodeId: deckId,
-          type: GameType.typing,
-          scope: GameScope.all,
-        ),
-      );
-    });
+            if (accept.evaluate().isNotEmpty) {
+              await tester.tap(accept);
+              await _drain(tester);
+            }
+            final field = find.byKey(const Key('typingField'));
+            if (field.evaluate().isEmpty) break; // round complete
+            await tester.enterText(field, 'zz');
+            await tester.tap(
+              find.byKey(const ValueKey('mx-node:game-typing/check')),
+            );
+            await _drain(tester);
+          }
+        },
+      ],
+    );
   });
 
   testWidgets('export FE spec — game-recall', (tester) async {
-    await _pumpAndExport(tester, 'game-recall', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      for (var i = 0; i < 12; i++) {
-        await db
-            .into(db.card)
-            .insert(
-              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+    await _pumpAndExport(
+      tester,
+      'game-recall',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        for (var i = 0; i < 12; i++) {
+          await db
+              .into(db.card)
+              .insert(
+                CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+              );
+        }
+        return GameScreen(
+          request: GameRequest(
+            nodeId: deckId,
+            type: GameType.recall,
+            scope: GameScope.all,
+          ),
+        );
+      },
+      drives: [
+        // revealed → game-recall/meaning + /forgot + /remembered.
+        (tester, db) async {
+          await tester.tap(
+            find.byKey(const ValueKey('mx-node:game-recall/reveal')),
+          );
+          await tester.pumpAndSettle();
+        },
+        // complete: remember every card → game-recall/complete.
+        (tester, db) async {
+          for (var i = 0; i < 12; i++) {
+            final remembered = find.byKey(
+              const ValueKey('mx-node:game-recall/remembered'),
             );
-      }
-      return GameScreen(
-        request: GameRequest(
-          nodeId: deckId,
-          type: GameType.recall,
-          scope: GameScope.all,
-        ),
-      );
-    });
+            if (remembered.evaluate().isEmpty) break;
+            await tester.tap(remembered);
+            await tester.pumpAndSettle();
+            final reveal = find.byKey(
+              const ValueKey('mx-node:game-recall/reveal'),
+            );
+            if (reveal.evaluate().isEmpty) break; // round complete
+            await tester.tap(reveal);
+            await tester.pumpAndSettle();
+          }
+        },
+      ],
+    );
   });
 
   testWidgets('export FE spec — game-mc', (tester) async {
-    await _pumpAndExport(tester, 'game-mc', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      for (var i = 0; i < 12; i++) {
-        await db
-            .into(db.card)
-            .insert(
-              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
-            );
-      }
-      return GameScreen(
-        request: GameRequest(
-          nodeId: deckId,
-          type: GameType.multipleChoice,
-          scope: GameScope.all,
-        ),
-      );
-    });
+    await _pumpAndExport(
+      tester,
+      'game-mc',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        for (var i = 0; i < 12; i++) {
+          await db
+              .into(db.card)
+              .insert(
+                CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+              );
+        }
+        return GameScreen(
+          request: GameRequest(
+            nodeId: deckId,
+            type: GameType.multipleChoice,
+            scope: GameScope.all,
+          ),
+        );
+      },
+      drives: [
+        // complete: answer every card correctly → game-mc/complete.
+        (tester, db) async {
+          for (var i = 0; i < 12; i++) {
+            final correct = find.byKey(const Key('mcCorrect'));
+            if (correct.evaluate().isEmpty) break;
+            await tester.tap(correct);
+            await tester.pumpAndSettle();
+          }
+        },
+      ],
+    );
   });
 
   testWidgets('export FE spec — game-picker', (tester) async {
-    await _pumpAndExport(tester, 'game-picker', (db) async {
-      final pair = await db.select(db.languagePair).getSingle();
-      final deckId = await db
-          .into(db.deck)
-          .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
-      for (var i = 0; i < 12; i++) {
-        await db
-            .into(db.card)
-            .insert(
-              CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
-            );
-      }
-      return GamePickerScreen(nodeId: deckId);
-    });
+    await _pumpAndExport(
+      tester,
+      'game-picker',
+      (db) async {
+        final pair = await db.select(db.languagePair).getSingle();
+        final deckId = await db
+            .into(db.deck)
+            .insert(DeckCompanion.insert(pairId: pair.id, name: 'Deck'));
+        for (var i = 0; i < 12; i++) {
+          await db
+              .into(db.card)
+              .insert(
+                CardCompanion.insert(deckId: deckId, term: 'w$i', createdAt: i),
+              );
+        }
+        return GamePickerScreen(nodeId: deckId);
+      },
+      drives: [
+        // an empty deck → not-enough → game-picker/add-cards.
+        (tester, db) async {
+          final pair = await db.select(db.languagePair).getSingle();
+          final emptyId = await db
+              .into(db.deck)
+              .insert(DeckCompanion.insert(pairId: pair.id, name: 'Empty'));
+          await _repump(tester, db, GamePickerScreen(nodeId: emptyId));
+        },
+      ],
+    );
   });
 
   // study-result is the finished state of the study session; drive a 1-card
@@ -469,6 +839,29 @@ void main() {
             ),
           );
     }
+    // Seed today's activity + an unmet daily goal so the dashboard renders its
+    // POPULATED state (goal ring / streak / mastered / decks stack), not the
+    // minimal empty state — otherwise only today+start export and the rest go
+    // unchecked (style-parity blind spot). Goal (40) > words (24) → the goal card
+    // shows the progress-ring variant, matching the kit's `loaded` spec.
+    await db
+        .into(db.settings)
+        .insert(
+          SettingsCompanion.insert(
+            key: 'daily_goal_words',
+            value: const Value('40'),
+          ),
+        );
+    await db
+        .into(db.dailyActivity)
+        .insert(
+          DailyActivityCompanion.insert(
+            day: dayKey(DateTime.now()),
+            pairId: pairId,
+            seconds: const Value(750),
+            words: const Value(24),
+          ),
+        );
 
     tester.view.physicalSize = const Size(390, 1800);
     tester.view.devicePixelRatio = 1.0;
@@ -490,6 +883,20 @@ void main() {
     while (tester.takeException() != null) {}
     _exportScreen(tester, 'dashboard');
     await _maybeShot(tester, 'dashboard');
+
+    // Empty state (a fresh db with no activity) → the dashboard/start CTA.
+    // dashboard/appbar + /notifications + /quick-review live in the app shell
+    // (app_shell.dart), outside this body harness — a documented coverage gap.
+    final db2 = AppDatabase.forTesting(openInMemoryDatabase());
+    addTearDown(db2.close);
+    await db2
+        .into(db2.languagePair)
+        .insert(
+          LanguagePairCompanion.insert(sourceLang: 'ko', targetLang: 'vi'),
+        );
+    await _repump(tester, db2, const Scaffold(body: DashboardScreen()));
+    while (tester.takeException() != null) {}
+    _exportScreen(tester, 'dashboard', merge: true);
   });
 
   // The drawer's keyed mx-nodes live in its add-language view (add-screen,
@@ -529,6 +936,20 @@ void main() {
     while (tester.takeException() != null) {}
     _exportScreen(tester, 'drawer');
     await _maybeShot(tester, 'drawer');
+
+    // remove-language view → drawer/remove-screen; then tap a pair's delete →
+    // the confirm AlertDialog → drawer/remove-cancel + drawer/remove-ok.
+    await tester.tap(find.byKey(const Key('addBack')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('drawerRemoveLanguage')));
+    await tester.pumpAndSettle();
+    while (tester.takeException() != null) {}
+    _exportScreen(tester, 'drawer', merge: true);
+
+    await tester.tap(find.byIcon(Icons.delete_outline).first);
+    await tester.pumpAndSettle();
+    while (tester.takeException() != null) {}
+    _exportScreen(tester, 'drawer', merge: true);
   });
 }
 
@@ -555,10 +976,15 @@ Map<Color, String> _tokenMap(BuildContext context) {
   put(c.onAccent, 'on-accent');
   put(c.accentSoft, 'accent-soft');
   put(c.success, 'success');
+  put(c.successSoft, 'success-soft');
+  put(c.onSuccessSoft, 'on-success-soft');
   put(c.warning, 'warning');
   put(c.warningSoft, 'warning-soft');
   put(c.onWarningSoft, 'on-warning-soft');
   put(c.error, 'error');
+  put(c.onError, 'on-error');
+  put(c.errorSoft, 'error-soft');
+  put(c.onErrorSoft, 'on-error-soft');
   return m;
 }
 
@@ -579,7 +1005,7 @@ String? _materialRadius(Material material) {
   return null;
 }
 
-void _exportScreen(WidgetTester tester, String screen) {
+void _exportScreen(WidgetTester tester, String screen, {bool merge = false}) {
   final context = tester.element(find.byType(Scaffold).first);
   final tokens = _tokenMap(context);
 
@@ -600,7 +1026,6 @@ void _exportScreen(WidgetTester tester, String screen) {
       ...style,
     });
   }
-  nodes.sort((a, b) => (a['id']! as String).compareTo(b['id']! as String));
 
   // Only write the artifact when explicitly exporting (MEMOX_EXPORT_SPEC=1), so a
   // normal `flutter test` run (e.g. inside verify) renders + walks the tree but
@@ -608,9 +1033,25 @@ void _exportScreen(WidgetTester tester, String screen) {
   if (Platform.environment['MEMOX_EXPORT_SPEC'] != '1') return;
   final file = File('tool/parity/fe-specs/$screen.json');
   file.parent.createSync(recursive: true);
-  file.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(nodes));
+
+  // merge: union with the records already on disk (the base-state export),
+  // FIRST-wins per node id — a node visible in both states keeps its base-state
+  // style, matching spec_diff's parseKit which also keeps the first style seen.
+  var out = nodes;
+  if (merge && file.existsSync()) {
+    final existing = (jsonDecode(file.readAsStringSync()) as List<dynamic>)
+        .cast<Map<String, dynamic>>();
+    final seen = existing.map((n) => n['id'] as String).toSet();
+    out = <Map<String, Object?>>[
+      ...existing,
+      for (final n in nodes)
+        if (!seen.contains(n['id'] as String)) n,
+    ];
+  }
+  out.sort((a, b) => (a['id']! as String).compareTo(b['id']! as String));
+  file.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(out));
   // ignore: avoid_print
-  print('wrote ${file.path} (${nodes.length} nodes)');
+  print('wrote ${file.path} (${out.length} nodes${merge ? ', merged' : ''})');
 }
 
 /// Flattens the effective style of a keyed node: the first colored box (bg +

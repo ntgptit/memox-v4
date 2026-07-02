@@ -87,7 +87,7 @@ Grep cho ra ĐÚNG 10 literal keyed node (8 trong screen, 2 trong `deck_actions.
 | `mx-node:deck-detail/empty-import` | MxButton | ghost | ✓ MxButton ghost (`:128`) | `empty` |
 | `mx-node:deck-detail/retry` | MxButton | primary | ✓ MxButton (`:240`) | `error` |
 | `mx-node:deck-detail/deck-delete-cancel` | MxButton | ghost | ✓ TextButton (`deck_actions.dart:102`) — overlay dialog | `deck-delete-confirm` (overlay) |
-| `mx-node:deck-detail/deck-delete-ok` | MxButton | primary | ✓ FilledButton (`deck_actions.dart:107`) — overlay dialog | `deck-delete-confirm` (overlay) |
+| `mx-node:deck-detail/deck-delete-ok` | MxButton | primary (JSX attr; render = `.btn.danger` → bg:error) | ✓ FilledButton **destructive** (`deck_actions.dart` — bg:error/on-error khớp kit `.btn.danger`; PR #30) — overlay dialog | `deck-delete-confirm` (overlay) |
 
 > LƯU Ý FE-truth (khác gen.json/kit): `menu` + `add` chỉ render khi `async.value?.node != null`
 > (tức KHÔNG ở `loading`/`error`/notFound). `empty-*` chỉ ở nhánh `children.isEmpty && cards.isEmpty`.
