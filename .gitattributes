@@ -11,6 +11,9 @@ tool/design/*.mjs        text eol=lf
 tool/verify/*.mjs        text eol=lf
 # Generated loop prompts + queue — LF (stops CRLF churn on every regeneration).
 docs/agent/build/**      text eol=lf
+# Font/binary assets — never normalize line endings.
+*.ttf                    binary
+*.otf                    binary
 # Git hooks + CI workflows — LF everywhere (a CRLF shebang breaks `/bin/sh` hooks).
 .githooks/*              text eol=lf
 .github/workflows/*      text eol=lf
