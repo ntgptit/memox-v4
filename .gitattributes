@@ -14,6 +14,7 @@ docs/agent/build/**      text eol=lf
 # Font/binary assets — never normalize line endings.
 *.ttf                    binary
 *.otf                    binary
+*.png                    binary
 # Git hooks + CI workflows — LF everywhere (a CRLF shebang breaks `/bin/sh` hooks).
 .githooks/*              text eol=lf
 .github/workflows/*      text eol=lf
