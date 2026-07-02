@@ -50,10 +50,8 @@ class MxColors {
     required this.stateHover,
     required this.statePressed,
     required this.stateSelected,
-    required this.stateDisabled,
     required this.focusRing,
     required this.overlay,
-    required this.scrim,
   });
 
   final Color bg;
@@ -94,10 +92,8 @@ class MxColors {
   final Color stateHover;
   final Color statePressed;
   final Color stateSelected;
-  final Color stateDisabled;
   final Color focusRing;
   final Color overlay;
-  final Color scrim;
 
   /// Brand primary seed (`--memox-primary`, light).
   static const Color seed = Color(0xFF4F46E5);
@@ -150,10 +146,8 @@ class MxColors {
     stateHover: Color(0x0B1D2240),
     statePressed: Color(0x171D2240),
     stateSelected: Color(0x1A4F46E5),
-    stateDisabled: Color(0x421D2240),
     focusRing: Color(0x6B4F46E5),
     overlay: Color(0x7312142D),
-    scrim: Color(0x0A1D2240),
   );
 
   /// Dark — `[data-theme='dark']`.
@@ -196,9 +190,7 @@ class MxColors {
     stateHover: Color(0x0FFFFFFF),
     statePressed: Color(0x1CFFFFFF),
     stateSelected: Color(0x3D7D74F0),
-    stateDisabled: Color(0x42ECEDF7),
     focusRing: Color(0x997D74F0),
     overlay: Color(0xA8000000),
-    scrim: Color(0x0AFFFFFF),
   );
 }

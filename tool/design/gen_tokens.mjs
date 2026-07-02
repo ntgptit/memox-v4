@@ -22,7 +22,7 @@
  *         node tool/design/gen_tokens.mjs --check    (fails if out of date)
  */
 
-import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -73,6 +73,35 @@ function loadTokens() {
       TOK.set(name, e);
     }
   }
+}
+
+/**
+ * Prune tokens the kit DEFINES but never USES. A token is "used" iff it is
+ * referenced by any kit file outside `tokens/` (a component's CSS/JSX, an
+ * assembled screen, styles.css…). We mirror the theme the kit actually renders
+ * with, not every value it happens to declare — a defined-but-unused token in
+ * the Dart layer is noise that misrepresents the real design. The kit CSS is
+ * left untouched (it stays the frozen source of truth); only the Dart output
+ * is trimmed. Returns the sorted list of dropped token names.
+ */
+function pruneUnused() {
+  const KIT = join(TOKENS_DIR, '..');
+  const TOKENS_SUB = `${'tokens'}`;
+  /** @type {string[]} */
+  const files = [];
+  (function walk(d) {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (/\.(css|jsx|js|html|md|ts)$/.test(e.name) && !p.includes(join(KIT, TOKENS_SUB))) files.push(p);
+    }
+  })(KIT);
+  const corpus = files.map((f) => readFileSync(f, 'utf8')).join('\n');
+  const dropped = [];
+  for (const name of [...TOK.keys()]) {
+    if (!corpus.includes(name)) { TOK.delete(name); dropped.push(name); }
+  }
+  return dropped.sort();
 }
 
 // ── value converters ────────────────────────────────────────────────────────
@@ -201,7 +230,8 @@ function emitSpacing() {
     ['--memox-bottom-nav-height', 'bottomNavHeight', 'Fixed bottom navigation.'],
     ['--memox-fab-size', 'fabSize', 'Floating action button.'],
     ['--memox-touch-min', 'minTouchTarget', 'Minimum interactive target (a11y floor).'],
-  ].map(([n, d, doc]) => `  /// ${doc}\n  static const double ${d} = ${dbl(px(lightOf(n)))};`).join('\n\n');
+  ].filter(([n]) => TOK.has(n))
+    .map(([n, d, doc]) => `  /// ${doc}\n  static const double ${d} = ${dbl(px(lightOf(n)))};`).join('\n\n');
 
   FILES['mx_spacing.dart'] =
     GEN_HEADER('spacing.css') +
@@ -217,8 +247,9 @@ function emitSpacing() {
 function emitRadius() {
   const RMAP = { '2xl': 'xxl' }; // digit-leading suffix -> valid Dart id
   const rname = (suf) => RMAP[suf] || suf;
-  const roles = ['card', 'tile', 'control', 'field', 'chip', 'pill', 'full'];
-  const scaleSufs = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+  const has = (s) => TOK.has(`--memox-radius-${s}`);
+  const roles = ['card', 'tile', 'control', 'field', 'chip', 'pill', 'full'].filter(has);
+  const scaleSufs = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'].filter(has);
 
   const scale = scaleSufs
     .map((s) => `  static const double ${rname(s)} = ${dbl(px(lightOf(`--memox-radius-${s}`)))};`)
@@ -228,7 +259,7 @@ function emitRadius() {
     .join('\n');
   const brFor = (role) =>
     `  static const BorderRadius ${role}Radius =\n      BorderRadius.all(Radius.circular(${role}));`;
-  const helpers = ['card', 'tile', 'control', 'field', 'pill'].map(brFor).join('\n');
+  const helpers = ['card', 'tile', 'control', 'field', 'pill'].filter(has).map(brFor).join('\n');
 
   FILES['mx_radius.dart'] =
     GEN_HEADER('radius.css') +
@@ -372,6 +403,7 @@ function emitMotion() {
     return `  static const Cubic ${s} = Cubic(${a}, ${b}, ${c}, ${d});`;
   }).join('\n');
 
+  if (!durs && !eases) return; // all motion tokens pruned as unused -> no file
   FILES['mx_motion.dart'] =
     GEN_HEADER('motion.css') +
     `import 'package:flutter/animation.dart';\n\n` +
@@ -383,6 +415,13 @@ function emitMotion() {
     `abstract final class MxEasing {\n  const MxEasing._();\n\n${eases}\n}\n`;
 }
 
+// All filenames this generator can produce — used to delete stale outputs when
+// an emitter stops producing a file (e.g. every motion token pruned).
+const ALL_OUTPUTS = [
+  'mx_colors.dart', 'mx_spacing.dart', 'mx_radius.dart', 'mx_typography.dart',
+  'mx_sizes.dart', 'mx_elevation.dart', 'mx_motion.dart',
+];
+
 // ── coverage guard ──────────────────────────────────────────────────────────
 // Compound/derived tokens with no standalone Dart literal (documented gaps).
 const SKIP = new Set([
@@ -392,6 +431,10 @@ const SKIP = new Set([
 
 // ── run ─────────────────────────────────────────────────────────────────────
 loadTokens();
+const pruned = pruneUnused();
+if (pruned.length) {
+  console.log(`pruned ${pruned.length} defined-but-unused token(s): ${pruned.map((n) => n.replace('--memox-', '')).join(', ')}`);
+}
 emitColors();
 emitSpacing();
 emitRadius();
@@ -423,6 +466,22 @@ for (const [name, content] of Object.entries(FILES)) {
   } else {
     writeFileSync(path, content);
     console.log(`${existing === null ? 'created' : 'updated'}  lib/core/theme/${name}`);
+  }
+}
+
+// Remove any previously-generated file an emitter no longer produces.
+for (const name of ALL_OUTPUTS) {
+  if (name in FILES) continue;
+  const path = join(OUT_DIR, name);
+  let stale = false;
+  try { readFileSync(path); stale = true; } catch { /* absent */ }
+  if (!stale) continue;
+  drift++;
+  if (CHECK) {
+    console.error(`✗ stale (should be removed): lib/core/theme/${name}`);
+  } else {
+    rmSync(path);
+    console.log(`removed  lib/core/theme/${name}`);
   }
 }
 
