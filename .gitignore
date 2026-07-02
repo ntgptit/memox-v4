@@ -43,3 +43,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Codegen outputs (build_runner) — regenerated locally, never committed.
+# Agents: do NOT read these; regenerate with `dart run build_runner build`.
+*.g.dart
+*.drift.dart
+*.freezed.dart
+*.mocks.dart

@@ -6,8 +6,12 @@ Claude-specific notes so nothing critical is missed.
 
 ## Non-negotiables (see AGENTS.md for the rest)
 
-1. **Never hand-edit `lib/core/theme/mx_*.dart`** — generated. Change the kit CSS,
-   run `node tool/design/gen_tokens.mjs`; `--check` is the gate.
+1. **Never hand-edit generated code.** Token mirrors `lib/core/theme/mx_*.dart`
+   are generated (change the kit CSS → `node tool/design/gen_tokens.mjs`; `--check`
+   gates them) and committed. **build_runner outputs (`*.g.dart`/`*.drift.dart`/
+   `*.freezed.dart`) are `.gitignore`d** — regenerated via `dart run build_runner
+   build`, never committed, and **don't read them** (wasted tokens — read the
+   hand-written source with the `part` directive instead).
 2. **Kit is the source of truth** for visuals (`docs/design/MemoX Design System/`,
    frozen/synced). Don't patch Dart to diverge — fix the kit and `/design-sync`.
 3. **No raw `Color(0x..)`/px in UI** — use `Mx*` tokens + the `MxTheme` extension.

@@ -16,9 +16,16 @@ Stack: **Riverpod Annotation** (state + DI) · **Drift / SQLite** (persistence) 
 
 ## Golden rules
 
-1. **Design tokens are GENERATED — never hand-edit `lib/core/theme/mx_*.dart`.**
-   They carry a `// GENERATED … DO NOT EDIT` header. To change a value: edit the
-   kit CSS, then run `node tool/design/gen_tokens.mjs`. `--check` is the drift gate.
+1. **Generated code — never hand-edit, and don't read it.**
+   - Token mirrors `lib/core/theme/mx_*.dart` (`// GENERATED … DO NOT EDIT`): to
+     change a value, edit the kit CSS then run `node tool/design/gen_tokens.mjs`
+     (`--check` is the drift gate). These ARE committed.
+   - **build_runner outputs** (`*.g.dart`, `*.drift.dart`, `*.freezed.dart`): these
+     are **`.gitignore`d** — regenerated locally by `dart run build_runner build`,
+     never committed. **Do NOT open/read them** (wasted tokens); read the
+     hand-written source (`*.dart` with the `part '…g.dart'`) instead. A fresh
+     clone / CI must run codegen before analyze/test (`node tool/verify/run.mjs`
+     full does this; `--quick` assumes you've already built once).
 2. **The design kit is the source of truth for visuals** —
    `docs/design/MemoX Design System/` (frozen; synced with Claude Design). If the
    kit looks wrong, fix it there and `/design-sync`; do **not** patch Dart to
