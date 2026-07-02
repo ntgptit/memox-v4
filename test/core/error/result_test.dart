@@ -34,6 +34,9 @@ void main() {
 
     test('passes a thrown Failure through unchanged', () {
       const thrown = ValidationFailure('bad input');
+      // Deliberately throwing a Failure (not an Error) — that's exactly what
+      // guard must catch and pass through.
+      // ignore: only_throw_errors
       final result = guard<int>(() => throw thrown);
       expect((result as Err<int>).failure, same(thrown));
     });
