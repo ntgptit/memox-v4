@@ -16,3 +16,6 @@ extension type const LanguagePairId(String value) {}
 
 /// Identifies a single [CardMeaning] (`Nghĩa`) block of a card.
 extension type const CardMeaningId(String value) {}
+
+/// Identifies a [StudySession] (`phiên` học/ôn).
+extension type const StudySessionId(String value) {}
