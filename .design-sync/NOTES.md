@@ -17,6 +17,17 @@ Local source of truth: `docs/design/MemoX Design System/` (hand-authored / off-s
 - Content spot-check `components/core/MxButton.jsx`: identical (md5 match after CRLF→LF normalize; local is CRLF, remote LF — cosmetic, not a drift, same state as prior 0-upload sync).
 - No plan opened / no sentinel re-arm — with zero writes/deletes the app card index is already correct.
 
+## Sync triggers (both PUSH, repo kit → Claude Design)
+- **`.githooks/pre-push`** — on `git push` whose range touches `localDir`; runs
+  `sync-design.mjs --no-record`.
+- **`.githooks/post-merge`** (added 2026-07-03) — after `main` receives kit
+  changes (covers server-side PR merges + agent pushes that bypass pre-push).
+  Only on `main`; compares against `lastSyncedCommit`; runs `sync-design.mjs`
+  (record mode, advances lastSyncedCommit). Warns if `claude` CLI absent.
+- Both honor `MEMOX_SKIP_DESIGN_SYNC=1`. **Agent sessions (no design-auth TTY)
+  must prefix BOTH `git push` and `git pull` on main** with it, or the nested
+  `claude` hangs.
+
 ## Standing facts for next sync
 - No `_ds_sync.json` anchor is produced for this hand-authored layout, so each sync re-verifies by comparing the local tree against `list_files` (this is expected/correct).
 - Shots parity check: `ui_kits/memox-app/shots/` = 234 files, matched exactly.

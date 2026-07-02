@@ -132,9 +132,16 @@ and commit. Notes: `.design-sync/NOTES.md`.
 
 - Branch off `main` before changes (`build/<taskid>` for WBS tasks); PR → merge.
 - End commit messages with the `Co-Authored-By:` trailer your tool uses.
-- The `pre-push` hook runs design-sync. From an **agent session without a
-  design-authorized interactive terminal**, prefix pushes with
-  `MEMOX_SKIP_DESIGN_SYNC=1 git push …` (not `--no-verify`).
+- **Design-sync triggers (both PUSH kit → Claude Design):**
+  - `pre-push` — on `git push` whose range changes `docs/design/MemoX Design
+    System/`.
+  - `post-merge` — after `main` receives kit changes (PRs merge server-side +
+    agent pushes bypass pre-push, so this closes the loop; compares against
+    `lastSyncedCommit`, record mode).
+  Both honor `MEMOX_SKIP_DESIGN_SYNC=1` and need a design-authorized `claude` CLI.
+- From an **agent session without a design-authorized interactive terminal**,
+  prefix **both** `git push` **and** `git pull` (on main) with
+  `MEMOX_SKIP_DESIGN_SYNC=1 …` — else the nested `claude` hangs. Not `--no-verify`.
 - Generated files (`lib/core/theme/mx_*.dart`, `tool/design/*.mjs`) are pinned to
   LF via `.gitattributes`.
 
