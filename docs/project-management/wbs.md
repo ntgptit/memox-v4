@@ -336,6 +336,8 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(responsive foundation)_ | `core/theme/responsive.dart` (`Breakpoints`, `FormFactor`, `Responsive`, `ResponsiveContext`) | `test/core/theme/responsive_test.dart` | T.6 | #71 |
 | BR-1/BR-3/BR-4 (Leitner box 0..8, clamps) | `domain/entities/box_level.dart` (`BoxLevel`) | `test/domain/entities/value_types_test.dart` | DM.1 | #72 |
 | _(value types)_ | `domain/entities/{ids,review_grade,card_status}.dart` (`CardId`/`DeckId`/…, `ReviewGrade`, `CardStatus`) | `test/domain/entities/value_types_test.dart` | DM.1 | #72 |
+| deck BR-1 · flashcard BR-2/BR-4 | `domain/entities/{deck,card,card_meaning,language_pair}.dart` | `test/domain/entities/entities_test.dart` | DM.2 | #73 |
+| engagement BR-2/BR-3 (D-021) · deck BR-5/BR-6 | `domain/entities/{daily_goal,streak,deck_stats}.dart` · `review_log`/`study_session`/`study_mode` | `test/domain/entities/entities_test.dart` | DM.2 | #73 |
 
 ---
 
