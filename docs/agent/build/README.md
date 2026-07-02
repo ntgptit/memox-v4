@@ -62,7 +62,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | DM.2 | [Entities](dm2-entities.md) |
 | [x] | DM.3 | [Repository interfaces](dm3-repository-interfaces.md) |
 | [x] | DM.4 | [SRS engine (8-box single-direction)](dm4-srs-engine-8-box-single-direction.md) |
-| [ ] | DM.5 | [Study use cases](dm5-study-use-cases.md) |
+| [x] | DM.5 | [Study use cases](dm5-study-use-cases.md) |
 | [ ] | DM.6 | [Library use cases](dm6-library-use-cases.md) |
 | [ ] | DM.7 | [Import/export + stats use cases](dm7-import-export-stats-use-cases.md) |
 | [ ] | DM.8 | [Device / service contracts](dm8-device-service-contracts.md) |
