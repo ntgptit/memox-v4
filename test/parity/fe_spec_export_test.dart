@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/app/di/database_provider.dart';
 import 'package:memox_v4/app/di/import_export_providers.dart';
+import 'package:memox_v4/app/di/tts_providers.dart';
 import 'package:memox_v4/app/router/app_router.dart';
 import 'package:memox_v4/app/router/route_paths.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
@@ -25,6 +26,7 @@ import 'package:memox_v4/data/datasources/local/connection/database_connection.d
 import 'package:memox_v4/data/datasources/local/drift/app_database.dart';
 import 'package:memox_v4/domain/models/deck_node.dart';
 import 'package:memox_v4/domain/services/file_save_service.dart';
+import 'package:memox_v4/domain/services/tts_service.dart';
 import 'package:memox_v4/domain/types/game_scope.dart';
 import 'package:memox_v4/domain/types/game_type.dart';
 import 'package:memox_v4/domain/types/study_entry.dart';
@@ -113,6 +115,16 @@ class _FakeFileSave implements FileSaveService {
       '/tmp/$fileName';
 }
 
+/// Avoids the real flutter_tts platform channel — player autoplay speaks the
+/// current card on every advance (matches test/.../tts_speak_test.dart's fake).
+class _FakeTts implements TtsService {
+  @override
+  Future<void> speak(String text, {String? languageCode}) async {}
+
+  @override
+  Future<void> stop() async {}
+}
+
 /// Pumps [child] at the kit's 390-wide frame with a seeded in-memory DB, then
 /// exports its mx-node style record.
 ///
@@ -129,6 +141,7 @@ Future<void> _pumpAndExport(
   Future<Widget> Function(AppDatabase db) buildChild, {
   Future<void> Function(AppDatabase db)? seed,
   List<Future<void> Function(WidgetTester tester, AppDatabase db)>? drives,
+  List<Override> extra = const <Override>[],
 }) async {
   final db = AppDatabase.forTesting(openInMemoryDatabase());
   addTearDown(db.close);
@@ -144,7 +157,7 @@ Future<void> _pumpAndExport(
 
   await tester.pumpWidget(
     ProviderScope(
-      overrides: [databaseProvider.overrideWithValue(db)],
+      overrides: [databaseProvider.overrideWithValue(db), ...extra],
       child: MaterialApp(
         theme: AppTheme.light(),
         debugShowCheckedModeBanner: false,
@@ -536,6 +549,10 @@ void main() {
         }
         return PlayerScreen(nodeId: deckId);
       },
+      // autoplay speaks each card via TTS on advance — fake it so the drive
+      // below doesn't touch the real flutter_tts platform channel (matches
+      // test/presentation/features/flashcard/tts_speak_test.dart's pattern).
+      extra: [ttsServiceProvider.overrideWithValue(_FakeTts())],
       drives: [
         // end state → player/replay + /close. `next` is DISABLED at the last
         // card (index == cards.length - 1) — it can never push past the end;

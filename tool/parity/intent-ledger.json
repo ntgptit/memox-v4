@@ -326,15 +326,6 @@
       "source": "docs/business/study/study-flow.md"
     },
     {
-      "screen": "player",
-      "node": "replay",
-      "kind": "*",
-      "verdict": "exception",
-      "exceptionKind": "behavior",
-      "reason": "The kit's end-state Replay button is the primary variant. The FE pairs Replay(outline) + Close(default), giving Replay secondary emphasis as the optional restart action; kit primary would over-weight it against Close.",
-      "source": "docs/business/study/study-flow.md"
-    },
-    {
       "screen": "study-result",
       "node": "appbar",
       "kind": "*",
