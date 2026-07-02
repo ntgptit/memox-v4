@@ -62,7 +62,7 @@ const INFRA = [
     goal: 'App entrypoint: ProviderScope + MaterialApp.router + env/flavor + guarded error zone.',
     inputs: ['lib/main.dart', 'lib/app/', 'core/theme (F/T)'],
     outputs: ['lib/app/*.dart', 'lib/main.dart'],
-    notes: ['runApp inside a guarded zone; ProviderScope at root; MaterialApp.router wired to core/routes.', 'Replaces the Tier-0 swatch showcase.'] },
+    notes: ['runApp inside a guarded zone; ProviderScope at root; MaterialApp.router wired to core/routes.', 'Wire the central error capture here: `FlutterError.onError` + `PlatformDispatcher.onError` + the guarded zone → route to the logger + an error-reporting hook (dev/monitoring side of AGENTS.md error handling).', 'Replaces the Tier-0 swatch showcase.'] },
   { id: 'I.5', title: 'Routing skeleton', size: 'M', deps: 'I.4',
     goal: 'go_router with a shell route (bottom nav) + typed route stubs for all 22 features.',
     inputs: ['core/routes/', 'the 22 feature list (wbs.md Phase S)'],
@@ -72,7 +72,7 @@ const INFRA = [
     goal: 'Failure hierarchy + Result<T> + guard helpers used across domain/data.',
     inputs: ['core/error/'],
     outputs: ['lib/core/error/*.dart'],
-    notes: ['Sealed Failure types; Result/Either; a runGuarded that maps exceptions -> Failure.'] },
+    notes: ['Sealed Failure types; Result/Either; a runGuarded that maps exceptions -> Failure (never swallow — always map + log).', 'Define the Failure → l10n-message mapper contract (end-user side) + the logger/reporting seam (dev side) so every error can be both shown and observed. No `print`.'] },
   { id: 'I.7', title: 'Logging, utils, constants', size: 'S', deps: 'I.3',
     goal: 'Cross-cutting core: logger, utils, app constants.',
     inputs: ['core/logging/', 'core/utils/', 'core/constants/'],
@@ -192,7 +192,7 @@ const DOMAIN = [
 const DATA_STEPS = [
   '**Baseline**: `git checkout main && git pull`, branch.',
   'Read the domain entities/repositories (DM.2/DM.3) this implements against.',
-  'Implement in the **data layer only**; keep Drift row models separate from domain entities (map at the boundary).',
+  'Implement in the **data layer only**; keep Drift row models separate from domain entities (map at the boundary). **All SQL lives in `*.drift` files** (or typed Drift APIs) — no inline/hardcoded SQL strings, no raw sqflite.',
   'Run `dart run build_runner build --delete-conflicting-outputs` for Drift codegen.',
   '**Integration test** against an in-memory Drift DB.',
   'Run Verify; add §Ledger rows; Finish.',
@@ -366,6 +366,7 @@ const branchFor = (id) => `build/${slug(id)}`;
 const DOD = `## Definition of Done
 
 - [ ] **Built** at the output path(s), respecting the layer contracts (foundation token-only · primitives no business logic · feature UI no data/ imports).
+- [ ] **Conventions** (AGENTS.md) — state via **@riverpod only, no \`setState\`** in feature UI · **SQL only in \`*.drift\`** (no inline SQL) · no magic values, **no unnecessary \`else\`** (early return/throw/overwrite) · all text + error messages via l10n · errors flow \`Failure\` → \`AsyncValue.error\`, shown localized to the user **and** logged/reported for devs, never swallowed.
 - [ ] **Analyzes** — \`dart analyze lib test\` → 0 issues; codegen (build_runner) up to date.
 - [ ] **Tested** at the right level — domain = pure unit · data = Drift integration · primitives/composites = widget+golden (light+dark) · screens = provider-state widget tests + golden vs \`shots/*.png\`.
 - [ ] **Parity / correctness** — UI matches the kit for every state; domain matches the v1 rules in \`docs/business/\` with edge cases.
@@ -463,7 +464,7 @@ function renderScreen([id, feature, screenFile, locals, size, deferred, dm]) {
     `## Inputs — READ ALL IN FULL\n\n- \`${base}/${screenFile}\` — screen composition (components, states, state machine).\n- Feature-local components (build here):\n${locals.map((c) => `  - \`${base}/components/${c}.jsx\``).join('\n')}\n- \`${KIT}/ui_kits/memox-app/specs/${feature}.md\` — contract (states, copy, behaviour).\n- \`${KIT}/ui_kits/memox-app/shots/${feature}--*--{light,dark}.png\` — visual reference per state.\n- Shared widgets in \`lib/presentation/shared/{primitives,composites}/\`${dm !== '—' ? `\n- Domain use cases: \`lib/domain/usecases/\` (**${dm}**)` : ''}`,
     `## Output\n\n- \`${feat}/screens/${snake(feature)}_screen.dart\`\n- \`${feat}/providers/*.dart\` — \`@riverpod\` notifier(s) (own mutation; call use cases)\n- \`${feat}/widgets/*.dart\` — the ${locals.length} feature-local component(s)\n- \`test/presentation/features/${feature}/*_test.dart\``,
     `## Steps\n\n1. **Baseline**: \`git checkout main && git pull\`, \`git checkout -b ${branchFor(id)}\`.\n2. Read \`${screenFile}\` → enumerate **states** (screen + \`specs/${feature}.md\` + \`shots/\` filenames) and the components each renders.\n3. Build feature-local components (token-only; compose shared \`Mx*\`).\n4. ${dm !== '—' ? `Build the \`@riverpod\` provider(s) calling **${dm}** use cases (use in-memory fakes until DT.5 lands); render with \`AsyncValue.when\`.` : 'Wire local UI state via a provider/notifier — no logic in build().'}\n5. Compose the screen; strings from ARB.\n6. Test **every state** (light+dark golden vs \`shots/*.png\`; provider-state widget tests).\n7. Run Verify; add §Ledger rows; Finish.`,
-    `## Notes\n\n- Reuse shared components; build only genuinely screen-specific pieces locally.\n- Feature UI must **not** import \`data/\` or \`dart:io\` — go through providers → use cases.\n- **v1 scope**: no cloud/account sync — any kit "Cloud sync / Sync (alpha)" element renders as **local Backup / Restore** (or is omitted); save/load errors say **local persistence**, not cloud/offline sync. \`account-sync\` is deferred.\n- Undrivable kit states → document as a gap; if FE structure diverges from the kit → **STOP** (possible drift).`,
+    `## Notes\n\n- Reuse shared components; build only genuinely screen-specific pieces locally.\n- **State via \`@riverpod\` only — no \`setState\`.** Render \`AsyncValue\` with \`.when\`; the **error** branch shows a localized user surface (inline/empty-error per the kit) AND the cause is logged/reported. Errors never swallowed.\n- Feature UI must **not** import \`data/\` or \`dart:io\` — go through providers → use cases.\n- **v1 scope**: no cloud/account sync — any kit "Cloud sync / Sync (alpha)" element renders as **local Backup / Restore** (or is omitted); save/load errors say **local persistence**, not cloud/offline sync. \`account-sync\` is deferred.\n- Undrivable kit states → document as a gap; if FE structure diverges from the kit → **STOP** (possible drift).`,
     A11Y, DOD, VERIFY_CMDS, STOP, finish(id),
   ].join('\n\n');
 }
