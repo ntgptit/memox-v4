@@ -373,6 +373,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `Ring`+`Stat` helper (progress ring around value+label) | `presentation/shared/composites/mx_stat_ring.dart` | `test/presentation/shared/composites/mx_stat_ring_test.dart` | H.06 | #104 |
 | kit `ChoiceOption` helper (quiz answer: none/correct/wrong skins) | `presentation/shared/primitives/mx_choice_option.dart` | `test/presentation/shared/primitives/mx_choice_option_test.dart` | H.07 | #105 |
 | _(component gallery gate)_ | `presentation/shared/screens/component_gallery.dart` (all 25 P/K/H widgets) | `test/golden/gallery/component_gallery_test.dart` (renders in light+dark; pixel goldens → V.1) | H.08 | #106 |
+| _(screen state matrix — gates Phase S)_ | `docs/design/screen-state-matrix.md` (21 screens × every state, from shots + specs → kind + D-xxx) | per-screen tests built by S.01–S.21 to these rows | S.00 | #107 |
 
 **P.01 gaps (kit vs tokens):** `.btn` icon size is a raw **20px** with no matching `MxIconSize` token (18/22/28) — named `_iconSize` in the widget. Kit `sm` height **38px** < 48 a11y min — mitigated by Material's padded tap target (≥48 hit area). `.btn.primary` `shadow-fab` approximated by `elevation:0` (Material buttons can't take a token boxShadow). Pixel goldens for the button (text+shadow, platform-sensitive per T.5) are deferred to **V.1**; P.01 verifies variant→token mapping by widget assertions instead.
 
