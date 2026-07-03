@@ -27,6 +27,7 @@ class MxTheme extends ThemeExtension<MxTheme> {
     required this.divider,
     required this.primarySoft,
     required this.onPrimarySoft,
+    required this.primaryStrong,
     required this.accentSoft,
     required this.info,
     required this.onInfo,
@@ -60,6 +61,7 @@ class MxTheme extends ThemeExtension<MxTheme> {
         divider: c.divider,
         primarySoft: c.primarySoft,
         onPrimarySoft: c.onPrimarySoft,
+        primaryStrong: c.primaryStrong,
         accentSoft: c.accentSoft,
         info: c.info,
         onInfo: c.onInfo,
@@ -98,6 +100,7 @@ class MxTheme extends ThemeExtension<MxTheme> {
   // Semantic soft pairs (Material only carries the strong roles).
   final Color primarySoft;
   final Color onPrimarySoft;
+  final Color primaryStrong;
   final Color accentSoft;
   final Color info;
   final Color onInfo;
@@ -146,6 +149,7 @@ class MxTheme extends ThemeExtension<MxTheme> {
     Color? divider,
     Color? primarySoft,
     Color? onPrimarySoft,
+    Color? primaryStrong,
     Color? accentSoft,
     Color? info,
     Color? onInfo,
@@ -177,6 +181,7 @@ class MxTheme extends ThemeExtension<MxTheme> {
       divider: divider ?? this.divider,
       primarySoft: primarySoft ?? this.primarySoft,
       onPrimarySoft: onPrimarySoft ?? this.onPrimarySoft,
+      primaryStrong: primaryStrong ?? this.primaryStrong,
       accentSoft: accentSoft ?? this.accentSoft,
       info: info ?? this.info,
       onInfo: onInfo ?? this.onInfo,
@@ -214,6 +219,7 @@ class MxTheme extends ThemeExtension<MxTheme> {
       divider: mix(divider, other.divider),
       primarySoft: mix(primarySoft, other.primarySoft),
       onPrimarySoft: mix(onPrimarySoft, other.onPrimarySoft),
+      primaryStrong: mix(primaryStrong, other.primaryStrong),
       accentSoft: mix(accentSoft, other.accentSoft),
       info: mix(info, other.info),
       onInfo: mix(onInfo, other.onInfo),
