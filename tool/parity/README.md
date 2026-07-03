@@ -55,6 +55,7 @@ drift. Required fields:
 | `flutter-idiom` | platform rename beyond the global alias table |
 | `deferred-screen` | component on a deferred screen (account-sync) — no Flutter counterpart yet |
 | `flutter-only` | Flutter widget with no kit component (`library_node_card`, `search_app_bar`) — not gated by a `.d.ts` |
+| `fixture-parameterized` | kit component is a **static visual fixture** (hardcodes sample content + literal node ids so the parity generator sees real DOM); the Flutter widget parameterizes that content / adds the real callbacks. Common in the game/study POC widgets (e.g. `TermCard` hardcodes 친구; Flutter takes `term`). |
 
 An exception is **per-prop** (`"prop": "size"`) except `deferred-screen` / `flutter-only`
 which use `"prop": "*"`. A `"*"` + `flutter-idiom` is a **red flag** (hiding drift).

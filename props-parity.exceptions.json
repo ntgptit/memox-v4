@@ -14,5 +14,10 @@
   { "component": "surfaces/MxCard", "prop": "semanticLabel", "reason": "flutter-idiom", "note": "Flutter a11y label for an interactive card; no kit prop." },
   { "component": "surfaces/MxSectionHeader", "prop": "action", "reason": "flutter-idiom", "note": "Flutter decomposes the kit's ReactNode action slot into actionLabel + onAction." },
   { "component": "surfaces/MxSectionHeader", "prop": "actionLabel", "reason": "flutter-idiom", "note": "Half of the decomposed action slot (see MxSectionHeader/action)." },
-  { "component": "surfaces/MxSectionHeader", "prop": "onAction", "reason": "flutter-idiom", "note": "Half of the decomposed action slot (see MxSectionHeader/action)." }
+  { "component": "surfaces/MxSectionHeader", "prop": "onAction", "reason": "flutter-idiom", "note": "Half of the decomposed action slot (see MxSectionHeader/action)." },
+
+  { "component": "game-recall/TermCard", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample term (친구) as a static fixture; Flutter takes term:String." },
+  { "component": "game-recall/TermCard", "prop": "onAudio", "reason": "fixture-parameterized", "note": "Kit fixture stubs the audio button with a literal node id; Flutter wires the real onAudio callback." },
+  { "component": "game-recall/TermCard", "prop": "onEdit", "reason": "fixture-parameterized", "note": "Kit fixture stubs the edit button with a literal node id; Flutter wires the real onEdit callback." },
+  { "component": "game-recall/MeaningPanel", "prop": "meaning", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample meaning as a fixture; Flutter takes meaning:String." }
 ]
