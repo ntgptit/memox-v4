@@ -33,7 +33,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | [x] | C.14 | drawer | 4 |
 | [x] | C.15 | search | 2 |
 | [x] | C.16 | flashcard-editor | 2 |
-| [ ] | C.17 | import | 2 |
+| [x] | C.17 | import | 2 |
 | [ ] | C.18 | export | 2 |
 | [ ] | C.19 | reminder | 2 |
 | [ ] | C.20 | settings | 2 |
