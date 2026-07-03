@@ -421,6 +421,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `statistics/screen` — Stats (loading·loaded·insufficient·error) | `presentation/features/statistics/screens/statistics_screen.dart` + `providers/statistics_providers.dart` (`StatisticsController`) | `test/presentation/features/statistics/statistics_screen_test.dart` (4 states, light+dark) | S.09 | #116 |
 | kit `Bars` + `Heatmap` + `Donut` (charts) | `presentation/features/statistics/widgets/{bars,heatmap,donut}.dart` | (statistics screen test) | S.09 | #116 |
 | statistics §5 — streak · box distribution · library aggregate | `statistics_providers.dart` (`streakFromHistory` + `boxDistribution` + `DeckStats` aggregate + activity heatmap/weekly) | (statistics screen test, loaded) | S.09 | #116 |
+| kit `import/screen` — Import (source·mapping·preview·dup-warning·done, D-025/D-020) | `presentation/features/import/screens/import_screen.dart` + `providers/import_providers.dart` (`ImportController`) | `test/presentation/features/import/import_screen_test.dart` (source + full paste→done flow, light+dark) | S.10 | #117 |
+| kit `SourceCard` + `Table` (import source + preview table) | `presentation/features/import/widgets/source_card.dart` + `import_table.dart` | (import screen test) | S.10 | #117 |
+| D-025 parse import (delimiter + column mapping + skip count) | `import_providers.dart` (`ParseImport` + `CsvCodec`) → `SaveCard` write; `DetectDuplicateTerm` (D-020) | (import screen test, full flow) | S.10 | #117 |
+
+**S.10 gaps / notes:** the wizard drives `ParseImport` (D-025) live; **column
+mapping is fixed** to A→term / B→meaning (a column picker is deferred), and cards
+are written to the **first library deck** (a deck picker is deferred — if there is
+no deck, commit no-ops + logs). **Excel** (`.xlsx`) reuses the text file pick — the
+pure `CsvCodec` can't parse binary xlsx, so real Excel decoding is deferred. Imported
+meanings default to language `en` (per-pair language deferred). Soft-duplicate
+detection (D-020) counts against the target deck's direct cards → the dup-warning
+banner. The paste field's text controller is not app state (wizard state is in
+Riverpod). Pixel goldens deferred to V.1.
 
 **S.09 gaps / notes:** two kit elements are **undrivable** on the frozen contracts
 and documented: **scope (This pair / All)** — there is no pair↔content link in v1, so
