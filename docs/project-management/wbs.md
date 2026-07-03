@@ -424,6 +424,17 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `import/screen` — Import (source·mapping·preview·dup-warning·done, D-025/D-020) | `presentation/features/import/screens/import_screen.dart` + `providers/import_providers.dart` (`ImportController`) | `test/presentation/features/import/import_screen_test.dart` (source + full paste→done flow, light+dark) | S.10 | #117 |
 | kit `SourceCard` + `Table` (import source + preview table) | `presentation/features/import/widgets/source_card.dart` + `import_table.dart` | (import screen test) | S.10 | #117 |
 | D-025 parse import (delimiter + column mapping + skip count) | `import_providers.dart` (`ParseImport` + `CsvCodec`) → `SaveCard` write; `DetectDuplicateTerm` (D-020) | (import screen test, full flow) | S.10 | #117 |
+| kit `export/screen` — Export (config·exporting·done, D-026) | `presentation/features/export/screens/export_screen.dart` + `providers/export_providers.dart` (`ExportController`) | `test/presentation/features/export/export_screen_test.dart` (config + subtree export→done, light+dark) | S.11 | #118 |
+| kit `FormatList` + `ExportingCard` | `presentation/features/export/widgets/format_list.dart` + `exporting_card.dart` | (export screen test) | S.11 | #118 |
+| D-026 build export (scope · separator · include SRS) | `export_providers.dart` (`BuildExport` + `CsvCodec`) → `ImportExportFileService.writeTextFile/writeClipboard` | (export screen test, subtree flow) | S.11 | #118 |
+
+**S.11 gaps / notes:** export gathers the **first library deck** (a deck picker is
+deferred); scope is deck-only vs subtree. **Excel** reuses the CSV encoder — the pure
+`CsvCodec` produces text, so binary `.xlsx` is deferred. `includeSrs` (D-026) emits
+the Leitner **box** but the **due date is blank** — the frozen `ReviewRepository`
+exposes `currentBox` only (no dueAt read; documented gap). CSV/Excel → file, Copy →
+clipboard (DM.8). The done Share/Save re-output the encoded content (the platform
+share-vs-save distinction is a DT.7 detail). Pixel goldens deferred to V.1.
 
 **S.10 gaps / notes:** the wizard drives `ParseImport` (D-025) live; **column
 mapping is fixed** to A→term / B→meaning (a column picker is deferred), and cards
