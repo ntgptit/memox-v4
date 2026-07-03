@@ -8,6 +8,7 @@ import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_scree
 import 'package:memox_v4/presentation/features/deck-detail/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/drawer/screens/drawer_screen.dart';
 import 'package:memox_v4/presentation/features/export/screens/export_screen.dart';
+import 'package:memox_v4/presentation/features/flashcard-editor/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/features/import/screens/import_screen.dart';
 import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/reminder/screens/reminder_screen.dart';
@@ -63,7 +64,14 @@ GoRouter router(Ref ref) {
               ),
             ],
           ),
-          _branch(Routes.add),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.add,
+                builder: (context, state) => const FlashcardEditorScreen(),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -88,19 +96,6 @@ GoRouter router(Ref ref) {
   );
 }
 
-/// A shell branch whose root path renders its [RouteStub]; [extra] are nested
-/// sub-routes under that root.
-StatefulShellBranch _branch(String path, {List<RouteBase> extra = const []}) {
-  return StatefulShellBranch(
-    routes: [
-      GoRoute(
-        path: path,
-        builder: (context, state) => RouteStub(path),
-        routes: extra,
-      ),
-    ],
-  );
-}
 
 /// The v1 screens with no fixed path parameters, as top-level stub routes.
 const _fullScreenPaths = [
@@ -131,7 +126,7 @@ final List<GoRoute> _fullScreenRoutes = [
   GoRoute(
     path: Routes.editCardPattern,
     builder: (context, state) =>
-        RouteStub(Routes.editCard(state.pathParameters['cardId'] ?? '')),
+        FlashcardEditorScreen(cardId: state.pathParameters['cardId']),
   ),
 ];
 

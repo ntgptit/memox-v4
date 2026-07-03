@@ -427,6 +427,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `export/screen` — Export (config·exporting·done, D-026) | `presentation/features/export/screens/export_screen.dart` + `providers/export_providers.dart` (`ExportController`) | `test/presentation/features/export/export_screen_test.dart` (config + subtree export→done, light+dark) | S.11 | #118 |
 | kit `FormatList` + `ExportingCard` | `presentation/features/export/widgets/format_list.dart` + `exporting_card.dart` | (export screen test) | S.11 | #118 |
 | D-026 build export (scope · separator · include SRS) | `export_providers.dart` (`BuildExport` + `CsvCodec`) → `ImportExportFileService.writeTextFile/writeClipboard` | (export screen test, subtree flow) | S.11 | #118 |
+| kit `flashcard-editor/screen` — Editor (create·edit·validation·duplicate·multi-meaning·audio, D-020) | `presentation/features/flashcard-editor/screens/flashcard_editor_screen.dart` + `providers/editor_providers.dart` (`EditorController` family) | `test/presentation/features/flashcard-editor/flashcard_editor_screen_test.dart` (create/edit/validation/multi-meaning/audio + save) | S.12 | #119 |
+| kit `Field` + `DupBanner` | `presentation/features/flashcard-editor/widgets/field.dart` + `dup_banner.dart` | (editor screen test) | S.12 | #119 |
+| D-020 soft-duplicate + card create/edit (term + ≥1 meaning, gender, hidden) | `editor_providers.dart` (`DetectDuplicateTerm` + `Card.create` → `SaveCard`; `AudioService.speak`) | (editor screen test, save + audio) | S.12 | #119 |
+
+**S.12 gaps / notes:** the editor serves both the **Add tab** (create) and
+`/editor/:cardId` (edit). A new card is created in the **first library deck** (a deck
+picker is deferred). Soft-duplicate (D-020) shows the `DupBanner` but never blocks
+save. Save enables only when term + meaning are non-empty; required-field errors show
+once a field is touched-then-emptied (the `validation` state). **Audio** plays TTS
+(`AudioService.speak`, fixed `ko` term language); generating/storing an audio file
+(`card.audioRef`) is deferred (v1 scope). Meanings default to `en` primary / `vi`
+secondary (per-pair language deferred). The field text controllers are not app state
+(form + validity live in the provider). Pixel goldens deferred to V.1.
 
 **S.11 gaps / notes:** export gathers the **first library deck** (a deck picker is
 deferred); scope is deck-only vs subtree. **Excel** reuses the CSV encoder — the pure
