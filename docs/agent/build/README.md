@@ -114,7 +114,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 
 | done | id | task |
 | --- | --- | --- |
-| [ ] | H.01 | [MxProgressBar](h01-mxprogressbar.md) |
+| [x] | H.01 | [MxProgressBar](h01-mxprogressbar.md) |
 | [ ] | H.02 | [MxSkeleton](h02-mxskeleton.md) |
 | [ ] | H.03 | [MxEmptyState](h03-mxemptystate.md) |
 | [ ] | H.04 | [MxListRow](h04-mxlistrow.md) |
