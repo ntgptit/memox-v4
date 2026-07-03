@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +6,7 @@ import 'package:memox_v4/app/app.dart';
 import 'package:memox_v4/core/routes/app_router.dart';
 import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
+import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
 
 import '../../harness/provider_harness.dart';
 
@@ -43,11 +43,11 @@ void main() {
     // Starts on Today (the real dashboard).
     expect(find.byType(DashboardScreen), findsOneWidget);
 
-    // Tap the (unselected) Library destination — still a stub with its path shown.
+    // Tap the (unselected) Library destination — the real S.02 library screen.
     await tester.tap(find.byIcon(AppTab.library.icon));
     await tester.pumpAndSettle();
 
     expect(find.byType(DashboardScreen), findsNothing);
-    expect(find.widgetWithText(AppBar, Routes.library), findsOneWidget);
+    expect(find.byType(LibraryScreen), findsOneWidget);
   });
 }

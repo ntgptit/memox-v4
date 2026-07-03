@@ -182,5 +182,137 @@
   "actionRetry": "Try again",
   "@actionRetry": {
     "description": "Generic retry action, e.g. after a load error"
+  },
+
+  "libraryMenu": "Open menu",
+  "@libraryMenu": {
+    "description": "Accessible label for the library menu (drawer) button"
+  },
+  "libraryOverflow": "More options",
+  "@libraryOverflow": {
+    "description": "Accessible label for the library overflow menu button"
+  },
+  "librarySearch": "Search cards",
+  "@librarySearch": {
+    "description": "Accessible label for the library search button"
+  },
+  "librarySort": "Sort decks",
+  "@librarySort": {
+    "description": "Accessible label for the library sort button"
+  },
+  "libraryNew": "New",
+  "@libraryNew": {
+    "description": "Label of the create-deck floating action button"
+  },
+  "libraryPairNone": "Select language pair",
+  "@libraryPairNone": {
+    "description": "Placeholder in the context bar when no language pair is selected"
+  },
+  "libraryEmptyTitle": "Your library is empty",
+  "@libraryEmptyTitle": {
+    "description": "Title of the empty-library state"
+  },
+  "libraryEmptyText": "Decks and words you add will show up here. Start with a deck or import a CSV.",
+  "@libraryEmptyText": {
+    "description": "Body of the empty-library state"
+  },
+  "libraryCreateDeck": "Create deck",
+  "@libraryCreateDeck": {
+    "description": "Primary action on the empty-library state"
+  },
+  "libraryAddWords": "Add words",
+  "@libraryAddWords": {
+    "description": "Secondary action on the empty-library state"
+  },
+  "libraryErrorTitle": "Couldn't load your library",
+  "@libraryErrorTitle": {
+    "description": "Title of the library error state"
+  },
+  "libraryErrorText": "Something went wrong loading your decks. Try again.",
+  "@libraryErrorText": {
+    "description": "Body of the library error state (local persistence, not sync)"
+  },
+  "libraryNodeWords": "{count, plural, =1{1 word} other{{count} words}}",
+  "@libraryNodeWords": {
+    "description": "A deck node's visible word count",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "libraryNodeMetaDue": "{words} · {due} due",
+  "@libraryNodeMetaDue": {
+    "description": "Deck node meta: word count and how many are due",
+    "placeholders": {
+      "words": { "type": "String" },
+      "due": { "type": "int" }
+    }
+  },
+  "libraryNodeMetaHidden": "{words} · {hidden} hidden",
+  "@libraryNodeMetaHidden": {
+    "description": "Deck node meta: word count and how many are hidden",
+    "placeholders": {
+      "words": { "type": "String" },
+      "hidden": { "type": "int" }
+    }
+  },
+  "libraryNodeMetaMastered": "{words} · mastered",
+  "@libraryNodeMetaMastered": {
+    "description": "Deck node meta: word count, all mastered",
+    "placeholders": { "words": { "type": "String" } }
+  },
+  "librarySheetPairTitle": "Language pair",
+  "@librarySheetPairTitle": {
+    "description": "Title of the language-pair picker sheet"
+  },
+  "librarySheetPairAdd": "Add language",
+  "@librarySheetPairAdd": {
+    "description": "Add-language action in the language-pair sheet"
+  },
+  "librarySheetSortTitle": "Sort by",
+  "@librarySheetSortTitle": {
+    "description": "Title of the sort sheet"
+  },
+  "librarySortAlphaAsc": "Alphabetical A–Z",
+  "@librarySortAlphaAsc": {
+    "description": "Sort option: deck name ascending"
+  },
+  "librarySortAlphaDesc": "Alphabetical Z–A",
+  "@librarySortAlphaDesc": {
+    "description": "Sort option: deck name descending"
+  },
+  "librarySheetOverflowTitle": "Library",
+  "@librarySheetOverflowTitle": {
+    "description": "Title of the library overflow sheet"
+  },
+  "librarySheetImport": "Import cards",
+  "@librarySheetImport": {
+    "description": "Import action in the library overflow sheet"
+  },
+  "librarySheetExport": "Export cards",
+  "@librarySheetExport": {
+    "description": "Export action in the library overflow sheet"
+  },
+  "librarySheetSettings": "Settings",
+  "@librarySheetSettings": {
+    "description": "Settings action in the library overflow sheet"
+  },
+  "librarySheetLearn": "Learn new cards",
+  "@librarySheetLearn": {
+    "description": "Learn action in the per-deck play sheet"
+  },
+  "librarySheetReview": "Review · {due} due",
+  "@librarySheetReview": {
+    "description": "Review action in the per-deck play sheet, with due count",
+    "placeholders": { "due": { "type": "int" } }
+  },
+  "librarySheetBrowse": "Browse cards",
+  "@librarySheetBrowse": {
+    "description": "Browse-cards action in the per-deck play sheet"
+  },
+  "librarySheetGame": "Practice game",
+  "@librarySheetGame": {
+    "description": "Practice-game action in the per-deck play sheet"
+  },
+  "librarySheetPlayer": "Player",
+  "@librarySheetPlayer": {
+    "description": "Player action in the per-deck play sheet"
   }
 }
