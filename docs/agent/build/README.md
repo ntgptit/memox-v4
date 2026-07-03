@@ -132,7 +132,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | S.02 | [library](s02-library.md) |
 | [x] | S.03 | [deck-detail](s03-deck-detail.md) |
 | [x] | S.04 | [search](s04-search.md) |
-| [ ] | S.05 | [settings](s05-settings.md) |
+| [x] | S.05 | [settings](s05-settings.md) |
 | [ ] | S.06 | [drawer](s06-drawer.md) |
 | [ ] | S.07 | [reminder](s07-reminder.md) |
 | [ ] | S.08 | [theme](s08-theme.md) |
