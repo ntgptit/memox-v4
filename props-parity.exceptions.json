@@ -198,5 +198,10 @@
   { "component": "import/SourceCard", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via interactive/node-id; Flutter's SourceCard takes onPressed." },
 
   { "component": "export/FormatList", "prop": "selected", "reason": "fixture-parameterized", "note": "Kit hardcodes the selected format; Flutter takes the selected format." },
-  { "component": "export/FormatList", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit fixture stubs the rows; Flutter wires onSelect." }
+  { "component": "export/FormatList", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit fixture stubs the rows; Flutter wires onSelect." },
+
+  { "component": "reminder/TimeCol", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit renders the column values statically; Flutter wires onSelect for the tap." },
+  { "component": "reminder/TimeCol", "prop": "semanticLabel", "reason": "flutter-idiom", "note": "Flutter a11y label for the column; no kit prop." },
+
+  { "component": "reminder/TimePickerSheet", "prop": "onDone", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Done button; Flutter wires onDone." }
 ]
