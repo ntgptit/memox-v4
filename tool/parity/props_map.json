@@ -29,6 +29,7 @@
     "pct": ["percent"],
     "sub": ["subtitle", "caption"],
     "sel": ["selected"],
+    "tone": ["color"],
     "src": ["image", "imageUrl", "imageProvider"],
     "checked": ["value", "selected"],
     "onClick": ["onPressed", "onTap", "onSelected"],
