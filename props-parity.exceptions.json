@@ -203,5 +203,8 @@
   { "component": "reminder/TimeCol", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit renders the column values statically; Flutter wires onSelect for the tap." },
   { "component": "reminder/TimeCol", "prop": "semanticLabel", "reason": "flutter-idiom", "note": "Flutter a11y label for the column; no kit prop." },
 
-  { "component": "reminder/TimePickerSheet", "prop": "onDone", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Done button; Flutter wires onDone." }
+  { "component": "reminder/TimePickerSheet", "prop": "onDone", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Done button; Flutter wires onDone." },
+
+  { "component": "settings/ValuePickerSheet", "prop": "current", "reason": "fixture-parameterized", "note": "Kit hardcodes the selected value; Flutter takes the current value." },
+  { "component": "settings/ValuePickerSheet", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit fixture stubs the options; Flutter wires onSelect." }
 ]
