@@ -79,7 +79,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | DT.3 | [DAOs](dt3-daos.md) |
 | [x] | DT.4 | [Repository impls + mappers](dt4-repository-impls-mappers.md) |
 | [x] | DT.5 | [DI wiring (providers)](dt5-di-wiring-providers.md) |
-| [ ] | DT.6 | [Seed / sample data](dt6-seed-sample-data.md) |
+| [x] | DT.6 | [Seed / sample data](dt6-seed-sample-data.md) |
 | [ ] | DT.7 | [Service adapters (device/plugins)](dt7-service-adapters-device-plugins.md) |
 
 ### P — Primitives
