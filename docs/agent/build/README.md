@@ -117,7 +117,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | H.01 | [MxProgressBar](h01-mxprogressbar.md) |
 | [x] | H.02 | [MxSkeleton](h02-mxskeleton.md) |
 | [x] | H.03 | [MxEmptyState](h03-mxemptystate.md) |
-| [ ] | H.04 | [MxListRow](h04-mxlistrow.md) |
+| [x] | H.04 | [MxListRow](h04-mxlistrow.md) |
 | [ ] | H.05 | [MxSheet](h05-mxsheet.md) |
 | [ ] | H.06 | [MxStatRing](h06-mxstatring.md) |
 | [ ] | H.07 | [MxChoiceOption](h07-mxchoiceoption.md) |
