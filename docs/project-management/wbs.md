@@ -463,6 +463,17 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `study-result/screen` — result (standard·goal-met·goal-missed·many-wrong·finalizing·retry-finalize·finalize-error) | `presentation/features/study-result/screens/study_result_screen.dart` + `providers/study_result_providers.dart` (`StudyResultController`) | `test/presentation/features/study-result/study_result_screen_test.dart` (goal-met/missed/standard/finalize-error light+dark; head container) | S.21 | #PR |
 | kit `ResultHero`/`StreakGoalCard`/`Cta`/`FinalizingView` (4 result components) | `presentation/features/study-result/widgets/{result_hero,streak_goal_card,cta,finalizing_view}.dart` | (study-result screen test) | S.21 | #PR |
 | D-021 streak + D-010 goal head (met / missed / standard) | `study_result_providers.dart` (`streakFromHistory` + `DailyGoal.isMetBy` → `ResultHead`) | (study-result container: goal-met vs goal-missed head) | S.21 | #PR |
+| _(schema contract)_ — every table/column/index/FK ↔ rule; gates DT.1 | `docs/database/schema-contract.md` (language_pairs · decks self-FK · cards · card_meanings · srs_state · review_logs+review_outcome · study_sessions · daily_activity · settings · backup_metadata) | `node tool/verify/run.mjs --docs` (doc freshness) | DT.0 | #PR |
+
+**DT.0 gaps / notes:** documentation-only task (no Dart / build_runner / Drift test) — the
+authoritative schema DOC that gates DT.1. Maps D-001–D-011, D-013–D-021, D-023–D-026, D-028,
+D-030 to tables/columns; `D-007/D-013/D-014` are honored as **"no write"** contracts
+(practice modes touch no `srs_state`/`review_logs`/`study_sessions`). **Deferred by design**:
+`D-012` (Premium — no columns), `D-022` (folders removed — decks nest directly), `D-027`
+(sync beyond snapshot LWW — no per-record `updated_at`/tombstones in v1), persisted
+`card.audio_ref` (stays NULL, TTS live-only), and a materialized streak column (derived from
+`daily_activity`). `review_outcome` is a stored string value on `review_logs.grade`, not a
+lookup table (closed 2-value set). Soft-duplicate `D-020` ⇒ **no** unique `(deck_id, term)`.
 
 **S.21 gaps / notes:** v1 persists **day totals**, not per-session records, so the result
 is a **"today so far" summary** (the finished session's minutes/words are already folded
