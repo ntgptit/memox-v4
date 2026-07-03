@@ -473,6 +473,17 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | Seed / sample data — clean first-run (active pair + defaults) + realistic dev deck tree | `data/seed/database_seeder.dart` (`DatabaseSeeder.ensureFirstRun` / `seedSampleData`) · `data/seed/seed_providers.dart` (`databaseSeederProvider`) | `test/data/seed/database_seeder_test.dart` (first-run pair+defaults+empty · idempotent · sample tree + SRS mix) | DT.6 | #PR |
 | Service adapters (DM.8) — settings · language pair · daily activity (Drift) + audio/notifications/import-export/backup (device) | `data/services/{drift_settings_service,drift_language_pair_service,drift_daily_activity_service,device_services}.dart` · `data/models/mappers/language_pair_mapper.dart` · seam wired in `data_providers.dart` | `test/data/services/service_adapters_test.dart` (theme/game D-008 · pair add/select/remove · activity roll-up D-010 · no-op audio/reminder · clipboard · backup deferred) | DT.7 | #PR |
 | Domain test sweep — SRS + study invariants/edge cases (property-style) | `test/domain/usecases/srs/srs_invariants_test.dart` · `test/domain/usecases/study/study_invariants_test.dart` | (self) — box transition table all boxes×grades · bounds/ladder/mastery · interval monotonic · graduate determinism · D-018 intake · D-021 streak ratchet/reset + Streak invariants · D-010 activity sum | V.2 | #PR |
+| Data integration (Drift) — seed → queries → repos → use cases, one DB | `test/data/integration/data_integration_test.dart` | (self) — seed queue/search/stats align · grade D-003 propagates (queue+badge+log) · hide D-006 shifts due/hidden · delete D-024 cascades every read path · populated file round-trip | V.3 | #PR |
+
+**V.3 gaps / notes:** **cross-layer** integration scenarios over one in-memory / file Drift DB
+(the DT unit tests probe single queries; V.3 walks realistic multi-layer flows, no production
+code touched). Ties the **seeder → DAOs → repositories → study use cases**: the seeded due /
+new / search / stats reads all line up; a **`GradeCard` pass** (D-003) reschedules the card,
+empties the due queue, drops the live `watchDueCount` badge and writes the review log;
+**hiding** a due card (D-006) shifts the stats due/hidden counts; **deleting a deck** (D-024)
+cascades through *every* read path (children, `getById`, due queue, search, stats); and a
+**populated file-backed round-trip** confirms seeded data survives a close + reopen with
+`foreign_keys` re-enabled. Pure integration — no platform/golden dependency.
 
 **V.2 gaps / notes:** an **invariant/property sweep** over the SRS engine + engagement use
 cases, complementing the existing example-based tests (no production code touched). SRS:
