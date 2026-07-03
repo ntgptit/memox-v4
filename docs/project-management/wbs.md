@@ -349,6 +349,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(FE/BE fake seam)_ | `data/fakes/*.dart` (store/clock/ids + all repo+service fakes) · `data/providers/data_providers.dart` (DI seam, override-required) · `test/harness/provider_harness.dart` | `test/data/fakes/fakes_test.dart` · `test/harness/harness_smoke_test.dart` | DM.9 | #80 |
 | kit `MxButton` (.btn: primary/secondary/outline/ghost/contrast + danger/sizes) | `presentation/shared/primitives/mx_button.dart` (+ `MxTheme.primaryStrong`) | `test/presentation/shared/primitives/mx_button_test.dart` | P.01 | #81 |
 | kit `MxIconButton` (.icon-btn: plain/filled/primary + sm) | `presentation/shared/primitives/mx_icon_button.dart` | `test/presentation/shared/primitives/mx_icon_button_test.dart` | P.02 | #82 |
+| kit `MxAvatar` (.avatar: sm/md/lg · neutral/accent · ring · image/initials) | `presentation/shared/primitives/mx_avatar.dart` | `test/presentation/shared/primitives/mx_avatar_test.dart` | P.03 | #83 |
 
 **P.01 gaps (kit vs tokens):** `.btn` icon size is a raw **20px** with no matching `MxIconSize` token (18/22/28) — named `_iconSize` in the widget. Kit `sm` height **38px** < 48 a11y min — mitigated by Material's padded tap target (≥48 hit area). `.btn.primary` `shadow-fab` approximated by `elevation:0` (Material buttons can't take a token boxShadow). Pixel goldens for the button (text+shadow, platform-sensitive per T.5) are deferred to **V.1**; P.01 verifies variant→token mapping by widget assertions instead.
 
