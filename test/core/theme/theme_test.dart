@@ -15,6 +15,9 @@ void main() {
       expect(mx!.surface, MxColors.light.surface);
       expect(mx.errorSoft, MxColors.light.errorSoft);
       expect(mx.primaryStrong, MxColors.light.primaryStrong);
+      expect(mx.success, MxColors.light.success);
+      expect(mx.warning, MxColors.light.warning);
+      expect(mx.onSuccess, MxColors.light.onSuccess);
       expect(mx.focusRing, MxColors.light.focusRing);
       expect(mx.shadows, same(MxShadows.light));
     });
