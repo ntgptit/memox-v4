@@ -401,6 +401,21 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `search/filters` (Chips: status filter) | `presentation/features/search/widgets/search_chips.dart` | (search screen test, filtered) | S.04 | #111 |
 | kit `ResultRow` (search hit → shared `MxStatusCardRow` + deck line) | `presentation/features/search/widgets/result_row.dart` | (search screen test) | S.04 | #111 |
 | D-019 global card search (tokens AND, term+meaning) | `search_providers.dart` (`searchResults` → `SearchCards`) | `test/presentation/features/search/search_screen_test.dart` (results/no-results) | S.04 | #111 |
+| kit `settings/screen` — Settings hub (loaded·value-picker, D-008) | `presentation/features/settings/screens/settings_screen.dart` + `providers/settings_providers.dart` (`SettingsController`) | `test/presentation/features/settings/settings_screen_test.dart` (loaded + value-picker, light+dark) | S.05 | #112 |
+| kit `settings/profile` (Profile → local-identity card, D-027 no account) | `presentation/features/settings/widgets/profile_card.dart` | (settings screen test) | S.05 | #112 |
+| kit `settings/picker-sheet` (ValuePickerSheet, D-008 words/round) | `presentation/features/settings/widgets/value_picker_sheet.dart` | (settings screen test, value-picker) | S.05 | #112 |
+| D-008 game words-per-round mutation | `settings_providers.dart` (`SettingsController.setGameWordsPerRound` → `SettingsService.saveGameWordsPerRound`) | (settings screen test, value-picker) | S.05 | #112 |
+
+**S.05 gaps / notes:** the settings **hub** ships loaded + the **value-picker**
+(game words/round, D-008 — the one live DM.8 mutation). The kit **`group-expanded`**
+SRS sub-page is a documented gap: box count (8, D-002) and intervals are **fixed**,
+so SRS settings are informational, not editable, and there is no SRS-settings route.
+**Profile** is a **local-identity** card (MemoX wordmark + on-device subtitle) — v1
+has no account/sync (D-027 deferred), so no name/email. Language is an info row
+(selected pair or "Not set"); Word display / Voice kit rows are omitted (no v1
+setting). Reminders → S.07, Theme → S.08, Backup → export (S.11) — local file, not
+cloud. Setting streams don't fail, so the read has no error state (kit has none);
+a failed save is logged. Pixel goldens vs `shots/settings--*` deferred to V.1.
 
 **S.04 gaps / notes:** **recent searches are session-only** — there is no
 persistent recent-search store in v1, so `RecentSearches` is a `keepAlive`

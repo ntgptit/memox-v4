@@ -515,5 +515,88 @@
   "searchErrorText": "Something went wrong searching your cards. Try again.",
   "@searchErrorText": {
     "description": "Body of the search error state (local persistence)"
+  },
+
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Title of the settings screen"
+  },
+  "settingsProfileSubtitle": "Everything is stored on this device",
+  "@settingsProfileSubtitle": {
+    "description": "Subtitle of the local-identity profile card (no account in v1)"
+  },
+  "settingsSectionStudying": "Studying",
+  "@settingsSectionStudying": {
+    "description": "Section label for study-related settings"
+  },
+  "settingsSectionApp": "App",
+  "@settingsSectionApp": {
+    "description": "Section label for app-wide settings"
+  },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "Language settings row title"
+  },
+  "settingsLanguageNotSet": "Not set",
+  "@settingsLanguageNotSet": {
+    "description": "Shown when no language pair is selected"
+  },
+  "settingsSpacedRepetition": "Spaced repetition",
+  "@settingsSpacedRepetition": {
+    "description": "Spaced-repetition settings row title"
+  },
+  "settingsSpacedRepetitionSub": "8 boxes · 1·3·7·14·30·60·120 days",
+  "@settingsSpacedRepetitionSub": {
+    "description": "Spaced-repetition settings row subtitle (fixed schedule)"
+  },
+  "settingsGameSettings": "Game settings",
+  "@settingsGameSettings": {
+    "description": "Game settings row title"
+  },
+  "settingsGameSettingsSub": "{count, plural, =1{1 word per round} other{{count} words per round}}",
+  "@settingsGameSettingsSub": {
+    "description": "Game settings row subtitle: words per round",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "settingsReminders": "Reminders",
+  "@settingsReminders": {
+    "description": "Reminders settings row title"
+  },
+  "settingsRemindersSub": "Daily study reminders",
+  "@settingsRemindersSub": {
+    "description": "Reminders settings row subtitle"
+  },
+  "settingsTheme": "Theme",
+  "@settingsTheme": {
+    "description": "Theme settings row title"
+  },
+  "settingsThemeSub": "Appearance and accent colour",
+  "@settingsThemeSub": {
+    "description": "Theme settings row subtitle"
+  },
+  "settingsBackup": "Backup / Restore",
+  "@settingsBackup": {
+    "description": "Backup/restore settings row title"
+  },
+  "settingsBackupSub": "Local file · on this device",
+  "@settingsBackupSub": {
+    "description": "Backup/restore settings row subtitle (local, no cloud)"
+  },
+  "settingsWordsPerRoundTitle": "Words per round",
+  "@settingsWordsPerRoundTitle": {
+    "description": "Title of the words-per-round picker sheet"
+  },
+  "settingsWordsOption": "{count, plural, =1{1 word} other{{count} words}}",
+  "@settingsWordsOption": {
+    "description": "A words-per-round option in the picker sheet",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "settingsErrorTitle": "Couldn't load settings",
+  "@settingsErrorTitle": {
+    "description": "Title of the settings error state"
+  },
+  "settingsErrorText": "Something went wrong loading your settings. Try again.",
+  "@settingsErrorText": {
+    "description": "Body of the settings error state (local persistence)"
   }
 }

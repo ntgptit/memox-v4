@@ -8,6 +8,7 @@ import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_scree
 import 'package:memox_v4/presentation/features/deck-detail/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
+import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -58,7 +59,14 @@ GoRouter router(Ref ref) {
           ),
           _branch(Routes.add),
           _branch(Routes.stats),
-          _branch(Routes.profile),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.profile,
+                builder: (context, state) => const SettingsScreen(),
+              ),
+            ],
+          ),
         ],
       ),
       // Full-screen routes (rendered above the shell — no bottom nav).
