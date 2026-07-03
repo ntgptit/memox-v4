@@ -210,5 +210,15 @@
 
   { "component": "statistics/Donut", "prop": "label", "reason": "fixture-parameterized", "note": "Kit hardcodes the 'accuracy' caption; Flutter takes it as label:String." },
 
-  { "component": "statistics/Heatmap", "prop": "days", "reason": "fixture-parameterized", "note": "Kit hardcodes the intensity pattern; Flutter takes days (the real study-day data)." }
+  { "component": "statistics/Heatmap", "prop": "days", "reason": "fixture-parameterized", "note": "Kit hardcodes the intensity pattern; Flutter takes days (the real study-day data)." },
+
+  { "component": "theme/AccentPicker", "prop": "swatches", "reason": "flutter-idiom", "note": "Kit passes the accent palette; Flutter's AccentPicker defines it internally." },
+  { "component": "theme/AccentPicker", "prop": "accent", "reason": "flutter-idiom", "note": "Kit's selected accent index; Flutter names it `selected`." },
+  { "component": "theme/AccentPicker", "prop": "selected", "reason": "flutter-idiom", "note": "The Flutter name for the kit `accent` selected index." },
+  { "component": "theme/AccentPicker", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit stubs the swatches with node ids; Flutter wires onSelect." },
+
+  { "component": "theme/PreviewCard", "prop": "termSize", "reason": "flutter-idiom", "note": "Kit passes a CSS font size; Flutter uses a `fontScale` factor." },
+  { "component": "theme/PreviewCard", "prop": "accentColor", "reason": "flutter-idiom", "note": "Kit's accent color; Flutter names it `accent`." },
+  { "component": "theme/PreviewCard", "prop": "fontScale", "reason": "flutter-idiom", "note": "The Flutter scale-factor form of the kit `termSize`." },
+  { "component": "theme/PreviewCard", "prop": "accent", "reason": "flutter-idiom", "note": "The Flutter name for the kit `accentColor`." }
 ]
