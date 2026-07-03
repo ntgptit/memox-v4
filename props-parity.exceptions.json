@@ -24,5 +24,9 @@
   { "component": "game-typing/CharCompare", "prop": "typed", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample typed answer (친고) as a fixture; Flutter takes typed:String." },
   { "component": "game-typing/CharCompare", "prop": "correct", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample correct term (친구) as a fixture; Flutter takes correct:String." },
   { "component": "game-typing/InputBox", "prop": "tone", "reason": "enum-base-expansion", "note": "InputBoxTone adds 'neutral' — the base border the kit expresses by omitting tone." },
-  { "component": "game-typing/InputBox", "prop": "placeholder", "reason": "flutter-idiom", "note": "Flutter's InputBox takes a child (a TextField while typing); the placeholder belongs to that field, not the box." }
+  { "component": "game-typing/InputBox", "prop": "placeholder", "reason": "flutter-idiom", "note": "Flutter's InputBox takes a child (a TextField while typing); the placeholder belongs to that field, not the box." },
+
+  { "component": "game-mc/PromptCard", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample term (학교) as a static fixture; Flutter takes term:String." },
+  { "component": "game-mc/PromptCard", "prop": "onAudio", "reason": "fixture-parameterized", "note": "Kit fixture stubs the audio button with a literal node id; Flutter wires the real onAudio callback." },
+  { "component": "game-mc/PromptCard", "prop": "onEdit", "reason": "fixture-parameterized", "note": "Kit fixture stubs the edit button with a literal node id; Flutter wires the real onEdit callback." }
 ]
