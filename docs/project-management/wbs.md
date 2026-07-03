@@ -451,6 +451,23 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `review/TermCard` (term + audio; "Playing…" while audio) | `presentation/features/review/widgets/term_card.dart` | (review screen test) | S.18 | #PR |
 | kit `review/MeaningCard` (meaning + inline edit) | `presentation/features/review/widgets/meaning_card.dart` | (review screen test, edit state) | S.18 | #PR |
 | review browse + inline meaning edit (`SaveCard`) | `review_providers.dart` (deck-tree card walk; next/prev/startEdit/cancelEdit/saveEdit/playAudio) | (review screen test, save-edit persists) | S.18 | #PR |
+| kit `player/screen` — auto-play reader (playing·paused·speed·end·empty·error) | `presentation/features/player/screens/player_screen.dart` + `providers/player_providers.dart` (`PlayerController`) | `test/presentation/features/player/player_screen_test.dart` (playing/pause/speed/end/empty light+dark; next-speaks-clamps + setSpeed container) | S.19 | #PR |
+| kit `player/Dots` (8-dot deck progress) | `presentation/features/player/widgets/dots.dart` | (player screen test) | S.19 | #PR |
+| kit `player/PlayerCard` (term + rule + meaning) | `presentation/features/player/widgets/player_card.dart` | (player screen test) | S.19 | #PR |
+| player transport + speak (DM.8 `AudioService`) | `player_providers.dart` (deck-tree card walk; playPause/next/prev/replay/toggleSpeedControl/setSpeed; `speak`/`stop`) | (player screen test, speak on open + on next) | S.19 | #PR |
+
+**S.19 gaps / notes:** the player reads the **whole library** (deck-tree walk) — the route
+carries no deck id (deck scoping deferred, as the games/review). It reads the **term**
+aloud via `AudioService.speak` (DM.8, fixed `ko`); the meaning is shown, not spoken.
+**Automatic advance-on-speech-end is deferred to DT.7** — the fake TTS has no completion
+event, so v1 wires the **manual transport** (prev · play/pause · next) with a per-card
+speak, and `playing` is the transport/visual state (opening auto-speaks the first card and
+shows the pause icon). The **speed** control is **session-only** and **not applied** — the
+`AudioService` seam has no rate parameter (documented gap; the segmented control records
+the choice for when DT.7 adds a rate). The 8-dot indicator maps the cursor over the deck
+(`activeDot`). The app-bar **format_size** / **more_vert** controls are **omitted** (no v1
+menu — dead icon buttons are worse a11y). A zero-card **empty** state is added. **Replay**
+restarts; **Close** pops. Playback records no `StudySession`. Pixel goldens deferred to V.1.
 
 **S.18 gaps / notes:** review browses the **whole library** (deck-tree walk) — the route
 carries no deck id, so the kit's "every card in this **deck**" is library-wide (deck
