@@ -1,0 +1,70 @@
+{
+  "_doc": "F.0 props-parity config. How props_check.mjs maps a kit .d.ts prop-set to a Flutter widget constructor param-set before diffing. Schema + rationale: tool/parity/README.md. Verified against components/{core,navigation,surfaces}/*.d.ts + lib/presentation/shared/**. Add a NEW alias only when it is a real convention (applies to many components); a one-off belongs in props-parity.exceptions.json, not here.",
+
+  "componentsRoot": "docs/design/MemoX Design System/components",
+  "featuresRoot": "docs/design/MemoX Design System/ui_kits/memox-app/_features",
+  "sharedRoot": "docs/design/MemoX Design System/ui_kits/memox-app/_shared",
+  "flutterSharedRoot": "lib/presentation/shared",
+  "flutterFeaturesRoot": "lib/presentation/features",
+
+  "fileAlias": {
+    "_comment": "kit component key (relativeDir/PascalName) -> Flutter class+file when the default snake_case(PascalName) diverges. Key uses the kit dir so same-named components in different dirs (game-recall/TermCard vs review/TermCard) stay distinct.",
+    "dashboard/ContinueCard": { "class": "ContinueDeckCard", "file": "continue_deck_card.dart" },
+    "dashboard/TodaySummary": { "class": "TodaySummary", "file": "today_summary.dart" },
+    "import/Table": { "class": "ImportTable", "file": "import_table.dart" },
+    "settings/Profile": { "class": "ProfileCard", "file": "profile_card.dart" },
+    "search/Chips": { "class": "SearchChips", "file": "search_chips.dart" },
+    "_shared/ActionCallout": { "class": "ActionCallout", "file": "composites/action_callout.dart" },
+    "_shared/ConfirmDialog": { "class": "ConfirmDialog", "file": "composites/confirm_dialog.dart" },
+    "_shared/StatusCardRow": { "class": "StatusCardRow", "file": "composites/status_card_row.dart" }
+  },
+
+  "propNameAlias": {
+    "_comment": "web .d.ts prop name -> ordered list of accepted Flutter param names. A kit prop is SATISFIED if the ctor declares ANY name in its list. 'children'/'label' resolve to text (label/text) OR a node slot (child); the checker picks whichever the ctor actually has.",
+    "children": ["label", "child", "text", "title"],
+    "label": ["label", "text", "title"],
+    "text": ["text", "label"],
+    "onClick": ["onPressed", "onTap", "onSelected"],
+    "onSelect": ["onSelected", "onPressed", "onTap"],
+    "onChange": ["onChanged", "onSelected"],
+    "ariaLabel": ["semanticLabel", "tooltip", "label"]
+  },
+
+  "propDrop": {
+    "_comment": "web-only props with no Flutter meaning. Present in .d.ts (correct for the kit) but the checker drops them before diffing — never a MISSING_IN_FLUTTER. Reason class: web-only.",
+    "names": ["node", "className", "style", "key", "type", "role", "tabIndex", "id"]
+  },
+
+  "typeMap": {
+    "_comment": "web .d.ts type -> Flutter type, for the OPTIONALITY/type dimension. icon strings (Material Symbols name) become IconData; ReactNode slots become Widget; callbacks become VoidCallback.",
+    "string@icon": "IconData",
+    "string@trailingIcon": "IconData",
+    "ReactNode": "Widget",
+    "() => void": "VoidCallback",
+    "boolean": "bool",
+    "number": "int",
+    "string": "String"
+  },
+
+  "enumValueAlias": {
+    "_comment": "kit union literal -> Flutter enum value name (naming only; membership/extra-value is judged by the checker). 'kebabToCamel: true' additionally normalizes any 'a-b-c' literal to 'aBC' generically, so only truly irregular names need listing here.",
+    "kebabToCamel": true,
+    "map": {
+      "sm": "small",
+      "md": "medium",
+      "lg": "large",
+      "xs": "extraSmall",
+      "xl": "extraLarge"
+    }
+  },
+
+  "enumBaseNote": "Flutter enums frequently add ONE base value the kit expresses by omitting the prop (kit tone 'success|warning|error' -> MxBadgeTone {neutral,success,warning,error}; kit variant 'accent|ghost' -> MxChipVariant {standard,accent,ghost}). The checker does NOT auto-accept extra Flutter enum values — each extra must be recorded once in props-parity.exceptions.json with reason 'enum-base-expansion'. This keeps the map naming-only and forces extras to be reviewed.",
+
+  "diffDimensions": {
+    "_comment": "what props_check compares after aliasing. Each can be advisory (P0/P1) or blocking (after Z.0).",
+    "MISSING_IN_FLUTTER": "kit prop (post-alias, post-drop) has no matching Flutter param",
+    "EXTRA_IN_FLUTTER": "Flutter param with no kit prop and not a declared base/flutter-only exception",
+    "ENUM_MISMATCH": "kit union values (post enumValueAlias) not a subset of Flutter enum values, or vice-versa beyond a declared base",
+    "OPTIONALITY_MISMATCH": "kit '?:' optional vs Flutter 'required'/non-null (or kit required vs Flutter optional-with-default)"
+  }
+}
