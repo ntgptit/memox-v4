@@ -120,7 +120,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | H.04 | [MxListRow](h04-mxlistrow.md) |
 | [x] | H.05 | [MxSheet](h05-mxsheet.md) |
 | [x] | H.06 | [MxStatRing](h06-mxstatring.md) |
-| [ ] | H.07 | [MxChoiceOption](h07-mxchoiceoption.md) |
+| [x] | H.07 | [MxChoiceOption](h07-mxchoiceoption.md) |
 | [ ] | H.08 | [Component gallery + golden gate](h08-component-gallery-golden-gate.md) |
 
 ### S — Screens
