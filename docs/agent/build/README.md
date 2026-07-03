@@ -72,7 +72,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 
 | done | id | task |
 | --- | --- | --- |
-| [ ] | DT.0 | [Database schema contract](dt0-database-schema-contract.md) |
+| [x] | DT.0 | [Database schema contract](dt0-database-schema-contract.md) |
 | [ ] | DT.0.1 | [Persistence safety policy](dt01-persistence-safety-policy.md) |
 | [ ] | DT.1 | [Drift schema & tables](dt1-drift-schema-tables.md) |
 | [ ] | DT.2 | [Migrations & versioning](dt2-migrations-versioning.md) |
