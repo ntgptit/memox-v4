@@ -381,6 +381,26 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `dashboard/deck-N` (ContinueCard, due-deck row) | `presentation/features/dashboard/widgets/continue_deck_card.dart` | (dashboard screen test) | S.01 | #108 |
 | D-021/BR-3 streak read model (current + longest from activity history) | `domain/usecases/stats/streak_summary.dart` (`streakFromHistory`) | `test/domain/usecases/stats/streak_summary_test.dart` | S.01 | #108 |
 | kit `Note` primary-soft tone (empty-state banner) | `presentation/shared/composites/action_callout.dart` (`MxCalloutTone.primary`) | (dashboard screen test, empty state) | S.01 | #108 |
+| kit `library/screen` — Library (loading·empty·loaded·error) | `presentation/features/library/screens/library_screen.dart` + `providers/library_providers.dart` (`LibraryController`, `LibrarySort`) | `test/presentation/features/library/library_screen_test.dart` (4 states + sort + sheets, light+dark) | S.02 | #109 |
+| kit `library/appbar` (LibraryHeader) | `presentation/features/library/widgets/library_header.dart` | (library screen test) | S.02 | #109 |
+| kit `library/context` (ContextBar: search·pair·sort) | `presentation/features/library/widgets/context_bar.dart` | (library screen test) | S.02 | #109 |
+| kit `library/node-N` (DeckRow, D-019 tree) | `presentation/features/library/widgets/library_node_card.dart` | (library screen test) | S.02 | #109 |
+| kit `library/pair-sheet` (PairPickerSheet, D-030) | `presentation/features/library/widgets/pair_picker_sheet.dart` | (library screen test) | S.02 | #109 |
+| kit `library/sort-sheet` (SortSheet, name orders) | `presentation/features/library/widgets/sort_sheet.dart` | `library_screen_test.dart` (sort sheet + order) | S.02 | #109 |
+| kit `library/overflow-sheet` (OverflowMenuSheet) | `presentation/features/library/widgets/overflow_menu_sheet.dart` | `library_screen_test.dart` (overflow sheet) | S.02 | #109 |
+| kit `library/play-sheet` (per-deck PlaySheet) | `presentation/features/library/widgets/play_sheet.dart` | (library screen test) | S.02 | #109 |
+
+**S.02 gaps / notes:** `search-active` (→ S.04 search) and `drawer` (→ S.06)
+kit states are owned by their sibling screens — the library search/menu buttons
+**navigate** there rather than re-implementing them. Sort options are limited to
+**name A–Z / Z–A**: the deck row carries no created/last-studied columns (deck
+spec), so those two kit sort options are undrivable and omitted. The overflow
+"Select multiple" item is omitted (no multi-select mode in v1). Node icon/tone are
+presentational (the `Deck` entity has no art — folder vs deck derives from having
+child decks; tone cycles a palette). The deck-row layout duplicates the
+dashboard's `ContinueCard` pattern (kit shares one `DeckRow`); converging both to a
+shared `MxDeckRow` is a deferred cleanup. `FakeHarness` gained an optional
+`deckRepository` (mirrors the `activity` seam) so screens can drive loading/error.
 
 **S.01 gaps / notes:** deck rows have no kit-authored icon/tone (the `Deck` entity
 carries none) — the screen cycles a fixed presentational palette by position. The

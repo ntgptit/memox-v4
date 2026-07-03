@@ -5,6 +5,7 @@ import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
+import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -45,7 +46,14 @@ GoRouter router(Ref ref) {
               ),
             ],
           ),
-          _branch(Routes.library),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.library,
+                builder: (context, state) => const LibraryScreen(),
+              ),
+            ],
+          ),
           _branch(Routes.add),
           _branch(Routes.stats),
           _branch(Routes.profile),
