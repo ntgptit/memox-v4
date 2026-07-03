@@ -366,6 +366,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `ConfirmDialog` (icon + title + text + action row; caller owns copy) | `presentation/shared/composites/confirm_dialog.dart` (`showMxConfirmDialog`) | `test/presentation/shared/composites/confirm_dialog_test.dart` | K.10 | #97 |
 | kit `StatusCardRow` (term+meaning+deck+status badge; hidden/tight/truncate) | `presentation/shared/composites/status_card_row.dart` (`MxStatusCardRow`) · ARB `cardStatus*`/`cardHidden` | `test/presentation/shared/composites/status_card_row_test.dart` | K.11 | #98 |
 | kit `ProgressBar` helper (determinate bar on sunken track) | `presentation/shared/primitives/mx_progress_bar.dart` | `test/presentation/shared/primitives/mx_progress_bar_test.dart` | H.01 | #99 |
+| kit `Skeleton` helper (pulsing sunken placeholder; reduce-motion aware) | `presentation/shared/primitives/mx_skeleton.dart` | `test/presentation/shared/primitives/mx_skeleton_test.dart` | H.02 | #100 |
 
 **P.01 gaps (kit vs tokens):** `.btn` icon size is a raw **20px** with no matching `MxIconSize` token (18/22/28) — named `_iconSize` in the widget. Kit `sm` height **38px** < 48 a11y min — mitigated by Material's padded tap target (≥48 hit area). `.btn.primary` `shadow-fab` approximated by `elevation:0` (Material buttons can't take a token boxShadow). Pixel goldens for the button (text+shadow, platform-sensitive per T.5) are deferred to **V.1**; P.01 verifies variant→token mapping by widget assertions instead.
 
