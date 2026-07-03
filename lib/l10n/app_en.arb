@@ -25,5 +25,22 @@
   "routeNotFoundTitle": "Page not found",
   "@routeNotFoundTitle": {
     "description": "Title on the fallback screen shown for an unknown or broken route"
+  },
+
+  "cardStatusNew": "New",
+  "@cardStatusNew": {
+    "description": "Status badge for a card that has not yet been scheduled"
+  },
+  "cardStatusDue": "Due",
+  "@cardStatusDue": {
+    "description": "Status badge for a card that is due for review"
+  },
+  "cardStatusMastered": "Mastered",
+  "@cardStatusMastered": {
+    "description": "Status badge for a card that has reached the top Leitner box"
+  },
+  "cardHidden": "Hidden",
+  "@cardHidden": {
+    "description": "Accessible label for the icon marking a hidden card"
   }
 }
