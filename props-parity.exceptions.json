@@ -28,5 +28,8 @@
 
   { "component": "game-mc/PromptCard", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample term (학교) as a static fixture; Flutter takes term:String." },
   { "component": "game-mc/PromptCard", "prop": "onAudio", "reason": "fixture-parameterized", "note": "Kit fixture stubs the audio button with a literal node id; Flutter wires the real onAudio callback." },
-  { "component": "game-mc/PromptCard", "prop": "onEdit", "reason": "fixture-parameterized", "note": "Kit fixture stubs the edit button with a literal node id; Flutter wires the real onEdit callback." }
+  { "component": "game-mc/PromptCard", "prop": "onEdit", "reason": "fixture-parameterized", "note": "Kit fixture stubs the edit button with a literal node id; Flutter wires the real onEdit callback." },
+
+  { "component": "game-matching/Tile", "prop": "tone", "reason": "enum-base-expansion", "note": "MatchTone adds 'none' — the neutral base the kit expresses by omitting tone." },
+  { "component": "game-matching/Tile", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via node-id delegation; Flutter's MatchTileView takes an explicit onPressed callback." }
 ]
