@@ -469,6 +469,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | Migrations & versioning — forward-only strategy + versioned schema snapshot + round-trip tests (R3) | `app_database.dart` (`MigrationStrategy` onCreate + onUpgrade scaffold + `foreign_keys=ON`) · `drift_schemas/drift_schema_v1.json` · `test/data/migration/generated/*` | `test/data/migration/schema_migration_test.dart` (version==latest · runtime schema matches snapshot · close/reopen round-trip + FK on) | DT.2 | #PR |
 | DAOs — due queue · new queue · term+meaning search (D-019/D-028) · deck tree + subtree stats (D-009) · due count | `data/datasources/local/dao/{deck_dao,card_dao,review_dao}.dart` (typed Drift queries; `@DataClassName('…Row')` keeps rows distinct from domain entities) | `test/data/datasources/local/dao_test.dart` (children/subtree/stats · watchByDeck/meanings/search AND+hidden+scope · dueQueue/newQueue/currentBox/dueCount) | DT.3 | #PR |
 | Repository impls + mappers — DM.3 over the DAOs; row↔entity at the boundary | `data/repositories/drift_{deck,card,review,settings}_repository.dart` · `data/models/mappers/{deck,card,srs,time}_mapper.dart` | `test/data/repositories/drift_repositories_test.dart` (deck save/watch/stats/cascade · card save-txn/edit/hidden/search · review schedule/queues/log/count · settings goal+new/day) | DT.4 | #PR |
+| DI wiring — the seam flips repositories from fakes to Drift (DT.5) | `data/providers/database_provider.dart` (`appDatabaseProvider`, keepAlive file DB) · `data/providers/data_providers.dart` (deck/card/review/settings → Drift impls; services still override-only, DT.7) | `test/data/providers/di_wiring_test.dart` (seam resolves to Drift impls · reads/writes the DB · one shared AppDatabase) | DT.5 | #PR |
+
+**DT.5 gaps / notes:** the four **repository** seam providers now default to their Drift impls
+over a single `appDatabaseProvider` (a keepAlive Drift DB opened lazily on a file via
+path_provider; tests override it with `AppDatabase.memory()` so the plugin/file path never
+runs under `flutter test`). Screens are unchanged — this is the seam that flips them from
+fakes to real data (the FakeHarness still overrides the repos with fakes, so all screen tests
+stay on fakes). The **device/plugin services** (`settingsService`, `audioService`,
+`languagePairService`, `dailyActivityService`, reminder/import-export/backup) remain
+**override-only** (no default) until the **DT.7** adapters — a bare read still throws "must be
+overridden" (the harness smoke test now asserts this against a service, since repos no longer
+throw). The app is not fully runnable end-to-end until DT.6 (seed the active language pair the
+deck FK needs) + DT.7 (service adapters) land.
 
 **DT.4 gaps / notes:** implements the four DM.3 repository interfaces over the DT.3 DAOs
 with pure **row→entity mappers** (write-side companions built in the repos, since they need
