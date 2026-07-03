@@ -39,7 +39,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | [x] | C.20 | settings | 2 |
 | [x] | C.21 | statistics | 3 |
 | [x] | C.22 | theme | 2 |
-| [ ] | C.23 | account-sync (deferred Flutter) | 3 |
+| [x] | C.23 | account-sync (deferred Flutter) | 3 |
 
 ## P2 — Seal
 
