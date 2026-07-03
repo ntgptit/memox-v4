@@ -1,0 +1,18 @@
+[
+  { "component": "core/MxBadge", "prop": "tone", "reason": "enum-base-expansion", "note": "MxBadgeTone adds 'neutral' — the base badge the kit expresses by omitting tone." },
+  { "component": "core/MxButton", "prop": "size", "reason": "enum-base-expansion", "note": "MxButtonSize adds 'medium' — the base size (kit sm/lg + unstated base)." },
+  { "component": "core/MxChip", "prop": "variant", "reason": "enum-base-expansion", "note": "MxChipVariant adds 'standard' — the outlined base chip the kit expresses by omitting variant." },
+  { "component": "surfaces/MxIconTile", "prop": "tone", "reason": "enum-base-expansion", "note": "MxIconTileTone adds 'primary' — the base tile tone." },
+
+  { "component": "core/MxButton", "prop": "disabled", "reason": "flutter-idiom", "note": "Flutter disables via onPressed:null, not a bool — the idiomatic disabled state." },
+  { "component": "core/MxSwitch", "prop": "disabled", "reason": "flutter-idiom", "note": "Flutter disables via onChanged:null, not a bool." },
+  { "component": "navigation/MxFab", "prop": "semanticLabel", "reason": "flutter-idiom", "note": "Flutter a11y label for the icon-only FAB; no kit prop (kit relies on aria on the DOM node)." },
+  { "component": "navigation/MxSearchDock", "prop": "value", "reason": "flutter-idiom", "note": "Flutter holds the query in a TextEditingController, not a value prop." },
+  { "component": "navigation/MxSearchDock", "prop": "controller", "reason": "flutter-idiom", "note": "TextField idiom — Flutter's stand-in for the kit's value/onChange pair." },
+  { "component": "navigation/MxSearchDock", "prop": "focusNode", "reason": "flutter-idiom", "note": "TextField idiom — focus control has no web-prop equivalent." },
+  { "component": "surfaces/MxCard", "prop": "interactive", "reason": "flutter-idiom", "note": "Flutter enables hover/press by passing onPressed, not a bool flag." },
+  { "component": "surfaces/MxCard", "prop": "semanticLabel", "reason": "flutter-idiom", "note": "Flutter a11y label for an interactive card; no kit prop." },
+  { "component": "surfaces/MxSectionHeader", "prop": "action", "reason": "flutter-idiom", "note": "Flutter decomposes the kit's ReactNode action slot into actionLabel + onAction." },
+  { "component": "surfaces/MxSectionHeader", "prop": "actionLabel", "reason": "flutter-idiom", "note": "Half of the decomposed action slot (see MxSectionHeader/action)." },
+  { "component": "surfaces/MxSectionHeader", "prop": "onAction", "reason": "flutter-idiom", "note": "Half of the decomposed action slot (see MxSectionHeader/action)." }
+]
