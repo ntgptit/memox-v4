@@ -15,6 +15,12 @@ docs/agent/build/**      text eol=lf
 *.ttf                    binary
 *.otf                    binary
 *.png                    binary
+# Web Drift runtime assets — the wasm is binary; the worker must not be
+# CRLF-mangled (fetched by tool/web/fetch_db_assets.mjs, pinned to pubspec.lock).
+*.wasm                   binary
+web/drift_worker.js      binary
+# Web DB fetch tool — LF everywhere.
+tool/web/*.mjs           text eol=lf
 # Git hooks + CI workflows — LF everywhere (a CRLF shebang breaks `/bin/sh` hooks).
 .githooks/*              text eol=lf
 .github/workflows/*      text eol=lf
