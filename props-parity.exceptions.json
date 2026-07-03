@@ -141,5 +141,31 @@
   { "component": "deck-detail/SubDeckCard", "prop": "index", "reason": "flutter-idiom", "note": "Kit uses index only to build the export node id; no Flutter equivalent." },
   { "component": "deck-detail/SubDeckCard", "prop": "info", "reason": "flutter-idiom", "note": "The deck model (Flutter names it `info` rather than `deck`)." },
   { "component": "deck-detail/SubDeckCard", "prop": "tone", "reason": "flutter-idiom", "note": "Kit carries tone inside the deck object; Flutter takes it as a separate param." },
-  { "component": "deck-detail/SubDeckCard", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via interactive/node-id; Flutter's SubDeckCard takes onPressed." }
+  { "component": "deck-detail/SubDeckCard", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via interactive/node-id; Flutter's SubDeckCard takes onPressed." },
+
+  { "component": "library/ContextBar", "prop": "onSearch", "reason": "fixture-parameterized", "note": "Kit fixture stubs the search button; Flutter wires onSearch." },
+  { "component": "library/ContextBar", "prop": "onPair", "reason": "fixture-parameterized", "note": "Kit fixture stubs the pair button; Flutter wires onPair." },
+  { "component": "library/ContextBar", "prop": "onSort", "reason": "fixture-parameterized", "note": "Kit fixture stubs the sort button; Flutter wires onSort." },
+
+  { "component": "library/LibraryHeader", "prop": "onMenu", "reason": "fixture-parameterized", "note": "Kit fixture stubs the menu button; Flutter wires onMenu." },
+  { "component": "library/LibraryHeader", "prop": "onOverflow", "reason": "fixture-parameterized", "note": "Kit fixture stubs the overflow button; Flutter wires onOverflow." },
+
+  { "component": "library/OverflowMenuSheet", "prop": "onImport", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Import item; Flutter wires onImport." },
+  { "component": "library/OverflowMenuSheet", "prop": "onExport", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Export item; Flutter wires onExport." },
+  { "component": "library/OverflowMenuSheet", "prop": "onSettings", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Settings item; Flutter wires onSettings." },
+
+  { "component": "library/PairPickerSheet", "prop": "pairs", "reason": "fixture-parameterized", "note": "Kit hardcodes the pair list; Flutter takes pairs." },
+  { "component": "library/PairPickerSheet", "prop": "selectedId", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the selected pair id." },
+  { "component": "library/PairPickerSheet", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit fixture stubs the items; Flutter wires onSelect." },
+  { "component": "library/PairPickerSheet", "prop": "onAdd", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Add language item; Flutter wires onAdd." },
+
+  { "component": "library/PlaySheet", "prop": "node", "reason": "fixture-parameterized", "note": "Kit hardcodes the deck title; Flutter takes the deck node/model." },
+  { "component": "library/PlaySheet", "prop": "onLearn", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Learn item; Flutter wires onLearn." },
+  { "component": "library/PlaySheet", "prop": "onReview", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Review item; Flutter wires onReview." },
+  { "component": "library/PlaySheet", "prop": "onBrowse", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Browse item; Flutter wires onBrowse." },
+  { "component": "library/PlaySheet", "prop": "onGame", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Game item; Flutter wires onGame." },
+  { "component": "library/PlaySheet", "prop": "onPlayer", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Player item; Flutter wires onPlayer." },
+
+  { "component": "library/SortSheet", "prop": "current", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the current sort." },
+  { "component": "library/SortSheet", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit fixture stubs the options; Flutter wires onSelect." }
 ]
