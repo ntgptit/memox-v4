@@ -45,7 +45,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 
 | | ID | Task |
 |---|---|---|
-| [ ] | Z.0 | props_check → blocking trong verify gate |
+| [x] | Z.0 | props_check → blocking trong verify gate |
 | [ ] | Z.1 | wiring-guard test `props_check_gate_test.dart` |
 | [ ] | Z.2 | docs + ledger tổng |
 
