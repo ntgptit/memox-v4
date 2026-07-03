@@ -410,6 +410,57 @@ sang tiền đề.)*
 
 ---
 
+## PHẦN D.5 — PROPS PARITY: GÁC TRỤC API BẰNG `.d.ts` (bổ sung sau convert)
+
+> Sau khi convert xong, ta thêm một trục gate nữa: **contract props typed**. Mỗi
+> component kit có một `<Component>.d.ts` (interface props), và một checker so nó
+> với **constructor widget Flutter**. Trước đó "props có khớp không" chỉ là
+> đọc-JSX-nhớ-đủ-không; giờ nó là **gate chặn merge**. Kế hoạch đầy đủ:
+> [`docs/agent/props-parity/WBS.md`](../agent/props-parity/WBS.md); công cụ:
+> [`tool/parity/README.md`](../../tool/parity/README.md).
+
+**Cách làm.** 3 phase: **P0** dựng checker (`props_check.mjs`) + config alias
+(`props_map.json`) một lần, **hiệu chuẩn trên 15 shared component đã có sẵn cả
+`.d.ts` lẫn widget** (chứng minh checker đúng trước khi mass-author); **P1** author
+`.d.ts` cho 68 component còn lại theo từng feature (1 feature = 1 firing = 1 PR),
+mỗi cái chạy checker rồi resync widget HOẶC ghi exception; **P2** lật checker sang
+`--strict` **blocking** trong verify gate + test wiring-guard + doc/ledger.
+
+**Nguyên nhân / Giải thích.** `.d.ts` đóng ba thứ mà JSX để mở: (1) **không gian
+giá trị enum** (`variant?: 'a'|'b'`), (2) **optional/required/default**, (3)
+**ý định từng prop** (JSDoc). Với leaf stateless, đó gần như toàn bộ hợp đồng.
+Nhưng nó **chỉ gác trục API** — tên prop, enum, optionality — **KHÔNG** gác thị
+giác (padding/màu/layout/state); đó vẫn là việc của DOM spec. Nói rõ giới hạn này
+để không ai kỳ vọng sai.
+
+**Kết quả.** 83 component (68 author + 15 shared) · **0 undeclared drift** ·
+`props_check --strict` xanh. Đáng chú ý: **không phải resync widget Flutter nào** —
+các widget viết tay trong lần-2 vốn đã khớp contract (chỉ khác ở các idiom/fixture
+được ghi exception). Đây là bằng chứng định lượng cho luận điểm "hỏi kit trước rồi
+mới viết code": FE sinh-từ-kit khớp API kit gần như tuyệt đối.
+
+**Điểm cần chú ý (bài học riêng của trục props):**
+- **Exception phải typed + đóng, không phải sổ nợ.** Reason nằm trong tập đóng
+  (`web-only`, `enum-base-expansion`, `flutter-idiom`, `deferred-screen`,
+  `flutter-only`, `fixture-parameterized`, `flutter-helper`); checker **fail nếu
+  reason lạ hoặc thiếu `note`** — chính là cách né lại vết xe `intent-ledger` lần 1.
+- **Fixture tĩnh là một lớp lớn.** Nhiều component kit hardcode nội dung mẫu (친구,
+  "Linh Tran") + node id để generator parity thấy DOM thật; Flutter tham số hoá
+  chúng → `fixture-parameterized`. Không phải drift.
+- **Idiom nền tảng ≠ drift.** `disabled`→`onPressed:null`, string-state→`bool`,
+  object `g`→field rời, controller/onChanged của TextField, dialog→`show()` helper
+  / hàm tự do → `flutter-idiom` / `flutter-helper`.
+- **Trùng tên khác dir** (`game-recall/TermCard` vs `review/TermCard`): checker map
+  theo **feature dir**, không chỉ tên class.
+- **Enum forwarded qua file khác** (ResultHero.tone → MxIconTileTone) suýt lọt —
+  parser chỉ đọc enum cùng file. Phải index enum toàn `lib/` mới bắt được. Đây là
+  false-negative điển hình chỉ lộ ra khi lật gate sang blocking.
+- **Bug parser đã trả học phí:** tách statement `.d.ts` phải tôn trọng `;` lồng
+  trong `{}` (object type) và không nhầm `>` trong `=>`; keyword `required` chỉ là
+  modifier đầu token, không phải field tên `required`.
+
+---
+
 ## PHẦN E — CHECKLIST RÚT GỌN CHO DỰ ÁN KIT→FLUTTER SAU
 
 **Thiết kế kit (trước khi viết dòng Flutter nào):**
@@ -435,3 +486,7 @@ sang tiền đề.)*
 - [ ] Backend lật qua seam, chứng minh 0 dòng screen đổi.
 - [ ] Sweep verification: invariants domain, integration data, E2E qua provider thật,
       a11y, responsive — mỗi thứ một task có ledger.
+- [ ] **Props parity**: mỗi component kit có `.d.ts` (interface props); checker so
+      với constructor Flutter, `--strict` blocking trong gate; lệch có chủ đích là
+      exception **typed + reason đóng** (không phải sổ nợ). Gác trục API, không gác
+      thị giác. Xem PHẦN D.5.
