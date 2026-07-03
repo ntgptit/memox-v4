@@ -161,6 +161,6 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | V.4 | [End-to-end study flow](v4-end-to-end-study-flow.md) |
 | [x] | V.5 | [Accessibility pass](v5-accessibility-pass.md) |
 | [x] | V.6 | [Responsive check](v6-responsive-check.md) |
-| [ ] | V.7 | [design-sync → regenerate → gate loop](v7-design-sync-regenerate-gate-loop.md) |
+| [x] | V.7 | [design-sync → regenerate → gate loop](v7-design-sync-regenerate-gate-loop.md) |
 
 _Regenerate: `node tool/design/gen_task_prompts.mjs`._
