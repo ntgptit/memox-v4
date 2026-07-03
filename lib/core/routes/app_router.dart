@@ -5,6 +5,7 @@ import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
+import 'package:memox_v4/presentation/features/deck-detail/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -39,8 +40,8 @@ GoRouter router(Ref ref) {
                 routes: [
                   GoRoute(
                     path: Routes.deckDetailPattern,
-                    builder: (context, state) => RouteStub(
-                        Routes.deckDetail(state.pathParameters['deckId'] ?? '')),
+                    builder: (context, state) => DeckDetailScreen(
+                        deckId: state.pathParameters['deckId'] ?? ''),
                   ),
                 ],
               ),

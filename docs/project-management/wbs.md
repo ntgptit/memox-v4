@@ -389,6 +389,26 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `library/sort-sheet` (SortSheet, name orders) | `presentation/features/library/widgets/sort_sheet.dart` | `library_screen_test.dart` (sort sheet + order) | S.02 | #109 |
 | kit `library/overflow-sheet` (OverflowMenuSheet) | `presentation/features/library/widgets/overflow_menu_sheet.dart` | `library_screen_test.dart` (overflow sheet) | S.02 | #109 |
 | kit `library/play-sheet` (per-deck PlaySheet) | `presentation/features/library/widgets/play_sheet.dart` | (library screen test) | S.02 | #109 |
+| kit `deck-detail/screen` — Deck detail (loading·empty·loaded·search·no-results·error, D-006/D-019/D-024) | `presentation/features/deck-detail/screens/deck_detail_screen.dart` + `providers/deck_detail_providers.dart` (`DeckDetailController` family) | `test/presentation/features/deck-detail/deck_detail_screen_test.dart` (6 states + search + sheets, light+dark) | S.03 | #110 |
+| kit `deck-detail/appbar` (DeckHeader) | `presentation/features/deck-detail/widgets/deck_header.dart` | (deck-detail screen test) | S.03 | #110 |
+| kit `FlashcardRow` (card row → shared `MxStatusCardRow`) | `presentation/features/deck-detail/widgets/flashcard_row.dart` | (deck-detail screen test) | S.03 | #110 |
+| kit `deck-detail/subdeck-N` (SubDeckCard, DeckRow) | `presentation/features/deck-detail/widgets/sub_deck_card.dart` | (deck-detail screen test) | S.03 | #110 |
+| kit `deck-detail/deck-sheet` (DeckMenu: Move·Delete, D-024) | `presentation/features/deck-detail/widgets/deck_menu.dart` | (deck-detail screen test, overflow) | S.03 | #110 |
+| kit `deck-detail/delete-dialog` (card + deck delete confirms, D-024) | `presentation/features/deck-detail/widgets/delete_confirm_dialog.dart` | (deck-detail screen test) | S.03 | #110 |
+| D-006 hide card · card/deck delete · deck move mutations | `deck_detail_providers.dart` (`DeckDetailController.setCardHidden/deleteCard/deleteDeck/moveTo` → `SetCardHidden`/`DeleteCard`/`DeleteDeck`/`MoveDeck`) | (deck-detail screen test, card-actions) | S.03 | #110 |
+
+**S.03 gaps / notes:** in-deck **search** + **filter chips** (All/New/Due/Mastered)
+are drivable client-side (query in Riverpod, text field controller is not app
+state). Card status derives from the Leitner box (new=0 · mastered=8 · else due).
+DeckMenu ships **Move + Delete deck** only — **Rename** (needs an inline text
+dialog) and **Reset progress** (no v1 use case) are omitted (documented gaps), as
+is the header **play-audio** button (bulk deck TTS is ambiguous in v1). **Move** is
+a tap-to-move destination sheet (simplified from the kit's radio + apply). Mutation
+failures are logged (dev side); a user-facing snackbar surface is a follow-up (the
+fake layer never fails these, so the read-path error contract carries the gate).
+Sub-deck rows reuse the library node meta ARB keys and duplicate the deck-row
+layout — converging dashboard/library/deck-detail onto a shared `MxDeckRow` remains
+the deferred cleanup.
 
 **S.02 gaps / notes:** `search-active` (→ S.04 search) and `drawer` (→ S.06)
 kit states are owned by their sibling screens — the library search/menu buttons

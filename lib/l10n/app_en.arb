@@ -314,5 +314,160 @@
   "librarySheetPlayer": "Player",
   "@librarySheetPlayer": {
     "description": "Player action in the per-deck play sheet"
+  },
+
+  "actionCancel": "Cancel",
+  "@actionCancel": {
+    "description": "Generic cancel action in a dialog"
+  },
+  "actionDelete": "Delete",
+  "@actionDelete": {
+    "description": "Generic delete action in a confirm dialog"
+  },
+  "actionMove": "Move",
+  "@actionMove": {
+    "description": "Generic move action"
+  },
+  "deckDetailBack": "Back",
+  "@deckDetailBack": {
+    "description": "Accessible label for the deck-detail back button"
+  },
+  "deckDetailMenu": "Deck options",
+  "@deckDetailMenu": {
+    "description": "Accessible label for the deck-detail overflow menu button"
+  },
+  "deckDetailSearchPlaceholder": "Search in deck",
+  "@deckDetailSearchPlaceholder": {
+    "description": "Placeholder for the in-deck card search field"
+  },
+  "deckDetailSearchClear": "Clear search",
+  "@deckDetailSearchClear": {
+    "description": "Accessible label for the clear-search button"
+  },
+  "deckDetailSectionSubDecks": "Sub-decks",
+  "@deckDetailSectionSubDecks": {
+    "description": "Section label above the sub-deck list"
+  },
+  "deckDetailSectionCards": "Cards",
+  "@deckDetailSectionCards": {
+    "description": "Section label above the card list"
+  },
+  "deckDetailFilterAll": "All",
+  "@deckDetailFilterAll": {
+    "description": "Card filter chip: all cards"
+  },
+  "deckDetailFilterNew": "New",
+  "@deckDetailFilterNew": {
+    "description": "Card filter chip: new cards"
+  },
+  "deckDetailFilterDue": "Due",
+  "@deckDetailFilterDue": {
+    "description": "Card filter chip: due cards"
+  },
+  "deckDetailFilterMastered": "Mastered",
+  "@deckDetailFilterMastered": {
+    "description": "Card filter chip: mastered cards"
+  },
+  "deckDetailEmptyTitle": "Empty deck",
+  "@deckDetailEmptyTitle": {
+    "description": "Title of the empty-deck state"
+  },
+  "deckDetailEmptyText": "Add words, import in bulk, or create a sub-deck to organize this topic.",
+  "@deckDetailEmptyText": {
+    "description": "Body of the empty-deck state"
+  },
+  "deckDetailEmptyAdd": "Add words",
+  "@deckDetailEmptyAdd": {
+    "description": "Primary action on the empty-deck state"
+  },
+  "deckDetailEmptySubdeck": "New sub-deck",
+  "@deckDetailEmptySubdeck": {
+    "description": "Secondary action on the empty-deck state"
+  },
+  "deckDetailEmptyImport": "Import from file",
+  "@deckDetailEmptyImport": {
+    "description": "Tertiary action on the empty-deck state"
+  },
+  "deckDetailErrorTitle": "Couldn't load this deck",
+  "@deckDetailErrorTitle": {
+    "description": "Title of the deck-detail error state"
+  },
+  "deckDetailErrorText": "Something went wrong loading this deck. Try again.",
+  "@deckDetailErrorText": {
+    "description": "Body of the deck-detail error state (local persistence)"
+  },
+  "deckDetailNoResultsTitle": "No cards found",
+  "@deckDetailNoResultsTitle": {
+    "description": "Title when an in-deck search matches nothing"
+  },
+  "deckDetailNoResultsText": "Nothing matched “{query}”. Try another term or check the spelling.",
+  "@deckDetailNoResultsText": {
+    "description": "Body when an in-deck search matches nothing",
+    "placeholders": { "query": { "type": "String" } }
+  },
+  "deckDetailAddTitle": "Add",
+  "@deckDetailAddTitle": {
+    "description": "Title of the add-to-deck sheet"
+  },
+  "deckDetailAddWord": "Add word",
+  "@deckDetailAddWord": {
+    "description": "Add-word action in the add sheet"
+  },
+  "deckDetailAddSubdeck": "New sub-deck",
+  "@deckDetailAddSubdeck": {
+    "description": "New-sub-deck action in the add sheet"
+  },
+  "deckDetailAddImport": "Import cards",
+  "@deckDetailAddImport": {
+    "description": "Import action in the add sheet"
+  },
+  "deckDetailCardEdit": "Edit card",
+  "@deckDetailCardEdit": {
+    "description": "Edit action in the card-actions sheet"
+  },
+  "deckDetailCardHide": "Hide card",
+  "@deckDetailCardHide": {
+    "description": "Hide action in the card-actions sheet"
+  },
+  "deckDetailCardUnhide": "Unhide card",
+  "@deckDetailCardUnhide": {
+    "description": "Unhide action in the card-actions sheet"
+  },
+  "deckDetailCardDelete": "Delete card",
+  "@deckDetailCardDelete": {
+    "description": "Delete action in the card-actions sheet"
+  },
+  "deckDetailDeleteCardTitle": "Delete this card?",
+  "@deckDetailDeleteCardTitle": {
+    "description": "Title of the delete-card confirm dialog"
+  },
+  "deckDetailDeleteCardText": "The card “{term}” will be removed from this deck. This can't be undone.",
+  "@deckDetailDeleteCardText": {
+    "description": "Body of the delete-card confirm dialog",
+    "placeholders": { "term": { "type": "String" } }
+  },
+  "deckDetailDeckMove": "Move",
+  "@deckDetailDeckMove": {
+    "description": "Move action in the deck menu"
+  },
+  "deckDetailDeckDelete": "Delete deck",
+  "@deckDetailDeckDelete": {
+    "description": "Delete-deck action in the deck menu"
+  },
+  "deckDetailDeleteDeckTitle": "Delete this deck?",
+  "@deckDetailDeleteDeckTitle": {
+    "description": "Title of the delete-deck confirm dialog"
+  },
+  "deckDetailDeleteDeckText": "Deleting removes all sub-decks, cards and review state inside. This can't be undone.",
+  "@deckDetailDeleteDeckText": {
+    "description": "Body of the delete-deck confirm dialog"
+  },
+  "deckDetailMoveTitle": "Move to",
+  "@deckDetailMoveTitle": {
+    "description": "Title of the move-deck sheet"
+  },
+  "deckDetailMoveRoot": "Library (root)",
+  "@deckDetailMoveRoot": {
+    "description": "Move destination representing the library root (no parent)"
   }
 }
