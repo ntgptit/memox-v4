@@ -46,7 +46,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | | ID | Task |
 |---|---|---|
 | [x] | Z.0 | props_check → blocking trong verify gate |
-| [ ] | Z.1 | wiring-guard test `props_check_gate_test.dart` |
+| [x] | Z.1 | wiring-guard test `props_check_gate_test.dart` |
 | [ ] | Z.2 | docs + ledger tổng |
 
 > **Checker limitation to fix before Z.0 blocking** (found C.09): `props_check`
