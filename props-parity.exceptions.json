@@ -176,5 +176,14 @@
 
   { "component": "drawer/LangCard", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via interactive/node-id; Flutter's LangCard takes onPressed." },
 
-  { "component": "drawer/RemoveLanguageDialog", "prop": "*", "reason": "flutter-helper", "note": "Flutter counterpart is the top-level showRemoveLanguageDialog(context, …) helper function, not a widget class — no constructor to diff." }
+  { "component": "drawer/RemoveLanguageDialog", "prop": "*", "reason": "flutter-helper", "note": "Flutter counterpart is the top-level showRemoveLanguageDialog(context, …) helper function, not a widget class — no constructor to diff." },
+
+  { "component": "search/Chips", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit hardcodes the filter labels + stubs the chips with node ids; Flutter's SearchChips wires onSelect." },
+
+  { "component": "search/ResultRow", "prop": "term", "reason": "flutter-idiom", "note": "Kit forwards individual StatusCardRow props; Flutter composes them into a single `result` model." },
+  { "component": "search/ResultRow", "prop": "meaning", "reason": "flutter-idiom", "note": "Composed into the Flutter `result` model." },
+  { "component": "search/ResultRow", "prop": "deck", "reason": "flutter-idiom", "note": "Composed into the Flutter `result` model." },
+  { "component": "search/ResultRow", "prop": "status", "reason": "flutter-idiom", "note": "Composed into the Flutter `result` model." },
+  { "component": "search/ResultRow", "prop": "hidden", "reason": "flutter-idiom", "note": "Composed into the Flutter `result` model." },
+  { "component": "search/ResultRow", "prop": "result", "reason": "flutter-idiom", "note": "The composed result model (Flutter passes one model instead of the kit's individual StatusCardRow props)." }
 ]
