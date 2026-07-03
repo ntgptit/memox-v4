@@ -472,6 +472,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | DI wiring — the seam flips repositories from fakes to Drift (DT.5) | `data/providers/database_provider.dart` (`appDatabaseProvider`, keepAlive file DB) · `data/providers/data_providers.dart` (deck/card/review/settings → Drift impls; services still override-only, DT.7) | `test/data/providers/di_wiring_test.dart` (seam resolves to Drift impls · reads/writes the DB · one shared AppDatabase) | DT.5 | #PR |
 | Seed / sample data — clean first-run (active pair + defaults) + realistic dev deck tree | `data/seed/database_seeder.dart` (`DatabaseSeeder.ensureFirstRun` / `seedSampleData`) · `data/seed/seed_providers.dart` (`databaseSeederProvider`) | `test/data/seed/database_seeder_test.dart` (first-run pair+defaults+empty · idempotent · sample tree + SRS mix) | DT.6 | #PR |
 | Service adapters (DM.8) — settings · language pair · daily activity (Drift) + audio/notifications/import-export/backup (device) | `data/services/{drift_settings_service,drift_language_pair_service,drift_daily_activity_service,device_services}.dart` · `data/models/mappers/language_pair_mapper.dart` · seam wired in `data_providers.dart` | `test/data/services/service_adapters_test.dart` (theme/game D-008 · pair add/select/remove · activity roll-up D-010 · no-op audio/reminder · clipboard · backup deferred) | DT.7 | #PR |
+| Domain test sweep — SRS + study invariants/edge cases (property-style) | `test/domain/usecases/srs/srs_invariants_test.dart` · `test/domain/usecases/study/study_invariants_test.dart` | (self) — box transition table all boxes×grades · bounds/ladder/mastery · interval monotonic · graduate determinism · D-018 intake · D-021 streak ratchet/reset + Streak invariants · D-010 activity sum | V.2 | #PR |
+
+**V.2 gaps / notes:** an **invariant/property sweep** over the SRS engine + engagement use
+cases, complementing the existing example-based tests (no production code touched). SRS:
+the full **box × grade transition table** (all boxes 0..8 × pass/fail — promote ceilings at
+8, demote floors at 1, box 0 stays on a fail), the **bounds invariant** (no grade sequence
+leaves [0,8]), ladder→mastery→demote round-trips, `lastReviewedAt = now` + `dueAt = now +
+interval(nextBox)` for every transition, strictly-increasing intervals, `graduate`
+determinism across clocks (D-002), and the D-018 intake formula (`max(0, cap−introduced)`,
+monotonic). Study: `dailyActivityFrom` summation (D-010), `rollOverStreak` advance/reset with
+the **longest-never-decreases** ratchet + unconfigured-goal-always-resets (D-021), and the
+`Streak` entity's `longest ≥ current ≥ 0` invariant through arbitrary op sequences. Pure
+Dart — no platform/golden dependency (unlike the blocked V.1).
 
 **DT.7 gaps / notes:** implements the DM.8 service contracts and wires the **last of the seam**
 (services now default to real adapters, like the DT.5 repos). **Drift-backed + fully tested:**
