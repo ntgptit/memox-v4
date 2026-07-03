@@ -18,7 +18,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | | ID | Unit | #comp |
 |---|---|---|---|
 | [x] | C.01 | _shared | 3 |
-| [ ] | C.02 | game-recall | 2 |
+| [x] | C.02 | game-recall | 2 |
 | [ ] | C.03 | game-typing | 2 |
 | [ ] | C.04 | game-mc | 1 |
 | [ ] | C.05 | game-matching | 1 |
