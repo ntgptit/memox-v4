@@ -47,7 +47,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 |---|---|---|
 | [x] | Z.0 | props_check → blocking trong verify gate |
 | [x] | Z.1 | wiring-guard test `props_check_gate_test.dart` |
-| [ ] | Z.2 | docs + ledger tổng |
+| [x] | Z.2 | docs + ledger tổng |
 
 > **Checker limitation to fix before Z.0 blocking** (found C.09): `props_check`
 > only scans enums declared in the widget's own `.dart` file, so a prop whose
