@@ -4,6 +4,10 @@ import 'package:memox_v4/data/repositories/drift_card_repository.dart';
 import 'package:memox_v4/data/repositories/drift_deck_repository.dart';
 import 'package:memox_v4/data/repositories/drift_review_repository.dart';
 import 'package:memox_v4/data/repositories/drift_settings_repository.dart';
+import 'package:memox_v4/data/services/device_services.dart';
+import 'package:memox_v4/data/services/drift_daily_activity_service.dart';
+import 'package:memox_v4/data/services/drift_language_pair_service.dart';
+import 'package:memox_v4/data/services/drift_settings_service.dart';
 import 'package:memox_v4/domain/repositories/card_repository.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
 import 'package:memox_v4/domain/repositories/review_repository.dart';
@@ -21,12 +25,9 @@ part 'data_providers.g.dart';
 
 /// The dependency-injection seam between features and the data layer. Screens
 /// depend only on these providers, so swapping fakes → Drift never touches a
-/// screen. The **repositories** are wired to their Drift-backed implementations
-/// over [appDatabaseProvider] (DT.5); tests override them with the in-memory
-/// fakes (DM.9 harness). The **device/plugin services** still have no default —
-/// they land with the DT.7 adapters and stay override-only until then.
-const _mustOverride =
-    'This service must be overridden — fakes in tests (DM.9), device adapters in the app (DT.7).';
+/// screen. The **repositories** (DT.5) and **services** (DT.7) are wired to their
+/// Drift-backed / device-adapter implementations over [appDatabaseProvider];
+/// tests override them with the in-memory fakes (DM.9 harness).
 
 /// The app clock. Defaults to the real wall clock; tests override with a
 /// [FakeClock] for deterministic time.
@@ -56,27 +57,34 @@ SettingsRepository settingsRepository(Ref ref) =>
     DriftSettingsRepository(ref.watch(appDatabaseProvider));
 
 @riverpod
-SettingsService settingsService(Ref ref) => throw UnimplementedError(_mustOverride);
+SettingsService settingsService(Ref ref) =>
+    DriftSettingsService(ref.watch(appDatabaseProvider));
 
 @riverpod
-LanguagePairService languagePairService(Ref ref) =>
-    throw UnimplementedError(_mustOverride);
+LanguagePairService languagePairService(Ref ref) => DriftLanguagePairService(
+      ref.watch(appDatabaseProvider),
+      ref.watch(clockProvider),
+    );
 
 @riverpod
 DailyActivityService dailyActivityService(Ref ref) =>
-    throw UnimplementedError(_mustOverride);
+    DriftDailyActivityService(ref.watch(appDatabaseProvider));
 
+// The device-plugin services below are DT.7 adapters. TTS, notifications, the
+// file picker/share sheet, and local backup have no plugin in this build, so
+// their adapters are documented no-op/deferred (clipboard is real) — the seam is
+// satisfied and a real plugin adapter drops in without touching a screen.
 @riverpod
 ReminderNotificationService reminderNotificationService(Ref ref) =>
-    throw UnimplementedError(_mustOverride);
+    const NoopReminderNotificationService();
 
 @riverpod
-AudioService audioService(Ref ref) => throw UnimplementedError(_mustOverride);
+AudioService audioService(Ref ref) => const NoopAudioService();
 
 @riverpod
 ImportExportFileService importExportFileService(Ref ref) =>
-    throw UnimplementedError(_mustOverride);
+    const ClipboardImportExportFileService();
 
 @riverpod
 BackupRestoreService backupRestoreService(Ref ref) =>
-    throw UnimplementedError(_mustOverride);
+    const DeferredBackupRestoreService();

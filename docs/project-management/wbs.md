@@ -471,6 +471,24 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | Repository impls + mappers — DM.3 over the DAOs; row↔entity at the boundary | `data/repositories/drift_{deck,card,review,settings}_repository.dart` · `data/models/mappers/{deck,card,srs,time}_mapper.dart` | `test/data/repositories/drift_repositories_test.dart` (deck save/watch/stats/cascade · card save-txn/edit/hidden/search · review schedule/queues/log/count · settings goal+new/day) | DT.4 | #PR |
 | DI wiring — the seam flips repositories from fakes to Drift (DT.5) | `data/providers/database_provider.dart` (`appDatabaseProvider`, keepAlive file DB) · `data/providers/data_providers.dart` (deck/card/review/settings → Drift impls; services still override-only, DT.7) | `test/data/providers/di_wiring_test.dart` (seam resolves to Drift impls · reads/writes the DB · one shared AppDatabase) | DT.5 | #PR |
 | Seed / sample data — clean first-run (active pair + defaults) + realistic dev deck tree | `data/seed/database_seeder.dart` (`DatabaseSeeder.ensureFirstRun` / `seedSampleData`) · `data/seed/seed_providers.dart` (`databaseSeederProvider`) | `test/data/seed/database_seeder_test.dart` (first-run pair+defaults+empty · idempotent · sample tree + SRS mix) | DT.6 | #PR |
+| Service adapters (DM.8) — settings · language pair · daily activity (Drift) + audio/notifications/import-export/backup (device) | `data/services/{drift_settings_service,drift_language_pair_service,drift_daily_activity_service,device_services}.dart` · `data/models/mappers/language_pair_mapper.dart` · seam wired in `data_providers.dart` | `test/data/services/service_adapters_test.dart` (theme/game D-008 · pair add/select/remove · activity roll-up D-010 · no-op audio/reminder · clipboard · backup deferred) | DT.7 | #PR |
+
+**DT.7 gaps / notes:** implements the DM.8 service contracts and wires the **last of the seam**
+(services now default to real adapters, like the DT.5 repos). **Drift-backed + fully tested:**
+`SettingsService` (theme + game/round over the `settings` k/v, D-008), `LanguagePairService`
+(the active row = selected, D-030; remove cascades the pair's decks), `DailyActivityService`
+(session + day roll-up in one transaction, D-010). **Plugin-deferred adapters** (no
+`flutter_tts` / `flutter_local_notifications` / `file_picker` / `share_plus` in this build —
+only `path_provider`): `NoopAudioService` (TTS deferred → best-effort no-op Ok, audio is never
+load-bearing), `NoopReminderNotificationService` (notifications deferred → reports no
+permission / no-op), `ClipboardImportExportFileService` (**clipboard is real**; the file
+picker/share sheet is deferred → `pickTextFile` = no selection, `writeTextFile` = a localized
+"unavailable"), `DeferredBackupRestoreService` (local backup deferred, D-027 → "unavailable").
+Each keeps the contract satisfied so a real plugin adapter drops in without touching a screen.
+The harness smoke test + the l10n bottom-nav test now pump against the fake harness (the real
+seam opens a Drift **file** DB via path_provider, unavailable under `flutter test`). Bootstrap
+still needs a small hook to open the DB + call `DatabaseSeeder.ensureFirstRun` on startup
+(DT.6 gap) — the app-run integration, verified end-to-end in Phase V.
 
 **DT.6 gaps / notes:** `ensureFirstRun` establishes the **clean first-run state** every launch
 needs — the single **active language pair** (ko→vi, the reference domain; the deck FK requires

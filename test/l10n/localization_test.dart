@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/app/app.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 
+import '../harness/provider_harness.dart';
+
 /// T.4 — proves copy flows from ARB → AppLocalizations → the UI end-to-end.
 void main() {
   test('AppLocalizations loads the English ARB strings', () async {
@@ -17,7 +19,11 @@ void main() {
   testWidgets('the bottom nav renders labels from the ARB, not hardcoded', (
     tester,
   ) async {
-    await tester.pumpWidget(const ProviderScope(child: MemoxApp()));
+    // Pump against the fake data layer — the real providers now open a Drift
+    // file DB (DT.5/DT.7) which isn't available under flutter test.
+    await tester.pumpWidget(
+      ProviderScope(overrides: FakeHarness().overrides, child: const MemoxApp()),
+    );
     await tester.pumpAndSettle();
 
     // Labels sourced from app_en.arb via AppLocalizations.

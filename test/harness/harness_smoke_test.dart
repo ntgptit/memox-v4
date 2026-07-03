@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:memox_v4/data/providers/data_providers.dart';
+import 'package:memox_v4/data/services/device_services.dart';
 import 'package:memox_v4/domain/entities/deck.dart';
 
 import 'provider_harness.dart';
@@ -36,21 +37,12 @@ void main() {
     expect(find.text('roots: 1'), findsOneWidget);
   });
 
-  testWidgets('an override-only service throws without the harness', (tester) async {
-    // Repositories now default to their Drift impls (DT.5); the device/plugin
-    // services stay override-only until DT.7, so a bare read must throw — proving
-    // the DI seam is still enforced for them.
-    await tester.pumpWidget(
-      ProviderScope(
-        child: Consumer(
-          builder: (context, ref, _) {
-            ref.watch(audioServiceProvider);
-            return const SizedBox.shrink();
-          },
-        ),
-      ),
-    );
-    // Riverpod wraps the creation error; the underlying cause is our guard.
-    expect(tester.takeException().toString(), contains('must be overridden'));
+  test('the seam resolves to real adapters without the harness (DT.5/DT.7)', () {
+    // Every seam provider now has a real default: repositories over Drift (DT.5),
+    // services over their device adapters (DT.7). The plugin-free audio adapter is
+    // a safe probe (no appDatabase / no plugin channel needed).
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+    expect(container.read(audioServiceProvider), isA<NoopAudioService>());
   });
 }
