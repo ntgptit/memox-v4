@@ -218,7 +218,9 @@ function parseFlutterCtor(file, className) {
     for (const part of splitTopLevel(namedBlock)) {
       const token = part.trim();
       if (!token) continue;
-      const required = /\brequired\b/.test(token);
+      // `required` is a leading modifier (`required this.x`) — anchor it so a field
+      // literally named `required` (`this.required = false`) isn't mis-read as one.
+      const required = /^required\b/.test(token);
       const eq = token.indexOf('=');
       const hasDefault = eq >= 0;
       const decl = (hasDefault ? token.slice(0, eq) : token).trim();
