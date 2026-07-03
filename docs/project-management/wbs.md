@@ -466,6 +466,18 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(schema contract)_ — every table/column/index/FK ↔ rule; gates DT.1 | `docs/database/schema-contract.md` (language_pairs · decks self-FK · cards · card_meanings · srs_state · review_logs+review_outcome · study_sessions · daily_activity · settings · backup_metadata) | `node tool/verify/run.mjs --docs` (doc freshness) | DT.0 | #PR |
 | _(persistence-safety policy)_ — transaction/rollback · cascade (D-024) · deterministic order · clock injection · migrations; gates DT.1–DT.4 | `docs/database/persistence-safety.md` + `test/data/_skeletons/{transaction_rollback,cascade_delete,deterministic_ordering,clock_injection,migration}_test.dart` | 5 `@Skip`-marked skeletons (filled by DT.1–DT.4) + `--docs` | DT.0.1 | #PR |
 | Drift schema — all 10 tables per DT.0 (+ indices for due/search) · D-024 cascade · D-011 1:1 srs · box 0..8 CHECK | `data/datasources/local/tables.dart` (LanguagePairs·Decks self-FK·Cards·CardMeanings·SrsStates·ReviewLogs·StudySessions·DailyActivity·Settings·BackupMetadata) · `app_database.dart` (`AppDatabase`, `foreign_keys=ON`) | `test/data/datasources/local/app_database_test.dart` (insert/read all · FK pragma · cascade delete D-024 · box CHECK · FK reject) | DT.1 | #PR |
+| Migrations & versioning — forward-only strategy + versioned schema snapshot + round-trip tests (R3) | `app_database.dart` (`MigrationStrategy` onCreate + onUpgrade scaffold + `foreign_keys=ON`) · `drift_schemas/drift_schema_v1.json` · `test/data/migration/generated/*` | `test/data/migration/schema_migration_test.dart` (version==latest · runtime schema matches snapshot · close/reopen round-trip + FK on) | DT.2 | #PR |
+
+**DT.2 gaps / notes:** schema versioning + a **forward-only** migration strategy (R3 — never
+edit a shipped schema in place; each bump adds an `if (from < N)` step + a new
+`drift_schema_vN.json` snapshot). The v1 schema is exported via `drift_dev schema dump` to
+`drift_schemas/drift_schema_v1.json` and the verification helper generated into
+`test/data/migration/generated/` (committed **fixtures**, not build_runner outputs — excluded
+from analysis, regenerated only on a schema change). The migration test uses Drift's
+`SchemaVerifier` to confirm the **runtime schema matches its versioned snapshot** (no code↔
+schema drift) plus a file-backed **close/reopen round-trip** (data survives, `foreign_keys`
+re-enabled). Only **v1** exists, so `onUpgrade` has no steps yet — the scaffold + snapshot are
+in place so the first real bump is a pure add. Realizes the DT.0.1 migration-safety policy.
 
 **DT.1 gaps / notes:** implements every table in the schema contract as **typed Drift
 Table classes** (no raw SQL — AGENTS.md "SQL only in `*.drift`" satisfied by the typed
