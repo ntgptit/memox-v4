@@ -9,7 +9,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | | ID | Task |
 |---|---|---|
 | [x] | F.0 | Mapping/alias config `tool/parity/props_map.json` |
-| [ ] | F.1 | `tool/parity/props_check.mjs` (advisory) |
+| [x] | F.1 | `tool/parity/props_check.mjs` (advisory) |
 | [ ] | F.2 | Hiệu chuẩn trên 15 shared → exceptions.json |
 | [ ] | F.3 | Exception schema + queue + WBS committed |
 
