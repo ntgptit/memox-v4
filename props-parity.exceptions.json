@@ -44,5 +44,9 @@
   { "component": "game-picker/ScopeCard", "prop": "onPressed", "reason": "fixture-parameterized", "note": "Kit fixture stubs the tap with a node id; Flutter wires the real onPressed to open the sheet." },
 
   { "component": "game-picker/ScopeSheet", "prop": "selected", "reason": "fixture-parameterized", "note": "Kit hardcodes the selected option as a fixture; Flutter takes selected:GameSource." },
-  { "component": "game-picker/ScopeSheet", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit fixture stubs selection; Flutter wires onSelect:ValueChanged<GameSource>." }
+  { "component": "game-picker/ScopeSheet", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit fixture stubs selection; Flutter wires onSelect:ValueChanged<GameSource>." },
+
+  { "component": "player/Dots", "prop": "active", "reason": "fixture-parameterized", "note": "Kit hardcodes the active dot index (3) as a fixture; Flutter takes active:int." },
+  { "component": "player/PlayerCard", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample term (학교) as a fixture; Flutter takes term:String." },
+  { "component": "player/PlayerCard", "prop": "meaning", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample meaning (school) as a fixture; Flutter takes meaning:String." }
 ]
