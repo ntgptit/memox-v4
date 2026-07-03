@@ -48,5 +48,16 @@
 
   { "component": "player/Dots", "prop": "active", "reason": "fixture-parameterized", "note": "Kit hardcodes the active dot index (3) as a fixture; Flutter takes active:int." },
   { "component": "player/PlayerCard", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample term (학교) as a fixture; Flutter takes term:String." },
-  { "component": "player/PlayerCard", "prop": "meaning", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample meaning (school) as a fixture; Flutter takes meaning:String." }
+  { "component": "player/PlayerCard", "prop": "meaning", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample meaning (school) as a fixture; Flutter takes meaning:String." },
+
+  { "component": "review/MeaningCard", "prop": "meaning", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample meaning (school) as a fixture; Flutter takes meaning:String." },
+  { "component": "review/MeaningCard", "prop": "controller", "reason": "flutter-idiom", "note": "TextField idiom — binds the edit field's text; no kit equivalent." },
+  { "component": "review/MeaningCard", "prop": "onEdit", "reason": "fixture-parameterized", "note": "Kit fixture stubs the edit button with a node id; Flutter wires the real onEdit callback." },
+  { "component": "review/MeaningCard", "prop": "onCancel", "reason": "fixture-parameterized", "note": "Kit fixture stubs the cancel button with a node id; Flutter wires onCancel." },
+  { "component": "review/MeaningCard", "prop": "onSave", "reason": "fixture-parameterized", "note": "Kit fixture stubs the save button with a node id; Flutter wires onSave." },
+
+  { "component": "review/TermCard", "prop": "state", "reason": "flutter-idiom", "note": "Kit's string state ('idle'/'audio') is a bool `playing` in Flutter." },
+  { "component": "review/TermCard", "prop": "playing", "reason": "flutter-idiom", "note": "The bool form of the kit's state prop (state==='audio')." },
+  { "component": "review/TermCard", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample term (학교) as a fixture; Flutter takes term:String." },
+  { "component": "review/TermCard", "prop": "onAudio", "reason": "fixture-parameterized", "note": "Kit fixture stubs the audio button with a node id; Flutter wires the real onAudio callback." }
 ]
