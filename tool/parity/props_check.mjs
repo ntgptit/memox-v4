@@ -323,7 +323,10 @@ function indexFlutterClasses(dir) {
   walk(dir, (file) => {
     if (!file.endsWith('.dart')) return;
     const src = fs.readFileSync(file, 'utf8');
-    for (const m of src.matchAll(/\bclass\s+([A-Za-z0-9_]+)\s+extends\s+/g)) {
+    // Match `class X extends …`, and also constructor-less helper classes like
+    // `abstract final class ExitDialog { static show(…) }` — a kit dialog often
+    // maps to a Flutter show()-helper with no widget constructor (0 props).
+    for (const m of src.matchAll(/\bclass\s+([A-Za-z0-9_]+)\b/g)) {
       (index[m[1]] ||= []).push(file);
     }
   });
