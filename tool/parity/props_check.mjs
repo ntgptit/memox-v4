@@ -40,6 +40,7 @@ const REASONS = new Set([
   'flutter-idiom',
   'deferred-screen',
   'flutter-only',
+  'fixture-parameterized',
 ]);
 
 validateExceptions(EXCEPTIONS);
@@ -84,7 +85,7 @@ process.exit(strict && undeclared > 0 ? 1 : 0);
 function analyze(comp) {
   const kit = parseDts(comp.dtsPath, comp.name);
   const flutterClass = comp.aliasClass || comp.name;
-  const flutterFile = flutterClassIndex[flutterClass];
+  const flutterFile = resolveFlutterFile(comp, flutterClass);
   const drift = [];
 
   if (!flutterFile) {
@@ -144,7 +145,7 @@ function analyze(comp) {
   const IDIOMATIC = new Set(['key', 'child', 'children', 'builder']);
   for (const name of Object.keys(ft.params)) {
     if (consumed.has(name) || IDIOMATIC.has(name)) continue;
-    const excused = excuseFor(comp.key, name, ['flutter-only', 'flutter-idiom', 'enum-base-expansion']);
+    const excused = excuseFor(comp.key, name, ['flutter-only', 'flutter-idiom', 'enum-base-expansion', 'fixture-parameterized']);
     drift.push(mark({ kind: 'EXTRA_IN_FLUTTER', prop: name, detail: 'Flutter param has no kit prop' }, comp, excused));
   }
 
@@ -322,10 +323,20 @@ function indexFlutterClasses(dir) {
     if (!file.endsWith('.dart')) return;
     const src = fs.readFileSync(file, 'utf8');
     for (const m of src.matchAll(/\bclass\s+([A-Za-z0-9_]+)\s+extends\s+/g)) {
-      if (!index[m[1]]) index[m[1]] = file;
+      (index[m[1]] ||= []).push(file);
     }
   });
   return index;
+}
+
+/** Resolve the Flutter file for a component's class. When a class name collides
+ *  across features (e.g. game-recall/TermCard vs review/TermCard), disambiguate
+ *  by the component's feature dir so each unit maps to its own widget. */
+function resolveFlutterFile(comp, className) {
+  const files = flutterClassIndex[className] || [];
+  if (files.length <= 1) return files[0] || null;
+  const inUnit = files.find((f) => f.replace(/\\/g, '/').includes(`/features/${comp.unit}/`));
+  return inUnit || files[0];
 }
 
 function walk(dir, fn) {
