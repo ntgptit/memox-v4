@@ -110,5 +110,14 @@
   { "component": "study-session/StageTyping", "prop": "hintShown", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the hint-shown state." },
   { "component": "study-session/StageTyping", "prop": "hint", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the hint text." },
   { "component": "study-session/StageTyping", "prop": "onHint", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Help button; Flutter wires onHint." },
-  { "component": "study-session/StageTyping", "prop": "onCheck", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Check button; Flutter wires onCheck." }
+  { "component": "study-session/StageTyping", "prop": "onCheck", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Check button; Flutter wires onCheck." },
+
+  { "component": "dashboard/ContinueCard", "prop": "index", "reason": "flutter-idiom", "note": "Kit uses index only to build the export node id (dashboard/deck-N); no Flutter equivalent." },
+  { "component": "dashboard/ContinueCard", "prop": "icon", "reason": "flutter-idiom", "note": "Kit carries icon inside the deck object; Flutter's ContinueDeckCard takes it as a separate param." },
+  { "component": "dashboard/ContinueCard", "prop": "tone", "reason": "flutter-idiom", "note": "Kit carries tone inside the deck object; Flutter takes it as a separate param." },
+  { "component": "dashboard/ContinueCard", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via interactive/node-id; Flutter's ContinueDeckCard takes onPressed." },
+
+  { "component": "dashboard/GoalCard", "prop": "goal", "reason": "fixture-parameterized", "note": "Kit hardcodes the goal label ('Daily goal'); Flutter takes goal:String." },
+  { "component": "dashboard/GoalCard", "prop": "minutes", "reason": "fixture-parameterized", "note": "Kit hardcodes the minutes value ('20/20 min'); Flutter takes minutes." },
+  { "component": "dashboard/GoalCard", "prop": "words", "reason": "fixture-parameterized", "note": "Kit hardcodes the words value; Flutter takes words." }
 ]
