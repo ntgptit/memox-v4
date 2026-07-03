@@ -104,7 +104,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | K.04 | [MxScaffold](k04-mxscaffold.md) |
 | [x] | K.05 | [MxAppBar](k05-mxappbar.md) |
 | [x] | K.06 | [MxBottomNav](k06-mxbottomnav.md) |
-| [ ] | K.07 | [MxFab](k07-mxfab.md) |
+| [x] | K.07 | [MxFab](k07-mxfab.md) |
 | [ ] | K.08 | [MxSearchDock](k08-mxsearchdock.md) |
 | [ ] | K.09 | [ActionCallout](k09-actioncallout.md) |
 | [ ] | K.10 | [ConfirmDialog](k10-confirmdialog.md) |
