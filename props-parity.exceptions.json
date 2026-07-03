@@ -59,5 +59,20 @@
   { "component": "review/TermCard", "prop": "state", "reason": "flutter-idiom", "note": "Kit's string state ('idle'/'audio') is a bool `playing` in Flutter." },
   { "component": "review/TermCard", "prop": "playing", "reason": "flutter-idiom", "note": "The bool form of the kit's state prop (state==='audio')." },
   { "component": "review/TermCard", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample term (학교) as a fixture; Flutter takes term:String." },
-  { "component": "review/TermCard", "prop": "onAudio", "reason": "fixture-parameterized", "note": "Kit fixture stubs the audio button with a node id; Flutter wires the real onAudio callback." }
+  { "component": "review/TermCard", "prop": "onAudio", "reason": "fixture-parameterized", "note": "Kit fixture stubs the audio button with a node id; Flutter wires the real onAudio callback." },
+
+  { "component": "study-result/Cta", "prop": "state", "reason": "flutter-idiom", "note": "Kit's string state ('goal-missed'/'many-wrong'/default) is a ResultHead enum (`head`) in Flutter. NB: ResultHead {standard,goalMet,goalMissed} has NO 'many-wrong' equivalent — a behavioral gap tracked in docs/agent/props-parity/QUESTIONS.md Notes." },
+  { "component": "study-result/Cta", "prop": "head", "reason": "flutter-idiom", "note": "The ResultHead enum form of the kit's state prop." },
+  { "component": "study-result/Cta", "prop": "onPrimary", "reason": "fixture-parameterized", "note": "Kit fixture stubs the primary button with a node id; Flutter wires onPrimary." },
+  { "component": "study-result/Cta", "prop": "onSecondary", "reason": "fixture-parameterized", "note": "Kit fixture stubs the secondary button with a node id; Flutter wires onSecondary." },
+
+  { "component": "study-result/FinalizingView", "prop": "bar", "reason": "fixture-parameterized", "note": "Kit passes a pre-rendered app-bar node; Flutter builds its own MxAppBar internally." },
+  { "component": "study-result/FinalizingView", "prop": "onClose", "reason": "fixture-parameterized", "note": "Kit's fixtured bar stubs the close action; Flutter wires onClose." },
+
+  { "component": "study-result/StreakGoalCard", "prop": "met", "reason": "fixture-parameterized", "note": "Kit fixture flag toggles between two hardcoded streak/goal states; Flutter takes the real values instead." },
+  { "component": "study-result/StreakGoalCard", "prop": "streakLabel", "reason": "fixture-parameterized", "note": "Kit hardcodes the streak label ('13 days'); Flutter takes streakLabel:String." },
+  { "component": "study-result/StreakGoalCard", "prop": "streakCaption", "reason": "fixture-parameterized", "note": "Kit hardcodes the streak caption; Flutter takes streakCaption:String." },
+  { "component": "study-result/StreakGoalCard", "prop": "goalLabel", "reason": "fixture-parameterized", "note": "Kit hardcodes the goal label; Flutter takes goalLabel:String." },
+  { "component": "study-result/StreakGoalCard", "prop": "goalValue", "reason": "fixture-parameterized", "note": "Kit hardcodes the goal value ('20/20 min'); Flutter takes goalValue:String." },
+  { "component": "study-result/StreakGoalCard", "prop": "goalPercent", "reason": "fixture-parameterized", "note": "Kit hardcodes the goal percent (70/100); Flutter takes goalPercent:double." }
 ]

@@ -104,7 +104,7 @@ function analyze(comp) {
     const targets = [prop.name, ...(MAP.propNameAlias[prop.name] || [])];
     const paramName = targets.find((t) => ft.params[t]);
     if (!paramName) {
-      const excused = excuseFor(comp.key, prop.name, ['web-only', 'flutter-idiom', 'deferred-screen']);
+      const excused = excuseFor(comp.key, prop.name, ['web-only', 'flutter-idiom', 'deferred-screen', 'fixture-parameterized']);
       drift.push(mark({ kind: 'MISSING_IN_FLUTTER', prop: prop.name, detail: `no param in {${Object.keys(ft.params).join(', ')}}` }, comp, excused));
       continue;
     }
