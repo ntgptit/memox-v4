@@ -27,6 +27,7 @@
     "text": ["text", "label"],
     "content": ["child", "text"],
     "pct": ["percent"],
+    "sub": ["subtitle", "caption"],
     "src": ["image", "imageUrl", "imageProvider"],
     "checked": ["value", "selected"],
     "onClick": ["onPressed", "onTap", "onSelected"],
