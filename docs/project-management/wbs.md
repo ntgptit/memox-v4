@@ -346,6 +346,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | stats §5 · D-010 (accuracy/box dist/forecast) | `domain/usecases/stats/{srs_stats,review_stats}.dart` | `test/domain/usecases/stats/stats_test.dart` | DM.7 | #78 |
 | D-030 (language-pair validate) | `domain/entities/language_pair.dart` (`create`) · `domain/usecases/language_pair/create_language_pair.dart` | `test/domain/usecases/language_pair/create_language_pair_test.dart` | DM.8 | #79 |
 | _(device/service contracts)_ | `domain/services/*.dart` (Settings/LanguagePair/DailyActivity/ReminderNotification/Audio/ImportExportFile/BackupRestore) · `entities/{theme_settings,reminder}.dart` | `test/domain/services/service_contracts_test.dart` · `test/domain/entities/settings_value_types_test.dart` | DM.8 | #79 |
+| _(FE/BE fake seam)_ | `data/fakes/*.dart` (store/clock/ids + all repo+service fakes) · `data/providers/data_providers.dart` (DI seam, override-required) · `test/harness/provider_harness.dart` | `test/data/fakes/fakes_test.dart` · `test/harness/harness_smoke_test.dart` | DM.9 | #80 |
 
 ---
 
