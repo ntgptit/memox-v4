@@ -474,6 +474,21 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | Service adapters (DM.8) — settings · language pair · daily activity (Drift) + audio/notifications/import-export/backup (device) | `data/services/{drift_settings_service,drift_language_pair_service,drift_daily_activity_service,device_services}.dart` · `data/models/mappers/language_pair_mapper.dart` · seam wired in `data_providers.dart` | `test/data/services/service_adapters_test.dart` (theme/game D-008 · pair add/select/remove · activity roll-up D-010 · no-op audio/reminder · clipboard · backup deferred) | DT.7 | #PR |
 | Domain test sweep — SRS + study invariants/edge cases (property-style) | `test/domain/usecases/srs/srs_invariants_test.dart` · `test/domain/usecases/study/study_invariants_test.dart` | (self) — box transition table all boxes×grades · bounds/ladder/mastery · interval monotonic · graduate determinism · D-018 intake · D-021 streak ratchet/reset + Streak invariants · D-010 activity sum | V.2 | #PR |
 | Data integration (Drift) — seed → queries → repos → use cases, one DB | `test/data/integration/data_integration_test.dart` | (self) — seed queue/search/stats align · grade D-003 propagates (queue+badge+log) · hide D-006 shifts due/hidden · delete D-024 cascades every read path · populated file round-trip | V.3 | #PR |
+| End-to-end study flow — due→grade→box→goal/streak through real providers over real Drift | `test/e2e/study_flow_e2e_test.dart` | (self) — due-review grade pass moves box 1→2 + log + goal-met + streak (D-003/010/021); new-learn 5-stage walk graduates to box 1 (D-002) | V.4 | #PR |
+
+**V.4 gaps / notes:** the **true FE+BE end-to-end** — drives the **real** study-session
+controller (and reads the **real** dashboard controller) over a **real in-memory Drift DB**,
+overriding only `appDatabaseProvider` + `clockProvider` (no fakes). Two flows: **(1) due
+review** — the controller builds a due-review step from Drift, `gradeDue(pass)` runs
+`GradeCard` → the SRS box moves **1→2** in the DB, the review log is written (D-003), the
+session is recorded so today's activity counts (D-010) and the dashboard reads the goal as
+**met** with **streak = 1** (D-021); **(2) new learn** — walking the five NewLearn stages runs
+`GraduateCard` → the new card enters **box 1** scheduled (D-002). Notes: the session record is
+fire-and-forget in the controller, so the test pumps the event loop (~40 ms) to let it settle;
+the auto-dispose study-session provider is **pinned with a `container.listen`** so a post-settle
+read doesn't rebuild it into an empty session. Pure controller/data E2E — the widget/navigation
+layer (screen taps + result-screen push) is exercised by the S.20/S.21 provider-state tests, not
+re-driven here.
 
 **V.3 gaps / notes:** **cross-layer** integration scenarios over one in-memory / file Drift DB
 (the DT unit tests probe single queries; V.3 walks realistic multi-layer flows, no production
