@@ -6,10 +6,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memox_v4/app/app.dart';
 import 'package:memox_v4/core/logging/app_logger.dart';
 import 'package:memox_v4/core/logging/logger_provider.dart';
+import 'package:memox_v4/data/seed/seed_providers.dart';
 
 /// App entrypoint wiring: one [ProviderContainer] shared between the running
 /// widget tree and the app-wide error handlers, all inside a guarded zone so no
 /// error path is swallowed.
+///
+/// Before the first frame it establishes the database's clean first-run state
+/// (the single active language pair + default preferences that the deck FK needs)
+/// — and, in debug builds, seeds a realistic sample deck tree — so the app opens
+/// against a valid store on every platform (native + web).
 ///
 /// This is the dev/monitoring half of the AGENTS.md error contract — every
 /// uncaught error (framework, platform, or async) is routed to [AppLogger].
@@ -20,7 +26,7 @@ void bootstrap() {
   final AppLogger logger = container.read(loggerProvider);
 
   runZonedGuarded(
-    () {
+    () async {
       WidgetsFlutterBinding.ensureInitialized();
 
       // Errors raised inside the Flutter framework (build/layout/paint).
@@ -39,6 +45,8 @@ void bootstrap() {
         return true;
       };
 
+      await _prepareDatabase(container, logger);
+
       runApp(
         UncontrolledProviderScope(
           container: container,
@@ -50,4 +58,24 @@ void bootstrap() {
     (error, stack) =>
         logger.error('Uncaught zone error', error: error, stackTrace: stack),
   );
+}
+
+/// Opens the DB and seeds the clean first-run state (debug also seeds sample
+/// data). A seeding failure is logged, not fatal — the app still starts, and any
+/// downstream persistence error surfaces per-feature as `AsyncValue.error`.
+Future<void> _prepareDatabase(
+  ProviderContainer container,
+  AppLogger logger,
+) async {
+  try {
+    final seeder = container.read(databaseSeederProvider);
+    if (kDebugMode) {
+      await seeder.seedSampleData();
+    } else {
+      await seeder.ensureFirstRun();
+    }
+  } catch (error, stack) {
+    logger.error('Database first-run seeding failed',
+        error: error, stackTrace: stack);
+  }
 }
