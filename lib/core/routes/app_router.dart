@@ -11,6 +11,7 @@ import 'package:memox_v4/presentation/features/library/screens/library_screen.da
 import 'package:memox_v4/presentation/features/reminder/screens/reminder_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
+import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
 import 'package:memox_v4/presentation/features/theme/screens/theme_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -61,7 +62,14 @@ GoRouter router(Ref ref) {
             ],
           ),
           _branch(Routes.add),
-          _branch(Routes.stats),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.stats,
+                builder: (context, state) => const StatisticsScreen(),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(
