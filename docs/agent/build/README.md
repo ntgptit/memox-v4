@@ -98,7 +98,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 
 | done | id | task |
 | --- | --- | --- |
-| [ ] | K.01 | [MxCard](k01-mxcard.md) |
+| [x] | K.01 | [MxCard](k01-mxcard.md) |
 | [ ] | K.02 | [MxIconTile](k02-mxicontile.md) |
 | [ ] | K.03 | [MxSectionHeader](k03-mxsectionheader.md) |
 | [ ] | K.04 | [MxScaffold](k04-mxscaffold.md) |
