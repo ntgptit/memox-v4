@@ -148,7 +148,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | S.18 | [review](s18-review.md) |
 | [x] | S.19 | [player](s19-player.md) |
 | [x] | S.20 | [study-session](s20-study-session.md) |
-| [ ] | S.21 | [study-result](s21-study-result.md) |
+| [x] | S.21 | [study-result](s21-study-result.md) |
 | [~] | S.22 | [account-sync](s22-account-sync.md) |
 
 ### V — Verification
