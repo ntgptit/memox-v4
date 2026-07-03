@@ -460,6 +460,24 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `ExitDialog`/`AnswerSaveErrorDialog`/`ResumeErrorState` (overlays + error surface) | `presentation/features/study-session/widgets/{exit_dialog,answer_save_error_dialog,resume_error_state}.dart` | (study-session screen test; dialogs are `showMxConfirmDialog` helpers) | S.20 | #PR |
 | D-002 graduate new card (5 stages → box 1) · D-003/4/5 grade due card | `study_session_providers.dart` (`GraduateCard` on stage-5 typing; `GradeCard` on due-review pass/fail) | (study-session container: graduate-walk promotes to box 1; due pass promotes) | S.20 | #PR |
 | D-018 new-per-day cap · BR-1/D-010 counting session recorded | `study_session_providers.dart` (`BuildStudyQueue.newCards` cap; `DailyActivityService.record` on finish) | (container: session builds due+new queues) | S.20 | #PR |
+| kit `study-result/screen` — result (standard·goal-met·goal-missed·many-wrong·finalizing·retry-finalize·finalize-error) | `presentation/features/study-result/screens/study_result_screen.dart` + `providers/study_result_providers.dart` (`StudyResultController`) | `test/presentation/features/study-result/study_result_screen_test.dart` (goal-met/missed/standard/finalize-error light+dark; head container) | S.21 | #PR |
+| kit `ResultHero`/`StreakGoalCard`/`Cta`/`FinalizingView` (4 result components) | `presentation/features/study-result/widgets/{result_hero,streak_goal_card,cta,finalizing_view}.dart` | (study-result screen test) | S.21 | #PR |
+| D-021 streak + D-010 goal head (met / missed / standard) | `study_result_providers.dart` (`streakFromHistory` + `DailyGoal.isMetBy` → `ResultHead`) | (study-result container: goal-met vs goal-missed head) | S.21 | #PR |
+
+**S.21 gaps / notes:** v1 persists **day totals**, not per-session records, so the result
+is a **"today so far" summary** (the finished session's minutes/words are already folded
+into the day by S.20's `DailyActivityService.record`) — it reads the same activity + goal +
+streak read model as the dashboard (`streakFromHistory`, D-021). The **head** is derived
+from goal progress: **goal-met** (`DailyGoal.isMetBy`) / **goal-missed** (goal configured,
+not met) / **standard** (no goal). The kit's **many-wrong** head and its per-session
+**correct%** stat are **undrivable** — there is no per-session accuracy/wrong-count store in
+v1 (only day totals); the third stat shows **"of goal"** (goal %) instead of correct%, and
+many-wrong is documented, not fabricated. The **finalizing** / **retry-finalize** states map
+to the `AsyncValue.loading` **FinalizingView** (S.20 already commits the SRS during the flow,
+so there is no separate finalize step to drive — the loading view covers the read); the
+**finalize-error** surface is the `AsyncValue.error` branch (driven in the test via a failing
+activity read). CTAs: **Keep studying** → a new session; **Back to library** / **Later** /
+close → home. Pixel goldens deferred to V.1.
 
 **S.20 gaps / notes:** the session stitches **due cards** (each a `dueReview` grading
 step) then **new cards** (each the five NewLearn stages) into one ordered plan, walked
