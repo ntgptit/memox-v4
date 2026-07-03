@@ -161,8 +161,9 @@ function parseDts(file, name) {
   if (!m) return { props: [] };
   const body = m[1];
   const props = [];
-  // join wrapped lines so a multi-line union collapses to one statement
-  const statements = body.split(';').map((s) => s.trim()).filter(Boolean);
+  // split on top-level ';' only — an inline object type (g: { a: string; b: string })
+  // or a multi-line union must stay one statement, not fragment on its inner ';'.
+  const statements = splitTopLevelChar(body, ';').map((s) => s.trim()).filter(Boolean);
   for (const stmt of statements) {
     const pm = stmt.match(/^([A-Za-z_][A-Za-z0-9_]*)(\??)\s*:\s*([\s\S]+)$/);
     if (!pm) continue;
@@ -349,18 +350,28 @@ function walk(dir, fn) {
 }
 
 function splitTopLevel(s) {
+  return splitTopLevelChar(s, ',');
+}
+
+/** Split on `sep` only at bracket depth 0, so nested {}/()/<>/[] are preserved.
+ *  A `>` closes a generic — EXCEPT in `=>` (an arrow, e.g. `() => void`), which
+ *  must not decrement depth or a following `;`/`,` stops splitting. */
+function splitTopLevelChar(s, sep) {
   const out = [];
   let depth = 0;
   let cur = '';
+  let prev = '';
   for (const ch of s) {
     if ('([<{'.includes(ch)) depth++;
-    else if (')]>}'.includes(ch)) depth--;
-    if (ch === ',' && depth === 0) {
+    else if (')]}'.includes(ch)) depth--;
+    else if (ch === '>' && prev !== '=') depth--;
+    if (ch === sep && depth === 0) {
       out.push(cur);
       cur = '';
     } else {
       cur += ch;
     }
+    prev = ch;
   }
   if (cur.trim()) out.push(cur);
   return out;
