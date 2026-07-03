@@ -22,6 +22,7 @@ import 'package:memox_v4/presentation/features/review/screens/review_screen.dart
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
 import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
+import 'package:memox_v4/presentation/features/study-result/screens/study_result_screen.dart';
 import 'package:memox_v4/presentation/features/study-session/screens/study_session_screen.dart';
 import 'package:memox_v4/presentation/features/theme/screens/theme_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -106,9 +107,8 @@ GoRouter router(Ref ref) {
 
 
 /// The v1 screens with no fixed path parameters, as top-level stub routes.
-const _fullScreenPaths = [
-  Routes.studyResult,
-];
+/// Empty now that every full-screen route resolves to a real screen.
+const _fullScreenPaths = <String>[];
 
 /// Every remaining v1 screen as a top-level stub route (above the shell).
 final List<GoRoute> _fullScreenRoutes = [
@@ -146,6 +146,10 @@ final List<GoRoute> _fullScreenRoutes = [
   GoRoute(
     path: Routes.study,
     builder: (context, state) => const StudySessionScreen(),
+  ),
+  GoRoute(
+    path: Routes.studyResult,
+    builder: (context, state) => const StudyResultScreen(),
   ),
   for (final p in _fullScreenPaths)
     GoRoute(path: p, builder: (context, state) => RouteStub(p)),
