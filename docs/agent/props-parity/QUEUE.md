@@ -31,7 +31,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | [x] | C.12 | deck-detail | 5 |
 | [x] | C.13 | library | 6 |
 | [x] | C.14 | drawer | 4 |
-| [ ] | C.15 | search | 2 |
+| [x] | C.15 | search | 2 |
 | [ ] | C.16 | flashcard-editor | 2 |
 | [ ] | C.17 | import | 2 |
 | [ ] | C.18 | export | 2 |
