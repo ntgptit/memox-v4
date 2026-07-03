@@ -6,6 +6,7 @@ import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
 import 'package:memox_v4/presentation/features/deck-detail/screens/deck_detail_screen.dart';
+import 'package:memox_v4/presentation/features/drawer/screens/drawer_screen.dart';
 import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
@@ -91,7 +92,6 @@ StatefulShellBranch _branch(String path, {List<RouteBase> extra = const []}) {
 
 /// The v1 screens with no fixed path parameters, as top-level stub routes.
 const _fullScreenPaths = [
-  Routes.drawer,
   Routes.reminder,
   Routes.theme,
   Routes.import_,
@@ -110,6 +110,7 @@ const _fullScreenPaths = [
 /// Every remaining v1 screen as a top-level stub route (above the shell).
 final List<GoRoute> _fullScreenRoutes = [
   GoRoute(path: Routes.search, builder: (context, state) => const SearchScreen()),
+  GoRoute(path: Routes.drawer, builder: (context, state) => const DrawerScreen()),
   for (final p in _fullScreenPaths)
     GoRoute(path: p, builder: (context, state) => RouteStub(p)),
   GoRoute(
