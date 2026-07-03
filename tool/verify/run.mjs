@@ -65,11 +65,16 @@ function l10n() {
 }
 
 const tokens = () => step('design tokens --check', 'node', ['tool/design/gen_tokens.mjs', '--check']);
+// props parity: each kit component's .d.ts contract vs its Flutter constructor.
+// --strict exits non-zero on any undeclared drift (every intentional divergence
+// must be a typed exception in props-parity.exceptions.json). Blocking as of Z.0.
+const propsParity = () => step('props parity --strict', 'node', ['tool/parity/props_check.mjs', '--strict']);
 const analyze = () => step('dart analyze', 'dart', ['analyze', 'lib', 'test']);
 const test = () => step('flutter test', 'flutter', ['test']);
 
 if (mode === 'docs') {
   tokens();
+  propsParity();
 } else if (mode === 'quick') {
   analyze();
   test();
@@ -77,6 +82,7 @@ if (mode === 'docs') {
   codegen();
   l10n();
   tokens();
+  propsParity();
   analyze();
   test();
 }

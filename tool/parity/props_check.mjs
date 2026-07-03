@@ -51,6 +51,11 @@ validateExceptions(EXCEPTIONS);
 /** All Flutter `class X` → absolute file path, across lib/presentation. */
 const flutterClassIndex = indexFlutterClasses(path.join(ROOT, 'lib/presentation'));
 
+/** All Flutter `enum X { … }` → value list, across lib/ — lets the enum check
+ *  resolve an enum type IMPORTED from another file (e.g. ResultHero.tone →
+ *  MxIconTileTone), not just enums declared in the widget's own file. */
+const flutterEnumIndex = indexFlutterEnums(path.join(ROOT, 'lib'));
+
 /** Discover every kit component that currently has a .d.ts. */
 const components = discoverComponents();
 
@@ -140,7 +145,7 @@ function analyze(comp) {
     // enum value space
     if (prop.union) {
       const enumType = stripNull(param.type);
-      const flutterVals = ft.enums[enumType];
+      const flutterVals = ft.enums[enumType] || flutterEnumIndex[enumType];
       if (flutterVals) {
         const wanted = prop.union.map(aliasEnumValue);
         const missing = wanted.filter((v) => !flutterVals.includes(v));
@@ -358,6 +363,23 @@ function resolveFlutterFile(comp, className) {
   if (files.length <= 1) return files[0] || null;
   const inUnit = files.find((f) => f.replace(/\\/g, '/').includes(`/features/${comp.unit}/`));
   return inUnit || files[0];
+}
+
+function indexFlutterEnums(dir) {
+  const index = {};
+  walk(dir, (file) => {
+    if (!file.endsWith('.dart')) return;
+    const src = fs.readFileSync(file, 'utf8');
+    for (const m of src.matchAll(/enum\s+([A-Za-z0-9_]+)\s*\{([^}]*)\}/g)) {
+      if (!index[m[1]]) {
+        index[m[1]] = m[2]
+          .split(',')
+          .map((v) => v.replace(/\/\/.*$/gm, '').trim())
+          .filter((v) => v && /^[A-Za-z_]/.test(v));
+      }
+    }
+  });
+  return index;
 }
 
 function walk(dir, fn) {
