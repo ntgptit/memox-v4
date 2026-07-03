@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
+import 'package:memox_v4/core/theme/responsive.dart';
 
 /// The kit's root phone-screen frame (`MxScaffold` · base class `.app`): an app
 /// bar, a scrollable padded body, an optional bottom nav, and an optional FAB
@@ -8,6 +9,10 @@ import 'package:memox_v4/core/theme/mx_spacing.dart';
 ///
 /// [children] are the body sections, laid out in a scrolling column with the
 /// kit's `space5` gap. [flush] drops the horizontal gutter for full-bleed content.
+///
+/// Responsive (V.6): the phone-first body is capped at [Breakpoints.maxContentWidth]
+/// and centered, so on a tablet/desktop width the content stays readable instead of
+/// stretching edge-to-edge. Phone widths (< the cap) are unaffected.
 class MxScaffold extends StatelessWidget {
   const MxScaffold({
     required this.children,
@@ -34,16 +39,23 @@ class MxScaffold extends StatelessWidget {
       floatingActionButton: fab,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
-          horizontal,
-          MxSpacing.space4,
-          horizontal,
-          MxSpacing.space6,
+        padding: const EdgeInsets.only(
+          top: MxSpacing.space4,
+          bottom: MxSpacing.space6,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: MxSpacing.space5,
-          children: children,
+        child: Center(
+          child: ConstrainedBox(
+            constraints:
+                const BoxConstraints(maxWidth: Breakpoints.maxContentWidth),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontal),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: MxSpacing.space5,
+                children: children,
+              ),
+            ),
+          ),
         ),
       ),
     );
