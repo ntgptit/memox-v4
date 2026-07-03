@@ -439,6 +439,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `game-mc/screen` — Multiple choice (waiting·correct·wrong·complete) | `presentation/features/game-mc/screens/game_mc_screen.dart` + `providers/mc_providers.dart` (`McController`) | `test/presentation/features/game-mc/game_mc_screen_test.dart` (waiting/answer/audio/complete, light+dark) | S.15 | #122 |
 | kit `PromptCard` (prompt term + audio/edit) | `presentation/features/game-mc/widgets/prompt_card.dart` | (mc screen test) | S.15 | #122 |
 | mc round — N questions (correct meaning + 3 distractors), grading | `mc_providers.dart` (deck-tree card walk + shuffled choices; answer/next/next-round; `AudioService.speak`) | (mc screen test, complete flow) | S.15 | #122 |
+| kit `game-recall/screen` — Recall (before-reveal·revealed·complete·empty·error) | `presentation/features/game-recall/screens/game_recall_screen.dart` + `providers/recall_providers.dart` (`RecallController`) | `test/presentation/features/game-recall/game_recall_screen_test.dart` (before-reveal/reveal/audio light+dark; queue-complete + forgot-requeue container) | S.16 | #PR |
+| kit `TermCard` (term + audio/edit) | `presentation/features/game-recall/widgets/term_card.dart` | (recall screen test) | S.16 | #PR |
+| kit `MeaningPanel` (recall hint → revealed meaning) | `presentation/features/game-recall/widgets/meaning_panel.dart` | (recall screen test) | S.16 | #PR |
+| recall round — queue of N cards, reveal + self-grade (Got it removes · Forgot re-queues) | `recall_providers.dart` (deck-tree card walk; reveal/gotIt/forgot/nextRound; `AudioService.speak`) | (recall screen test, complete + requeue flows) | S.16 | #PR |
+
+**S.16 gaps / notes:** the round loads **words-per-round** cards (D-008) from the deck
+tree (library-wide; game-picker source not threaded in — deferred, as S.14/S.15). The
+game is a **queue**: **Got it** removes the current card, **Forgot** re-queues it to the
+end (progress = distinct-reviewed / total, so a forgotten card doesn't advance the bar).
+The kit's transient **forgot / remembered** "Note" states are skipped — grading advances
+straight to the next card (or the complete state). Audio speaks the term (`AudioService`,
+fixed `ko`); edit deep-links to the flashcard editor. Practice records no `StudySession`
+(BR-5). Pixel goldens deferred to V.1.
 
 **S.15 gaps / notes:** each question is a card's term + its meaning against **3
 distractor meanings** drawn from the other round cards (shuffled); the round loads
