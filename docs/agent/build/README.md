@@ -128,7 +128,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | done | id | task |
 | --- | --- | --- |
 | [x] | S.00 | [Screen state matrix](s00-screen-state-matrix.md) |
-| [ ] | S.01 | [dashboard](s01-dashboard.md) |
+| [x] | S.01 | [dashboard](s01-dashboard.md) |
 | [ ] | S.02 | [library](s02-library.md) |
 | [ ] | S.03 | [deck-detail](s03-deck-detail.md) |
 | [ ] | S.04 | [search](s04-search.md) |
