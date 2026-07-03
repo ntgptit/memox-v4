@@ -468,6 +468,21 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | Drift schema — all 10 tables per DT.0 (+ indices for due/search) · D-024 cascade · D-011 1:1 srs · box 0..8 CHECK | `data/datasources/local/tables.dart` (LanguagePairs·Decks self-FK·Cards·CardMeanings·SrsStates·ReviewLogs·StudySessions·DailyActivity·Settings·BackupMetadata) · `app_database.dart` (`AppDatabase`, `foreign_keys=ON`) | `test/data/datasources/local/app_database_test.dart` (insert/read all · FK pragma · cascade delete D-024 · box CHECK · FK reject) | DT.1 | #PR |
 | Migrations & versioning — forward-only strategy + versioned schema snapshot + round-trip tests (R3) | `app_database.dart` (`MigrationStrategy` onCreate + onUpgrade scaffold + `foreign_keys=ON`) · `drift_schemas/drift_schema_v1.json` · `test/data/migration/generated/*` | `test/data/migration/schema_migration_test.dart` (version==latest · runtime schema matches snapshot · close/reopen round-trip + FK on) | DT.2 | #PR |
 | DAOs — due queue · new queue · term+meaning search (D-019/D-028) · deck tree + subtree stats (D-009) · due count | `data/datasources/local/dao/{deck_dao,card_dao,review_dao}.dart` (typed Drift queries; `@DataClassName('…Row')` keeps rows distinct from domain entities) | `test/data/datasources/local/dao_test.dart` (children/subtree/stats · watchByDeck/meanings/search AND+hidden+scope · dueQueue/newQueue/currentBox/dueCount) | DT.3 | #PR |
+| Repository impls + mappers — DM.3 over the DAOs; row↔entity at the boundary | `data/repositories/drift_{deck,card,review,settings}_repository.dart` · `data/models/mappers/{deck,card,srs,time}_mapper.dart` | `test/data/repositories/drift_repositories_test.dart` (deck save/watch/stats/cascade · card save-txn/edit/hidden/search · review schedule/queues/log/count · settings goal+new/day) | DT.4 | #PR |
+
+**DT.4 gaps / notes:** implements the four DM.3 repository interfaces over the DT.3 DAOs
+with pure **row→entity mappers** (write-side companions built in the repos, since they need
+the injected `Clock` for `created_at` and the active language pair for the deck FK — columns
+the domain entities don't carry). A **card save spans two tables** (`cards` + `card_meanings`)
+so it runs in a `db.transaction` (all-or-nothing, Policy 1); `watchByDeck` **joins** both
+tables so it re-emits on either change. Deck/review repos take a `Clock` (deck `statsFor` +
+`review.watchDueCount` need "now" and there's no `asOf` on those interface methods — the
+injected clock is the sanctioned source, not `DateTime.now()`). `saveSchedule` upserts box +
+`due_at` leaving **`last_reviewed_at` absent** (not clobbered) — v1 derives last-reviewed from
+`review_logs`, so the column stays null (documented gap). `logReview` synthesizes a row id
+`rl-<cardId>-<micros>` (the domain `ReviewLog` has no id). Deck save resolves the **single
+active language pair** to own the FK (seeded at DT.6); with no active pair a save is a
+`PersistenceFailure`. Providers are still fakes — **DT.5** swaps them to these Drift impls.
 
 **DT.3 gaps / notes:** four query families as **typed Drift DAOs** (no raw SQL): the due
 queue (`due_at <= asOf`, non-hidden **D-006**, ordered `due_at, id`), the new queue (box 0 /
