@@ -455,6 +455,31 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `player/Dots` (8-dot deck progress) | `presentation/features/player/widgets/dots.dart` | (player screen test) | S.19 | #PR |
 | kit `player/PlayerCard` (term + rule + meaning) | `presentation/features/player/widgets/player_card.dart` | (player screen test) | S.19 | #PR |
 | player transport + speak (DM.8 `AudioService`) | `player_providers.dart` (deck-tree card walk; playPause/next/prev/replay/toggleSpeedControl/setSpeed; `speak`/`stop`) | (player screen test, speak on open + on next) | S.19 | #PR |
+| kit `study-session/screen` — session (stage1-5·relearn·due-review·exit·resume-error·answer-save-error·empty) | `presentation/features/study-session/screens/study_session_screen.dart` + `providers/study_session_providers.dart` (`StudySessionController`) | `test/presentation/features/study-session/study_session_screen_test.dart` (stage1/matching/due/empty light+dark; graduate-walk + due-grade + wrong-choice container) | S.20 | #PR |
+| kit `PromptCard`/`StageReview`/`StageMatching`/`StageChoice`/`StageRecall`/`StageTyping` (the 5 stages) | `presentation/features/study-session/widgets/{prompt_card,stage_review,stage_matching,stage_choice,stage_recall,stage_typing}.dart` | (study-session screen test) | S.20 | #PR |
+| kit `ExitDialog`/`AnswerSaveErrorDialog`/`ResumeErrorState` (overlays + error surface) | `presentation/features/study-session/widgets/{exit_dialog,answer_save_error_dialog,resume_error_state}.dart` | (study-session screen test; dialogs are `showMxConfirmDialog` helpers) | S.20 | #PR |
+| D-002 graduate new card (5 stages → box 1) · D-003/4/5 grade due card | `study_session_providers.dart` (`GraduateCard` on stage-5 typing; `GradeCard` on due-review pass/fail) | (study-session container: graduate-walk promotes to box 1; due pass promotes) | S.20 | #PR |
+| D-018 new-per-day cap · BR-1/D-010 counting session recorded | `study_session_providers.dart` (`BuildStudyQueue.newCards` cap; `DailyActivityService.record` on finish) | (container: session builds due+new queues) | S.20 | #PR |
+
+**S.20 gaps / notes:** the session stitches **due cards** (each a `dueReview` grading
+step) then **new cards** (each the five NewLearn stages) into one ordered plan, walked
+library-wide (route carries no deck id — deck scoping deferred, as the games/review). The
+**NewLearn stages are teaching steps**: advancing through all five graduates the card
+(`GraduateCard`, D-002) — per-stage answer *validation* is **presentational** (matching a
+tile / picking the answer / typing + Check advance; a wrong choice shows the not-counted
+relearn note and lets you retry), because v1 grades only on the **due-review** path
+(`GradeCard`, pass=promote / fail=demote, D-003/4/5). New-per-day uses the **D-018 default
+cap (20)** with `introducedToday: 0` (per-deck/settings new-cap config deferred). Finishing
+records a **counting `StudySession`** (BR-1/D-010) via `DailyActivityService.record`
+(`deckId` = the first studied card's; a library-wide session has no single deck — approx,
+documented) and navigates to the result screen (S.21). The **answer-save-error** and
+**resume-error** surfaces are wired (`saveError` flag → `AnswerSaveErrorDialog`; a failed
+build → `ResumeErrorState`) but **undrivable on the fakes** (writes/loads always succeed) —
+built + rendered, not driven end-to-end (documented gap, as other Result-based error
+states). The app-bar carries the progress bar in the **body header** (MxAppBar title is
+text-only) and the **more_vert options** control is omitted (no v1 menu). The kit's fixed
+per-stage progress pcts are illustrative; progress here is **step-based** over the real
+queue. Pixel goldens deferred to V.1.
 
 **S.19 gaps / notes:** the player reads the **whole library** (deck-tree walk) — the route
 carries no deck id (deck scoping deferred, as the games/review). It reads the **term**

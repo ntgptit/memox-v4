@@ -22,6 +22,7 @@ import 'package:memox_v4/presentation/features/review/screens/review_screen.dart
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
 import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
+import 'package:memox_v4/presentation/features/study-session/screens/study_session_screen.dart';
 import 'package:memox_v4/presentation/features/theme/screens/theme_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -106,7 +107,6 @@ GoRouter router(Ref ref) {
 
 /// The v1 screens with no fixed path parameters, as top-level stub routes.
 const _fullScreenPaths = [
-  Routes.study,
   Routes.studyResult,
 ];
 
@@ -142,6 +142,10 @@ final List<GoRoute> _fullScreenRoutes = [
   GoRoute(
     path: Routes.player,
     builder: (context, state) => const PlayerScreen(),
+  ),
+  GoRoute(
+    path: Routes.study,
+    builder: (context, state) => const StudySessionScreen(),
   ),
   for (final p in _fullScreenPaths)
     GoRoute(path: p, builder: (context, state) => RouteStub(p)),
