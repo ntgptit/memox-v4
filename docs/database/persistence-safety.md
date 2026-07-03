@@ -4,9 +4,9 @@
 > code. For a local-first SRS app the database is the single source of truth with
 > **no server to recover from** — a persistence bug (a half-applied grade, a lost
 > cascade, a wall-clock query) silently corrupts the learner's schedule. This doc
-> defines the mandatory patterns and pairs each with a **test skeleton** under
-> [`test/data/_skeletons/`](../../test/data/_skeletons) that DT.1–DT.4 must fill in
-> (the skeletons are skipped until then, so the gate stays green). It builds on the
+> defines the mandatory patterns and pairs each with its **realizing test** (the
+> DT.1–DT.4 suites listed per policy below; the original skipped skeletons were
+> removed once these landed). It builds on the
 > [schema contract](schema-contract.md) (DT.0) and `docs/decision-tables/
 > core-decision-table.md` (esp. **D-024** cascade).
 
@@ -46,9 +46,11 @@ executor or wrap their body in `db.transaction(() async { … })`. Repository im
 `PersistenceFailure`, never an uncaught exception. **No** repository method performs
 two awaited writes outside a transaction.
 
-**Skeleton.** [`transaction_rollback_test.dart`](../../test/data/_skeletons/transaction_rollback_test.dart)
-— a multi-table write whose second step throws leaves **zero** rows from the first
-step (full rollback).
+**Test.** [`persistence_safety_test.dart`](../../test/data/persistence_safety_test.dart)
+(Policy 1) — a card save whose second `card_meanings` insert throws (a PK clash)
+leaves **zero** rows from the first step, and the `db.transaction` primitive rolls
+back a thrown body. The transactional card write is also exercised in
+[`drift_repositories_test.dart`](../../test/data/repositories/drift_repositories_test.dart).
 
 ---
 
@@ -68,9 +70,11 @@ CASCADE` per the [schema contract](schema-contract.md).
 subtree is a single delete of the root deck row — the FKs do the rest inside one
 transaction (Policy 1).
 
-**Skeleton.** [`cascade_delete_test.dart`](../../test/data/_skeletons/cascade_delete_test.dart)
-— seeding a parent→child deck with cards + meanings + srs, then deleting the parent,
-leaves **no** orphaned child deck / card / meaning / srs / review-log rows (D-024).
+**Test.** [`app_database_test.dart`](../../test/data/datasources/local/app_database_test.dart)
+(cascade delete + `PRAGMA foreign_keys`) and
+[`data_integration_test.dart`](../../test/data/integration/data_integration_test.dart)
+(delete cascades through every read path) — deleting a parent deck leaves **no**
+orphaned child deck / card / meaning / srs / review-log rows (D-024).
 
 ---
 
@@ -90,9 +94,10 @@ the stats history.
 `*.drift`, AGENTS.md); the sort **criterion** (D-023) is a bound parameter/variant,
 not string-built SQL. No query returns rows for display without an `ORDER BY`.
 
-**Skeleton.** [`deterministic_ordering_test.dart`](../../test/data/_skeletons/deterministic_ordering_test.dart)
-— the same query over the same data returns rows in the **same order** twice, and
-ties on the sort key fall back to `id` (D-023).
+**Test.** [`persistence_safety_test.dart`](../../test/data/persistence_safety_test.dart)
+(Policy 3) — the same query over the same data returns rows in the **same order**
+twice, and ties on the sort key fall back to `id` (D-023); per-query ordering is
+also asserted in [`dao_test.dart`](../../test/data/datasources/local/dao_test.dart).
 
 ---
 
@@ -117,9 +122,12 @@ compare, never a UTC/local mismatch.
 `ReviewRepository.dueQueue(asOf:)` already does) sourced from `ref.read(clockProvider)`
 at the call site; the data layer contains **no** `DateTime.now()`.
 
-**Skeleton.** [`clock_injection_test.dart`](../../test/data/_skeletons/clock_injection_test.dart)
-— the due query uses the injected `asOf` (a card due at T is due at T+1s but not at
-T−1s), and the day bucket is the injected-clock local day (D-010/D-021).
+**Test.** [`dao_test.dart`](../../test/data/datasources/local/dao_test.dart) (the due
+query honours the passed `asOf`) and
+[`service_adapters_test.dart`](../../test/data/services/service_adapters_test.dart)
+(daily-activity day bucket) — plus the scheduler's
+[`srs_invariants_test.dart`](../../test/domain/usecases/srs/srs_invariants_test.dart)
+"due time tracks the injected clock" (D-010/D-021).
 
 ---
 
@@ -136,9 +144,9 @@ vN+1 with rows intact). New columns are nullable or defaulted so old rows remain
 valid; column drops/renames go through Drift's stepwise migration, never a silent
 `DROP`.
 
-**Skeleton.** [`migration_test.dart`](../../test/data/_skeletons/migration_test.dart)
-— migrating a populated vN database to the current version keeps every row and
-re-enables foreign keys.
+**Test.** [`schema_migration_test.dart`](../../test/data/migration/schema_migration_test.dart)
+(DT.2) — the runtime schema matches its versioned snapshot, and a populated database
+survives a close + reopen with foreign keys re-enabled.
 
 ---
 
@@ -155,10 +163,12 @@ re-enables foreign keys.
 
 ## Coverage self-check
 
-Policies map to the DT.0.1 Notes: **transaction/rollback** (Policy 1 + skeleton),
-**migration test** (Policy 5 + skeleton), **deterministic ordering** (Policy 3 +
-skeleton), **clock/local-day injection** (Policy 4 + skeleton), **soft-delete/cascade
-D-024** (Policy 2 + skeleton). Every skeleton is `skip`-marked until its DT task
-(DT.1 tables/pragma, DT.2 migrations, DT.3 DAOs/ordering, DT.4 repo impls/transactions)
-fills it in — so this task keeps the gate green while locking the contract those tasks
-must satisfy.
+Every policy is now backed by a **live** test (the DT.0.1 skeletons were removed once
+these landed): **transaction/rollback** (Policy 1 — `persistence_safety_test.dart` +
+`drift_repositories_test.dart`), **cascade D-024** (Policy 2 — `app_database_test.dart`
++ `data_integration_test.dart`), **deterministic ordering** (Policy 3 —
+`persistence_safety_test.dart` + `dao_test.dart`), **clock/local-day injection**
+(Policy 4 — `dao_test.dart` + `service_adapters_test.dart` + `srs_invariants_test.dart`),
+and **migration** (Policy 5 — `schema_migration_test.dart`). Wired across DT.1
+(tables/pragma), DT.2 (migrations), DT.3 (DAOs/ordering), DT.4 (repos/transactions),
+and this cleanup — the contract is enforced by running tests, not skipped stubs.
