@@ -91,7 +91,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | P.03 | [MxAvatar](p03-mxavatar.md) |
 | [x] | P.04 | [MxBadge](p04-mxbadge.md) |
 | [x] | P.05 | [MxChip](p05-mxchip.md) |
-| [ ] | P.06 | [MxSwitch](p06-mxswitch.md) |
+| [x] | P.06 | [MxSwitch](p06-mxswitch.md) |
 | [ ] | P.07 | [MxSegmentedControl](p07-mxsegmentedcontrol.md) |
 
 ### K — Composites
