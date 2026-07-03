@@ -136,7 +136,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | S.06 | [drawer](s06-drawer.md) |
 | [x] | S.07 | [reminder](s07-reminder.md) |
 | [x] | S.08 | [theme](s08-theme.md) |
-| [ ] | S.09 | [statistics](s09-statistics.md) |
+| [x] | S.09 | [statistics](s09-statistics.md) |
 | [ ] | S.10 | [import](s10-import.md) |
 | [ ] | S.11 | [export](s11-export.md) |
 | [ ] | S.12 | [flashcard-editor](s12-flashcard-editor.md) |
