@@ -10,6 +10,7 @@ import 'package:memox_v4/presentation/features/drawer/screens/drawer_screen.dart
 import 'package:memox_v4/presentation/features/export/screens/export_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard-editor/screens/flashcard_editor_screen.dart';
 import 'package:memox_v4/presentation/features/game-matching/screens/game_matching_screen.dart';
+import 'package:memox_v4/presentation/features/game-mc/screens/game_mc_screen.dart';
 import 'package:memox_v4/presentation/features/game-picker/screens/game_picker_screen.dart';
 import 'package:memox_v4/presentation/features/import/screens/import_screen.dart';
 import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
@@ -101,7 +102,6 @@ GoRouter router(Ref ref) {
 
 /// The v1 screens with no fixed path parameters, as top-level stub routes.
 const _fullScreenPaths = [
-  Routes.gameMc,
   Routes.gameRecall,
   Routes.gameTyping,
   Routes.review,
@@ -126,6 +126,7 @@ final List<GoRoute> _fullScreenRoutes = [
     path: Routes.gameMatching,
     builder: (context, state) => const GameMatchingScreen(),
   ),
+  GoRoute(path: Routes.gameMc, builder: (context, state) => const GameMcScreen()),
   for (final p in _fullScreenPaths)
     GoRoute(path: p, builder: (context, state) => RouteStub(p)),
   GoRoute(

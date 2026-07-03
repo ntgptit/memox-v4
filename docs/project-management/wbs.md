@@ -436,6 +436,17 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `game-matching/screen` — Matching (playing·selected·correct·wrong·complete) | `presentation/features/game-matching/screens/game_matching_screen.dart` + `providers/matching_providers.dart` (`MatchingController`) | `test/presentation/features/game-matching/game_matching_screen_test.dart` (playing/correct/wrong/complete, light+dark) | S.14 | #121 |
 | kit `Tile` (match tile, tone skins) | `presentation/features/game-matching/widgets/tile.dart` (`MatchTileView`/`MatchTone`) | (matching screen test) | S.14 | #121 |
 | matching round — load N cards (words/round), pair-match logic | `matching_providers.dart` (deck-tree card walk + `watchGameWordsPerRound`; select/match/next-round) | (matching screen test, complete flow) | S.14 | #121 |
+| kit `game-mc/screen` — Multiple choice (waiting·correct·wrong·complete) | `presentation/features/game-mc/screens/game_mc_screen.dart` + `providers/mc_providers.dart` (`McController`) | `test/presentation/features/game-mc/game_mc_screen_test.dart` (waiting/answer/audio/complete, light+dark) | S.15 | #122 |
+| kit `PromptCard` (prompt term + audio/edit) | `presentation/features/game-mc/widgets/prompt_card.dart` | (mc screen test) | S.15 | #122 |
+| mc round — N questions (correct meaning + 3 distractors), grading | `mc_providers.dart` (deck-tree card walk + shuffled choices; answer/next/next-round; `AudioService.speak`) | (mc screen test, complete flow) | S.15 | #122 |
+
+**S.15 gaps / notes:** each question is a card's term + its meaning against **3
+distractor meanings** drawn from the other round cards (shuffled); the round loads
+words-per-round cards library-wide (game-picker source not threaded in — deferred).
+Answering **locks** the choices (correct/wrong tones, the correct one always shown)
+and reveals a **Next** button — the kit implies tap-to-continue; an explicit button
+is added for accessibility (no timer). Audio speaks the prompt term (`AudioService`,
+fixed `ko`). Practice records no `StudySession` (BR-5). Pixel goldens deferred to V.1.
 
 **S.14 gaps / notes:** the round loads up to **words-per-round** cards (D-008) from
 the deck tree (library-wide; the game-picker source isn't threaded into the game yet
