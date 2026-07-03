@@ -41,6 +41,7 @@ const REASONS = new Set([
   'deferred-screen',
   'flutter-only',
   'fixture-parameterized',
+  'flutter-helper',
 ]);
 
 validateExceptions(EXCEPTIONS);
@@ -89,7 +90,7 @@ function analyze(comp) {
   const drift = [];
 
   if (!flutterFile) {
-    const excused = excuseFor(comp.key, '*', ['deferred-screen', 'flutter-only']);
+    const excused = excuseFor(comp.key, '*', ['deferred-screen', 'flutter-only', 'flutter-helper']);
     drift.push(mark({ kind: 'NO_FLUTTER_COUNTERPART', prop: '*', detail: `no class ${flutterClass} under lib/presentation` }, comp, excused));
     return { component: comp.key, flutterClass, flutterFile: null, kitProps: kit.props.map((p) => p.name), drift };
   }
