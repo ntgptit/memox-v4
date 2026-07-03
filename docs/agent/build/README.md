@@ -87,7 +87,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | done | id | task |
 | --- | --- | --- |
 | [x] | P.01 | [MxButton](p01-mxbutton.md) |
-| [ ] | P.02 | [MxIconButton](p02-mxiconbutton.md) |
+| [x] | P.02 | [MxIconButton](p02-mxiconbutton.md) |
 | [ ] | P.03 | [MxAvatar](p03-mxavatar.md) |
 | [ ] | P.04 | [MxBadge](p04-mxbadge.md) |
 | [ ] | P.05 | [MxChip](p05-mxchip.md) |
