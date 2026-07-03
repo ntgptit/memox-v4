@@ -28,6 +28,22 @@ const onlyShared = args.includes('--shared');
 const asJson = args.includes('--json');
 const strict = args.includes('--strict');
 
+// -------------------------------------------------------- exception schema ---
+
+// Closed reason set — an exception with any other reason (or a missing field) is
+// a config error and fails the run even in advisory mode: a malformed exception
+// silently suppressing real drift is the "junk drawer" failure this gate exists
+// to prevent. Keep in sync with tool/parity/README.md.
+const REASONS = new Set([
+  'web-only',
+  'enum-base-expansion',
+  'flutter-idiom',
+  'deferred-screen',
+  'flutter-only',
+]);
+
+validateExceptions(EXCEPTIONS);
+
 // ---------------------------------------------------------------- discovery ---
 
 /** All Flutter `class X` → absolute file path, across lib/presentation. */
@@ -225,6 +241,27 @@ function aliasEnumValue(v) {
     return v.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
   }
   return v;
+}
+
+function validateExceptions(list) {
+  if (!Array.isArray(list)) fail('props-parity.exceptions.json must be a JSON array');
+  const errors = [];
+  list.forEach((e, i) => {
+    if (typeof e !== 'object' || e === null) return errors.push(`#${i}: not an object`);
+    if (!e.component) errors.push(`#${i}: missing "component"`);
+    if (!e.prop) errors.push(`#${i}: missing "prop" (use "*" for whole-component)`);
+    if (!e.reason) errors.push(`#${i}: missing "reason"`);
+    else if (!REASONS.has(e.reason)) errors.push(`#${i} (${e.component}/${e.prop}): unknown reason "${e.reason}" — allowed: ${[...REASONS].join(', ')}`);
+    if (!e.note) errors.push(`#${i} (${e.component}/${e.prop}): missing "note" (why this divergence is intentional)`);
+  });
+  if (errors.length) {
+    fail(`props-parity.exceptions.json has ${errors.length} schema error(s):\n  - ${errors.join('\n  - ')}`);
+  }
+}
+
+function fail(msg) {
+  console.error(`\x1b[31mprops_check: ${msg}\x1b[0m`);
+  process.exit(2);
 }
 
 function excuseFor(componentKey, prop, allowedReasons) {

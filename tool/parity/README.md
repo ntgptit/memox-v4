@@ -32,7 +32,21 @@ same API the kit promises" is a **gate**, not a memory game. Plan + full task li
 | `enumBaseNote` | Why extra Flutter enum values (the "base" the kit omits) are **not** auto-accepted — each must be an `enum-base-expansion` exception. |
 | `diffDimensions` | The four drift classes the checker emits. |
 
-## Exception reasons (`props-parity.exceptions.json`) — closed set
+## Exceptions (`props-parity.exceptions.json`)
+
+A JSON array of typed, intentional divergences. **Every entry is schema-checked on
+every run** — a missing field or an unknown `reason` fails the process (exit 2),
+even in advisory mode, so a malformed exception can never silently suppress real
+drift. Required fields:
+
+| Field | Rule |
+| --- | --- |
+| `component` | kit key, `"<dir>/<PascalName>"` (e.g. `core/MxButton`) |
+| `prop` | the diverging prop, or `"*"` for whole-component (`deferred-screen`/`flutter-only` only) |
+| `reason` | one of the closed set below |
+| `note` | why the divergence is intentional (required — no silent entries) |
+
+### Reasons — closed set
 
 | Reason | For |
 | --- | --- |
