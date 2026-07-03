@@ -141,7 +141,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | S.11 | [export](s11-export.md) |
 | [x] | S.12 | [flashcard-editor](s12-flashcard-editor.md) |
 | [x] | S.13 | [game-picker](s13-game-picker.md) |
-| [ ] | S.14 | [game-matching](s14-game-matching.md) |
+| [x] | S.14 | [game-matching](s14-game-matching.md) |
 | [ ] | S.15 | [game-mc](s15-game-mc.md) |
 | [ ] | S.16 | [game-recall](s16-game-recall.md) |
 | [ ] | S.17 | [game-typing](s17-game-typing.md) |
