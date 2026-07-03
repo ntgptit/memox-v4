@@ -465,6 +465,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | D-021 streak + D-010 goal head (met / missed / standard) | `study_result_providers.dart` (`streakFromHistory` + `DailyGoal.isMetBy` → `ResultHead`) | (study-result container: goal-met vs goal-missed head) | S.21 | #PR |
 | _(schema contract)_ — every table/column/index/FK ↔ rule; gates DT.1 | `docs/database/schema-contract.md` (language_pairs · decks self-FK · cards · card_meanings · srs_state · review_logs+review_outcome · study_sessions · daily_activity · settings · backup_metadata) | `node tool/verify/run.mjs --docs` (doc freshness) | DT.0 | #PR |
 | _(persistence-safety policy)_ — transaction/rollback · cascade (D-024) · deterministic order · clock injection · migrations; gates DT.1–DT.4 | `docs/database/persistence-safety.md` + `test/data/_skeletons/{transaction_rollback,cascade_delete,deterministic_ordering,clock_injection,migration}_test.dart` | 5 `@Skip`-marked skeletons (filled by DT.1–DT.4) + `--docs` | DT.0.1 | #PR |
+| Drift schema — all 10 tables per DT.0 (+ indices for due/search) · D-024 cascade · D-011 1:1 srs · box 0..8 CHECK | `data/datasources/local/tables.dart` (LanguagePairs·Decks self-FK·Cards·CardMeanings·SrsStates·ReviewLogs·StudySessions·DailyActivity·Settings·BackupMetadata) · `app_database.dart` (`AppDatabase`, `foreign_keys=ON`) | `test/data/datasources/local/app_database_test.dart` (insert/read all · FK pragma · cascade delete D-024 · box CHECK · FK reject) | DT.1 | #PR |
+
+**DT.1 gaps / notes:** implements every table in the schema contract as **typed Drift
+Table classes** (no raw SQL — AGENTS.md "SQL only in `*.drift`" satisfied by the typed
+API); the generated row models are gitignored (`*.g.dart`) and mapped to domain entities
+at the repository boundary in **DT.4** (not here). `foreign_keys = ON` is set in
+`beforeOpen` so `onDelete: cascade` fires (**D-024**, verified: deleting a parent deck drops
+the child deck + cards + meanings + srs + review-logs). `srs_state` is 1:1 with `cards`
+(`cardId` PK, **D-011**); `box` carries a `CHECK (0..8)`. Indices per contract: due
+(`srs.dueAt`), card/meaning search (`term`/`content`), review-log + session time, deck
+parent. `daily_activity.day` is an integer PK (SQLite rowid alias) keyed by the explicit
+midnight-epoch value. In-memory `NativeDatabase.memory()` runs the integration test on the
+`flutter test` VM (confirmed). Migrations/versioning are **DT.2**; DAOs/queries **DT.3**.
 
 **DT.0.1 gaps / notes:** doc + test-skeleton task (the real Drift work is DT.1+). Five
 safety policies each backed by a skipped skeleton under `test/data/_skeletons/`:
