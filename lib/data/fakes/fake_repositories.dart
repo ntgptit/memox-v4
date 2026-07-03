@@ -179,11 +179,29 @@ class FakeReviewRepository implements ReviewRepository {
   }
 
   List<Card> _dueCards({DeckId? within, required DateTime asOf}) {
+    final scope = within == null ? null : _subtreeIds(within);
     return _store.cards.values.where((card) {
       if (card.hidden) return false;
-      if (within != null && card.deckId.value != within.value) return false;
+      if (scope != null && !scope.contains(card.deckId.value)) return false;
       return _store.srsByCard[card.id.value]?.isDue(asOf) ?? false;
     }).toList(growable: false);
+  }
+
+  /// Deck ids in [root]'s subtree (root included) — mirrors the deck repo, so
+  /// `within` scopes to a subtree per the contract, not a single deck node.
+  Set<String> _subtreeIds(DeckId root) {
+    final ids = <String>{root.value};
+    var changed = true;
+    while (changed) {
+      changed = false;
+      for (final deck in _store.decks.values) {
+        final parent = deck.parentId?.value;
+        if (parent != null && ids.contains(parent) && ids.add(deck.id.value)) {
+          changed = true;
+        }
+      }
+    }
+    return ids;
   }
 
   @override
@@ -198,9 +216,10 @@ class FakeReviewRepository implements ReviewRepository {
 
   @override
   Future<Result<List<Card>>> newQueue({DeckId? within, required int limit}) async {
+    final scope = within == null ? null : _subtreeIds(within);
     final news = _store.cards.values.where((card) {
       if (card.hidden) return false;
-      if (within != null && card.deckId.value != within.value) return false;
+      if (scope != null && !scope.contains(card.deckId.value)) return false;
       return _store.srsByCard[card.id.value]?.box.isNew ?? true;
     });
     return Ok(news.take(limit).toList(growable: false));

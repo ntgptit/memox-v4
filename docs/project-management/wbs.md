@@ -374,6 +374,26 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `ChoiceOption` helper (quiz answer: none/correct/wrong skins) | `presentation/shared/primitives/mx_choice_option.dart` | `test/presentation/shared/primitives/mx_choice_option_test.dart` | H.07 | #105 |
 | _(component gallery gate)_ | `presentation/shared/screens/component_gallery.dart` (all 25 P/K/H widgets) | `test/golden/gallery/component_gallery_test.dart` (renders in light+dark; pixel goldens → V.1) | H.08 | #106 |
 | _(screen state matrix — gates Phase S)_ | `docs/design/screen-state-matrix.md` (21 screens × every state, from shots + specs → kind + D-xxx) | per-screen tests built by S.01–S.21 to these rows | S.00 | #107 |
+| kit `dashboard/screen` — Today (loading·empty·loaded·goal-met·streak-reset, D-010/D-021) | `presentation/features/dashboard/screens/dashboard_screen.dart` + `providers/dashboard_providers.dart` (`DashboardController`) | `test/presentation/features/dashboard/dashboard_screen_test.dart` (5 states + error/retry, light+dark) | S.01 | #108 |
+| kit `dashboard/today` hero (TodaySummary) | `presentation/features/dashboard/widgets/today_summary.dart` | (dashboard screen test) | S.01 | #108 |
+| kit `dashboard/goal` (GoalCard, D-021 BR-2) | `presentation/features/dashboard/widgets/goal_card.dart` | (dashboard screen test) | S.01 | #108 |
+| kit `dashboard/streak` (StreakCard, D-021 BR-3) | `presentation/features/dashboard/widgets/streak_card.dart` | (dashboard screen test) | S.01 | #108 |
+| kit `dashboard/deck-N` (ContinueCard, due-deck row) | `presentation/features/dashboard/widgets/continue_deck_card.dart` | (dashboard screen test) | S.01 | #108 |
+| D-021/BR-3 streak read model (current + longest from activity history) | `domain/usecases/stats/streak_summary.dart` (`streakFromHistory`) | `test/domain/usecases/stats/streak_summary_test.dart` | S.01 | #108 |
+| kit `Note` primary-soft tone (empty-state banner) | `presentation/shared/composites/action_callout.dart` (`MxCalloutTone.primary`) | (dashboard screen test, empty state) | S.01 | #108 |
+
+**S.01 gaps / notes:** deck rows have no kit-authored icon/tone (the `Deck` entity
+carries none) — the screen cycles a fixed presentational palette by position. The
+app-bar avatar is **decorative** in v1 (no account/profile entity yet); the Profile
+tab owns navigation. The empty/goal-met/streak-reset kit "Cloud sync" affordance is
+absent from this screen (v1 has no sync). `FakeReviewRepository.dueQueue` /
+`watchDueCount` / `newQueue` were made **subtree-aware** to honour their frozen
+"for a node's subtree" contract (they previously exact-matched `within`), matching
+`FakeDeckRepository.statsFor`. The `data/providers/` DI seam is now an explicit
+allowance in `test/architecture/layer_boundaries_test.dart` (presentation may reach
+repositories through it, still not through data *impls*). Pixel goldens vs
+`shots/dashboard--*` are platform-sensitive → deferred to **V.1**; S.01 verifies
+every state by provider-state widget tests.
 
 **P.01 gaps (kit vs tokens):** `.btn` icon size is a raw **20px** with no matching `MxIconSize` token (18/22/28) — named `_iconSize` in the widget. Kit `sm` height **38px** < 48 a11y min — mitigated by Material's padded tap target (≥48 hit area). `.btn.primary` `shadow-fab` approximated by `elevation:0` (Material buttons can't take a token boxShadow). Pixel goldens for the button (text+shadow, platform-sensitive per T.5) are deferred to **V.1**; P.01 verifies variant→token mapping by widget assertions instead.
 

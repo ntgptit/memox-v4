@@ -7,6 +7,7 @@ import 'package:memox_v4/data/fakes/fake_repositories.dart';
 import 'package:memox_v4/data/fakes/fake_services.dart';
 import 'package:memox_v4/data/fakes/fake_store.dart';
 import 'package:memox_v4/data/providers/data_providers.dart';
+import 'package:memox_v4/domain/services/daily_activity_service.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 
 /// A ready-made bundle of fake overrides for the data-layer providers, so any
@@ -29,7 +30,11 @@ class FakeHarness {
   final FakeImportExportFileService files;
   final List<Override> overrides;
 
-  factory FakeHarness({FakeStore? store, DateTime? now}) {
+  factory FakeHarness({
+    FakeStore? store,
+    DateTime? now,
+    DailyActivityService? activity,
+  }) {
     final clock = FakeClock(now ?? DateTime.utc(2026, 7, 3, 9));
     final data = store ?? seedFakeStore(now: clock.now());
     final audio = FakeAudioService();
@@ -43,7 +48,8 @@ class FakeHarness {
       settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository(data)),
       settingsServiceProvider.overrideWithValue(FakeSettingsService()),
       languagePairServiceProvider.overrideWithValue(FakeLanguagePairService()),
-      dailyActivityServiceProvider.overrideWithValue(FakeDailyActivityService()),
+      dailyActivityServiceProvider
+          .overrideWithValue(activity ?? FakeDailyActivityService()),
       reminderNotificationServiceProvider
           .overrideWithValue(FakeReminderNotificationService()),
       audioServiceProvider.overrideWithValue(audio),
