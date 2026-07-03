@@ -75,7 +75,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | DT.0 | [Database schema contract](dt0-database-schema-contract.md) |
 | [x] | DT.0.1 | [Persistence safety policy](dt01-persistence-safety-policy.md) |
 | [x] | DT.1 | [Drift schema & tables](dt1-drift-schema-tables.md) |
-| [ ] | DT.2 | [Migrations & versioning](dt2-migrations-versioning.md) |
+| [x] | DT.2 | [Migrations & versioning](dt2-migrations-versioning.md) |
 | [ ] | DT.3 | [DAOs](dt3-daos.md) |
 | [ ] | DT.4 | [Repository impls + mappers](dt4-repository-impls-mappers.md) |
 | [ ] | DT.5 | [DI wiring (providers)](dt5-di-wiring-providers.md) |
