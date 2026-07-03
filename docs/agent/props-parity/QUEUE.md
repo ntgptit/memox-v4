@@ -27,7 +27,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | [x] | C.08 | review | 2 |
 | [x] | C.09 | study-result | 4 |
 | [x] | C.10 | study-session | 9 |
-| [ ] | C.11 | dashboard | 4 |
+| [x] | C.11 | dashboard | 4 |
 | [ ] | C.12 | deck-detail | 5 |
 | [ ] | C.13 | library | 6 |
 | [ ] | C.14 | drawer | 4 |
