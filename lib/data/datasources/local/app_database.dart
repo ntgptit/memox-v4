@@ -1,5 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:memox_v4/data/datasources/local/dao/card_dao.dart';
+import 'package:memox_v4/data/datasources/local/dao/deck_dao.dart';
+import 'package:memox_v4/data/datasources/local/dao/review_dao.dart';
 import 'package:memox_v4/data/datasources/local/tables.dart';
 
 part 'app_database.g.dart';
@@ -28,6 +31,7 @@ const int _schemaVersion = 1;
     Settings,
     BackupMetadata,
   ],
+  daos: [DeckDao, CardDao, ReviewDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
