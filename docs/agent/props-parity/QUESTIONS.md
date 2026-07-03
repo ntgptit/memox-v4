@@ -5,6 +5,15 @@ contradiction, or verify can't be made green). Each entry: **id · exact blocker
 fallback/what was skipped · what's needed from the human**. Resolved items move to
 `## Resolved` with the resolution. An empty `## Open` means the loop is healthy.
 
+## Status
+
+**✅ PROPS-PARITY COMPLETE** — all 30 tasks done (P0 F.0–F.3 · P1 C.01–C.23 · P2
+Z.0–Z.2). BLOCKED: _(none — nothing was ever blocked)_. Final gate:
+`node tool/parity/props_check.mjs --strict` → 83 components · 0 undeclared drift ·
+192 typed exceptions · PASS, and it is now blocking in `tool/verify/run.mjs`
+(wiring-guarded by `test/tooling/props_check_gate_test.dart`). No Flutter resync
+was needed across all 23 feature units. The loop has stopped itself.
+
 ## Open
 
 _(none)_
