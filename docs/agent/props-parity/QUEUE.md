@@ -48,3 +48,10 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | [ ] | Z.0 | props_check → blocking trong verify gate |
 | [ ] | Z.1 | wiring-guard test `props_check_gate_test.dart` |
 | [ ] | Z.2 | docs + ledger tổng |
+
+> **Checker limitation to fix before Z.0 blocking** (found C.09): `props_check`
+> only scans enums declared in the widget's own `.dart` file, so a prop whose
+> Flutter type is an enum **imported** from another file (e.g. `ResultHero.tone` →
+> `MxIconTileTone` in `mx_icon_tile.dart`) is not value-checked — enum drift on
+> forwarded props is a false-negative. Resolve imported enums (or fold this into
+> Z.0) so the blocking gate can't miss cross-file enum mismatches.
