@@ -960,5 +960,26 @@
   "gamePickerErrorTitle": "Couldn''t load games",
   "@gamePickerErrorTitle": { "description": "Title of the game picker error state" },
   "gamePickerErrorText": "Something went wrong loading your cards. Try again.",
-  "@gamePickerErrorText": { "description": "Body of the game picker error state" }
+  "@gamePickerErrorText": { "description": "Body of the game picker error state" },
+
+  "matchingTitle": "Matching",
+  "@matchingTitle": { "description": "Title of the matching game" },
+  "matchingBack": "Back",
+  "@matchingBack": { "description": "Accessible label for the matching back button" },
+  "matchingOptions": "Options",
+  "@matchingOptions": { "description": "Accessible label for the matching options button" },
+  "matchingCompleteTitle": "Round complete!",
+  "@matchingCompleteTitle": { "description": "Title of the matching complete state" },
+  "matchingCompleteText": "You matched {matched}/{total} pairs. Keep the momentum.",
+  "@matchingCompleteText": { "description": "Body of the matching complete state", "placeholders": { "matched": { "type": "int" }, "total": { "type": "int" } } },
+  "matchingNext": "Next round",
+  "@matchingNext": { "description": "Action to start the next matching round" },
+  "matchingEmptyTitle": "No cards to play",
+  "@matchingEmptyTitle": { "description": "Title when there are no cards for the game" },
+  "matchingEmptyText": "Add some cards to this set, then try again.",
+  "@matchingEmptyText": { "description": "Body when there are no cards for the game" },
+  "matchingErrorTitle": "Couldn''t start the game",
+  "@matchingErrorTitle": { "description": "Title of the matching error state" },
+  "matchingErrorText": "Something went wrong loading your cards. Try again.",
+  "@matchingErrorText": { "description": "Body of the matching error state" }
 }

@@ -9,6 +9,7 @@ import 'package:memox_v4/presentation/features/deck-detail/screens/deck_detail_s
 import 'package:memox_v4/presentation/features/drawer/screens/drawer_screen.dart';
 import 'package:memox_v4/presentation/features/export/screens/export_screen.dart';
 import 'package:memox_v4/presentation/features/flashcard-editor/screens/flashcard_editor_screen.dart';
+import 'package:memox_v4/presentation/features/game-matching/screens/game_matching_screen.dart';
 import 'package:memox_v4/presentation/features/game-picker/screens/game_picker_screen.dart';
 import 'package:memox_v4/presentation/features/import/screens/import_screen.dart';
 import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
@@ -100,7 +101,6 @@ GoRouter router(Ref ref) {
 
 /// The v1 screens with no fixed path parameters, as top-level stub routes.
 const _fullScreenPaths = [
-  Routes.gameMatching,
   Routes.gameMc,
   Routes.gameRecall,
   Routes.gameTyping,
@@ -122,6 +122,10 @@ final List<GoRoute> _fullScreenRoutes = [
   GoRoute(path: Routes.import_, builder: (context, state) => const ImportScreen()),
   GoRoute(path: Routes.export_, builder: (context, state) => const ExportScreen()),
   GoRoute(path: Routes.games, builder: (context, state) => const GamePickerScreen()),
+  GoRoute(
+    path: Routes.gameMatching,
+    builder: (context, state) => const GameMatchingScreen(),
+  ),
   for (final p in _fullScreenPaths)
     GoRoute(path: p, builder: (context, state) => RouteStub(p)),
   GoRoute(
