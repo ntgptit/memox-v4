@@ -60,10 +60,13 @@ the page served with the `Cross-Origin-Opener-Policy: same-origin` +
 `Cross-Origin-Embedder-Policy: require-corp` headers. Without them the web DB
 still works — drift transparently falls back to IndexedDB — just a bit slower.
 
-## Not covered here
+## First-run seeding (wired in bootstrap)
 
-- **First-run seeding on web.** Like every platform, the app still needs a
-  startup hook to open the DB and call `DatabaseSeeder.ensureFirstRun()` before
-  the first repository use (the DT.6 bootstrap gap) — otherwise the deck FK has no
-  active language pair. That app-integration step is platform-agnostic and tracked
-  separately from this DB-connection wiring.
+`lib/app/bootstrap.dart` opens the DB and seeds it **before the first frame**, on
+every platform (native + web): a release build calls
+`DatabaseSeeder.ensureFirstRun()` (the single active language pair + default
+preferences the deck FK needs), and a **debug** build calls `seedSampleData()`
+(a realistic Korean-Basics → Food deck tree, so `flutter run -d chrome` opens with
+content). A seeding failure is logged, not fatal — the app still starts and any
+downstream persistence error surfaces per-feature as `AsyncValue.error`. This
+closes the earlier DT.6 "startup invocation not wired" gap.
