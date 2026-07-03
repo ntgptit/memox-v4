@@ -158,7 +158,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [ ] | V.1 | [Golden suite (components + screen states)](v1-golden-suite-components-screen-states.md) |
 | [x] | V.2 | [Domain test sweep (SRS invariants)](v2-domain-test-sweep-srs-invariants.md) |
 | [x] | V.3 | [Data integration (Drift)](v3-data-integration-drift.md) |
-| [ ] | V.4 | [End-to-end study flow](v4-end-to-end-study-flow.md) |
+| [x] | V.4 | [End-to-end study flow](v4-end-to-end-study-flow.md) |
 | [ ] | V.5 | [Accessibility pass](v5-accessibility-pass.md) |
 | [ ] | V.6 | [Responsive check](v6-responsive-check.md) |
 | [ ] | V.7 | [design-sync → regenerate → gate loop](v7-design-sync-regenerate-gate-loop.md) |
