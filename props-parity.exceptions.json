@@ -185,5 +185,8 @@
   { "component": "search/ResultRow", "prop": "deck", "reason": "flutter-idiom", "note": "Composed into the Flutter `result` model." },
   { "component": "search/ResultRow", "prop": "status", "reason": "flutter-idiom", "note": "Composed into the Flutter `result` model." },
   { "component": "search/ResultRow", "prop": "hidden", "reason": "flutter-idiom", "note": "Composed into the Flutter `result` model." },
-  { "component": "search/ResultRow", "prop": "result", "reason": "flutter-idiom", "note": "The composed result model (Flutter passes one model instead of the kit's individual StatusCardRow props)." }
+  { "component": "search/ResultRow", "prop": "result", "reason": "flutter-idiom", "note": "The composed result model (Flutter passes one model instead of the kit's individual StatusCardRow props)." },
+
+  { "component": "flashcard-editor/Field", "prop": "controller", "reason": "flutter-idiom", "note": "TextField idiom — binds the field's text; no kit equivalent (kit displays value statically)." },
+  { "component": "flashcard-editor/Field", "prop": "onChanged", "reason": "flutter-idiom", "note": "TextField idiom — the kit field is display-only; Flutter wires onChanged for editing." }
 ]
