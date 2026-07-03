@@ -28,6 +28,10 @@ class MxTheme extends ThemeExtension<MxTheme> {
     required this.primarySoft,
     required this.onPrimarySoft,
     required this.primaryStrong,
+    required this.success,
+    required this.onSuccess,
+    required this.warning,
+    required this.onWarning,
     required this.accentSoft,
     required this.info,
     required this.onInfo,
@@ -62,6 +66,10 @@ class MxTheme extends ThemeExtension<MxTheme> {
         primarySoft: c.primarySoft,
         onPrimarySoft: c.onPrimarySoft,
         primaryStrong: c.primaryStrong,
+        success: c.success,
+        onSuccess: c.onSuccess,
+        warning: c.warning,
+        onWarning: c.onWarning,
         accentSoft: c.accentSoft,
         info: c.info,
         onInfo: c.onInfo,
@@ -101,6 +109,10 @@ class MxTheme extends ThemeExtension<MxTheme> {
   final Color primarySoft;
   final Color onPrimarySoft;
   final Color primaryStrong;
+  final Color success;
+  final Color onSuccess;
+  final Color warning;
+  final Color onWarning;
   final Color accentSoft;
   final Color info;
   final Color onInfo;
@@ -150,6 +162,10 @@ class MxTheme extends ThemeExtension<MxTheme> {
     Color? primarySoft,
     Color? onPrimarySoft,
     Color? primaryStrong,
+    Color? success,
+    Color? onSuccess,
+    Color? warning,
+    Color? onWarning,
     Color? accentSoft,
     Color? info,
     Color? onInfo,
@@ -182,6 +198,10 @@ class MxTheme extends ThemeExtension<MxTheme> {
       primarySoft: primarySoft ?? this.primarySoft,
       onPrimarySoft: onPrimarySoft ?? this.onPrimarySoft,
       primaryStrong: primaryStrong ?? this.primaryStrong,
+      success: success ?? this.success,
+      onSuccess: onSuccess ?? this.onSuccess,
+      warning: warning ?? this.warning,
+      onWarning: onWarning ?? this.onWarning,
       accentSoft: accentSoft ?? this.accentSoft,
       info: info ?? this.info,
       onInfo: onInfo ?? this.onInfo,
@@ -220,6 +240,10 @@ class MxTheme extends ThemeExtension<MxTheme> {
       primarySoft: mix(primarySoft, other.primarySoft),
       onPrimarySoft: mix(onPrimarySoft, other.onPrimarySoft),
       primaryStrong: mix(primaryStrong, other.primaryStrong),
+      success: mix(success, other.success),
+      onSuccess: mix(onSuccess, other.onSuccess),
+      warning: mix(warning, other.warning),
+      onWarning: mix(onWarning, other.onWarning),
       accentSoft: mix(accentSoft, other.accentSoft),
       info: mix(info, other.info),
       onInfo: mix(onInfo, other.onInfo),
