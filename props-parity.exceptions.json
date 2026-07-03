@@ -31,5 +31,18 @@
   { "component": "game-mc/PromptCard", "prop": "onEdit", "reason": "fixture-parameterized", "note": "Kit fixture stubs the edit button with a literal node id; Flutter wires the real onEdit callback." },
 
   { "component": "game-matching/Tile", "prop": "tone", "reason": "enum-base-expansion", "note": "MatchTone adds 'none' — the neutral base the kit expresses by omitting tone." },
-  { "component": "game-matching/Tile", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via node-id delegation; Flutter's MatchTileView takes an explicit onPressed callback." }
+  { "component": "game-matching/Tile", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via node-id delegation; Flutter's MatchTileView takes an explicit onPressed callback." },
+
+  { "component": "game-picker/GameOption", "prop": "g", "reason": "flutter-idiom", "note": "Kit passes a game descriptor object (id/icon/name/desc); Flutter decomposes it into typed icon/name/description params." },
+  { "component": "game-picker/GameOption", "prop": "disabled", "reason": "flutter-idiom", "note": "Flutter dims + disables via null onPressed, not a bool." },
+  { "component": "game-picker/GameOption", "prop": "icon", "reason": "flutter-idiom", "note": "Decomposed field of the kit g object." },
+  { "component": "game-picker/GameOption", "prop": "name", "reason": "flutter-idiom", "note": "Decomposed field of the kit g object." },
+  { "component": "game-picker/GameOption", "prop": "description", "reason": "flutter-idiom", "note": "Decomposed field of the kit g object (g.desc)." },
+  { "component": "game-picker/GameOption", "prop": "onPressed", "reason": "flutter-idiom", "note": "Kit wires the tap via node-id delegation; Flutter uses onPressed (also the disabled signal)." },
+
+  { "component": "game-picker/ScopeCard", "prop": "sourceLabel", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample source label as a fixture; Flutter takes sourceLabel:String." },
+  { "component": "game-picker/ScopeCard", "prop": "onPressed", "reason": "fixture-parameterized", "note": "Kit fixture stubs the tap with a node id; Flutter wires the real onPressed to open the sheet." },
+
+  { "component": "game-picker/ScopeSheet", "prop": "selected", "reason": "fixture-parameterized", "note": "Kit hardcodes the selected option as a fixture; Flutter takes selected:GameSource." },
+  { "component": "game-picker/ScopeSheet", "prop": "onSelect", "reason": "fixture-parameterized", "note": "Kit fixture stubs selection; Flutter wires onSelect:ValueChanged<GameSource>." }
 ]
