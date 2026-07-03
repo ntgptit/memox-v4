@@ -82,7 +82,9 @@ function analyze(comp) {
 
   for (const prop of kit.props) {
     if (MAP.propDrop.names.includes(prop.name)) continue; // web-only
-    const targets = MAP.propNameAlias[prop.name] || [prop.name];
+    // identity first, then declared aliases — a Flutter param with the same name
+    // as the kit prop always satisfies it (e.g. MxScaffold children → children).
+    const targets = [prop.name, ...(MAP.propNameAlias[prop.name] || [])];
     const paramName = targets.find((t) => ft.params[t]);
     if (!paramName) {
       const excused = excuseFor(comp.key, prop.name, ['web-only', 'flutter-idiom', 'deferred-screen']);
@@ -92,13 +94,15 @@ function analyze(comp) {
     consumed.add(paramName);
     const param = ft.params[paramName];
 
-    // optionality
-    if (prop.optional && param.required) {
-      const excused = excuseFor(comp.key, prop.name, ['flutter-idiom']);
-      drift.push(mark({ kind: 'OPTIONALITY_MISMATCH', prop: prop.name, detail: `kit optional → Flutter required (${paramName})` }, comp, excused));
-    } else if (!prop.optional && !param.required && !prop.hasDefault) {
+    // optionality — direction matters. kit REQUIRED but Flutter optional means the
+    // Flutter API is LOOSER than the contract (a required prop can be omitted) →
+    // real drift. kit OPTIONAL but Flutter required is a safe *tightening* the app
+    // chose (a content prop the widget can't render without) → INFO, not drift.
+    if (!prop.optional && !param.required && !prop.hasDefault) {
       const excused = excuseFor(comp.key, prop.name, ['flutter-idiom', 'enum-base-expansion']);
       drift.push(mark({ kind: 'OPTIONALITY_MISMATCH', prop: prop.name, detail: `kit required → Flutter optional (${paramName})` }, comp, excused));
+    } else if (prop.optional && param.required) {
+      drift.push({ kind: 'OPTIONALITY_TIGHTENED', prop: prop.name, detail: `kit optional → Flutter required (${paramName})`, excused: true, info: true });
     }
 
     // enum value space
@@ -344,7 +348,11 @@ function printReport(report) {
     const tag = real.length ? '\x1b[33m●\x1b[0m' : '\x1b[36m○\x1b[0m';
     console.log(`${tag} ${r.component} → ${r.flutterClass}`);
     for (const d of r.drift) {
-      const mk = d.excused ? '\x1b[36m  · (excused)\x1b[0m' : '\x1b[33m  ✗\x1b[0m';
+      const mk = d.info
+        ? '\x1b[36m  ○ (ok: tightened)\x1b[0m'
+        : d.excused
+          ? '\x1b[36m  · (excused)\x1b[0m'
+          : '\x1b[33m  ✗\x1b[0m';
       console.log(`${mk} ${d.kind} [${d.prop}] — ${d.detail}${d.hint ? ` (${d.hint})` : ''}`);
       if (!d.excused) total++;
     }
