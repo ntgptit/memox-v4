@@ -11,6 +11,7 @@ import 'package:memox_v4/presentation/features/library/screens/library_screen.da
 import 'package:memox_v4/presentation/features/reminder/screens/reminder_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
+import 'package:memox_v4/presentation/features/theme/screens/theme_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -93,7 +94,6 @@ StatefulShellBranch _branch(String path, {List<RouteBase> extra = const []}) {
 
 /// The v1 screens with no fixed path parameters, as top-level stub routes.
 const _fullScreenPaths = [
-  Routes.theme,
   Routes.import_,
   Routes.export_,
   Routes.games,
@@ -115,6 +115,7 @@ final List<GoRoute> _fullScreenRoutes = [
     path: Routes.reminder,
     builder: (context, state) => const ReminderScreen(),
   ),
+  GoRoute(path: Routes.theme, builder: (context, state) => const ThemeScreen()),
   for (final p in _fullScreenPaths)
     GoRoute(path: p, builder: (context, state) => RouteStub(p)),
   GoRoute(

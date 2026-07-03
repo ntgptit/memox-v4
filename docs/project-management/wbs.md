@@ -413,6 +413,20 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `reminder/screen` — Reminders (on·off·time-picker, BR-4) | `presentation/features/reminder/screens/reminder_screen.dart` + `providers/reminder_providers.dart` (`ReminderController`/`ReminderTimeDraft`) | `test/presentation/features/reminder/reminder_screen_test.dart` (on/off + weekday + time-picker, light+dark) | S.07 | #114 |
 | kit `TimeCol` + `TimePickerSheet` (hour:minute picker) | `presentation/features/reminder/widgets/time_col.dart` + `time_picker_sheet.dart` | (reminder screen test, time-picker) | S.07 | #114 |
 | BR-4 reminder schedule + permission (weekday set, OS notify) | `reminder_providers.dart` (`ReminderController.setEnabled/toggleWeekday/setTime` → `ReminderNotificationService.requestPermission/schedule`) | (reminder screen test, toggle/weekday) | S.07 | #114 |
+| kit `theme/screen` — Theme (mode·accent·size, BR-1/BR-2/BR-3) | `presentation/features/theme/screens/theme_screen.dart` + `providers/theme_providers.dart` (`ThemeController`/`themeMode`) | `test/presentation/features/theme/theme_screen_test.dart` (loaded + mode/accent/size, light+dark) | S.08 | #115 |
+| kit `PreviewCard` (live accent + text-size preview) | `presentation/features/theme/widgets/preview_card.dart` | (theme screen test) | S.08 | #115 |
+| kit `AccentPicker` (accent swatches, BR-2) | `presentation/features/theme/widgets/accent_picker.dart` | (theme screen test, accent) | S.08 | #115 |
+| BR-1/BR-3 colour mode applied live (theme setting → app ThemeMode) | `theme_providers.dart` (`themeMode`) → `app/app.dart` (`MemoxApp`) | (boot smoke test) | S.08 | #115 |
+| BR-1/BR-2/BR-3 theme save (mode/accent/fontScale) | `theme_providers.dart` (`ThemeController.setMode/setAccent/setFontScale` → `SettingsService.saveTheme`) | (theme screen test) | S.08 | #115 |
+
+**S.08 gaps / notes:** **colour mode applies live** (`themeMode` → `MemoxApp`,
+falling back to system while loading / if the store is unavailable). **Accent** and
+**font scale** are **persisted + previewed** but do **not** re-theme the whole app in
+v1 — the token system is single-accent, and app-wide font scaling would need a
+MediaQuery wrap; both live-apply paths are deferred (the `PreviewCard` shows the
+choice locally). The domain has **three** accent presets (brand/warm/cool → indigo/
+coral/cyan palette tokens); the kit's six swatches collapse to these (documented).
+Setting streams don't fail → no read-error state. Pixel goldens deferred to V.1.
 
 **S.07 gaps / notes:** the reminder config (time + weekdays) is **session state** —
 v1 has no reminder store (DM.8 `ReminderNotificationService` only *schedules*), so
