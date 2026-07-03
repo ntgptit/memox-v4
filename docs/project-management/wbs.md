@@ -470,6 +470,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | DAOs — due queue · new queue · term+meaning search (D-019/D-028) · deck tree + subtree stats (D-009) · due count | `data/datasources/local/dao/{deck_dao,card_dao,review_dao}.dart` (typed Drift queries; `@DataClassName('…Row')` keeps rows distinct from domain entities) | `test/data/datasources/local/dao_test.dart` (children/subtree/stats · watchByDeck/meanings/search AND+hidden+scope · dueQueue/newQueue/currentBox/dueCount) | DT.3 | #PR |
 | Repository impls + mappers — DM.3 over the DAOs; row↔entity at the boundary | `data/repositories/drift_{deck,card,review,settings}_repository.dart` · `data/models/mappers/{deck,card,srs,time}_mapper.dart` | `test/data/repositories/drift_repositories_test.dart` (deck save/watch/stats/cascade · card save-txn/edit/hidden/search · review schedule/queues/log/count · settings goal+new/day) | DT.4 | #PR |
 | DI wiring — the seam flips repositories from fakes to Drift (DT.5) | `data/providers/database_provider.dart` (`appDatabaseProvider`, keepAlive file DB) · `data/providers/data_providers.dart` (deck/card/review/settings → Drift impls; services still override-only, DT.7) | `test/data/providers/di_wiring_test.dart` (seam resolves to Drift impls · reads/writes the DB · one shared AppDatabase) | DT.5 | #PR |
+| Seed / sample data — clean first-run (active pair + defaults) + realistic dev deck tree | `data/seed/database_seeder.dart` (`DatabaseSeeder.ensureFirstRun` / `seedSampleData`) · `data/seed/seed_providers.dart` (`databaseSeederProvider`) | `test/data/seed/database_seeder_test.dart` (first-run pair+defaults+empty · idempotent · sample tree + SRS mix) | DT.6 | #PR |
+
+**DT.6 gaps / notes:** `ensureFirstRun` establishes the **clean first-run state** every launch
+needs — the single **active language pair** (ko→vi, the reference domain; the deck FK requires
+it, DT.4) + default prefs (new/day 20, goal 15 min / 20 words) — and is **idempotent** (a
+no-op once a pair exists), leaving **zero decks/cards** (the empty dashboard/library on first
+run). `seedSampleData` adds a realistic dev tree (Korean Basics → Food, 3 cards, a due /
+scheduled / new SRS mix), also idempotent; it reuses the **DT.4 repositories** so seeded data
+is validated exactly like user data. A `databaseSeederProvider` exposes it over
+`appDatabaseProvider` + clock. **Startup invocation is not wired here** — bootstrap must call
+`ensureFirstRun()` (and, for dev builds, `seedSampleData()`) before the first repository use;
+that small app-integration hook lands with DT.7 (when the app first runs against real
+services). Documented, not fabricated.
 
 **DT.5 gaps / notes:** the four **repository** seam providers now default to their Drift impls
 over a single `appDatabaseProvider` (a keepAlive Drift DB opened lazily on a file via
