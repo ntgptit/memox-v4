@@ -447,6 +447,25 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `InputBox` (answer field; tone tints border) | `presentation/features/game-typing/widgets/input_box.dart` | (typing screen test) | S.17 | #PR |
 | kit `CharCompare` (per-character typed-vs-correct diff) | `presentation/features/game-typing/widgets/char_compare.dart` | (typing screen test, wrong state) | S.17 | #PR |
 | typing round — type the term, grade (exact/trimmed), self-accept · retry · advance | `typing_providers.dart` (deck-tree card walk; check/showHint/next/acceptAsCorrect/retry/nextRound) | (typing screen test, complete + retry flows) | S.17 | #PR |
+| kit `review/screen` — Review browse (browsing·editing·audio·end·empty·error) | `presentation/features/review/screens/review_screen.dart` + `providers/review_providers.dart` (`ReviewController`) | `test/presentation/features/review/review_screen_test.dart` (browsing/edit/audio/end/empty light+dark; next-prev clamp + save-edit container) | S.18 | #PR |
+| kit `review/TermCard` (term + audio; "Playing…" while audio) | `presentation/features/review/widgets/term_card.dart` | (review screen test) | S.18 | #PR |
+| kit `review/MeaningCard` (meaning + inline edit) | `presentation/features/review/widgets/meaning_card.dart` | (review screen test, edit state) | S.18 | #PR |
+| review browse + inline meaning edit (`SaveCard`) | `review_providers.dart` (deck-tree card walk; next/prev/startEdit/cancelEdit/saveEdit/playAudio) | (review screen test, save-edit persists) | S.18 | #PR |
+
+**S.18 gaps / notes:** review browses the **whole library** (deck-tree walk) — the route
+carries no deck id, so the kit's "every card in this **deck**" is library-wide (deck
+scoping not threaded — deferred, as the games). The **inline meaning edit** rewrites the
+card's **first** meaning via `SaveCard` (BR-2 re-validated); a save failure keeps the
+editor open with the draft and is **logged** (the kit meaning card has no error slot —
+documented gap, no user surface here). The **audio** "Playing…" state is **transient**
+(toggled around the async `AudioService.speak`; on the fake it completes at once) — the
+container/audio test covers `speak` being invoked rather than a static snapshot. The
+app-bar **format_size** (text-size) and **more_vert** (options) controls are **omitted** —
+no menu/behaviour is specified for v1 (documented gap; dead icon buttons are worse a11y).
+A zero-card **empty** state is added (the kit has only the all-reviewed "end" state).
+**Study now** deep-links to the study session (S.20); **Back to set** pops. Prev/next
+chevrons drive navigation and a horizontal swipe mirrors "Swipe to continue". Review is a
+pure browse — it records no `StudySession`. Pixel goldens deferred to V.1.
 
 **S.17 gaps / notes:** the round loads **words-per-round** cards (D-008) from the deck
 tree (library-wide; game-picker source not threaded in — deferred, as S.14–S.16). The

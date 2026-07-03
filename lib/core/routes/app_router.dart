@@ -17,6 +17,7 @@ import 'package:memox_v4/presentation/features/game-typing/screens/game_typing_s
 import 'package:memox_v4/presentation/features/import/screens/import_screen.dart';
 import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
 import 'package:memox_v4/presentation/features/reminder/screens/reminder_screen.dart';
+import 'package:memox_v4/presentation/features/review/screens/review_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
 import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
@@ -104,7 +105,6 @@ GoRouter router(Ref ref) {
 
 /// The v1 screens with no fixed path parameters, as top-level stub routes.
 const _fullScreenPaths = [
-  Routes.review,
   Routes.player,
   Routes.study,
   Routes.studyResult,
@@ -134,6 +134,10 @@ final List<GoRoute> _fullScreenRoutes = [
   GoRoute(
     path: Routes.gameTyping,
     builder: (context, state) => const GameTypingScreen(),
+  ),
+  GoRoute(
+    path: Routes.review,
+    builder: (context, state) => const ReviewScreen(),
   ),
   for (final p in _fullScreenPaths)
     GoRoute(path: p, builder: (context, state) => RouteStub(p)),
