@@ -405,6 +405,21 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `settings/profile` (Profile → local-identity card, D-027 no account) | `presentation/features/settings/widgets/profile_card.dart` | (settings screen test) | S.05 | #112 |
 | kit `settings/picker-sheet` (ValuePickerSheet, D-008 words/round) | `presentation/features/settings/widgets/value_picker_sheet.dart` | (settings screen test, value-picker) | S.05 | #112 |
 | D-008 game words-per-round mutation | `settings_providers.dart` (`SettingsController.setGameWordsPerRound` → `SettingsService.saveGameWordsPerRound`) | (settings screen test, value-picker) | S.05 | #112 |
+| kit `drawer/screen` — Drawer + language pairs (menu·add-language·remove-language, D-030) | `presentation/features/drawer/screens/drawer_screen.dart` + `providers/drawer_providers.dart` (`DrawerViewState`/`LanguagePairController`/`AddLanguageDraft`/`drawerActivity`) | `test/presentation/features/drawer/drawer_screen_test.dart` (menu + add/remove flow, light+dark) | S.06 | #113 |
+| kit `DrawerPanel` + `DrawerItem` (menu panel + nav rows) | `presentation/features/drawer/widgets/drawer_panel.dart` + `drawer_item.dart` | (drawer screen test, menu) | S.06 | #113 |
+| kit `LangCard` (language selector) | `presentation/features/drawer/widgets/lang_card.dart` | (drawer screen test, add-language) | S.06 | #113 |
+| kit `drawer/remove-dialog` (RemoveLanguageDialog) | `presentation/features/drawer/widgets/remove_language_dialog.dart` | (drawer screen test, delete flow) | S.06 | #113 |
+| D-030 language-pair add/remove (validate differ + non-empty) | `drawer_providers.dart` (`LanguagePairController.addPair/removePair` → `LanguagePairService`) | (drawer screen test, add/remove flow) | S.06 | #113 |
+
+**S.06 gaps / notes:** the drawer is a **full-screen route** (Routes.drawer) hosting
+three sub-views (menu · add-language · remove-language) switched by `DrawerViewState`
+— the kit's slide-out overlay + scrim is a route here (documented). Add-language uses
+a **fixed language catalog** (no dynamic language directory in v1); the Add button is
+gated on `LanguageDraft.canAdd` so D-030 (differ + non-empty) can't fail from the UI.
+Per-pair **card counts** are omitted (cards belong to decks, not directly to a pair —
+undrivable). The kit **FAQ / Email us** items are omitted (no in-app help/support in
+v1). Stats/Settings items `context.go` to their tabs; Import/Export/Theme/Backup push
+their routes (Backup → local export, not cloud). Pixel goldens deferred to V.1.
 
 **S.05 gaps / notes:** the settings **hub** ships loaded + the **value-picker**
 (game words/round, D-008 — the one live DM.8 mutation). The kit **`group-expanded`**
