@@ -36,13 +36,15 @@ void main() {
     expect(find.text('roots: 1'), findsOneWidget);
   });
 
-  testWidgets('overriding a provider throws without the harness', (tester) async {
-    // The bare provider must be overridden — proves the DI seam is enforced.
+  testWidgets('an override-only service throws without the harness', (tester) async {
+    // Repositories now default to their Drift impls (DT.5); the device/plugin
+    // services stay override-only until DT.7, so a bare read must throw — proving
+    // the DI seam is still enforced for them.
     await tester.pumpWidget(
       ProviderScope(
         child: Consumer(
           builder: (context, ref, _) {
-            ref.watch(deckRepositoryProvider);
+            ref.watch(audioServiceProvider);
             return const SizedBox.shrink();
           },
         ),

@@ -81,7 +81,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  FakeStore _store(DailyGoal goal) => FakeStore()..dailyGoal = goal;
+  FakeStore makeStore(DailyGoal goal) => FakeStore()..dailyGoal = goal;
 
   for (final dark in [false, true]) {
     final theme = dark ? 'dark' : 'light';
@@ -91,7 +91,7 @@ void main() {
       await pump(
         tester,
         dark: dark,
-        store: _store(const DailyGoal(minutesTarget: 15)),
+        store: makeStore(const DailyGoal(minutesTarget: 15)),
         activity: await _activity(minutes: 20, words: 10),
       );
       expect(find.text('Daily goal reached!'), findsOneWidget);
@@ -104,7 +104,7 @@ void main() {
     await pump(
       tester,
       dark: false,
-      store: _store(const DailyGoal(minutesTarget: 15, wordsTarget: 20)),
+      store: makeStore(const DailyGoal(minutesTarget: 15, wordsTarget: 20)),
       activity: await _activity(minutes: 5, words: 2),
     );
     expect(find.text('Almost there!'), findsOneWidget);
@@ -116,7 +116,7 @@ void main() {
     await pump(
       tester,
       dark: false,
-      store: _store(const DailyGoal()),
+      store: makeStore(const DailyGoal()),
       activity: await _activity(minutes: 6, words: 4),
     );
     expect(find.text('Session complete'), findsOneWidget);
@@ -128,7 +128,7 @@ void main() {
     await pump(
       tester,
       dark: false,
-      store: _store(const DailyGoal(minutesTarget: 15)),
+      store: makeStore(const DailyGoal(minutesTarget: 15)),
       activity: _FailingActivityService(),
     );
     expect(find.byIcon(Icons.cloud_off), findsOneWidget);
@@ -139,7 +139,7 @@ void main() {
   test('head is goal-met when the goal is reached, missed when configured but not',
       () async {
     final metHarness = FakeHarness(
-      store: _store(const DailyGoal(minutesTarget: 15)),
+      store: makeStore(const DailyGoal(minutesTarget: 15)),
       activity: await _activity(minutes: 30, words: 10),
     );
     final metContainer = ProviderContainer(overrides: metHarness.overrides);
@@ -149,7 +149,7 @@ void main() {
     expect(met.goalMet, isTrue);
 
     final missHarness = FakeHarness(
-      store: _store(const DailyGoal(minutesTarget: 60)),
+      store: makeStore(const DailyGoal(minutesTarget: 60)),
       activity: await _activity(minutes: 5, words: 1),
     );
     final missContainer = ProviderContainer(overrides: missHarness.overrides);
