@@ -10,7 +10,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 |---|---|---|
 | [x] | F.0 | Mapping/alias config `tool/parity/props_map.json` |
 | [x] | F.1 | `tool/parity/props_check.mjs` (advisory) |
-| [ ] | F.2 | Hiệu chuẩn trên 15 shared → exceptions.json |
+| [x] | F.2 | Hiệu chuẩn trên 15 shared → exceptions.json |
 | [ ] | F.3 | Exception schema + queue + WBS committed |
 
 ## P1 — Loop per-feature (23 unit / 68 `.d.ts`)
