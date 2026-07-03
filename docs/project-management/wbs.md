@@ -430,6 +430,17 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `flashcard-editor/screen` — Editor (create·edit·validation·duplicate·multi-meaning·audio, D-020) | `presentation/features/flashcard-editor/screens/flashcard_editor_screen.dart` + `providers/editor_providers.dart` (`EditorController` family) | `test/presentation/features/flashcard-editor/flashcard_editor_screen_test.dart` (create/edit/validation/multi-meaning/audio + save) | S.12 | #119 |
 | kit `Field` + `DupBanner` | `presentation/features/flashcard-editor/widgets/field.dart` + `dup_banner.dart` | (editor screen test) | S.12 | #119 |
 | D-020 soft-duplicate + card create/edit (term + ≥1 meaning, gender, hidden) | `editor_providers.dart` (`DetectDuplicateTerm` + `Card.create` → `SaveCard`; `AudioService.speak`) | (editor screen test, save + audio) | S.12 | #119 |
+| kit `game-picker/screen` — Single game (default·scope-dropdown·not-enough) | `presentation/features/game-picker/screens/game_picker_screen.dart` + `providers/game_picker_providers.dart` (`GamePickerController`) | `test/presentation/features/game-picker/game_picker_screen_test.dart` (not-enough + scope sheet + playable, light+dark) | S.13 | #120 |
+| kit `GameOption` + `ScopeCard` + `ScopeSheet` | `presentation/features/game-picker/widgets/{game_option,scope_card,scope_sheet}.dart` | (game-picker screen test) | S.13 | #120 |
+| game gating — source word count vs min (D-008 words/round footer) | `game_picker_providers.dart` (`dueQueue`/`newQueue`/`statsFor` count + `watchGameWordsPerRound`; `canPlay` ≥ `gameMinWords`) | (game-picker screen test) | S.13 | #120 |
+
+**S.13 gaps / notes:** the "scope" is a **card source** (By schedule / All cards /
+Unlearned only), not a deck — games play **library-wide** (a deck picker is deferred).
+The word count comes from the DM.5 queues (`dueQueue`/`newQueue`) or the `DeckStats`
+aggregate; games are disabled + the not-enough banner shows when the source has fewer
+than `gameMinWords` (4) cards. A game tap navigates to its screen (S.14–S.17), which
+own their own queues. The footer shows the words-per-round setting (D-008). Pixel
+goldens deferred to V.1.
 
 **S.12 gaps / notes:** the editor serves both the **Add tab** (create) and
 `/editor/:cardId` (edit). A new card is created in the **first library deck** (a deck
