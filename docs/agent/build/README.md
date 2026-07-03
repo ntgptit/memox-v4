@@ -108,7 +108,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | K.08 | [MxSearchDock](k08-mxsearchdock.md) |
 | [x] | K.09 | [ActionCallout](k09-actioncallout.md) |
 | [x] | K.10 | [ConfirmDialog](k10-confirmdialog.md) |
-| [ ] | K.11 | [StatusCardRow](k11-statuscardrow.md) |
+| [x] | K.11 | [StatusCardRow](k11-statuscardrow.md) |
 
 ### H — Shared helpers
 
