@@ -433,6 +433,17 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `game-picker/screen` — Single game (default·scope-dropdown·not-enough) | `presentation/features/game-picker/screens/game_picker_screen.dart` + `providers/game_picker_providers.dart` (`GamePickerController`) | `test/presentation/features/game-picker/game_picker_screen_test.dart` (not-enough + scope sheet + playable, light+dark) | S.13 | #120 |
 | kit `GameOption` + `ScopeCard` + `ScopeSheet` | `presentation/features/game-picker/widgets/{game_option,scope_card,scope_sheet}.dart` | (game-picker screen test) | S.13 | #120 |
 | game gating — source word count vs min (D-008 words/round footer) | `game_picker_providers.dart` (`dueQueue`/`newQueue`/`statsFor` count + `watchGameWordsPerRound`; `canPlay` ≥ `gameMinWords`) | (game-picker screen test) | S.13 | #120 |
+| kit `game-matching/screen` — Matching (playing·selected·correct·wrong·complete) | `presentation/features/game-matching/screens/game_matching_screen.dart` + `providers/matching_providers.dart` (`MatchingController`) | `test/presentation/features/game-matching/game_matching_screen_test.dart` (playing/correct/wrong/complete, light+dark) | S.14 | #121 |
+| kit `Tile` (match tile, tone skins) | `presentation/features/game-matching/widgets/tile.dart` (`MatchTileView`/`MatchTone`) | (matching screen test) | S.14 | #121 |
+| matching round — load N cards (words/round), pair-match logic | `matching_providers.dart` (deck-tree card walk + `watchGameWordsPerRound`; select/match/next-round) | (matching screen test, complete flow) | S.14 | #121 |
+
+**S.14 gaps / notes:** the round loads up to **words-per-round** cards (D-008) from
+the deck tree (library-wide; the game-picker source isn't threaded into the game yet
+— deferred). Meanings sit on the left in card order, terms are **shuffled** on the
+right; a correct match **hides** both tiles (kit `matched`); a wrong pair flashes and
+clears on the next tap (no timer). The kit's transient "correct" green flash is
+skipped (matched hides immediately). Practice games record no `StudySession` (BR-5) —
+this is pure practice. Pixel goldens deferred to V.1.
 
 **S.13 gaps / notes:** the "scope" is a **card source** (By schedule / All cards /
 Unlearned only), not a deck — games play **library-wide** (a deck picker is deferred).
