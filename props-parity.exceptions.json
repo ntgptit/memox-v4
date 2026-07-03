@@ -61,6 +61,8 @@
   { "component": "review/TermCard", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the sample term (학교) as a fixture; Flutter takes term:String." },
   { "component": "review/TermCard", "prop": "onAudio", "reason": "fixture-parameterized", "note": "Kit fixture stubs the audio button with a node id; Flutter wires the real onAudio callback." },
 
+  { "component": "study-result/ResultHero", "prop": "tone", "reason": "enum-base-expansion", "note": "tone forwards to MxIconTile; MxIconTileTone adds 'primary' — the soft-primary base the kit expresses by omitting tone. (Now caught via the cross-file enum index, Z.0.)" },
+
   { "component": "study-result/Cta", "prop": "state", "reason": "flutter-idiom", "note": "Kit's string state ('goal-missed'/'many-wrong'/default) is a ResultHead enum (`head`) in Flutter. NB: ResultHead {standard,goalMet,goalMissed} has NO 'many-wrong' equivalent — a behavioral gap tracked in docs/agent/props-parity/QUESTIONS.md Notes." },
   { "component": "study-result/Cta", "prop": "head", "reason": "flutter-idiom", "note": "The ResultHead enum form of the kit's state prop." },
   { "component": "study-result/Cta", "prop": "onPrimary", "reason": "fixture-parameterized", "note": "Kit fixture stubs the primary button with a node id; Flutter wires onPrimary." },
