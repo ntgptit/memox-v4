@@ -362,6 +362,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `MxBottomNav` (.bottom-nav: tabs, active primarySoft icon pill) | `presentation/shared/composites/mx_bottom_nav.dart` (`MxBottomNavItem`) | `test/presentation/shared/composites/mx_bottom_nav_test.dart` | K.06 | #93 |
 | kit `MxFab` (.fab: extended/round · primary/accent · shadow-fab) | `presentation/shared/composites/mx_fab.dart` | `test/presentation/shared/composites/mx_fab_test.dart` | K.07 | #94 |
 | kit `MxSearchDock` (.search-dock: pill field, focus ring, flat) | `presentation/shared/composites/mx_search_dock.dart` | `test/presentation/shared/composites/mx_search_dock_test.dart` | K.08 | #95 |
+| kit `ActionCallout` (soft banner: warning/success/error + action) | `presentation/shared/composites/action_callout.dart` (`MxActionCallout`) | `test/presentation/shared/composites/action_callout_test.dart` | K.09 | #96 |
 
 **P.01 gaps (kit vs tokens):** `.btn` icon size is a raw **20px** with no matching `MxIconSize` token (18/22/28) — named `_iconSize` in the widget. Kit `sm` height **38px** < 48 a11y min — mitigated by Material's padded tap target (≥48 hit area). `.btn.primary` `shadow-fab` approximated by `elevation:0` (Material buttons can't take a token boxShadow). Pixel goldens for the button (text+shadow, platform-sensitive per T.5) are deferred to **V.1**; P.01 verifies variant→token mapping by widget assertions instead.
 
