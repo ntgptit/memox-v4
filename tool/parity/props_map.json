@@ -28,6 +28,7 @@
     "content": ["child", "text"],
     "pct": ["percent"],
     "sub": ["subtitle", "caption"],
+    "sel": ["selected"],
     "src": ["image", "imageUrl", "imageProvider"],
     "checked": ["value", "selected"],
     "onClick": ["onPressed", "onTap", "onSelected"],
