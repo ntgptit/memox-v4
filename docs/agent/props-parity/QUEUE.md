@@ -23,7 +23,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | [x] | C.04 | game-mc | 1 |
 | [x] | C.05 | game-matching | 1 |
 | [x] | C.06 | game-picker | 3 |
-| [ ] | C.07 | player | 2 |
+| [x] | C.07 | player | 2 |
 | [ ] | C.08 | review | 2 |
 | [ ] | C.09 | study-result | 4 |
 | [ ] | C.10 | study-session | 9 |
