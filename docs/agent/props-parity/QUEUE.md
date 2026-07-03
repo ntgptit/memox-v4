@@ -21,7 +21,7 @@ Tick `[x]` sau khi merge; append id vào `DONE.txt`.
 | [x] | C.02 | game-recall | 2 |
 | [x] | C.03 | game-typing | 2 |
 | [x] | C.04 | game-mc | 1 |
-| [ ] | C.05 | game-matching | 1 |
+| [x] | C.05 | game-matching | 1 |
 | [ ] | C.06 | game-picker | 3 |
 | [ ] | C.07 | player | 2 |
 | [ ] | C.08 | review | 2 |
