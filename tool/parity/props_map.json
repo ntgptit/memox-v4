@@ -14,6 +14,7 @@
     "import/Table": { "class": "ImportTable", "file": "import_table.dart" },
     "settings/Profile": { "class": "ProfileCard", "file": "profile_card.dart" },
     "search/Chips": { "class": "SearchChips", "file": "search_chips.dart" },
+    "game-matching/Tile": { "class": "MatchTileView", "file": "game-matching/widgets/tile.dart" },
     "_shared/ActionCallout": { "class": "MxActionCallout", "file": "composites/action_callout.dart" },
     "_shared/ConfirmDialog": { "class": "MxConfirmDialog", "file": "composites/confirm_dialog.dart" },
     "_shared/StatusCardRow": { "class": "MxStatusCardRow", "file": "composites/status_card_row.dart" }
