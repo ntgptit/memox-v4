@@ -477,6 +477,22 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | End-to-end study flow — due→grade→box→goal/streak through real providers over real Drift | `test/e2e/study_flow_e2e_test.dart` | (self) — due-review grade pass moves box 1→2 + log + goal-met + streak (D-003/010/021); new-learn 5-stage walk graduates to box 1 (D-002) | V.4 | #PR |
 | Accessibility pass — WCAG AA contrast + ≥48 tap targets + icon-only labels | `test/a11y/{contrast_test,tap_target_semantics_test}.dart` | (self) — token-pair contrast (4.5:1 text / 3:1 bold-accent labels, light+dark) · `androidTapTargetGuideline`+`iOSTapTargetGuideline` · `labeledTapTargetGuideline` + no icon-ligature labels | V.5 | #PR |
 | Responsive — phone widths correct · large screens capped/centred (`Breakpoints.maxContentWidth`) | `presentation/shared/composites/mx_scaffold.dart` (body capped + centred) | `test/responsive/{mx_scaffold_responsive_test,screen_responsive_test}.dart` (no overflow 320→1440 · phones fill · large caps at maxContentWidth · centred · app-level sweep) | V.6 | #PR |
+| design-sync → regenerate → drift-gate loop — documented + CI-wired + wiring-guarded | `docs/design/design-sync-workflow.md` · drift gate `tool/design/gen_tokens.mjs --check` in `tool/verify/run.mjs` (CI: `.github/workflows/verify.yml`) · hooks `.githooks/{pre-push,post-merge}` | `test/tooling/design_sync_gate_test.dart` (run.mjs invokes `--check` + calls it · verify.yml runs the gate · generator+mirrors exist · docs present) | V.7 | #PR |
+
+**V.7 gaps / notes:** documents + locks the kit → tokens → gate loop. The **drift gate**
+(`gen_tokens.mjs --check`, which regenerates the `mx_*.dart` mirrors in memory and diffs the
+committed ones) was **already CI-wired** — it is a first-class step in the single gate
+`tool/verify/run.mjs`, which `verify.yml` runs on every PR/push (no separate CI step added,
+per the single-gate design). V.7 adds the authoritative **workflow doc**
+(`docs/design/design-sync-workflow.md`) tying the five steps (kit edit → `gen_tokens.mjs` →
+`--check` drift gate → verify/CI → design-sync push hooks) with exact commands/files, and a
+**wiring-guard test** that reads the real `run.mjs` + `verify.yml` + generator + mirrors so
+the gate can't be silently dropped. The `mx_*.dart` token mirrors are **generated-but-
+committed** (the documented exception to "generated code is gitignored" — no build step, must
+be diffable). Design-sync itself stays a **push** flow (repo → Claude Design) run from the git
+hooks / headless `MSYS_NO_PATHCONV=1 claude -p "/design-sync"` — an agent session's own
+DesignSync tool may lack design auth, so it delegates to that subprocess (documented, not run
+here). **This completes Phase V except the environment-blocked V.1 golden suite.**
 
 **V.6 gaps / notes:** the responsive foundation (T.6 `Breakpoints.maxContentWidth = 480`) existed
 but **`MxScaffold` never applied it** — so screens stretched edge-to-edge on tablet/desktop.
