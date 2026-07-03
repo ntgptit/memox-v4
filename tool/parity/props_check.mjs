@@ -85,6 +85,20 @@ process.exit(strict && undeclared > 0 ? 1 : 0);
 
 function analyze(comp) {
   const kit = parseDts(comp.dtsPath, comp.name);
+
+  // Deferred screens (e.g. account-sync, S.22) have no Flutter counterpart yet.
+  // Short-circuit BEFORE resolving by class name, so a same-named widget in
+  // another feature (settings/ProfileCard) is never mistaken for the counterpart.
+  if (excuseFor(comp.key, '*', ['deferred-screen'])) {
+    return {
+      component: comp.key,
+      flutterClass: null,
+      flutterFile: null,
+      kitProps: kit.props.map((p) => p.name),
+      drift: [{ kind: 'DEFERRED', prop: '*', detail: 'screen deferred — no Flutter counterpart yet', excused: true }],
+    };
+  }
+
   const flutterClass = comp.aliasClass || comp.name;
   const flutterFile = resolveFlutterFile(comp, flutterClass);
   const drift = [];
