@@ -22,10 +22,11 @@
 
   "propNameAlias": {
     "_comment": "web .d.ts prop name -> ordered list of accepted Flutter param names. A kit prop is SATISFIED if the ctor declares ANY name in its list. 'children'/'label' resolve to text (label/text) OR a node slot (child); the checker picks whichever the ctor actually has.",
-    "children": ["label", "child", "text", "title"],
+    "children": ["label", "child", "text", "title", "action"],
     "label": ["label", "text", "title"],
     "text": ["text", "label"],
     "content": ["child", "text"],
+    "pct": ["percent"],
     "src": ["image", "imageUrl", "imageProvider"],
     "checked": ["value", "selected"],
     "onClick": ["onPressed", "onTap", "onSelected"],
