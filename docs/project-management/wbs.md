@@ -443,6 +443,23 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `TermCard` (term + audio/edit) | `presentation/features/game-recall/widgets/term_card.dart` | (recall screen test) | S.16 | #PR |
 | kit `MeaningPanel` (recall hint → revealed meaning) | `presentation/features/game-recall/widgets/meaning_panel.dart` | (recall screen test) | S.16 | #PR |
 | recall round — queue of N cards, reveal + self-grade (Got it removes · Forgot re-queues) | `recall_providers.dart` (deck-tree card walk; reveal/gotIt/forgot/nextRound; `AudioService.speak`) | (recall screen test, complete + requeue flows) | S.16 | #PR |
+| kit `game-typing/screen` — Typing (waiting·typing·hint·correct·wrong·complete·empty·error) | `presentation/features/game-typing/screens/game_typing_screen.dart` + `providers/typing_providers.dart` (`TypingController`) | `test/presentation/features/game-typing/game_typing_screen_test.dart` (waiting/hint/correct/wrong light+dark; queue-complete + retry container) | S.17 | #PR |
+| kit `InputBox` (answer field; tone tints border) | `presentation/features/game-typing/widgets/input_box.dart` | (typing screen test) | S.17 | #PR |
+| kit `CharCompare` (per-character typed-vs-correct diff) | `presentation/features/game-typing/widgets/char_compare.dart` | (typing screen test, wrong state) | S.17 | #PR |
+| typing round — type the term, grade (exact/trimmed), self-accept · retry · advance | `typing_providers.dart` (deck-tree card walk; check/showHint/next/acceptAsCorrect/retry/nextRound) | (typing screen test, complete + retry flows) | S.17 | #PR |
+
+**S.17 gaps / notes:** the round loads **words-per-round** cards (D-008) from the deck
+tree (library-wide; game-picker source not threaded in — deferred, as S.14–S.16). The
+learner types the **term** (grading is an **exact match after trimming** — no
+fuzzy/diacritic tolerance in v1); the answer lives in a local `TextEditingController`
+(not app state — the game state is Riverpod-owned), and **Check** is gated on non-blank
+text via a `ValueListenableBuilder` (no `setState`). **Help** reveals a hint note
+(char-count + first character). A **wrong** grade shows the per-character `CharCompare`
+diff + the correct answer, then **Correct** (self-accept the near-miss → advance) or
+**Retry** (re-open the same card). The kit app-bar's `more_horiz` **options** control is
+**omitted** — no menu is specified for v1 (documented gap; a dead icon button is a worse
+a11y outcome than none). No audio in this game (the kit has no audio control here).
+Practice records no `StudySession` (BR-5). Pixel goldens deferred to V.1.
 
 **S.16 gaps / notes:** the round loads **words-per-round** cards (D-008) from the deck
 tree (library-wide; game-picker source not threaded in — deferred, as S.14/S.15). The
