@@ -28,11 +28,19 @@ void main() {
   });
 
   testWidgets('applies the gutter horizontally by default; flush drops it', (tester) async {
+    // The horizontal gutter sits on the inner Padding wrapping the body column
+    // (the max-content-width cap centres that block on large screens, V.6).
+    EdgeInsets gutterPadding() => tester
+        .widget<Padding>(find
+            .ancestor(of: find.byType(Column), matching: find.byType(Padding))
+            .first)
+        .padding as EdgeInsets;
+
     await _pump(tester, const MxScaffold(children: [Text('a')]));
-    expect((_body(tester).padding! as EdgeInsets).left, MxSpacing.gutter);
+    expect(gutterPadding().left, MxSpacing.gutter);
 
     await _pump(tester, const MxScaffold(flush: true, children: [Text('a')]));
-    expect((_body(tester).padding! as EdgeInsets).left, 0);
+    expect(gutterPadding().left, 0);
   });
 
   testWidgets('body has the top + bottom padding', (tester) async {

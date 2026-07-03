@@ -476,6 +476,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | Data integration (Drift) — seed → queries → repos → use cases, one DB | `test/data/integration/data_integration_test.dart` | (self) — seed queue/search/stats align · grade D-003 propagates (queue+badge+log) · hide D-006 shifts due/hidden · delete D-024 cascades every read path · populated file round-trip | V.3 | #PR |
 | End-to-end study flow — due→grade→box→goal/streak through real providers over real Drift | `test/e2e/study_flow_e2e_test.dart` | (self) — due-review grade pass moves box 1→2 + log + goal-met + streak (D-003/010/021); new-learn 5-stage walk graduates to box 1 (D-002) | V.4 | #PR |
 | Accessibility pass — WCAG AA contrast + ≥48 tap targets + icon-only labels | `test/a11y/{contrast_test,tap_target_semantics_test}.dart` | (self) — token-pair contrast (4.5:1 text / 3:1 bold-accent labels, light+dark) · `androidTapTargetGuideline`+`iOSTapTargetGuideline` · `labeledTapTargetGuideline` + no icon-ligature labels | V.5 | #PR |
+| Responsive — phone widths correct · large screens capped/centred (`Breakpoints.maxContentWidth`) | `presentation/shared/composites/mx_scaffold.dart` (body capped + centred) | `test/responsive/{mx_scaffold_responsive_test,screen_responsive_test}.dart` (no overflow 320→1440 · phones fill · large caps at maxContentWidth · centred · app-level sweep) | V.6 | #PR |
+
+**V.6 gaps / notes:** the responsive foundation (T.6 `Breakpoints.maxContentWidth = 480`) existed
+but **`MxScaffold` never applied it** — so screens stretched edge-to-edge on tablet/desktop.
+V.6 wires it: the scaffold body is now **capped at 480 and centred**, keeping large screens
+readable while phone widths (all < 480) are **unaffected** (the horizontal gutter moved from the
+scroll view onto the inner content `Padding`; the existing scaffold test was updated to read it
+there). Tests: `MxScaffold` renders **without overflow from 320→1440 px**, phone content grows
+with width up to the cap, large widths cap at `maxContentWidth` and centre; a real-app sweep
+pumps `MemoxApp` (dashboard/Today over the fakes) across the same widths with no overflow and
+the nav shell intact. The kit's large **132px hero app bar** and any multi-column tablet layout
+are **not introduced** (v1 is phone-first; the cap is the "graceful" large-screen behaviour) —
+documented, not fabricated.
 
 **V.5 gaps / notes:** a WCAG-AA a11y sweep — verification only, no production change. **Contrast**
 is token math (deterministic, platform-free): every semantic pair clears the applicable AA tier
