@@ -11,6 +11,7 @@ import 'package:drift/drift.dart';
 /// `PRAGMA foreign_keys = ON`, set in `AppDatabase.beforeOpen` (D-024).
 
 /// The learning↔native language pair (`D-030`). One row is active in v1.
+@DataClassName('LanguagePairRow')
 class LanguagePairs extends Table {
   TextColumn get id => text()();
   TextColumn get learningLanguage => text()();
@@ -24,6 +25,7 @@ class LanguagePairs extends Table {
 
 /// The self-nesting deck tree (`D-009` recursive subtree; `D-024` cascade).
 @TableIndex(name: 'idx_decks_parent', columns: {#parentId})
+@DataClassName('DeckRow')
 class Decks extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
@@ -42,6 +44,7 @@ class Decks extends Table {
 /// `(deckId, term)`, `D-020`). `hidden` excludes it from queues/counts (`D-006`).
 @TableIndex(name: 'idx_cards_deck', columns: {#deckId})
 @TableIndex(name: 'idx_cards_term', columns: {#term})
+@DataClassName('CardRow')
 class Cards extends Table {
   TextColumn get id => text()();
   TextColumn get deckId =>
@@ -59,6 +62,7 @@ class Cards extends Table {
 /// A meaning block of a card (BR-3); search matches `content` (`D-019`).
 @TableIndex(name: 'idx_meanings_card', columns: {#cardId})
 @TableIndex(name: 'idx_meanings_content', columns: {#content})
+@DataClassName('CardMeaningRow')
 class CardMeanings extends Table {
   TextColumn get id => text()();
   TextColumn get cardId =>
@@ -74,6 +78,7 @@ class CardMeanings extends Table {
 /// The Leitner position of a card — one row per card, single-direction (`D-011`).
 /// `box` 0..8 (`CHECK`); `dueAt` null for new (box 0) + mastered (box 8, BR-5).
 @TableIndex(name: 'idx_srs_due', columns: {#dueAt})
+@DataClassName('SrsStateRow')
 class SrsStates extends Table {
   TextColumn get cardId =>
       text().references(Cards, #id, onDelete: KeyAction.cascade)();
@@ -91,6 +96,7 @@ class SrsStates extends Table {
 /// Append-only graded-review history (`review_outcome` = `pass`/`fail`).
 @TableIndex(name: 'idx_review_logs_card', columns: {#cardId})
 @TableIndex(name: 'idx_review_logs_at', columns: {#reviewedAt})
+@DataClassName('ReviewLogRow')
 class ReviewLogs extends Table {
   TextColumn get id => text()();
   TextColumn get cardId =>
@@ -104,6 +110,7 @@ class ReviewLogs extends Table {
 
 /// A finished counting session — only DueReview/NewLearn (`D-010`).
 @TableIndex(name: 'idx_sessions_started', columns: {#startedAt})
+@DataClassName('StudySessionRow')
 class StudySessions extends Table {
   TextColumn get id => text()();
   TextColumn get deckId =>
@@ -118,6 +125,7 @@ class StudySessions extends Table {
 }
 
 /// Per-day study roll-up (`D-010`/`D-021`). `day` = midnight of the local day.
+@DataClassName('DailyActivityRow')
 class DailyActivity extends Table {
   IntColumn get day => integer()();
   IntColumn get minutes => integer().withDefault(const Constant(0))();
@@ -128,6 +136,7 @@ class DailyActivity extends Table {
 }
 
 /// Key–value app preferences (theme, goal, new/day, game/round, reminder…).
+@DataClassName('SettingRow')
 class Settings extends Table {
   TextColumn get key => text()();
   TextColumn get value => text()();
@@ -137,6 +146,7 @@ class Settings extends Table {
 }
 
 /// Local backup/restore bookkeeping (`D-027` snapshot level — no cloud in v1).
+@DataClassName('BackupMetadataRow')
 class BackupMetadata extends Table {
   TextColumn get id => text()();
   IntColumn get schemaVersion => integer()();

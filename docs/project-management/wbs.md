@@ -467,6 +467,21 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | _(persistence-safety policy)_ — transaction/rollback · cascade (D-024) · deterministic order · clock injection · migrations; gates DT.1–DT.4 | `docs/database/persistence-safety.md` + `test/data/_skeletons/{transaction_rollback,cascade_delete,deterministic_ordering,clock_injection,migration}_test.dart` | 5 `@Skip`-marked skeletons (filled by DT.1–DT.4) + `--docs` | DT.0.1 | #PR |
 | Drift schema — all 10 tables per DT.0 (+ indices for due/search) · D-024 cascade · D-011 1:1 srs · box 0..8 CHECK | `data/datasources/local/tables.dart` (LanguagePairs·Decks self-FK·Cards·CardMeanings·SrsStates·ReviewLogs·StudySessions·DailyActivity·Settings·BackupMetadata) · `app_database.dart` (`AppDatabase`, `foreign_keys=ON`) | `test/data/datasources/local/app_database_test.dart` (insert/read all · FK pragma · cascade delete D-024 · box CHECK · FK reject) | DT.1 | #PR |
 | Migrations & versioning — forward-only strategy + versioned schema snapshot + round-trip tests (R3) | `app_database.dart` (`MigrationStrategy` onCreate + onUpgrade scaffold + `foreign_keys=ON`) · `drift_schemas/drift_schema_v1.json` · `test/data/migration/generated/*` | `test/data/migration/schema_migration_test.dart` (version==latest · runtime schema matches snapshot · close/reopen round-trip + FK on) | DT.2 | #PR |
+| DAOs — due queue · new queue · term+meaning search (D-019/D-028) · deck tree + subtree stats (D-009) · due count | `data/datasources/local/dao/{deck_dao,card_dao,review_dao}.dart` (typed Drift queries; `@DataClassName('…Row')` keeps rows distinct from domain entities) | `test/data/datasources/local/dao_test.dart` (children/subtree/stats · watchByDeck/meanings/search AND+hidden+scope · dueQueue/newQueue/currentBox/dueCount) | DT.3 | #PR |
+
+**DT.3 gaps / notes:** four query families as **typed Drift DAOs** (no raw SQL): the due
+queue (`due_at <= asOf`, non-hidden **D-006**, ordered `due_at, id`), the new queue (box 0 /
+unscheduled, ordered `created_at, id`, capped **D-018**), token search (each token matches
+`term` **or** any meaning `content`, **AND** across tokens **D-019**, **includes hidden
+D-028**, optional subtree scope), and the deck tree (stable-ordered children, subtree
+resolution, per-subtree stats — total/hidden/due/mastered, **D-009/BR-6**). Clock injection
+(all time via an `asOf` param, no `DateTime.now()`) and deterministic total `ORDER BY` with
+an `id` tie-break per the DT.0.1 policy. Tables now carry `@DataClassName('…Row')` so the
+generated row classes (`DeckRow`/`CardRow`/…) don't collide with the domain `Deck`/`Card`
+(SQL schema unchanged — the DT.2 snapshot still validates). **Subtree resolution is a Dart
+walk** over a single decks scan (deterministic, injection-free; a recursive CTE is a later
+optimization — noted in the schema contract). Entity mapping + the repository interfaces are
+**DT.4**; DAOs here return raw Drift rows.
 
 **DT.2 gaps / notes:** schema versioning + a **forward-only** migration strategy (R3 — never
 edit a shipped schema in place; each bump adds an `if (from < N)` step + a new
