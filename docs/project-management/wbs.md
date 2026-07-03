@@ -475,6 +475,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | Domain test sweep — SRS + study invariants/edge cases (property-style) | `test/domain/usecases/srs/srs_invariants_test.dart` · `test/domain/usecases/study/study_invariants_test.dart` | (self) — box transition table all boxes×grades · bounds/ladder/mastery · interval monotonic · graduate determinism · D-018 intake · D-021 streak ratchet/reset + Streak invariants · D-010 activity sum | V.2 | #PR |
 | Data integration (Drift) — seed → queries → repos → use cases, one DB | `test/data/integration/data_integration_test.dart` | (self) — seed queue/search/stats align · grade D-003 propagates (queue+badge+log) · hide D-006 shifts due/hidden · delete D-024 cascades every read path · populated file round-trip | V.3 | #PR |
 | End-to-end study flow — due→grade→box→goal/streak through real providers over real Drift | `test/e2e/study_flow_e2e_test.dart` | (self) — due-review grade pass moves box 1→2 + log + goal-met + streak (D-003/010/021); new-learn 5-stage walk graduates to box 1 (D-002) | V.4 | #PR |
+| Accessibility pass — WCAG AA contrast + ≥48 tap targets + icon-only labels | `test/a11y/{contrast_test,tap_target_semantics_test}.dart` | (self) — token-pair contrast (4.5:1 text / 3:1 bold-accent labels, light+dark) · `androidTapTargetGuideline`+`iOSTapTargetGuideline` · `labeledTapTargetGuideline` + no icon-ligature labels | V.5 | #PR |
+
+**V.5 gaps / notes:** a WCAG-AA a11y sweep — verification only, no production change. **Contrast**
+is token math (deterministic, platform-free): every semantic pair clears the applicable AA tier
+in **both** themes — body/secondary/soft-banner text ≥ **4.5:1** (min measured 4.68), and the
+`on*` labels on a **solid accent** (always bold ≥14pt button/chip labels, so WCAG large-text /
+UI applies) ≥ **3.0:1** (min 3.02 for onSuccess/success light; onError/error 3.84–4.12). No pair
+falls below its tier — nothing to fix. **Tap targets + labels** use Flutter's built-in
+guidelines over the interactive primitives: `androidTapTargetGuideline` + `iOSTapTargetGuideline`
+confirm ≥ `MxSpacing.minTouchTarget` (48) hit rects (Material's padded tap target covers the
+small icon-button's 36px visual), and `labeledTapTargetGuideline` confirms every icon-only
+control is labelled — the ARB copy surfaced as the a11y tooltip (`find.byTooltip`), never the
+Material icon ligature (`find.bySemanticsLabel('arrow_back')` finds nothing).
 
 **V.4 gaps / notes:** the **true FE+BE end-to-end** — drives the **real** study-session
 controller (and reads the **real** dashboard controller) over a **real in-memory Drift DB**,
