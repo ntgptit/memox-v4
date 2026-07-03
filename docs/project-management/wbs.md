@@ -181,7 +181,7 @@ Before I.0 lands, fall back to:
 | ID | Task | Size | Deps | Output |
 |----|------|------|------|--------|
 | **DT.0** | **Database schema contract** — author the authoritative schema doc (every table/column/index/FK ↔ the rule it serves) **before** Drift, so DT.1 covers all rules | M | DM.2 | `docs/database/schema-contract.md` |
-| **DT.0.1** | **Persistence safety policy** — doc + test skeletons before Drift: transaction/rollback pattern (+ rollback test), migration-test skeleton, deterministic ordering, clock injection, soft-delete/cascade (D-024). For local-first SRS a DB bug is the worst failure | M | DT.0 | `docs/database/persistence-safety.md`, `test/data/_skeletons/*` |
+| **DT.0.1** | **Persistence safety policy** — doc + test skeletons before Drift: transaction/rollback pattern (+ rollback test), migration-test skeleton, deterministic ordering, clock injection, soft-delete/cascade (D-024). For local-first SRS a DB bug is the worst failure | M | DT.0 | `docs/database/persistence-safety.md`, `test/data/persistence_safety_test.dart` (+ DT.1–DT.4 suites; skeletons removed post-cleanup) |
 | DT.1 | **Drift schema** — all tables per DT.0: `language_pairs`, `decks` (self FK), `cards`, `card_meanings`, `srs_state`, `review_logs`, `review_outcome`, `study_sessions`, `daily_activity`, `settings`, backup meta; indices for due/search | L | DT.0 | `data/datasources/local/*.dart`, `data/models/*.dart` |
 | DT.2 | **Migrations** — schema versioning + migration strategy + schema tests | M | DT.1 | migrations + `test/data/migration` |
 | DT.3 | **DAOs** — due-cards query, search (term+meaning, incl. hidden, D-028), deck tree, stats aggregations | M | DT.1 | `data/datasources/local/dao/*.dart` |
@@ -464,7 +464,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `ResultHero`/`StreakGoalCard`/`Cta`/`FinalizingView` (4 result components) | `presentation/features/study-result/widgets/{result_hero,streak_goal_card,cta,finalizing_view}.dart` | (study-result screen test) | S.21 | #PR |
 | D-021 streak + D-010 goal head (met / missed / standard) | `study_result_providers.dart` (`streakFromHistory` + `DailyGoal.isMetBy` → `ResultHead`) | (study-result container: goal-met vs goal-missed head) | S.21 | #PR |
 | _(schema contract)_ — every table/column/index/FK ↔ rule; gates DT.1 | `docs/database/schema-contract.md` (language_pairs · decks self-FK · cards · card_meanings · srs_state · review_logs+review_outcome · study_sessions · daily_activity · settings · backup_metadata) | `node tool/verify/run.mjs --docs` (doc freshness) | DT.0 | #PR |
-| _(persistence-safety policy)_ — transaction/rollback · cascade (D-024) · deterministic order · clock injection · migrations; gates DT.1–DT.4 | `docs/database/persistence-safety.md` + `test/data/_skeletons/{transaction_rollback,cascade_delete,deterministic_ordering,clock_injection,migration}_test.dart` | 5 `@Skip`-marked skeletons (filled by DT.1–DT.4) + `--docs` | DT.0.1 | #PR |
+| _(persistence-safety policy)_ — transaction/rollback · cascade (D-024) · deterministic order · clock injection · migrations; gates DT.1–DT.4 | `docs/database/persistence-safety.md` (policy) → realized by the DT.1–DT.4 suites + `test/data/persistence_safety_test.dart` (rollback + ordering tie-break) | live tests per policy (the `@Skip` skeletons were removed post-cleanup) + `--docs` | DT.0.1 | #PR |
 | Drift schema — all 10 tables per DT.0 (+ indices for due/search) · D-024 cascade · D-011 1:1 srs · box 0..8 CHECK | `data/datasources/local/tables.dart` (LanguagePairs·Decks self-FK·Cards·CardMeanings·SrsStates·ReviewLogs·StudySessions·DailyActivity·Settings·BackupMetadata) · `app_database.dart` (`AppDatabase`, `foreign_keys=ON`) | `test/data/datasources/local/app_database_test.dart` (insert/read all · FK pragma · cascade delete D-024 · box CHECK · FK reject) | DT.1 | #PR |
 | Migrations & versioning — forward-only strategy + versioned schema snapshot + round-trip tests (R3) | `app_database.dart` (`MigrationStrategy` onCreate + onUpgrade scaffold + `foreign_keys=ON`) · `drift_schemas/drift_schema_v1.json` · `test/data/migration/generated/*` | `test/data/migration/schema_migration_test.dart` (version==latest · runtime schema matches snapshot · close/reopen round-trip + FK on) | DT.2 | #PR |
 | DAOs — due queue · new queue · term+meaning search (D-019/D-028) · deck tree + subtree stats (D-009) · due count | `data/datasources/local/dao/{deck_dao,card_dao,review_dao}.dart` (typed Drift queries; `@DataClassName('…Row')` keeps rows distinct from domain entities) | `test/data/datasources/local/dao_test.dart` (children/subtree/stats · watchByDeck/meanings/search AND+hidden+scope · dueQueue/newQueue/currentBox/dueCount) | DT.3 | #PR |
@@ -647,14 +647,16 @@ midnight-epoch value. In-memory `NativeDatabase.memory()` runs the integration t
 `flutter test` VM (confirmed). Migrations/versioning are **DT.2**; DAOs/queries **DT.3**.
 
 **DT.0.1 gaps / notes:** doc + test-skeleton task (the real Drift work is DT.1+). Five
-safety policies each backed by a skipped skeleton under `test/data/_skeletons/`:
-**(1)** atomic multi-table writes (transaction/rollback — save-card BR-2, grade
-D-003/4/5, import D-025, session D-010); **(2)** cascade delete + `PRAGMA
+safety policies: **(1)** atomic multi-table writes (transaction/rollback — save-card BR-2,
+grade D-003/4/5, import D-025, session D-010); **(2)** cascade delete + `PRAGMA
 foreign_keys=ON` (**D-024**); **(3)** deterministic total `ORDER BY` with `id`
 tie-break (D-023, due/new/search queues); **(4)** clock injection — no `DateTime.now()`
 in the data layer, local-day bucketing (D-010/D-021); **(5)** migration safety +
-incompatible-restore rejection (D-027 schema_version). Skeletons are `@Skip`-marked so
-the gate stays green (444 passed, 5 skipped) until each DT task fills them in.
+incompatible-restore rejection (D-027 schema_version). Originally each was a `@Skip`-marked
+skeleton under `test/data/_skeletons/` (so the gate stayed green while the Drift layer was
+built); **post-cleanup those skeletons were removed** — every policy is now backed by a
+**live** test (DT.1–DT.4 suites + `test/data/persistence_safety_test.dart` for the
+rollback-on-failure and ordering-tie-break scenarios). See the doc's Coverage self-check.
 
 **DT.0 gaps / notes:** documentation-only task (no Dart / build_runner / Drift test) — the
 authoritative schema DOC that gates DT.1. Maps D-001–D-011, D-013–D-021, D-023–D-026, D-028,
