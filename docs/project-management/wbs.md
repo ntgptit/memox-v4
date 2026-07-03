@@ -418,6 +418,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `AccentPicker` (accent swatches, BR-2) | `presentation/features/theme/widgets/accent_picker.dart` | (theme screen test, accent) | S.08 | #115 |
 | BR-1/BR-3 colour mode applied live (theme setting → app ThemeMode) | `theme_providers.dart` (`themeMode`) → `app/app.dart` (`MemoxApp`) | (boot smoke test) | S.08 | #115 |
 | BR-1/BR-2/BR-3 theme save (mode/accent/fontScale) | `theme_providers.dart` (`ThemeController.setMode/setAccent/setFontScale` → `SettingsService.saveTheme`) | (theme screen test) | S.08 | #115 |
+| kit `statistics/screen` — Stats (loading·loaded·insufficient·error) | `presentation/features/statistics/screens/statistics_screen.dart` + `providers/statistics_providers.dart` (`StatisticsController`) | `test/presentation/features/statistics/statistics_screen_test.dart` (4 states, light+dark) | S.09 | #116 |
+| kit `Bars` + `Heatmap` + `Donut` (charts) | `presentation/features/statistics/widgets/{bars,heatmap,donut}.dart` | (statistics screen test) | S.09 | #116 |
+| statistics §5 — streak · box distribution · library aggregate | `statistics_providers.dart` (`streakFromHistory` + `boxDistribution` + `DeckStats` aggregate + activity heatmap/weekly) | (statistics screen test, loaded) | S.09 | #116 |
+
+**S.09 gaps / notes:** two kit elements are **undrivable** on the frozen contracts
+and documented: **scope (This pair / All)** — there is no pair↔content link in v1, so
+stats are library-wide and the scope control + `scope-switch` state are omitted; and
+**accuracy** — the frozen `ReviewRepository` exposes no review-log read, so the
+`Donut` shows **mastery** (mastered/visible) instead. `insufficient` triggers when no
+study activity is recorded (empty history). The **Leitner distribution** walks the
+deck tree per-card (`currentBox`) since no aggregate SRS read exists — DT.5 can
+replace it with one query. The heatmap is 14×7 sequential days (no weekday
+alignment). Pixel goldens deferred to V.1.
 
 **S.08 gaps / notes:** **colour mode applies live** (`themeMode` → `MemoxApp`,
 falling back to system while loading / if the store is unavailable). **Accent** and
