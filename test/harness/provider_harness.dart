@@ -7,6 +7,7 @@ import 'package:memox_v4/data/fakes/fake_repositories.dart';
 import 'package:memox_v4/data/fakes/fake_services.dart';
 import 'package:memox_v4/data/fakes/fake_store.dart';
 import 'package:memox_v4/data/providers/data_providers.dart';
+import 'package:memox_v4/domain/repositories/card_repository.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
 import 'package:memox_v4/domain/services/daily_activity_service.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
@@ -36,6 +37,7 @@ class FakeHarness {
     DateTime? now,
     DailyActivityService? activity,
     DeckRepository? deckRepository,
+    CardRepository? cardRepository,
   }) {
     final clock = FakeClock(now ?? DateTime.utc(2026, 7, 3, 9));
     final data = store ?? seedFakeStore(now: clock.now());
@@ -46,7 +48,8 @@ class FakeHarness {
       clockProvider.overrideWithValue(clock),
       deckRepositoryProvider
           .overrideWithValue(deckRepository ?? FakeDeckRepository(data)),
-      cardRepositoryProvider.overrideWithValue(FakeCardRepository(data)),
+      cardRepositoryProvider
+          .overrideWithValue(cardRepository ?? FakeCardRepository(data)),
       reviewRepositoryProvider.overrideWithValue(FakeReviewRepository(data)),
       settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository(data)),
       settingsServiceProvider.overrideWithValue(FakeSettingsService()),
