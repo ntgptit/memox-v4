@@ -410,6 +410,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `LangCard` (language selector) | `presentation/features/drawer/widgets/lang_card.dart` | (drawer screen test, add-language) | S.06 | #113 |
 | kit `drawer/remove-dialog` (RemoveLanguageDialog) | `presentation/features/drawer/widgets/remove_language_dialog.dart` | (drawer screen test, delete flow) | S.06 | #113 |
 | D-030 language-pair add/remove (validate differ + non-empty) | `drawer_providers.dart` (`LanguagePairController.addPair/removePair` → `LanguagePairService`) | (drawer screen test, add/remove flow) | S.06 | #113 |
+| kit `reminder/screen` — Reminders (on·off·time-picker, BR-4) | `presentation/features/reminder/screens/reminder_screen.dart` + `providers/reminder_providers.dart` (`ReminderController`/`ReminderTimeDraft`) | `test/presentation/features/reminder/reminder_screen_test.dart` (on/off + weekday + time-picker, light+dark) | S.07 | #114 |
+| kit `TimeCol` + `TimePickerSheet` (hour:minute picker) | `presentation/features/reminder/widgets/time_col.dart` + `time_picker_sheet.dart` | (reminder screen test, time-picker) | S.07 | #114 |
+| BR-4 reminder schedule + permission (weekday set, OS notify) | `reminder_providers.dart` (`ReminderController.setEnabled/toggleWeekday/setTime` → `ReminderNotificationService.requestPermission/schedule`) | (reminder screen test, toggle/weekday) | S.07 | #114 |
+
+**S.07 gaps / notes:** the reminder config (time + weekdays) is **session state** —
+v1 has no reminder store (DM.8 `ReminderNotificationService` only *schedules*), so
+it does not persist across restarts (documented; DT.7 could back it with settings).
+`isEnabled` = weekday set non-empty; the master switch turns all 7 days on/off,
+chips customize (deselecting the last day turns it off). Enabling requests OS
+permission first (BR-4); a denial keeps it off + logs (the fake grants). The time
+picker uses **quarter-hour** minutes (kit granularity); columns don't auto-scroll to
+the selection. There is no read-error state (no store to read). Pixel goldens deferred
+to V.1.
 
 **S.06 gaps / notes:** the drawer is a **full-screen route** (Routes.drawer) hosting
 three sub-views (menu · add-language · remove-language) switched by `DrawerViewState`
