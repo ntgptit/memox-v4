@@ -396,6 +396,19 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `deck-detail/deck-sheet` (DeckMenu: Move·Delete, D-024) | `presentation/features/deck-detail/widgets/deck_menu.dart` | (deck-detail screen test, overflow) | S.03 | #110 |
 | kit `deck-detail/delete-dialog` (card + deck delete confirms, D-024) | `presentation/features/deck-detail/widgets/delete_confirm_dialog.dart` | (deck-detail screen test) | S.03 | #110 |
 | D-006 hide card · card/deck delete · deck move mutations | `deck_detail_providers.dart` (`DeckDetailController.setCardHidden/deleteCard/deleteDeck/moveTo` → `SetCardHidden`/`DeleteCard`/`DeleteDeck`/`MoveDeck`) | (deck-detail screen test, card-actions) | S.03 | #110 |
+| kit `search/screen` — Search (empty-recent·loading·results·filtered·no-results·error, D-019) | `presentation/features/search/screens/search_screen.dart` + `providers/search_providers.dart` (`SearchQuery`/`SearchFilterState`/`RecentSearches`/`searchResults`) | `test/presentation/features/search/search_screen_test.dart` (6 states + filter + recents, light+dark) | S.04 | #111 |
+| kit `search/appbar` (SearchAppBar: back + embedded search dock) | `presentation/features/search/widgets/search_app_bar.dart` | (search screen test) | S.04 | #111 |
+| kit `search/filters` (Chips: status filter) | `presentation/features/search/widgets/search_chips.dart` | (search screen test, filtered) | S.04 | #111 |
+| kit `ResultRow` (search hit → shared `MxStatusCardRow` + deck line) | `presentation/features/search/widgets/result_row.dart` | (search screen test) | S.04 | #111 |
+| D-019 global card search (tokens AND, term+meaning) | `search_providers.dart` (`searchResults` → `SearchCards`) | `test/presentation/features/search/search_screen_test.dart` (results/no-results) | S.04 | #111 |
+
+**S.04 gaps / notes:** **recent searches are session-only** — there is no
+persistent recent-search store in v1, so `RecentSearches` is a `keepAlive`
+in-session list (a query is recorded when the search is cleared) and empty-recent
+shows a hint until the first search. Results tap → the card editor (S.12). The
+search app bar embeds `MxSearchDock` (MxAppBar only takes a string title). Filter
+chips reuse the shared filter ARB keys. Card status derives from the Leitner box.
+Pixel goldens vs `shots/search--*` deferred to V.1.
 
 **S.03 gaps / notes:** in-deck **search** + **filter chips** (All/New/Due/Mastered)
 are drivable client-side (query in Riverpod, text field controller is not app

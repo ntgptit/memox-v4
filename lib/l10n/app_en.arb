@@ -469,5 +469,51 @@
   "deckDetailMoveRoot": "Library (root)",
   "@deckDetailMoveRoot": {
     "description": "Move destination representing the library root (no parent)"
+  },
+
+  "searchBack": "Back",
+  "@searchBack": {
+    "description": "Accessible label for the search back button"
+  },
+  "searchPlaceholder": "Search by word or meaning",
+  "@searchPlaceholder": {
+    "description": "Placeholder for the global search field"
+  },
+  "searchClear": "Clear search",
+  "@searchClear": {
+    "description": "Accessible label for the clear-search button"
+  },
+  "searchRecentLabel": "Recent",
+  "@searchRecentLabel": {
+    "description": "Section label above the recent-searches list"
+  },
+  "searchRecentFill": "Use this search",
+  "@searchRecentFill": {
+    "description": "Accessible label for the button that re-runs a recent search"
+  },
+  "searchHintTitle": "Search your cards",
+  "@searchHintTitle": {
+    "description": "Title of the initial search prompt (no recent searches yet)"
+  },
+  "searchHintText": "Find any card by its word or meaning across every deck.",
+  "@searchHintText": {
+    "description": "Body of the initial search prompt"
+  },
+  "searchNoResultsTitle": "No matches",
+  "@searchNoResultsTitle": {
+    "description": "Title when a search matches nothing"
+  },
+  "searchNoResultsText": "Nothing matched “{query}”. Try another term or check the spelling.",
+  "@searchNoResultsText": {
+    "description": "Body when a search matches nothing",
+    "placeholders": { "query": { "type": "String" } }
+  },
+  "searchErrorTitle": "Search failed",
+  "@searchErrorTitle": {
+    "description": "Title of the search error state"
+  },
+  "searchErrorText": "Something went wrong searching your cards. Try again.",
+  "@searchErrorText": {
+    "description": "Body of the search error state (local persistence)"
   }
 }
