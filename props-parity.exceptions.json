@@ -74,5 +74,41 @@
   { "component": "study-result/StreakGoalCard", "prop": "streakCaption", "reason": "fixture-parameterized", "note": "Kit hardcodes the streak caption; Flutter takes streakCaption:String." },
   { "component": "study-result/StreakGoalCard", "prop": "goalLabel", "reason": "fixture-parameterized", "note": "Kit hardcodes the goal label; Flutter takes goalLabel:String." },
   { "component": "study-result/StreakGoalCard", "prop": "goalValue", "reason": "fixture-parameterized", "note": "Kit hardcodes the goal value ('20/20 min'); Flutter takes goalValue:String." },
-  { "component": "study-result/StreakGoalCard", "prop": "goalPercent", "reason": "fixture-parameterized", "note": "Kit hardcodes the goal percent (70/100); Flutter takes goalPercent:double." }
+  { "component": "study-result/StreakGoalCard", "prop": "goalPercent", "reason": "fixture-parameterized", "note": "Kit hardcodes the goal percent (70/100); Flutter takes goalPercent:double." },
+
+  { "component": "study-session/ResumeErrorState", "prop": "onRestart", "reason": "fixture-parameterized", "note": "Kit fixture stubs the restart button with a node id; Flutter wires onRestart." },
+  { "component": "study-session/ResumeErrorState", "prop": "onBack", "reason": "fixture-parameterized", "note": "Kit fixture stubs the back button with a node id; Flutter wires onBack." },
+
+  { "component": "study-session/StageChoice", "prop": "relearn", "reason": "flutter-idiom", "note": "Kit's relearn flag shows the not-counted note; Flutter drives that note from the `wrong` pick state instead." },
+  { "component": "study-session/StageChoice", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the prompt term (학교); Flutter takes term:String." },
+  { "component": "study-session/StageChoice", "prop": "choices", "reason": "fixture-parameterized", "note": "Kit hardcodes the choice list; Flutter takes choices." },
+  { "component": "study-session/StageChoice", "prop": "correctChoice", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the correct choice to grade against." },
+  { "component": "study-session/StageChoice", "prop": "chosen", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the currently chosen option." },
+  { "component": "study-session/StageChoice", "prop": "wrong", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the wrong-pick state (also drives the relearn note)." },
+  { "component": "study-session/StageChoice", "prop": "onChoose", "reason": "fixture-parameterized", "note": "Kit fixture stubs the options; Flutter wires onChoose." },
+
+  { "component": "study-session/StageMatching", "prop": "terms", "reason": "fixture-parameterized", "note": "Kit hardcodes the term tiles; Flutter takes terms." },
+  { "component": "study-session/StageMatching", "prop": "meanings", "reason": "fixture-parameterized", "note": "Kit hardcodes the meaning tiles; Flutter takes meanings." },
+  { "component": "study-session/StageMatching", "prop": "matched", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the matched set." },
+  { "component": "study-session/StageMatching", "prop": "selectedTermId", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the selected term id." },
+  { "component": "study-session/StageMatching", "prop": "onSelectTerm", "reason": "fixture-parameterized", "note": "Kit fixture stubs the tiles; Flutter wires onSelectTerm." },
+  { "component": "study-session/StageMatching", "prop": "onSelectMeaning", "reason": "fixture-parameterized", "note": "Kit fixture stubs the tiles; Flutter wires onSelectMeaning." },
+
+  { "component": "study-session/StageRecall", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the term (친구); Flutter takes term:String." },
+  { "component": "study-session/StageRecall", "prop": "meaning", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes meaning:String." },
+  { "component": "study-session/StageRecall", "prop": "revealed", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the revealed state." },
+  { "component": "study-session/StageRecall", "prop": "onReveal", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Show button; Flutter wires onReveal." },
+  { "component": "study-session/StageRecall", "prop": "onNext", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter wires onNext." },
+
+  { "component": "study-session/StageReview", "prop": "term", "reason": "fixture-parameterized", "note": "Kit hardcodes the term (학교); Flutter takes term:String." },
+  { "component": "study-session/StageReview", "prop": "meaning", "reason": "fixture-parameterized", "note": "Kit hardcodes the meaning (school); Flutter takes meaning:String." },
+  { "component": "study-session/StageReview", "prop": "onNext", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Next button; Flutter wires onNext." },
+
+  { "component": "study-session/StageTyping", "prop": "meaningLabel", "reason": "fixture-parameterized", "note": "Kit hardcodes the meaning label; Flutter takes meaningLabel:String." },
+  { "component": "study-session/StageTyping", "prop": "meaning", "reason": "fixture-parameterized", "note": "Kit hardcodes the meaning (school); Flutter takes meaning:String." },
+  { "component": "study-session/StageTyping", "prop": "controller", "reason": "flutter-idiom", "note": "TextField idiom — binds the answer field's text; no kit equivalent." },
+  { "component": "study-session/StageTyping", "prop": "hintShown", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the hint-shown state." },
+  { "component": "study-session/StageTyping", "prop": "hint", "reason": "fixture-parameterized", "note": "Kit fixture; Flutter takes the hint text." },
+  { "component": "study-session/StageTyping", "prop": "onHint", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Help button; Flutter wires onHint." },
+  { "component": "study-session/StageTyping", "prop": "onCheck", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Check button; Flutter wires onCheck." }
 ]
