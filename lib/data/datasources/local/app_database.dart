@@ -41,6 +41,11 @@ class AppDatabase extends _$AppDatabase {
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) => m.createAll(),
+        // Forward-only (R3): never edit a shipped schema in place. Each version
+        // bump adds a `if (from < N) { … }` block here and a new
+        // `drift_schemas/drift_schema_vN.json` snapshot (regenerate the migration
+        // test helper). v1 is the base — there are no upgrade steps yet.
+        onUpgrade: (m, from, to) async {},
         beforeOpen: (details) async {
           // Cascades (D-024) only fire when foreign keys are enforced; SQLite
           // leaves them off by default, so enable them on every connection.
