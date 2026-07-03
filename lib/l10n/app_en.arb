@@ -42,5 +42,145 @@
   "cardHidden": "Hidden",
   "@cardHidden": {
     "description": "Accessible label for the icon marking a hidden card"
+  },
+
+  "dashboardGreetingMorning": "Good morning",
+  "@dashboardGreetingMorning": {
+    "description": "Dashboard app-bar greeting shown in the morning"
+  },
+  "dashboardGreetingAfternoon": "Good afternoon",
+  "@dashboardGreetingAfternoon": {
+    "description": "Dashboard app-bar greeting shown in the afternoon"
+  },
+  "dashboardGreetingEvening": "Good evening",
+  "@dashboardGreetingEvening": {
+    "description": "Dashboard app-bar greeting shown in the evening"
+  },
+  "dashboardNotifications": "Notifications",
+  "@dashboardNotifications": {
+    "description": "Accessible label for the dashboard notifications button"
+  },
+  "dashboardProfile": "Open profile",
+  "@dashboardProfile": {
+    "description": "Accessible label for the dashboard profile avatar button"
+  },
+  "dashboardTodayEyebrow": "Today",
+  "@dashboardTodayEyebrow": {
+    "description": "Small label on the today summary hero card (rendered uppercase)"
+  },
+  "dashboardTimeStudied": "time studied",
+  "@dashboardTimeStudied": {
+    "description": "Caption under the minutes-studied figure on the today card"
+  },
+  "dashboardWordsLearned": "words learned",
+  "@dashboardWordsLearned": {
+    "description": "Caption under the words-learned figure on the today card"
+  },
+  "dashboardStartStudying": "Start studying",
+  "@dashboardStartStudying": {
+    "description": "Call-to-action on the empty today card to begin a study session"
+  },
+  "dashboardEmptyBanner": "You haven't studied today — start to keep your streak!",
+  "@dashboardEmptyBanner": {
+    "description": "Banner shown when there is no study activity yet today"
+  },
+  "dashboardGoalMetBanner": "Daily goal reached! Streak +1.",
+  "@dashboardGoalMetBanner": {
+    "description": "Celebration banner shown once the daily goal is met"
+  },
+  "dashboardStreakResetBanner": "Streak reset — study today to start again.",
+  "@dashboardStreakResetBanner": {
+    "description": "Banner shown when the streak has reset to zero"
+  },
+  "dashboardGoalTitle": "Daily goal",
+  "@dashboardGoalTitle": {
+    "description": "Title of the daily-goal card"
+  },
+  "dashboardGoalMinutes": "{done}/{target} min",
+  "@dashboardGoalMinutes": {
+    "description": "Daily-goal progress in minutes (not yet met)",
+    "placeholders": {
+      "done": { "type": "int" },
+      "target": { "type": "int" }
+    }
+  },
+  "dashboardGoalMinutesMet": "{done}/{target} min · complete",
+  "@dashboardGoalMinutesMet": {
+    "description": "Daily-goal progress in minutes once met",
+    "placeholders": {
+      "done": { "type": "int" },
+      "target": { "type": "int" }
+    }
+  },
+  "dashboardGoalWords": "{done}/{target} words",
+  "@dashboardGoalWords": {
+    "description": "Daily-goal progress in words (not yet met)",
+    "placeholders": {
+      "done": { "type": "int" },
+      "target": { "type": "int" }
+    }
+  },
+  "dashboardGoalWordsMet": "{done}/{target} words · complete",
+  "@dashboardGoalWordsMet": {
+    "description": "Daily-goal progress in words once met",
+    "placeholders": {
+      "done": { "type": "int" },
+      "target": { "type": "int" }
+    }
+  },
+  "dashboardGoalUnset": "Set a daily goal to build a streak",
+  "@dashboardGoalUnset": {
+    "description": "Shown on the goal card when no daily goal is configured"
+  },
+  "dashboardGoalRule": "Met when minutes OR words reached",
+  "@dashboardGoalRule": {
+    "description": "Caption explaining how the daily goal is met"
+  },
+  "dashboardStreakLabel": "day streak",
+  "@dashboardStreakLabel": {
+    "description": "Caption under the current-streak figure"
+  },
+  "dashboardMasteredLabel": "mastered",
+  "@dashboardMasteredLabel": {
+    "description": "Caption under the mastered-percentage figure"
+  },
+  "dashboardContinueTitle": "Continue studying",
+  "@dashboardContinueTitle": {
+    "description": "Section header above the due-deck list"
+  },
+  "dashboardDecksDueCaption": "{count, plural, =1{1 deck due today} other{{count} decks due today}}",
+  "@dashboardDecksDueCaption": {
+    "description": "Caption counting how many decks have cards due today",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "dashboardSeeAll": "See all",
+  "@dashboardSeeAll": {
+    "description": "Action on the continue-studying header linking to the full library"
+  },
+  "dashboardDeckMeta": "{cards, plural, =1{1 card} other{{cards} cards}} · {due} due",
+  "@dashboardDeckMeta": {
+    "description": "Per-deck line: total visible cards and how many are due",
+    "placeholders": {
+      "cards": { "type": "int" },
+      "due": { "type": "int" }
+    }
+  },
+  "dashboardReview": "Review",
+  "@dashboardReview": {
+    "description": "Label of the quick-review floating action button"
+  },
+  "dashboardErrorTitle": "Couldn't load your dashboard",
+  "@dashboardErrorTitle": {
+    "description": "Title on the dashboard error surface"
+  },
+  "dashboardErrorBody": "Something went wrong loading today's progress.",
+  "@dashboardErrorBody": {
+    "description": "Body text on the dashboard error surface"
+  },
+  "actionRetry": "Try again",
+  "@actionRetry": {
+    "description": "Generic retry action, e.g. after a load error"
   }
 }

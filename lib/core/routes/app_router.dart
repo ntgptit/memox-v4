@@ -4,6 +4,7 @@ import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
+import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -27,13 +28,23 @@ GoRouter router(Ref ref) {
         builder: (context, state, navigationShell) =>
             _ShellScaffold(navigationShell: navigationShell),
         branches: [
-          _branch(Routes.today, extra: [
-            GoRoute(
-              path: Routes.deckDetailPattern,
-              builder: (context, state) =>
-                  RouteStub(Routes.deckDetail(state.pathParameters['deckId'] ?? '')),
-            ),
-          ]),
+          // The Today tab hosts the real S.01 dashboard; deck-detail (S.03) stays
+          // a stub under it until built.
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.today,
+                builder: (context, state) => const DashboardScreen(),
+                routes: [
+                  GoRoute(
+                    path: Routes.deckDetailPattern,
+                    builder: (context, state) => RouteStub(
+                        Routes.deckDetail(state.pathParameters['deckId'] ?? '')),
+                  ),
+                ],
+              ),
+            ],
+          ),
           _branch(Routes.library),
           _branch(Routes.add),
           _branch(Routes.stats),

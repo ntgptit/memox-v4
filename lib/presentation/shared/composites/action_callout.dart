@@ -6,7 +6,7 @@ import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 
 /// Tone for [MxActionCallout] — picks the `*Soft` / `on*Soft` token pair.
-enum MxCalloutTone { warning, success, error }
+enum MxCalloutTone { primary, warning, success, error }
 
 /// The kit's shared `ActionCallout`: a soft-tinted inline banner (icon + message)
 /// with an optional trailing [action] (usually a small `MxButton`). A composite,
@@ -65,6 +65,7 @@ class MxActionCallout extends StatelessWidget {
 
   (Color, Color) _colors(MxTheme mx) {
     return switch (tone) {
+      MxCalloutTone.primary => (mx.primarySoft, mx.onPrimarySoft),
       MxCalloutTone.warning => (mx.warningSoft, mx.onWarningSoft),
       MxCalloutTone.success => (mx.successSoft, mx.onSuccessSoft),
       MxCalloutTone.error => (mx.errorSoft, mx.onErrorSoft),

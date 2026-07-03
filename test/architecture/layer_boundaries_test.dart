@@ -67,9 +67,17 @@ List<String> importViolations(String path, List<String> imports) {
   void check(List<String> forbidden, String layer) {
     for (final imp in imports) {
       for (final bad in forbidden) {
-        if (imp.contains(bad)) {
-          out.add('$layer file "$n" imports "$imp" (forbidden: "$bad")');
+        if (!imp.contains(bad)) continue;
+        // The DI provider seam (`data/providers/`) is the sanctioned channel by
+        // which presentation obtains repositories/services — swapping fakes →
+        // Drift never touches a screen. It is allowed, unlike data *impls*
+        // (repos/drift/plugins). The domain stays pure and may not use it.
+        if (layer == 'presentation' &&
+            bad == 'package:memox_v4/data/' &&
+            imp.contains('package:memox_v4/data/providers/')) {
+          continue;
         }
+        out.add('$layer file "$n" imports "$imp" (forbidden: "$bad")');
       }
     }
   }
@@ -132,6 +140,19 @@ void main() {
       expect(importViolations(f, ['package:memox_v4/data/repo.dart']), isNotEmpty);
       // Flutter + domain use-cases are exactly what a screen should import.
       expect(importViolations(f, ['package:flutter/material.dart']), isEmpty);
+      // The DI provider seam is the one data/ import presentation may use…
+      expect(
+          importViolations(f, ['package:memox_v4/data/providers/data_providers.dart']),
+          isEmpty);
+      // …but a concrete data implementation is still forbidden.
+      expect(
+          importViolations(f, ['package:memox_v4/data/repositories/deck_repo.dart']),
+          isNotEmpty);
+      // The domain stays pure — it may not reach the seam either.
+      expect(
+          importViolations('lib/domain/x.dart',
+              ['package:memox_v4/data/providers/data_providers.dart']),
+          isNotEmpty);
     });
 
     test('a provider may not import go_router; the app router is exempt', () {
