@@ -143,7 +143,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | S.13 | [game-picker](s13-game-picker.md) |
 | [x] | S.14 | [game-matching](s14-game-matching.md) |
 | [x] | S.15 | [game-mc](s15-game-mc.md) |
-| [ ] | S.16 | [game-recall](s16-game-recall.md) |
+| [x] | S.16 | [game-recall](s16-game-recall.md) |
 | [ ] | S.17 | [game-typing](s17-game-typing.md) |
 | [ ] | S.18 | [review](s18-review.md) |
 | [ ] | S.19 | [player](s19-player.md) |
