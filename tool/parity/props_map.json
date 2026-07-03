@@ -24,6 +24,7 @@
     "children": ["label", "child", "text", "title"],
     "label": ["label", "text", "title"],
     "text": ["text", "label"],
+    "content": ["child", "text"],
     "src": ["image", "imageUrl", "imageProvider"],
     "checked": ["value", "selected"],
     "onClick": ["onPressed", "onTap", "onSelected"],
