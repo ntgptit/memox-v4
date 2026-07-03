@@ -139,7 +139,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | S.09 | [statistics](s09-statistics.md) |
 | [x] | S.10 | [import](s10-import.md) |
 | [x] | S.11 | [export](s11-export.md) |
-| [ ] | S.12 | [flashcard-editor](s12-flashcard-editor.md) |
+| [x] | S.12 | [flashcard-editor](s12-flashcard-editor.md) |
 | [ ] | S.13 | [game-picker](s13-game-picker.md) |
 | [ ] | S.14 | [game-matching](s14-game-matching.md) |
 | [ ] | S.15 | [game-mc](s15-game-mc.md) |
