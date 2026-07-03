@@ -371,6 +371,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `ListRow` helper (icon tile + title/sub + trailing · divider/muted) | `presentation/shared/composites/mx_list_row.dart` | `test/presentation/shared/composites/mx_list_row_test.dart` | H.04 | #102 |
 | kit `Sheet`/`Scrim` helper (bottom sheet: handle + title + content) | `presentation/shared/composites/mx_sheet.dart` (`showMxSheet`) | `test/presentation/shared/composites/mx_sheet_test.dart` | H.05 | #103 |
 | kit `Ring`+`Stat` helper (progress ring around value+label) | `presentation/shared/composites/mx_stat_ring.dart` | `test/presentation/shared/composites/mx_stat_ring_test.dart` | H.06 | #104 |
+| kit `ChoiceOption` helper (quiz answer: none/correct/wrong skins) | `presentation/shared/primitives/mx_choice_option.dart` | `test/presentation/shared/primitives/mx_choice_option_test.dart` | H.07 | #105 |
 
 **P.01 gaps (kit vs tokens):** `.btn` icon size is a raw **20px** with no matching `MxIconSize` token (18/22/28) — named `_iconSize` in the widget. Kit `sm` height **38px** < 48 a11y min — mitigated by Material's padded tap target (≥48 hit area). `.btn.primary` `shadow-fab` approximated by `elevation:0` (Material buttons can't take a token boxShadow). Pixel goldens for the button (text+shadow, platform-sensitive per T.5) are deferred to **V.1**; P.01 verifies variant→token mapping by widget assertions instead.
 
