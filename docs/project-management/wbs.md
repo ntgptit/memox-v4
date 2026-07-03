@@ -356,6 +356,7 @@ then `DM.4–DM.7` + `S.00` → **S.01 dashboard pilot** (review) → fan out S/
 | kit `MxSegmentedControl` (.segmented: radiogroup, active pill, block) | `presentation/shared/primitives/mx_segmented_control.dart` (`MxSegment`) | `test/presentation/shared/primitives/mx_segmented_control_test.dart` | P.07 | #87 |
 | kit `MxCard` (.card: elevated/flat/muted/primary/primary-soft · padding · interactive) | `presentation/shared/composites/mx_card.dart` | `test/presentation/shared/composites/mx_card_test.dart` | K.01 | #88 |
 | kit `MxIconTile` (.icon-tile: primary/accent/success/warning/error · solid · lg) | `presentation/shared/composites/mx_icon_tile.dart` | `test/presentation/shared/composites/mx_icon_tile_test.dart` | K.02 | #89 |
+| kit `MxSectionHeader` (.section-head: title + caption + text action) | `presentation/shared/composites/mx_section_header.dart` | `test/presentation/shared/composites/mx_section_header_test.dart` | K.03 | #90 |
 
 **P.01 gaps (kit vs tokens):** `.btn` icon size is a raw **20px** with no matching `MxIconSize` token (18/22/28) — named `_iconSize` in the widget. Kit `sm` height **38px** < 48 a11y min — mitigated by Material's padded tap target (≥48 hit area). `.btn.primary` `shadow-fab` approximated by `elevation:0` (Material buttons can't take a token boxShadow). Pixel goldens for the button (text+shadow, platform-sensitive per T.5) are deferred to **V.1**; P.01 verifies variant→token mapping by widget assertions instead.
 
