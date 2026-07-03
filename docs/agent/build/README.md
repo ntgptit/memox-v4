@@ -101,7 +101,7 @@ is the pilot** — do it, pause for review, then fan out. Every behaviour traces
 | [x] | K.01 | [MxCard](k01-mxcard.md) |
 | [x] | K.02 | [MxIconTile](k02-mxicontile.md) |
 | [x] | K.03 | [MxSectionHeader](k03-mxsectionheader.md) |
-| [ ] | K.04 | [MxScaffold](k04-mxscaffold.md) |
+| [x] | K.04 | [MxScaffold](k04-mxscaffold.md) |
 | [ ] | K.05 | [MxAppBar](k05-mxappbar.md) |
 | [ ] | K.06 | [MxBottomNav](k06-mxbottomnav.md) |
 | [ ] | K.07 | [MxFab](k07-mxfab.md) |
