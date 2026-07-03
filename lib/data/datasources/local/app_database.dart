@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
+import 'package:memox_v4/data/datasources/local/connection/memory_executor.dart';
 import 'package:memox_v4/data/datasources/local/dao/card_dao.dart';
 import 'package:memox_v4/data/datasources/local/dao/deck_dao.dart';
 import 'package:memox_v4/data/datasources/local/dao/review_dao.dart';
@@ -36,8 +36,10 @@ const int _schemaVersion = 1;
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
-  /// An in-memory database — used by data-layer integration tests (DT.1+).
-  AppDatabase.memory() : super(NativeDatabase.memory());
+  /// An in-memory database — used by data-layer integration tests (DT.1+). The
+  /// executor is resolved by a conditional import ([memoryExecutor]) so this file
+  /// never pulls `dart:ffi` into the web build.
+  AppDatabase.memory() : super(memoryExecutor());
 
   @override
   int get schemaVersion => _schemaVersion;
