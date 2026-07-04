@@ -14,6 +14,14 @@ Claude-specific notes so nothing critical is missed.
    hand-written source with the `part` directive instead).
 2. **Kit is the source of truth** for visuals (`docs/design/MemoX Design System/`,
    frozen/synced). Don't patch Dart to diverge — fix the kit and `/design-sync`.
+   **KIT-FIRST IS MANDATORY:** every Flutter **UI** change (new control / menu item
+   / picker, visual state, layout, icon, copy placement) requires the kit to define
+   it **first** — investigate the kit (a kit-parity sub-agent) before editing any
+   Flutter UI; if the kit lacks it, update the kit + `/design-sync`, *then* build
+   Flutter to match **exactly**. Never Flutter-only UI. Non-visual changes (data /
+   domain / provider / behavior / persistence / a11y) are exempt. Enforced by the
+   `PreToolUse` guard `tool/hooks/kit-first-guard.mjs`. Full rule: AGENTS.md §Golden
+   rules #2.
 3. **No raw `Color(0x..)`/px in UI** — use `Mx*` tokens + the `MxTheme` extension.
    **Strings from ARB**, never hardcoded.
 4. **Layer contracts** (clean arch): feature UI must not import `data/`/`dart:io`;

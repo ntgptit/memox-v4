@@ -30,6 +30,25 @@ Stack: **Riverpod Annotation** (state + DI) · **Drift / SQLite** (persistence) 
    `docs/design/MemoX Design System/` (frozen; synced with Claude Design). If the
    kit looks wrong, fix it there and `/design-sync`; do **not** patch Dart to
    diverge. Only tokens the kit actually *uses* are mirrored (unused are pruned).
+   - **KIT-FIRST IS MANDATORY (workflow, not just a preference).** Every change to
+     Flutter **UI** — a widget/screen's visuals or layout, a new affordance / menu
+     item / control / picker, a visual state, an icon, where copy sits — MUST be
+     defined in the kit **first**. Before you touch any Flutter UI file you MUST
+     **investigate the kit** (grep/read `docs/design/MemoX Design System/`, or spawn
+     a kit-parity sub-agent): (a) if the kit already defines it → make Flutter match
+     the kit **exactly** (same placement, same control type, same scope); (b) if the
+     kit does **not** define it → update the kit (`.jsx`/`.d.ts` + tokens) and
+     `/design-sync` **first**, then implement Flutter. **Never introduce Flutter-only
+     UI, and never render a design that diverges from the kit.**
+   - *Why this rule exists:* the gaps loop drifted twice — a per-**card** reset was
+     added to the card-actions sheet when the kit's reset is per-**deck** (from the
+     deck menu), and an inline-**chip** column picker was built when the kit's import
+     mapping is **ListRow + dropdown**. Both were caught only in review. Don't repeat.
+   - **Exempt:** non-visual changes — data / domain / provider / behavior /
+     persistence / a11y wiring / logic that produces no new or changed pixels.
+   - A `PreToolUse` **kit-first guard** hook (`tool/hooks/kit-first-guard.mjs`, wired
+     in `.claude/settings.json`) fires on edits to Flutter UI files and forces this
+     check before the edit lands.
 3. **No raw visual values in UI** — never `Color(0x..)` / literal px. Use
    `MxColors`/`MxSpacing`/`MxRadius`/`MxTypography`/`MxShadows` + the `MxTheme`
    extension.
