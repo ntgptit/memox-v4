@@ -42,3 +42,36 @@ and the minimal entity. Confirmed no existing active-pair deck query to reuse.
 Default taken: **none** — blocked, loop continued to the next unit. The stats donut
 already shows *mastery* (a real number), so nothing is broken; only the pair toggle
 is absent.
+
+> **Shared root with G.05:** both need the *same* decision — whether to enrich the
+> deliberately-minimal `Deck` entity beyond `id`/`name`/`parentId`. Deciding once
+> unblocks the data-model side of both.
+
+### G.05 — library sort "Date created" + "Last studied" — BLOCKED (data model)
+
+**Blocker.** The kit SortSheet offers 4 orders; Flutter has 2 (`alphaAsc`,
+`alphaDesc`). The two missing ones can't be added with a safe autonomous default:
+
+- **Date created** — the `decks` table *has* a `createdAt` column, but the `Deck`
+  entity **deliberately omits it** ("carries no created/last-studied columns, so
+  this entity has none"). Sorting by it means enriching the entity + mapper (and
+  touching 22 `Deck.create` call sites) — **the same minimal-entity reversal
+  blocked for G.02**.
+- **Last studied** — there is **no per-deck last-studied data anywhere** (only
+  global day-totals; no per-deck review timestamp). This needs a new schema column
+  + a write on every review to record it — real tracking infra, not a sort tweak.
+
+**What I tried.** Confirmed the sort lives in `library_providers._sort` over
+`LibraryNode`; traced date-created to the table column the entity hides, and
+searched the whole tree for any per-deck last-studied field (none exists).
+
+**What I need (pick one):**
+1. **Enrich `Deck`** (add `createdAt`, resolving the shared G.02/G.05 entity
+   decision) → I implement **Date created**. **Last studied** stays deferred until
+   per-deck review tracking exists.
+2. **Add per-deck last-studied tracking** (schema column + review write path) →
+   both orders become drivable.
+3. **Leave deferred** — keep the two alpha orders (recommended for v1).
+
+Default taken: **none** — blocked. Alphabetical A→Z / Z→A both work; nothing is
+broken, only the two extra orders are absent.
