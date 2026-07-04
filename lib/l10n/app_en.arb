@@ -324,6 +324,10 @@
   "@actionDelete": {
     "description": "Generic delete action in a confirm dialog"
   },
+  "actionReset": "Reset",
+  "@actionReset": {
+    "description": "Generic reset action in a confirm dialog"
+  },
   "actionMove": "Move",
   "@actionMove": {
     "description": "Generic move action"
@@ -444,6 +448,19 @@
   "deckDetailDeleteCardText": "The card “{term}” will be removed from this deck. This can't be undone.",
   "@deckDetailDeleteCardText": {
     "description": "Body of the delete-card confirm dialog",
+    "placeholders": { "term": { "type": "String" } }
+  },
+  "deckDetailCardResetProgress": "Reset progress",
+  "@deckDetailCardResetProgress": {
+    "description": "Reset-progress action in the card-actions sheet"
+  },
+  "deckDetailResetProgressTitle": "Reset this card's progress?",
+  "@deckDetailResetProgressTitle": {
+    "description": "Title of the reset-progress confirm dialog"
+  },
+  "deckDetailResetProgressText": "“{term}” goes back to New and starts the 5-stage learn again. Its review history is kept.",
+  "@deckDetailResetProgressText": {
+    "description": "Body of the reset-progress confirm dialog",
     "placeholders": { "term": { "type": "String" } }
   },
   "deckDetailDeckMove": "Move",

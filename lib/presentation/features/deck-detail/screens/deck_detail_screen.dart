@@ -353,6 +353,15 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
             },
           ),
           MxListRow(
+            icon: Icons.restart_alt,
+            tone: MxIconTileTone.warning,
+            title: l10n.deckDetailCardResetProgress,
+            onPressed: () {
+              Navigator.of(context).pop();
+              _confirmResetProgress(card);
+            },
+          ),
+          MxListRow(
             icon: Icons.delete,
             tone: MxIconTileTone.error,
             title: l10n.deckDetailCardDelete,
@@ -371,6 +380,12 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
     final ok = await showDeleteCardDialog(context, term: card.term);
     if (!ok) return;
     await _controller.deleteCard(card.id);
+  }
+
+  Future<void> _confirmResetProgress(DeckCardInfo card) async {
+    final ok = await showResetProgressDialog(context, term: card.term);
+    if (!ok) return;
+    await _controller.resetCardProgress(card.id);
   }
 
   // ── Empty / loading ──────────────────────────────────────────────────────────
