@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_motion.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 
 /// The kit's `Skeleton` helper as a reusable primitive: a sunken placeholder block
@@ -23,9 +24,10 @@ class MxSkeleton extends StatefulWidget {
   static const double _defaultHeight = 16;
   static const double _defaultRadius = 8;
 
-  // Kit `.mxg-skel` pulse: opacity .5 ↔ 1 over 1.3s, ease-in-out, infinite.
+  // Kit `.mxg-skel` pulse: opacity .5 ↔ 1 over the `pulse` motion token
+  // (1.3s), ease-in-out, infinite.
   static const double _minOpacity = 0.5;
-  static const Duration _period = Duration(milliseconds: 1300);
+  static const Duration _period = MxDurations.pulse;
 
   @override
   State<MxSkeleton> createState() => _MxSkeletonState();

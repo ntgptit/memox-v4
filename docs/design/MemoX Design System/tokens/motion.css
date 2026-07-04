@@ -12,6 +12,10 @@
   --memox-duration-base: 220ms;    /* default: card, fade, sheet content */
   --memox-duration-slow: 320ms;    /* large / overlay: dialog, drawer, page */
 
+  /* loop / feedback timings — not on the transition scale above */
+  --memox-duration-flash: 300ms;   /* feedback reveal: correct-match tile flash before it clears */
+  --memox-duration-pulse: 1300ms;  /* ambient loop period: skeleton shimmer (opacity .5↔1, infinite) */
+
   /* easings */
   --memox-ease-standard: cubic-bezier(0.2, 0, 0, 1);   /* most in-place transitions */
   --memox-ease-decelerate: cubic-bezier(0, 0, 0, 1);   /* enter: element settling in */

@@ -1,5 +1,6 @@
 import 'package:memox_v4/core/error/failure.dart';
 import 'package:memox_v4/core/logging/logger_provider.dart';
+import 'package:memox_v4/core/theme/mx_motion.dart';
 import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,8 +17,8 @@ class MatchTile {
 }
 
 /// How long a correctly-matched pair flashes the success skin before the tiles
-/// collapse into the matched (hidden) state.
-const Duration matchFlashDuration = Duration(milliseconds: 300);
+/// collapse into the matched (hidden) state (kit motion token `flash`).
+const Duration matchFlashDuration = MxDurations.flash;
 
 /// The matching-game state: the two columns, the current left selection, the
 /// matched indices, and the transient correct- / wrong-pair feedback.
