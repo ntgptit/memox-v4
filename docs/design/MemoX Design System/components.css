@@ -253,12 +253,12 @@
   width: 100%;
 }
 .btn--sm {
-  min-height: 38px;
+  min-height: var(--memox-size-sm);
   padding: 0 var(--memox-space-4);
   font-size: var(--memox-font-size-sm);
 }
 .btn--lg {
-  min-height: 56px;
+  min-height: var(--memox-size-md);
   padding: 0 var(--memox-space-7);
   font-size: var(--memox-font-size-md);
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -118,7 +119,7 @@ class MxButton extends StatelessWidget {
   ) {
     return switch (size) {
       MxButtonSize.small => (
-          height: 38,
+          height: MxSizes.sizeSm,
           paddingX: MxSpacing.space4,
           fontSize: MxTypography.sizeSm,
         ),
@@ -128,7 +129,7 @@ class MxButton extends StatelessWidget {
           fontSize: MxTypography.sizeBase,
         ),
       MxButtonSize.large => (
-          height: 56,
+          height: MxSizes.sizeMd,
           paddingX: MxSpacing.space7,
           fontSize: MxTypography.sizeMd,
         ),

@@ -283,9 +283,9 @@ class _SkeletonRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MxSkeleton(width: 150, height: 14),
+                MxSkeleton(widthFactor: 0.55, height: 14),
                 SizedBox(height: MxSpacing.space2),
-                MxSkeleton(width: 100, height: 10),
+                MxSkeleton(widthFactor: 0.38, height: 10),
               ],
             ),
           ),
