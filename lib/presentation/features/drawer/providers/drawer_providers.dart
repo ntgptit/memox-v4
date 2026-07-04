@@ -112,7 +112,7 @@ class LanguagePairController extends _$LanguagePairController {
 
   void _apply(Result<void> result) {
     result.fold(
-      (_) => ref.invalidateSelf(),
+      (_) => ref.invalidateSelf(), // guard:invalidate-reviewed -- reason: refresh after removing a language pair
       (failure) => ref
           .read(loggerProvider)
           .error('language pair mutation failed', error: failure),

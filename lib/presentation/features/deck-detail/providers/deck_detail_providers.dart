@@ -208,7 +208,7 @@ class DeckDetailController extends _$DeckDetailController {
   Future<void> _mutate(Future<Result<Object?>> Function() action) async {
     final result = await action();
     result.fold(
-      (_) => ref.invalidateSelf(),
+      (_) => ref.invalidateSelf(), // guard:invalidate-reviewed -- reason: refresh deck detail after a successful mutation
       (failure) => ref
           .read(loggerProvider)
           .error('deck-detail mutation failed', error: failure),

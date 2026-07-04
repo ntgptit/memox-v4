@@ -60,7 +60,7 @@ class GamePickerController extends _$GamePickerController {
 
   Future<void> setSource(GameSource source) async {
     _source = source;
-    ref.invalidateSelf();
+    ref.invalidateSelf(); // guard:invalidate-reviewed -- reason: rebuild with the newly selected game source
   }
 
   Future<GamePickerData> _load(GameSource source) async {

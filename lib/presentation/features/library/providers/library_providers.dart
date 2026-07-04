@@ -122,7 +122,7 @@ class LibraryController extends _$LibraryController {
     final saved = await SaveDeckUseCase(ref.read(deckRepositoryProvider))
         .call((created as Ok<Deck>).value);
     saved.fold(
-      (_) => ref.invalidateSelf(),
+      (_) => ref.invalidateSelf(), // guard:invalidate-reviewed -- reason: refresh the library tree after saving a deck
       (failure) =>
           ref.read(loggerProvider).error('create deck failed', error: failure),
     );
