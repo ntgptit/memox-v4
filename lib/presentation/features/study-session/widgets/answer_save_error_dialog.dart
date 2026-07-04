@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
-import 'package:memox_v4/presentation/shared/composites/confirm_dialog.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_confirm_dialog.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 
 /// The action the learner chose on the answer-save-error dialog.

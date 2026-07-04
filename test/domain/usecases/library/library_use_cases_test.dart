@@ -8,9 +8,9 @@ import 'package:memox_v4/domain/entities/deck_stats.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/repositories/card_repository.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
-import 'package:memox_v4/domain/usecases/library/card_search.dart';
-import 'package:memox_v4/domain/usecases/library/card_use_cases.dart';
-import 'package:memox_v4/domain/usecases/library/deck_use_cases.dart';
+import 'package:memox_v4/domain/usecases/library/card_search_usecase.dart';
+import 'package:memox_v4/domain/usecases/library/card_usecases.dart';
+import 'package:memox_v4/domain/usecases/library/deck_usecases.dart';
 
 Deck _deck(String id, {String? parent}) => (Deck.create(
       id: DeckId(id),
@@ -73,7 +73,7 @@ class _FakeCardRepository implements CardRepository {
 
   @override
   Future<Result<List<Card>>> search(String query, {DeckId? within}) async =>
-      Ok(CardSearch.filter(_cards, query));
+      Ok(CardSearchUseCase.filter(_cards, query));
 
   @override
   Future<Result<Card>> getById(CardId id) async => const Err(NotFoundFailure('x'));
@@ -86,7 +86,7 @@ class _FakeCardRepository implements CardRepository {
 }
 
 void main() {
-  group('MoveDeck cycle prevention (BR-3 / AC-3)', () {
+  group('MoveDeckUseCase cycle prevention (BR-3 / AC-3)', () {
     // Tree: a → b → c
     Map<String, Deck> tree() => {
           'a': _deck('a'),
@@ -97,7 +97,7 @@ void main() {
 
     test('rejects moving a deck into its own subtree', () async {
       final repo = _FakeDeckRepository(tree());
-      final result = await MoveDeck(repo).call(deckId: const DeckId('a'), newParentId: const DeckId('c'));
+      final result = await MoveDeckUseCase(repo).call(deckId: const DeckId('a'), newParentId: const DeckId('c'));
       expect(result, isA<Err<Deck>>());
       expect(repo.savedDeck, isNull);
     });
@@ -105,47 +105,47 @@ void main() {
     test('rejects making a deck its own parent', () async {
       final repo = _FakeDeckRepository(tree());
       expect(
-        await MoveDeck(repo).call(deckId: const DeckId('b'), newParentId: const DeckId('b')),
+        await MoveDeckUseCase(repo).call(deckId: const DeckId('b'), newParentId: const DeckId('b')),
         isA<Err<Deck>>(),
       );
     });
 
     test('allows a valid move to an unrelated node', () async {
       final repo = _FakeDeckRepository(tree());
-      final result = await MoveDeck(repo).call(deckId: const DeckId('c'), newParentId: const DeckId('x'));
+      final result = await MoveDeckUseCase(repo).call(deckId: const DeckId('c'), newParentId: const DeckId('x'));
       expect(result, isA<Ok<Deck>>());
       expect(repo.savedDeck!.parentId, const DeckId('x'));
     });
 
     test('allows a move to root (null parent)', () async {
       final repo = _FakeDeckRepository(tree());
-      final result = await MoveDeck(repo).call(deckId: const DeckId('c'), newParentId: null);
+      final result = await MoveDeckUseCase(repo).call(deckId: const DeckId('c'), newParentId: null);
       expect(result, isA<Ok<Deck>>());
       expect(repo.savedDeck!.parentId, isNull);
     });
   });
 
-  test('DeleteDeck delegates the cascade to the repository (D-024)', () async {
+  test('DeleteDeckUseCase delegates the cascade to the repository (D-024)', () async {
     final repo = _FakeDeckRepository({'a': _deck('a')});
-    await DeleteDeck(repo).call(const DeckId('a'));
+    await DeleteDeckUseCase(repo).call(const DeckId('a'));
     expect(repo.deletedId, const DeckId('a'));
   });
 
-  group('DetectDuplicateTerm (soft-dup, D-020)', () {
+  group('DetectDuplicateTermUseCase (soft-dup, D-020)', () {
     test('flags a case-insensitive term already in the deck', () async {
       final repo = _FakeCardRepository([_card('c1', 'd1', 'Neko')]);
-      final dup = await DetectDuplicateTerm(repo).call(deckId: const DeckId('d1'), term: 'neko');
+      final dup = await DetectDuplicateTermUseCase(repo).call(deckId: const DeckId('d1'), term: 'neko');
       expect((dup as Ok<bool>).value, isTrue);
     });
 
     test('does not flag a distinct term, nor the card being edited', () async {
       final repo = _FakeCardRepository([_card('c1', 'd1', 'neko')]);
       expect(
-        (await DetectDuplicateTerm(repo).call(deckId: const DeckId('d1'), term: 'inu') as Ok<bool>).value,
+        (await DetectDuplicateTermUseCase(repo).call(deckId: const DeckId('d1'), term: 'inu') as Ok<bool>).value,
         isFalse,
       );
       expect(
-        (await DetectDuplicateTerm(repo)
+        (await DetectDuplicateTermUseCase(repo)
                 .call(deckId: const DeckId('d1'), term: 'neko', excluding: const CardId('c1')) as Ok<bool>)
             .value,
         isFalse,
@@ -153,40 +153,40 @@ void main() {
     });
   });
 
-  group('CardSearch — D-019 token AND over term + meaning', () {
+  group('CardSearchUseCase — D-019 token AND over term + meaning', () {
     final cat = _card('c1', 'd1', 'neko', meaning: 'con mèo');
     final dog = _card('c2', 'd1', 'inu', meaning: 'con chó', hidden: true);
 
     test('single token is a substring match on term or meaning (AC-1)', () {
-      expect(CardSearch.matches(cat, 'neko'), isTrue);
-      expect(CardSearch.matches(cat, 'mèo'), isTrue);
-      expect(CardSearch.matches(cat, 'chó'), isFalse);
+      expect(CardSearchUseCase.matches(cat, 'neko'), isTrue);
+      expect(CardSearchUseCase.matches(cat, 'mèo'), isTrue);
+      expect(CardSearchUseCase.matches(cat, 'chó'), isFalse);
     });
 
     test('multi-token requires every token to match somewhere on the card (AC-4)', () {
-      expect(CardSearch.matches(cat, 'neko mèo'), isTrue); // term + meaning
-      expect(CardSearch.matches(cat, 'neko chó'), isFalse); // one token misses
+      expect(CardSearchUseCase.matches(cat, 'neko mèo'), isTrue); // term + meaning
+      expect(CardSearchUseCase.matches(cat, 'neko chó'), isFalse); // one token misses
     });
 
     test('hidden cards are still matched (D-028 / AC-2)', () {
-      expect(CardSearch.matches(dog, 'inu'), isTrue);
-      expect(CardSearch.filter([cat, dog], 'con'), hasLength(2));
+      expect(CardSearchUseCase.matches(dog, 'inu'), isTrue);
+      expect(CardSearchUseCase.filter([cat, dog], 'con'), hasLength(2));
     });
 
     test('empty query matches nothing', () {
-      expect(CardSearch.matches(cat, '   '), isFalse);
+      expect(CardSearchUseCase.matches(cat, '   '), isFalse);
     });
   });
 
-  group('SearchCards use case', () {
+  group('SearchCardsUseCase use case', () {
     test('empty query short-circuits to no results', () async {
       final repo = _FakeCardRepository([_card('c1', 'd1', 'neko')]);
-      expect((await SearchCards(repo).call('  ') as Ok<List<Card>>).value, isEmpty);
+      expect((await SearchCardsUseCase(repo).call('  ') as Ok<List<Card>>).value, isEmpty);
     });
 
     test('delegates matching to the repository', () async {
       final repo = _FakeCardRepository([_card('c1', 'd1', 'neko', meaning: 'con mèo')]);
-      final result = await SearchCards(repo).call('mèo');
+      final result = await SearchCardsUseCase(repo).call('mèo');
       expect((result as Ok<List<Card>>).value, hasLength(1));
     });
   });

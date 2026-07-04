@@ -14,7 +14,7 @@ import 'package:memox_v4/presentation/features/dashboard/widgets/continue_deck_c
 import 'package:memox_v4/presentation/features/dashboard/widgets/goal_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/streak_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/today_summary.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';

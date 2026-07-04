@@ -12,11 +12,11 @@ import 'package:memox_v4/domain/entities/streak.dart';
 import 'package:memox_v4/domain/entities/study_mode.dart';
 import 'package:memox_v4/domain/entities/study_session.dart';
 import 'package:memox_v4/domain/repositories/review_repository.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
-import 'package:memox_v4/domain/usecases/study/build_study_queue.dart';
-import 'package:memox_v4/domain/usecases/study/grade_card.dart';
-import 'package:memox_v4/domain/usecases/study/graduate_card.dart';
-import 'package:memox_v4/domain/usecases/study/streak_rollover.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
+import 'package:memox_v4/domain/usecases/study/build_study_queue_usecase.dart';
+import 'package:memox_v4/domain/usecases/study/grade_card_usecase.dart';
+import 'package:memox_v4/domain/usecases/study/graduate_card_usecase.dart';
+import 'package:memox_v4/domain/usecases/study/streak_rollover_usecases.dart';
 
 class _FixedClock implements Clock {
   const _FixedClock(this._now);
@@ -79,20 +79,20 @@ void main() {
   final scheduler = SrsScheduler(_FixedClock(now));
   const cardId = CardId('c1');
 
-  test('GraduateCard persists box 1 with a due date (D-002)', () async {
+  test('GraduateCardUseCase persists box 1 with a due date (D-002)', () async {
     final repo = _FakeReviewRepository(box: BoxLevel.newCard);
-    final result = await GraduateCard(reviews: repo, scheduler: scheduler).call(cardId);
+    final result = await GraduateCardUseCase(reviews: repo, scheduler: scheduler).call(cardId);
 
     expect(result, isA<Ok<SrsState>>());
     expect(repo.savedSchedule!.box, BoxLevel.firstBox);
     expect(repo.savedSchedule!.dueAt, now.add(const Duration(days: 1)));
   });
 
-  group('GradeCard', () {
+  group('GradeCardUseCase', () {
     test('pass promotes, saves the new schedule, and logs the outcome', () async {
       final repo = _FakeReviewRepository(box: _box(3));
       final result =
-          await GradeCard(reviews: repo, scheduler: scheduler).call(cardId: cardId, grade: ReviewGrade.pass);
+          await GradeCardUseCase(reviews: repo, scheduler: scheduler).call(cardId: cardId, grade: ReviewGrade.pass);
 
       expect(result, isA<Ok<SrsState>>());
       expect(repo.savedSchedule!.box, _box(4));
@@ -103,15 +103,15 @@ void main() {
 
     test('fail demotes and reschedules', () async {
       final repo = _FakeReviewRepository(box: _box(5));
-      await GradeCard(reviews: repo, scheduler: scheduler).call(cardId: cardId, grade: ReviewGrade.fail);
+      await GradeCardUseCase(reviews: repo, scheduler: scheduler).call(cardId: cardId, grade: ReviewGrade.fail);
       expect(repo.savedSchedule!.box, _box(4));
     });
   });
 
-  group('BuildStudyQueue.newCards caps intake (D-018)', () {
+  group('BuildStudyQueueUseCase.newCards caps intake (D-018)', () {
     test('limit = remaining allowance, never over the per-day cap', () async {
       final repo = _FakeReviewRepository(box: BoxLevel.newCard);
-      final queue = BuildStudyQueue(reviews: repo, scheduler: scheduler);
+      final queue = BuildStudyQueueUseCase(reviews: repo, scheduler: scheduler);
 
       await queue.newCards(perDayCap: 20, introducedToday: 18);
       expect(repo.newQueueLimit, 2);

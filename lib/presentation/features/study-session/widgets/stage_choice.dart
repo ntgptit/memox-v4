@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/study-session/widgets/prompt_card.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_choice_option.dart';
 
 /// Study-session local (kit `StageChoice`): stage 3 / relearn — a prompt term and

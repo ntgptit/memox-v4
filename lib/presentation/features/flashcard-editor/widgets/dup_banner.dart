@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 
 /// Editor-local duplicate warning (kit `DupBanner`): a soft warning banner shown
 /// when the term already exists in the deck (soft-duplicate, D-020 — the save is

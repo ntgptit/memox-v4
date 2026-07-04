@@ -13,7 +13,7 @@ import 'package:memox_v4/domain/repositories/card_repository.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
 import 'package:memox_v4/domain/repositories/review_repository.dart';
 import 'package:memox_v4/domain/repositories/settings_repository.dart';
-import 'package:memox_v4/domain/usecases/library/card_search.dart';
+import 'package:memox_v4/domain/usecases/library/card_search_usecase.dart';
 
 /// In-memory [DeckRepository] over a [FakeStore]. Screens (and the DM.5/DM.6 use
 /// cases) run against this exactly as they will against the Drift-backed repo
@@ -159,7 +159,7 @@ class FakeCardRepository implements CardRepository {
     final scope = within == null
         ? _store.cards.values
         : _store.cards.values.where((card) => card.deckId.value == within.value);
-    return Ok(CardSearch.filter(scope, query));
+    return Ok(CardSearchUseCase.filter(scope, query));
   }
 }
 

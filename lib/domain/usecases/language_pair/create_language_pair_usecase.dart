@@ -6,8 +6,8 @@ import 'package:memox_v4/domain/services/language_pair_service.dart';
 /// Creates a new language pair: validates via [LanguagePair.create] (D-030 —
 /// empty code or source == target is rejected before anything is written), then
 /// persists it through the [LanguagePairService].
-class CreateLanguagePair {
-  const CreateLanguagePair(this._service);
+class CreateLanguagePairUseCase {
+  const CreateLanguagePairUseCase(this._service);
 
   final LanguagePairService _service;
 

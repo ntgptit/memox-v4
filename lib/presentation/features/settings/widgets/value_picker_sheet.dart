@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/providers/settings_providers.dart';
-import 'package:memox_v4/presentation/shared/composites/select_sheet.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_select_sheet.dart';
 
 /// Settings-local words-per-round picker (kit `settings/picker-sheet`) — the
 /// content of an [showMxSheet]. Radio-style: the active count carries a check.

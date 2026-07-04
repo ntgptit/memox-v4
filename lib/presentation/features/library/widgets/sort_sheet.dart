@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/library/providers/library_providers.dart';
-import 'package:memox_v4/presentation/shared/composites/select_sheet.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_select_sheet.dart';
 
 /// Library-local sort picker (kit `library/sort-sheet`) — the content of an
 /// [showMxSheet]. Only name-based orders are offered; the kit's date-created /

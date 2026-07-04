@@ -4,7 +4,7 @@ import 'package:memox_v4/core/utils/clock.dart';
 import 'package:memox_v4/domain/entities/box_level.dart';
 import 'package:memox_v4/domain/entities/review_grade.dart';
 import 'package:memox_v4/domain/entities/srs_state.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
 
 class _FixedClock implements Clock {
   const _FixedClock(this._now);

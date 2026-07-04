@@ -6,7 +6,7 @@ import 'package:memox_v4/core/logging/logger_provider.dart';
 import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/daily_goal.dart';
 import 'package:memox_v4/domain/entities/streak.dart';
-import 'package:memox_v4/domain/usecases/stats/streak_summary.dart';
+import 'package:memox_v4/domain/usecases/stats/streak_summary_usecase.dart';
 import 'package:memox_v4/presentation/features/study-session/providers/study_session_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

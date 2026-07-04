@@ -5,10 +5,10 @@ import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/box_level.dart';
 import 'package:memox_v4/domain/entities/deck.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
-import 'package:memox_v4/domain/usecases/library/card_use_cases.dart';
-import 'package:memox_v4/domain/usecases/library/deck_use_cases.dart';
-import 'package:memox_v4/domain/usecases/srs/reset_deck_progress.dart';
-import 'package:memox_v4/presentation/shared/composites/status_card_row.dart';
+import 'package:memox_v4/domain/usecases/library/card_usecases.dart';
+import 'package:memox_v4/domain/usecases/library/deck_usecases.dart';
+import 'package:memox_v4/domain/usecases/srs/reset_deck_progress_usecase.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_status_card_row.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'deck_detail_providers.g.dart';
@@ -163,18 +163,18 @@ class DeckDetailController extends _$DeckDetailController {
   }
 
   Future<void> setCardHidden(CardId cardId, {required bool hidden}) => _mutate(
-        () => SetCardHidden(ref.read(cardRepositoryProvider))
+        () => SetCardHiddenUseCase(ref.read(cardRepositoryProvider))
             .call(cardId, hidden: hidden),
       );
 
   Future<void> deleteCard(CardId cardId) => _mutate(
-        () => DeleteCard(ref.read(cardRepositoryProvider)).call(cardId),
+        () => DeleteCardUseCase(ref.read(cardRepositoryProvider)).call(cardId),
       );
 
   /// Reset every card in this deck back to New (box 0, unscheduled) so the deck
   /// re-enters the learn flow (kit `deck-detail/reset-confirm`).
   Future<void> resetDeckProgress() => _mutate(
-        () => ResetDeckProgress(
+        () => ResetDeckProgressUseCase(
           ref.read(cardRepositoryProvider),
           ref.read(reviewRepositoryProvider),
         ).call(_id!),
@@ -188,16 +188,16 @@ class DeckDetailController extends _$DeckDetailController {
             'deck-${ref.read(clockProvider).now().microsecondsSinceEpoch}');
         final created = Deck.create(id: id, name: name, parentId: _id);
         if (created case Err(:final failure)) return Err<Deck>(failure);
-        return SaveDeck(ref.read(deckRepositoryProvider))
+        return SaveDeckUseCase(ref.read(deckRepositoryProvider))
             .call((created as Ok<Deck>).value);
       });
 
   Future<void> deleteDeck() => _mutate(
-        () => DeleteDeck(ref.read(deckRepositoryProvider)).call(_id!),
+        () => DeleteDeckUseCase(ref.read(deckRepositoryProvider)).call(_id!),
       );
 
   Future<void> moveTo(DeckId? newParentId) => _mutate(
-        () => MoveDeck(ref.read(deckRepositoryProvider))
+        () => MoveDeckUseCase(ref.read(deckRepositoryProvider))
             .call(deckId: _id!, newParentId: newParentId),
       );
 

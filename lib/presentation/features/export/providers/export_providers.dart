@@ -4,8 +4,8 @@ import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/srs_state.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
-import 'package:memox_v4/domain/usecases/io/export_cards.dart';
-import 'package:memox_v4/domain/usecases/io/table_codec.dart';
+import 'package:memox_v4/domain/services/table_codec.dart';
+import 'package:memox_v4/domain/usecases/io/export_cards_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'export_providers.g.dart';
@@ -85,7 +85,7 @@ class ExportState {
   }
 }
 
-/// Drives the export flow (DM.7 `BuildExport`, D-026; DM.8 file service). Gathers
+/// Drives the export flow (DM.7 `BuildExportUseCase`, D-026; DM.8 file service). Gathers
 /// the first library deck's cards (a deck picker is deferred), encodes them, and
 /// writes/copies based on the chosen format. No `setState`; failures are logged.
 @riverpod
@@ -104,7 +104,7 @@ class ExportController extends _$ExportController {
     state = state.copyWith(step: ExportStep.exporting);
     final items = await _gatherItems();
     final codec = CsvCodec(delimiter: state.separator.delimiter);
-    final content = BuildExport(codec).call(items, includeSrs: state.includeSrs);
+    final content = BuildExportUseCase(codec).call(items, includeSrs: state.includeSrs);
 
     final files = ref.read(importExportFileServiceProvider);
     final Result<void> output = switch (state.format) {

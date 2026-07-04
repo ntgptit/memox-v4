@@ -5,7 +5,7 @@ import 'package:memox_v4/core/utils/clock.dart';
 import 'package:memox_v4/domain/entities/box_level.dart';
 import 'package:memox_v4/domain/entities/review_grade.dart';
 import 'package:memox_v4/domain/entities/srs_state.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
 
 /// V.2 — invariant/property sweep for the SRS engine, complementing the
 /// example-based `srs_scheduler_test.dart`. Exhaustively exercises every box and

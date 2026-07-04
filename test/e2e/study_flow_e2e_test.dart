@@ -86,7 +86,7 @@ void main() {
     expect(start.current!.kind, StudyStageKind.dueReview);
     expect(start.current!.card.id.value, 'c-due');
 
-    // Grade it correct → GradeCard → SRS box move + review log (D-003).
+    // Grade it correct → GradeCardUseCase → SRS box move + review log (D-003).
     await container
         .read(studySessionControllerProvider.notifier)
         .gradeDue(ReviewGrade.pass);

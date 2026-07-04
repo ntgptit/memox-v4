@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
-import 'package:memox_v4/presentation/shared/composites/status_card_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_status_card_row.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_badge.dart';
 
 Future<void> _pump(WidgetTester tester, Widget row) {

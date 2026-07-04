@@ -8,7 +8,7 @@ import 'package:memox_v4/domain/entities/card.dart';
 /// Hidden cards are NOT excluded — search must still surface them (D-028 / AC-2).
 /// The SQL-backed [CardRepository.search] implements these same semantics; this is
 /// the canonical, unit-testable definition it must mirror.
-abstract final class CardSearch {
+abstract final class CardSearchUseCase {
   static final RegExp _whitespace = RegExp(r'\s+');
 
   static List<String> tokenize(String query) => query

@@ -4,7 +4,7 @@ import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/entities/card_meaning.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
-import 'package:memox_v4/domain/usecases/library/card_use_cases.dart';
+import 'package:memox_v4/domain/usecases/library/card_usecases.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'editor_providers.g.dart';
@@ -206,7 +206,7 @@ class EditorController extends _$EditorController {
       ref.read(loggerProvider).error('editor save rejected', error: failure);
       return false;
     }
-    final saved = await SaveCard(ref.read(cardRepositoryProvider))
+    final saved = await SaveCardUseCase(ref.read(cardRepositoryProvider))
         .call((card as Ok<Card>).value);
     if (saved case Err(:final failure)) {
       ref.read(loggerProvider).error('editor save failed', error: failure);
@@ -222,7 +222,7 @@ class EditorController extends _$EditorController {
       state = AsyncData(data.copyWith(duplicate: false));
       return;
     }
-    final result = await DetectDuplicateTerm(ref.read(cardRepositoryProvider))
+    final result = await DetectDuplicateTermUseCase(ref.read(cardRepositoryProvider))
         .call(deckId: data.deckId!, term: data.term, excluding: data.cardId);
     final isDuplicate = switch (result) {
       Ok<bool>(:final value) => value,

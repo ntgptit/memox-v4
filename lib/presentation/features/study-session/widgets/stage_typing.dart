@@ -6,7 +6,7 @@ import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/study-session/widgets/prompt_card.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 
 /// Study-session local (kit `StageTyping`): stage 5 — the meaning is prompted;

@@ -9,8 +9,8 @@ import 'package:memox_v4/domain/entities/srs_state.dart';
 import 'package:memox_v4/domain/repositories/card_repository.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
 import 'package:memox_v4/domain/repositories/review_repository.dart';
-import 'package:memox_v4/domain/usecases/stats/srs_stats.dart';
-import 'package:memox_v4/domain/usecases/stats/streak_summary.dart';
+import 'package:memox_v4/domain/usecases/stats/srs_stats_usecases.dart';
+import 'package:memox_v4/domain/usecases/stats/streak_summary_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'statistics_providers.g.dart';

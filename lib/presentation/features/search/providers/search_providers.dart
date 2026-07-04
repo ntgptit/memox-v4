@@ -6,8 +6,8 @@ import 'package:memox_v4/core/logging/logger_provider.dart';
 import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/box_level.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
-import 'package:memox_v4/domain/usecases/library/card_use_cases.dart';
-import 'package:memox_v4/presentation/shared/composites/status_card_row.dart';
+import 'package:memox_v4/domain/usecases/library/card_usecases.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_status_card_row.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'search_providers.g.dart';
@@ -94,7 +94,7 @@ class RecentSearches extends _$RecentSearches {
   }
 }
 
-/// Runs the global card search (DM.6 `SearchCards`, D-019) for the active query
+/// Runs the global card search (DM.6 `SearchCardsUseCase`, D-019) for the active query
 /// and enriches each hit with its deck name + SRS status. Empty query → no
 /// results (the screen shows recents instead). A failed read throws its [Failure]
 /// — surfaced localized by the screen and logged here; never swallowed.
@@ -108,7 +108,7 @@ Future<List<SearchResult>> searchResults(Ref ref) async {
     final decksRepo = ref.watch(deckRepositoryProvider);
     final reviews = ref.watch(reviewRepositoryProvider);
 
-    final cards = _value(await SearchCards(cardsRepo).call(query));
+    final cards = _value(await SearchCardsUseCase(cardsRepo).call(query));
     final results = <SearchResult>[];
     for (final card in cards) {
       final box = _value(await reviews.currentBox(card.id));

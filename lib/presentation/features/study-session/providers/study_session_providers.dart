@@ -9,10 +9,10 @@ import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/review_grade.dart';
 import 'package:memox_v4/domain/entities/study_mode.dart';
 import 'package:memox_v4/domain/entities/study_session.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
-import 'package:memox_v4/domain/usecases/study/build_study_queue.dart';
-import 'package:memox_v4/domain/usecases/study/grade_card.dart';
-import 'package:memox_v4/domain/usecases/study/graduate_card.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
+import 'package:memox_v4/domain/usecases/study/build_study_queue_usecase.dart';
+import 'package:memox_v4/domain/usecases/study/grade_card_usecase.dart';
+import 'package:memox_v4/domain/usecases/study/graduate_card_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'study_session_providers.g.dart';
@@ -161,7 +161,7 @@ class LastSessionWrongCount extends _$LastSessionWrongCount {
 
 /// Drives a study session: builds the due + new queues (DM.5), sequences each due
 /// card into a grading step and each new card into the five NewLearn stages, and
-/// applies the SRS outcome (`GradeCard` / `GraduateCard`) as the learner works
+/// applies the SRS outcome (`GradeCardUseCase` / `GraduateCardUseCase`) as the learner works
 /// through. Finishing records a counting [StudySession]. An async notifier
 /// rendered with `AsyncValue.when`; a failed build is the resume-error surface.
 @riverpod
@@ -278,7 +278,7 @@ class StudySessionController extends _$StudySessionController {
     final data = state.asData?.value;
     final step = data?.current;
     if (data == null || step == null || step.kind != StudyStageKind.typing) return;
-    final graduated = await GraduateCard(
+    final graduated = await GraduateCardUseCase(
       reviews: ref.read(reviewRepositoryProvider),
       scheduler: SrsScheduler(ref.read(clockProvider)),
     ).call(step.card.id);
@@ -300,7 +300,7 @@ class StudySessionController extends _$StudySessionController {
     if (data == null || step == null || step.kind != StudyStageKind.dueReview) {
       return;
     }
-    final graded = await GradeCard(
+    final graded = await GradeCardUseCase(
       reviews: ref.read(reviewRepositoryProvider),
       scheduler: SrsScheduler(ref.read(clockProvider)),
     ).call(cardId: step.card.id, grade: grade);
@@ -374,7 +374,7 @@ class StudySessionController extends _$StudySessionController {
         Err<T>(:final failure) => throw failure,
       };
 
-  BuildStudyQueue _buildStudyQueue() => BuildStudyQueue(
+  BuildStudyQueueUseCase _buildStudyQueue() => BuildStudyQueueUseCase(
         reviews: ref.read(reviewRepositoryProvider),
         scheduler: SrsScheduler(ref.read(clockProvider)),
       );
