@@ -33,7 +33,7 @@ class ThemeController extends _$ThemeController {
       ref.read(loggerProvider).error('save theme failed', error: failure);
       return;
     }
-    ref.invalidateSelf();
+    ref.invalidateSelf(); // guard:invalidate-reviewed -- reason: re-fetch theme after a successful save
   }
 }
 

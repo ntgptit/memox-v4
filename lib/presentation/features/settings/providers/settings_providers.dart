@@ -51,7 +51,7 @@ class SettingsController extends _$SettingsController {
     final result =
         await ref.read(settingsServiceProvider).saveGameWordsPerRound(count);
     result.fold(
-      (_) => ref.invalidateSelf(),
+      (_) => ref.invalidateSelf(), // guard:invalidate-reviewed -- reason: re-fetch settings after saving game words-per-round
       (failure) => ref
           .read(loggerProvider)
           .error('save game words per round failed', error: failure),
@@ -78,7 +78,7 @@ class SrsSettingsController extends _$SrsSettingsController {
     final result =
         await ref.read(settingsServiceProvider).saveSrsDueNotifications(enabled);
     result.fold(
-      (_) => ref.invalidateSelf(),
+      (_) => ref.invalidateSelf(), // guard:invalidate-reviewed -- reason: re-fetch settings after saving SRS due-notifications
       (failure) => ref
           .read(loggerProvider)
           .error('save SRS due notifications failed', error: failure),
