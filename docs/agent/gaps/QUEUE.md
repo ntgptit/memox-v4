@@ -11,7 +11,7 @@ Detail per unit: [`WBS.md`](WBS.md). Tick `[x]` after merge; append id to `DONE.
 | [x] | G.04 | player/speed→TTS — apply playback rate | fidelity |
 | [ ] | G.05 | library/sort — date-created + last-studied | fidelity |
 | [x] | G.06 | game-matching/correct-flash | fidelity |
-| [ ] | G.07 | import/column-picker — map columns | fidelity |
+| [x] | G.07 | import/column-picker — map columns | fidelity |
 | [ ] | G.08 | theme/live-accent — app-wide accent + font-scale | fidelity |
 | [ ] | G.09 | search/recents-persist | fidelity |
 | [ ] | G.10 | study-result/many-wrong — per-session accuracy + CTA | ⚠ yes |
