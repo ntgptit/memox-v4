@@ -66,7 +66,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         children: [
           SizedBox(
             height: _stateBoxHeight,
-            child: _ErrorBody(onRetry: () => ref.invalidate(searchResultsProvider)),
+            child: _ErrorBody(
+              onRetry: () => ref.invalidate(searchResultsProvider),
+            ),
           ),
         ],
       ),
@@ -88,7 +90,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       children: [
         SearchChips(
           active: filter,
-          onSelect: (f) => ref.read(searchFilterStateProvider.notifier).select(f),
+          onSelect: (f) =>
+              ref.read(searchFilterStateProvider.notifier).select(f),
         ),
         if (visible.isEmpty)
           SizedBox(
@@ -99,14 +102,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               title: l10n.searchNoResultsTitle,
               text: l10n.searchNoResultsText(query),
             ),
-          )
-        else
-          for (final result in visible)
-            MxCard(
-              padding: MxCardPadding.small,
-              onPressed: () => context.push(Routes.editCard(result.cardId.value)),
-              child: ResultRow(result: result),
-            ),
+          ),
+        for (final result in visible)
+          MxCard(
+            padding: MxCardPadding.small,
+            onPressed: () => context.push(Routes.editCard(result.cardId.value)),
+            child: ResultRow(result: result),
+          ),
       ],
     );
   }
@@ -169,7 +171,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   }
 
   void _clear() {
-    ref.read(recentSearchesProvider.notifier).add(ref.read(searchQueryProvider));
+    ref
+        .read(recentSearchesProvider.notifier)
+        .add(ref.read(searchQueryProvider));
     _search.clear();
     ref.read(searchQueryProvider.notifier).clear();
   }

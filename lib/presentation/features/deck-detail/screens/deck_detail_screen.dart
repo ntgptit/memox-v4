@@ -79,9 +79,8 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
         children: [
           _StateBox(
             child: _ErrorBody(
-              onRetry: () => ref.invalidate(
-                deckDetailControllerProvider(widget.deckId),
-              ),
+              onRetry: () =>
+                  ref.invalidate(deckDetailControllerProvider(widget.deckId)),
             ),
           ),
         ],
@@ -91,10 +90,10 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
   }
 
   DeckHeader _header(String title) => DeckHeader(
-        title: title,
-        onBack: () => context.pop(),
-        onMenu: title.isEmpty ? null : _openDeckMenu,
-      );
+    title: title,
+    onBack: () => context.pop(),
+    onMenu: title.isEmpty ? null : _openDeckMenu,
+  );
 
   Widget _content(DeckDetailData data) {
     final l10n = AppLocalizations.of(context);
@@ -122,9 +121,8 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
                 title: l10n.deckDetailNoResultsTitle,
                 text: l10n.deckDetailNoResultsText(query),
               ),
-            )
-          else
-            for (final card in results) _cardTile(card),
+            ),
+          for (final card in results) _cardTile(card),
         ],
       );
     }
@@ -172,7 +170,8 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
     return MxSearchDock(
       controller: _search,
       placeholder: l10n.deckDetailSearchPlaceholder,
-      onChanged: (value) => ref.read(deckSearchQueryProvider.notifier).set(value),
+      onChanged: (value) =>
+          ref.read(deckSearchQueryProvider.notifier).set(value),
       trailing: searching
           ? MxIconButton(
               icon: Icons.close,
@@ -220,12 +219,14 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
     DeckCardFilter filter,
   ) {
     final needle = query.trim().toLowerCase();
-    return cards.where((card) {
-      if (!_matchesFilter(card, filter)) return false;
-      if (needle.isEmpty) return true;
-      return card.term.toLowerCase().contains(needle) ||
-          card.meaning.toLowerCase().contains(needle);
-    }).toList(growable: false);
+    return cards
+        .where((card) {
+          if (!_matchesFilter(card, filter)) return false;
+          if (needle.isEmpty) return true;
+          return card.term.toLowerCase().contains(needle) ||
+              card.meaning.toLowerCase().contains(needle);
+        })
+        .toList(growable: false);
   }
 
   bool _matchesFilter(DeckCardInfo card, DeckCardFilter filter) {
@@ -365,7 +366,9 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
           ),
           MxListRow(
             icon: card.hidden ? Icons.visibility : Icons.visibility_off,
-            title: card.hidden ? l10n.deckDetailCardUnhide : l10n.deckDetailCardHide,
+            title: card.hidden
+                ? l10n.deckDetailCardUnhide
+                : l10n.deckDetailCardHide,
             onPressed: () {
               Navigator.of(context).pop();
               _controller.setCardHidden(card.id, hidden: !card.hidden);

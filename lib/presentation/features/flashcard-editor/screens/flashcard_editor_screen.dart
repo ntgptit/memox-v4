@@ -127,21 +127,20 @@ class _FlashcardEditorScreenState extends ConsumerState<FlashcardEditorScreen> {
               : null,
           onChanged: _controller.setMeaning,
         ),
-        if (data.showSecondary)
-          Field(
-            label: l10n.editorSecondaryLabel,
-            controller: _secondary,
-            placeholder: l10n.editorSecondaryPlaceholder,
-            onChanged: _controller.setSecondary,
-          )
-        else
-          MxButton(
-            label: l10n.editorAddSecondary,
-            variant: MxButtonVariant.ghost,
-            icon: Icons.add,
-            block: true,
-            onPressed: _controller.showSecondary,
-          ),
+        data.showSecondary
+            ? Field(
+                label: l10n.editorSecondaryLabel,
+                controller: _secondary,
+                placeholder: l10n.editorSecondaryPlaceholder,
+                onChanged: _controller.setSecondary,
+              )
+            : MxButton(
+                label: l10n.editorAddSecondary,
+                variant: MxButtonVariant.ghost,
+                icon: Icons.add,
+                block: true,
+                onPressed: _controller.showSecondary,
+              ),
         _gender(l10n, data),
         Field(
           label: l10n.editorAudioLabel,

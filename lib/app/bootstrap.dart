@@ -41,7 +41,11 @@ void bootstrap() {
       // Errors from the engine/platform outside the framework. Returning true
       // marks them handled (we've logged them) so the app is not force-killed.
       PlatformDispatcher.instance.onError = (error, stack) {
-        logger.error('Uncaught platform error', error: error, stackTrace: stack);
+        logger.error(
+          'Uncaught platform error',
+          error: error,
+          stackTrace: stack,
+        );
         return true;
       };
 
@@ -69,13 +73,12 @@ Future<void> _prepareDatabase(
 ) async {
   try {
     final seeder = container.read(databaseSeederProvider);
-    if (kDebugMode) {
-      await seeder.seedSampleData();
-    } else {
-      await seeder.ensureFirstRun();
-    }
+    await (kDebugMode ? seeder.seedSampleData() : seeder.ensureFirstRun());
   } catch (error, stack) {
-    logger.error('Database first-run seeding failed',
-        error: error, stackTrace: stack);
+    logger.error(
+      'Database first-run seeding failed',
+      error: error,
+      stackTrace: stack,
+    );
   }
 }

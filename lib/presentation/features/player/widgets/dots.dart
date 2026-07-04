@@ -8,8 +8,8 @@ import 'package:memox_v4/presentation/features/player/providers/player_providers
 /// Player-local (kit `player/progress`): an [playerDotCount]-dot deck-progress
 /// indicator. Dots up to [active] are primary (the active one elongated); the
 /// rest are sunken.
-class Dots extends StatelessWidget {
-  const Dots({required this.active, super.key});
+class PlayerDots extends StatelessWidget {
+  const PlayerDots({required this.active, super.key});
 
   final int active;
 
@@ -28,7 +28,9 @@ class Dots extends StatelessWidget {
             height: MxSizes.size2xs,
             decoration: BoxDecoration(
               color: i <= active ? scheme.primary : mx.surfaceSunken,
-              borderRadius: const BorderRadius.all(Radius.circular(MxRadius.pill)),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(MxRadius.pill),
+              ),
             ),
           ),
         ],

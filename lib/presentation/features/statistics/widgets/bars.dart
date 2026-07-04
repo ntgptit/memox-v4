@@ -11,8 +11,13 @@ import 'package:memox_v4/core/theme/mx_typography.dart';
 /// the max, with an axis label beneath. Used by the weekly-time + Leitner charts.
 /// [color] overrides the bar fill (a token colour). Labels are supplied by the
 /// caller.
-class Bars extends StatelessWidget {
-  const Bars({required this.data, required this.labels, this.color, super.key});
+class StatBars extends StatelessWidget {
+  const StatBars({
+    required this.data,
+    required this.labels,
+    this.color,
+    super.key,
+  });
 
   final List<int> data;
   final List<String> labels;
@@ -46,15 +51,18 @@ class Bars extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: FractionallySizedBox(
                       widthFactor: 1,
-                      heightFactor:
-                          math.max(value / safeMax, _minFraction).clamp(0.0, 1.0),
+                      heightFactor: math
+                          .max(value / safeMax, _minFraction)
+                          .clamp(0.0, 1.0),
                       child: Container(
                         margin: const EdgeInsets.symmetric(
                           horizontal: MxSpacing.space1,
                         ),
                         decoration: BoxDecoration(
                           color: fill,
-                          borderRadius: const BorderRadius.all(Radius.circular(MxRadius.xs)),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(MxRadius.xs),
+                          ),
                         ),
                       ),
                     ),

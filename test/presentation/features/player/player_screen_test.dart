@@ -21,17 +21,23 @@ import '../../../harness/provider_harness.dart';
 Deck _deck(String id, String name) =>
     (Deck.create(id: DeckId(id), name: name) as Ok<Deck>).value;
 
-Card _card(String id, String deckId, String term, String meaning) => (Card.create(
-      id: CardId(id),
-      deckId: DeckId(deckId),
-      term: term,
-      meanings: [
-        (CardMeaning.create(id: CardMeaningId('m-$id'), language: 'en', text: meaning)
-                as Ok<CardMeaning>)
-            .value,
-      ],
-    ) as Ok<Card>)
-    .value;
+Card _card(String id, String deckId, String term, String meaning) =>
+    (Card.create(
+              id: CardId(id),
+              deckId: DeckId(deckId),
+              term: term,
+              meanings: [
+                (CardMeaning.create(
+                          id: CardMeaningId('m-$id'),
+                          language: 'en',
+                          text: meaning,
+                        )
+                        as Ok<CardMeaning>)
+                    .value,
+              ],
+            )
+            as Ok<Card>)
+        .value;
 
 FakeStore _store({int cards = 3}) {
   final store = FakeStore();
@@ -72,10 +78,11 @@ void main() {
   for (final dark in [false, true]) {
     final theme = dark ? 'dark' : 'light';
 
-    testWidgets('playing: dots + card + transport, pause icon ($theme)',
-        (tester) async {
+    testWidgets('playing: dots + card + transport, pause icon ($theme)', (
+      tester,
+    ) async {
       await pump(tester, dark: dark);
-      expect(find.byType(Dots), findsOneWidget);
+      expect(find.byType(PlayerDots), findsOneWidget);
       expect(find.byType(PlayerCard), findsOneWidget);
       expect(find.text('term1'), findsOneWidget);
       expect(find.text('means1'), findsOneWidget);
@@ -109,8 +116,9 @@ void main() {
     expect(harness.audio.lastSpoken, 'term1');
   });
 
-  testWidgets('skipping past the last card reaches the end state',
-      (tester) async {
+  testWidgets('skipping past the last card reaches the end state', (
+    tester,
+  ) async {
     await pump(tester, dark: false, cards: 1);
 
     await tester.tap(find.byIcon(Icons.skip_next));
@@ -138,7 +146,10 @@ void main() {
 
     notifier.next(); // now at end
     expect(container.read(playerControllerProvider).requireValue.isEnd, isTrue);
-    expect(container.read(playerControllerProvider).requireValue.playing, isFalse);
+    expect(
+      container.read(playerControllerProvider).requireValue.playing,
+      isFalse,
+    );
   });
 
   test('setSpeed records the session rate and collapses the control', () async {

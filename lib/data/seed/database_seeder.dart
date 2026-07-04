@@ -15,7 +15,7 @@ import 'package:memox_v4/domain/entities/deck.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 
 /// The default active language pair for a fresh install — Korean → Vietnamese
-/// (the reference domain). A first run has exactly this pair and nothing else
+/// (the reference domain). A first run has exactly this pair and nothing more
 /// (a clean empty state); decks/cards arrive only via [seedSampleData] (dev).
 const String _defaultPairId = 'lang-ko-vi';
 const String _defaultLearning = 'ko';
@@ -48,7 +48,9 @@ class DatabaseSeeder {
     final existing = await _db.select(_db.languagePairs).get();
     if (existing.isNotEmpty) return;
 
-    await _db.into(_db.languagePairs).insert(
+    await _db
+        .into(_db.languagePairs)
+        .insert(
           LanguagePairsCompanion.insert(
             id: _defaultPairId,
             learningLanguage: _defaultLearning,
@@ -60,10 +62,14 @@ class DatabaseSeeder {
 
     final settings = DriftSettingsRepository(_db);
     _throwIfErr(await settings.saveNewCardsPerDay(_defaultNewPerDay));
-    _throwIfErr(await settings.saveDailyGoal(const DailyGoal(
-      minutesTarget: _defaultGoalMinutes,
-      wordsTarget: _defaultGoalWords,
-    )));
+    _throwIfErr(
+      await settings.saveDailyGoal(
+        const DailyGoal(
+          minutesTarget: _defaultGoalMinutes,
+          wordsTarget: _defaultGoalWords,
+        ),
+      ),
+    );
   }
 
   /// Seeds a realistic dev deck tree (Korean Basics → Food) with three cards and
@@ -81,44 +87,56 @@ class DatabaseSeeder {
 
     _throwIfErr(await deckRepo.save(_deck(_rootDeckId, 'Korean Basics')));
     _throwIfErr(
-        await deckRepo.save(_deck(_foodDeckId, 'Food', parent: _rootDeckId)));
+      await deckRepo.save(_deck(_foodDeckId, 'Food', parent: _rootDeckId)),
+    );
 
     _throwIfErr(await cardRepo.save(_card('seed-card-1', '사과', 'quả táo')));
     _throwIfErr(await cardRepo.save(_card('seed-card-2', '고양이', 'con mèo')));
     _throwIfErr(await cardRepo.save(_card('seed-card-3', '개', 'con chó')));
 
     // card-1 is due (an hour ago); card-2 is scheduled ahead; card-3 stays new.
-    _throwIfErr(await reviewRepo.saveSchedule(
-      cardId: const CardId('seed-card-1'),
-      box: BoxLevel.firstBox,
-      dueAt: now.subtract(const Duration(hours: 1)),
-    ));
-    _throwIfErr(await reviewRepo.saveSchedule(
-      cardId: const CardId('seed-card-2'),
-      box: (BoxLevel.of(3) as Ok<BoxLevel>).value,
-      dueAt: now.add(const Duration(days: 5)),
-    ));
+    _throwIfErr(
+      await reviewRepo.saveSchedule(
+        cardId: const CardId('seed-card-1'),
+        box: BoxLevel.firstBox,
+        dueAt: now.subtract(const Duration(hours: 1)),
+      ),
+    );
+    _throwIfErr(
+      await reviewRepo.saveSchedule(
+        cardId: const CardId('seed-card-2'),
+        box: (BoxLevel.of(3) as Ok<BoxLevel>).value,
+        dueAt: now.add(const Duration(days: 5)),
+      ),
+    );
   }
 
-  Deck _deck(String id, String name, {String? parent}) => (Deck.create(
-        id: DeckId(id),
-        name: name,
-        parentId: parent == null ? null : DeckId(parent),
-      ) as Ok<Deck>)
-      .value;
+  Deck _deck(String id, String name, {String? parent}) =>
+      (Deck.create(
+                id: DeckId(id),
+                name: name,
+                parentId: parent == null ? null : DeckId(parent),
+              )
+              as Ok<Deck>)
+          .value;
 
-  Card _card(String id, String term, String meaning) => (Card.create(
-        id: CardId(id),
-        deckId: const DeckId(_foodDeckId),
-        term: term,
-        meanings: [
-          (CardMeaning.create(
-                  id: CardMeaningId('m-$id'), language: _defaultNative, text: meaning)
-              as Ok<CardMeaning>)
-              .value,
-        ],
-      ) as Ok<Card>)
-      .value;
+  Card _card(String id, String term, String meaning) =>
+      (Card.create(
+                id: CardId(id),
+                deckId: const DeckId(_foodDeckId),
+                term: term,
+                meanings: [
+                  (CardMeaning.create(
+                            id: CardMeaningId('m-$id'),
+                            language: _defaultNative,
+                            text: meaning,
+                          )
+                          as Ok<CardMeaning>)
+                      .value,
+                ],
+              )
+              as Ok<Card>)
+          .value;
 
   void _throwIfErr<T>(Result<T> result) {
     if (result case Err(:final failure)) {

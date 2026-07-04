@@ -62,9 +62,7 @@ class StudyResultScreen extends ConsumerWidget {
                       block: true,
                       onPressed: () {
                         // Reframe the next finalizing pass as a re-attempt.
-                        ref
-                            .read(finalizeRetryingProvider.notifier)
-                            .markRetry();
+                        ref.read(finalizeRetryingProvider.notifier).markRetry();
                         ref.invalidate(studyResultControllerProvider);
                       },
                     ),
@@ -87,13 +85,13 @@ class StudyResultScreen extends ConsumerWidget {
   }
 
   MxAppBar _bar(BuildContext context, AppLocalizations l10n) => MxAppBar(
-        title: l10n.resultTitle,
-        leading: MxIconButton(
-          icon: Icons.close,
-          semanticLabel: l10n.resultClose,
-          onPressed: () => _home(context),
-        ),
-      );
+    title: l10n.resultTitle,
+    leading: MxIconButton(
+      icon: Icons.close,
+      semanticLabel: l10n.resultClose,
+      onPressed: () => _home(context),
+    ),
+  );
 
   Widget _content(
     BuildContext context,
@@ -132,13 +130,14 @@ class StudyResultScreen extends ConsumerWidget {
         ),
         StreakGoalCard(
           streakLabel: l10n.resultStreakDays(data.streak.current),
-          streakCaption:
-              data.goalMet ? l10n.resultStreakCaptionPlus : l10n.resultStreakCaption,
+          streakCaption: data.goalMet
+              ? l10n.resultStreakCaptionPlus
+              : l10n.resultStreakCaption,
           goalLabel: l10n.resultGoalToday,
           goalValue: _goalValue(l10n, data),
           goalPercent: data.goalPercent,
         ),
-        Cta(
+        ResultCta(
           head: data.head,
           wrongCount: data.wrongCount,
           onPrimary: () => context.go(Routes.study),
@@ -153,33 +152,32 @@ class StudyResultScreen extends ConsumerWidget {
   (IconData, MxIconTileTone, String, String) _head(
     AppLocalizations l10n,
     ResultHead head,
-  ) =>
-      switch (head) {
-        ResultHead.manyWrong => (
-            Icons.replay,
-            MxIconTileTone.error,
-            l10n.resultManyWrongTitle,
-            l10n.resultManyWrongText,
-          ),
-        ResultHead.goalMet => (
-            Icons.celebration,
-            MxIconTileTone.success,
-            l10n.resultGoalMetTitle,
-            l10n.resultGoalMetText,
-          ),
-        ResultHead.goalMissed => (
-            Icons.trending_up,
-            MxIconTileTone.warning,
-            l10n.resultGoalMissedTitle,
-            l10n.resultGoalMissedText,
-          ),
-        ResultHead.standard => (
-            Icons.task_alt,
-            MxIconTileTone.accent,
-            l10n.resultStandardTitle,
-            l10n.resultStandardText,
-          ),
-      };
+  ) => switch (head) {
+    ResultHead.manyWrong => (
+      Icons.replay,
+      MxIconTileTone.error,
+      l10n.resultManyWrongTitle,
+      l10n.resultManyWrongText,
+    ),
+    ResultHead.goalMet => (
+      Icons.celebration,
+      MxIconTileTone.success,
+      l10n.resultGoalMetTitle,
+      l10n.resultGoalMetText,
+    ),
+    ResultHead.goalMissed => (
+      Icons.trending_up,
+      MxIconTileTone.warning,
+      l10n.resultGoalMissedTitle,
+      l10n.resultGoalMissedText,
+    ),
+    ResultHead.standard => (
+      Icons.task_alt,
+      MxIconTileTone.accent,
+      l10n.resultStandardTitle,
+      l10n.resultStandardText,
+    ),
+  };
 
   String _goalValue(AppLocalizations l10n, StudyResultData data) {
     final DailyGoal goal = data.goal;

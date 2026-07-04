@@ -38,7 +38,10 @@ class SubDeckCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          MxIconTile(icon: info.isFolder ? Icons.layers : Icons.style, tone: tone),
+          MxIconTile(
+            icon: info.isFolder ? Icons.layers : Icons.style,
+            tone: tone,
+          ),
           const SizedBox(width: MxSpacing.space4),
           Expanded(
             child: Column(
@@ -74,7 +77,7 @@ class SubDeckCard extends StatelessWidget {
           ),
           if (info.due > 0) ...[
             const SizedBox(width: MxSpacing.space3),
-            MxBadge(label: '${info.due}'),
+            MxBadge(label: info.due.toString()),
           ],
         ],
       ),

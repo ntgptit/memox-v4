@@ -31,11 +31,13 @@ class ImportTable extends StatelessWidget {
                 border: index == rows.length - 1
                     ? null
                     : Border(
-                        bottom:
-                            BorderSide(color: mx.divider, width: MxStroke.hairline),
+                        bottom: BorderSide(
+                          color: mx.divider,
+                          width: MxStroke.hairline,
+                        ),
                       ),
               ),
-              child: _Row(cells: row, header: index == 0),
+              child: _ImportRow(cells: row, header: index == 0),
             ),
         ],
       ),
@@ -43,8 +45,8 @@ class ImportTable extends StatelessWidget {
   }
 }
 
-class _Row extends StatelessWidget {
-  const _Row({required this.cells, required this.header});
+class _ImportRow extends StatelessWidget {
+  const _ImportRow({required this.cells, required this.header});
 
   final List<String> cells;
   final bool header;

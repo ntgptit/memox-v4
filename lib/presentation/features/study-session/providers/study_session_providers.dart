@@ -90,8 +90,9 @@ class StepState {
       revealed: revealed ?? this.revealed,
       chosen: chosen != null ? chosen() : this.chosen,
       wrongChoice: wrongChoice ?? this.wrongChoice,
-      selectedTermId:
-          selectedTermId != null ? selectedTermId() : this.selectedTermId,
+      selectedTermId: selectedTermId != null
+          ? selectedTermId()
+          : this.selectedTermId,
       matched: matched ?? this.matched,
       hintShown: hintShown ?? this.hintShown,
     );
@@ -181,7 +182,9 @@ class StudySessionController extends _$StudySessionController {
       );
 
       final steps = _planSteps(due: due, newCards: newCards);
-      final mode = newCards.isNotEmpty ? StudyMode.newLearn : StudyMode.dueReview;
+      final mode = newCards.isNotEmpty
+          ? StudyMode.newLearn
+          : StudyMode.dueReview;
       return StudySessionState(
         steps: steps,
         index: 0,
@@ -190,7 +193,9 @@ class StudySessionController extends _$StudySessionController {
         saveError: false,
       );
     } on Failure catch (failure, stackTrace) {
-      ref.read(loggerProvider).error(
+      ref
+          .read(loggerProvider)
+          .error(
             'study session load failed',
             error: failure,
             stackTrace: stackTrace,
@@ -221,7 +226,9 @@ class StudySessionController extends _$StudySessionController {
   void choose(int index) {
     final data = state.asData?.value;
     final step = data?.current;
-    if (data == null || step == null || step.kind != StudyStageKind.choice) return;
+    if (data == null || step == null || step.kind != StudyStageKind.choice) {
+      return;
+    }
     if (index == step.correctChoice) {
       _goNext(data);
       return;
@@ -247,7 +254,9 @@ class StudySessionController extends _$StudySessionController {
   void selectMeaning(String cardId) {
     final data = state.asData?.value;
     final step = data?.current;
-    if (data == null || step == null || step.kind != StudyStageKind.matching) return;
+    if (data == null || step == null || step.kind != StudyStageKind.matching) {
+      return;
+    }
     if (data.step.selectedTermId != cardId) {
       state = AsyncData(
         data.copyWith(step: data.step.copyWith(selectedTermId: () => null)),
@@ -277,7 +286,9 @@ class StudySessionController extends _$StudySessionController {
   Future<void> checkTyping() async {
     final data = state.asData?.value;
     final step = data?.current;
-    if (data == null || step == null || step.kind != StudyStageKind.typing) return;
+    if (data == null || step == null || step.kind != StudyStageKind.typing) {
+      return;
+    }
     final graduated = await GraduateCardUseCase(
       reviews: ref.read(reviewRepositoryProvider),
       scheduler: SrsScheduler(ref.read(clockProvider)),
@@ -310,7 +321,9 @@ class StudySessionController extends _$StudySessionController {
       return;
     }
     final scored = grade.isFail
-        ? data.copyWith(wrongCardIds: {...data.wrongCardIds, step.card.id.value})
+        ? data.copyWith(
+            wrongCardIds: {...data.wrongCardIds, step.card.id.value},
+          )
         : data;
     _goNext(scored);
   }
@@ -340,9 +353,7 @@ class StudySessionController extends _$StudySessionController {
     final next = data.copyWith(index: data.index + 1, step: const StepState());
     state = AsyncData(next);
     if (next.isComplete) {
-      ref
-          .read(lastSessionWrongCountProvider.notifier)
-          .record(next.wrongCount);
+      ref.read(lastSessionWrongCountProvider.notifier).record(next.wrongCount);
       unawaited(_record(next));
     }
   }
@@ -360,7 +371,9 @@ class StudySessionController extends _$StudySessionController {
       durationMinutes: minutes < 0 ? 0 : minutes,
       wordsStudied: words,
     );
-    final recorded = await ref.read(dailyActivityServiceProvider).record(session);
+    final recorded = await ref
+        .read(dailyActivityServiceProvider)
+        .record(session);
     if (recorded case Err(:final failure)) {
       ref.read(loggerProvider).error('session record failed', error: failure);
     }
@@ -369,15 +382,15 @@ class StudySessionController extends _$StudySessionController {
   // Failure is the domain error channel; the build() catch turns it into the
   // resume-error AsyncValue.
   T _value<T>(Result<T> result) => switch (result) {
-        Ok<T>(:final value) => value,
-        // ignore: only_throw_errors
-        Err<T>(:final failure) => throw failure,
-      };
+    Ok<T>(:final value) => value,
+    // ignore: only_throw_errors
+    Err<T>(:final failure) => throw failure,
+  };
 
   BuildStudyQueueUseCase _buildStudyQueue() => BuildStudyQueueUseCase(
-        reviews: ref.read(reviewRepositoryProvider),
-        scheduler: SrsScheduler(ref.read(clockProvider)),
-      );
+    reviews: ref.read(reviewRepositoryProvider),
+    scheduler: SrsScheduler(ref.read(clockProvider)),
+  );
 
   List<StudyStep> _planSteps({
     required List<Card> due,
@@ -385,7 +398,8 @@ class StudySessionController extends _$StudySessionController {
   }) {
     final pool = [...due, ...newCards];
     final steps = <StudyStep>[
-      for (final card in due) StudyStep(card: card, kind: StudyStageKind.dueReview),
+      for (final card in due)
+        StudyStep(card: card, kind: StudyStageKind.dueReview),
     ];
     for (final card in newCards) {
       steps

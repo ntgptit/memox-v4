@@ -74,7 +74,7 @@ class ContinueDeckCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: MxSpacing.space3),
-          MxBadge(label: '${deck.dueCount}'),
+          MxBadge(label: deck.dueCount.toString()),
         ],
       ),
     );
