@@ -1315,6 +1315,15 @@
   "@resultGoalMissedTitle": { "description": "Goal-missed title" },
   "resultGoalMissedText": "A little more study today will hit your goal.",
   "@resultGoalMissedText": { "description": "Goal-missed body" },
+  "resultManyWrongTitle": "A few shaky words",
+  "@resultManyWrongTitle": { "description": "Many-wrong result headline" },
+  "resultManyWrongText": "You missed several cards this session. A quick review locks them in.",
+  "@resultManyWrongText": { "description": "Many-wrong result body" },
+  "resultReviewWrong": "{count, plural, =1{Review 1 card} other{Review {count} cards}}",
+  "@resultReviewWrong": {
+    "description": "Many-wrong primary CTA — review the missed cards",
+    "placeholders": { "count": { "type": "int" } }
+  },
   "resultStatWords": "{count}",
   "@resultStatWords": { "description": "Words-studied stat value", "placeholders": { "count": { "type": "int" } } },
   "resultStatWordsLabel": "words",

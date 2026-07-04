@@ -7,16 +7,25 @@ import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/daily_goal.dart';
 import 'package:memox_v4/domain/entities/streak.dart';
 import 'package:memox_v4/domain/usecases/stats/streak_summary.dart';
+import 'package:memox_v4/presentation/features/study-session/providers/study_session_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'study_result_providers.g.dart';
 
-/// The headline mood of the result, chosen from today's goal progress.
-enum ResultHead { standard, goalMet, goalMissed }
+/// The headline mood of the result. `manyWrong` (the learner missed a lot this
+/// session) takes precedence over the goal-based moods — the actionable "review
+/// your misses" is the more useful message.
+enum ResultHead { standard, goalMet, goalMissed, manyWrong }
+
+/// A session counts as "many wrong" at this many distinct missed cards (default
+/// — no product spec; tuned so a handful of misses trips the review CTA).
+const int manyWrongThreshold = 5;
 
 /// The study-result summary — today's activity (the finished session's minutes +
-/// words are already folded in), the goal, and the streak. v1 persists day totals
-/// (not per-session records), so this is a "today so far" summary.
+/// words are already folded in), the goal, the streak, and the just-finished
+/// session's wrong-card count. v1 persists day totals (not per-session records),
+/// so the day figures are "today so far"; the wrong count comes from the session
+/// handoff ([LastSessionWrongCount]).
 class StudyResultData {
   const StudyResultData({
     required this.words,
@@ -25,6 +34,7 @@ class StudyResultData {
     required this.goalMet,
     required this.goalPercent,
     required this.streak,
+    required this.wrongCount,
   });
 
   final int words;
@@ -34,7 +44,12 @@ class StudyResultData {
   final double goalPercent;
   final Streak streak;
 
+  /// Distinct cards missed in the just-finished session (0 when the result is
+  /// opened outside a session flow).
+  final int wrongCount;
+
   ResultHead get head {
+    if (wrongCount >= manyWrongThreshold) return ResultHead.manyWrong;
     if (goalMet) return ResultHead.goalMet;
     if (goal.isConfigured) return ResultHead.goalMissed;
     return ResultHead.standard;
@@ -84,6 +99,7 @@ class StudyResultController extends _$StudyResultController {
       goalMet: goalMet,
       goalPercent: _goalPercent(goal, activity, goalMet),
       streak: streak,
+      wrongCount: ref.watch(lastSessionWrongCountProvider),
     );
   }
 

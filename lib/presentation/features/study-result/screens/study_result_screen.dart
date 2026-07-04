@@ -132,6 +132,7 @@ class StudyResultScreen extends ConsumerWidget {
         ),
         Cta(
           head: data.head,
+          wrongCount: data.wrongCount,
           onPrimary: () => context.go(Routes.study),
           onSecondary: () => data.head == ResultHead.goalMissed
               ? _home(context)
@@ -146,6 +147,12 @@ class StudyResultScreen extends ConsumerWidget {
     ResultHead head,
   ) =>
       switch (head) {
+        ResultHead.manyWrong => (
+            Icons.replay,
+            MxIconTileTone.error,
+            l10n.resultManyWrongTitle,
+            l10n.resultManyWrongText,
+          ),
         ResultHead.goalMet => (
             Icons.celebration,
             MxIconTileTone.success,
