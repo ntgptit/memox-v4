@@ -11,4 +11,10 @@ abstract interface class SettingsService {
   /// Words per game round (settings BR-2 / D-008, default 5).
   Stream<int> watchGameWordsPerRound();
   Future<Result<void>> saveGameWordsPerRound(int count);
+
+  /// Whether the learner opted in to "cards due" notifications (SRS detail
+  /// sub-page). Persists the preference; actual OS-notification delivery is a
+  /// separate, later feature (no notification infrastructure in v1). Default off.
+  Stream<bool> watchSrsDueNotifications();
+  Future<Result<void>> saveSrsDueNotifications(bool enabled);
 }

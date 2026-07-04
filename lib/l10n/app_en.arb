@@ -549,6 +549,52 @@
   "@settingsSpacedRepetitionSub": {
     "description": "Spaced-repetition settings row subtitle (fixed schedule)"
   },
+  "srsTitle": "Spaced repetition",
+  "@srsTitle": {
+    "description": "SRS detail sub-page app-bar title"
+  },
+  "srsBack": "Back",
+  "@srsBack": {
+    "description": "SRS detail sub-page back button accessible label"
+  },
+  "srsSectionSchedule": "Schedule",
+  "@srsSectionSchedule": {
+    "description": "SRS detail section header for the fixed-schedule rows"
+  },
+  "srsBoxesTitle": "Leitner boxes",
+  "@srsBoxesTitle": {
+    "description": "SRS detail row title — number of review boxes"
+  },
+  "srsBoxesSub": "Number of review boxes",
+  "@srsBoxesSub": {
+    "description": "SRS detail row subtitle for Leitner boxes"
+  },
+  "srsBoxesValue": "{count}",
+  "@srsBoxesValue": {
+    "description": "SRS detail Leitner box count value",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "srsIntervalsTitle": "Intervals (days)",
+  "@srsIntervalsTitle": {
+    "description": "SRS detail row title — review intervals"
+  },
+  "srsIntervalsSub": "{intervals}",
+  "@srsIntervalsSub": {
+    "description": "SRS detail row subtitle listing the review intervals",
+    "placeholders": { "intervals": { "type": "String" } }
+  },
+  "srsSectionNotifications": "Notifications",
+  "@srsSectionNotifications": {
+    "description": "SRS detail section header for the notifications row"
+  },
+  "srsDueNotificationsTitle": "Due notifications",
+  "@srsDueNotificationsTitle": {
+    "description": "SRS detail row title — cards-due notifications toggle"
+  },
+  "srsDueNotificationsSub": "Remind me when cards are due to review",
+  "@srsDueNotificationsSub": {
+    "description": "SRS detail row subtitle for the due-notifications toggle"
+  },
   "settingsGameSettings": "Game settings",
   "@settingsGameSettings": {
     "description": "Game settings row title"

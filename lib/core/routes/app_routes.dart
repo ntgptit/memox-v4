@@ -19,6 +19,7 @@ abstract final class Routes {
   static const drawer = '/drawer'; // S.06
   static const reminder = '/reminder'; // S.07
   static const theme = '/theme'; // S.08
+  static const settingsSrs = '/settings/srs'; // S.05 SRS detail sub-page
   static const import_ = '/import'; // S.10
   static const export_ = '/export'; // S.11
   static const games = '/games'; // S.13 game-picker

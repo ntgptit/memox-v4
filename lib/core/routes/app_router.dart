@@ -21,6 +21,7 @@ import 'package:memox_v4/presentation/features/reminder/screens/reminder_screen.
 import 'package:memox_v4/presentation/features/review/screens/review_screen.dart';
 import 'package:memox_v4/presentation/features/search/screens/search_screen.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
+import 'package:memox_v4/presentation/features/settings/screens/srs_settings_screen.dart';
 import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
 import 'package:memox_v4/presentation/features/study-result/screens/study_result_screen.dart';
 import 'package:memox_v4/presentation/features/study-session/screens/study_session_screen.dart';
@@ -119,6 +120,10 @@ final List<GoRoute> _fullScreenRoutes = [
     builder: (context, state) => const ReminderScreen(),
   ),
   GoRoute(path: Routes.theme, builder: (context, state) => const ThemeScreen()),
+  GoRoute(
+    path: Routes.settingsSrs,
+    builder: (context, state) => const SrsSettingsScreen(),
+  ),
   GoRoute(path: Routes.import_, builder: (context, state) => const ImportScreen()),
   GoRoute(path: Routes.export_, builder: (context, state) => const ExportScreen()),
   GoRoute(path: Routes.games, builder: (context, state) => const GamePickerScreen()),
