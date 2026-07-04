@@ -183,7 +183,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
                 sample: _controller.columnSample(state.meaningColumn),
                 selected: state.meaningColumn,
                 onPick: _controller.setMeaningColumn,
-                last: true,
+                isLast: true,
               ),
             ],
           ),
@@ -209,13 +209,13 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     required String sample,
     required int selected,
     required void Function(int) onPick,
-    bool last = false,
+    bool isLast = false,
   }) {
     return MxListRow(
       icon: icon,
       title: title,
       subtitle: sample,
-      last: last,
+      last: isLast,
       trailing: MxIconButton(
         icon: Icons.expand_more,
         size: MxIconButtonSize.small,

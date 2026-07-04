@@ -171,9 +171,9 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
         ),
         GestureDetector(
           onHorizontalDragEnd: (details) {
-            final v = details.primaryVelocity ?? 0;
-            if (v < 0) _controller.next();
-            if (v > 0) _controller.prev();
+            final velocity = details.primaryVelocity ?? 0;
+            if (velocity < 0) _controller.next();
+            if (velocity > 0) _controller.prev();
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
