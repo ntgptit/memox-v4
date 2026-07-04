@@ -140,7 +140,7 @@ class DatabaseSeeder {
 
   void _throwIfErr<T>(Result<T> result) {
     if (result case Err(:final failure)) {
-      // ignore: only_throw_errors
+      // ignore: only_throw_errors -- reason: Failure is MemoX's domain error type; rethrown here to abort the seed and surface via the seeder's Result/AsyncValue boundary
       throw failure;
     }
   }

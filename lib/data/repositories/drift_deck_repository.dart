@@ -33,7 +33,7 @@ class DriftDeckRepository implements DeckRepository {
   @override
   Future<Result<Deck>> getById(DeckId id) => guardAsync(() async {
         final row = await _dao.getById(id.value);
-        // ignore: only_throw_errors
+        // ignore: only_throw_errors -- reason: NotFoundFailure is MemoX's domain error type; thrown inside guardAsync which catches it and returns Err(failure) as a Result
         if (row == null) throw NotFoundFailure('No deck ${id.value}');
         return deckFromRow(row);
       });
@@ -82,7 +82,7 @@ class DriftDeckRepository implements DeckRepository {
           ..limit(1))
         .getSingleOrNull();
     if (pair == null) {
-      // ignore: only_throw_errors
+      // ignore: only_throw_errors -- reason: PersistenceFailure is MemoX's domain error type; thrown inside save()'s guardAsync which catches it and returns Err(failure) as a Result
       throw const PersistenceFailure('No active language pair to own the deck');
     }
     return pair.id;

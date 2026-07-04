@@ -84,7 +84,7 @@ class SrsStates extends Table {
       text().references(Cards, #id, onDelete: KeyAction.cascade)();
   // drift_dev reads this getter's AST to build the CHECK; the self-reference is
   // the documented way to constrain the column (box 0..8).
-  // ignore: recursive_getters
+  // ignore: recursive_getters -- reason: drift_dev reads this getter's AST to build the CHECK constraint; the self-reference to `box` is the documented drift idiom for constraining the column, not a runtime recursive call
   IntColumn get box => integer().check(box.isBetweenValues(0, 8))();
   IntColumn get dueAt => integer().nullable()();
   IntColumn get lastReviewedAt => integer().nullable()();

@@ -137,7 +137,7 @@ class StudyResultController extends _$StudyResultController {
   // finalize-error AsyncValue.
   T _value<T>(Result<T> result) => switch (result) {
         Ok<T>(:final value) => value,
-        // ignore: only_throw_errors
+        // ignore: only_throw_errors -- reason: Failure is MemoX's domain error type; unwrapping the Result and rethrowing surfaces it as AsyncValue.error via the build() catch
         Err<T>(:final failure) => throw failure,
       };
 }

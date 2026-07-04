@@ -156,7 +156,7 @@ class LastSessionWrongCount extends _$LastSessionWrongCount {
   @override
   int build() => 0;
 
-  // ignore: use_setters_to_change_properties
+  // ignore: use_setters_to_change_properties -- reason: `record` is the notifier's named command API (called on session completion), not a property setter; a setter would obscure the intent and break the call site's `.record(...)` semantics
   void record(int count) => state = count;
 }
 
@@ -383,7 +383,7 @@ class StudySessionController extends _$StudySessionController {
   // resume-error AsyncValue.
   T _value<T>(Result<T> result) => switch (result) {
     Ok<T>(:final value) => value,
-    // ignore: only_throw_errors
+    // ignore: only_throw_errors -- reason: Failure is MemoX's domain error type; unwrapping the Result and rethrowing surfaces it as AsyncValue.error via the build() catch
     Err<T>(:final failure) => throw failure,
   };
 
