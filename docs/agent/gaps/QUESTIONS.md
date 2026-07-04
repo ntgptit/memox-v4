@@ -85,3 +85,13 @@ broken, only the two extra orders are absent.
   accent token sets and regenerate `mx_*.dart` (which must not be hand-edited).
   Accent stays persisted + previewed until that kit change happens. Not a Flutter
   gap; out of the gaps-loop scope.
+
+## Status
+
+**✅ GAPS-REMEDIATION COMPLETE.** 9 of 11 units shipped (G.01, G.03, G.04, G.06,
+G.07, G.08-font-scale, G.09, G.10, G.11); **G.08-accent** is a documented
+design-system deferral (single-accent token set). **BLOCKED (2):** G.02
+(statistics scope-switch) and G.05 (library sort date-created / last-studied) —
+both gated on the *same* human decision: whether to enrich the deliberately-minimal
+`Deck` entity (see the Open entries above). Alphabetical sort + mastery donut still
+work; nothing is broken. The loop has stopped itself.
