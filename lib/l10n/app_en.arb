@@ -863,6 +863,15 @@
   "@importSepSemicolon": { "description": "Semicolon separator option" },
   "importHasHeader": "First row is a header",
   "@importHasHeader": { "description": "Toggle: skip the first row as a header" },
+  "importTermColumn": "Term column",
+  "@importTermColumn": { "description": "Label for the term-column picker" },
+  "importMeaningColumn": "Meaning column",
+  "@importMeaningColumn": { "description": "Label for the meaning-column picker" },
+  "importColumnLabel": "Col {number}",
+  "@importColumnLabel": {
+    "description": "A selectable column in the import column picker (1-based)",
+    "placeholders": { "number": { "type": "int" } }
+  },
   "importColTerm": "Term",
   "@importColTerm": { "description": "Table header for the term column" },
   "importColMeaning": "Meaning",
