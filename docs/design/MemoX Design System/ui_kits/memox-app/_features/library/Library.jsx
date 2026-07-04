@@ -118,8 +118,9 @@ function Library({ state = 'loaded' }) {
           <window.Dialog icon="stacks" title="New deck" node="library/create-dialog"
             text={<window.DialogInput label="Deck name" placeholder="e.g. Korean Basics" />}
             actions={<React.Fragment>
-              <MxButton variant="ghost" block node="library/create-cancel">Cancel</MxButton>
-              <MxButton variant="primary" block node="library/create-ok">Create</MxButton>
+              <div style={{ flex: 1 }} />
+              <MxButton variant="ghost" node="library/create-cancel">Cancel</MxButton>
+              <MxButton variant="primary" node="library/create-ok">Create</MxButton>
             </React.Fragment>} />
         </window.Scrim>
       </React.Fragment>
