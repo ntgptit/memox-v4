@@ -15,8 +15,12 @@ class MatchTile {
   final String text;
 }
 
+/// How long a correctly-matched pair flashes the success skin before the tiles
+/// collapse into the matched (hidden) state.
+const Duration matchFlashDuration = Duration(milliseconds: 300);
+
 /// The matching-game state: the two columns, the current left selection, the
-/// matched indices, and the transient wrong-pair feedback.
+/// matched indices, and the transient correct- / wrong-pair feedback.
 class MatchingState {
   const MatchingState({
     required this.left,
@@ -24,6 +28,8 @@ class MatchingState {
     required this.selectedLeft,
     required this.matchedLeft,
     required this.matchedRight,
+    required this.correctLeft,
+    required this.correctRight,
     required this.wrongLeft,
     required this.wrongRight,
   });
@@ -33,6 +39,10 @@ class MatchingState {
   final int? selectedLeft;
   final Set<int> matchedLeft;
   final Set<int> matchedRight;
+
+  /// The pair flashing the success skin this instant (before it becomes matched).
+  final int? correctLeft;
+  final int? correctRight;
   final int? wrongLeft;
   final int? wrongRight;
 
@@ -45,6 +55,8 @@ class MatchingState {
     int? Function()? selectedLeft,
     Set<int>? matchedLeft,
     Set<int>? matchedRight,
+    int? Function()? correctLeft,
+    int? Function()? correctRight,
     int? Function()? wrongLeft,
     int? Function()? wrongRight,
   }) {
@@ -54,6 +66,8 @@ class MatchingState {
       selectedLeft: selectedLeft != null ? selectedLeft() : this.selectedLeft,
       matchedLeft: matchedLeft ?? this.matchedLeft,
       matchedRight: matchedRight ?? this.matchedRight,
+      correctLeft: correctLeft != null ? correctLeft() : this.correctLeft,
+      correctRight: correctRight != null ? correctRight() : this.correctRight,
       wrongLeft: wrongLeft != null ? wrongLeft() : this.wrongLeft,
       wrongRight: wrongRight != null ? wrongRight() : this.wrongRight,
     );
@@ -66,8 +80,13 @@ class MatchingState {
 /// [Failure] — surfaced localized by the screen and logged; never swallowed.
 @riverpod
 class MatchingController extends _$MatchingController {
+  /// True once the provider is disposed — stops the delayed match-commit from
+  /// touching `state` after the learner has left the screen.
+  bool _disposed = false;
+
   @override
   Future<MatchingState> build() async {
+    ref.onDispose(() => _disposed = true);
     try {
       return await _newRound();
     } on Failure catch (failure, stackTrace) {
@@ -96,6 +115,8 @@ class MatchingController extends _$MatchingController {
       selectedLeft: null,
       matchedLeft: const {},
       matchedRight: const {},
+      correctLeft: null,
+      correctRight: null,
       wrongLeft: null,
       wrongRight: null,
     );
@@ -119,13 +140,15 @@ class MatchingController extends _$MatchingController {
 
     final isMatch = data.left[selected].cardId == data.right[index].cardId;
     if (isMatch) {
+      // Flash the success skin, then collapse the pair into matched after a beat.
       state = AsyncData(data.copyWith(
-        matchedLeft: {...data.matchedLeft, selected},
-        matchedRight: {...data.matchedRight, index},
         selectedLeft: () => null,
+        correctLeft: () => selected,
+        correctRight: () => index,
         wrongLeft: () => null,
         wrongRight: () => null,
       ));
+      _commitMatchAfterFlash(leftIndex: selected, rightIndex: index);
       return;
     }
     state = AsyncData(data.copyWith(
@@ -133,6 +156,24 @@ class MatchingController extends _$MatchingController {
       wrongLeft: () => selected,
       wrongRight: () => index,
     ));
+  }
+
+  /// After [matchFlashDuration], move the just-flashed pair into the matched set
+  /// (hiding the tiles) and clear its correct flag. Guarded against firing after
+  /// the provider is disposed (the learner left mid-flash).
+  void _commitMatchAfterFlash({required int leftIndex, required int rightIndex}) {
+    Future<void>.delayed(matchFlashDuration, () {
+      if (_disposed) return;
+      final data = state.asData?.value;
+      if (data == null) return;
+      state = AsyncData(data.copyWith(
+        matchedLeft: {...data.matchedLeft, leftIndex},
+        matchedRight: {...data.matchedRight, rightIndex},
+        correctLeft: () => data.correctLeft == leftIndex ? null : data.correctLeft,
+        correctRight: () =>
+            data.correctRight == rightIndex ? null : data.correctRight,
+      ));
+    });
   }
 
   Future<void> nextRound() async {

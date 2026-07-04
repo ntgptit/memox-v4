@@ -152,6 +152,8 @@ class GameMatchingScreen extends ConsumerWidget {
   MatchTone _toneFor(MatchingState state, {required bool left, required int index}) {
     final matched = left ? state.matchedLeft : state.matchedRight;
     if (matched.contains(index)) return MatchTone.matched;
+    final correct = left ? state.correctLeft : state.correctRight;
+    if (correct == index) return MatchTone.correct;
     if (left && state.selectedLeft == index) return MatchTone.selected;
     final wrong = left ? state.wrongLeft : state.wrongRight;
     if (wrong == index) return MatchTone.wrong;
