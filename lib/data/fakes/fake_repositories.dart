@@ -172,9 +172,9 @@ class FakeReviewRepository implements ReviewRepository {
 
   @override
   Stream<int> watchDueCount({DeckId? within}) async* {
-    yield _dueCards(within: within, asOf: DateTime.now()).length;
+    yield _dueCards(within: within, asOf: DateTime.now().toUtc()).length;
     await for (final _ in _store.onChange) {
-      yield _dueCards(within: within, asOf: DateTime.now()).length;
+      yield _dueCards(within: within, asOf: DateTime.now().toUtc()).length;
     }
   }
 

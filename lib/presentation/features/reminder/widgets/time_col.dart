@@ -31,34 +31,36 @@ class TimeCol extends StatelessWidget {
       container: true,
       child: SizedBox(
         height: MxSizes.size2xl,
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            for (final value in values)
-              Semantics(
-                button: true,
-                selected: value == selected,
-                child: InkWell(
-                  onTap: () => onSelect(value),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: MxSpacing.space2),
-                    child: Center(
-                      child: Text(
-                        value.toString().padLeft(2, '0'),
-                        style: TextStyle(
-                          fontFamily: MxTypography.fontFamily,
-                          fontSize: MxTypography.sizeMd,
-                          fontWeight: value == selected
-                              ? MxTypography.extrabold
-                              : MxTypography.medium,
-                          color: value == selected ? scheme.primary : mx.textTertiary,
-                        ),
+        // The SizedBox bounds the height, so the list scrolls lazily via .builder
+        // (no shrinkWrap needed) — hours/minutes are up to 60 rows.
+        child: ListView.builder(
+          itemCount: values.length,
+          itemBuilder: (context, index) {
+            final value = values[index];
+            return Semantics(
+              button: true,
+              selected: value == selected,
+              child: InkWell(
+                onTap: () => onSelect(value),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: MxSpacing.space2),
+                  child: Center(
+                    child: Text(
+                      value.toString().padLeft(2, '0'),
+                      style: TextStyle(
+                        fontFamily: MxTypography.fontFamily,
+                        fontSize: MxTypography.sizeMd,
+                        fontWeight: value == selected
+                            ? MxTypography.extrabold
+                            : MxTypography.medium,
+                        color: value == selected ? scheme.primary : mx.textTertiary,
                       ),
                     ),
                   ),
                 ),
               ),
-          ],
+            );
+          },
         ),
       ),
     );
