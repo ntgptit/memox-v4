@@ -63,8 +63,9 @@
 
   { "component": "study-result/ResultHero", "prop": "tone", "reason": "enum-base-expansion", "note": "tone forwards to MxIconTile; MxIconTileTone adds 'primary' — the soft-primary base the kit expresses by omitting tone. (Now caught via the cross-file enum index, Z.0.)" },
 
-  { "component": "study-result/Cta", "prop": "state", "reason": "flutter-idiom", "note": "Kit's string state ('goal-missed'/'many-wrong'/default) is a ResultHead enum (`head`) in Flutter. NB: ResultHead {standard,goalMet,goalMissed} has NO 'many-wrong' equivalent — a behavioral gap tracked in docs/agent/props-parity/QUESTIONS.md Notes." },
+  { "component": "study-result/Cta", "prop": "state", "reason": "flutter-idiom", "note": "Kit's string state ('goal-missed'/'many-wrong'/default) is a ResultHead enum (`head`) in Flutter. ResultHead {standard,goalMet,goalMissed,manyWrong} now covers many-wrong (implemented in gaps G.10)." },
   { "component": "study-result/Cta", "prop": "head", "reason": "flutter-idiom", "note": "The ResultHead enum form of the kit's state prop." },
+  { "component": "study-result/Cta", "prop": "wrongCount", "reason": "fixture-parameterized", "note": "Kit hardcodes the missed-card count ('Review 8 cards'); Flutter parameterizes it from the session handoff." },
   { "component": "study-result/Cta", "prop": "onPrimary", "reason": "fixture-parameterized", "note": "Kit fixture stubs the primary button with a node id; Flutter wires onPrimary." },
   { "component": "study-result/Cta", "prop": "onSecondary", "reason": "fixture-parameterized", "note": "Kit fixture stubs the secondary button with a node id; Flutter wires onSecondary." },
 

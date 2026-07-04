@@ -107,6 +107,7 @@ class StudySessionState {
     required this.step,
     required this.mode,
     required this.saveError,
+    this.wrongCardIds = const {},
   });
 
   final List<StudyStep> steps;
@@ -115,9 +116,15 @@ class StudySessionState {
   final StudyMode mode;
   final bool saveError;
 
+  /// Distinct cards the learner got wrong at least once this session (a wrong
+  /// stage-3 choice, or a failed due-review grade). Drives the result "many
+  /// wrong" mood + its "Review N cards" CTA.
+  final Set<String> wrongCardIds;
+
   bool get isEmpty => steps.isEmpty;
   bool get isComplete => steps.isNotEmpty && index >= steps.length;
   int get total => steps.length;
+  int get wrongCount => wrongCardIds.length;
   double get progress => steps.isEmpty ? 0 : index / steps.length;
   StudyStep? get current =>
       (index < 0 || index >= steps.length) ? null : steps[index];
@@ -126,6 +133,7 @@ class StudySessionState {
     int? index,
     StepState? step,
     bool? saveError,
+    Set<String>? wrongCardIds,
   }) {
     return StudySessionState(
       steps: steps,
@@ -133,8 +141,22 @@ class StudySessionState {
       step: step ?? this.step,
       mode: mode,
       saveError: saveError ?? this.saveError,
+      wrongCardIds: wrongCardIds ?? this.wrongCardIds,
     );
   }
+}
+
+/// The just-finished session's wrong-card count, handed to the study-result
+/// screen (which reads its own day-activity but not the session). Kept alive so
+/// it survives the session provider's disposal on navigation; the session records
+/// it on completion.
+@Riverpod(keepAlive: true)
+class LastSessionWrongCount extends _$LastSessionWrongCount {
+  @override
+  int build() => 0;
+
+  // ignore: use_setters_to_change_properties
+  void record(int count) => state = count;
 }
 
 /// Drives a study session: builds the due + new queues (DM.5), sequences each due
@@ -207,6 +229,7 @@ class StudySessionController extends _$StudySessionController {
     state = AsyncData(
       data.copyWith(
         step: data.step.copyWith(chosen: () => index, wrongChoice: true),
+        wrongCardIds: {...data.wrongCardIds, step.card.id.value},
       ),
     );
   }
@@ -286,7 +309,10 @@ class StudySessionController extends _$StudySessionController {
       state = AsyncData(data.copyWith(saveError: true));
       return;
     }
-    _goNext(data);
+    final scored = grade.isFail
+        ? data.copyWith(wrongCardIds: {...data.wrongCardIds, step.card.id.value})
+        : data;
+    _goNext(scored);
   }
 
   // ── Save-error recovery ─────────────────────────────────────────────────────
@@ -313,7 +339,12 @@ class StudySessionController extends _$StudySessionController {
   void _goNext(StudySessionState data) {
     final next = data.copyWith(index: data.index + 1, step: const StepState());
     state = AsyncData(next);
-    if (next.isComplete) unawaited(_record(next));
+    if (next.isComplete) {
+      ref
+          .read(lastSessionWrongCountProvider.notifier)
+          .record(next.wrongCount);
+      unawaited(_record(next));
+    }
   }
 
   Future<void> _record(StudySessionState data) async {
