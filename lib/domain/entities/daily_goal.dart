@@ -19,8 +19,10 @@ class DailyGoal extends Equatable {
   /// [minutes] and [words] of activity (BR-2). An unset target can never be the
   /// one that is met.
   bool isMetBy({required int minutes, required int words}) {
-    final byMinutes = minutesTarget != null && minutes >= minutesTarget!;
-    final byWords = wordsTarget != null && words >= wordsTarget!;
+    final mt = minutesTarget;
+    final wt = wordsTarget;
+    final byMinutes = mt != null && minutes >= mt;
+    final byWords = wt != null && words >= wt;
     return byMinutes || byWords;
   }
 

@@ -41,6 +41,8 @@ class GradeCardUseCase {
     if (saved case Err(:final failure)) return Err(failure);
 
     final logged = await _reviews.logReview(
+      // Invariant: `review()` always stamps `lastReviewedAt`, so `!` is a checked
+      // assertion with no reachable null path (nothing meaningful to handle).
       ReviewLog(cardId: cardId, grade: grade, reviewedAt: next.lastReviewedAt!),
     );
     if (logged case Err(:final failure)) return Err(failure);

@@ -45,6 +45,7 @@ class MxBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
+    final onChanged = this.onChanged;
 
     return DecoratedBox(
       decoration: BoxDecoration(color: mx.surface, boxShadow: mx.shadows.nav),
@@ -66,7 +67,7 @@ class MxBottomNav extends StatelessWidget {
                     child: _NavItem(
                       item: item,
                       active: item.id == value,
-                      onTap: onChanged == null ? null : () => onChanged!(item.id),
+                      onTap: onChanged == null ? null : () => onChanged(item.id),
                     ),
                   ),
               ],

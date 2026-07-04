@@ -28,6 +28,8 @@ class MxSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final caption = this.caption;
+    final actionLabel = this.actionLabel;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +52,7 @@ class MxSectionHeader extends StatelessWidget {
               if (caption != null) ...[
                 const SizedBox(height: _titleCaptionGap),
                 Text(
-                  caption!,
+                  caption,
                   style: TextStyle(
                     fontFamily: MxTypography.fontFamily,
                     fontSize: MxTypography.sizeSm,
@@ -74,7 +76,7 @@ class MxSectionHeader extends StatelessWidget {
                 fontWeight: MxTypography.semibold,
               ),
             ),
-            child: Text(actionLabel!),
+            child: Text(actionLabel),
           ),
         ],
       ],

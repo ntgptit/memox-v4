@@ -97,7 +97,8 @@ class PlayerController extends _$PlayerController {
         speedOpen: false,
         speed: _defaultSpeed,
       );
-      if (state.current != null) unawaited(_speak(state.current!));
+      final current = state.current;
+      if (current != null) unawaited(_speak(current));
       return state;
     } on Failure catch (failure, stackTrace) {
       ref.read(loggerProvider).error(
@@ -111,11 +112,12 @@ class PlayerController extends _$PlayerController {
 
   void playPause() {
     final data = state.asData?.value;
-    if (data == null || data.current == null) return;
+    final current = data?.current;
+    if (data == null || current == null) return;
     final playing = !data.playing;
     state = AsyncData(data.copyWith(playing: playing));
     if (playing) {
-      unawaited(_speak(data.current!));
+      unawaited(_speak(current));
       return;
     }
     unawaited(_stop());
@@ -141,8 +143,9 @@ class PlayerController extends _$PlayerController {
       speedOpen: false,
     );
     state = AsyncData(moved);
-    if (!ended && moved.playing && moved.current != null) {
-      unawaited(_speak(moved.current!));
+    final current = moved.current;
+    if (!ended && moved.playing && current != null) {
+      unawaited(_speak(current));
     }
   }
 
@@ -158,8 +161,9 @@ class PlayerController extends _$PlayerController {
     final next = data.copyWith(speed: value, speedOpen: false);
     state = AsyncData(next);
     // Re-read the current card at the new rate so the change is heard now.
-    if (next.playing && next.current != null) {
-      unawaited(_speak(next.current!));
+    final current = next.current;
+    if (next.playing && current != null) {
+      unawaited(_speak(current));
     }
   }
 
@@ -169,7 +173,8 @@ class PlayerController extends _$PlayerController {
     final restarted =
         data.copyWith(index: 0, playing: true, speedOpen: false);
     state = AsyncData(restarted);
-    if (restarted.current != null) unawaited(_speak(restarted.current!));
+    final current = restarted.current;
+    if (current != null) unawaited(_speak(current));
   }
 
   Future<void> _speak(Card card) async {

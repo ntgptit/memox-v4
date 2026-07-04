@@ -116,6 +116,8 @@ class GameRecallScreen extends ConsumerWidget {
       );
     }
 
+    // Invariant: past the isEmpty / isComplete guards above the queue is
+    // non-empty, so RecallState.current is always present here.
     final card = state.current!;
     return MxScaffold(
       appBar: appBar,

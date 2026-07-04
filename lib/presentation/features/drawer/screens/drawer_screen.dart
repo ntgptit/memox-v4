@@ -138,6 +138,11 @@ class _AddLanguage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final draft = ref.watch(addLanguageDraftProvider);
+    final learning = draft.learning;
+    final native = draft.native;
+    // Mirrors LanguageDraft.canAdd, but on promotable locals so the add
+    // callback can read the non-null names without a null-assertion.
+    final canAdd = learning != null && native != null && learning != native;
 
     void back() {
       ref.read(addLanguageDraftProvider.notifier).reset();
@@ -157,7 +162,7 @@ class _AddLanguage extends ConsumerWidget {
         _Label(l10n.drawerSectionLearning),
         LangCard(
           icon: Icons.language,
-          name: draft.learning ?? l10n.drawerChooseLanguage,
+          name: learning ?? l10n.drawerChooseLanguage,
           subtitle: l10n.drawerSectionLearning,
           onPressed: () => _pick(context, ref, learning: true),
         ),
@@ -170,7 +175,7 @@ class _AddLanguage extends ConsumerWidget {
         _Label(l10n.drawerSectionNative),
         LangCard(
           icon: Icons.translate,
-          name: draft.native ?? l10n.drawerChooseLanguage,
+          name: native ?? l10n.drawerChooseLanguage,
           subtitle: l10n.drawerNativeHint,
           onPressed: () => _pick(context, ref, learning: false),
         ),
@@ -178,13 +183,13 @@ class _AddLanguage extends ConsumerWidget {
           label: l10n.drawerAddPair,
           icon: Icons.add,
           block: true,
-          onPressed: draft.canAdd
+          onPressed: canAdd
               ? () {
                   ref
                       .read(languagePairControllerProvider.notifier)
                       .addPair(
-                        learning: draft.learning!,
-                        native: draft.native!,
+                        learning: learning,
+                        native: native,
                       );
                   back();
                   ref

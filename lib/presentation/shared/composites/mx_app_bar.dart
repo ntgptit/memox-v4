@@ -86,6 +86,7 @@ class MxAppBar extends StatelessWidget implements PreferredSizeWidget {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
     final hasRow = leading != null || trailing != null;
+    final eyebrow = this.eyebrow;
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -112,7 +113,7 @@ class MxAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             if (eyebrow != null)
               Text(
-                eyebrow!,
+                eyebrow,
                 style: TextStyle(
                   fontFamily: MxTypography.fontFamily,
                   fontSize: MxTypography.sizeSm,

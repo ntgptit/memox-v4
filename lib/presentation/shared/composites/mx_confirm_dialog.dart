@@ -39,6 +39,7 @@ class MxConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final icon = this.icon;
 
     return Dialog(
       alignment: alignment,
@@ -49,7 +50,7 @@ class MxConfirmDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (icon != null) ...[
-              Center(child: MxIconTile(icon: icon!, tone: _tileTone)),
+              Center(child: MxIconTile(icon: icon, tone: _tileTone)),
               const SizedBox(height: MxSpacing.space4),
             ],
             Text(

@@ -18,6 +18,7 @@ class MxSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
+    final title = this.title;
 
     return Container(
       decoration: BoxDecoration(
@@ -58,7 +59,7 @@ class MxSheet extends StatelessWidget {
                     bottom: MxSpacing.space2,
                   ),
                   child: Text(
-                    title!.toUpperCase(),
+                    title.toUpperCase(),
                     style: TextStyle(
                       fontFamily: MxTypography.fontFamily,
                       fontSize: MxTypography.sizeSm,
