@@ -97,7 +97,7 @@ class StatisticsScreen extends ConsumerWidget {
     return MxScaffold(
       appBar: appBar,
       children: [
-        IntrinsicHeight(
+        IntrinsicHeight( // guard:intrinsic-reviewed -- reason: exactly 2 equal-height stat tiles (current + longest streak) in a stretch Row
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -150,7 +150,7 @@ class StatisticsScreen extends ConsumerWidget {
           ),
         ),
         MxSectionHeader(title: l10n.statsOverview),
-        IntrinsicHeight(
+        IntrinsicHeight( // guard:intrinsic-reviewed -- reason: exactly 3 equal-height stat tiles (total + mastered + due) in a stretch Row
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
