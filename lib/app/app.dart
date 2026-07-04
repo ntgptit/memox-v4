@@ -9,8 +9,10 @@ import 'package:memox_v4/presentation/features/theme/providers/theme_providers.d
 /// Root widget. Riverpod owns all state — no `setState` here — and the router is
 /// read from [routerProvider]. The Material theme comes from [AppTheme], assembled
 /// from the design tokens (colors + the `MxTheme` extension). The colour mode is
-/// driven live by the saved theme setting ([themeModeProvider], S.08); it falls
-/// back to system while the setting loads or if the store is unavailable.
+/// driven live by the saved theme setting ([themeModeProvider], S.08); the saved
+/// font scale is applied live app-wide via a MediaQuery `TextScaler`
+/// ([textScaleFactorProvider]). Both fall back to their defaults while the setting
+/// loads or if the store is unavailable.
 class MemoxApp extends ConsumerWidget {
   const MemoxApp({super.key});
 
@@ -19,6 +21,8 @@ class MemoxApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     final themeMode =
         ref.watch(themeModeProvider).asData?.value ?? ThemeMode.system;
+    final textScale =
+        ref.watch(textScaleFactorProvider).asData?.value ?? fontScaleMediumFactor;
     return MaterialApp.router(
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
@@ -28,6 +32,13 @@ class MemoxApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router,
+      builder: (context, child) {
+        final media = MediaQuery.of(context);
+        return MediaQuery(
+          data: media.copyWith(textScaler: TextScaler.linear(textScale)),
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
     );
   }
 }
