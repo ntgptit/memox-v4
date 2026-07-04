@@ -192,7 +192,7 @@ class StatisticsScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              MxSkeleton(width: 140, height: 14),
+              MxSkeleton(widthFactor: 0.45, height: 14),
               SizedBox(height: MxSpacing.space3),
               MxSkeleton(height: 110),
             ],

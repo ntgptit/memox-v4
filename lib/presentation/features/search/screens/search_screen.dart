@@ -246,11 +246,11 @@ class _SkeletonResultRow extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          MxSkeleton(width: 120, height: 16),
+          MxSkeleton(widthFactor: 0.4, height: 16),
           SizedBox(height: MxSpacing.space2),
-          MxSkeleton(width: 180, height: 10),
+          MxSkeleton(widthFactor: 0.62, height: 10),
           SizedBox(height: MxSpacing.space2),
-          MxSkeleton(width: 150, height: 10),
+          MxSkeleton(widthFactor: 0.5, height: 10),
         ],
       ),
     );

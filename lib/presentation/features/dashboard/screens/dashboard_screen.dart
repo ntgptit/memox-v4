@@ -219,9 +219,9 @@ class DashboardScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MxSkeleton(width: 120, height: 12),
+            MxSkeleton(widthFactor: 0.4, height: 12),
             SizedBox(height: MxSpacing.space2),
-            MxSkeleton(width: 180, height: 30),
+            MxSkeleton(widthFactor: 0.55, height: 30),
           ],
         ),
       ),
@@ -235,7 +235,7 @@ class DashboardScreen extends ConsumerWidget {
           ],
         ),
       ),
-      const MxSkeleton(width: 160, height: 16),
+      const MxSkeleton(widthFactor: 0.45, height: 16),
       const _SkeletonRow(),
       const _SkeletonRow(),
     ];
@@ -357,9 +357,9 @@ class _SkeletonMini extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          MxSkeleton(width: 80, height: 22),
+          MxSkeleton(widthFactor: 0.6, height: 22),
           SizedBox(height: MxSpacing.space2),
-          MxSkeleton(width: 60, height: 10),
+          MxSkeleton(widthFactor: 0.45, height: 10),
         ],
       ),
     );
@@ -381,9 +381,9 @@ class _SkeletonRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MxSkeleton(width: 140, height: 14),
+                MxSkeleton(widthFactor: 0.6, height: 14),
                 SizedBox(height: MxSpacing.space2),
-                MxSkeleton(width: 90, height: 10),
+                MxSkeleton(widthFactor: 0.4, height: 10),
               ],
             ),
           ),

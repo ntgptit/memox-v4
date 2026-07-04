@@ -5,18 +5,27 @@ import 'package:memox_v4/core/theme/mx_theme.dart';
 /// The kit's `Skeleton` helper as a reusable primitive: a sunken placeholder block
 /// that gently pulses while content loads. Token-driven via [MxTheme].
 ///
-/// [width] defaults to filling the parent; [height]/[radius] size the block.
-/// Honours the platform "reduce motion" setting — when animations are disabled the
-/// block is shown static (dimmed) instead of pulsing.
+/// Width mirrors the kit `Skeleton({ w })`, which is a fraction of the parent
+/// (`w="40%"`): pass [widthFactor] (0..1) for a text-line placeholder, or [width]
+/// for an absolute square (kit `w={48}`, e.g. an avatar). Omit both to fill the
+/// parent. [height]/[radius] size the block. Honours the platform "reduce motion"
+/// setting — when animations are disabled the block is shown static (dimmed).
 class MxSkeleton extends StatefulWidget {
   const MxSkeleton({
     this.width,
+    this.widthFactor,
     this.height = _defaultHeight,
     this.radius = _defaultRadius,
     super.key,
-  });
+  }) : assert(
+          width == null || widthFactor == null,
+          'Use width (absolute) or widthFactor (fraction of parent), not both',
+        );
 
   final double? width;
+
+  /// Width as a fraction of the parent (0..1), mirroring the kit `w="X%"`.
+  final double? widthFactor;
   final double height;
   final double radius;
 
@@ -57,13 +66,25 @@ class _MxSkeletonState extends State<MxSkeleton>
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
 
-    final block = Container(
-      width: widget.width ?? double.infinity,
-      height: widget.height,
+    // A decoration-only Container (fills the width/height its parent gives it).
+    final bar = Container(
       decoration: BoxDecoration(
         color: mx.surfaceSunken,
         borderRadius: BorderRadius.circular(widget.radius),
       ),
+    );
+    // Height always bounds the vertical axis; the width is either a fraction of
+    // the parent (kit `w="X%"`) or absolute (kit `w={48}`) or fills the parent.
+    final block = SizedBox(
+      height: widget.height,
+      width: widget.widthFactor == null ? (widget.width ?? double.infinity) : null,
+      child: widget.widthFactor == null
+          ? bar
+          : FractionallySizedBox(
+              alignment: AlignmentDirectional.centerStart,
+              widthFactor: widget.widthFactor,
+              child: bar,
+            ),
     );
 
     if (MediaQuery.of(context).disableAnimations) {

@@ -66,7 +66,7 @@ class _Menu extends ConsumerWidget {
       children: [
         DrawerPanel(
           activity: activity.when(
-            loading: () => const MxSkeleton(width: 180, height: 20),
+            loading: () => const MxSkeleton(widthFactor: 0.55, height: 20),
             error: (_, _) => const SizedBox.shrink(),
             data: (a) => DrawerActivityRow(
               time: _formatTime(a.minutes),
