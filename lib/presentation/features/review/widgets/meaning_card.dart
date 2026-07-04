@@ -8,6 +8,7 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
 /// Review-local (kit `review/meaning`): the meaning with an inline edit
 /// affordance — a read-only value, or (when [editing]) a bordered field with
@@ -95,7 +96,7 @@ class MeaningCard extends StatelessWidget {
             borderRadius: MxRadius.controlRadius,
             border: Border.all(color: scheme.primary, width: MxStroke.emphasis),
           ),
-          child: TextField(
+          child: MxTextField(
             controller: controller,
             autofocus: true,
             onSubmitted: (_) => onSave?.call(),
@@ -104,10 +105,6 @@ class MeaningCard extends StatelessWidget {
               fontSize: MxTypography.sizeMd,
               fontWeight: MxTypography.bold,
               color: scheme.onSurface,
-            ),
-            decoration: const InputDecoration(
-              isCollapsed: true,
-              border: InputBorder.none,
             ),
           ),
         ),
