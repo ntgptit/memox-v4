@@ -115,8 +115,9 @@ function DeckDetail({ state = 'loaded' }) {
           <window.Dialog icon="library_add" title="New sub-deck" node="deck-detail/subdeck-dialog"
             text={<window.DialogInput label="Deck name" placeholder="e.g. Irregular Verbs" />}
             actions={<React.Fragment>
-              <MxButton variant="ghost" block node="deck-detail/subdeck-cancel">Cancel</MxButton>
-              <MxButton variant="primary" block node="deck-detail/subdeck-ok">Create</MxButton>
+              <div style={{ flex: 1 }} />
+              <MxButton variant="ghost" node="deck-detail/subdeck-cancel">Cancel</MxButton>
+              <MxButton variant="primary" node="deck-detail/subdeck-ok">Create</MxButton>
             </React.Fragment>} />
         </window.Scrim>
       </React.Fragment>

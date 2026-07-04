@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:memox_v4/core/theme/mx_radius.dart';
-import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -93,54 +91,31 @@ class _MxInputDialogState extends State<MxInputDialog> {
               ),
             ),
             const SizedBox(height: MxSpacing.space2),
-            Container(
-              constraints:
-                  const BoxConstraints(minHeight: MxSpacing.minTouchTarget),
-              padding: const EdgeInsets.symmetric(
-                horizontal: MxSpacing.space4,
-                vertical: MxSpacing.space3,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: MxRadius.controlRadius,
-                border: Border.all(color: mx.divider, width: MxStroke.hairline),
-              ),
-              child: TextField(
-                controller: _controller,
-                autofocus: true,
-                textInputAction: TextInputAction.done,
-                onSubmitted: (_) => _submit(),
-                style: TextStyle(
-                  fontFamily: MxTypography.fontFamily,
-                  fontSize: MxTypography.sizeBase,
-                  color: scheme.onSurface,
-                ),
-                decoration: InputDecoration(
-                  isCollapsed: true,
-                  border: InputBorder.none,
-                  hintText: widget.placeholder,
-                  hintStyle: TextStyle(
-                    fontFamily: MxTypography.fontFamily,
-                    fontSize: MxTypography.sizeBase,
-                    color: mx.textTertiary,
-                  ),
-                ),
-              ),
+            TextField(
+              controller: _controller,
+              autofocus: true,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => _submit(),
+              decoration: InputDecoration(hintText: widget.placeholder),
             ),
             const SizedBox(height: MxSpacing.space5),
-            MxButton(
-              label: widget.cancelLabel,
-              variant: MxButtonVariant.ghost,
-              block: true,
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            const SizedBox(height: MxSpacing.space2),
-            ValueListenableBuilder<TextEditingValue>(
-              valueListenable: _controller,
-              builder: (context, value, _) => MxButton(
-                label: widget.confirmLabel,
-                block: true,
-                onPressed: value.text.trim().isEmpty ? null : _submit,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                MxButton(
+                  label: widget.cancelLabel,
+                  variant: MxButtonVariant.ghost,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                const SizedBox(width: MxSpacing.space2),
+                ValueListenableBuilder<TextEditingValue>(
+                  valueListenable: _controller,
+                  builder: (context, value, _) => MxButton(
+                    label: widget.confirmLabel,
+                    onPressed: value.text.trim().isEmpty ? null : _submit,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
