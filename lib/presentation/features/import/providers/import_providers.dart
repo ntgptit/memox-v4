@@ -30,12 +30,19 @@ extension on ImportSeparator {
 }
 
 /// The import wizard state.
+/// The default term / meaning column indices when the picker is untouched
+/// (A→term, B→meaning).
+const int _defaultTermColumn = 0;
+const int _defaultMeaningColumn = 1;
+
 class ImportState {
   const ImportState({
     required this.step,
     required this.input,
     required this.separator,
     required this.hasHeader,
+    required this.termColumn,
+    required this.meaningColumn,
     required this.preview,
     required this.duplicateCount,
     required this.importedCount,
@@ -46,6 +53,8 @@ class ImportState {
     input: '',
     separator: ImportSeparator.tab,
     hasHeader: false,
+    termColumn: _defaultTermColumn,
+    meaningColumn: _defaultMeaningColumn,
     preview: null,
     duplicateCount: 0,
     importedCount: 0,
@@ -55,6 +64,10 @@ class ImportState {
   final String input;
   final ImportSeparator separator;
   final bool hasHeader;
+
+  /// Which parsed column supplies the card term / meaning (0-based).
+  final int termColumn;
+  final int meaningColumn;
   final ImportPreview? preview;
   final int duplicateCount;
   final int importedCount;
@@ -64,6 +77,8 @@ class ImportState {
     String? input,
     ImportSeparator? separator,
     bool? hasHeader,
+    int? termColumn,
+    int? meaningColumn,
     ImportPreview? preview,
     int? duplicateCount,
     int? importedCount,
@@ -73,6 +88,8 @@ class ImportState {
       input: input ?? this.input,
       separator: separator ?? this.separator,
       hasHeader: hasHeader ?? this.hasHeader,
+      termColumn: termColumn ?? this.termColumn,
+      meaningColumn: meaningColumn ?? this.meaningColumn,
       preview: preview ?? this.preview,
       duplicateCount: duplicateCount ?? this.duplicateCount,
       importedCount: importedCount ?? this.importedCount,
@@ -81,9 +98,9 @@ class ImportState {
 }
 
 /// Drives the import wizard (DM.7 `ParseImport`, D-025 / D-020; DM.8 file service).
-/// Column mapping is fixed to A→term, B→meaning (a column picker is deferred).
-/// Cards are written to the first library deck (a deck picker is deferred). No
-/// `setState`; failures are logged, not swallowed.
+/// Column mapping defaults to A→term, B→meaning but is user-pickable on the
+/// mapping step. Cards are written to the first library deck (a deck picker is
+/// deferred). No `setState`; failures are logged, not swallowed.
 @riverpod
 class ImportController extends _$ImportController {
   @override
@@ -96,6 +113,23 @@ class ImportController extends _$ImportController {
 
   void setHasHeader(bool hasHeader) =>
       state = state.copyWith(hasHeader: hasHeader);
+
+  void setTermColumn(int column) =>
+      state = state.copyWith(termColumn: column);
+
+  void setMeaningColumn(int column) =>
+      state = state.copyWith(meaningColumn: column);
+
+  /// Number of columns in the current input's first non-empty row (for the
+  /// column picker). Zero when there is nothing to parse.
+  int columnCount() {
+    final delimiter = state.separator.delimiter;
+    for (final line in state.input.split('\n')) {
+      if (line.trim().isEmpty) continue;
+      return line.split(delimiter).length;
+    }
+    return 0;
+  }
 
   void goTo(ImportStep step) => state = state.copyWith(step: step);
 
@@ -135,8 +169,8 @@ class ImportController extends _$ImportController {
   ImportPreview parseCurrent() {
     final codec = CsvCodec(delimiter: state.separator.delimiter);
     final mapping = ColumnMapping(
-      termColumn: 0,
-      meaningColumn: 1,
+      termColumn: state.termColumn,
+      meaningColumn: state.meaningColumn,
       hasHeader: state.hasHeader,
     );
     return ParseImport(codec).call(state.input, mapping);

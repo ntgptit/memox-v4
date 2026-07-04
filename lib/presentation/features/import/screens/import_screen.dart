@@ -157,6 +157,22 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
           ),
         ),
       ),
+      if (_controller.columnCount() > 1) ...[
+        _columnPicker(
+          l10n,
+          label: l10n.importTermColumn,
+          selected: state.termColumn,
+          count: _controller.columnCount(),
+          onPick: _controller.setTermColumn,
+        ),
+        _columnPicker(
+          l10n,
+          label: l10n.importMeaningColumn,
+          selected: state.meaningColumn,
+          count: _controller.columnCount(),
+          onPick: _controller.setMeaningColumn,
+        ),
+      ],
       _tableOrEmpty(l10n, preview),
       MxButton(
         label: l10n.importContinue,
@@ -165,6 +181,34 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
             preview.drafts.isEmpty ? null : () => _controller.toPreview(),
       ),
     ];
+  }
+
+  /// A labelled row of column chips for picking the term / meaning column.
+  Widget _columnPicker(
+    AppLocalizations l10n, {
+    required String label,
+    required int selected,
+    required int count,
+    required void Function(int) onPick,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _Label(label),
+        Wrap(
+          spacing: MxSpacing.space2,
+          runSpacing: MxSpacing.space2,
+          children: [
+            for (var i = 0; i < count; i++)
+              MxChip(
+                label: l10n.importColumnLabel(i + 1),
+                selected: selected == i,
+                onPressed: () => onPick(i),
+              ),
+          ],
+        ),
+      ],
+    );
   }
 
   // ── Preview / dup-warning ──────────────────────────────────────────────────
