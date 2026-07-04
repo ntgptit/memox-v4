@@ -52,7 +52,7 @@ class DriftCardRepository implements CardRepository {
   @override
   Future<Result<Card>> getById(CardId id) => guardAsync(() async {
         final row = await _dao.getById(id.value);
-        // ignore: only_throw_errors
+        // ignore: only_throw_errors -- reason: NotFoundFailure is MemoX's domain error type; thrown inside guardAsync which catches it and returns Err(failure) as a Result
         if (row == null) throw NotFoundFailure('No card ${id.value}');
         final meanings = await _dao.meaningsFor([id.value]);
         return cardFromRows(row, meanings);
@@ -104,7 +104,7 @@ class DriftCardRepository implements CardRepository {
         final updated = await (_db.update(_db.cards)
               ..where((c) => c.id.equals(id.value)))
             .write(CardsCompanion(hidden: Value(hidden)));
-        // ignore: only_throw_errors
+        // ignore: only_throw_errors -- reason: NotFoundFailure is MemoX's domain error type; thrown inside guardAsync which catches it and returns Err(failure) as a Result
         if (updated == 0) throw NotFoundFailure('No card ${id.value}');
       });
 

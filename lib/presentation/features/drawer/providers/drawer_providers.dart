@@ -49,7 +49,7 @@ Future<({int minutes, int words})> drawerActivity(Ref ref) async {
     (failure) {
       ref.read(loggerProvider).error('drawer activity read failed', error: failure);
       // Failure is the app's error type → carried to the async error branch.
-      // ignore: only_throw_errors
+      // ignore: only_throw_errors -- reason: Failure is MemoX's domain error type; rethrown to surface as AsyncValue.error at the provider boundary (already logged above)
       throw failure;
     },
   );

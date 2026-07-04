@@ -179,7 +179,7 @@ class DashboardController extends _$DashboardController {
         Ok<T>(:final value) => value,
         // Failure is the app's error type (not an Exception/Error subclass); the
         // async error branch carries it to the localized surface + the logger.
-        // ignore: only_throw_errors
+        // ignore: only_throw_errors -- reason: Failure is MemoX's domain error type; unwrapping the Result and rethrowing surfaces it as AsyncValue.error at the provider boundary
         Err<T>(:final failure) => throw failure,
       };
 }
