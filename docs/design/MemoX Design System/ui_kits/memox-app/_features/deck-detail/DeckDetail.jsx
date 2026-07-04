@@ -1,4 +1,4 @@
-/* MemoX — Deck detail (tree node: sub-decks + cards). States: loaded · search · no-results · empty · add-menu · card-actions · delete-confirm · reset-confirm · deck-menu · deck-delete-confirm · move · loading · error
+/* MemoX — Deck detail (tree node: sub-decks + cards). States: loaded · search · no-results · empty · add-menu · new-subdeck · card-actions · delete-confirm · reset-confirm · deck-menu · deck-delete-confirm · move · loading · error
    Feature-local components: components/{DeckHeader,FlashcardRow,SubDeckCard,DeckMenu,DeleteConfirmDialog}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
@@ -106,6 +106,22 @@ function DeckDetail({ state = 'loaded' }) {
       ))}
     </MxScaffold>
   );
+
+  if (state === 'new-subdeck') {
+    return (
+      <React.Fragment>
+        {base}
+        <window.Scrim align="center" node="deck-detail/subdeck-scrim">
+          <window.Dialog icon="library_add" title="New sub-deck" node="deck-detail/subdeck-dialog"
+            text={<window.DialogInput label="Deck name" placeholder="e.g. Irregular Verbs" />}
+            actions={<React.Fragment>
+              <MxButton variant="ghost" block node="deck-detail/subdeck-cancel">Cancel</MxButton>
+              <MxButton variant="primary" block node="deck-detail/subdeck-ok">Create</MxButton>
+            </React.Fragment>} />
+        </window.Scrim>
+      </React.Fragment>
+    );
+  }
 
   if (state === 'add-menu') {
     return (

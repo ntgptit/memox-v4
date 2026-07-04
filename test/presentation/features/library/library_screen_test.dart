@@ -108,6 +108,17 @@ void main() {
     });
   }
 
+  testWidgets('New FAB opens the create-deck dialog', (tester) async {
+    await pump(tester, dark: false);
+
+    await tester.tap(find.byType(MxFab));
+    await tester.pumpAndSettle();
+
+    expect(find.text('New deck'), findsOneWidget);
+    expect(find.text('Deck name'), findsOneWidget);
+    expect(find.text('Create'), findsOneWidget);
+  });
+
   testWidgets('sort sheet opens from the context bar', (tester) async {
     await pump(tester, dark: false);
 
@@ -126,6 +137,23 @@ void main() {
 
     expect(find.text('Import cards'), findsOneWidget);
     expect(find.text('Export cards'), findsOneWidget);
+  });
+
+  test('createDeck persists a new root deck and refreshes the tree', () async {
+    final harness = FakeHarness(store: FakeStore()); // empty library
+    final container = ProviderContainer(overrides: harness.overrides);
+    addTearDown(container.dispose);
+
+    final before = await container.read(libraryControllerProvider.future);
+    expect(before.nodes, isEmpty);
+
+    await container
+        .read(libraryControllerProvider.notifier)
+        .createDeck('Korean Basics');
+
+    final after = await container.read(libraryControllerProvider.future);
+    expect(after.nodes.map((n) => n.name), ['Korean Basics']);
+    expect(after.nodes.single.isFolder, isFalse); // a leaf deck, not a folder
   });
 
   test('library sort orders nodes by name, reversing on desc', () async {

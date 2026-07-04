@@ -220,6 +220,18 @@
   "@libraryCreateDeck": {
     "description": "Primary action on the empty-library state"
   },
+  "libraryNewDeckTitle": "New deck",
+  "@libraryNewDeckTitle": {
+    "description": "Title of the create-deck naming dialog"
+  },
+  "deckNameLabel": "Deck name",
+  "@deckNameLabel": {
+    "description": "Field label in the create-deck / create-sub-deck dialog"
+  },
+  "deckNamePlaceholder": "e.g. Korean Basics",
+  "@deckNamePlaceholder": {
+    "description": "Field placeholder in the create-deck dialog"
+  },
   "libraryAddWords": "Add words",
   "@libraryAddWords": {
     "description": "Secondary action on the empty-library state"
@@ -328,6 +340,10 @@
   "@actionReset": {
     "description": "Generic reset action in a confirm dialog"
   },
+  "actionCreate": "Create",
+  "@actionCreate": {
+    "description": "Generic create action in a naming dialog"
+  },
   "actionMove": "Move",
   "@actionMove": {
     "description": "Generic move action"
@@ -420,6 +436,10 @@
   "deckDetailAddSubdeck": "New sub-deck",
   "@deckDetailAddSubdeck": {
     "description": "New-sub-deck action in the add sheet"
+  },
+  "deckDetailSubdeckPlaceholder": "e.g. Irregular Verbs",
+  "@deckDetailSubdeckPlaceholder": {
+    "description": "Field placeholder in the create-sub-deck dialog"
   },
   "deckDetailAddImport": "Import cards",
   "@deckDetailAddImport": {

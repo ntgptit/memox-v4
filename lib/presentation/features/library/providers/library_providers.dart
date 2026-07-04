@@ -2,8 +2,10 @@ import 'package:memox_v4/core/error/failure.dart';
 import 'package:memox_v4/core/error/result.dart';
 import 'package:memox_v4/core/logging/logger_provider.dart';
 import 'package:memox_v4/data/providers/data_providers.dart';
+import 'package:memox_v4/domain/entities/deck.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/language_pair.dart';
+import 'package:memox_v4/domain/usecases/library/deck_use_cases.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'library_providers.g.dart';
@@ -104,6 +106,26 @@ class LibraryController extends _$LibraryController {
     }
     _sort(nodes, order);
     return LibraryData(nodes: nodes);
+  }
+
+  /// Create a new root deck from the learner-entered [name] (kit `library/create`
+  /// → `new-deck`). The id is a clock-stamped value (same convention as import);
+  /// the name is validated by [Deck.create] (BR-1). Refreshes on success; a
+  /// failure is logged, not swallowed.
+  Future<void> createDeck(String name) async {
+    final id = DeckId('deck-${ref.read(clockProvider).now().microsecondsSinceEpoch}');
+    final created = Deck.create(id: id, name: name);
+    if (created case Err(:final failure)) {
+      ref.read(loggerProvider).error('create deck rejected', error: failure);
+      return;
+    }
+    final saved = await SaveDeck(ref.read(deckRepositoryProvider))
+        .call((created as Ok<Deck>).value);
+    saved.fold(
+      (_) => ref.invalidateSelf(),
+      (failure) =>
+          ref.read(loggerProvider).error('create deck failed', error: failure),
+    );
   }
 
   void _sort(List<LibraryNode> nodes, LibrarySortOrder order) {

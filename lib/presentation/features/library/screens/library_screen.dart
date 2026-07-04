@@ -16,6 +16,7 @@ import 'package:memox_v4/presentation/features/library/widgets/overflow_menu_she
 import 'package:memox_v4/presentation/features/library/widgets/pair_picker_sheet.dart';
 import 'package:memox_v4/presentation/features/library/widgets/play_sheet.dart';
 import 'package:memox_v4/presentation/features/library/widgets/sort_sheet.dart';
+import 'package:memox_v4/presentation/shared/composites/input_dialog.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
@@ -82,7 +83,7 @@ class LibraryScreen extends ConsumerWidget {
       fab: MxFab(
         icon: Icons.add,
         label: l10n.libraryNew,
-        onPressed: () => context.push(Routes.add),
+        onPressed: () => _openCreateDeck(context, ref),
       ),
       children: [
         _contextBar(context, ref),
@@ -117,7 +118,7 @@ class LibraryScreen extends ConsumerWidget {
                     label: l10n.libraryCreateDeck,
                     icon: Icons.style,
                     block: true,
-                    onPressed: () => context.push(Routes.add),
+                    onPressed: () => _openCreateDeck(context, ref),
                   ),
                   const SizedBox(height: MxSpacing.space3),
                   MxButton(
@@ -142,6 +143,23 @@ class LibraryScreen extends ConsumerWidget {
       onPair: () => _openPair(context, ref),
       onSort: () => _openSort(context, ref),
     );
+  }
+
+  /// Prompt for a deck name (kit `library/create` → `new-deck`) and create a root
+  /// deck. Adding words/cards is a separate flow (the bottom-nav "Add" tab).
+  Future<void> _openCreateDeck(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final name = await showMxInputDialog(
+      context: context,
+      icon: Icons.layers,
+      title: l10n.libraryNewDeckTitle,
+      label: l10n.deckNameLabel,
+      placeholder: l10n.deckNamePlaceholder,
+      confirmLabel: l10n.actionCreate,
+      cancelLabel: l10n.actionCancel,
+    );
+    if (name == null) return;
+    await ref.read(libraryControllerProvider.notifier).createDeck(name);
   }
 
   // ── Sheets ─────────────────────────────────────────────────────────────────

@@ -1,4 +1,4 @@
-/* MemoX — Library. States: loaded · search-active · pair-picker · sort-menu · overflow-menu · play-sheet · drawer · empty · loading · error
+/* MemoX — Library. States: loaded · search-active · pair-picker · sort-menu · overflow-menu · play-sheet · new-deck · drawer · empty · loading · error
    Feature-local components: components/{LibraryHeader,ContextBar,PairPickerSheet,SortSheet,OverflowMenuSheet,PlaySheet}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
@@ -109,6 +109,21 @@ function Library({ state = 'loaded' }) {
 
   if (state === 'play-sheet') {
     return overlay(<PlaySheet />);
+  }
+
+  if (state === 'new-deck') {
+    return (
+      <React.Fragment>{base()}
+        <window.Scrim align="center" node="library/create-scrim">
+          <window.Dialog icon="stacks" title="New deck" node="library/create-dialog"
+            text={<window.DialogInput label="Deck name" placeholder="e.g. Korean Basics" />}
+            actions={<React.Fragment>
+              <MxButton variant="ghost" block node="library/create-cancel">Cancel</MxButton>
+              <MxButton variant="primary" block node="library/create-ok">Create</MxButton>
+            </React.Fragment>} />
+        </window.Scrim>
+      </React.Fragment>
+    );
   }
 
   if (state === 'drawer') {
