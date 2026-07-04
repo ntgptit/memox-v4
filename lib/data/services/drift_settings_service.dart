@@ -9,9 +9,13 @@ const String _kThemeMode = 'theme.mode';
 const String _kThemeAccent = 'theme.accent';
 const String _kThemeFontScale = 'theme.font_scale';
 const String _kGameWordsPerRound = 'game.words_per_round';
+const String _kSrsDueNotifications = 'srs.due_notifications';
 
 /// The default game round size when unset (D-008).
 const int _defaultGameWords = 5;
+
+/// Due-notifications default when unset — opt-in, so off.
+const bool _defaultSrsDueNotifications = false;
 
 /// Drift-backed [SettingsService] (DT.7) over the `settings` key–value table.
 /// `watch*` streams re-emit on any settings write; enums serialize by name.
@@ -50,6 +54,17 @@ class DriftSettingsService implements SettingsService {
   @override
   Future<Result<void>> saveGameWordsPerRound(int count) =>
       guardAsync(() async => _put(_kGameWordsPerRound, count.toString()));
+
+  @override
+  Stream<bool> watchSrsDueNotifications() =>
+      _watchKeys([_kSrsDueNotifications]).map((values) =>
+          values[_kSrsDueNotifications] == null
+              ? _defaultSrsDueNotifications
+              : values[_kSrsDueNotifications] == 'true');
+
+  @override
+  Future<Result<void>> saveSrsDueNotifications(bool enabled) =>
+      guardAsync(() async => _put(_kSrsDueNotifications, enabled.toString()));
 
   Stream<Map<String, String>> _watchKeys(List<String> keys) {
     final query = _db.select(_db.settings)..where((s) => s.key.isIn(keys));

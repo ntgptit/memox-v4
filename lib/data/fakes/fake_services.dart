@@ -16,6 +16,7 @@ import 'package:memox_v4/domain/services/settings_service.dart';
 class FakeSettingsService implements SettingsService {
   ThemeSettings _theme = const ThemeSettings();
   int _gameWords = 5;
+  bool _srsDueNotifications = false;
 
   @override
   Stream<ThemeSettings> watchTheme() => Stream.value(_theme);
@@ -32,6 +33,15 @@ class FakeSettingsService implements SettingsService {
   @override
   Future<Result<void>> saveGameWordsPerRound(int count) async {
     _gameWords = count;
+    return const Ok<void>(null);
+  }
+
+  @override
+  Stream<bool> watchSrsDueNotifications() => Stream.value(_srsDueNotifications);
+
+  @override
+  Future<Result<void>> saveSrsDueNotifications(bool enabled) async {
+    _srsDueNotifications = enabled;
     return const Ok<void>(null);
   }
 }

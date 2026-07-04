@@ -65,6 +65,11 @@ class _StubSettings implements SettingsService {
   Stream<int> watchGameWordsPerRound() => Stream.value(5);
   @override
   Future<Result<void>> saveGameWordsPerRound(int count) async => const Ok<void>(null);
+  @override
+  Stream<bool> watchSrsDueNotifications() => Stream.value(false);
+  @override
+  Future<Result<void>> saveSrsDueNotifications(bool enabled) async =>
+      const Ok<void>(null);
 }
 
 class _StubActivity implements DailyActivityService {

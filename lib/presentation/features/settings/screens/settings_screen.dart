@@ -23,9 +23,10 @@ import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
 /// The Settings hub (S.05): a local-identity card + grouped setting rows. Reads
 /// DM.8 service state through [settingsControllerProvider] and renders it with
 /// `AsyncValue.when`. Fixed-schedule SRS (8 boxes, D-002) is informational; the
-/// game words-per-round (D-008) opens a picker sheet; reminders / theme / backup
-/// navigate to their screens. State lives in the provider; no `setState`. Copy is
-/// from ARB. (The kit `group-expanded` SRS sub-page is a documented gap.)
+/// game words-per-round (D-008) opens a picker sheet; the SRS row drills into the
+/// [SrsSettingsScreen] detail sub-page (kit `group-expanded`); reminders / theme /
+/// backup navigate to their screens. State lives in the provider; no `setState`.
+/// Copy is from ARB.
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -79,6 +80,8 @@ class SettingsScreen extends ConsumerWidget {
                 icon: Icons.schedule,
                 title: l10n.settingsSpacedRepetition,
                 subtitle: l10n.settingsSpacedRepetitionSub,
+                trailing: const _Chevron(),
+                onPressed: () => context.push(Routes.settingsSrs),
               ),
               MxListRow(
                 icon: Icons.sports_esports,

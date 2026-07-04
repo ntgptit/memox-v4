@@ -61,3 +61,27 @@ class SettingsController extends _$SettingsController {
   String _label(LanguagePair pair) =>
       '${pair.learningLanguage} → ${pair.nativeLanguage}';
 }
+
+/// The SRS detail sub-page's only mutable value: the "cards due" notifications
+/// opt-in. The box count + intervals shown there are fixed domain constants
+/// (`BoxLevel.max`, `SrsScheduler.intervalDays`), so they need no provider.
+/// Delivery of the notifications is a later feature; this persists the preference.
+@riverpod
+class SrsSettingsController extends _$SrsSettingsController {
+  @override
+  Future<bool> build() async {
+    final settings = ref.watch(settingsServiceProvider);
+    return settings.watchSrsDueNotifications().first;
+  }
+
+  Future<void> setDueNotifications({required bool enabled}) async {
+    final result =
+        await ref.read(settingsServiceProvider).saveSrsDueNotifications(enabled);
+    result.fold(
+      (_) => ref.invalidateSelf(),
+      (failure) => ref
+          .read(loggerProvider)
+          .error('save SRS due notifications failed', error: failure),
+    );
+  }
+}
