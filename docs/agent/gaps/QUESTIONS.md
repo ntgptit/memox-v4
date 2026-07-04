@@ -75,3 +75,13 @@ searched the whole tree for any per-deck last-studied field (none exists).
 
 Default taken: **none** — blocked. Alphabetical A→Z / Z→A both work; nothing is
 broken, only the two extra orders are absent.
+
+## Notes (non-blocking)
+
+- **G.08 accent live re-theming — deferred (design-system, not Flutter).** Font
+  scale now applies live app-wide (shipped). Accent does not: the token system is
+  single-accent — `AccentColor {brand,warm,cool}` exists but only `brand` has a
+  generated color token. Making accent live needs the **kit** to define warm/cool
+  accent token sets and regenerate `mx_*.dart` (which must not be hand-edited).
+  Accent stays persisted + previewed until that kit change happens. Not a Flutter
+  gap; out of the gaps-loop scope.
