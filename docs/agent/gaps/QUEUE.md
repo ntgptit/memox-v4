@@ -15,4 +15,4 @@ Detail per unit: [`WBS.md`](WBS.md). Tick `[x]` after merge; append id to `DONE.
 | [x] | G.08 | theme/live-accent — app-wide accent + font-scale | fidelity |
 | [x] | G.09 | search/recents-persist | fidelity |
 | [x] | G.10 | study-result/many-wrong — per-session accuracy + CTA | ⚠ yes |
-| [ ] | G.11 | study-result/retry-finalize — resolve dead `retry` | cleanup |
+| [x] | G.11 | study-result/retry-finalize — resolve dead `retry` | cleanup |
