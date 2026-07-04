@@ -62,3 +62,34 @@ Future<bool> showDeleteDeckDialog(BuildContext context) async {
   );
   return confirmed ?? false;
 }
+
+/// Deck-detail reset-a-card-progress confirm. Returns the card to New (box 0) so
+/// it re-enters the learn flow — a recoverable action (warning tone, not danger).
+/// Resolves to `true` when the learner confirms. Copy is from ARB.
+Future<bool> showResetProgressDialog(
+  BuildContext context, {
+  required String term,
+}) async {
+  final l10n = AppLocalizations.of(context);
+  final confirmed = await showMxConfirmDialog<bool>(
+    context: context,
+    icon: Icons.restart_alt,
+    tone: MxDialogTone.warning,
+    title: l10n.deckDetailResetProgressTitle,
+    text: l10n.deckDetailResetProgressText(term),
+    actions: [
+      MxButton(
+        label: l10n.actionCancel,
+        variant: MxButtonVariant.ghost,
+        block: true,
+        onPressed: () => Navigator.of(context).pop(false),
+      ),
+      MxButton(
+        label: l10n.actionReset,
+        block: true,
+        onPressed: () => Navigator.of(context).pop(true),
+      ),
+    ],
+  );
+  return confirmed ?? false;
+}
