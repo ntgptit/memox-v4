@@ -5,7 +5,7 @@ Detail per unit: [`WBS.md`](WBS.md). Tick `[x]` after merge; append id to `DONE.
 
 | | ID | Unit | Reverses v1? |
 |---|---|---|---|
-| [ ] | G.01 | settings/group-expanded — SRS detail sub-page | deferred UI |
+| [x] | G.01 | settings/group-expanded — SRS detail sub-page | deferred UI |
 | [ ] | G.02 | statistics/scope-switch — This pair / All | ⚠ yes |
 | [ ] | G.03 | deck-detail/reset-confirm — reset card progress | ⚠ yes |
 | [ ] | G.04 | player/speed→TTS — apply playback rate | fidelity |
