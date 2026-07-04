@@ -129,6 +129,7 @@
   { "component": "deck-detail/DeckHeader", "prop": "onMenu", "reason": "fixture-parameterized", "note": "Kit fixture stubs the menu button; Flutter wires onMenu." },
 
   { "component": "deck-detail/DeckMenu", "prop": "onMove", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Move item; Flutter wires onMove." },
+  { "component": "deck-detail/DeckMenu", "prop": "onReset", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Reset progress item; Flutter wires onReset to the reset-deck-progress use case." },
   { "component": "deck-detail/DeckMenu", "prop": "onDelete", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Delete item; Flutter wires onDelete." },
 
   { "component": "deck-detail/DeleteConfirmDialog", "prop": "*", "reason": "flutter-helper", "note": "Flutter counterpart is the top-level showDeleteCardDialog(context, term:) helper function, not a widget class — no constructor to diff." },
