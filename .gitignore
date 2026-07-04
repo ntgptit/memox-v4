@@ -57,3 +57,7 @@ lib/l10n/app_localizations*.dart
 
 # Kit-first guard markers (tool/hooks/kit-first-guard.mjs) — per-session, local.
 tool/hooks/.kit-acks/
+
+# code-verification-guard-v2 — a separate nested git repo (its own tooling),
+# not part of this project. Ignore so it is never embedded/tracked here.
+/code-verification-guard-v2/
