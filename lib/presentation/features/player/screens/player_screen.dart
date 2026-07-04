@@ -42,11 +42,14 @@ class PlayerScreen extends ConsumerWidget {
     final async = ref.watch(playerControllerProvider);
 
     return async.when(
-      loading: () => MxScaffold(appBar: appBar, children: const [
-        MxSkeleton(height: 8),
-        SizedBox(height: MxSpacing.space5),
-        MxSkeleton(height: 280),
-      ]),
+      loading: () => MxScaffold(
+        appBar: appBar,
+        children: const [
+          MxSkeleton(height: 8),
+          SizedBox(height: MxSpacing.space5),
+          MxSkeleton(height: 280),
+        ],
+      ),
       error: (_, _) => MxScaffold(
         appBar: appBar,
         children: [
@@ -134,7 +137,7 @@ class PlayerScreen extends ConsumerWidget {
     return MxScaffold(
       appBar: appBar,
       children: [
-        Dots(active: state.activeDot),
+        PlayerDots(active: state.activeDot),
         PlayerCard(term: card.term, meaning: card.meanings.first.text),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -159,26 +162,25 @@ class PlayerScreen extends ConsumerWidget {
             ),
           ],
         ),
-        if (state.speedOpen)
-          MxSegmentedControl(
-            block: true,
-            value: state.speed,
-            onChanged: controller.setSpeed,
-            segments: [
-              for (final rate in playerSpeeds)
-                MxSegment(value: rate, label: l10n.playerSpeedValue(rate)),
-            ],
-          )
-        else
-          Center(
-            child: MxButton(
-              label: l10n.playerSpeedValue(state.speed),
-              icon: Icons.speed,
-              variant: MxButtonVariant.ghost,
-              size: MxButtonSize.small,
-              onPressed: controller.toggleSpeedControl,
-            ),
-          ),
+        state.speedOpen
+            ? MxSegmentedControl(
+                block: true,
+                value: state.speed,
+                onChanged: controller.setSpeed,
+                segments: [
+                  for (final rate in playerSpeeds)
+                    MxSegment(value: rate, label: l10n.playerSpeedValue(rate)),
+                ],
+              )
+            : Center(
+                child: MxButton(
+                  label: l10n.playerSpeedValue(state.speed),
+                  icon: Icons.speed,
+                  variant: MxButtonVariant.ghost,
+                  size: MxButtonSize.small,
+                  onPressed: controller.toggleSpeedControl,
+                ),
+              ),
       ],
     );
   }

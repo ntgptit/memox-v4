@@ -90,7 +90,8 @@ class StatisticsScreen extends ConsumerWidget {
         data.leitner[box] ?? 0,
     ];
     final leitnerLabels = [
-      for (var box = BoxLevel.firstScheduled; box <= BoxLevel.max; box++) '$box',
+      for (var box = BoxLevel.firstScheduled; box <= BoxLevel.max; box++)
+        '$box',
     ];
 
     return MxScaffold(
@@ -123,18 +124,31 @@ class StatisticsScreen extends ConsumerWidget {
           caption: l10n.statsCalendarCaption,
         ),
         MxCard(child: Heatmap(days: data.heatmapDays)),
-        MxSectionHeader(title: l10n.statsWeekly, caption: l10n.statsWeeklyCaption),
-        MxCard(child: Bars(data: data.weeklyMinutes, labels: weekdayInitials)),
-        MxSectionHeader(title: l10n.statsLeitner, caption: l10n.statsLeitnerCaption),
+        MxSectionHeader(
+          title: l10n.statsWeekly,
+          caption: l10n.statsWeeklyCaption,
+        ),
         MxCard(
-          child: Bars(
+          child: StatBars(data: data.weeklyMinutes, labels: weekdayInitials),
+        ),
+        MxSectionHeader(
+          title: l10n.statsLeitner,
+          caption: l10n.statsLeitnerCaption,
+        ),
+        MxCard(
+          child: StatBars(
             data: leitnerValues,
             labels: leitnerLabels,
             color: scheme.secondary,
           ),
         ),
         MxSectionHeader(title: l10n.statsMastery),
-        MxCard(child: Donut(percent: data.masteryPercent, label: l10n.statsMasteryLabel)),
+        MxCard(
+          child: Donut(
+            percent: data.masteryPercent,
+            label: l10n.statsMasteryLabel,
+          ),
+        ),
         MxSectionHeader(title: l10n.statsOverview),
         IntrinsicHeight(
           child: Row(

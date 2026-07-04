@@ -49,32 +49,34 @@ class MeaningCard extends StatelessWidget {
                     fontFamily: MxTypography.fontFamily,
                     fontSize: MxTypography.sizeSm,
                     fontWeight: MxTypography.bold,
-                    letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
+                    letterSpacing:
+                        MxTypography.sizeSm * MxTypography.trackingWide,
                     color: mx.textTertiary,
                   ),
                 ),
               ),
               MxIconButton(
                 icon: editing ? Icons.close : Icons.edit,
-                semanticLabel: editing ? l10n.reviewEditCancel : l10n.reviewEdit,
+                semanticLabel: editing
+                    ? l10n.reviewEditCancel
+                    : l10n.reviewEdit,
                 size: MxIconButtonSize.small,
                 onPressed: editing ? onCancel : onEdit,
               ),
             ],
           ),
           const SizedBox(height: MxSpacing.space3),
-          if (editing)
-            _editor(l10n, scheme)
-          else
-            Text(
-              meaning,
-              style: TextStyle(
-                fontFamily: MxTypography.fontFamily,
-                fontSize: MxTypography.size2xl,
-                fontWeight: MxTypography.bold,
-                color: scheme.onSurface,
-              ),
-            ),
+          editing
+              ? _editor(l10n, scheme)
+              : Text(
+                  meaning,
+                  style: TextStyle(
+                    fontFamily: MxTypography.fontFamily,
+                    fontSize: MxTypography.size2xl,
+                    fontWeight: MxTypography.bold,
+                    color: scheme.onSurface,
+                  ),
+                ),
         ],
       ),
     );

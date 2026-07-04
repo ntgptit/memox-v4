@@ -77,7 +77,7 @@ class LibraryNodeCard extends StatelessWidget {
           ),
           if (node.due > 0) ...[
             const SizedBox(width: MxSpacing.space3),
-            MxBadge(label: '${node.due}'),
+            MxBadge(label: node.due.toString()),
           ],
         ],
       ),

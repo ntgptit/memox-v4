@@ -37,8 +37,10 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
-    final harness =
-        FakeHarness(activity: activity, deckRepository: deckRepository);
+    final harness = FakeHarness(
+      activity: activity,
+      deckRepository: deckRepository,
+    );
     await tester.pumpWidget(
       ProviderScope(
         overrides: harness.overrides,
@@ -60,15 +62,16 @@ void main() {
     testWidgets('insufficient: no study activity yet ($theme)', (tester) async {
       await pump(tester, dark: dark); // default fake activity is empty
       expect(find.text('Not enough data'), findsOneWidget);
-      expect(find.byType(Bars), findsNothing);
+      expect(find.byType(StatBars), findsNothing);
     });
 
-    testWidgets('loaded: charts render once there is activity ($theme)',
-        (tester) async {
+    testWidgets('loaded: charts render once there is activity ($theme)', (
+      tester,
+    ) async {
       await pump(tester, dark: dark, activity: await _seededActivity());
 
       expect(find.byType(Heatmap), findsOneWidget);
-      expect(find.byType(Bars), findsNWidgets(2)); // weekly + Leitner
+      expect(find.byType(StatBars), findsNWidgets(2)); // weekly + Leitner
       expect(find.byType(Donut), findsOneWidget);
       expect(find.text('Study calendar'), findsOneWidget);
       expect(find.text('Library overview'), findsOneWidget);
@@ -106,15 +109,15 @@ Future<FakeDailyActivityService> _seededActivity() async {
   final svc = FakeDailyActivityService();
   var seq = 0;
   Future<void> rec(DateTime day, int minutes) => svc.record(
-        StudySession(
-          id: StudySessionId('s-${seq++}'),
-          deckId: const DeckId('deck-root'),
-          mode: StudyMode.dueReview,
-          startedAt: day,
-          durationMinutes: minutes,
-          wordsStudied: minutes,
-        ),
-      );
+    StudySession(
+      id: StudySessionId('s-${seq++}'),
+      deckId: const DeckId('deck-root'),
+      mode: StudyMode.dueReview,
+      startedAt: day,
+      durationMinutes: minutes,
+      wordsStudied: minutes,
+    ),
+  );
   for (var i = 0; i < 5; i++) {
     await rec(_today.subtract(Duration(days: i)), 10 + i * 3);
   }

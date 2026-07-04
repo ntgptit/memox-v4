@@ -86,8 +86,9 @@ void main() {
   for (final dark in [false, true]) {
     final theme = dark ? 'dark' : 'light';
 
-    testWidgets('goal met: celebration head + streak card ($theme)',
-        (tester) async {
+    testWidgets('goal met: celebration head + streak card ($theme)', (
+      tester,
+    ) async {
       await pump(
         tester,
         dark: dark,
@@ -136,26 +137,30 @@ void main() {
     expect(find.text('Not now'), findsOneWidget);
   });
 
-  test('head is goal-met when the goal is reached, missed when configured but not',
-      () async {
-    final metHarness = FakeHarness(
-      store: makeStore(const DailyGoal(minutesTarget: 15)),
-      activity: await _activity(minutes: 30, words: 10),
-    );
-    final metContainer = ProviderContainer(overrides: metHarness.overrides);
-    addTearDown(metContainer.dispose);
-    final met = await metContainer.read(studyResultControllerProvider.future);
-    expect(met.head, ResultHead.goalMet);
-    expect(met.goalMet, isTrue);
+  test(
+    'head is goal-met when the goal is reached, missed when configured but not',
+    () async {
+      final metHarness = FakeHarness(
+        store: makeStore(const DailyGoal(minutesTarget: 15)),
+        activity: await _activity(minutes: 30, words: 10),
+      );
+      final metContainer = ProviderContainer(overrides: metHarness.overrides);
+      addTearDown(metContainer.dispose);
+      final met = await metContainer.read(studyResultControllerProvider.future);
+      expect(met.head, ResultHead.goalMet);
+      expect(met.goalMet, isTrue);
 
-    final missHarness = FakeHarness(
-      store: makeStore(const DailyGoal(minutesTarget: 60)),
-      activity: await _activity(minutes: 5, words: 1),
-    );
-    final missContainer = ProviderContainer(overrides: missHarness.overrides);
-    addTearDown(missContainer.dispose);
-    final miss = await missContainer.read(studyResultControllerProvider.future);
-    expect(miss.head, ResultHead.goalMissed);
-    expect(miss.goalMet, isFalse);
-  });
+      final missHarness = FakeHarness(
+        store: makeStore(const DailyGoal(minutesTarget: 60)),
+        activity: await _activity(minutes: 5, words: 1),
+      );
+      final missContainer = ProviderContainer(overrides: missHarness.overrides);
+      addTearDown(missContainer.dispose);
+      final miss = await missContainer.read(
+        studyResultControllerProvider.future,
+      );
+      expect(miss.head, ResultHead.goalMissed);
+      expect(miss.goalMet, isFalse);
+    },
+  );
 }

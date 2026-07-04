@@ -40,11 +40,14 @@ class GameRecallScreen extends ConsumerWidget {
     final async = ref.watch(recallControllerProvider);
 
     return async.when(
-      loading: () => MxScaffold(appBar: appBar, children: const [
-        MxProgressBar(value: 0),
-        SizedBox(height: MxSpacing.space5),
-        MxSkeleton(height: 200),
-      ]),
+      loading: () => MxScaffold(
+        appBar: appBar,
+        children: const [
+          MxProgressBar(value: 0),
+          SizedBox(height: MxSpacing.space5),
+          MxSkeleton(height: 200),
+        ],
+      ),
       error: (_, _) => MxScaffold(
         appBar: appBar,
         children: [
@@ -124,33 +127,32 @@ class GameRecallScreen extends ConsumerWidget {
           onEdit: () => context.push(Routes.editCard(card.cardId)),
         ),
         MeaningPanel(meaning: card.meaning, revealed: state.revealed),
-        if (!state.revealed)
-          MxButton(
-            label: l10n.recallShow,
-            icon: Icons.visibility,
-            size: MxButtonSize.large,
-            block: true,
-            onPressed: controller.reveal,
-          )
-        else
-          Row(
-            children: [
-              Expanded(
-                child: MxButton(
-                  label: l10n.recallForgot,
-                  variant: MxButtonVariant.outline,
-                  onPressed: controller.forgot,
-                ),
+        !state.revealed
+            ? MxButton(
+                label: l10n.recallShow,
+                icon: Icons.visibility,
+                size: MxButtonSize.large,
+                block: true,
+                onPressed: controller.reveal,
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    child: MxButton(
+                      label: l10n.recallForgot,
+                      variant: MxButtonVariant.outline,
+                      onPressed: controller.forgot,
+                    ),
+                  ),
+                  const SizedBox(width: MxSpacing.space3),
+                  Expanded(
+                    child: MxButton(
+                      label: l10n.recallGotIt,
+                      onPressed: controller.gotIt,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: MxSpacing.space3),
-              Expanded(
-                child: MxButton(
-                  label: l10n.recallGotIt,
-                  onPressed: controller.gotIt,
-                ),
-              ),
-            ],
-          ),
       ],
     );
   }

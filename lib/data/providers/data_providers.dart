@@ -36,43 +36,43 @@ part 'data_providers.g.dart';
 @riverpod
 Clock clock(Ref ref) => const SystemClock();
 
-@riverpod
+@Riverpod(keepAlive: true)
 DeckRepository deckRepository(Ref ref) => DriftDeckRepository(
-      ref.watch(appDatabaseProvider),
-      ref.watch(clockProvider),
-    );
+  ref.watch(appDatabaseProvider),
+  ref.watch(clockProvider),
+);
 
-@riverpod
+@Riverpod(keepAlive: true)
 CardRepository cardRepository(Ref ref) => DriftCardRepository(
-      ref.watch(appDatabaseProvider),
-      ref.watch(clockProvider),
-    );
+  ref.watch(appDatabaseProvider),
+  ref.watch(clockProvider),
+);
 
-@riverpod
+@Riverpod(keepAlive: true)
 ReviewRepository reviewRepository(Ref ref) => DriftReviewRepository(
-      ref.watch(appDatabaseProvider),
-      ref.watch(clockProvider),
-    );
+  ref.watch(appDatabaseProvider),
+  ref.watch(clockProvider),
+);
 
-@riverpod
+@Riverpod(keepAlive: true)
 SettingsRepository settingsRepository(Ref ref) =>
     DriftSettingsRepository(ref.watch(appDatabaseProvider));
 
-@riverpod
+@Riverpod(keepAlive: true)
 SettingsService settingsService(Ref ref) =>
     DriftSettingsService(ref.watch(appDatabaseProvider));
 
-@riverpod
+@Riverpod(keepAlive: true)
 RecentSearchService recentSearchService(Ref ref) =>
     DriftRecentSearchService(ref.watch(appDatabaseProvider));
 
-@riverpod
+@Riverpod(keepAlive: true)
 LanguagePairService languagePairService(Ref ref) => DriftLanguagePairService(
-      ref.watch(appDatabaseProvider),
-      ref.watch(clockProvider),
-    );
+  ref.watch(appDatabaseProvider),
+  ref.watch(clockProvider),
+);
 
-@riverpod
+@Riverpod(keepAlive: true)
 DailyActivityService dailyActivityService(Ref ref) =>
     DriftDailyActivityService(ref.watch(appDatabaseProvider));
 
@@ -80,17 +80,17 @@ DailyActivityService dailyActivityService(Ref ref) =>
 // file picker/share sheet, and local backup have no plugin in this build, so
 // their adapters are documented no-op/deferred (clipboard is real) — the seam is
 // satisfied and a real plugin adapter drops in without touching a screen.
-@riverpod
+@Riverpod(keepAlive: true)
 ReminderNotificationService reminderNotificationService(Ref ref) =>
     const NoopReminderNotificationService();
 
-@riverpod
+@Riverpod(keepAlive: true)
 AudioService audioService(Ref ref) => const NoopAudioService();
 
-@riverpod
+@Riverpod(keepAlive: true)
 ImportExportFileService importExportFileService(Ref ref) =>
     const ClipboardImportExportFileService();
 
-@riverpod
+@Riverpod(keepAlive: true)
 BackupRestoreService backupRestoreService(Ref ref) =>
     const DeferredBackupRestoreService();

@@ -46,30 +46,33 @@ class StageRecall extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: MxTypography.fontFamily,
-                fontSize: revealed ? MxTypography.size2xl : MxTypography.sizeBase,
-                fontWeight: revealed ? MxTypography.bold : MxTypography.semibold,
+                fontSize: revealed
+                    ? MxTypography.size2xl
+                    : MxTypography.sizeBase,
+                fontWeight: revealed
+                    ? MxTypography.bold
+                    : MxTypography.semibold,
                 color: revealed ? scheme.onSurface : mx.textTertiary,
               ),
             ),
           ),
         ),
         const SizedBox(height: MxSpacing.space5),
-        if (revealed)
-          MxButton(
-            label: l10n.studyNext,
-            icon: Icons.arrow_forward,
-            size: MxButtonSize.large,
-            block: true,
-            onPressed: onNext,
-          )
-        else
-          MxButton(
-            label: l10n.studyReveal,
-            icon: Icons.visibility,
-            size: MxButtonSize.large,
-            block: true,
-            onPressed: onReveal,
-          ),
+        revealed
+            ? MxButton(
+                label: l10n.studyNext,
+                icon: Icons.arrow_forward,
+                size: MxButtonSize.large,
+                block: true,
+                onPressed: onNext,
+              )
+            : MxButton(
+                label: l10n.studyReveal,
+                icon: Icons.visibility,
+                size: MxButtonSize.large,
+                block: true,
+                onPressed: onReveal,
+              ),
       ],
     );
   }

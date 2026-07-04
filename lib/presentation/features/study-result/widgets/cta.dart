@@ -6,8 +6,8 @@ import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 
 /// Study-result local (kit `Cta`): the primary + secondary action pair, which
 /// varies by the result [head]. Copy is from ARB.
-class Cta extends StatelessWidget {
-  const Cta({
+class ResultCta extends StatelessWidget {
+  const ResultCta({
     required this.head,
     this.wrongCount = 0,
     this.onPrimary,
@@ -27,11 +27,15 @@ class Cta extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final (primaryLabel, primaryIcon, secondaryLabel) = switch (head) {
       ResultHead.manyWrong => (
-          l10n.resultReviewWrong(wrongCount),
-          Icons.replay,
-          l10n.resultBackToLibrary,
-        ),
-      ResultHead.goalMissed => (l10n.resultKeepGoing, Icons.bolt, l10n.resultLater),
+        l10n.resultReviewWrong(wrongCount),
+        Icons.replay,
+        l10n.resultBackToLibrary,
+      ),
+      ResultHead.goalMissed => (
+        l10n.resultKeepGoing,
+        Icons.bolt,
+        l10n.resultLater,
+      ),
       _ => (l10n.resultKeepStudying, Icons.bolt, l10n.resultBackToLibrary),
     };
 

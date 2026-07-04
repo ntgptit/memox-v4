@@ -77,8 +77,9 @@ class _Menu extends ConsumerWidget {
             DrawerItem(
               icon: Icons.add,
               label: l10n.drawerAddLanguage,
-              onPressed: () =>
-                  ref.read(drawerViewStateProvider.notifier).show(DrawerView.addLanguage),
+              onPressed: () => ref
+                  .read(drawerViewStateProvider.notifier)
+                  .show(DrawerView.addLanguage),
             ),
             DrawerItem(
               icon: Icons.delete,
@@ -161,7 +162,10 @@ class _AddLanguage extends ConsumerWidget {
           onPressed: () => _pick(context, ref, learning: true),
         ),
         Center(
-          child: Icon(Icons.arrow_downward, color: MxTheme.of(context).textTertiary),
+          child: Icon(
+            Icons.arrow_downward,
+            color: MxTheme.of(context).textTertiary,
+          ),
         ),
         _Label(l10n.drawerSectionNative),
         LangCard(
@@ -176,7 +180,9 @@ class _AddLanguage extends ConsumerWidget {
           block: true,
           onPressed: draft.canAdd
               ? () {
-                  ref.read(languagePairControllerProvider.notifier).addPair(
+                  ref
+                      .read(languagePairControllerProvider.notifier)
+                      .addPair(
                         learning: draft.learning!,
                         native: draft.native!,
                       );
@@ -240,7 +246,9 @@ class _RemoveLanguage extends ConsumerWidget {
     return async.when(
       loading: () => MxScaffold(
         appBar: appBar,
-        children: const [MxCard(padding: MxCardPadding.small, child: MxSkeleton(height: 48))],
+        children: const [
+          MxCard(padding: MxCardPadding.small, child: MxSkeleton(height: 48)),
+        ],
       ),
       error: (_, _) => MxScaffold(
         appBar: appBar,
@@ -264,35 +272,36 @@ class _RemoveLanguage extends ConsumerWidget {
       data: (pairs) => MxScaffold(
         appBar: appBar,
         children: [
-          if (pairs.isEmpty)
-            SizedBox(
-              height: _stateBoxHeight,
-              child: MxEmptyState(
-                icon: Icons.translate,
-                title: l10n.drawerRemoveEmptyTitle,
-                text: l10n.drawerRemoveEmptyText,
-              ),
-            )
-          else
-            MxCard(
-              padding: MxCardPadding.small,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (final (index, pair) in pairs.indexed)
-                    MxListRow(
-                      icon: Icons.translate,
-                      title: _label(pair),
-                      last: index == pairs.length - 1,
-                      trailing: MxIconButton(
-                        icon: Icons.delete,
-                        semanticLabel: l10n.drawerRemovePairLabel(_label(pair)),
-                        onPressed: () => _confirmRemove(context, ref, pair),
-                      ),
-                    ),
-                ],
-              ),
-            ),
+          pairs.isEmpty
+              ? SizedBox(
+                  height: _stateBoxHeight,
+                  child: MxEmptyState(
+                    icon: Icons.translate,
+                    title: l10n.drawerRemoveEmptyTitle,
+                    text: l10n.drawerRemoveEmptyText,
+                  ),
+                )
+              : MxCard(
+                  padding: MxCardPadding.small,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (final (index, pair) in pairs.indexed)
+                        MxListRow(
+                          icon: Icons.translate,
+                          title: _label(pair),
+                          last: index == pairs.length - 1,
+                          trailing: MxIconButton(
+                            icon: Icons.delete,
+                            semanticLabel: l10n.drawerRemovePairLabel(
+                              _label(pair),
+                            ),
+                            onPressed: () => _confirmRemove(context, ref, pair),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
         ],
       ),
     );
@@ -306,8 +315,10 @@ class _RemoveLanguage extends ConsumerWidget {
     WidgetRef ref,
     LanguagePair pair,
   ) async {
-    final confirmed =
-        await showRemoveLanguageDialog(context, pairLabel: _label(pair));
+    final confirmed = await showRemoveLanguageDialog(
+      context,
+      pairLabel: _label(pair),
+    );
     if (!confirmed) return;
     await ref.read(languagePairControllerProvider.notifier).removePair(pair.id);
   }
