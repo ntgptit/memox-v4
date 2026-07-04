@@ -13,6 +13,7 @@ import 'package:memox_v4/presentation/features/deck-detail/widgets/deck_menu.dar
 import 'package:memox_v4/presentation/features/deck-detail/widgets/delete_confirm_dialog.dart';
 import 'package:memox_v4/presentation/features/deck-detail/widgets/flashcard_row.dart';
 import 'package:memox_v4/presentation/features/deck-detail/widgets/sub_deck_card.dart';
+import 'package:memox_v4/presentation/shared/composites/input_dialog.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
@@ -312,7 +313,7 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
             title: l10n.deckDetailAddSubdeck,
             onPressed: () {
               Navigator.of(context).pop();
-              context.push(Routes.add);
+              _openCreateSubDeck();
             },
           ),
           MxListRow(
@@ -327,6 +328,23 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
         ],
       ),
     );
+  }
+
+  /// Prompt for a name (kit `deck-detail/new-subdeck`) and create a sub-deck
+  /// under the current deck.
+  Future<void> _openCreateSubDeck() async {
+    final l10n = AppLocalizations.of(context);
+    final name = await showMxInputDialog(
+      context: context,
+      icon: Icons.library_add,
+      title: l10n.deckDetailAddSubdeck,
+      label: l10n.deckNameLabel,
+      placeholder: l10n.deckDetailSubdeckPlaceholder,
+      confirmLabel: l10n.actionCreate,
+      cancelLabel: l10n.actionCancel,
+    );
+    if (name == null) return;
+    await _controller.createSubDeck(name);
   }
 
   void _openCardActions(DeckCardInfo card) {
@@ -406,7 +424,7 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
                 variant: MxButtonVariant.ghost,
                 icon: Icons.library_add,
                 block: true,
-                onPressed: () => context.push(Routes.add),
+                onPressed: _openCreateSubDeck,
               ),
               const SizedBox(height: MxSpacing.space3),
               MxButton(

@@ -180,6 +180,18 @@ class DeckDetailController extends _$DeckDetailController {
         ).call(_id!),
       );
 
+  /// Create a sub-deck under this deck from the learner-entered [name] (kit
+  /// `deck-detail/new-subdeck`). Id is clock-stamped (import convention); the name
+  /// is validated by [Deck.create] (BR-1).
+  Future<void> createSubDeck(String name) => _mutate(() async {
+        final id = DeckId(
+            'deck-${ref.read(clockProvider).now().microsecondsSinceEpoch}');
+        final created = Deck.create(id: id, name: name, parentId: _id);
+        if (created case Err(:final failure)) return Err<Deck>(failure);
+        return SaveDeck(ref.read(deckRepositoryProvider))
+            .call((created as Ok<Deck>).value);
+      });
+
   Future<void> deleteDeck() => _mutate(
         () => DeleteDeck(ref.read(deckRepositoryProvider)).call(_id!),
       );

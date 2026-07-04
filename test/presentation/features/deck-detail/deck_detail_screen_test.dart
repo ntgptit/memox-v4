@@ -12,6 +12,7 @@ import 'package:memox_v4/domain/entities/deck_stats.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
+import 'package:memox_v4/presentation/features/deck-detail/providers/deck_detail_providers.dart';
 import 'package:memox_v4/presentation/features/deck-detail/screens/deck_detail_screen.dart';
 import 'package:memox_v4/presentation/features/deck-detail/widgets/flashcard_row.dart';
 import 'package:memox_v4/presentation/features/deck-detail/widgets/sub_deck_card.dart';
@@ -141,6 +142,25 @@ void main() {
 
     expect(find.text('Move'), findsOneWidget);
     expect(find.text('Delete deck'), findsOneWidget);
+  });
+
+  test('createSubDeck persists a child deck under the current deck', () async {
+    final harness = FakeHarness(store: seedFakeStore());
+    final container = ProviderContainer(overrides: harness.overrides);
+    addTearDown(container.dispose);
+
+    const parent = 'deck-food'; // holds cards, no sub-decks
+    final before =
+        await container.read(deckDetailControllerProvider(parent).future);
+    expect(before.subDecks, isEmpty);
+
+    await container
+        .read(deckDetailControllerProvider(parent).notifier)
+        .createSubDeck('Irregular Verbs');
+
+    final after =
+        await container.read(deckDetailControllerProvider(parent).future);
+    expect(after.subDecks.map((d) => d.name), contains('Irregular Verbs'));
   });
 }
 

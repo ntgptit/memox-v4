@@ -127,6 +127,20 @@ function Dialog({ icon, tone, title, text, actions, node }) {
   );
 }
 
+/* Labeled text input for a naming dialog (create deck / sub-deck / rename).
+   Static in the kit — Flutter wires the editable field. Drop into a <Dialog>
+   body via its `text` slot; `value` renders a filled state, else `placeholder`. */
+function DialogInput({ label, placeholder, value }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', width: '100%', textAlign: 'left' }}>
+      {label ? <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>{label}</div> : null}
+      <div style={{ minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', display: 'flex', alignItems: 'center' }}>
+        <span style={{ fontSize: 'var(--memox-font-size-base)', color: value ? 'var(--memox-text)' : 'var(--memox-text-tertiary)' }}>{value || placeholder}</span>
+      </div>
+    </div>
+  );
+}
+
 /* Inline tinted callout — icon + text on a soft tonal background. */
 function Note({ icon, text, tone = 'accent' }) {
   const map = {
@@ -174,4 +188,4 @@ function ChoiceOption({ text, tone, node, onClick }) {
   );
 }
 
-Object.assign(window, { ProgressBar, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, Dialog, Note, SectionLabel, Ring, ChoiceOption });
+Object.assign(window, { ProgressBar, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });
