@@ -38,8 +38,10 @@ class ThemeController extends _$ThemeController {
 }
 
 /// The app-wide [ThemeMode] derived from the saved colour mode (BR-1/BR-3), so the
-/// theme applies live. Accent + font-scale live re-theming is deferred (the token
-/// system is single-accent) — those are persisted + previewed on the theme screen.
+/// theme applies live. **Accent** live re-theming is still deferred — the token
+/// system is single-accent (no `warm`/`cool` accent tokens; that needs a
+/// design-system change), so accent is persisted + previewed only. **Font scale**
+/// is now applied live app-wide via [textScaleFactor].
 @riverpod
 Stream<ThemeMode> themeMode(Ref ref) =>
     ref.watch(settingsServiceProvider).watchTheme().map(
@@ -48,4 +50,27 @@ Stream<ThemeMode> themeMode(Ref ref) =>
             ColorMode.dark => ThemeMode.dark,
             ColorMode.system => ThemeMode.system,
           },
+        );
+
+/// Text-scale factors for each [FontScale] step (applied app-wide via a
+/// MediaQuery `TextScaler` — see `MemoxApp`).
+const double fontScaleSmallFactor = 0.9;
+const double fontScaleMediumFactor = 1.0;
+const double fontScaleLargeFactor = 1.15;
+
+/// The relative text scale for a [FontScale] setting.
+extension FontScaleFactor on FontScale {
+  double get factor => switch (this) {
+        FontScale.small => fontScaleSmallFactor,
+        FontScale.medium => fontScaleMediumFactor,
+        FontScale.large => fontScaleLargeFactor,
+      };
+}
+
+/// The app-wide text scale derived from the saved font-scale setting, so the
+/// choice on the theme screen applies live everywhere (personalization BR-2/BR-3).
+@riverpod
+Stream<double> textScaleFactor(Ref ref) =>
+    ref.watch(settingsServiceProvider).watchTheme().map(
+          (settings) => settings.fontScale.factor,
         );
