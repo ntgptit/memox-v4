@@ -7,7 +7,7 @@ Detail per unit: [`WBS.md`](WBS.md). Tick `[x]` after merge; append id to `DONE.
 |---|---|---|---|
 | [x] | G.01 | settings/group-expanded — SRS detail sub-page | deferred UI |
 | [ ] | G.02 | statistics/scope-switch — This pair / All | ⚠ yes |
-| [ ] | G.03 | deck-detail/reset-confirm — reset card progress | ⚠ yes |
+| [x] | G.03 | deck-detail/reset-confirm — reset card progress | ⚠ yes |
 | [ ] | G.04 | player/speed→TTS — apply playback rate | fidelity |
 | [ ] | G.05 | library/sort — date-created + last-studied | fidelity |
 | [ ] | G.06 | game-matching/correct-flash | fidelity |
