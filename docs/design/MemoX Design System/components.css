@@ -768,3 +768,29 @@
 .avatar--ring {
   box-shadow: 0 0 0 2px var(--memox-surface), 0 0 0 4px var(--memox-primary);
 }
+
+/* ============================================================
+   MxTextField  ·  .field
+   Bare inline input — the visible box (if any) is the caller's container.
+   ============================================================ */
+.field {
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--memox-font-size-base);
+  color: var(--memox-text);
+  caret-color: var(--memox-primary);
+}
+.field::placeholder {
+  color: var(--memox-text-tertiary);
+}
+.field--center {
+  text-align: center;
+}
+.field--multiline {
+  resize: none;
+  line-height: var(--memox-line-height-normal);
+}

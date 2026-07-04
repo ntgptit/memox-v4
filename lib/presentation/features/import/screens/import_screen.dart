@@ -23,6 +23,7 @@ import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_chip.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_switch.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
 /// Fixed height for the done / empty boxes.
 const double _stateBoxHeight = 360;
@@ -367,7 +368,7 @@ class _PasteField extends StatelessWidget {
         borderRadius: MxRadius.controlRadius,
         border: Border.all(color: mx.divider, width: MxStroke.hairline),
       ),
-      child: TextField(
+      child: MxTextField(
         controller: controller,
         focusNode: focusNode,
         onChanged: onChanged,
@@ -378,16 +379,7 @@ class _PasteField extends StatelessWidget {
           fontSize: MxTypography.sizeBase,
           color: scheme.onSurface,
         ),
-        decoration: InputDecoration(
-          isCollapsed: true,
-          border: InputBorder.none,
-          hintText: hint,
-          hintStyle: TextStyle(
-            fontFamily: MxTypography.fontFamily,
-            fontSize: MxTypography.sizeBase,
-            color: mx.textTertiary,
-          ),
-        ),
+        hintText: hint,
       ),
     );
   }

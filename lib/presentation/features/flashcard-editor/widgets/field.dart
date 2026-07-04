@@ -4,6 +4,7 @@ import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
 /// Editor-local labelled field (kit `Field`): a label (with an optional required
 /// marker), a bordered input — an editable [TextField] when [controller] is set,
@@ -111,18 +112,13 @@ class Field extends StatelessWidget {
     if (controller == null) {
       return Text(value ?? '', style: textStyle.copyWith(color: mx.textSecondary));
     }
-    return TextField(
-      controller: controller,
+    return MxTextField(
+      controller: controller!,
       onChanged: onChanged,
       maxLines: multiline ? null : 1,
       minLines: multiline ? 3 : 1,
       style: textStyle,
-      decoration: InputDecoration(
-        isCollapsed: true,
-        border: InputBorder.none,
-        hintText: placeholder,
-        hintStyle: textStyle.copyWith(color: mx.textTertiary),
-      ),
+      hintText: placeholder,
     );
   }
 }

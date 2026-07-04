@@ -8,6 +8,7 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/study-session/widgets/prompt_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
 /// Study-session local (kit `StageTyping`): stage 5 — the meaning is prompted;
 /// type the term and check. Help reveals a hint. Copy is from ARB.
@@ -51,7 +52,7 @@ class StageTyping extends StatelessWidget {
             borderRadius: MxRadius.controlRadius,
             border: Border.all(color: mx.divider, width: MxStroke.hairline),
           ),
-          child: TextField(
+          child: MxTextField(
             controller: controller,
             textAlign: TextAlign.center,
             onSubmitted: (_) => onCheck?.call(),
@@ -61,16 +62,12 @@ class StageTyping extends StatelessWidget {
               fontWeight: MxTypography.extrabold,
               color: scheme.onSurface,
             ),
-            decoration: InputDecoration(
-              isCollapsed: true,
-              border: InputBorder.none,
-              hintText: l10n.studyTypePlaceholder,
-              hintStyle: TextStyle(
-                fontFamily: MxTypography.fontFamily,
-                fontSize: MxTypography.sizeBase,
-                fontWeight: MxTypography.semibold,
-                color: mx.textTertiary,
-              ),
+            hintText: l10n.studyTypePlaceholder,
+            hintStyle: TextStyle(
+              fontFamily: MxTypography.fontFamily,
+              fontSize: MxTypography.sizeBase,
+              fontWeight: MxTypography.semibold,
+              color: mx.textTertiary,
             ),
           ),
         ),

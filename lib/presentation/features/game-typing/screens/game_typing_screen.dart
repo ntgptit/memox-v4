@@ -18,6 +18,7 @@ import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_progress_bar.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
 /// Fixed height for the complete / empty / error boxes.
 const double _stateBoxHeight = 400;
@@ -197,21 +198,17 @@ class _GameTypingScreenState extends ConsumerState<GameTypingScreen> {
     if (state.outcome == TypingOutcome.correct) {
       return Text(card.term, textAlign: TextAlign.center, style: answerStyle);
     }
-    return TextField(
+    return MxTextField(
       controller: _answer,
       textAlign: TextAlign.center,
       style: answerStyle,
       onSubmitted: (_) => _check(),
-      decoration: InputDecoration(
-        isCollapsed: true,
-        border: InputBorder.none,
-        hintText: AppLocalizations.of(context).typingPlaceholder,
-        hintStyle: TextStyle(
-          fontFamily: MxTypography.fontFamily,
-          fontSize: MxTypography.sizeBase,
-          fontWeight: MxTypography.semibold,
-          color: MxTheme.of(context).textTertiary,
-        ),
+      hintText: AppLocalizations.of(context).typingPlaceholder,
+      hintStyle: TextStyle(
+        fontFamily: MxTypography.fontFamily,
+        fontSize: MxTypography.sizeBase,
+        fontWeight: MxTypography.semibold,
+        color: MxTheme.of(context).textTertiary,
       ),
     );
   }
