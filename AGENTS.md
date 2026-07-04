@@ -47,8 +47,11 @@ Stack: **Riverpod Annotation** (state + DI) · **Drift / SQLite** (persistence) 
    - **Exempt:** non-visual changes — data / domain / provider / behavior /
      persistence / a11y wiring / logic that produces no new or changed pixels.
    - A `PreToolUse` **kit-first guard** hook (`tool/hooks/kit-first-guard.mjs`, wired
-     in `.claude/settings.json`) fires on edits to Flutter UI files and forces this
-     check before the edit lands.
+     in `.claude/settings.json`) fires on edits to Flutter UI files. It never asks
+     the user — it **denies the first edit to a UI file and hands the agent a
+     directive** to run the kit-parity investigation (spawn an Explore sub-agent)
+     itself, then re-issue the edit (which then passes; the file is marked
+     kit-checked for ~30 min so it isn't re-gated mid-task). Fully automatic.
 3. **No raw visual values in UI** — never `Color(0x..)` / literal px. Use
    `MxColors`/`MxSpacing`/`MxRadius`/`MxTypography`/`MxShadows` + the `MxTheme`
    extension.
