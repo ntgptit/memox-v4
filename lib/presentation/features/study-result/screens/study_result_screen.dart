@@ -36,9 +36,12 @@ class StudyResultScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final async = ref.watch(studyResultControllerProvider);
+    // A loading pass that follows a Retry is a re-attempt → "Retrying…".
+    final retrying = ref.watch(finalizeRetryingProvider);
 
     return async.when(
-      loading: () => FinalizingView(onClose: () => _home(context)),
+      loading: () =>
+          FinalizingView(retry: retrying, onClose: () => _home(context)),
       error: (_, _) => MxScaffold(
         appBar: _bar(context, l10n),
         children: [
@@ -57,8 +60,13 @@ class StudyResultScreen extends ConsumerWidget {
                       label: l10n.resultErrorRetry,
                       icon: Icons.refresh,
                       block: true,
-                      onPressed: () =>
-                          ref.invalidate(studyResultControllerProvider),
+                      onPressed: () {
+                        // Reframe the next finalizing pass as a re-attempt.
+                        ref
+                            .read(finalizeRetryingProvider.notifier)
+                            .markRetry();
+                        ref.invalidate(studyResultControllerProvider);
+                      },
                     ),
                     const SizedBox(height: MxSpacing.space3),
                     MxButton(

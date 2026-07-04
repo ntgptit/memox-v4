@@ -12,6 +12,18 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'study_result_providers.g.dart';
 
+/// Whether the current finalizing (loading) pass is a **re-attempt** after a
+/// finalize error — so the finalizing view shows "Retrying…" instead of
+/// "Saving…". Set when the learner taps Retry on the error surface; auto-disposes
+/// (resets to false) with the screen, so a fresh result opens as a first save.
+@riverpod
+class FinalizeRetrying extends _$FinalizeRetrying {
+  @override
+  bool build() => false;
+
+  void markRetry() => state = true;
+}
+
 /// The headline mood of the result. `manyWrong` (the learner missed a lot this
 /// session) takes precedence over the goal-based moods — the actionable "review
 /// your misses" is the more useful message.
