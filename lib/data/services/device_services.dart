@@ -15,7 +15,11 @@ class NoopAudioService implements AudioService {
   const NoopAudioService();
 
   @override
-  Future<Result<void>> speak(String text, {required String languageCode}) async =>
+  Future<Result<void>> speak(
+    String text, {
+    required String languageCode,
+    double rate = 1.0,
+  }) async =>
       const Ok<void>(null);
 
   @override

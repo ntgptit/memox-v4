@@ -13,12 +13,17 @@ part 'player_providers.g.dart';
 /// Fixed term language for spoken playback (per-pair language deferred — gap).
 const String _termSpeakLanguage = 'ko';
 
-/// The playback-rate options (kit `player/speed-control`). Session-only — the
-/// rate is not yet applied to TTS (no rate on the `AudioService` seam — gap).
+/// The playback-rate options (kit `player/speed-control`). The chosen rate is
+/// passed to [AudioService.speak] on every read (audible once the real TTS
+/// adapter ships; the current adapter is a no-op that accepts the rate).
 const List<String> playerSpeeds = ['0.75', '1', '1.5'];
 
 /// The default playback rate.
 const String _defaultSpeed = '1';
+
+/// Fallback rate if a speed string can't be parsed (should not happen — the
+/// options are all valid doubles).
+const double _fallbackRate = 1.0;
 
 /// How many progress dots the deck indicator shows (kit `player/progress`).
 const int playerDotCount = 8;
@@ -150,7 +155,12 @@ class PlayerController extends _$PlayerController {
   void setSpeed(String value) {
     final data = state.asData?.value;
     if (data == null || !playerSpeeds.contains(value)) return;
-    state = AsyncData(data.copyWith(speed: value, speedOpen: false));
+    final next = data.copyWith(speed: value, speedOpen: false);
+    state = AsyncData(next);
+    // Re-read the current card at the new rate so the change is heard now.
+    if (next.playing && next.current != null) {
+      unawaited(_speak(next.current!));
+    }
   }
 
   void replay() {
@@ -163,12 +173,20 @@ class PlayerController extends _$PlayerController {
   }
 
   Future<void> _speak(Card card) async {
-    final result = await ref
-        .read(audioServiceProvider)
-        .speak(card.term, languageCode: _termSpeakLanguage);
+    final result = await ref.read(audioServiceProvider).speak(
+          card.term,
+          languageCode: _termSpeakLanguage,
+          rate: _currentRate(),
+        );
     if (result case Err(:final failure)) {
       ref.read(loggerProvider).error('player audio failed', error: failure);
     }
+  }
+
+  /// The active playback rate as a double (the selected speed option parsed).
+  double _currentRate() {
+    final speed = state.asData?.value.speed ?? _defaultSpeed;
+    return double.tryParse(speed) ?? _fallbackRate;
   }
 
   Future<void> _stop() async {
