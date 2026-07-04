@@ -40,21 +40,6 @@ class MxSegmentedControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
-    final onChanged = this.onChanged;
-
-    final children = <Widget>[];
-    for (var i = 0; i < segments.length; i++) {
-      final segment = segments[i];
-      final tile = _Segment(
-        segment: segment,
-        active: segment.value == value,
-        onTap: onChanged == null ? null : () => onChanged(segment.value),
-      );
-      children.add(block ? Expanded(child: tile) : tile);
-      if (i < segments.length - 1) {
-        children.add(const SizedBox(width: MxSpacing.space1));
-      }
-    }
 
     return Semantics(
       container: true,
@@ -66,9 +51,27 @@ class MxSegmentedControl extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: block ? MainAxisSize.max : MainAxisSize.min,
-          children: children,
+          children: [
+            for (var i = 0; i < segments.length; i++) ...[
+              block ? Expanded(child: _tile(i)) : _tile(i),
+              if (i < segments.length - 1)
+                const SizedBox(width: MxSpacing.space1),
+            ],
+          ],
         ),
       ),
+    );
+  }
+
+  /// One segment tile. [onChanged] is copied to a local so the null-check
+  /// promotes for the tap closure (a field would not).
+  Widget _tile(int i) {
+    final segment = segments[i];
+    final changed = onChanged;
+    return _Segment(
+      segment: segment,
+      active: segment.value == value,
+      onTap: changed == null ? null : () => changed(segment.value),
     );
   }
 }

@@ -37,7 +37,9 @@ class MxStatRing extends StatelessWidget {
     final ringColor = color ?? scheme.primary;
 
     return Semantics(
-      label: '$value $label',
+      // a11y label = the caller's already-localized value + label, space-joined
+      // (no literal copy of our own — the two are supplied from ARB).
+      label: [value, label].join(' '),
       child: SizedBox(
         width: size,
         height: size,
