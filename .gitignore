@@ -54,3 +54,6 @@ app.*.map.json
 # Generated localizations (flutter gen-l10n) — regenerated from lib/l10n/*.arb.
 # Agents: do NOT read these; regenerate with `flutter gen-l10n`.
 lib/l10n/app_localizations*.dart
+
+# Kit-first guard markers (tool/hooks/kit-first-guard.mjs) — per-session, local.
+tool/hooks/.kit-acks/
