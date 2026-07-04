@@ -5,7 +5,7 @@ import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/entities/card_meaning.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
-import 'package:memox_v4/domain/usecases/library/card_use_cases.dart';
+import 'package:memox_v4/domain/usecases/library/card_usecases.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'review_providers.g.dart';
@@ -53,7 +53,7 @@ class ReviewState {
 
 /// Drives the review browse: walks every card in the library (DM.5), steps
 /// forward/back, plays the term audio, and edits the meaning inline (saved via
-/// [SaveCard]). An async notifier rendered with `AsyncValue.when`; failed loads
+/// [SaveCardUseCase]). An async notifier rendered with `AsyncValue.when`; failed loads
 /// throw their [Failure] — surfaced localized by the screen + logged.
 @riverpod
 class ReviewController extends _$ReviewController {
@@ -116,7 +116,7 @@ class ReviewController extends _$ReviewController {
       return;
     }
 
-    final saved = await SaveCard(ref.read(cardRepositoryProvider))
+    final saved = await SaveCardUseCase(ref.read(cardRepositoryProvider))
         .call((updated as Ok<Card>).value);
     if (saved case Err(:final failure)) {
       ref.read(loggerProvider).error('review edit save failed', error: failure);

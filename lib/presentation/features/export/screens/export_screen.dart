@@ -25,7 +25,7 @@ import 'package:memox_v4/presentation/shared/primitives/mx_switch.dart';
 const double _doneBoxHeight = 400;
 
 /// The Export screen (S.11): a scope · format · separator · review-state config
-/// then an exporting → done flow. Drives DM.7 `BuildExport` (D-026) + DM.8 file
+/// then an exporting → done flow. Drives DM.7 `BuildExportUseCase` (D-026) + DM.8 file
 /// service through [exportControllerProvider]. No `setState`. Copy is from ARB.
 class ExportScreen extends ConsumerWidget {
   const ExportScreen({super.key});

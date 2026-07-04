@@ -2,15 +2,15 @@ import 'package:memox_v4/core/error/result.dart';
 import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/repositories/review_repository.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
 
 /// Builds the two study queues for a node (a parent node covers its subtree
 /// recursively, BR-6 — enforced by the repository query):
 /// - [due] — cards due for review at [asOf] (hidden excluded, BR-8);
 /// - [newCards] — new cards to introduce, capped at the remaining per-day
 ///   allowance (D-018) so a session never over-introduces.
-class BuildStudyQueue {
-  const BuildStudyQueue({
+class BuildStudyQueueUseCase {
+  const BuildStudyQueueUseCase({
     required ReviewRepository reviews,
     required SrsScheduler scheduler,
   })  : _reviews = reviews,

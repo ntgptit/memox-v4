@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:memox_v4/core/theme/app_theme.dart';
-import 'package:memox_v4/presentation/shared/composites/confirm_dialog.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_confirm_dialog.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 
 /// Pumps a screen with a button that opens the dialog and records its result.

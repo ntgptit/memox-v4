@@ -12,8 +12,8 @@ import 'package:memox_v4/data/repositories/drift_review_repository.dart';
 import 'package:memox_v4/data/seed/database_seeder.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/review_grade.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
-import 'package:memox_v4/domain/usecases/study/grade_card.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
+import 'package:memox_v4/domain/usecases/study/grade_card_usecase.dart';
 
 /// V.3 — cross-layer data integration: seed → DAO queries → repositories → the
 /// study use cases, all against one in-memory (or file) Drift DB. Where the DT
@@ -71,7 +71,7 @@ void main() {
 
   group('grade a due card (D-003) propagates across the stack', () {
     test('a pass reschedules it, empties the due queue, drops the badge', () async {
-      final grade = GradeCard(
+      final grade = GradeCardUseCase(
         reviews: reviews,
         scheduler: SrsScheduler(clock),
       );

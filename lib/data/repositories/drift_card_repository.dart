@@ -9,7 +9,7 @@ import 'package:memox_v4/data/models/mappers/time_mapper.dart';
 import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/repositories/card_repository.dart';
-import 'package:memox_v4/domain/usecases/library/card_search.dart';
+import 'package:memox_v4/domain/usecases/library/card_search_usecase.dart';
 
 /// Drift-backed [CardRepository] (DT.4). A card's write spans two tables
 /// (`cards` + `card_meanings`), so `save` runs in a transaction (all-or-nothing,
@@ -111,7 +111,7 @@ class DriftCardRepository implements CardRepository {
   @override
   Future<Result<List<Card>>> search(String query, {DeckId? within}) =>
       guardAsync(() async {
-        final tokens = CardSearch.tokenize(query);
+        final tokens = CardSearchUseCase.tokenize(query);
         if (tokens.isEmpty) return const <Card>[];
         final scope = within == null
             ? null

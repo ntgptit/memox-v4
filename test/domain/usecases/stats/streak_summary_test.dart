@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/domain/entities/daily_goal.dart';
 import 'package:memox_v4/domain/entities/streak.dart';
-import 'package:memox_v4/domain/usecases/stats/streak_summary.dart';
-import 'package:memox_v4/domain/usecases/study/streak_rollover.dart';
+import 'package:memox_v4/domain/usecases/stats/streak_summary_usecase.dart';
+import 'package:memox_v4/domain/usecases/study/streak_rollover_usecases.dart';
 
 void main() {
   // Goal met by 15 minutes (words target unused in these cases).

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/presentation/features/deck-detail/providers/deck_detail_providers.dart';
-import 'package:memox_v4/presentation/shared/composites/status_card_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_status_card_row.dart';
 
 /// Deck-detail card row (kit `FlashcardRow`): the shared [MxStatusCardRow] with
 /// the deck-detail tightening (tight term + ellipsis-clipped meaning). Wrap it in

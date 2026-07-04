@@ -5,7 +5,7 @@ import 'package:memox_v4/domain/entities/review_grade.dart';
 import 'package:memox_v4/domain/entities/review_log.dart';
 import 'package:memox_v4/domain/entities/srs_state.dart';
 import 'package:memox_v4/domain/repositories/review_repository.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
 
 /// Applies a review grade to a due card: read its current box, run the scheduler
 /// (promote on pass / demote on fail, D-003/D-004/D-005), persist the new SRS
@@ -13,8 +13,8 @@ import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
 ///
 /// The scheduler stamps `lastReviewedAt` with its clock's "now"; the same instant
 /// is reused for the review log so the two writes agree.
-class GradeCard {
-  const GradeCard({
+class GradeCardUseCase {
+  const GradeCardUseCase({
     required ReviewRepository reviews,
     required SrsScheduler scheduler,
   })  : _reviews = reviews,

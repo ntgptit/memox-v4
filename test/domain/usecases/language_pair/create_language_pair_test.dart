@@ -4,7 +4,7 @@ import 'package:memox_v4/core/error/result.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/language_pair.dart';
 import 'package:memox_v4/domain/services/language_pair_service.dart';
-import 'package:memox_v4/domain/usecases/language_pair/create_language_pair.dart';
+import 'package:memox_v4/domain/usecases/language_pair/create_language_pair_usecase.dart';
 
 class _FakeLanguagePairService implements LanguagePairService {
   LanguagePair? added;
@@ -28,10 +28,10 @@ class _FakeLanguagePairService implements LanguagePairService {
 void main() {
   const id = LanguagePairId('lp1');
 
-  group('CreateLanguagePair (D-030)', () {
+  group('CreateLanguagePairUseCase (D-030)', () {
     test('rejects an empty language code, without persisting', () async {
       final service = _FakeLanguagePairService();
-      final result = await (CreateLanguagePair(service)).call(
+      final result = await (CreateLanguagePairUseCase(service)).call(
         id: id,
         learningLanguage: '  ',
         nativeLanguage: 'vi',
@@ -43,7 +43,7 @@ void main() {
 
     test('rejects source == target (case-insensitive), without persisting', () async {
       final service = _FakeLanguagePairService();
-      final result = await (CreateLanguagePair(service)).call(
+      final result = await (CreateLanguagePairUseCase(service)).call(
         id: id,
         learningLanguage: 'EN',
         nativeLanguage: 'en',
@@ -54,7 +54,7 @@ void main() {
 
     test('creates + persists a valid distinct pair', () async {
       final service = _FakeLanguagePairService();
-      final result = await (CreateLanguagePair(service)).call(
+      final result = await (CreateLanguagePairUseCase(service)).call(
         id: id,
         learningLanguage: 'ko',
         nativeLanguage: 'vi',

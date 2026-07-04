@@ -6,8 +6,8 @@ import 'package:memox_v4/domain/repositories/deck_repository.dart';
 
 /// Upsert a deck — create or rename. The [Deck] is already validated by
 /// [Deck.create] (name required, BR-1), so this only persists it.
-class SaveDeck {
-  const SaveDeck(this._decks);
+class SaveDeckUseCase {
+  const SaveDeckUseCase(this._decks);
 
   final DeckRepository _decks;
 
@@ -17,8 +17,8 @@ class SaveDeck {
 /// Move a deck under a new parent (or to the root when [newParentId] is null),
 /// rejecting any move that would create a cycle — a deck cannot become its own
 /// parent nor move into its own subtree (deck-management BR-3 / AC-3).
-class MoveDeck {
-  const MoveDeck(this._decks);
+class MoveDeckUseCase {
+  const MoveDeckUseCase(this._decks);
 
   final DeckRepository _decks;
 
@@ -61,8 +61,8 @@ class MoveDeck {
 
 /// Delete a deck; the repository cascades the whole subtree — child decks, cards,
 /// meanings, SRS state (deck-management BR-4 / D-024).
-class DeleteDeck {
-  const DeleteDeck(this._decks);
+class DeleteDeckUseCase {
+  const DeleteDeckUseCase(this._decks);
 
   final DeckRepository _decks;
 

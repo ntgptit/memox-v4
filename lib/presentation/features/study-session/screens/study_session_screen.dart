@@ -17,7 +17,7 @@ import 'package:memox_v4/presentation/features/study-session/widgets/stage_match
 import 'package:memox_v4/presentation/features/study-session/widgets/stage_recall.dart';
 import 'package:memox_v4/presentation/features/study-session/widgets/stage_review.dart';
 import 'package:memox_v4/presentation/features/study-session/widgets/stage_typing.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';

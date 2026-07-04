@@ -5,8 +5,8 @@ import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/review_grade.dart';
 import 'package:memox_v4/domain/entities/review_log.dart';
 import 'package:memox_v4/domain/entities/srs_state.dart';
-import 'package:memox_v4/domain/usecases/stats/review_stats.dart';
-import 'package:memox_v4/domain/usecases/stats/srs_stats.dart';
+import 'package:memox_v4/domain/usecases/stats/review_stats_usecase.dart';
+import 'package:memox_v4/domain/usecases/stats/srs_stats_usecases.dart';
 
 BoxLevel _box(int v) => (BoxLevel.of(v) as Ok<BoxLevel>).value;
 

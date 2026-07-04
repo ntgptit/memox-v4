@@ -4,10 +4,11 @@ import 'package:memox_v4/domain/entities/box_level.dart';
 import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/entities/card_meaning.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
+import 'package:memox_v4/domain/entities/import_preview.dart';
 import 'package:memox_v4/domain/entities/srs_state.dart';
-import 'package:memox_v4/domain/usecases/io/export_cards.dart';
-import 'package:memox_v4/domain/usecases/io/import_cards.dart';
-import 'package:memox_v4/domain/usecases/io/table_codec.dart';
+import 'package:memox_v4/domain/services/table_codec.dart';
+import 'package:memox_v4/domain/usecases/io/export_cards_usecase.dart';
+import 'package:memox_v4/domain/usecases/io/import_cards_usecase.dart';
 
 Card _card(String term, List<String> meanings) => (Card.create(
       id: const CardId('c'),
@@ -65,10 +66,10 @@ void main() {
     });
   });
 
-  group('ParseImport (D-025)', () {
+  group('ParseImportUseCase (D-025)', () {
     test('maps columns, skips the header, and counts bad rows', () {
       const input = 'Term,Meaning\nneko,con mèo\ninu,con chó\nbad-row-no-comma';
-      final preview = const ParseImport(CsvCodec()).call(
+      final preview = const ParseImportUseCase(CsvCodec()).call(
         input,
         const ColumnMapping(termColumn: 0, meaningColumn: 1, hasHeader: true),
       );
@@ -80,7 +81,7 @@ void main() {
     });
 
     test('skips rows missing a required field', () {
-      final preview = const ParseImport(CsvCodec()).call(
+      final preview = const ParseImportUseCase(CsvCodec()).call(
         'neko,\n,con chó',
         const ColumnMapping(termColumn: 0, meaningColumn: 1),
       );
@@ -89,9 +90,9 @@ void main() {
     });
   });
 
-  group('BuildExport (D-026)', () {
+  group('BuildExportUseCase (D-026)', () {
     test('emits term + joined meanings, no SRS by default', () {
-      final out = const BuildExport(CsvCodec()).call(
+      final out = const BuildExportUseCase(CsvCodec()).call(
         [(card: _card('neko', ['con mèo', 'cat']), srs: null)],
         includeSrs: false,
       );
@@ -100,7 +101,7 @@ void main() {
 
     test('includes box + due when opted in (AC-3)', () {
       final due = DateTime.utc(2026, 7, 10);
-      final out = const BuildExport(CsvCodec()).call(
+      final out = const BuildExportUseCase(CsvCodec()).call(
         [
           (card: _card('neko', ['con mèo']), srs: SrsState(box: BoxLevel.firstBox, dueAt: due)),
         ],

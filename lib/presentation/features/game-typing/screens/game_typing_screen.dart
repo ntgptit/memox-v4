@@ -8,7 +8,7 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/game-typing/providers/typing_providers.dart';
 import 'package:memox_v4/presentation/features/game-typing/widgets/char_compare.dart';
 import 'package:memox_v4/presentation/features/game-typing/widgets/input_box.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';

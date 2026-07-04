@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
@@ -11,7 +11,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_search_dock.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_stat_ring.dart';
-import 'package:memox_v4/presentation/shared/composites/status_card_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_status_card_row.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_avatar.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_badge.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';

@@ -15,7 +15,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
-import 'package:memox_v4/presentation/shared/composites/status_card_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_status_card_row.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
@@ -24,7 +24,7 @@ import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
 const double _stateBoxHeight = 460;
 
 /// The global search screen (S.04): search cards by word or meaning across every
-/// deck (DM.6 `SearchCards`, D-019). Renders empty-recent · loading · results ·
+/// deck (DM.6 `SearchCardsUseCase`, D-019). Renders empty-recent · loading · results ·
 /// filtered · no-results · error. The query / filter / recents live in Riverpod
 /// (the text-field controller is not app state); no `setState`. Copy is from ARB.
 class SearchScreen extends ConsumerStatefulWidget {

@@ -5,9 +5,9 @@ import 'package:memox_v4/domain/repositories/card_repository.dart';
 
 /// Upsert a card — create or edit. The [Card] is already validated by
 /// [Card.create] (term + ≥1 meaning, BR-2). Duplicate terms are allowed; the
-/// warning is surfaced separately by [DetectDuplicateTerm] (BR-5 / D-020).
-class SaveCard {
-  const SaveCard(this._cards);
+/// warning is surfaced separately by [DetectDuplicateTermUseCase] (BR-5 / D-020).
+class SaveCardUseCase {
+  const SaveCardUseCase(this._cards);
 
   final CardRepository _cards;
 
@@ -15,8 +15,8 @@ class SaveCard {
 }
 
 /// Delete a card and its meanings + SRS state.
-class DeleteCard {
-  const DeleteCard(this._cards);
+class DeleteCardUseCase {
+  const DeleteCardUseCase(this._cards);
 
   final CardRepository _cards;
 
@@ -25,8 +25,8 @@ class DeleteCard {
 
 /// Toggle a card's hidden flag — a hidden card leaves the review queue + due
 /// count but is kept (flashcard UC-3 / D-006).
-class SetCardHidden {
-  const SetCardHidden(this._cards);
+class SetCardHiddenUseCase {
+  const SetCardHiddenUseCase(this._cards);
 
   final CardRepository _cards;
 
@@ -36,9 +36,9 @@ class SetCardHidden {
 
 /// Search cards by term + meaning, globally or within a node's subtree
 /// (global-search). An empty query yields no results. Matching semantics are
-/// D-019 (see `CardSearch`); the repository applies them in the store.
-class SearchCards {
-  const SearchCards(this._cards);
+/// D-019 (see `CardSearchUseCase`); the repository applies them in the store.
+class SearchCardsUseCase {
+  const SearchCardsUseCase(this._cards);
 
   final CardRepository _cards;
 
@@ -52,8 +52,8 @@ class SearchCards {
 /// the same term (case-insensitive). A duplicate is only a warning — the caller
 /// still allows the save (BR-5 / D-020). When editing, [excluding] skips the card
 /// being edited so it never flags itself.
-class DetectDuplicateTerm {
-  const DetectDuplicateTerm(this._cards);
+class DetectDuplicateTermUseCase {
+  const DetectDuplicateTermUseCase(this._cards);
 
   final CardRepository _cards;
 

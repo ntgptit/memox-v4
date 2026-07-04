@@ -5,7 +5,7 @@ import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/deck.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/language_pair.dart';
-import 'package:memox_v4/domain/usecases/library/deck_use_cases.dart';
+import 'package:memox_v4/domain/usecases/library/deck_usecases.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'library_providers.g.dart';
@@ -119,7 +119,7 @@ class LibraryController extends _$LibraryController {
       ref.read(loggerProvider).error('create deck rejected', error: failure);
       return;
     }
-    final saved = await SaveDeck(ref.read(deckRepositoryProvider))
+    final saved = await SaveDeckUseCase(ref.read(deckRepositoryProvider))
         .call((created as Ok<Deck>).value);
     saved.fold(
       (_) => ref.invalidateSelf(),

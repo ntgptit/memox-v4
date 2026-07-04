@@ -5,7 +5,7 @@ import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/domain/entities/box_level.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/providers/settings_providers.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';

@@ -5,7 +5,7 @@ import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/streak.dart';
 import 'package:memox_v4/domain/entities/study_mode.dart';
 import 'package:memox_v4/domain/entities/study_session.dart';
-import 'package:memox_v4/domain/usecases/study/streak_rollover.dart';
+import 'package:memox_v4/domain/usecases/study/streak_rollover_usecases.dart';
 
 /// V.2 — invariant sweep for the engagement/study use cases (streak roll-over +
 /// daily-activity summation), complementing the example-based tests. Covers

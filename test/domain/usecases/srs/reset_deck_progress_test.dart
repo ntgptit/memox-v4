@@ -5,7 +5,7 @@ import 'package:memox_v4/data/fakes/fake_store.dart';
 import 'package:memox_v4/domain/entities/box_level.dart';
 import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
-import 'package:memox_v4/domain/usecases/srs/reset_deck_progress.dart';
+import 'package:memox_v4/domain/usecases/srs/reset_deck_progress_usecase.dart';
 
 void main() {
   test('resets every card in the deck back to New (box 0, unscheduled)',
@@ -27,7 +27,7 @@ void main() {
         (await reviews.dueQueue(asOf: asOf) as Ok<List<Card>>).value;
     expect(dueBefore.map((c) => c.id.value), contains('card-1'));
 
-    final result = await ResetDeckProgress(cards, reviews).call(deckId);
+    final result = await ResetDeckProgressUseCase(cards, reviews).call(deckId);
     expect(result, isA<Ok<void>>());
 
     // After: every card in the deck is back to box 0 and off the schedule.

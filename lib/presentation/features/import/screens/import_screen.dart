@@ -6,12 +6,12 @@ import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
-import 'package:memox_v4/domain/usecases/io/import_cards.dart';
+import 'package:memox_v4/domain/entities/import_preview.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/import/providers/import_providers.dart';
 import 'package:memox_v4/presentation/features/import/widgets/import_table.dart';
 import 'package:memox_v4/presentation/features/import/widgets/source_card.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
@@ -31,7 +31,7 @@ const double _stateBoxHeight = 360;
 const int _previewRowLimit = 6;
 
 /// The Import screen (S.10): a source → mapping → preview → done wizard. Drives
-/// DM.7 `ParseImport` (D-025) + DM.8 file service through [importControllerProvider]
+/// DM.7 `ParseImportUseCase` (D-025) + DM.8 file service through [importControllerProvider]
 /// (no `setState`; the paste field's text controller is not app state). Copy is
 /// from ARB.
 class ImportScreen extends ConsumerStatefulWidget {

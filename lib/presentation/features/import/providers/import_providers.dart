@@ -4,9 +4,10 @@ import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/entities/card_meaning.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
-import 'package:memox_v4/domain/usecases/io/import_cards.dart';
-import 'package:memox_v4/domain/usecases/io/table_codec.dart';
-import 'package:memox_v4/domain/usecases/library/card_use_cases.dart';
+import 'package:memox_v4/domain/entities/import_preview.dart';
+import 'package:memox_v4/domain/services/table_codec.dart';
+import 'package:memox_v4/domain/usecases/io/import_cards_usecase.dart';
+import 'package:memox_v4/domain/usecases/library/card_usecases.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'import_providers.g.dart';
@@ -100,7 +101,7 @@ class ImportState {
   }
 }
 
-/// Drives the import wizard (DM.7 `ParseImport`, D-025 / D-020; DM.8 file service).
+/// Drives the import wizard (DM.7 `ParseImportUseCase`, D-025 / D-020; DM.8 file service).
 /// Column mapping defaults to A→term, B→meaning but is user-pickable on the
 /// mapping step. Cards are written to the first library deck (a deck picker is
 /// deferred). No `setState`; failures are logged, not swallowed.
@@ -198,7 +199,7 @@ class ImportController extends _$ImportController {
       meaningColumn: state.meaningColumn,
       hasHeader: state.hasHeader,
     );
-    return ParseImport(codec).call(state.input, mapping);
+    return ParseImportUseCase(codec).call(state.input, mapping);
   }
 
   /// Persist the previewed drafts into the first library deck.
@@ -217,7 +218,7 @@ class ImportController extends _$ImportController {
     for (final (index, draft) in preview.drafts.indexed) {
       final card = _draftToCard(draft, deckId, now, index);
       if (card == null) continue;
-      final saved = await SaveCard(cards).call(card);
+      final saved = await SaveCardUseCase(cards).call(card);
       if (saved.isOk) imported++;
     }
     state = state.copyWith(step: ImportStep.done, importedCount: imported);
@@ -245,7 +246,7 @@ class ImportController extends _$ImportController {
   Future<int> _countDuplicates(List<CardDraft> drafts) async {
     final deckId = await _targetDeck();
     if (deckId == null) return 0;
-    final detect = DetectDuplicateTerm(ref.read(cardRepositoryProvider));
+    final detect = DetectDuplicateTermUseCase(ref.read(cardRepositoryProvider));
     var count = 0;
     for (final draft in drafts) {
       final result = await detect.call(deckId: deckId, term: draft.term);

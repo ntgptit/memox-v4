@@ -20,7 +20,7 @@ import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_scree
 import 'package:memox_v4/presentation/features/dashboard/widgets/continue_deck_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/goal_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/today_summary.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';

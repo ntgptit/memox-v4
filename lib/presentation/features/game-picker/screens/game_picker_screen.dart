@@ -10,7 +10,7 @@ import 'package:memox_v4/presentation/features/game-picker/providers/game_picker
 import 'package:memox_v4/presentation/features/game-picker/widgets/game_option.dart';
 import 'package:memox_v4/presentation/features/game-picker/widgets/scope_card.dart';
 import 'package:memox_v4/presentation/features/game-picker/widgets/scope_sheet.dart';
-import 'package:memox_v4/presentation/shared/composites/action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';

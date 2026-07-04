@@ -13,8 +13,8 @@ import 'package:memox_v4/domain/repositories/review_repository.dart';
 /// card gets when it first enters the schedule), so no contract change is needed.
 /// The first failing write short-circuits and surfaces its [Failure] — a partial
 /// reset is reported, never swallowed.
-class ResetDeckProgress {
-  const ResetDeckProgress(this._cards, this._reviews);
+class ResetDeckProgressUseCase {
+  const ResetDeckProgressUseCase(this._cards, this._reviews);
 
   final CardRepository _cards;
   final ReviewRepository _reviews;

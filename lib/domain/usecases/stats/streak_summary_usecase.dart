@@ -1,6 +1,6 @@
 import 'package:memox_v4/domain/entities/daily_goal.dart';
 import 'package:memox_v4/domain/entities/streak.dart';
-import 'package:memox_v4/domain/usecases/study/streak_rollover.dart';
+import 'package:memox_v4/domain/usecases/study/streak_rollover_usecases.dart';
 
 /// Derives the [Streak] (current run + longest ever) from the day-by-day activity
 /// history and the daily goal (engagement BR-3 / D-021). Pure — a read model over

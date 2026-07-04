@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/presentation/features/search/providers/search_providers.dart';
-import 'package:memox_v4/presentation/shared/composites/status_card_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_status_card_row.dart';
 
 /// Search-local result row (kit `ResultRow`): the shared [MxStatusCardRow] with
 /// the owning deck's name on the deck line. Wrap it in an `MxCard` at the call

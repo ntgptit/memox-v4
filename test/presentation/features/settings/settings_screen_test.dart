@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
-import 'package:memox_v4/presentation/shared/composites/profile_card.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_profile_card.dart';
 
 import '../../../harness/provider_harness.dart';
 

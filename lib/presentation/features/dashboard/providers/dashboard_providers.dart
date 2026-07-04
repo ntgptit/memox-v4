@@ -8,7 +8,7 @@ import 'package:memox_v4/domain/entities/daily_goal.dart';
 import 'package:memox_v4/domain/entities/deck_stats.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/streak.dart';
-import 'package:memox_v4/domain/usecases/stats/streak_summary.dart';
+import 'package:memox_v4/domain/usecases/stats/streak_summary_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dashboard_providers.g.dart';

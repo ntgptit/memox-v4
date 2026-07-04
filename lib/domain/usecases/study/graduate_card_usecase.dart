@@ -2,13 +2,13 @@ import 'package:memox_v4/core/error/result.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/srs_state.dart';
 import 'package:memox_v4/domain/repositories/review_repository.dart';
-import 'package:memox_v4/domain/usecases/srs/srs_scheduler.dart';
+import 'package:memox_v4/domain/services/srs_scheduler.dart';
 
 /// Graduates a new card into the schedule once its 5-stage learn is complete:
 /// the card enters box 1 with a due date (BR-2 / D-002). Persists the new SRS
 /// position via [ReviewRepository].
-class GraduateCard {
-  const GraduateCard({
+class GraduateCardUseCase {
+  const GraduateCardUseCase({
     required ReviewRepository reviews,
     required SrsScheduler scheduler,
   })  : _reviews = reviews,
