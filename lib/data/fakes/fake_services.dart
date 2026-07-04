@@ -115,13 +115,19 @@ class FakeReminderNotificationService implements ReminderNotificationService {
   Future<Result<void>> cancelAll() async => const Ok<void>(null);
 }
 
-/// Records the last spoken text so tests can assert TTS was invoked.
+/// Records the last spoken text + rate so tests can assert TTS was invoked.
 class FakeAudioService implements AudioService {
   String? lastSpoken;
+  double? lastRate;
 
   @override
-  Future<Result<void>> speak(String text, {required String languageCode}) async {
+  Future<Result<void>> speak(
+    String text, {
+    required String languageCode,
+    double rate = 1.0,
+  }) async {
     lastSpoken = text;
+    lastRate = rate;
     return const Ok<void>(null);
   }
 

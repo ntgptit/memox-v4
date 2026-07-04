@@ -95,7 +95,9 @@ class _StubReminders implements ReminderNotificationService {
 
 class _StubAudio implements AudioService {
   @override
-  Future<Result<void>> speak(String text, {required String languageCode}) async => const Ok<void>(null);
+  Future<Result<void>> speak(String text,
+          {required String languageCode, double rate = 1.0}) async =>
+      const Ok<void>(null);
   @override
   Future<Result<void>> stop() async => const Ok<void>(null);
 }
