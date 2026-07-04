@@ -142,9 +142,9 @@ class ReminderScreen extends ConsumerWidget {
   }
 
   String _formatTime(Reminder reminder) {
-    final h = reminder.hour.toString().padLeft(2, '0');
-    final m = reminder.minute.toString().padLeft(2, '0');
-    return '$h:$m';
+    final hh = reminder.hour.toString().padLeft(2, '0');
+    final mm = reminder.minute.toString().padLeft(2, '0');
+    return '$hh:$mm';
   }
 
   String _dayName(AppLocalizations l10n, int weekday) {

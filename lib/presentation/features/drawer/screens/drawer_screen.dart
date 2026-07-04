@@ -125,9 +125,9 @@ class _Menu extends ConsumerWidget {
   }
 
   String _formatTime(int minutes) {
-    final h = minutes ~/ _minutesPerHour;
-    final m = minutes % _minutesPerHour;
-    return '${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}';
+    final hours = minutes ~/ _minutesPerHour;
+    final mins = minutes % _minutesPerHour;
+    return '${hours.toString().padLeft(2, '0')}:${mins.toString().padLeft(2, '0')}';
   }
 }
 
