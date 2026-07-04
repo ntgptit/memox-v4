@@ -863,14 +863,24 @@
   "@importSepSemicolon": { "description": "Semicolon separator option" },
   "importHasHeader": "First row is a header",
   "@importHasHeader": { "description": "Toggle: skip the first row as a header" },
-  "importTermColumn": "Term column",
-  "@importTermColumn": { "description": "Label for the term-column picker" },
-  "importMeaningColumn": "Meaning column",
-  "@importMeaningColumn": { "description": "Label for the meaning-column picker" },
-  "importColumnLabel": "Col {number}",
-  "@importColumnLabel": {
-    "description": "A selectable column in the import column picker (1-based)",
-    "placeholders": { "number": { "type": "int" } }
+  "importColumnMapping": "Column mapping",
+  "@importColumnMapping": { "description": "Section label for the import column-mapping rows" },
+  "importMapTerm": "Column {column} → Term",
+  "@importMapTerm": {
+    "description": "Import mapping row — which column supplies the term",
+    "placeholders": { "column": { "type": "String" } }
+  },
+  "importMapMeaning": "Column {column} → Meaning",
+  "@importMapMeaning": {
+    "description": "Import mapping row — which column supplies the meaning",
+    "placeholders": { "column": { "type": "String" } }
+  },
+  "importPickColumn": "Choose column",
+  "@importPickColumn": { "description": "Title + a11y label for the column-choice sheet" },
+  "importColumnOption": "Column {column}",
+  "@importColumnOption": {
+    "description": "A selectable column in the column-choice sheet",
+    "placeholders": { "column": { "type": "String" } }
   },
   "importColTerm": "Term",
   "@importColTerm": { "description": "Table header for the term column" },

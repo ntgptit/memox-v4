@@ -18,6 +18,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_sheet.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_chip.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
@@ -158,19 +159,33 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
         ),
       ),
       if (_controller.columnCount() > 1) ...[
-        _columnPicker(
-          l10n,
-          label: l10n.importTermColumn,
-          selected: state.termColumn,
-          count: _controller.columnCount(),
-          onPick: _controller.setTermColumn,
-        ),
-        _columnPicker(
-          l10n,
-          label: l10n.importMeaningColumn,
-          selected: state.meaningColumn,
-          count: _controller.columnCount(),
-          onPick: _controller.setMeaningColumn,
+        _Label(l10n.importColumnMapping),
+        MxCard(
+          padding: MxCardPadding.small,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _mapRow(
+                context,
+                l10n,
+                icon: Icons.text_fields,
+                title: l10n.importMapTerm(_columnLetter(state.termColumn)),
+                sample: _controller.columnSample(state.termColumn),
+                selected: state.termColumn,
+                onPick: _controller.setTermColumn,
+              ),
+              _mapRow(
+                context,
+                l10n,
+                icon: Icons.translate,
+                title: l10n.importMapMeaning(_columnLetter(state.meaningColumn)),
+                sample: _controller.columnSample(state.meaningColumn),
+                selected: state.meaningColumn,
+                onPick: _controller.setMeaningColumn,
+                last: true,
+              ),
+            ],
+          ),
         ),
       ],
       _tableOrEmpty(l10n, preview),
@@ -183,33 +198,68 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     ];
   }
 
-  /// A labelled row of column chips for picking the term / meaning column.
-  Widget _columnPicker(
+  /// One mapping row (kit `import/map-term` · `import/map-meaning`): the current
+  /// "Column X → Role" with a sample preview and a dropdown that opens the picker.
+  Widget _mapRow(
+    BuildContext context,
     AppLocalizations l10n, {
-    required String label,
+    required IconData icon,
+    required String title,
+    required String sample,
     required int selected,
-    required int count,
     required void Function(int) onPick,
+    bool last = false,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _Label(label),
-        Wrap(
-          spacing: MxSpacing.space2,
-          runSpacing: MxSpacing.space2,
-          children: [
-            for (var i = 0; i < count; i++)
-              MxChip(
-                label: l10n.importColumnLabel(i + 1),
-                selected: selected == i,
-                onPressed: () => onPick(i),
-              ),
-          ],
-        ),
-      ],
+    return MxListRow(
+      icon: icon,
+      title: title,
+      subtitle: sample,
+      last: last,
+      trailing: MxIconButton(
+        icon: Icons.expand_more,
+        size: MxIconButtonSize.small,
+        semanticLabel: l10n.importPickColumn,
+        onPressed: () =>
+            _openColumnPicker(context, l10n, selected: selected, onPick: onPick),
+      ),
     );
   }
+
+  /// The column-choice sheet opened by a mapping row's dropdown.
+  void _openColumnPicker(
+    BuildContext context,
+    AppLocalizations l10n, {
+    required int selected,
+    required void Function(int) onPick,
+  }) {
+    final count = _controller.columnCount();
+    showMxSheet<void>(
+      context: context,
+      title: l10n.importPickColumn,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 0; i < count; i++)
+            MxListRow(
+              title: l10n.importColumnOption(_columnLetter(i)),
+              last: i == count - 1,
+              trailing: i == selected
+                  ? Icon(Icons.check,
+                      color: Theme.of(context).colorScheme.primary)
+                  : null,
+              onPressed: () {
+                Navigator.of(context).pop();
+                onPick(i);
+              },
+            ),
+        ],
+      ),
+    );
+  }
+
+  /// The spreadsheet-style letter for a 0-based column index (0 → A, 1 → B, …).
+  String _columnLetter(int index) =>
+      String.fromCharCode('A'.codeUnitAt(0) + index);
 
   // ── Preview / dup-warning ──────────────────────────────────────────────────
 

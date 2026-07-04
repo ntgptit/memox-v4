@@ -35,6 +35,9 @@ extension on ImportSeparator {
 const int _defaultTermColumn = 0;
 const int _defaultMeaningColumn = 1;
 
+/// How many sample values a mapping row previews for its column.
+const int _columnSampleCount = 2;
+
 class ImportState {
   const ImportState({
     required this.step,
@@ -129,6 +132,28 @@ class ImportController extends _$ImportController {
       return line.split(delimiter).length;
     }
     return 0;
+  }
+
+  /// A short preview of a column's first data values, for the mapping rows
+  /// ("안녕하세요, 감사합니다"). Skips the header row when [ImportState.hasHeader].
+  String columnSample(int column) {
+    final delimiter = state.separator.delimiter;
+    final samples = <String>[];
+    var skippedHeader = false;
+    for (final line in state.input.split('\n')) {
+      if (line.trim().isEmpty) continue;
+      if (state.hasHeader && !skippedHeader) {
+        skippedHeader = true;
+        continue;
+      }
+      final cells = line.split(delimiter);
+      if (column >= 0 && column < cells.length) {
+        final value = cells[column].trim();
+        if (value.isNotEmpty) samples.add(value);
+      }
+      if (samples.length >= _columnSampleCount) break;
+    }
+    return samples.join(', ');
   }
 
   void goTo(ImportStep step) => state = state.copyWith(step: step);
