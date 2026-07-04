@@ -450,22 +450,21 @@
     "description": "Body of the delete-card confirm dialog",
     "placeholders": { "term": { "type": "String" } }
   },
-  "deckDetailCardResetProgress": "Reset progress",
-  "@deckDetailCardResetProgress": {
-    "description": "Reset-progress action in the card-actions sheet"
-  },
-  "deckDetailResetProgressTitle": "Reset this card's progress?",
+  "deckDetailResetProgressTitle": "Reset progress?",
   "@deckDetailResetProgressTitle": {
-    "description": "Title of the reset-progress confirm dialog"
+    "description": "Title of the reset-deck-progress confirm dialog"
   },
-  "deckDetailResetProgressText": "“{term}” goes back to New and starts the 5-stage learn again. Its review history is kept.",
+  "deckDetailResetProgressText": "Reset all cards in this deck back to New? Their Leitner box and due dates will be cleared.",
   "@deckDetailResetProgressText": {
-    "description": "Body of the reset-progress confirm dialog",
-    "placeholders": { "term": { "type": "String" } }
+    "description": "Body of the reset-deck-progress confirm dialog"
   },
   "deckDetailDeckMove": "Move",
   "@deckDetailDeckMove": {
     "description": "Move action in the deck menu"
+  },
+  "deckDetailDeckResetProgress": "Reset progress",
+  "@deckDetailDeckResetProgress": {
+    "description": "Reset-progress action in the deck menu"
   },
   "deckDetailDeckDelete": "Delete deck",
   "@deckDetailDeckDelete": {

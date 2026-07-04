@@ -4,13 +4,19 @@ import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
 
 /// Deck-detail deck-level actions (kit `deck-detail/deck-sheet`) — the content of
-/// an [showMxSheet] titled with the deck name. Move · Delete deck. The kit's
-/// Rename (inline text dialog) and Reset progress (no v1 use case) items are
-/// omitted (documented gaps). Each item dismisses the sheet before acting.
+/// an [showMxSheet] titled with the deck name. Move · Reset progress · Delete
+/// deck. The kit's Rename (inline text dialog) item is omitted (documented gap).
+/// Each item dismisses the sheet before acting.
 class DeckMenu extends StatelessWidget {
-  const DeckMenu({required this.onMove, required this.onDelete, super.key});
+  const DeckMenu({
+    required this.onMove,
+    required this.onReset,
+    required this.onDelete,
+    super.key,
+  });
 
   final VoidCallback onMove;
+  final VoidCallback onReset;
   final VoidCallback onDelete;
 
   @override
@@ -26,6 +32,15 @@ class DeckMenu extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
             onMove();
+          },
+        ),
+        MxListRow(
+          icon: Icons.restart_alt,
+          tone: MxIconTileTone.warning,
+          title: l10n.deckDetailDeckResetProgress,
+          onPressed: () {
+            Navigator.of(context).pop();
+            onReset();
           },
         ),
         MxListRow(

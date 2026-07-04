@@ -7,7 +7,7 @@ import 'package:memox_v4/domain/entities/deck.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/usecases/library/card_use_cases.dart';
 import 'package:memox_v4/domain/usecases/library/deck_use_cases.dart';
-import 'package:memox_v4/domain/usecases/srs/reset_card_progress.dart';
+import 'package:memox_v4/domain/usecases/srs/reset_deck_progress.dart';
 import 'package:memox_v4/presentation/shared/composites/status_card_row.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -171,10 +171,13 @@ class DeckDetailController extends _$DeckDetailController {
         () => DeleteCard(ref.read(cardRepositoryProvider)).call(cardId),
       );
 
-  /// Reset a card back to New (box 0, unscheduled) so it re-enters the learn flow.
-  Future<void> resetCardProgress(CardId cardId) => _mutate(
-        () =>
-            ResetCardProgress(ref.read(reviewRepositoryProvider)).call(cardId),
+  /// Reset every card in this deck back to New (box 0, unscheduled) so the deck
+  /// re-enters the learn flow (kit `deck-detail/reset-confirm`).
+  Future<void> resetDeckProgress() => _mutate(
+        () => ResetDeckProgress(
+          ref.read(cardRepositoryProvider),
+          ref.read(reviewRepositoryProvider),
+        ).call(_id!),
       );
 
   Future<void> deleteDeck() => _mutate(
