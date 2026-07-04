@@ -9,6 +9,7 @@ import 'package:memox_v4/domain/services/backup_restore_service.dart';
 import 'package:memox_v4/domain/services/daily_activity_service.dart';
 import 'package:memox_v4/domain/services/import_export_file_service.dart';
 import 'package:memox_v4/domain/services/language_pair_service.dart';
+import 'package:memox_v4/domain/services/recent_search_service.dart';
 import 'package:memox_v4/domain/services/reminder_notification_service.dart';
 import 'package:memox_v4/domain/services/settings_service.dart';
 
@@ -169,4 +170,18 @@ class FakeBackupRestoreService implements BackupRestoreService {
   Future<Result<String>> createBackup() async => const Ok('memory://backup.json');
   @override
   Future<Result<void>> restoreBackup(String source) async => const Ok<void>(null);
+}
+
+/// In-memory [RecentSearchService] — persists within the fake's lifetime.
+class FakeRecentSearchService implements RecentSearchService {
+  List<String> _stored = const [];
+
+  @override
+  Future<List<String>> load() async => _stored;
+
+  @override
+  Future<Result<void>> save(List<String> queries) async {
+    _stored = List<String>.unmodifiable(queries);
+    return const Ok<void>(null);
+  }
 }

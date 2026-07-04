@@ -53,6 +53,7 @@ class FakeHarness {
       reviewRepositoryProvider.overrideWithValue(FakeReviewRepository(data)),
       settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository(data)),
       settingsServiceProvider.overrideWithValue(FakeSettingsService()),
+      recentSearchServiceProvider.overrideWithValue(FakeRecentSearchService()),
       languagePairServiceProvider.overrideWithValue(FakeLanguagePairService()),
       dailyActivityServiceProvider
           .overrideWithValue(activity ?? FakeDailyActivityService()),

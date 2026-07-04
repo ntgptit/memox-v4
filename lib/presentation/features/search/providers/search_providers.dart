@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:memox_v4/core/error/failure.dart';
 import 'package:memox_v4/core/error/result.dart';
 import 'package:memox_v4/core/logging/logger_provider.dart';
@@ -51,22 +53,44 @@ class SearchFilterState extends _$SearchFilterState {
   void select(SearchFilter filter) => state = filter;
 }
 
-/// Recently used searches — **session-only** (no persistent recent-search store in
-/// v1; documented gap). Most-recent first, de-duplicated, capped. Kept alive so it
-/// survives the results↔recents transitions (it is only watched when the query is
-/// empty).
+/// Recently used searches — **persisted** across restarts via
+/// [RecentSearchService] (over the KV store). Most-recent first, de-duplicated,
+/// capped. Kept alive so it survives the results↔recents transitions (it is only
+/// watched when the query is empty). `build` seeds asynchronously from the store,
+/// so the type stays `List<String>` for the screen.
 @Riverpod(keepAlive: true)
 class RecentSearches extends _$RecentSearches {
   static const int _max = 5;
 
   @override
-  List<String> build() => const [];
+  List<String> build() {
+    unawaited(_seed());
+    return const [];
+  }
+
+  Future<void> _seed() async {
+    final saved = await ref.read(recentSearchServiceProvider).load();
+    // Don't clobber an `add` that raced the async load.
+    if (state.isEmpty) {
+      state = saved.take(_max).toList(growable: false);
+    }
+  }
 
   void add(String query) {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return;
-    final next = [trimmed, ...state.where((q) => q != trimmed)];
-    state = next.take(_max).toList(growable: false);
+    final next = [trimmed, ...state.where((q) => q != trimmed)]
+        .take(_max)
+        .toList(growable: false);
+    state = next;
+    unawaited(_persist(next));
+  }
+
+  Future<void> _persist(List<String> queries) async {
+    final result = await ref.read(recentSearchServiceProvider).save(queries);
+    if (result case Err(:final failure)) {
+      ref.read(loggerProvider).error('save recent searches failed', error: failure);
+    }
   }
 }
 

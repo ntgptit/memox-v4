@@ -7,6 +7,7 @@ import 'package:memox_v4/data/repositories/drift_settings_repository.dart';
 import 'package:memox_v4/data/services/device_services.dart';
 import 'package:memox_v4/data/services/drift_daily_activity_service.dart';
 import 'package:memox_v4/data/services/drift_language_pair_service.dart';
+import 'package:memox_v4/data/services/drift_recent_search_service.dart';
 import 'package:memox_v4/data/services/drift_settings_service.dart';
 import 'package:memox_v4/domain/repositories/card_repository.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
@@ -17,6 +18,7 @@ import 'package:memox_v4/domain/services/backup_restore_service.dart';
 import 'package:memox_v4/domain/services/daily_activity_service.dart';
 import 'package:memox_v4/domain/services/import_export_file_service.dart';
 import 'package:memox_v4/domain/services/language_pair_service.dart';
+import 'package:memox_v4/domain/services/recent_search_service.dart';
 import 'package:memox_v4/domain/services/reminder_notification_service.dart';
 import 'package:memox_v4/domain/services/settings_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -59,6 +61,10 @@ SettingsRepository settingsRepository(Ref ref) =>
 @riverpod
 SettingsService settingsService(Ref ref) =>
     DriftSettingsService(ref.watch(appDatabaseProvider));
+
+@riverpod
+RecentSearchService recentSearchService(Ref ref) =>
+    DriftRecentSearchService(ref.watch(appDatabaseProvider));
 
 @riverpod
 LanguagePairService languagePairService(Ref ref) => DriftLanguagePairService(
