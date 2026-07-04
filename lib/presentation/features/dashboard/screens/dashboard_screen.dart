@@ -153,7 +153,7 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   Widget _statRow(DashboardData data) {
-    return IntrinsicHeight(
+    return IntrinsicHeight( // guard:intrinsic-reviewed -- reason: exactly 2 equal-height cards (StreakCard + _MasteredCard) in a stretch Row
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -225,7 +225,7 @@ class DashboardScreen extends ConsumerWidget {
           ],
         ),
       ),
-      const IntrinsicHeight(
+      const IntrinsicHeight( // guard:intrinsic-reviewed -- reason: exactly 2 equal-height skeleton tiles (_SkeletonMini) in a stretch Row
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
