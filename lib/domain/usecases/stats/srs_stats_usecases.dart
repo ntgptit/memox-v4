@@ -13,7 +13,7 @@ Map<int, int> boxDistribution(Iterable<SrsState> states) {
   for (final state in states) {
     final box = state.box.value;
     if (box < BoxLevel.firstScheduled) continue;
-    counts[box] = counts[box]! + 1;
+    counts[box] = (counts[box] ?? 0) + 1;
   }
   return counts;
 }

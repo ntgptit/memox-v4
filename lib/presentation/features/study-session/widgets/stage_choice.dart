@@ -29,6 +29,7 @@ class StageChoice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final onChoose = this.onChoose;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,7 +44,7 @@ class StageChoice extends StatelessWidget {
           MxChoiceOption(
             text: choice,
             tone: _tone(index),
-            onPressed: onChoose == null ? null : () => onChoose!(index),
+            onPressed: onChoose == null ? null : () => onChoose(index),
           ),
           if (index < choices.length - 1)
             const SizedBox(height: MxSpacing.space3),

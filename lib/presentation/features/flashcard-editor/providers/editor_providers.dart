@@ -194,9 +194,12 @@ class EditorController extends _$EditorController {
     }
     if (meanings.isEmpty) return false;
 
+    final deckId = data.deckId;
+    if (deckId == null) return false;
+
     final card = Card.create(
       id: data.cardId ?? CardId('card-${_stamp()}'),
-      deckId: data.deckId!,
+      deckId: deckId,
       term: data.term,
       meanings: meanings,
       hidden: data.hidden,
@@ -218,12 +221,13 @@ class EditorController extends _$EditorController {
   Future<void> _checkDuplicate() async {
     final data = _data;
     if (data == null) return;
-    if (data.term.trim().isEmpty || data.deckId == null) {
+    final deckId = data.deckId;
+    if (data.term.trim().isEmpty || deckId == null) {
       state = AsyncData(data.copyWith(duplicate: false));
       return;
     }
     final result = await DetectDuplicateTermUseCase(ref.read(cardRepositoryProvider))
-        .call(deckId: data.deckId!, term: data.term, excluding: data.cardId);
+        .call(deckId: deckId, term: data.term, excluding: data.cardId);
     final isDuplicate = switch (result) {
       Ok<bool>(:final value) => value,
       Err<bool>() => false,

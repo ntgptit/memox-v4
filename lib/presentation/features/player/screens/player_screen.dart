@@ -133,6 +133,8 @@ class PlayerScreen extends ConsumerWidget {
       );
     }
 
+    // Invariant: past the isEmpty / isEnd guards above the index is in range
+    // (init at 0, prev clamps at 0), so PlayerState.current is present here.
     final card = state.current!;
     return MxScaffold(
       appBar: appBar,

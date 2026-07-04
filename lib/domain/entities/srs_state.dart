@@ -21,7 +21,10 @@ class SrsState extends Equatable {
 
   /// Whether the card is due for review at [now] (a scheduled card whose due time
   /// has arrived). Hidden-card exclusion is a queue concern, not modeled here.
-  bool isDue(DateTime now) => dueAt != null && !dueAt!.isAfter(now);
+  bool isDue(DateTime now) {
+    final due = dueAt;
+    return due != null && !due.isAfter(now);
+  }
 
   @override
   List<Object?> get props => [box, dueAt, lastReviewedAt];

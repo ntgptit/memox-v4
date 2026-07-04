@@ -44,6 +44,7 @@ class MxStatusCardRow extends StatelessWidget {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
+    final deck = this.deck;
     final (label, tone) = _status(l10n);
 
     final row = Opacity(
@@ -98,7 +99,7 @@ class MxStatusCardRow extends StatelessWidget {
                 if (deck != null) ...[
                   const SizedBox(height: MxSpacing.space1),
                   Text(
-                    deck!,
+                    deck,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

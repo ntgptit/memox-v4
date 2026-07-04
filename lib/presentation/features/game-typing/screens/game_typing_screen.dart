@@ -147,6 +147,8 @@ class _GameTypingScreenState extends ConsumerState<GameTypingScreen> {
       );
     }
 
+    // Invariant: past the isEmpty / isComplete guards above the queue is
+    // non-empty, so TypingState.current is always present here.
     final card = state.current!;
     return MxScaffold(
       appBar: appBar,

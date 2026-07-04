@@ -26,6 +26,7 @@ class TodaySummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final action = this.action;
 
     return MxCard(
       variant: MxCardVariant.primary,
@@ -52,7 +53,7 @@ class TodaySummary extends StatelessWidget {
           ),
           if (action != null) ...[
             const SizedBox(height: MxSpacing.space4),
-            action!,
+            action,
           ],
         ],
       ),

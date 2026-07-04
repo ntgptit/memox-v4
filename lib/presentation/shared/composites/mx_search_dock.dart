@@ -54,6 +54,7 @@ class _MxSearchDockState extends State<MxSearchDock> {
   @override
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
+    final trailing = widget.trailing;
 
     return ListenableBuilder(
       listenable: _node,
@@ -100,9 +101,9 @@ class _MxSearchDockState extends State<MxSearchDock> {
                   ),
                 ),
               ),
-              if (widget.trailing != null) ...[
+              if (trailing != null) ...[
                 const SizedBox(width: MxSpacing.space3),
-                widget.trailing!,
+                trailing,
               ],
             ],
           ),

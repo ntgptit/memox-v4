@@ -58,6 +58,7 @@ class _MxInputDialogState extends State<MxInputDialog> {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final icon = widget.icon;
 
     return Dialog(
       child: Padding(
@@ -66,8 +67,8 @@ class _MxInputDialogState extends State<MxInputDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (widget.icon != null) ...[
-              Center(child: MxIconTile(icon: widget.icon!, tone: MxIconTileTone.primary)),
+            if (icon != null) ...[
+              Center(child: MxIconTile(icon: icon, tone: MxIconTileTone.primary)),
               const SizedBox(height: MxSpacing.space4),
             ],
             Text(

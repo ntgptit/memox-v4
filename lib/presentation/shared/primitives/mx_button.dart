@@ -75,6 +75,9 @@ class MxButton extends StatelessWidget {
     );
 
     final button = switch (palette.kind) {
+      // Invariant: every _Kind.filled palette is built with a non-null
+      // background (see _palette); the field is nullable only for the
+      // outlined / text kinds, which take the other switch arms.
       _Kind.filled => FilledButton(
           onPressed: onPressed,
           style: style.copyWith(

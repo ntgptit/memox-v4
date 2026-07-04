@@ -39,13 +39,15 @@ class MxListRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final icon = this.icon;
+    final subtitle = this.subtitle;
     final trailingWidget =
         trailing ?? (selected ? Icon(Icons.check, color: scheme.primary) : null);
 
     Widget row = Row(
       spacing: MxSpacing.space4,
       children: [
-        if (icon != null) MxIconTile(icon: icon!, tone: tone),
+        if (icon != null) MxIconTile(icon: icon, tone: tone),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +67,7 @@ class MxListRow extends StatelessWidget {
               if (subtitle != null) ...[
                 const SizedBox(height: MxSpacing.space1),
                 Text(
-                  subtitle!,
+                  subtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

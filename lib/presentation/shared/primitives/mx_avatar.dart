@@ -52,6 +52,7 @@ class MxAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final image = this.image;
 
     final dim = switch (size) {
       MxAvatarSize.small => _dimSmall,
@@ -80,7 +81,7 @@ class MxAvatar extends StatelessWidget {
           )
         : ClipOval(
             child: Image(
-              image: image!,
+              image: image,
               width: dim,
               height: dim,
               fit: BoxFit.cover,

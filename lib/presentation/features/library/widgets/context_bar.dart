@@ -67,6 +67,7 @@ class _PairButton extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final pair = this.pair;
 
     final labelStyle = TextStyle(
       fontFamily: MxTypography.fontFamily,
@@ -78,11 +79,11 @@ class _PairButton extends StatelessWidget {
     final children = pair == null
         ? [Text(l10n.libraryPairNone, style: labelStyle)]
         : [
-            Text(pair!.learningLanguage, style: labelStyle),
+            Text(pair.learningLanguage, style: labelStyle),
             const SizedBox(width: MxSpacing.space2),
             Icon(Icons.swap_horiz, size: MxIconSize.sm, color: mx.textTertiary),
             const SizedBox(width: MxSpacing.space2),
-            Text(pair!.nativeLanguage, style: labelStyle),
+            Text(pair.nativeLanguage, style: labelStyle),
           ];
 
     return Semantics(

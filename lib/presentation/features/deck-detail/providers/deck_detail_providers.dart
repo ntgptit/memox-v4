@@ -99,7 +99,9 @@ Stream<List<Deck>> rootDecks(Ref ref) =>
 /// the screen and logged here; never swallowed.
 @riverpod
 class DeckDetailController extends _$DeckDetailController {
-  DeckId? _id;
+  // Set in build() before any command runs, so it is late (non-null) rather than
+  // nullable + `!`; a violated invariant throws a clear LateInitializationError.
+  late DeckId _id;
 
   @override
   Future<DeckDetailData> build(String deckId) async {
@@ -177,7 +179,7 @@ class DeckDetailController extends _$DeckDetailController {
         () => ResetDeckProgressUseCase(
           ref.read(cardRepositoryProvider),
           ref.read(reviewRepositoryProvider),
-        ).call(_id!),
+        ).call(_id),
       );
 
   /// Create a sub-deck under this deck from the learner-entered [name] (kit
@@ -193,12 +195,12 @@ class DeckDetailController extends _$DeckDetailController {
       });
 
   Future<void> deleteDeck() => _mutate(
-        () => DeleteDeckUseCase(ref.read(deckRepositoryProvider)).call(_id!),
+        () => DeleteDeckUseCase(ref.read(deckRepositoryProvider)).call(_id),
       );
 
   Future<void> moveTo(DeckId? newParentId) => _mutate(
         () => MoveDeckUseCase(ref.read(deckRepositoryProvider))
-            .call(deckId: _id!, newParentId: newParentId),
+            .call(deckId: _id, newParentId: newParentId),
       );
 
   /// Runs a mutation use case; refreshes on success, logs the cause on failure

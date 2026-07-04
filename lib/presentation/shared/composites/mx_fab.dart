@@ -39,6 +39,7 @@ class MxFab extends StatelessWidget {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final label = this.label;
     final (background, foreground) = variant == MxFabVariant.accent
         ? (scheme.secondary, scheme.onSecondary)
         : (scheme.primary, scheme.onPrimary);
@@ -69,7 +70,7 @@ class MxFab extends StatelessWidget {
                   children: [
                     if (icon != null) Icon(icon, size: _glyphSize, color: foreground),
                     Text(
-                      label!,
+                      label,
                       style: TextStyle(
                         fontFamily: MxTypography.fontFamily,
                         fontSize: MxTypography.sizeBase,

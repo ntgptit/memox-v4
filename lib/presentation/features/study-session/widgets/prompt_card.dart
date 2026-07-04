@@ -16,6 +16,7 @@ class PromptCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final sub = this.sub;
 
     return MxCard(
       child: Column(
@@ -34,7 +35,7 @@ class PromptCard extends StatelessWidget {
           if (sub != null) ...[
             const SizedBox(height: MxSpacing.space3),
             Text(
-              sub!,
+              sub,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: MxTypography.fontFamily,

@@ -116,6 +116,8 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
       ]);
     }
 
+    // Invariant: past the isEmpty / isComplete guards above the index is in
+    // range, so StudySessionState.current is always present here.
     final step = state.current!;
     final pct = (state.progress * 100).round();
     return MxScaffold(

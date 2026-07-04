@@ -37,6 +37,7 @@ class Field extends StatelessWidget {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final error = this.error;
     final borderColor = error != null ? scheme.error : mx.divider;
 
     return Column(
@@ -88,7 +89,7 @@ class Field extends StatelessWidget {
         if (error != null) ...[
           const SizedBox(height: MxSpacing.space1),
           Text(
-            error!,
+            error,
             style: TextStyle(
               fontFamily: MxTypography.fontFamily,
               fontSize: MxTypography.sizeSm,

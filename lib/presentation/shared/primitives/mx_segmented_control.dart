@@ -40,6 +40,7 @@ class MxSegmentedControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
+    final onChanged = this.onChanged;
 
     final children = <Widget>[];
     for (var i = 0; i < segments.length; i++) {
@@ -47,7 +48,7 @@ class MxSegmentedControl extends StatelessWidget {
       final tile = _Segment(
         segment: segment,
         active: segment.value == value,
-        onTap: onChanged == null ? null : () => onChanged!(segment.value),
+        onTap: onChanged == null ? null : () => onChanged(segment.value),
       );
       children.add(block ? Expanded(child: tile) : tile);
       if (i < segments.length - 1) {
