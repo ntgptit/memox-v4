@@ -13,8 +13,8 @@ Build the **settings** screen + its 2 feature-local component(s), composed from 
 
 - `docs/design/MemoX Design System/ui_kits/memox-app/_features/settings/Settings.jsx` — screen composition (components, states, state machine).
 - Feature-local components (build here):
-  - `docs/design/MemoX Design System/ui_kits/memox-app/_features/settings/components/Profile.jsx`
   - `docs/design/MemoX Design System/ui_kits/memox-app/_features/settings/components/ValuePickerSheet.jsx`
+- Shared composite (consume, already built): `docs/design/MemoX Design System/ui_kits/memox-app/_shared/ProfileCard.jsx` (`window.ProfileCard`) → Flutter `MxProfileCard`.
 - `docs/design/MemoX Design System/ui_kits/memox-app/specs/settings.md` — contract (states, copy, behaviour).
 - `docs/design/MemoX Design System/ui_kits/memox-app/shots/settings--*--{light,dark}.png` — visual reference per state.
 - Shared widgets in `lib/presentation/shared/{primitives,composites}/`

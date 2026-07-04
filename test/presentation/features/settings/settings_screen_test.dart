@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/screens/settings_screen.dart';
-import 'package:memox_v4/presentation/features/settings/widgets/profile_card.dart';
+import 'package:memox_v4/presentation/shared/composites/profile_card.dart';
 
 import '../../../harness/provider_harness.dart';
 
@@ -37,7 +37,7 @@ void main() {
     testWidgets('loaded: profile + grouped setting rows ($theme)', (tester) async {
       await pump(tester, dark: dark);
 
-      expect(find.byType(ProfileCard), findsOneWidget);
+      expect(find.byType(MxProfileCard), findsOneWidget);
       expect(find.text('STUDYING'), findsOneWidget);
       expect(find.text('APP'), findsOneWidget);
       expect(find.text('Game settings'), findsOneWidget);

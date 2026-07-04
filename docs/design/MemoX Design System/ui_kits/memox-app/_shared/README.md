@@ -11,6 +11,8 @@ drawer:
 | `ConfirmDialog` (`window.ConfirmDialog`) | `ConfirmDialog.md` | study-session, deck-detail, drawer (6 sites) |
 | `StatusCardRow` (`window.StatusCardRow`) | `StatusCardRow.md` | deck-detail, search |
 | `ActionCallout` (`window.ActionCallout`) | `ActionCallout.md` | import, game-picker |
+| `SelectSheet` (`window.SelectSheet`) | `SelectSheet.md` | game-picker (ScopeSheet), library (SortSheet), settings (ValuePickerSheet) |
+| `ProfileCard` (`window.ProfileCard`) | `ProfileCard.md` | settings, account-sync |
 
 ## Admission rule (strict)
 

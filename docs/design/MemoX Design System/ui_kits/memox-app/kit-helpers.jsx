@@ -101,13 +101,15 @@ function Sheet({ title, children, node }) {
 }
 
 /* Full-width row button inside a Sheet. */
-function MenuItem({ icon, label, tone, danger, trailing, node, onClick }) {
+function MenuItem({ icon, label, tone, danger, trailing, selected, node, onClick }) {
   const color = danger ? 'var(--memox-error)' : 'inherit';
+  // `selected` renders the primary-tinted check; an explicit `trailing` still wins.
+  const mark = selected ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : trailing;
   return (
     <button data-mx-node={node} onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', width: '100%', border: 'none', background: 'transparent', cursor: 'pointer', font: 'inherit', color, padding: 'var(--memox-space-3) var(--memox-space-2)', borderRadius: 'var(--memox-radius-control)', textAlign: 'left' }}>
       <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: danger ? 'var(--memox-error)' : (tone || 'var(--memox-text-secondary)') }}>{icon}</span>
       <span style={{ flex: 1, fontWeight: 'var(--memox-font-weight-semibold)', fontSize: 'var(--memox-font-size-base)' }}>{label}</span>
-      {trailing}
+      {mark}
     </button>
   );
 }

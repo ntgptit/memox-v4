@@ -9,12 +9,8 @@ function ScopeSheet() {
   ];
   return (
     <window.Scrim node="game-picker/scope-scrim">
-      <window.Sheet title="Card source" node="game-picker/scope-sheet">
-        {opts.map((o) => (
-          <window.MenuItem key={o.id} icon={o.icon} label={o.label} node={'game-picker/scope-' + o.id}
-            trailing={o.sel ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : null} />
-        ))}
-      </window.Sheet>
+      <window.SelectSheet title="Card source" node="game-picker/scope-sheet"
+        options={opts.map((o) => ({ key: o.id, icon: o.icon, label: o.label, node: 'game-picker/scope-' + o.id, selected: o.sel }))} />
     </window.Scrim>
   );
 }

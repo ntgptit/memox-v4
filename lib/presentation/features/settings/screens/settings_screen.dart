@@ -8,8 +8,8 @@ import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/providers/settings_providers.dart';
-import 'package:memox_v4/presentation/features/settings/widgets/profile_card.dart';
 import 'package:memox_v4/presentation/features/settings/widgets/value_picker_sheet.dart';
+import 'package:memox_v4/presentation/shared/composites/profile_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
@@ -64,7 +64,7 @@ class SettingsScreen extends ConsumerWidget {
     return MxScaffold(
       appBar: appBar,
       children: [
-        const ProfileCard(),
+        const MxProfileCard(),
         _Label(l10n.settingsSectionStudying),
         MxCard(
           padding: MxCardPadding.small,

@@ -1,9 +1,11 @@
 /* MemoX — Settings. States: loaded · group-expanded · value-picker. (No Premium in v1.)
-   Feature-local components: components/{Profile,ValuePickerSheet}.jsx */
+   Feature-local components: components/{ValuePickerSheet}.jsx
+   Shared: window.ProfileCard (_shared/ProfileCard.jsx). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSwitch } = NS;
-const { Profile, ValuePickerSheet } = window.MemoXSettings;
+const { ValuePickerSheet } = window.MemoXSettings;
+const Profile = () => <window.ProfileCard node="settings/profile" />;
 
 const NAV = [
   { id: 'home', label: 'Today', icon: 'today' },

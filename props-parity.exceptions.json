@@ -226,7 +226,12 @@
   { "component": "theme/PreviewCard", "prop": "fontScale", "reason": "flutter-idiom", "note": "The Flutter scale-factor form of the kit `termSize`." },
   { "component": "theme/PreviewCard", "prop": "accent", "reason": "flutter-idiom", "note": "The Flutter name for the kit `accentColor`." },
 
-  { "component": "account-sync/ProfileCard", "prop": "*", "reason": "deferred-screen", "note": "Account-sync screen deferred (WBS S.22) — no Flutter counterpart yet. NB: a same-named ProfileCard exists in settings; the checker short-circuits deferred components before class resolution." },
+  { "component": "_shared/SelectSheet", "prop": "title", "reason": "flutter-idiom", "note": "Kit's SelectSheet renders the Sheet + title; Flutter's SelectSheet is content-only — the sheet title is supplied by showMxSheet/MxSheet at the call site." },
+  { "component": "_shared/SelectSheet", "prop": "selected", "reason": "flutter-idiom", "note": "Kit marks the active row via a per-option `selected` flag; Flutter hoists it to a single typed `selected` value compared against each option." },
+  { "component": "_shared/SelectSheet", "prop": "onSelect", "reason": "flutter-idiom", "note": "Kit wires each option's tap via per-option onClick/node-id; Flutter uses a single onSelect:ValueChanged<T> callback." },
+
+  { "component": "_shared/ProfileCard", "prop": "badge", "reason": "deferred-screen", "note": "The kit's optional trailing badge is account-sync's ALPHA tag; account-sync is deferred (WBS S.22), so the v1 Flutter MxProfileCard (settings only) has no badge slot yet." },
+
   { "component": "account-sync/SignInCard", "prop": "*", "reason": "deferred-screen", "note": "Account-sync screen deferred (WBS S.22) — no Flutter counterpart yet." },
   { "component": "account-sync/SyncBlock", "prop": "*", "reason": "deferred-screen", "note": "Account-sync screen deferred (WBS S.22) — no Flutter counterpart yet." }
 ]

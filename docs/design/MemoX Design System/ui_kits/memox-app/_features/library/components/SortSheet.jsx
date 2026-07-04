@@ -7,12 +7,8 @@ function SortSheet() {
     ['schedule', 'Date created (newest)', false], ['history', 'Last studied', false],
   ];
   return (
-    <window.Sheet title="Sort by" node="library/sort-sheet">
-      {opts.map((o, i) => (
-        <window.MenuItem key={i} icon={o[0]} label={o[1]} node={'library/sort-' + i}
-          trailing={o[2] ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : null} />
-      ))}
-    </window.Sheet>
+    <window.SelectSheet title="Sort by" node="library/sort-sheet"
+      options={opts.map((o, i) => ({ key: i, icon: o[0], label: o[1], node: 'library/sort-' + i, selected: o[2] }))} />
   );
 }
 

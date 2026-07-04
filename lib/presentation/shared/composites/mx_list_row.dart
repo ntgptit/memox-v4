@@ -9,7 +9,8 @@ import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 /// tile, a title (+ optional subtitle), and an optional trailing widget, with a
 /// hairline divider below unless [last]. Token-driven via [MxTheme]; composes
 /// [MxIconTile]. [muted] dims the row; [onPressed] makes it an accessible button.
-/// Copy is supplied by the caller (from ARB).
+/// [selected] renders the primary-tinted trailing check (single-select sheets); an
+/// explicit [trailing] still wins. Copy is supplied by the caller (from ARB).
 class MxListRow extends StatelessWidget {
   const MxListRow({
     required this.title,
@@ -17,6 +18,7 @@ class MxListRow extends StatelessWidget {
     this.tone = MxIconTileTone.primary,
     this.subtitle,
     this.trailing,
+    this.selected = false,
     this.last = false,
     this.muted = false,
     this.onPressed,
@@ -28,6 +30,7 @@ class MxListRow extends StatelessWidget {
   final MxIconTileTone tone;
   final String? subtitle;
   final Widget? trailing;
+  final bool selected;
   final bool last;
   final bool muted;
   final VoidCallback? onPressed;
@@ -36,6 +39,8 @@ class MxListRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final trailingWidget =
+        trailing ?? (selected ? Icon(Icons.check, color: scheme.primary) : null);
 
     Widget row = Row(
       spacing: MxSpacing.space4,
@@ -73,7 +78,7 @@ class MxListRow extends StatelessWidget {
             ],
           ),
         ),
-        ?trailing,
+        ?trailingWidget,
       ],
     );
 

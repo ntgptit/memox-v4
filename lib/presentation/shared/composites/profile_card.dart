@@ -7,12 +7,17 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_avatar.dart';
 
-/// Settings-local identity card (kit `settings/profile`). v1 is local-first with
-/// no account/sync (D-027 deferred), so this shows the app's **local** identity —
-/// the MemoX wordmark + an on-device subtitle — not a signed-in name/email
-/// (documented gap). Copy is from ARB; the wordmark is brand, not translatable.
-class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key});
+/// The kit's `_shared/ProfileCard` as a reusable composite: an avatar + name +
+/// subtitle identity card. Shared by settings (settings/profile) and — once built
+/// — account-sync (account/profile, deferred WBS S.22).
+///
+/// v1 divergence (documented, D-027): local-first with no account/sync, so this
+/// shows the app's **local** identity — the MemoX wordmark + an on-device subtitle —
+/// not the kit's signed-in name/email. The kit's optional `badge` (account-sync's
+/// ALPHA tag) has no v1 slot here (deferred-screen props-parity exception). Copy is
+/// from ARB; the wordmark is brand, not translatable.
+class MxProfileCard extends StatelessWidget {
+  const MxProfileCard({super.key});
 
   @override
   Widget build(BuildContext context) {

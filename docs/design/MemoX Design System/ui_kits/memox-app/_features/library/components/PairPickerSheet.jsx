@@ -4,8 +4,7 @@
 function PairPickerSheet() {
   return (
     <window.Sheet title="Language pair" node="library/pair-sheet">
-      <window.MenuItem icon="check" label="한국어 → English" node="library/pair-ko-en"
-        trailing={<span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span>} />
+      <window.MenuItem icon="check" label="한국어 → English" node="library/pair-ko-en" selected />
       <window.MenuItem icon="translate" label="日本語 → English" node="library/pair-ja-en" />
       <window.MenuItem icon="add" label="Add language" node="library/pair-add" />
     </window.Sheet>

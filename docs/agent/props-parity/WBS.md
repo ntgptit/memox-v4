@@ -142,8 +142,9 @@ component phải author `.d.ts`. Thứ tự chạy: **§8**.
 | `dashboard/ContinueCard` | `continue_deck_card.dart` / `ContinueDeckCard` |
 | `dashboard/TodaySummary` | `today_summary.dart` / `TodaySummary` |
 | `import/Table` | `import_table.dart` / `ImportTable` |
-| `settings/Profile` | `profile_card.dart` / `ProfileCard` |
 | `search/Chips` | `search_chips.dart` / `SearchChips` |
+| `_shared/SelectSheet` | `composites/select_sheet.dart` / `MxSelectSheet` |
+| `_shared/ProfileCard` | `composites/profile_card.dart` / `MxProfileCard` |
 | *(còn lại)* | snake_case của PascalCase (mặc định) |
 
 ### 5.2 Prop-name alias (áp cho MỌI component)

@@ -15,9 +15,9 @@ Build the **account-sync** screen + its 3 feature-local component(s), composed f
 
 - `docs/design/MemoX Design System/ui_kits/memox-app/_features/account-sync/AccountSync.jsx` — screen composition (components, states, state machine).
 - Feature-local components (build here):
-  - `docs/design/MemoX Design System/ui_kits/memox-app/_features/account-sync/components/ProfileCard.jsx`
   - `docs/design/MemoX Design System/ui_kits/memox-app/_features/account-sync/components/SignInCard.jsx`
   - `docs/design/MemoX Design System/ui_kits/memox-app/_features/account-sync/components/SyncBlock.jsx`
+- Shared composite (consume, already built): `docs/design/MemoX Design System/ui_kits/memox-app/_shared/ProfileCard.jsx` (`window.ProfileCard`, with the ALPHA `badge`) → Flutter `MxProfileCard`.
 - `docs/design/MemoX Design System/ui_kits/memox-app/specs/account-sync.md` — contract (states, copy, behaviour).
 - `docs/design/MemoX Design System/ui_kits/memox-app/shots/account-sync--*--{light,dark}.png` — visual reference per state.
 - Shared widgets in `lib/presentation/shared/{primitives,composites}/`

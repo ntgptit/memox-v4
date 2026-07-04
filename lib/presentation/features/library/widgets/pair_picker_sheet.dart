@@ -34,9 +34,7 @@ class PairPickerSheet extends StatelessWidget {
           MxListRow(
             icon: Icons.translate,
             title: '${pair.learningLanguage} → ${pair.nativeLanguage}',
-            trailing: pair.id.value == selectedId?.value
-                ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary)
-                : null,
+            selected: pair.id.value == selectedId?.value,
             onPressed: () {
               Navigator.of(context).pop();
               onSelect(pair.id);

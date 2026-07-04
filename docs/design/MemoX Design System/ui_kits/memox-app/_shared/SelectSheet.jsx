@@ -1,0 +1,22 @@
+/* MemoX shared composite: SelectSheet — a single-select option list inside a
+   bottom Sheet. Owns the "title + rows, primary check on the active one" pattern
+   that game-picker (ScopeSheet), library (SortSheet) and settings (ValuePickerSheet)
+   previously spelled out row-by-row. Thin wrapper over window.Sheet + window.MenuItem;
+   carries no copy of its own — title, each row's icon/label, the per-row node id and
+   which one is `selected` are all passed in by the caller. The caller wraps it in a
+   window.Scrim when the sheet is presented as an overlay (game-picker / settings do;
+   library renders it inside its existing overlay). */
+(function () {
+
+function SelectSheet({ title, node, options }) {
+  return (
+    <window.Sheet title={title} node={node}>
+      {options.map((o) => (
+        <window.MenuItem key={o.key} icon={o.icon} label={o.label} node={o.node} selected={o.selected} onClick={o.onClick} />
+      ))}
+    </window.Sheet>
+  );
+}
+
+window.SelectSheet = SelectSheet;
+})();
