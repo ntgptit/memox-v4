@@ -29,9 +29,26 @@ jobs:
         with:
           node-version: 20
 
+      # code-verification-guard-v2 is a separate (public) tooling repo, gitignored
+      # here — check it out beside the app so the gate's code-guard step runs in CI
+      # instead of skipping.
+      - name: Checkout code guard
+        uses: actions/checkout@v4
+        with:
+          repository: ntgptit/code-verification-guard-v2
+          path: code-verification-guard-v2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install code-guard deps
+        run: pip install -r code-verification-guard-v2/requirements.txt
+
       - name: Install dependencies
         run: flutter pub get
 
-      # Full gate: codegen (build_runner) + gen_tokens --check + analyze + test.
+      # Full gate: codegen (build_runner) + gen_tokens --check + analyze +
+      # code guard (memox-v4 ruleset) + test.
       - name: Verify
         run: node tool/verify/run.mjs

@@ -7,7 +7,7 @@
  * the strongest available checks and exits non-zero on the FIRST failure, naming
  * the step that failed.
  *
- *   node tool/verify/run.mjs           # FULL: codegen freshness + tokens + analyze + test
+ *   node tool/verify/run.mjs           # FULL: codegen + tokens + analyze + code guard + test
  *   node tool/verify/run.mjs --quick   # analyze + test only (fast, while iterating)
  *   node tool/verify/run.mjs --docs    # doc/token freshness only (gen_tokens --check)
  *
@@ -64,6 +64,45 @@ function l10n() {
   step('l10n (flutter gen-l10n)', 'flutter', ['gen-l10n']);
 }
 
+// code-verification-guard-v2 is a separate, gitignored tooling repo. When it is
+// checked out beside the app (local dev, the loop, and CI once it clones the repo),
+// run its memox-v4 ruleset as a blocking gate (its `local`/`ci` profiles fail on
+// warnings too); when it or Python is absent, skip with a notice so the rest of the
+// gate still runs everywhere. The ruleset must be memox-v4 (the V4 app), not memox.
+// Pick the interpreter that can actually load the guard (its deps — typer +
+// pyyaml — importable), not merely one that exists: a machine may have several
+// pythons with the deps installed in only one. Probe with `run.py --help`, which
+// exits 0 iff the imports succeed (and, unlike `-c "import …"`, has no spaces in
+// its args, so it survives shell:true arg-flattening on Windows). `python` first
+// (CI's setup-python provides it; the deps are pip-installed there).
+function guardPython() {
+  for (const c of ['python', 'python3']) {
+    const r = spawnSync(c, ['code-verification-guard-v2/guard/run.py', '--help'], {
+      cwd: REPO,
+      stdio: 'ignore',
+      shell: process.platform === 'win32',
+    });
+    if (r.status === 0) return c;
+  }
+  return null;
+}
+
+function guard() {
+  if (!existsSync(join(REPO, 'code-verification-guard-v2', 'guard', 'run.py'))) {
+    process.stdout.write('• code guard: code-verification-guard-v2 not checked out — skipping\n');
+    return;
+  }
+  const py = guardPython();
+  if (!py) {
+    process.stdout.write('• code guard: no python with typer+pyyaml — skipping (pip install -r code-verification-guard-v2/requirements.txt)\n');
+    return;
+  }
+  step('code guard (memox-v4)', py, [
+    'code-verification-guard-v2/guard/run.py',
+    'check', '--project', '.', '--ruleset', 'memox-v4',
+  ]);
+}
+
 const tokens = () => step('design tokens --check', 'node', ['tool/design/gen_tokens.mjs', '--check']);
 // props parity: each kit component's .d.ts contract vs its Flutter constructor.
 // --strict exits non-zero on any undeclared drift (every intentional divergence
@@ -84,6 +123,7 @@ if (mode === 'docs') {
   tokens();
   propsParity();
   analyze();
+  guard();
   test();
 }
 
