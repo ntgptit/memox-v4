@@ -5,9 +5,11 @@ import 'package:memox_v4/core/error/result.dart';
 import 'package:memox_v4/core/logging/logger_provider.dart';
 import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/entities/daily_goal.dart';
+import 'package:memox_v4/domain/entities/deck.dart';
 import 'package:memox_v4/domain/entities/deck_stats.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/streak.dart';
+import 'package:memox_v4/domain/usecases/library/deck_usecases.dart';
 import 'package:memox_v4/domain/usecases/stats/streak_summary_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,8 +18,13 @@ part 'dashboard_providers.g.dart';
 /// Which dashboard layout the kit renders — derived purely from the assembled
 /// data (`docs/design/screen-state-matrix.md`, dashboard rows).
 enum DashboardStatus {
-  /// No study activity yet today — the minimal "start" layout (D-010).
+  /// The library has no decks yet — the first-run onboarding layout
+  /// (hero invitation + how-it-works steps).
   empty,
+
+  /// Has decks but no study activity today — the full layout with zeroed
+  /// figures plus a nudge banner (the user's decks/goal/streak stay visible).
+  notStudied,
 
   /// Today's goal is met — the celebration banner + full layout (D-021).
   goalMet,
@@ -64,6 +71,7 @@ class DashboardData {
     required this.goalPercent,
     required this.streak,
     required this.masteredPercent,
+    required this.hasDecks,
     required this.dueDecks,
   });
 
@@ -78,13 +86,18 @@ class DashboardData {
 
   /// Mastered fraction across the whole library, 0..1.
   final double masteredPercent;
+
+  /// Whether the library has any root deck — `false` drives the first-run
+  /// onboarding layout.
+  final bool hasDecks;
   final List<DashboardDeck> dueDecks;
 
   bool get hasActivity => minutes > 0 || words > 0;
 
   DashboardStatus get status {
-    if (!hasActivity) return DashboardStatus.empty;
+    if (!hasDecks) return DashboardStatus.empty;
     if (goalMet) return DashboardStatus.goalMet;
+    if (!hasActivity) return DashboardStatus.notStudied;
     if (streak.current == 0) return DashboardStatus.streakReset;
     return DashboardStatus.loaded;
   }
@@ -149,7 +162,30 @@ class DashboardController extends _$DashboardController {
       goalPercent: _goalPercent(goal, activity, goalMet),
       streak: streak,
       masteredPercent: mastered.progress,
+      hasDecks: roots.isNotEmpty,
       dueDecks: dueDecks,
+    );
+  }
+
+  /// Create the learner's first root deck from the first-run onboarding CTA
+  /// (kit `dashboard/create-deck`). Same convention as the library flow: a
+  /// clock-stamped id, name validated by [Deck.create] (BR-1). Refreshes the
+  /// dashboard on success (the onboarding layout yields to loaded); a failure
+  /// is logged, not swallowed.
+  Future<void> createDeck(String name) async {
+    final id =
+        DeckId('deck-${ref.read(clockProvider).now().microsecondsSinceEpoch}');
+    final created = Deck.create(id: id, name: name);
+    if (created case Err(:final failure)) {
+      ref.read(loggerProvider).error('create deck rejected', error: failure);
+      return;
+    }
+    final saved = await SaveDeckUseCase(ref.read(deckRepositoryProvider))
+        .call((created as Ok<Deck>).value);
+    saved.fold(
+      (_) => ref.invalidateSelf(), // guard:invalidate-reviewed -- reason: refresh the dashboard after the first deck is created so onboarding yields to loaded
+      (failure) =>
+          ref.read(loggerProvider).error('create deck failed', error: failure),
     );
   }
 

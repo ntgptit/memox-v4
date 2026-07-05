@@ -1,5 +1,9 @@
-/* MemoX — Dashboard (Today). States: loaded · empty · loading · goal-met · streak-reset
-   Feature-local components: components/{TodaySummary,GoalCard,StreakCard,ContinueCard}.jsx */
+/* MemoX — Dashboard (Today). States: loaded · not-studied · empty · loading · goal-met · streak-reset
+   `empty` = the library has no decks yet (first-run onboarding); "no activity
+   today" is NOT empty — it is `not-studied`: the full loaded layout with zeroed
+   figures plus a nudge banner (the user's decks/goal/streak don't vanish).
+   Feature-local components: components/{TodaySummary,GoalCard,StreakCard,
+   ContinueCard,OnboardingHero,OnboardingStep}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar } = NS;
@@ -44,19 +48,29 @@ function Dashboard({ state = 'loaded' }) {
   }
 
   if (state === 'empty') {
+    const { OnboardingHero, OnboardingStep } = window.MemoXDashboard;
     return (
       <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}>
-        <Note icon="bolt" tone="accent" text="You haven't studied today — start to keep your streak!" />
-        <TodaySummary time="00:00" words="0">
-          <MxButton variant="contrast" icon="play_arrow" block node="dashboard/start">Start studying</MxButton>
-        </TodaySummary>
+        <OnboardingHero icon="school" title="Start your first deck"
+          text="Add the words you want to remember — MemoX schedules the reviews for you.">
+          <MxButton variant="contrast" icon="add" block node="dashboard/create-deck">Create a deck</MxButton>
+          <MxButton variant="secondary" icon="upload_file" block node="dashboard/import-file">Import from a file</MxButton>
+        </OnboardingHero>
+        <MxSectionHeader title="How MemoX works" node="dashboard/how-it-works" />
+        <OnboardingStep icon="library_add" title="Add your words"
+          text="Create decks or import from CSV" node="dashboard/step-add" />
+        <OnboardingStep icon="bolt" tone="accent" title="Study with smart review"
+          text="Spaced repetition picks what's due" node="dashboard/step-review" />
+        <OnboardingStep icon="local_fire_department" tone="warning" title="Build a daily streak"
+          text="Hit your daily goal to keep the flame" node="dashboard/step-streak" />
       </MxScaffold>
     );
   }
 
   const met = state === 'goal-met';
   const reset = state === 'streak-reset';
-  const goalPct = met ? 100 : 70;
+  const idle = state === 'not-studied';
+  const goalPct = met ? 100 : idle ? 0 : 70;
   const streak = met ? 13 : reset ? 0 : 12;
 
   return (
@@ -64,8 +78,9 @@ function Dashboard({ state = 'loaded' }) {
       fab={<MxFabReview />}>
       {met ? <Note icon="celebration" tone="success" text="Daily goal reached! Streak +1." /> : null}
       {reset ? <Note icon="local_fire_department" tone="warning" text="Streak reset — study today to start again." /> : null}
+      {idle ? <Note icon="bolt" tone="accent" text="You haven't studied today — start to keep your streak!" /> : null}
 
-      <TodaySummary time="12:30" words="24" />
+      <TodaySummary time={idle ? '00:00' : '12:30'} words={idle ? '0' : '24'} />
 
       <GoalCard pct={goalPct} met={met} />
 

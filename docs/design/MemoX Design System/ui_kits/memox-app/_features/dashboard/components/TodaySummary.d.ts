@@ -5,7 +5,7 @@ export interface TodaySummaryProps {
   time: ReactNode;
   /** Words learned today. */
   words: ReactNode;
-  /** Optional Start CTA (empty state only). Flutter names this slot `action`. */
+  /** Optional CTA slot (currently unused — first-run renders OnboardingHero). Flutter names this slot `action`. */
   children?: ReactNode;
 }
 
