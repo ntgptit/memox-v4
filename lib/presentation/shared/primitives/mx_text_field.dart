@@ -71,9 +71,18 @@ class MxTextField extends StatelessWidget {
       maxLines: maxLines,
       keyboardType: keyboardType,
       style: effectiveStyle,
+      // Every border slot is explicitly none: an ambient InputDecorationTheme's
+      // enabledBorder/focusedBorder would override a bare `border:` and paint a
+      // second outline inside the caller's container (kit `.field` = no chrome).
       decoration: InputDecoration(
         isCollapsed: true,
+        filled: false,
         border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        focusedErrorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
         hintText: hintText,
         hintStyle: hintStyle ?? effectiveStyle.copyWith(color: mx.textTertiary),
       ),

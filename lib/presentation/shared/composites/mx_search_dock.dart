@@ -4,6 +4,7 @@ import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
 /// The kit's rounded search dock with a leading search glyph (`MxSearchDock` ·
 /// base class `.search-dock`). A composite wrapping a real [TextField],
@@ -79,7 +80,9 @@ class _MxSearchDockState extends State<MxSearchDock> {
               Icon(Icons.search, size: MxIconSize.md, color: mx.textTertiary),
               const SizedBox(width: MxSpacing.space3),
               Expanded(
-                child: TextField(
+                // The bare-input primitive — the pill container above is the
+                // sole owner of box, shadow, and focus ring (kit .search-dock).
+                child: MxTextField(
                   controller: widget.controller,
                   focusNode: _node,
                   onChanged: widget.onChanged,
@@ -88,17 +91,7 @@ class _MxSearchDockState extends State<MxSearchDock> {
                     fontSize: MxTypography.sizeBase,
                     color: mx.text,
                   ),
-                  decoration: InputDecoration(
-                    isCollapsed: true,
-                    filled: false,
-                    border: InputBorder.none,
-                    hintText: widget.placeholder,
-                    hintStyle: TextStyle(
-                      fontFamily: MxTypography.fontFamily,
-                      fontSize: MxTypography.sizeBase,
-                      color: mx.textTertiary,
-                    ),
-                  ),
+                  hintText: widget.placeholder,
                 ),
               ),
               if (trailing != null) ...[

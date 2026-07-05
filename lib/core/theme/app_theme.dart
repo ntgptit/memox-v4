@@ -122,19 +122,20 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.all(Radius.circular(MxRadius.xl)),
         ),
       ),
+      // Kit contract (`.field`): inputs are BARE — the visible box, border, and
+      // focus ring belong to the surrounding MemoX container (search-dock pill,
+      // DialogInput box, editor Field…). Theme-level borders here would paint a
+      // second outline INSIDE those containers (they override a widget-level
+      // `border: InputBorder.none`), so every slot is explicitly none.
       inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: c.surfaceMuted,
+        filled: false,
         hintStyle: TextStyle(color: c.textTertiary),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: MxSpacing.space4,
-          vertical: MxSpacing.space3,
-        ),
-        border: _inputBorder(c.border, MxStroke.hairline),
-        enabledBorder: _inputBorder(c.border, MxStroke.hairline),
-        focusedBorder: _inputBorder(c.focusRing, MxStroke.emphasis),
-        errorBorder: _inputBorder(c.error, MxStroke.hairline),
-        focusedErrorBorder: _inputBorder(c.error, MxStroke.emphasis),
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        focusedErrorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
       ),
       extensions: [MxTheme.fromTokens(c, shadows)],
     );
@@ -162,9 +163,4 @@ abstract final class AppTheme {
     );
   }
 
-  static OutlineInputBorder _inputBorder(Color color, double width) =>
-      OutlineInputBorder(
-        borderRadius: MxRadius.controlRadius,
-        borderSide: BorderSide(color: color, width: width),
-      );
 }
