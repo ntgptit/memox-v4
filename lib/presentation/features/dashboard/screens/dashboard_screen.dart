@@ -12,6 +12,7 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/dashboard/providers/dashboard_providers.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/continue_deck_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/goal_card.dart';
+import 'package:memox_v4/presentation/features/dashboard/widgets/greeting_header.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/onboarding_hero.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/onboarding_step.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/streak_card.dart';
@@ -58,26 +59,28 @@ class DashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final now = ref.watch(clockProvider).now();
     final async = ref.watch(dashboardControllerProvider);
-    final appBar = _appBar(context, now);
+    final appBar = _appBar(context);
+    final greeting = _greetingHeader(context, now);
 
     return async.when(
-      loading: () => MxScaffold(appBar: appBar, children: _loadingBody()),
-      error: (_, _) =>
-          MxScaffold(appBar: appBar, children: [_ErrorBody(onRetry: () => _retry(ref))]),
-      data: (data) => _loaded(context, ref, appBar, data),
+      loading: () =>
+          MxScaffold(appBar: appBar, children: [greeting, ..._loadingBody()]),
+      error: (_, _) => MxScaffold(
+          appBar: appBar,
+          children: [greeting, _ErrorBody(onRetry: () => _retry(ref))]),
+      data: (data) => _loaded(context, ref, appBar, greeting, data),
     );
   }
 
   void _retry(WidgetRef ref) => ref.invalidate(dashboardControllerProvider);
 
-  // ── App bar (constant across states) ───────────────────────────────────────
+  // ── App bar + greeting (constant across states) ─────────────────────────────
+  // Kit split: the slim bar holds only the actions; the date + greeting render
+  // as the scroll body's first child (`dashboard/greeting`) so they scroll away.
 
-  MxAppBar _appBar(BuildContext context, DateTime now) {
+  MxAppBar _appBar(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return MxAppBar(
-      large: true,
-      eyebrow: DateFormat('EEEE · d MMM').format(now),
-      title: _greeting(l10n, now),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -95,6 +98,14 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
+  GreetingHeader _greetingHeader(BuildContext context, DateTime now) {
+    final l10n = AppLocalizations.of(context);
+    return GreetingHeader(
+      eyebrow: DateFormat('EEEE · d MMM').format(now),
+      title: _greeting(l10n, now),
+    );
+  }
+
   String _greeting(AppLocalizations l10n, DateTime now) {
     if (now.hour < _afternoonHour) return l10n.dashboardGreetingMorning;
     if (now.hour < _eveningHour) return l10n.dashboardGreetingAfternoon;
@@ -107,16 +118,21 @@ class DashboardScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     MxAppBar appBar,
+    GreetingHeader greeting,
     DashboardData data,
   ) {
     if (data.status == DashboardStatus.empty) {
-      return MxScaffold(appBar: appBar, children: _onboardingBody(context, ref));
+      return MxScaffold(
+        appBar: appBar,
+        children: [greeting, ..._onboardingBody(context, ref)],
+      );
     }
 
     return MxScaffold(
       appBar: appBar,
       fab: _reviewFab(context),
       children: [
+        greeting,
         ?_banner(context, data.status),
         TodaySummary(
           time: _formatTime(data.minutes),

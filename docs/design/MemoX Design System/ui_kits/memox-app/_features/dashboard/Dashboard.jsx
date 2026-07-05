@@ -2,8 +2,8 @@
    `empty` = the library has no decks yet (first-run onboarding); "no activity
    today" is NOT empty — it is `not-studied`: the full loaded layout with zeroed
    figures plus a nudge banner (the user's decks/goal/streak don't vanish).
-   Feature-local components: components/{TodaySummary,GoalCard,StreakCard,
-   ContinueCard,OnboardingHero,OnboardingStep}.jsx */
+   Feature-local components: components/{GreetingHeader,TodaySummary,GoalCard,
+   StreakCard,ContinueCard,OnboardingHero,OnboardingStep}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar } = NS;
@@ -25,20 +25,24 @@ const DECKS = [
 const Note = window.Note;
 
 function Dashboard({ state = 'loaded' }) {
-  const { TodaySummary, GoalCard, StreakCard, ContinueCard } = window.MemoXDashboard;
+  const { TodaySummary, GoalCard, StreakCard, ContinueCard, GreetingHeader } = window.MemoXDashboard;
   const nav = <MxBottomNav items={NAV} value="home" node="shell/bottom-nav" />;
+  // Slim bar: actions only. The date + greeting live in the scroll body
+  // (GreetingHeader) so they scroll away with content.
   const bar = (
-    <MxAppBar large eyebrow="Saturday · 27 Jun" title="Good evening, Linh" node="dashboard/appbar"
+    <MxAppBar node="dashboard/appbar"
       trailing={<React.Fragment>
         <MxIconButton icon="notifications" node="dashboard/notifications" />
         <MxAvatar name="Linh Tran" size="sm" />
       </React.Fragment>} />
   );
+  const greeting = <GreetingHeader eyebrow="Saturday · 27 Jun" title="Good evening, Linh" node="dashboard/greeting" />;
 
   if (state === 'loading') {
     const S = window.Skeleton;
     return (
       <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}>
+        {greeting}
         <MxCard><S w="40%" h={12} /><S w="55%" h={30} style={{ marginTop: 'var(--memox-space-2)' }} /></MxCard>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>{[0, 1].map((i) => <MxCard key={i} padding="sm"><S w="60%" h={22} /><S w="45%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></MxCard>)}</div>
         <S w="45%" h={16} />
@@ -51,6 +55,7 @@ function Dashboard({ state = 'loaded' }) {
     const { OnboardingHero, OnboardingStep } = window.MemoXDashboard;
     return (
       <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}>
+        {greeting}
         <OnboardingHero icon="school" title="Start your first deck"
           text="Add the words you want to remember — MemoX schedules the reviews for you.">
           <MxButton variant="contrast" icon="add" block node="dashboard/create-deck">Create a deck</MxButton>
@@ -76,6 +81,7 @@ function Dashboard({ state = 'loaded' }) {
   return (
     <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}
       fab={<MxFabReview />}>
+      {greeting}
       {met ? <Note icon="celebration" tone="success" text="Daily goal reached! Streak +1." /> : null}
       {reset ? <Note icon="local_fire_department" tone="warning" text="Streak reset — study today to start again." /> : null}
       {idle ? <Note icon="bolt" tone="accent" text="You haven't studied today — start to keep your streak!" /> : null}

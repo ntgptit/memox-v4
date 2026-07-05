@@ -20,10 +20,12 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/continue_deck_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/goal_card.dart';
+import 'package:memox_v4/presentation/features/dashboard/widgets/greeting_header.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/onboarding_hero.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/onboarding_step.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/today_summary.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
@@ -72,6 +74,7 @@ void main() {
       await pump(tester, dark: dark, store: FakeStore());
 
       expect(find.byType(OnboardingHero), findsOneWidget);
+      expect(find.byType(GreetingHeader), findsOneWidget);
       expect(find.text('Start your first deck'), findsOneWidget);
       expect(find.text('Create a deck'), findsOneWidget);
       expect(find.text('Import from a file'), findsOneWidget);
@@ -102,6 +105,11 @@ void main() {
       expect(find.byType(ContinueDeckCard), findsWidgets);
       expect(find.byType(MxFab), findsOneWidget);
       expect(find.byType(OnboardingHero), findsNothing);
+      // Kit split: slim bar (actions only); the greeting lives in the body.
+      final bar = tester.widget<MxAppBar>(find.byType(MxAppBar));
+      expect(bar.large, isFalse);
+      expect(bar.title, isNull);
+      expect(find.byType(GreetingHeader), findsOneWidget);
     });
 
     testWidgets('loaded: activity + live streak → full layout, no banner ($theme)',
@@ -156,6 +164,8 @@ void main() {
 
       expect(find.byType(MxSkeleton), findsWidgets);
       expect(find.byType(TodaySummary), findsNothing);
+      // The greeting is data-independent — visible even while loading.
+      expect(find.byType(GreetingHeader), findsOneWidget);
     });
 
     testWidgets('error: failed read → localized surface + logged cause ($theme)',
