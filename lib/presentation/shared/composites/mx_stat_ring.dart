@@ -5,14 +5,16 @@ import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 
 /// The kit's `Ring` + `Stat` helpers combined into one reusable composite: a
-/// circular progress ring around a centered value + label. Token-driven via
-/// [MxTheme]. [percent] is a 0..1 fraction; [color] tints both the ring arc and
-/// the value. Copy ([value], [label]) is supplied by the caller (from ARB).
+/// circular progress ring around a centered value and an optional [label]
+/// beneath it (kit: the goal ring is percent-only; the statistics donut adds
+/// "accuracy"). Token-driven via [MxTheme]. [percent] is a 0..1 fraction;
+/// [color] tints both the ring arc and the value. Copy ([value], [label]) is
+/// supplied by the caller (from ARB).
 class MxStatRing extends StatelessWidget {
   const MxStatRing({
     required this.percent,
     required this.value,
-    required this.label,
+    this.label,
     this.color,
     this.size = _defaultSize,
     this.strokeWidth = _defaultStroke,
@@ -21,7 +23,7 @@ class MxStatRing extends StatelessWidget {
 
   final double percent;
   final String value;
-  final String label;
+  final String? label;
   final Color? color;
   final double size;
   final double strokeWidth;
@@ -35,11 +37,12 @@ class MxStatRing extends StatelessWidget {
     final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
     final ringColor = color ?? scheme.primary;
+    final label = this.label;
 
     return Semantics(
       // a11y label = the caller's already-localized value + label, space-joined
       // (no literal copy of our own — the two are supplied from ARB).
-      label: [value, label].join(' '),
+      label: [value, ?label].join(' '),
       child: SizedBox(
         width: size,
         height: size,
@@ -71,15 +74,19 @@ class MxStatRing extends StatelessWidget {
                     color: color ?? scheme.onSurface,
                   ),
                 ),
-                const SizedBox(height: MxSpacing.space1),
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontFamily: MxTypography.fontFamily,
-                    fontSize: MxTypography.sizeXs,
-                    color: mx.textSecondary,
+                // No empty label line — it would push the value off-center
+                // (kit: the goal ring centers the bare percent).
+                if (label != null && label.isNotEmpty) ...[
+                  const SizedBox(height: MxSpacing.space1),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontFamily: MxTypography.fontFamily,
+                      fontSize: MxTypography.sizeXs,
+                      color: mx.textSecondary,
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ],
