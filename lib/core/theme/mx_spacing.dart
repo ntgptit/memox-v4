@@ -17,7 +17,7 @@ abstract final class MxSpacing {
 
   // ── layout rhythm ─────────────────────────────────────────────────────────
   /// Screen edge padding on phones.
-  static const double gutter = 20;
+  static const double gutter = 24;
 
   /// Compact top app bar.
   static const double appBarHeight = 64;
