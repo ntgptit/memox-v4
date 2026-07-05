@@ -12,6 +12,8 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/dashboard/providers/dashboard_providers.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/continue_deck_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/goal_card.dart';
+import 'package:memox_v4/presentation/features/dashboard/widgets/onboarding_hero.dart';
+import 'package:memox_v4/presentation/features/dashboard/widgets/onboarding_step.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/streak_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/today_summary.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
@@ -19,6 +21,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_input_dialog.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_section_header.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_avatar.dart';
@@ -61,7 +64,7 @@ class DashboardScreen extends ConsumerWidget {
       loading: () => MxScaffold(appBar: appBar, children: _loadingBody()),
       error: (_, _) =>
           MxScaffold(appBar: appBar, children: [_ErrorBody(onRetry: () => _retry(ref))]),
-      data: (data) => _loaded(context, appBar, data),
+      data: (data) => _loaded(context, ref, appBar, data),
     );
   }
 
@@ -100,43 +103,118 @@ class DashboardScreen extends ConsumerWidget {
 
   // ── Loaded / empty / goal-met / streak-reset ───────────────────────────────
 
-  Widget _loaded(BuildContext context, MxAppBar appBar, DashboardData data) {
-    final isEmpty = data.status == DashboardStatus.empty;
+  Widget _loaded(
+    BuildContext context,
+    WidgetRef ref,
+    MxAppBar appBar,
+    DashboardData data,
+  ) {
+    if (data.status == DashboardStatus.empty) {
+      return MxScaffold(appBar: appBar, children: _onboardingBody(context, ref));
+    }
 
     return MxScaffold(
       appBar: appBar,
-      fab: isEmpty ? null : _reviewFab(context),
+      fab: _reviewFab(context),
       children: [
         ?_banner(context, data.status),
         TodaySummary(
           time: _formatTime(data.minutes),
           words: '${data.words}',
-          action: isEmpty ? _startButton(context) : null,
         ),
-        if (!isEmpty) ...[
-          GoalCard(
-            goal: data.goal,
-            minutes: data.minutes,
-            words: data.words,
-            percent: data.goalPercent,
-            met: data.goalMet,
-          ),
-          _statRow(data),
-          _continueHeader(context, data.dueDecks.length),
-          for (final (index, deck) in data.dueDecks.indexed)
-            _deckCard(context, deck, index),
-        ],
+        GoalCard(
+          goal: data.goal,
+          minutes: data.minutes,
+          words: data.words,
+          percent: data.goalPercent,
+          met: data.goalMet,
+        ),
+        _statRow(data),
+        _continueHeader(context, data.dueDecks.length),
+        for (final (index, deck) in data.dueDecks.indexed)
+          _deckCard(context, deck, index),
       ],
     );
+  }
+
+  // ── First-run onboarding (kit `empty`: no decks yet) ───────────────────────
+
+  List<Widget> _onboardingBody(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    return [
+      OnboardingHero(
+        icon: Icons.school,
+        title: l10n.dashboardOnboardingTitle,
+        text: l10n.dashboardOnboardingBody,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            MxButton(
+              label: l10n.dashboardCreateDeck,
+              variant: MxButtonVariant.contrast,
+              icon: Icons.add,
+              block: true,
+              onPressed: () => _openCreateDeck(context, ref),
+            ),
+            const SizedBox(height: MxSpacing.space3),
+            MxButton(
+              label: l10n.dashboardImportFile,
+              variant: MxButtonVariant.secondary,
+              icon: Icons.upload_file,
+              block: true,
+              onPressed: () => context.push(Routes.import_),
+            ),
+          ],
+        ),
+      ),
+      MxSectionHeader(title: l10n.dashboardHowItWorksTitle),
+      OnboardingStep(
+        icon: Icons.library_add,
+        title: l10n.dashboardStepAddTitle,
+        text: l10n.dashboardStepAddBody,
+      ),
+      OnboardingStep(
+        icon: Icons.bolt,
+        tone: MxIconTileTone.accent,
+        title: l10n.dashboardStepReviewTitle,
+        text: l10n.dashboardStepReviewBody,
+      ),
+      OnboardingStep(
+        icon: Icons.local_fire_department,
+        tone: MxIconTileTone.warning,
+        title: l10n.dashboardStepStreakTitle,
+        text: l10n.dashboardStepStreakBody,
+      ),
+    ];
+  }
+
+  /// Prompt for a deck name (kit `dashboard/create-deck`) and create the first
+  /// root deck via the dashboard controller — same flow as the library's
+  /// create-deck (dialog copy shared through ARB).
+  Future<void> _openCreateDeck(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final name = await showMxInputDialog(
+      context: context,
+      icon: Icons.layers,
+      title: l10n.libraryNewDeckTitle,
+      label: l10n.deckNameLabel,
+      placeholder: l10n.deckNamePlaceholder,
+      confirmLabel: l10n.actionCreate,
+      cancelLabel: l10n.actionCancel,
+    );
+    if (name == null) return;
+    await ref.read(dashboardControllerProvider.notifier).createDeck(name);
   }
 
   Widget? _banner(BuildContext context, DashboardStatus status) {
     final l10n = AppLocalizations.of(context);
     return switch (status) {
-      DashboardStatus.empty => MxActionCallout(
+      // `empty` renders the onboarding body instead — no banner reaches here.
+      DashboardStatus.empty => null,
+      DashboardStatus.notStudied => MxActionCallout(
           tone: MxCalloutTone.primary,
           icon: Icons.bolt,
-          text: l10n.dashboardEmptyBanner,
+          text: l10n.dashboardNotStudiedBanner,
         ),
       DashboardStatus.goalMet => MxActionCallout(
           tone: MxCalloutTone.success,
@@ -191,17 +269,6 @@ class DashboardScreen extends ConsumerWidget {
       icon: Icons.bolt,
       label: l10n.dashboardReview,
       onPressed: () => context.push(Routes.review),
-    );
-  }
-
-  Widget _startButton(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return MxButton(
-      label: l10n.dashboardStartStudying,
-      variant: MxButtonVariant.contrast,
-      icon: Icons.play_arrow,
-      block: true,
-      onPressed: () => context.push(Routes.study),
     );
   }
 

@@ -1,5 +1,6 @@
 /* MemoX — Dashboard local: TodaySummary (today's time + words hero card).
-   `children` carries the optional Start CTA (empty state only). */
+   `children` is an optional CTA slot (kept for contract stability; currently
+   unused — the first-run empty state renders OnboardingHero instead). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxCard } = NS;

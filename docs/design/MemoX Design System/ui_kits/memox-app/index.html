@@ -76,6 +76,8 @@
 <script type="text/babel" src="_features/dashboard/components/GoalCard.jsx"></script>
 <script type="text/babel" src="_features/dashboard/components/StreakCard.jsx"></script>
 <script type="text/babel" src="_features/dashboard/components/ContinueCard.jsx"></script>
+<script type="text/babel" src="_features/dashboard/components/OnboardingHero.jsx"></script>
+<script type="text/babel" src="_features/dashboard/components/OnboardingStep.jsx"></script>
 <script type="text/babel" src="_features/dashboard/Dashboard.jsx"></script>
 <script type="text/babel" src="_features/library/components/LibraryHeader.jsx"></script>
 <script type="text/babel" src="_features/library/components/ContextBar.jsx"></script>
@@ -157,7 +159,7 @@
 <script type="text/babel" src="_features/settings/Settings.jsx"></script>
 <script type="text/babel">
 const SCREENS = [
-  { id: 'dashboard', title: 'Today', Comp: () => window.Dashboard, states: ['loaded', 'goal-met', 'streak-reset', 'empty', 'loading'] },
+  { id: 'dashboard', title: 'Today', Comp: () => window.Dashboard, states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'empty', 'loading'] },
   { id: 'library', title: 'Library', Comp: () => window.Library, states: ['loaded', 'search-active', 'pair-picker', 'sort-menu', 'overflow-menu', 'play-sheet', 'drawer', 'empty', 'loading', 'error'] },
   { id: 'deck-detail', title: 'Deck Detail (node)', Comp: () => window.DeckDetail, states: ['loaded', 'search', 'no-results', 'empty', 'add-menu', 'card-actions', 'delete-confirm', 'reset-confirm', 'deck-menu', 'deck-delete-confirm', 'move', 'loading', 'error'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'multi-meaning', 'audio'] },

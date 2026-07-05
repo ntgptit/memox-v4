@@ -124,6 +124,8 @@
   { "component": "dashboard/GoalCard", "prop": "minutes", "reason": "fixture-parameterized", "note": "Kit hardcodes the minutes value ('20/20 min'); Flutter takes minutes." },
   { "component": "dashboard/GoalCard", "prop": "words", "reason": "fixture-parameterized", "note": "Kit hardcodes the words value; Flutter takes words." },
 
+  { "component": "dashboard/OnboardingStep", "prop": "tone", "reason": "enum-base-expansion", "note": "tone forwards to MxIconTile; MxIconTileTone adds 'primary' — the soft-primary base the kit expresses by omitting tone." },
+
   { "component": "deck-detail/DeckHeader", "prop": "title", "reason": "fixture-parameterized", "note": "Kit hardcodes the deck title ('Korean Basics'); Flutter takes title:String." },
   { "component": "deck-detail/DeckHeader", "prop": "onBack", "reason": "fixture-parameterized", "note": "Kit fixture stubs the back button; Flutter wires onBack." },
   { "component": "deck-detail/DeckHeader", "prop": "onMenu", "reason": "fixture-parameterized", "note": "Kit fixture stubs the menu button; Flutter wires onMenu." },

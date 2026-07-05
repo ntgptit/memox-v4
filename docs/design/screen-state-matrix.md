@@ -41,7 +41,8 @@ Spec `dashboard.md` · shots `dashboard--*`.
 | State | Kind | Shows | D-xxx |
 | --- | --- | --- | --- |
 | `loading` | loading | activity/goal/streak skeletons | — |
-| `empty` | empty | no activity yet — prompt to start learning | — |
+| `empty` | empty | no decks yet — first-run onboarding hero (create/import) + how-it-works steps | — |
+| `not-studied` | partial | has decks, no activity today — full layout with zeroed figures + nudge banner | — |
 | `loaded` | success | today's minutes + words, goal, current + longest streak | D-010 |
 | `goal-met` | partial | goal reached → streak advances | D-021 |
 | `streak-reset` | partial | a missed day zeroed the current streak | D-021 |

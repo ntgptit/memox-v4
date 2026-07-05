@@ -32,6 +32,17 @@ void main() {
     expect(indicator.backgroundColor, MxColors.light.surfaceSunken);
   });
 
+  testWidgets('without a label the value sits dead-center in the ring',
+      (tester) async {
+    await _pump(tester, const MxStatRing(percent: 0, value: '0%'));
+
+    // No phantom label line (an empty Text would push the value off-center).
+    expect(find.byType(Text), findsOneWidget);
+    final ringCenter = tester.getCenter(find.byType(MxStatRing));
+    final valueCenter = tester.getCenter(find.text('0%'));
+    expect((valueCenter - ringCenter).distance, lessThan(0.01));
+  });
+
   testWidgets('clamps percent to 0..1', (tester) async {
     await _pump(tester, const MxStatRing(percent: 1.4, value: '1', label: 'l'));
     expect(_indicator(tester).value, 1.0);

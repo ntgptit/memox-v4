@@ -11,6 +11,7 @@ import 'package:memox_v4/core/logging/app_logger.dart';
 import 'package:memox_v4/core/logging/logger_provider.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/data/fakes/fake_services.dart';
+import 'package:memox_v4/data/fakes/fake_store.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/study_mode.dart';
 import 'package:memox_v4/domain/entities/study_session.dart';
@@ -19,6 +20,8 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/continue_deck_card.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/goal_card.dart';
+import 'package:memox_v4/presentation/features/dashboard/widgets/onboarding_hero.dart';
+import 'package:memox_v4/presentation/features/dashboard/widgets/onboarding_step.dart';
 import 'package:memox_v4/presentation/features/dashboard/widgets/today_summary.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
@@ -36,6 +39,7 @@ void main() {
     WidgetTester tester, {
     required bool dark,
     DailyActivityService? activity,
+    FakeStore? store,
     List<Override> extra = const [],
     bool settle = true,
   }) async {
@@ -43,7 +47,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
-    final harness = FakeHarness(activity: activity);
+    final harness = FakeHarness(store: store, activity: activity);
     await tester.pumpWidget(
       ProviderScope(
         overrides: [...harness.overrides, ...extra],
@@ -62,21 +66,42 @@ void main() {
   for (final dark in [false, true]) {
     final theme = dark ? 'dark' : 'light';
 
-    testWidgets('empty: no activity today → start CTA, no goal/decks ($theme)',
+    testWidgets('empty: no decks → first-run onboarding, no today card ($theme)',
         (tester) async {
-      // Default fake activity service is empty → 0 minutes / 0 words today.
+      // An unseeded store has no decks → the first-run onboarding layout.
+      await pump(tester, dark: dark, store: FakeStore());
+
+      expect(find.byType(OnboardingHero), findsOneWidget);
+      expect(find.text('Start your first deck'), findsOneWidget);
+      expect(find.text('Create a deck'), findsOneWidget);
+      expect(find.text('Import from a file'), findsOneWidget);
+      expect(find.text('How MemoX works'), findsOneWidget);
+      expect(find.byType(OnboardingStep), findsNWidgets(3));
+      // Onboarding replaces the whole dashboard — no zeroed figures, no nudge.
+      expect(find.byType(TodaySummary), findsNothing);
+      expect(find.byType(GoalCard), findsNothing);
+      expect(find.byType(ContinueDeckCard), findsNothing);
+      expect(find.byType(MxFab), findsNothing);
+      expect(find.byType(MxActionCallout), findsNothing);
+    });
+
+    testWidgets(
+        'not-studied: decks but no activity today → full layout + nudge ($theme)',
+        (tester) async {
+      // Default seeded store has decks; default activity service is empty.
       await pump(tester, dark: dark);
 
-      expect(find.byType(TodaySummary), findsOneWidget);
       expect(
         find.text("You haven't studied today — start to keep your streak!"),
         findsOneWidget,
       );
-      expect(find.text('Start studying'), findsOneWidget);
-      // Empty hides the rest of the dashboard.
-      expect(find.byType(GoalCard), findsNothing);
-      expect(find.byType(ContinueDeckCard), findsNothing);
-      expect(find.byType(MxFab), findsNothing);
+      expect(find.byType(TodaySummary), findsOneWidget);
+      expect(find.text('00:00'), findsOneWidget);
+      // The user's dashboard stays intact — goal, decks, and FAB all render.
+      expect(find.byType(GoalCard), findsOneWidget);
+      expect(find.byType(ContinueDeckCard), findsWidgets);
+      expect(find.byType(MxFab), findsOneWidget);
+      expect(find.byType(OnboardingHero), findsNothing);
     });
 
     testWidgets('loaded: activity + live streak → full layout, no banner ($theme)',
@@ -150,6 +175,32 @@ void main() {
       expect(logger.errors, isNotEmpty);
     });
   }
+
+  testWidgets('onboarding create-deck: dialog → first deck → full dashboard',
+      (tester) async {
+    await pump(tester, dark: false, store: FakeStore());
+    expect(find.byType(OnboardingHero), findsOneWidget);
+
+    await tester.tap(find.text('Create a deck'));
+    await tester.pumpAndSettle();
+    expect(find.text('New deck'), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), 'Korean Basics');
+    // One frame so the dialog's confirm enables off the field listener.
+    await tester.pump();
+    await tester.tap(find.text('Create'));
+    await tester.pumpAndSettle();
+    expect(find.text('New deck'), findsNothing, reason: 'dialog should close');
+
+    // The first deck exists now — onboarding yields to the regular dashboard
+    // (no activity yet → the not-studied nudge layout).
+    expect(find.byType(OnboardingHero), findsNothing);
+    expect(find.byType(TodaySummary), findsOneWidget);
+    expect(
+      find.text("You haven't studied today — start to keep your streak!"),
+      findsOneWidget,
+    );
+  });
 
   testWidgets('retry re-runs the load after an error clears', (tester) async {
     final svc = _RecoveringActivityService();

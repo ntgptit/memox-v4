@@ -76,13 +76,53 @@
   "@dashboardWordsLearned": {
     "description": "Caption under the words-learned figure on the today card"
   },
-  "dashboardStartStudying": "Start studying",
-  "@dashboardStartStudying": {
-    "description": "Call-to-action on the empty today card to begin a study session"
+  "dashboardNotStudiedBanner": "You haven't studied today — start to keep your streak!",
+  "@dashboardNotStudiedBanner": {
+    "description": "Nudge banner on the full dashboard when there is no study activity yet today"
   },
-  "dashboardEmptyBanner": "You haven't studied today — start to keep your streak!",
-  "@dashboardEmptyBanner": {
-    "description": "Banner shown when there is no study activity yet today"
+  "dashboardOnboardingTitle": "Start your first deck",
+  "@dashboardOnboardingTitle": {
+    "description": "Headline of the first-run hero card shown while the library has no decks"
+  },
+  "dashboardOnboardingBody": "Add the words you want to remember — MemoX schedules the reviews for you.",
+  "@dashboardOnboardingBody": {
+    "description": "Body copy of the first-run hero card"
+  },
+  "dashboardCreateDeck": "Create a deck",
+  "@dashboardCreateDeck": {
+    "description": "Primary call-to-action on the first-run hero card"
+  },
+  "dashboardImportFile": "Import from a file",
+  "@dashboardImportFile": {
+    "description": "Secondary call-to-action on the first-run hero card, opens the import flow"
+  },
+  "dashboardHowItWorksTitle": "How MemoX works",
+  "@dashboardHowItWorksTitle": {
+    "description": "Section header above the first-run how-it-works steps"
+  },
+  "dashboardStepAddTitle": "Add your words",
+  "@dashboardStepAddTitle": {
+    "description": "Headline of the first how-it-works step"
+  },
+  "dashboardStepAddBody": "Create decks or import from CSV",
+  "@dashboardStepAddBody": {
+    "description": "Caption of the first how-it-works step"
+  },
+  "dashboardStepReviewTitle": "Study with smart review",
+  "@dashboardStepReviewTitle": {
+    "description": "Headline of the second how-it-works step"
+  },
+  "dashboardStepReviewBody": "Spaced repetition picks what's due",
+  "@dashboardStepReviewBody": {
+    "description": "Caption of the second how-it-works step"
+  },
+  "dashboardStepStreakTitle": "Build a daily streak",
+  "@dashboardStepStreakTitle": {
+    "description": "Headline of the third how-it-works step"
+  },
+  "dashboardStepStreakBody": "Hit your daily goal to keep the flame",
+  "@dashboardStepStreakBody": {
+    "description": "Caption of the third how-it-works step"
   },
   "dashboardGoalMetBanner": "Daily goal reached! Streak +1.",
   "@dashboardGoalMetBanner": {

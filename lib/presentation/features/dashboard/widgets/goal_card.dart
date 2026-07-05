@@ -42,7 +42,6 @@ class GoalCard extends StatelessWidget {
           MxStatRing(
             percent: percent,
             value: '${(percent * _percentScale).round()}%',
-            label: '',
           ),
           const SizedBox(width: MxSpacing.space4),
           Expanded(
