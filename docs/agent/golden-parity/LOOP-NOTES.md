@@ -74,3 +74,16 @@
   interface + a stuck fake).
 - **Assumed/deferred:** left as a red worklist item; revisit with a stuck file
   service. Same likely applies to import states that are mid-flight.
+
+## 2026-07-06 · G.1 · search/settings/statistics — 3 states deferred
+- Filled: search (empty-recent/results/filtered/no-results), settings (loaded/
+  value-picker), statistics (insufficient/loaded/loading). All render green.
+- **Deferred (need decisions / not drivable as-is):**
+  - `search/loading` — transient mid-query state; the search resolves synchronously
+    after enterText so no deterministic loading frame. Needs a stuck card repo.
+  - `settings/group-expanded` — per the settings screen doc this maps to the
+    SrsSettingsScreen SUB-PAGE (a nav push), not an in-screen expansion. The golden
+    renders SettingsScreen only; this state needs either a router-driven golden or
+    a separate golden that renders SrsSettingsScreen. Modeling decision for the user.
+  - `statistics/scope-switch` — no scope control exists in the Flutter statistics
+    screen (kit-only feature). Undrivable until/unless the control is built.
