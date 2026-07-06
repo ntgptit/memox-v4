@@ -203,3 +203,13 @@ Same public-notifier subclass. `StudySessionController` + `StudySessionState` /
   for the CHANGE, not the initial value).
 - exit = a fixed step + a drive that taps the close (X) → ExitDialog.
 study-session fully covered.
+
+## 2026-07-06 · G.1b · RESOLVED 3 home-override states (settings/group-expanded, library nav-aliases)
+Code comments confirm the exact mapping, so these render the real target screen
+via `StateFixture.home` (no fabrication):
+- settings/group-expanded → `SrsSettingsScreen` (the SRS detail SUB-PAGE; the
+  source comment literally reads "kit `settings/group-expanded`").
+- library/search-active → `SearchScreen` (library's search navigates here).
+- library/drawer → `DrawerScreen` (library's drawer navigates here).
+These are nav targets rather than in-screen states; the golden captures what the
+learner actually sees after the transition. All 6 (3×2) render green.
