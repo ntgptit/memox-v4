@@ -91,8 +91,12 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
   DeckHeader _header(String title) => DeckHeader(
     title: title,
     onBack: () => context.pop(),
+    onPlayAudio: title.isEmpty ? null : _playDeckAudio,
     onMenu: title.isEmpty ? null : _openDeckMenu,
   );
+
+  void _playDeckAudio() =>
+      ref.read(deckDetailControllerProvider(widget.deckId).notifier).playDeckAudio();
 
   Widget _content(DeckDetailData data) {
     final l10n = AppLocalizations.of(context);
@@ -100,6 +104,7 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
     final header = DeckHeader(
       title: data.deckName,
       onBack: () => context.pop(),
+      onPlayAudio: _playDeckAudio,
       onMenu: _openDeckMenu,
     );
     final searching = query.trim().isNotEmpty;

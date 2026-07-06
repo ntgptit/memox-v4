@@ -5,14 +5,20 @@ import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
 
 /// Deck-detail app bar (kit `deck-detail/appbar`): a back button, the deck name,
-/// and an overflow (deck options) button. Shared by every deck-detail state. The
-/// kit's deck-level "play audio" action is omitted in v1 (bulk deck TTS is
-/// undrivable / ambiguous — documented gap). Copy + labels are from ARB.
+/// and two trailing actions — play-audio (deck-level TTS) + overflow (deck
+/// options). Shared by every deck-detail state. Copy + labels are from ARB.
 class DeckHeader extends StatelessWidget implements PreferredSizeWidget {
-  const DeckHeader({required this.title, this.onBack, this.onMenu, super.key});
+  const DeckHeader({
+    required this.title,
+    this.onBack,
+    this.onPlayAudio,
+    this.onMenu,
+    super.key,
+  });
 
   final String title;
   final VoidCallback? onBack;
+  final VoidCallback? onPlayAudio;
   final VoidCallback? onMenu;
 
   @override
@@ -28,10 +34,20 @@ class DeckHeader extends StatelessWidget implements PreferredSizeWidget {
         semanticLabel: l10n.deckDetailBack,
         onPressed: onBack,
       ),
-      trailing: MxIconButton(
-        icon: Icons.more_vert,
-        semanticLabel: l10n.deckDetailMenu,
-        onPressed: onMenu,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          MxIconButton(
+            icon: Icons.volume_up,
+            semanticLabel: l10n.deckDetailPlayAudio,
+            onPressed: onPlayAudio,
+          ),
+          MxIconButton(
+            icon: Icons.more_vert,
+            semanticLabel: l10n.deckDetailMenu,
+            onPressed: onMenu,
+          ),
+        ],
       ),
     );
   }

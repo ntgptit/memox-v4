@@ -13,6 +13,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'deck_detail_providers.g.dart';
 
+/// Fixed term voice for deck-level TTS (per-pair language deferred — same gap as
+/// the games' spoken prompts).
+const String _deckSpeakLanguage = 'ko';
+
 /// Card status filter for the in-deck search (kit filter chips).
 enum DeckCardFilter { all, newCards, due, mastered }
 
@@ -172,6 +176,27 @@ class DeckDetailController extends _$DeckDetailController {
   Future<void> deleteCard(CardId cardId) => _mutate(
         () => DeleteCardUseCase(ref.read(cardRepositoryProvider)).call(cardId),
       );
+
+  /// Speak every visible card's term in order (kit `deck-detail/play-audio`).
+  /// v1 uses the fixed Korean voice (per-pair language deferred, as in the games);
+  /// hidden cards are skipped. Best-effort — a failed utterance is logged and ends
+  /// the run so the learner is never stuck; no state change (audio is not state).
+  Future<void> playDeckAudio() async {
+    final data = state.value;
+    if (data == null) return;
+    final audio = ref.read(audioServiceProvider);
+    for (final card in data.cards) {
+      if (card.hidden) continue;
+      final result = await audio.speak(
+        card.term,
+        languageCode: _deckSpeakLanguage,
+      );
+      if (result case Err(:final failure)) {
+        ref.read(loggerProvider).error('deck audio failed', error: failure);
+        return;
+      }
+    }
+  }
 
   /// Reset every card in this deck back to New (box 0, unscheduled) so the deck
   /// re-enters the learn flow (kit `deck-detail/reset-confirm`).

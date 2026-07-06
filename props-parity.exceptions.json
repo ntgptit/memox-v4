@@ -129,6 +129,7 @@
   { "component": "deck-detail/DeckHeader", "prop": "title", "reason": "fixture-parameterized", "note": "Kit hardcodes the deck title ('Korean Basics'); Flutter takes title:String." },
   { "component": "deck-detail/DeckHeader", "prop": "onBack", "reason": "fixture-parameterized", "note": "Kit fixture stubs the back button; Flutter wires onBack." },
   { "component": "deck-detail/DeckHeader", "prop": "onMenu", "reason": "fixture-parameterized", "note": "Kit fixture stubs the menu button; Flutter wires onMenu." },
+  { "component": "deck-detail/DeckHeader", "prop": "onPlayAudio", "reason": "fixture-parameterized", "note": "Kit fixture stubs the play-audio button (node deck-detail/play-audio); Flutter wires onPlayAudio for deck-level TTS." },
 
   { "component": "deck-detail/DeckMenu", "prop": "onMove", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Move item; Flutter wires onMove." },
   { "component": "deck-detail/DeckMenu", "prop": "onReset", "reason": "fixture-parameterized", "note": "Kit fixture stubs the Reset progress item; Flutter wires onReset to the reset-deck-progress use case." },
