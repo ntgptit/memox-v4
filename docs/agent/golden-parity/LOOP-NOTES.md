@@ -175,3 +175,14 @@ in batches; recording resolutions below.
   All 14 goldens (7×2 themes) render; gate green. This confirms the
   subclass-the-public-notifier pattern for the remaining provider-driven
   clusters (game correct-answer, study-session mid-session).
+
+## 2026-07-06 · G.1b · RESOLVED game-mc 4/4 + game-typing 6/6
+Same public-notifier-subclass pattern. The interaction/complete states can't be
+reached from a fresh round without tapping a choice whose correct index / card
+order is randomised per run, so we hand the controller a fixed state instead:
+- game-mc: `_FixedMc` returns a fixed `McState` (public class). correct = chosen
+  == correctIndex; wrong = chosen != correctIndex; complete = index == total.
+- game-typing: `_FixedTyping` returns a fixed `TypingState` (public). correct =
+  outcome=correct + submitted term (queue non-empty); complete = empty queue.
+Both games now fully covered. `waiting`/`typing`/`hint`/`wrong` stay on the real
+controller + drive (already filled).
