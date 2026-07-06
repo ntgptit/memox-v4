@@ -34,17 +34,20 @@ class MxSegmentedControl extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final bool block;
 
-  /// Kit `.segmented__seg` min-height — raw px with no matching token.
-  static const double _segmentMinHeight = 38;
+  /// Kit `.segmented__seg` min-height — M3 segmented visual spec (M3-1).
+  static const double _segmentMinHeight = 40;
 
   @override
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
 
+    // Vertical inset lives INSIDE each segment's tap area (48-tall InkWell,
+    // 40-tall visual pill centered) so the whole 48px control height is
+    // tappable (M3-1); only the horizontal inset stays on the container.
     return Semantics(
       container: true,
       child: Container(
-        padding: const EdgeInsets.all(MxSpacing.space1),
+        padding: const EdgeInsets.symmetric(horizontal: MxSpacing.space1),
         decoration: BoxDecoration(
           color: mx.surfaceMuted,
           borderRadius: MxRadius.pillRadius,
@@ -88,39 +91,54 @@ class _Segment extends StatelessWidget {
     final mx = MxTheme.of(context);
     final foreground = active ? mx.primaryStrong : mx.textSecondary;
 
+    // The tap surface is the full 48px control height (M3-1); the visual pill
+    // (40px, active bg) sits centered inside and carries no handlers itself.
     return Semantics(
       inMutuallyExclusiveGroup: true,
       selected: active,
       button: true,
       label: segment.label,
       child: Material(
-        color: active ? mx.surface : Colors.transparent,
+        color: Colors.transparent,
         shape: const StadiumBorder(),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: MxSegmentedControl._segmentMinHeight),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: MxSpacing.space4),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (segment.icon != null) ...[
-                    Icon(segment.icon, size: MxIconSize.sm, color: foreground),
-                    const SizedBox(width: MxSpacing.space2),
-                  ],
-                  Text(
-                    segment.label,
-                    style: TextStyle(
-                      fontFamily: MxTypography.fontFamily,
-                      fontSize: MxTypography.sizeSm,
-                      fontWeight: MxTypography.semibold,
-                      color: foreground,
+          child: SizedBox(
+            height: MxSpacing.minTouchTarget,
+            child: Center(
+              child: Material(
+                color: active ? mx.surface : Colors.transparent,
+                shape: const StadiumBorder(),
+                clipBehavior: Clip.antiAlias,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                      minHeight: MxSegmentedControl._segmentMinHeight),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: MxSpacing.space4),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (segment.icon != null) ...[
+                          Icon(segment.icon,
+                              size: MxIconSize.sm, color: foreground),
+                          const SizedBox(width: MxSpacing.space2),
+                        ],
+                        Text(
+                          segment.label,
+                          style: TextStyle(
+                            fontFamily: MxTypography.fontFamily,
+                            fontSize: MxTypography.sizeSm,
+                            fontWeight: MxTypography.semibold,
+                            color: foreground,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),

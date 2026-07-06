@@ -702,7 +702,7 @@
   justify-content: center;
   gap: var(--memox-space-2);
   padding: 0 var(--memox-space-4);
-  min-height: 38px;
+  min-height: 40px; /* M3 segmented visual spec (was 38, M3-1) */
   border: none;
   border-radius: var(--memox-radius-pill);
   background: transparent;
@@ -794,3 +794,39 @@
   resize: none;
   line-height: var(--memox-line-height-normal);
 }
+
+/* ============================================================
+   M3-1 hit areas (audit G2) — interactive controls whose VISUAL is smaller
+   than the 48px M3 / 44px HIG minimum get an invisible ::after overlay that
+   extends the clickable region. Visual + layout stay untouched; the overlay
+   may overlap neighbouring gaps (M3 explicitly allows tap zones to exceed
+   the visible bounds). Flutter mirrors this by widening the interactive box
+   (visual unchanged). Inset per control = (48 - visual) / 2, capped at the
+   surrounding gap.
+   ============================================================ */
+.chip,
+.switch,
+.btn--sm,
+.icon-btn--sm,
+.segmented__seg,
+.section-head__action,
+.accent-swatch {
+  position: relative;
+}
+.chip::after,
+.switch::after,
+.btn--sm::after,
+.icon-btn--sm::after,
+.segmented__seg::after,
+.section-head__action::after,
+.accent-swatch::after {
+  content: '';
+  position: absolute;
+}
+.chip::after { inset: -7px 0; }             /* 34 -> 48 */
+.switch::after { inset: -8px -4px; }        /* 52x32 -> 60x48 */
+.btn--sm::after { inset: -4px 0; }          /* 40 -> 48 */
+.icon-btn--sm::after { inset: -6px; }       /* 36 -> 48 */
+.segmented__seg::after { inset: -4px 0; }   /* 40 -> 48 */
+.section-head__action::after { inset: -14px 0; } /* ~20 -> 48 */
+.accent-swatch::after { inset: -4px; }      /* 40 -> 48 */

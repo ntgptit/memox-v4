@@ -3,10 +3,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
+import 'package:memox_v4/domain/entities/theme_settings.dart';
+import 'package:memox_v4/presentation/features/theme/widgets/accent_picker.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_section_header.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_chip.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_choice_option.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_segmented_control.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_switch.dart';
 
 /// V.5 — tap-target size (≥ 48, `MxSpacing.minTouchTarget`) and icon-only-control
 /// labels for the interactive primitives, via Flutter's built-in a11y guidelines
@@ -48,6 +54,32 @@ void main() {
       ),
       MxFab(icon: Icons.add, semanticLabel: 'Add', onPressed: noop),
       MxChoiceOption(text: 'Option', onPressed: noop),
+    ]);
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    handle.dispose();
+  });
+
+  testWidgets(
+      'sub-48 visuals still meet the guideline via expanded hit areas (M3-1)',
+      (tester) async {
+    // Audit G2: these controls draw smaller than 48px — the tap surface must
+    // still measure ≥48 (kit ::after overlays / Flutter padded tap boxes).
+    final handle = tester.ensureSemantics();
+    await _pump(tester, [
+      MxChip(label: 'Filter', onPressed: noop),
+      MxSwitch(value: true, onChanged: (_) {}, semanticLabel: 'Reminders'),
+      MxSegmentedControl(
+        segments: const [
+          MxSegment(value: 'a', label: 'Week'),
+          MxSegment(value: 'b', label: 'Month'),
+        ],
+        value: 'a',
+        onChanged: (_) {},
+      ),
+      MxSectionHeader(title: 'Decks', actionLabel: 'See all', onAction: noop),
+      AccentPicker(selected: AccentColor.brand, onSelect: (_) {}),
     ]);
 
     await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
