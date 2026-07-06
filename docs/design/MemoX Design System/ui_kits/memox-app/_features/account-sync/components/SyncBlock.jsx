@@ -1,19 +1,8 @@
 /* MemoX — Account-sync local: SyncBlock (sync status card, varies by state).
-   Owns its inline Banner callout (used only here). */
+   Status callouts use the shared window.Note (K.4b banner tier 1). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxCard, MxButton } = NS;
-
-function Banner({ icon, text, tone }) {
-  const c = tone === 'success'
-    ? ['var(--memox-success-soft)', 'var(--memox-on-success-soft)']
-    : ['var(--memox-warning-soft)', 'var(--memox-on-warning-soft)'];
-  return (
-    <div style={{ background: c[0], color: c[1], borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)' }}>
-      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{icon}</span>{text}
-    </div>
-  );
-}
 
 function SyncBlock({ state }) {
   if (state === 'syncing') {
@@ -35,7 +24,7 @@ function SyncBlock({ state }) {
     return (
       <MxCard node="account/sync" style={{ gap: 'var(--memox-space-3)' }}>
         <window.ListRow icon="merge_type" tone="success" title="Merged" sub="Kept the latest (last-write-wins)" last node="account/sync-status" />
-        <Banner icon="check_circle" tone="success" text="Your devices' data was merged safely." />
+        <window.Note icon="check_circle" tone="success" text="Your devices' data was merged safely." />
       </MxCard>
     );
   }

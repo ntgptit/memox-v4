@@ -168,12 +168,12 @@ function DeckDetail({ state = 'loaded' }) {
       <React.Fragment>
         {base}
         <window.ConfirmDialog align="center" scrimNode="deck-detail/reset-scrim"
-          icon="restart_alt" tone="warning" title="Reset progress?"
+          icon="restart_alt" tone="error" title="Reset progress?"
           text="Reset all cards in this deck back to New? Their Leitner box and due dates will be cleared."
           dialogNode="deck-detail/reset-dialog"
           actions={<React.Fragment>
             <MxButton variant="ghost" block node="deck-detail/reset-cancel">Cancel</MxButton>
-            <MxButton variant="primary" block node="deck-detail/reset-ok">Reset</MxButton>
+            <MxButton variant="primary" danger block node="deck-detail/reset-ok">Reset</MxButton>
           </React.Fragment>} />
       </React.Fragment>
     );
