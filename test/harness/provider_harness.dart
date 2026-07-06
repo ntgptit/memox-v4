@@ -10,6 +10,7 @@ import 'package:memox_v4/data/providers/data_providers.dart';
 import 'package:memox_v4/domain/repositories/card_repository.dart';
 import 'package:memox_v4/domain/repositories/deck_repository.dart';
 import 'package:memox_v4/domain/services/daily_activity_service.dart';
+import 'package:memox_v4/domain/services/language_pair_service.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 
 /// A ready-made bundle of fake overrides for the data-layer providers, so any
@@ -38,6 +39,7 @@ class FakeHarness {
     DailyActivityService? activity,
     DeckRepository? deckRepository,
     CardRepository? cardRepository,
+    LanguagePairService? languagePairService,
   }) {
     final clock = FakeClock(now ?? DateTime.utc(2026, 7, 3, 9));
     final data = store ?? seedFakeStore(now: clock.now());
@@ -54,7 +56,9 @@ class FakeHarness {
       settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository(data)),
       settingsServiceProvider.overrideWithValue(FakeSettingsService()),
       recentSearchServiceProvider.overrideWithValue(FakeRecentSearchService()),
-      languagePairServiceProvider.overrideWithValue(FakeLanguagePairService()),
+      languagePairServiceProvider.overrideWithValue(
+        languagePairService ?? FakeLanguagePairService(),
+      ),
       dailyActivityServiceProvider
           .overrideWithValue(activity ?? FakeDailyActivityService()),
       reminderNotificationServiceProvider
