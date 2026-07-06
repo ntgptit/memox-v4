@@ -207,7 +207,7 @@ class _Label extends StatelessWidget {
           fontSize: MxTypography.sizeSm,
           fontWeight: MxTypography.bold,
           letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-          color: mx.textTertiary,
+          color: mx.textSecondary,
         ),
       ),
     );

@@ -85,7 +85,7 @@ function Library({ state = 'loaded' }) {
       <MxScaffold node="library/screen" appBar={<LibraryHeader />} bottomNav={nav}>
         <MxSearchDock focused placeholder="Search by word or meaning" node="library/search-dock"
           trailing={<MxIconButton icon="close" size="sm" node="library/search-clear" />} />
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>RECENT</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>RECENT</div>
         <MxCard padding="sm">
           {['안녕하세요', '학교', '공부하다'].map((r, i) => (
             <window.ListRow key={r} icon="history" title={r} last={i === 2} node={'library/recent-' + i} />

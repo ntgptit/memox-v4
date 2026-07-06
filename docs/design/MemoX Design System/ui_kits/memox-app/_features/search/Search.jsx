@@ -24,7 +24,7 @@ function Search({ state = 'empty-recent' }) {
   if (state === 'empty-recent') {
     return (
       <MxScaffold node="search/screen" appBar={bar}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>RECENT</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>RECENT</div>
         <MxCard padding="sm">
           {RECENT.map((r, i) => (
             <window.ListRow key={r} icon="history" title={r} last={i === RECENT.length - 1} node={'search/recent-' + i}

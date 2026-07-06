@@ -52,7 +52,7 @@ class MeaningCard extends StatelessWidget {
                     fontWeight: MxTypography.bold,
                     letterSpacing:
                         MxTypography.sizeSm * MxTypography.trackingWide,
-                    color: mx.textTertiary,
+                    color: mx.textSecondary,
                   ),
                 ),
               ),

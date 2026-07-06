@@ -39,7 +39,7 @@ class DrawerPanel extends StatelessWidget {
                   fontSize: MxTypography.sizeSm,
                   fontWeight: MxTypography.bold,
                   letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-                  color: mx.textTertiary,
+                  color: mx.textSecondary,
                 ),
               ),
               const SizedBox(height: MxSpacing.space2),

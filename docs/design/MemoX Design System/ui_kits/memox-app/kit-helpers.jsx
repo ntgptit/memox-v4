@@ -94,7 +94,7 @@ function Sheet({ title, children, node }) {
   return (
     <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-5) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
       <div style={{ width: 'var(--memox-size-sm)', height: 'var(--memox-size-3xs)', borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-divider)', margin: '0 auto var(--memox-space-4)' }} />
-      {title ? <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', textTransform: 'uppercase', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</div> : null}
+      {title ? <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)', textTransform: 'uppercase', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</div> : null}
       {children}
     </div>
   );
@@ -159,9 +159,10 @@ function Note({ icon, text, tone = 'accent' }) {
   );
 }
 
-/* Small overline label above a group of rows/cards. */
+/* Small overline label above a group of rows/cards. text-secondary, not
+   tertiary — ALL-CAPS 13px labels need AA contrast (audit G1). */
 function SectionLabel({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
+  return <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
 }
 
 /* Conic-gradient progress ring with a centered surface punch-out (holds children). */

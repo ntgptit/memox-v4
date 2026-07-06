@@ -58,7 +58,7 @@ function GameTyping({ state = 'waiting' }) {
       <window.ProgressBar value={80} height={8} node="game-typing/progress" />
 
       <MxCard node="game-typing/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', padding: 'var(--memox-space-6)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>MEANING</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>MEANING</div>
         <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>friend</div>
       </MxCard>
 
