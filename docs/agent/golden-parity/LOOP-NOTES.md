@@ -87,3 +87,15 @@
     a separate golden that renders SrsSettingsScreen. Modeling decision for the user.
   - `statistics/scope-switch` — no scope control exists in the Flutter statistics
     screen (kit-only feature). Undrivable until/unless the control is built.
+
+## 2026-07-06 · G.1 · games recall + typing; typing correct/complete deferred
+- game-recall: all 5 states filled (before-reveal / revealed=Show / remembered=
+  Show+Got it / forgot=Show+Forgot / complete=grade the whole queue). All render.
+  Note: kit splits remembered/forgot as feedback frames; the Flutter impl advances
+  on grade, so those goldens capture the post-grade frame (FE-combined; a G.2
+  content note, not a render problem).
+- game-typing: waiting / typing (enterText) / hint (Help) / wrong (bad answer +
+  Check) filled. DEFERRED: correct + complete — both need the exact correct answer
+  (the card's term) typed in; the round can't be finished without answering
+  correctly. A per-round harness that reads the seeded term and types it would fill
+  both — a small follow-up.
