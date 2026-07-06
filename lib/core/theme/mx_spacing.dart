@@ -26,7 +26,7 @@ abstract final class MxSpacing {
   static const double appBarLargeHeight = 112;
 
   /// Fixed bottom navigation.
-  static const double bottomNavHeight = 72;
+  static const double bottomNavHeight = 80;
 
   /// Floating action button.
   static const double fabSize = 60;
