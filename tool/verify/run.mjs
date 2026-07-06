@@ -115,7 +115,11 @@ const goldenScaffold = () => step('golden scaffold --check', 'node', ['tool/gold
 // must be a typed exception in props-parity.exceptions.json). Blocking as of Z.0.
 const propsParity = () => step('props parity --strict', 'node', ['tool/parity/props_check.mjs', '--strict']);
 const analyze = () => step('dart analyze', 'dart', ['analyze', 'lib', 'test']);
-const test = () => step('flutter test', 'flutter', ['test']);
+// The golden-parity screen goldens are tagged and excluded here during build-out
+// (fail-by-default fixture stubs shouldn't block the gate; a dedicated CI job owns
+// their baselines — golden-parity WBS Đ-G-5). Coverage stays enforced by the
+// scaffold --check step above.
+const test = () => step('flutter test', 'flutter', ['test', '--exclude-tags', 'golden-parity']);
 
 if (mode === 'docs') {
   tokens();

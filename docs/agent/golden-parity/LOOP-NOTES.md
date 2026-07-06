@@ -31,3 +31,15 @@
 - **Why:** the memox-v4 code guard rule `common.no_todo_without_ticket` fails on any
   bare TODO; 114 stubs would each trip it. FILL/UNIMPLEMENTED convey the same intent
   and keep the gate green.
+
+## 2026-07-06 · G.0 · chunk 2a = golden-test machinery (Dashboard fill → 2b)
+- **What:** scaffolder now also emits per-screen golden tests (@Tags golden-parity,
+  loop state×theme → pumpScreenGolden → matchesGoldenFile). dart_test.yaml defines
+  the tag; the gate runs `flutter test --exclude-tags golden-parity` so fail-stubs
+  don't block (Đ-G-5). scaffold --check also asserts each screen has a golden test.
+- **Screen→widget:** pure convention (`<Pascal>Screen`, zero-arg const) for 20/21;
+  only deck-detail needs an arg — `DeckDetailScreen(deckId: 'deck-root')` (deckId is
+  a String, not DeckId — corrected). No other exceptions.
+- **Confirmed:** running the golden-parity tag fails-fast with the UNIMPLEMENTED
+  sentinel (mechanism proven). Fixed a `$sentinel` interpolation bug in _fixture.dart.
+- **Deferred to 2b:** filling Dashboard's 6 real fixtures + diff.mjs calibration.
