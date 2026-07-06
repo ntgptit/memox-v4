@@ -134,23 +134,23 @@ Output: `visual-diff-report.md` + `diff/<screen>--<state>--<theme>.png` (heatmap
 
 ## 4. Phases
 
-### G.0 — Spike + hiệu chuẩn trên Dashboard *(1 PR, KHÔNG chặn trên VP)*
-- [ ] `_fixture.dart` + `screen_golden.dart` + `fixtures/dashboard/` (6 file state
-      + barrel) + `golden/screens/dashboard/dashboard_golden_test.dart`.
-- [ ] `diff.mjs` bản đầu + hiệu chuẩn ngưỡng trên 1 cặp ảnh THẬT (dùng shot kit
-      dashboard hiện có — dù stale — chỉ để calibrate cơ chế, ghi rõ "calibration
-      only").
-- [ ] Chốt: downscale factor, metric (pixelmatch vs SSIM), format mask/threshold.
-- **DoD:** chứng minh diff phân biệt được "cùng layout, khác AA" (PASS) vs "card
-      lệch 8px / sai màu / thiếu element" (FAIL) trên dashboard. Docs cơ chế.
+### G.0 — Scaffolder + contract + hiệu chuẩn (Dashboard) *(1 PR, KHÔNG chặn trên VP)*
+- [ ] `tool/golden/scaffold.mjs` (§4b): matrix → folders + fail-stub files, idempotent,
+      `--check` coverage (§5). Template Dart cho fixture/barrel/golden test.
+- [ ] `_fixture.dart` (kiểu `StateFixture`) + `screen_golden.dart` (pump 390×780).
+- [ ] Chạy scaffolder → **toàn bộ 22 màn × 126 state** ra khung fail-stub (chưa logic).
+- [ ] Điền logic **Dashboard** (6 state) làm mẫu — chứng minh AI chỉ-viết-logic.
+- [ ] `diff.mjs` bản đầu + hiệu chuẩn trên 1 cặp ảnh THẬT (shot kit dashboard hiện
+      có — dù stale — "calibration only"); chốt downscale/metric/format.
+- **DoD:** scaffolder sinh đủ khung + `--check` xanh; Dashboard 6 state đã điền →
+      golden xanh; diff phân biệt "khác AA" (PASS) vs "lệch 8px/sai màu" (FAIL).
 
-### G.1 — Golden Flutter (độc lập, có giá trị regression riêng) *(theo batch)*
-- [ ] `fixtures/<screen>/` cho 22 màn theo matrix (126 state) — mỗi state 1 file +
-      barrel; `state_registry` gộp lại.
-- [ ] `golden/screens/<screen>/<screen>_golden_test.dart` sinh baseline trên CI ubuntu.
-- [ ] Gate coverage matrix↔fixture (§5).
-- **DoD:** mọi state matrix có 1 golden × 2 theme; `flutter test` xanh; baseline
-      commit từ CI.
+### G.1 — Điền logic 21 màn còn lại *(theo batch, AI chỉ viết logic)*
+- [ ] Với mỗi màn: điền seed + drive + mask cho từng state file (xoá sentinel);
+      golden chuyển đỏ→xanh. KHÔNG dựng khung tay — đã có từ scaffolder.
+- [ ] Baseline PNG sinh trên CI ubuntu.
+- **DoD:** mọi state matrix có golden × 2 theme đã điền; `scaffold.mjs --check` xanh;
+      không còn sentinel; baseline commit từ CI.
 
 ### G.2 — Bước diff kit↔Flutter *(CHẶN trên visual-parity VP.2 = shots tươi)*
 - [ ] `diff.mjs` hoàn thiện + `thresholds.json` baseline per màn (hiệu chuẩn thật).
@@ -171,9 +171,39 @@ Output: `visual-diff-report.md` + `diff/<screen>--<state>--<theme>.png` (heatmap
 
 ---
 
-## 5. Gate coverage (matrix ↔ fixture)
-Script nhỏ: mọi state trong `screen-state-matrix.md` phải có entry trong
-`state_registry`; mọi entry phải map về matrix. Thiếu/mồ côi = đỏ. Ngăn "phủ giả".
+## 4b. Scaffolder — `tool/golden/scaffold.mjs` (máy sinh khung, fail mặc định)
+
+> Nguồn sót lớn nhất là **thêm state bằng tay**. Bỏ hẳn: một tool đọc
+> `screen-state-matrix.md` (126 state) và **sinh toàn bộ khung** cho từng
+> screen×state; con người/AI **chỉ điền logic**.
+
+**Tool sinh gì (per screen×state):**
+- `test/fixtures/<screen>/<screen>_<state>_fixture.dart` — skeleton `StateFixture`
+  với import, ký hiệu, và **1 vùng `// TODO(logic):` duy nhất**; giá trị khởi tạo
+  là sentinel `_unimplemented('<screen>/<state>')` (fail khi chạy).
+- `test/fixtures/<screen>/<screen>_fixtures.dart` — barrel: export + entry map.
+- `test/golden/screens/<screen>/<screen>_golden_test.dart` — vòng lặp state×theme
+  đã nối vào registry; mỗi state là 1 `testWidgets` gọi `screen_golden`.
+- `test/fixtures/state_registry.dart` — gộp mọi barrel.
+
+**3 tính chất bắt buộc:**
+1. **Fail mặc định** — stub chưa điền ⇒ `fail("TODO: <screen>/<state> chưa có
+   fixture")`. Chưa làm = ĐỎ, không bao giờ xanh nhầm (yêu cầu của bạn).
+2. **Idempotent, không đè logic** — chạy lại chỉ TẠO file thiếu; file đã điền
+   (không còn sentinel) KHÔNG bị ghi đè. Thêm state kit mới → chạy tool → chỉ mọc
+   1 stub mới.
+3. **Sinh từ matrix, không tay** — danh sách screen×state×theme lấy 100% từ
+   `screen-state-matrix.md`. Matrix là hợp đồng; tool là cái tay máy.
+
+**Quy trình dùng:** đổi/ thêm state ở kit → cập nhật matrix → `node tool/golden/
+scaffold.mjs` → stub mới xuất hiện (đỏ) → AI điền logic (seed + mask + xoá
+sentinel) → xanh. AI **không** dựng folder/khung/registry bằng tay ⇒ không sót.
+
+## 5. Gate coverage (matrix ↔ fixture ↔ golden)
+`scaffold.mjs --check` (chạy trong verify gate): mọi state trong matrix phải có
+đủ 3 file (fixture + entry barrel + testWidgets trong golden test); mọi file phải
+map về matrix. Thiếu/mồ côi = đỏ. Cùng với "fail mặc định", đây là hai lớp khoá:
+**coverage** (đủ file) + **implementation** (file đã điền, hết sentinel).
 
 ## 6. Quyết định
 
@@ -183,6 +213,7 @@ Script nhỏ: mọi state trong `screen-state-matrix.md` phải có entry trong
 | Đ-G-2 | Downscale ×0.5 đủ dập nhiễu? hay ×0.25 | chốt ở G.0 |
 | Đ-G-3 | Ngưỡng khởi điểm per-màn (vd < 2% pixel-khác sau downscale) | chốt ở G.2 |
 | Đ-G-4 | Content: tái tạo mock vs mask — mặc định per màn | quyết trong lúc build từng màn |
+| Đ-G-5 | Fail-stub tương tác CI: job golden riêng cho-phép-đỏ trong lúc build (worklist), tách khỏi gate chặn — vs skipped+đếm | đề xuất: **job riêng đỏ-được** trong buildout; coverage `--check` thì CHẶN (rẻ, luôn xanh sau scaffold). Màn đã điền xong mới nhập gate chính. |
 
 ## 7. Rủi ro
 
@@ -193,3 +224,5 @@ Script nhỏ: mọi state trong `screen-state-matrix.md` phải có entry trong
 | Golden nhạy platform | sinh/diff CHỈ trên CI ubuntu (S3); local = update-and-review |
 | Shots kit stale/chưa có | G.1 độc lập; G.2 chặn trên VP.2; calibrate G.0 ghi rõ "stale, chỉ thử cơ chế" |
 | 2 nguồn fixture lệch nhau (QĐ#2) | gate coverage §5 + đối chiếu định kỳ; chấp nhận đánh đổi có chủ đích |
+| Scaffolder đè mất logic đã điền | idempotent: chỉ tạo file thiếu; phát hiện "đã điền" = không còn sentinel → skip file đó |
+| Fail-stub làm đỏ CI dài ngày | Đ-G-5: job worklist riêng đỏ-được; gate chính chỉ chặn `--check` coverage |
