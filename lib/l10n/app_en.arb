@@ -1041,6 +1041,18 @@
   "@themeAccentCool": {
     "description": "Accessible label for the cool accent"
   },
+  "themeAccentViolet": "Violet",
+  "@themeAccentViolet": {
+    "description": "Accessible label for the violet accent"
+  },
+  "themeAccentGreen": "Green",
+  "@themeAccentGreen": {
+    "description": "Accessible label for the green accent"
+  },
+  "themeAccentAmber": "Amber",
+  "@themeAccentAmber": {
+    "description": "Accessible label for the amber accent"
+  },
   "themeTextSize": "Text size",
   "@themeTextSize": {
     "description": "Section header for the text-size control"

@@ -8,24 +8,34 @@ import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 
 /// The domain's three accent presets in display order (the kit's six swatches
-/// collapse to these — the persisted model has three, BR-2).
+/// The six accent swatches in the kit's display order (indigo · violet · green ·
+/// coral · amber · cyan — kit `AccentPicker` SWATCHES).
 const List<AccentColor> themeAccentOrder = [
-  AccentColor.brand,
-  AccentColor.warm,
-  AccentColor.cool,
+  AccentColor.brand, // indigo
+  AccentColor.violet,
+  AccentColor.green,
+  AccentColor.warm, // coral
+  AccentColor.amber,
+  AccentColor.cool, // cyan
 ];
 
 /// A representative palette token for each accent preset.
 Color accentSwatchColor(AccentColor accent) => switch (accent) {
       AccentColor.brand => MxColors.paletteIndigo,
+      AccentColor.violet => MxColors.paletteViolet,
+      AccentColor.green => MxColors.paletteGreen,
       AccentColor.warm => MxColors.paletteCoral,
+      AccentColor.amber => MxColors.paletteAmber,
       AccentColor.cool => MxColors.paletteCyan,
     };
 
 /// The localized name of an accent preset (for a11y; not shown visually).
 String accentLabel(AppLocalizations l10n, AccentColor accent) => switch (accent) {
       AccentColor.brand => l10n.themeAccentBrand,
+      AccentColor.violet => l10n.themeAccentViolet,
+      AccentColor.green => l10n.themeAccentGreen,
       AccentColor.warm => l10n.themeAccentWarm,
+      AccentColor.amber => l10n.themeAccentAmber,
       AccentColor.cool => l10n.themeAccentCool,
     };
 
