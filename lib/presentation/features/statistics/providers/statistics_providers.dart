@@ -19,6 +19,24 @@ part 'statistics_providers.g.dart';
 const int statsHeatmapWeeks = 14;
 const int _daysPerWeek = 7;
 
+/// The statistics scope toggle (kit `statistics/scope`): the selected language
+/// [pair] vs the whole app ([all]). v1 has no pair↔content link, so the scope is
+/// a **visual-only** affordance for now — switching it does not refilter the
+/// stats (mirroring the kit, whose control ships a no-op `onChange`); the real
+/// filter lands with the pair↔content link. The screen still owns the selection
+/// through Riverpod (no `setState`).
+enum StatisticsScope { pair, all }
+
+/// Holds the selected [StatisticsScope]. Defaults to [StatisticsScope.pair] (the
+/// kit's default active segment).
+@riverpod
+class StatisticsScopeController extends _$StatisticsScopeController {
+  @override
+  StatisticsScope build() => StatisticsScope.pair;
+
+  void select(StatisticsScope scope) => state = scope;
+}
+
 /// The statistics view-model — everything the charts render.
 class StatisticsData {
   const StatisticsData({
@@ -60,9 +78,11 @@ class StatisticsData {
 /// An async notifier rendered with `AsyncValue.when`. A failed read throws its
 /// [Failure] — surfaced localized by the screen and logged here; never swallowed.
 ///
-/// Scope (This pair / All) and the accuracy chart are documented gaps: v1 has no
-/// pair↔content link, and the frozen `ReviewRepository` exposes no review-log read
-/// for accuracy. The donut shows **mastery** instead.
+/// The scope toggle (This pair / All) is present as a visual affordance
+/// ([StatisticsScopeController]) but does not yet refilter these stats — v1 has
+/// no pair↔content link (the same reason the kit ships a no-op toggle). The
+/// accuracy chart is likewise a documented gap: the frozen `ReviewRepository`
+/// exposes no review-log read, so the donut shows **mastery** instead.
 @riverpod
 class StatisticsController extends _$StatisticsController {
   @override

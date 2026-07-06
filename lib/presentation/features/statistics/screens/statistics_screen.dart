@@ -16,6 +16,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_section_header.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_segmented_control.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
 
 /// Fixed height for the insufficient / error boxes.
@@ -59,6 +60,7 @@ class StatisticsScreen extends ConsumerWidget {
     return MxScaffold(
       appBar: appBar,
       children: [
+        const _ScopeControl(),
         SizedBox(
           height: _stateBoxHeight,
           child: MxEmptyState(
@@ -97,6 +99,7 @@ class StatisticsScreen extends ConsumerWidget {
     return MxScaffold(
       appBar: appBar,
       children: [
+        const _ScopeControl(),
         IntrinsicHeight( // guard:intrinsic-reviewed -- reason: exactly 2 equal-height stat tiles (current + longest streak) in a stretch Row
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -199,6 +202,36 @@ class StatisticsScreen extends ConsumerWidget {
           ),
         ),
     ];
+  }
+}
+
+/// The scope toggle (kit `statistics/scope`): "This pair" vs "All", pinned to
+/// the top of the body above the charts. Owns its selection through Riverpod
+/// ([statisticsScopeControllerProvider]); v1 has no pair↔content link, so the
+/// selection is visual-only for now (see the provider doc) — it never refilters
+/// the stats, matching the kit's no-op toggle.
+class _ScopeControl extends ConsumerWidget {
+  const _ScopeControl();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final scope = ref.watch(statisticsScopeControllerProvider);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: MxSpacing.space2),
+      child: MxSegmentedControl(
+        block: true,
+        value: scope.name,
+        segments: [
+          MxSegment(value: StatisticsScope.pair.name, label: l10n.statsScopePair),
+          MxSegment(value: StatisticsScope.all.name, label: l10n.statsScopeAll),
+        ],
+        onChanged: (value) => ref
+            .read(statisticsScopeControllerProvider.notifier)
+            .select(StatisticsScope.values.byName(value)),
+      ),
+    );
   }
 }
 

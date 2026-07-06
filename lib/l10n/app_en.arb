@@ -1054,6 +1054,14 @@
   "@statsTitle": {
     "description": "Title of the statistics screen"
   },
+  "statsScopePair": "This pair",
+  "@statsScopePair": {
+    "description": "Statistics scope toggle — the selected language pair"
+  },
+  "statsScopeAll": "All",
+  "@statsScopeAll": {
+    "description": "Statistics scope toggle — the whole app (all pairs)"
+  },
   "statsInsufficientTitle": "Not enough data",
   "@statsInsufficientTitle": {
     "description": "Title of the insufficient-data statistics state"

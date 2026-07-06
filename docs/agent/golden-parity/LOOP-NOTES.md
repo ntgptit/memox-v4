@@ -239,3 +239,22 @@ Rendering it would require BUILDING the control (a real kit-first UI task, not a
 golden fixture). Left as the single deferred state; the fixture stays a stub and
 the golden job will show it red until the control lands. Needs a product/build
 decision, not more test wiring.
+
+## 2026-07-06 · G.1c · RESOLVED statistics/scope-switch — 114/114 COMPLETE
+The last gap is now CLOSED by building the kit's control (kit-first: two Explore
+kit-parity passes confirmed the kit defines it). The kit's `statistics/scope` is
+an `MxSegmentedControl` ("This pair" / "All", `block`) at the top of the body in
+loaded + insufficient (not loading); `scope-switch` = the "All" segment selected.
+- Flutter already had the `MxSegmentedControl` primitive — reused it.
+- Added `StatisticsScope { pair, all }` + `StatisticsScopeController` (Riverpod,
+  no setState) for the selection; rendered `_ScopeControl` atop loaded +
+  insufficient. Labels from ARB (statsScopePair / statsScopeAll).
+- IMPORTANT: v1 has no pair↔content link (decks carry no pairId), so the toggle
+  is VISUAL-ONLY — switching it does not refilter the stats. This faithfully
+  matches the kit, whose control ships a no-op `onChange`. The real filter lands
+  with the pair↔content link (still a documented v1 gap). Not dead UI: the
+  control is read+written live; only the data refilter is deferred, same as kit.
+- Fixture drives a tap on the "All" segment (asserted pair→all in a throwaway
+  test). All 8 statistics goldens render; full golden suite 228/228, 0 stubs.
+
+GOLDEN-PARITY COVERAGE COMPLETE: 114/114 states across 21 screens render green.
