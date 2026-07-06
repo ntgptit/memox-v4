@@ -186,3 +186,20 @@ order is randomised per run, so we hand the controller a fixed state instead:
   outcome=correct + submitted term (queue non-empty); complete = empty queue.
 Both games now fully covered. `waiting`/`typing`/`hint`/`wrong` stay on the real
 controller + drive (already filled).
+
+## 2026-07-06 · G.1b · RESOLVED study-session 3/11 → 11/11
+Same public-notifier subclass. `StudySessionController` + `StudySessionState` /
+`StudyStep` / `StepState` are all public, so a fixed state drives each position:
+- stage3-choice / stage4-recall / stage5-typing = a fixed one-card NewLearn plan
+  at index 2 / 3 / 4.
+- relearn = the choice step with a wrong pick (chosen wrong + wrongChoice).
+- resume = a 2-card plan at index 5 (progress header advanced). NOTE: Flutter has
+  NO distinct resume surface — a resumed session just renders the current step;
+  documented as such (the kit↔Flutter diff would flag any real divergence).
+- resume-error = `_ErrorSession.build()` throws → ResumeErrorState.
+- answer-save-error = `_SaveErrorSession` returns a due step and makes gradeDue
+  set saveError; the fixture drives a grade tap so the false→true transition
+  fires the retry dialog (a fixed saveError:true wouldn't — the screen `ref.listen`s
+  for the CHANGE, not the initial value).
+- exit = a fixed step + a drive that taps the close (X) → ExitDialog.
+study-session fully covered.
