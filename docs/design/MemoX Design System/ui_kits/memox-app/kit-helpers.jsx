@@ -21,6 +21,19 @@ function ProgressBar({ value = 0, tone, height = 8, node }) {
   );
 }
 
+/* Standard progress header (K.4a, Đ-K-2): ONE presentation for every
+   study/review/game flow — 8px bar + "done/total" count. Player dots stay
+   only for autoplay. */
+function ProgressHeader({ done, total, node }) {
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  return (
+    <div data-mx-node={node} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
+      <div style={{ flex: 1 }}><ProgressBar value={pct} height={8} /></div>
+      <span style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)', whiteSpace: 'nowrap' }}>{done}/{total}</span>
+    </div>
+  );
+}
+
 function Skeleton({ w = '100%', h = 16, r = 8, style }) {
   return <div className="mxg-skel" style={{ width: w, height: h, borderRadius: r, ...style }} />;
 }
@@ -205,4 +218,4 @@ function ChoiceOption({ text, tone, node, onClick }) {
   );
 }
 
-Object.assign(window, { ProgressBar, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });
+Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });

@@ -8,6 +8,7 @@ import 'package:memox_v4/presentation/features/game-matching/widgets/tile.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_progress_header.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
@@ -93,7 +94,7 @@ class GameMatchingScreen extends ConsumerWidget {
       return MxScaffold(
         appBar: appBar,
         children: [
-          const MxProgressBar(value: 1),
+          MxProgressHeader(done: state.total, total: state.total),
           _StateBox(
             child: MxEmptyState(
               icon: Icons.celebration,
@@ -114,7 +115,7 @@ class GameMatchingScreen extends ConsumerWidget {
     return MxScaffold(
       appBar: appBar,
       children: [
-        MxProgressBar(value: state.progress),
+        MxProgressHeader(done: state.matchedCount, total: state.total),
         const SizedBox(height: MxSpacing.space2),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,

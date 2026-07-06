@@ -25,7 +25,7 @@ function GameMultipleChoice({ state = 'waiting' }) {
   if (state === 'complete') {
     return (
       <MxScaffold node="game-mc/screen" appBar={bar}>
-        <window.ProgressBar value={100} height={8} node="game-mc/progress" />
+        <window.ProgressHeader done={20} total={20} node="game-mc/progress" />
         <window.EmptyState node="game-mc/complete" icon="celebration" tone="success" title="Round complete!"
           text="You answered 5/5 correctly."
           action={<MxButton variant="primary" icon="arrow_forward" node="game-mc/next">Next round</MxButton>} />
@@ -35,7 +35,7 @@ function GameMultipleChoice({ state = 'waiting' }) {
 
   return (
     <MxScaffold node="game-mc/screen" appBar={bar}>
-      <window.ProgressBar value={40} height={8} node="game-mc/progress" />
+      <window.ProgressHeader done={8} total={20} node="game-mc/progress" />
       <PromptCard />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
         {CHOICES.map((c, i) => <Choice key={i} text={c} tone={toneFor(state, i)} node={'game-mc/choice-' + i} />)}

@@ -25,7 +25,7 @@ function GameTyping({ state = 'waiting' }) {
   if (state === 'complete') {
     return (
       <MxScaffold node="game-typing/screen" appBar={bar}>
-        <window.ProgressBar value={100} height={8} node="game-typing/progress" />
+        <window.ProgressHeader done={20} total={20} node="game-typing/progress" />
         <window.EmptyState node="game-typing/complete" icon="celebration" tone="success" title="Round complete!"
           text="You typed the words correctly."
           action={<MxButton variant="primary" icon="arrow_forward" node="game-typing/next">Next round</MxButton>} />
@@ -55,7 +55,7 @@ function GameTyping({ state = 'waiting' }) {
 
   return (
     <MxScaffold node="game-typing/screen" appBar={bar}>
-      <window.ProgressBar value={80} height={8} node="game-typing/progress" />
+      <window.ProgressHeader done={16} total={20} node="game-typing/progress" />
 
       <MxCard node="game-typing/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', padding: 'var(--memox-space-6)' }}>
         <window.SectionLabel style={{ margin: 0 }}>MEANING</window.SectionLabel>

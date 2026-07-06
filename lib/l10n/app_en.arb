@@ -1,6 +1,5 @@
 {
   "@@locale": "en",
-
   "navToday": "Today",
   "@navToday": {
     "description": "Bottom-navigation label for the Today (dashboard) tab"
@@ -21,12 +20,10 @@
   "@navProfile": {
     "description": "Bottom-navigation label for the Profile tab"
   },
-
   "routeNotFoundTitle": "Page not found",
   "@routeNotFoundTitle": {
     "description": "Title on the fallback screen shown for an unknown or broken route"
   },
-
   "cardStatusNew": "New",
   "@cardStatusNew": {
     "description": "Status badge for a card that has not yet been scheduled"
@@ -43,7 +40,6 @@
   "@cardHidden": {
     "description": "Accessible label for the icon marking a hidden card"
   },
-
   "dashboardGreetingMorning": "Good morning",
   "@dashboardGreetingMorning": {
     "description": "Dashboard app-bar greeting shown in the morning"
@@ -140,32 +136,48 @@
   "@dashboardGoalMinutes": {
     "description": "Daily-goal progress in minutes (not yet met)",
     "placeholders": {
-      "done": { "type": "int" },
-      "target": { "type": "int" }
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
     }
   },
   "dashboardGoalMinutesMet": "{done}/{target} min · complete",
   "@dashboardGoalMinutesMet": {
     "description": "Daily-goal progress in minutes once met",
     "placeholders": {
-      "done": { "type": "int" },
-      "target": { "type": "int" }
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
     }
   },
   "dashboardGoalWords": "{done}/{target} words",
   "@dashboardGoalWords": {
     "description": "Daily-goal progress in words (not yet met)",
     "placeholders": {
-      "done": { "type": "int" },
-      "target": { "type": "int" }
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
     }
   },
   "dashboardGoalWordsMet": "{done}/{target} words · complete",
   "@dashboardGoalWordsMet": {
     "description": "Daily-goal progress in words once met",
     "placeholders": {
-      "done": { "type": "int" },
-      "target": { "type": "int" }
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
     }
   },
   "dashboardGoalUnset": "Set a daily goal to build a streak",
@@ -192,7 +204,9 @@
   "@dashboardDecksDueCaption": {
     "description": "Caption counting how many decks have cards due today",
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "dashboardSeeAll": "See all",
@@ -203,8 +217,12 @@
   "@dashboardDeckMeta": {
     "description": "Per-deck line: total visible cards and how many are due",
     "placeholders": {
-      "cards": { "type": "int" },
-      "due": { "type": "int" }
+      "cards": {
+        "type": "int"
+      },
+      "due": {
+        "type": "int"
+      }
     }
   },
   "dashboardReview": "Review",
@@ -223,7 +241,6 @@
   "@actionRetry": {
     "description": "Generic retry action, e.g. after a load error"
   },
-
   "libraryMenu": "Open menu",
   "@libraryMenu": {
     "description": "Accessible label for the library menu (drawer) button"
@@ -287,28 +304,44 @@
   "libraryNodeWords": "{count, plural, =1{1 word} other{{count} words}}",
   "@libraryNodeWords": {
     "description": "A deck node's visible word count",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "libraryNodeMetaDue": "{words} · {due} due",
   "@libraryNodeMetaDue": {
     "description": "Deck node meta: word count and how many are due",
     "placeholders": {
-      "words": { "type": "String" },
-      "due": { "type": "int" }
+      "words": {
+        "type": "String"
+      },
+      "due": {
+        "type": "int"
+      }
     }
   },
   "libraryNodeMetaHidden": "{words} · {hidden} hidden",
   "@libraryNodeMetaHidden": {
     "description": "Deck node meta: word count and how many are hidden",
     "placeholders": {
-      "words": { "type": "String" },
-      "hidden": { "type": "int" }
+      "words": {
+        "type": "String"
+      },
+      "hidden": {
+        "type": "int"
+      }
     }
   },
   "libraryNodeMetaMastered": "{words} · mastered",
   "@libraryNodeMetaMastered": {
     "description": "Deck node meta: word count, all mastered",
-    "placeholders": { "words": { "type": "String" } }
+    "placeholders": {
+      "words": {
+        "type": "String"
+      }
+    }
   },
   "librarySheetPairTitle": "Language pair",
   "@librarySheetPairTitle": {
@@ -353,7 +386,11 @@
   "librarySheetReview": "Review · {due} due",
   "@librarySheetReview": {
     "description": "Review action in the per-deck play sheet, with due count",
-    "placeholders": { "due": { "type": "int" } }
+    "placeholders": {
+      "due": {
+        "type": "int"
+      }
+    }
   },
   "librarySheetBrowse": "Browse cards",
   "@librarySheetBrowse": {
@@ -367,7 +404,6 @@
   "@librarySheetPlayer": {
     "description": "Player action in the per-deck play sheet"
   },
-
   "actionCancel": "Cancel",
   "@actionCancel": {
     "description": "Generic cancel action in a dialog"
@@ -463,7 +499,11 @@
   "deckDetailNoResultsText": "Nothing matched “{query}”. Try another term or check the spelling.",
   "@deckDetailNoResultsText": {
     "description": "Body when an in-deck search matches nothing",
-    "placeholders": { "query": { "type": "String" } }
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
   },
   "deckDetailAddTitle": "Add",
   "@deckDetailAddTitle": {
@@ -508,7 +548,11 @@
   "deckDetailDeleteCardText": "The card “{term}” will be removed from this deck. This can't be undone.",
   "@deckDetailDeleteCardText": {
     "description": "Body of the delete-card confirm dialog",
-    "placeholders": { "term": { "type": "String" } }
+    "placeholders": {
+      "term": {
+        "type": "String"
+      }
+    }
   },
   "deckDetailResetProgressTitle": "Reset progress?",
   "@deckDetailResetProgressTitle": {
@@ -546,7 +590,6 @@
   "@deckDetailMoveRoot": {
     "description": "Move destination representing the library root (no parent)"
   },
-
   "searchBack": "Back",
   "@searchBack": {
     "description": "Accessible label for the search back button"
@@ -582,7 +625,11 @@
   "searchNoResultsText": "Nothing matched “{query}”. Try another term or check the spelling.",
   "@searchNoResultsText": {
     "description": "Body when a search matches nothing",
-    "placeholders": { "query": { "type": "String" } }
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
   },
   "searchErrorTitle": "Search failed",
   "@searchErrorTitle": {
@@ -592,7 +639,6 @@
   "@searchErrorText": {
     "description": "Body of the search error state (local persistence)"
   },
-
   "settingsTitle": "Settings",
   "@settingsTitle": {
     "description": "Title of the settings screen"
@@ -648,7 +694,11 @@
   "srsBoxesValue": "{count}",
   "@srsBoxesValue": {
     "description": "SRS detail Leitner box count value",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "srsIntervalsTitle": "Intervals (days)",
   "@srsIntervalsTitle": {
@@ -657,7 +707,11 @@
   "srsIntervalsSub": "{intervals}",
   "@srsIntervalsSub": {
     "description": "SRS detail row subtitle listing the review intervals",
-    "placeholders": { "intervals": { "type": "String" } }
+    "placeholders": {
+      "intervals": {
+        "type": "String"
+      }
+    }
   },
   "srsSectionNotifications": "Notifications",
   "@srsSectionNotifications": {
@@ -678,7 +732,11 @@
   "settingsGameSettingsSub": "{count, plural, =1{1 word per round} other{{count} words per round}}",
   "@settingsGameSettingsSub": {
     "description": "Game settings row subtitle: words per round",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "settingsReminders": "Reminders",
   "@settingsReminders": {
@@ -711,7 +769,11 @@
   "settingsWordsOption": "{count, plural, =1{1 word} other{{count} words}}",
   "@settingsWordsOption": {
     "description": "A words-per-round option in the picker sheet",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "settingsErrorTitle": "Couldn't load settings",
   "@settingsErrorTitle": {
@@ -721,726 +783,1537 @@
   "@settingsErrorText": {
     "description": "Body of the settings error state (local persistence)"
   },
-
   "drawerTitle": "Menu",
-  "@drawerTitle": { "description": "Title of the drawer menu" },
+  "@drawerTitle": {
+    "description": "Title of the drawer menu"
+  },
   "drawerClose": "Close",
-  "@drawerClose": { "description": "Accessible label for the drawer close button" },
+  "@drawerClose": {
+    "description": "Accessible label for the drawer close button"
+  },
   "drawerBack": "Back",
-  "@drawerBack": { "description": "Accessible label for a drawer sub-screen back button" },
+  "@drawerBack": {
+    "description": "Accessible label for a drawer sub-screen back button"
+  },
   "drawerActivityLabel": "Today's activity",
-  "@drawerActivityLabel": { "description": "Label above the drawer's today activity summary" },
+  "@drawerActivityLabel": {
+    "description": "Label above the drawer's today activity summary"
+  },
   "drawerActivityWords": "{count, plural, =1{1 word} other{{count} words}}",
-  "@drawerActivityWords": { "description": "Words-learned figure in the drawer header", "placeholders": { "count": { "type": "int" } } },
+  "@drawerActivityWords": {
+    "description": "Words-learned figure in the drawer header",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "drawerAddLanguage": "Add language",
-  "@drawerAddLanguage": { "description": "Drawer item / title: add a language pair" },
+  "@drawerAddLanguage": {
+    "description": "Drawer item / title: add a language pair"
+  },
   "drawerRemoveLanguage": "Remove language",
-  "@drawerRemoveLanguage": { "description": "Drawer item / title: remove a language pair" },
+  "@drawerRemoveLanguage": {
+    "description": "Drawer item / title: remove a language pair"
+  },
   "drawerImport": "Import",
-  "@drawerImport": { "description": "Drawer item: import cards" },
+  "@drawerImport": {
+    "description": "Drawer item: import cards"
+  },
   "drawerExport": "Export",
-  "@drawerExport": { "description": "Drawer item: export cards" },
+  "@drawerExport": {
+    "description": "Drawer item: export cards"
+  },
   "drawerStats": "Stats",
-  "@drawerStats": { "description": "Drawer item: statistics" },
+  "@drawerStats": {
+    "description": "Drawer item: statistics"
+  },
   "drawerTheme": "Theme",
-  "@drawerTheme": { "description": "Drawer item: theme" },
+  "@drawerTheme": {
+    "description": "Drawer item: theme"
+  },
   "drawerSettings": "Settings",
-  "@drawerSettings": { "description": "Drawer item: settings" },
+  "@drawerSettings": {
+    "description": "Drawer item: settings"
+  },
   "drawerBackup": "Backup",
-  "@drawerBackup": { "description": "Drawer item: backup" },
+  "@drawerBackup": {
+    "description": "Drawer item: backup"
+  },
   "drawerSectionLearning": "Learning",
-  "@drawerSectionLearning": { "description": "Section label above the learning-language card" },
+  "@drawerSectionLearning": {
+    "description": "Section label above the learning-language card"
+  },
   "drawerSectionNative": "Native",
-  "@drawerSectionNative": { "description": "Section label above the native-language card" },
+  "@drawerSectionNative": {
+    "description": "Section label above the native-language card"
+  },
   "drawerChooseLanguage": "Choose a language",
-  "@drawerChooseLanguage": { "description": "Placeholder on an unset language card" },
+  "@drawerChooseLanguage": {
+    "description": "Placeholder on an unset language card"
+  },
   "drawerNativeHint": "Meaning language",
-  "@drawerNativeHint": { "description": "Subtitle hint for the native language card" },
+  "@drawerNativeHint": {
+    "description": "Subtitle hint for the native language card"
+  },
   "drawerAddPair": "Add language pair",
-  "@drawerAddPair": { "description": "Confirm button on the add-language form" },
+  "@drawerAddPair": {
+    "description": "Confirm button on the add-language form"
+  },
   "drawerLanguagePicker": "Language",
-  "@drawerLanguagePicker": { "description": "Title of the language picker sheet" },
+  "@drawerLanguagePicker": {
+    "description": "Title of the language picker sheet"
+  },
   "drawerRemoveEmptyTitle": "No language pairs yet",
-  "@drawerRemoveEmptyTitle": { "description": "Title of the empty remove-language list" },
+  "@drawerRemoveEmptyTitle": {
+    "description": "Title of the empty remove-language list"
+  },
   "drawerRemoveEmptyText": "Add a language pair to start organizing your cards.",
-  "@drawerRemoveEmptyText": { "description": "Body of the empty remove-language list" },
+  "@drawerRemoveEmptyText": {
+    "description": "Body of the empty remove-language list"
+  },
   "drawerRemovePairTitle": "Remove {pair}?",
-  "@drawerRemovePairTitle": { "description": "Title of the remove-pair confirm dialog", "placeholders": { "pair": { "type": "String" } } },
+  "@drawerRemovePairTitle": {
+    "description": "Title of the remove-pair confirm dialog",
+    "placeholders": {
+      "pair": {
+        "type": "String"
+      }
+    }
+  },
   "drawerRemovePairText": "All decks and cards for this pair will be deleted. This can''t be undone.",
-  "@drawerRemovePairText": { "description": "Body of the remove-pair confirm dialog" },
+  "@drawerRemovePairText": {
+    "description": "Body of the remove-pair confirm dialog"
+  },
   "drawerRemoveAction": "Remove",
-  "@drawerRemoveAction": { "description": "Confirm action on the remove-pair dialog" },
+  "@drawerRemoveAction": {
+    "description": "Confirm action on the remove-pair dialog"
+  },
   "drawerRemovePairLabel": "Remove {pair}",
-  "@drawerRemovePairLabel": { "description": "Accessible label for a pair's delete button", "placeholders": { "pair": { "type": "String" } } },
+  "@drawerRemovePairLabel": {
+    "description": "Accessible label for a pair's delete button",
+    "placeholders": {
+      "pair": {
+        "type": "String"
+      }
+    }
+  },
   "drawerErrorTitle": "Couldn't load language pairs",
-  "@drawerErrorTitle": { "description": "Title of the drawer language-pair error state" },
+  "@drawerErrorTitle": {
+    "description": "Title of the drawer language-pair error state"
+  },
   "drawerErrorText": "Something went wrong loading your language pairs. Try again.",
-  "@drawerErrorText": { "description": "Body of the drawer error state (local persistence)" },
-
+  "@drawerErrorText": {
+    "description": "Body of the drawer error state (local persistence)"
+  },
   "reminderTitle": "Reminders",
-  "@reminderTitle": { "description": "Title of the reminders screen" },
+  "@reminderTitle": {
+    "description": "Title of the reminders screen"
+  },
   "reminderBack": "Back",
-  "@reminderBack": { "description": "Accessible label for the reminders back button" },
+  "@reminderBack": {
+    "description": "Accessible label for the reminders back button"
+  },
   "reminderToggleTitle": "Study reminders",
-  "@reminderToggleTitle": { "description": "Title of the reminders master toggle row" },
+  "@reminderToggleTitle": {
+    "description": "Title of the reminders master toggle row"
+  },
   "reminderToggleSub": "Remind you to review every day",
-  "@reminderToggleSub": { "description": "Subtitle of the reminders master toggle row" },
+  "@reminderToggleSub": {
+    "description": "Subtitle of the reminders master toggle row"
+  },
   "reminderTimeLabel": "Reminder time",
-  "@reminderTimeLabel": { "description": "Label above the reminder time" },
+  "@reminderTimeLabel": {
+    "description": "Label above the reminder time"
+  },
   "reminderEditTime": "Change time",
-  "@reminderEditTime": { "description": "Accessible label for the change-time button" },
+  "@reminderEditTime": {
+    "description": "Accessible label for the change-time button"
+  },
   "reminderRepeatLabel": "Repeat",
-  "@reminderRepeatLabel": { "description": "Label above the weekday chips" },
+  "@reminderRepeatLabel": {
+    "description": "Label above the weekday chips"
+  },
   "reminderDayMon": "Mon",
-  "@reminderDayMon": { "description": "Short label for Monday" },
+  "@reminderDayMon": {
+    "description": "Short label for Monday"
+  },
   "reminderDayTue": "Tue",
-  "@reminderDayTue": { "description": "Short label for Tuesday" },
+  "@reminderDayTue": {
+    "description": "Short label for Tuesday"
+  },
   "reminderDayWed": "Wed",
-  "@reminderDayWed": { "description": "Short label for Wednesday" },
+  "@reminderDayWed": {
+    "description": "Short label for Wednesday"
+  },
   "reminderDayThu": "Thu",
-  "@reminderDayThu": { "description": "Short label for Thursday" },
+  "@reminderDayThu": {
+    "description": "Short label for Thursday"
+  },
   "reminderDayFri": "Fri",
-  "@reminderDayFri": { "description": "Short label for Friday" },
+  "@reminderDayFri": {
+    "description": "Short label for Friday"
+  },
   "reminderDaySat": "Sat",
-  "@reminderDaySat": { "description": "Short label for Saturday" },
+  "@reminderDaySat": {
+    "description": "Short label for Saturday"
+  },
   "reminderDaySun": "Sun",
-  "@reminderDaySun": { "description": "Short label for Sunday" },
+  "@reminderDaySun": {
+    "description": "Short label for Sunday"
+  },
   "reminderPickerTitle": "Pick reminder time",
-  "@reminderPickerTitle": { "description": "Title of the time picker sheet" },
+  "@reminderPickerTitle": {
+    "description": "Title of the time picker sheet"
+  },
   "reminderPickerDone": "Done",
-  "@reminderPickerDone": { "description": "Confirm button on the time picker sheet" },
+  "@reminderPickerDone": {
+    "description": "Confirm button on the time picker sheet"
+  },
   "reminderHoursLabel": "Hours",
-  "@reminderHoursLabel": { "description": "Accessible label for the hours column" },
+  "@reminderHoursLabel": {
+    "description": "Accessible label for the hours column"
+  },
   "reminderMinutesLabel": "Minutes",
-  "@reminderMinutesLabel": { "description": "Accessible label for the minutes column" },
-
+  "@reminderMinutesLabel": {
+    "description": "Accessible label for the minutes column"
+  },
   "themeTitle": "Theme",
-  "@themeTitle": { "description": "Title of the theme screen" },
+  "@themeTitle": {
+    "description": "Title of the theme screen"
+  },
   "themeBack": "Back",
-  "@themeBack": { "description": "Accessible label for the theme back button" },
+  "@themeBack": {
+    "description": "Accessible label for the theme back button"
+  },
   "themePreviewLabel": "Preview",
-  "@themePreviewLabel": { "description": "Label above the theme preview card" },
+  "@themePreviewLabel": {
+    "description": "Label above the theme preview card"
+  },
   "themePreviewTerm": "학교",
-  "@themePreviewTerm": { "description": "Sample term shown in the theme preview (a fixed sample word)" },
+  "@themePreviewTerm": {
+    "description": "Sample term shown in the theme preview (a fixed sample word)"
+  },
   "themePreviewMeaning": "school",
-  "@themePreviewMeaning": { "description": "Sample meaning shown in the theme preview" },
+  "@themePreviewMeaning": {
+    "description": "Sample meaning shown in the theme preview"
+  },
   "themePreviewCta": "Study now",
-  "@themePreviewCta": { "description": "Sample CTA shown in the theme preview" },
+  "@themePreviewCta": {
+    "description": "Sample CTA shown in the theme preview"
+  },
   "themeColorMode": "Color mode",
-  "@themeColorMode": { "description": "Section header for the color-mode control" },
+  "@themeColorMode": {
+    "description": "Section header for the color-mode control"
+  },
   "themeModeLight": "Light",
-  "@themeModeLight": { "description": "Light color mode option" },
+  "@themeModeLight": {
+    "description": "Light color mode option"
+  },
   "themeModeDark": "Dark",
-  "@themeModeDark": { "description": "Dark color mode option" },
+  "@themeModeDark": {
+    "description": "Dark color mode option"
+  },
   "themeModeSystem": "System",
-  "@themeModeSystem": { "description": "Follow-system color mode option" },
+  "@themeModeSystem": {
+    "description": "Follow-system color mode option"
+  },
   "themeAccent": "Accent color",
-  "@themeAccent": { "description": "Section header for the accent picker" },
+  "@themeAccent": {
+    "description": "Section header for the accent picker"
+  },
   "themeAccentBrand": "Brand",
-  "@themeAccentBrand": { "description": "Accessible label for the brand accent" },
+  "@themeAccentBrand": {
+    "description": "Accessible label for the brand accent"
+  },
   "themeAccentWarm": "Warm",
-  "@themeAccentWarm": { "description": "Accessible label for the warm accent" },
+  "@themeAccentWarm": {
+    "description": "Accessible label for the warm accent"
+  },
   "themeAccentCool": "Cool",
-  "@themeAccentCool": { "description": "Accessible label for the cool accent" },
+  "@themeAccentCool": {
+    "description": "Accessible label for the cool accent"
+  },
   "themeTextSize": "Text size",
-  "@themeTextSize": { "description": "Section header for the text-size control" },
+  "@themeTextSize": {
+    "description": "Section header for the text-size control"
+  },
   "themeSizeSmall": "Small",
-  "@themeSizeSmall": { "description": "Small text size option" },
+  "@themeSizeSmall": {
+    "description": "Small text size option"
+  },
   "themeSizeMedium": "Medium",
-  "@themeSizeMedium": { "description": "Medium text size option" },
+  "@themeSizeMedium": {
+    "description": "Medium text size option"
+  },
   "themeSizeLarge": "Large",
-  "@themeSizeLarge": { "description": "Large text size option" },
-
+  "@themeSizeLarge": {
+    "description": "Large text size option"
+  },
   "statsTitle": "Stats",
-  "@statsTitle": { "description": "Title of the statistics screen" },
+  "@statsTitle": {
+    "description": "Title of the statistics screen"
+  },
   "statsInsufficientTitle": "Not enough data",
-  "@statsInsufficientTitle": { "description": "Title of the insufficient-data statistics state" },
+  "@statsInsufficientTitle": {
+    "description": "Title of the insufficient-data statistics state"
+  },
   "statsInsufficientText": "Study a few more sessions and MemoX will chart your progress, streaks and due forecast.",
-  "@statsInsufficientText": { "description": "Body of the insufficient-data statistics state" },
+  "@statsInsufficientText": {
+    "description": "Body of the insufficient-data statistics state"
+  },
   "statsCurrentStreak": "current streak",
-  "@statsCurrentStreak": { "description": "Label under the current streak figure" },
+  "@statsCurrentStreak": {
+    "description": "Label under the current streak figure"
+  },
   "statsLongest": "longest",
-  "@statsLongest": { "description": "Label under the longest streak figure" },
+  "@statsLongest": {
+    "description": "Label under the longest streak figure"
+  },
   "statsCalendar": "Study calendar",
-  "@statsCalendar": { "description": "Section header for the study heatmap" },
+  "@statsCalendar": {
+    "description": "Section header for the study heatmap"
+  },
   "statsCalendarCaption": "last 14 weeks",
-  "@statsCalendarCaption": { "description": "Caption for the study heatmap" },
+  "@statsCalendarCaption": {
+    "description": "Caption for the study heatmap"
+  },
   "statsWeekly": "Time per week",
-  "@statsWeekly": { "description": "Section header for the weekly time bars" },
+  "@statsWeekly": {
+    "description": "Section header for the weekly time bars"
+  },
   "statsWeeklyCaption": "min / day",
-  "@statsWeeklyCaption": { "description": "Caption for the weekly time bars" },
+  "@statsWeeklyCaption": {
+    "description": "Caption for the weekly time bars"
+  },
   "statsLeitner": "Leitner box distribution",
-  "@statsLeitner": { "description": "Section header for the Leitner box bars" },
+  "@statsLeitner": {
+    "description": "Section header for the Leitner box bars"
+  },
   "statsLeitnerCaption": "cards in boxes 1-8",
-  "@statsLeitnerCaption": { "description": "Caption for the Leitner box bars" },
+  "@statsLeitnerCaption": {
+    "description": "Caption for the Leitner box bars"
+  },
   "statsMastery": "Mastery",
-  "@statsMastery": { "description": "Section header for the mastery donut" },
+  "@statsMastery": {
+    "description": "Section header for the mastery donut"
+  },
   "statsMasteryLabel": "mastered",
-  "@statsMasteryLabel": { "description": "Label inside the mastery donut" },
+  "@statsMasteryLabel": {
+    "description": "Label inside the mastery donut"
+  },
   "statsOverview": "Library overview",
-  "@statsOverview": { "description": "Section header for the library overview" },
+  "@statsOverview": {
+    "description": "Section header for the library overview"
+  },
   "statsTotal": "total",
-  "@statsTotal": { "description": "Label under the total-cards figure" },
+  "@statsTotal": {
+    "description": "Label under the total-cards figure"
+  },
   "statsMastered": "mastered",
-  "@statsMastered": { "description": "Label under the mastered-cards figure" },
+  "@statsMastered": {
+    "description": "Label under the mastered-cards figure"
+  },
   "statsDue": "due",
-  "@statsDue": { "description": "Label under the due-cards figure" },
+  "@statsDue": {
+    "description": "Label under the due-cards figure"
+  },
   "statsErrorTitle": "Couldn't load stats",
-  "@statsErrorTitle": { "description": "Title of the statistics error state" },
+  "@statsErrorTitle": {
+    "description": "Title of the statistics error state"
+  },
   "statsErrorText": "Something went wrong loading your statistics. Try again.",
-  "@statsErrorText": { "description": "Body of the statistics error state (local persistence)" },
-
+  "@statsErrorText": {
+    "description": "Body of the statistics error state (local persistence)"
+  },
   "importTitle": "Import cards",
-  "@importTitle": { "description": "Title of the import screen" },
+  "@importTitle": {
+    "description": "Title of the import screen"
+  },
   "importBack": "Back",
-  "@importBack": { "description": "Accessible label for the import back button" },
+  "@importBack": {
+    "description": "Accessible label for the import back button"
+  },
   "importChooseSource": "Choose source",
-  "@importChooseSource": { "description": "Section label above the import sources" },
+  "@importChooseSource": {
+    "description": "Section label above the import sources"
+  },
   "importSourceCsv": "CSV file",
-  "@importSourceCsv": { "description": "CSV import source name" },
+  "@importSourceCsv": {
+    "description": "CSV import source name"
+  },
   "importSourceCsvDesc": "Import from a .csv file",
-  "@importSourceCsvDesc": { "description": "CSV import source description" },
+  "@importSourceCsvDesc": {
+    "description": "CSV import source description"
+  },
   "importSourceExcel": "Excel",
-  "@importSourceExcel": { "description": "Excel import source name" },
+  "@importSourceExcel": {
+    "description": "Excel import source name"
+  },
   "importSourceExcelDesc": "Import from an .xlsx file",
-  "@importSourceExcelDesc": { "description": "Excel import source description" },
+  "@importSourceExcelDesc": {
+    "description": "Excel import source description"
+  },
   "importSourcePaste": "Paste text",
-  "@importSourcePaste": { "description": "Paste-text import source name" },
+  "@importSourcePaste": {
+    "description": "Paste-text import source name"
+  },
   "importSourcePasteDesc": "Copy from somewhere else",
-  "@importSourcePasteDesc": { "description": "Paste-text import source description" },
+  "@importSourcePasteDesc": {
+    "description": "Paste-text import source description"
+  },
   "importPastePlaceholder": "Paste your data here (one card per line: term then a separator then meaning)",
-  "@importPastePlaceholder": { "description": "Placeholder for the paste text area" },
+  "@importPastePlaceholder": {
+    "description": "Placeholder for the paste text area"
+  },
   "importContinue": "Continue",
-  "@importContinue": { "description": "Continue button in the import wizard" },
+  "@importContinue": {
+    "description": "Continue button in the import wizard"
+  },
   "importSeparator": "Separator",
-  "@importSeparator": { "description": "Section label above the separator chips" },
+  "@importSeparator": {
+    "description": "Section label above the separator chips"
+  },
   "importSepTab": "Tab",
-  "@importSepTab": { "description": "Tab separator option" },
+  "@importSepTab": {
+    "description": "Tab separator option"
+  },
   "importSepComma": "Comma",
-  "@importSepComma": { "description": "Comma separator option" },
+  "@importSepComma": {
+    "description": "Comma separator option"
+  },
   "importSepSemicolon": "Semicolon",
-  "@importSepSemicolon": { "description": "Semicolon separator option" },
+  "@importSepSemicolon": {
+    "description": "Semicolon separator option"
+  },
   "importHasHeader": "First row is a header",
-  "@importHasHeader": { "description": "Toggle: skip the first row as a header" },
+  "@importHasHeader": {
+    "description": "Toggle: skip the first row as a header"
+  },
   "importColumnMapping": "Column mapping",
-  "@importColumnMapping": { "description": "Section label for the import column-mapping rows" },
+  "@importColumnMapping": {
+    "description": "Section label for the import column-mapping rows"
+  },
   "importMapTerm": "Column {column} → Term",
   "@importMapTerm": {
     "description": "Import mapping row — which column supplies the term",
-    "placeholders": { "column": { "type": "String" } }
+    "placeholders": {
+      "column": {
+        "type": "String"
+      }
+    }
   },
   "importMapMeaning": "Column {column} → Meaning",
   "@importMapMeaning": {
     "description": "Import mapping row — which column supplies the meaning",
-    "placeholders": { "column": { "type": "String" } }
+    "placeholders": {
+      "column": {
+        "type": "String"
+      }
+    }
   },
   "importPickColumn": "Choose column",
-  "@importPickColumn": { "description": "Title + a11y label for the column-choice sheet" },
+  "@importPickColumn": {
+    "description": "Title + a11y label for the column-choice sheet"
+  },
   "importColumnOption": "Column {column}",
   "@importColumnOption": {
     "description": "A selectable column in the column-choice sheet",
-    "placeholders": { "column": { "type": "String" } }
+    "placeholders": {
+      "column": {
+        "type": "String"
+      }
+    }
   },
   "importColTerm": "Term",
-  "@importColTerm": { "description": "Table header for the term column" },
+  "@importColTerm": {
+    "description": "Table header for the term column"
+  },
   "importColMeaning": "Meaning",
-  "@importColMeaning": { "description": "Table header for the meaning column" },
+  "@importColMeaning": {
+    "description": "Table header for the meaning column"
+  },
   "importPreviewLabel": "Preview · {count, plural, =1{1 card} other{{count} cards}}",
-  "@importPreviewLabel": { "description": "Section label above the import preview", "placeholders": { "count": { "type": "int" } } },
+  "@importPreviewLabel": {
+    "description": "Section label above the import preview",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "importSkipped": "{count, plural, =1{1 row skipped} other{{count} rows skipped}}",
-  "@importSkipped": { "description": "How many rows were skipped during parsing", "placeholders": { "count": { "type": "int" } } },
+  "@importSkipped": {
+    "description": "How many rows were skipped during parsing",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "importDupWarning": "{count, plural, =1{1 card already exists} other{{count} cards already exist}} - import anyway?",
-  "@importDupWarning": { "description": "Duplicate warning banner", "placeholders": { "count": { "type": "int" } } },
+  "@importDupWarning": {
+    "description": "Duplicate warning banner",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "importDoImport": "{count, plural, =1{Import 1 card} other{Import {count} cards}}",
-  "@importDoImport": { "description": "Import confirm button", "placeholders": { "count": { "type": "int" } } },
+  "@importDoImport": {
+    "description": "Import confirm button",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "importEmptyPreview": "No cards to import",
-  "@importEmptyPreview": { "description": "Shown when parsing produced no importable cards" },
+  "@importEmptyPreview": {
+    "description": "Shown when parsing produced no importable cards"
+  },
   "importEmptyPreviewText": "Check the separator and that each line has a term and a meaning.",
-  "@importEmptyPreviewText": { "description": "Body when parsing produced no cards" },
+  "@importEmptyPreviewText": {
+    "description": "Body when parsing produced no cards"
+  },
   "importDoneTitle": "{count, plural, =1{Imported 1 card} other{Imported {count} cards}}",
-  "@importDoneTitle": { "description": "Import done title", "placeholders": { "count": { "type": "int" } } },
+  "@importDoneTitle": {
+    "description": "Import done title",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "importDoneText": "The new cards were added to your library.",
-  "@importDoneText": { "description": "Import done body" },
+  "@importDoneText": {
+    "description": "Import done body"
+  },
   "importBackToDeck": "Back to library",
-  "@importBackToDeck": { "description": "Action on the import done state" },
+  "@importBackToDeck": {
+    "description": "Action on the import done state"
+  },
   "importErrorTitle": "No deck to import into",
-  "@importErrorTitle": { "description": "Shown when there is no deck to import into" },
+  "@importErrorTitle": {
+    "description": "Shown when there is no deck to import into"
+  },
   "importErrorText": "Create a deck first, then import your cards into it.",
-  "@importErrorText": { "description": "Body when there is no target deck" },
-
+  "@importErrorText": {
+    "description": "Body when there is no target deck"
+  },
   "exportTitle": "Export cards",
-  "@exportTitle": { "description": "Title of the export screen" },
+  "@exportTitle": {
+    "description": "Title of the export screen"
+  },
   "exportBack": "Back",
-  "@exportBack": { "description": "Accessible label for the export back button" },
+  "@exportBack": {
+    "description": "Accessible label for the export back button"
+  },
   "exportScope": "Scope",
-  "@exportScope": { "description": "Section label above the export scope control" },
+  "@exportScope": {
+    "description": "Section label above the export scope control"
+  },
   "exportScopeDeck": "This deck",
-  "@exportScopeDeck": { "description": "Export scope: this deck only" },
+  "@exportScopeDeck": {
+    "description": "Export scope: this deck only"
+  },
   "exportScopeSubtree": "Incl. sub-decks",
-  "@exportScopeSubtree": { "description": "Export scope: deck and its sub-decks" },
+  "@exportScopeSubtree": {
+    "description": "Export scope: deck and its sub-decks"
+  },
   "exportFormat": "Format",
-  "@exportFormat": { "description": "Section label above the format list" },
+  "@exportFormat": {
+    "description": "Section label above the format list"
+  },
   "exportFormatCsv": "CSV",
-  "@exportFormatCsv": { "description": "CSV export format name" },
+  "@exportFormatCsv": {
+    "description": "CSV export format name"
+  },
   "exportFormatCsvSub": ".csv file",
-  "@exportFormatCsvSub": { "description": "CSV export format description" },
+  "@exportFormatCsvSub": {
+    "description": "CSV export format description"
+  },
   "exportFormatExcel": "Excel",
-  "@exportFormatExcel": { "description": "Excel export format name" },
+  "@exportFormatExcel": {
+    "description": "Excel export format name"
+  },
   "exportFormatExcelSub": ".xlsx file",
-  "@exportFormatExcelSub": { "description": "Excel export format description" },
+  "@exportFormatExcelSub": {
+    "description": "Excel export format description"
+  },
   "exportFormatCopy": "Copy text",
-  "@exportFormatCopy": { "description": "Copy-to-clipboard export format name" },
+  "@exportFormatCopy": {
+    "description": "Copy-to-clipboard export format name"
+  },
   "exportFormatCopySub": "To clipboard",
-  "@exportFormatCopySub": { "description": "Copy-to-clipboard export format description" },
+  "@exportFormatCopySub": {
+    "description": "Copy-to-clipboard export format description"
+  },
   "exportIncludeSrs": "Include review state",
-  "@exportIncludeSrs": { "description": "Toggle: include Leitner box + due date" },
+  "@exportIncludeSrs": {
+    "description": "Toggle: include Leitner box + due date"
+  },
   "exportIncludeSrsSub": "Leitner box + due date",
-  "@exportIncludeSrsSub": { "description": "Subtitle for the include-review-state toggle" },
+  "@exportIncludeSrsSub": {
+    "description": "Subtitle for the include-review-state toggle"
+  },
   "exportAction": "Export",
-  "@exportAction": { "description": "Export confirm button" },
+  "@exportAction": {
+    "description": "Export confirm button"
+  },
   "exportingLabel": "Exporting",
-  "@exportingLabel": { "description": "Label shown while exporting is in progress" },
+  "@exportingLabel": {
+    "description": "Label shown while exporting is in progress"
+  },
   "exportFormatSelected": "{format} selected",
-  "@exportFormatSelected": { "description": "Accessible label for the selected format radio", "placeholders": { "format": { "type": "String" } } },
+  "@exportFormatSelected": {
+    "description": "Accessible label for the selected format radio",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      }
+    }
+  },
   "exportDoneTitle": "{count, plural, =1{Exported 1 card} other{Exported {count} cards}}",
-  "@exportDoneTitle": { "description": "Export done title", "placeholders": { "count": { "type": "int" } } },
+  "@exportDoneTitle": {
+    "description": "Export done title",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "exportDoneText": "Your file is ready to share or save.",
-  "@exportDoneText": { "description": "Export done body" },
+  "@exportDoneText": {
+    "description": "Export done body"
+  },
   "exportShare": "Share file",
-  "@exportShare": { "description": "Share action on the export done state" },
+  "@exportShare": {
+    "description": "Share action on the export done state"
+  },
   "exportSave": "Save to device",
-  "@exportSave": { "description": "Save action on the export done state" },
-
+  "@exportSave": {
+    "description": "Save action on the export done state"
+  },
   "editorNewTitle": "New card",
-  "@editorNewTitle": { "description": "Title when creating a card" },
+  "@editorNewTitle": {
+    "description": "Title when creating a card"
+  },
   "editorEditTitle": "Edit card",
-  "@editorEditTitle": { "description": "Title when editing a card" },
+  "@editorEditTitle": {
+    "description": "Title when editing a card"
+  },
   "editorCancel": "Cancel",
-  "@editorCancel": { "description": "Cancel action in the editor" },
+  "@editorCancel": {
+    "description": "Cancel action in the editor"
+  },
   "editorSave": "Save",
-  "@editorSave": { "description": "Save action in the editor" },
+  "@editorSave": {
+    "description": "Save action in the editor"
+  },
   "editorTermLabel": "Term",
-  "@editorTermLabel": { "description": "Label for the term field" },
+  "@editorTermLabel": {
+    "description": "Label for the term field"
+  },
   "editorTermPlaceholder": "Enter a word",
-  "@editorTermPlaceholder": { "description": "Placeholder for the term field" },
+  "@editorTermPlaceholder": {
+    "description": "Placeholder for the term field"
+  },
   "editorTermRequired": "Term is required",
-  "@editorTermRequired": { "description": "Validation error for an empty term" },
+  "@editorTermRequired": {
+    "description": "Validation error for an empty term"
+  },
   "editorMeaningLabel": "Meaning",
-  "@editorMeaningLabel": { "description": "Label for the meaning field" },
+  "@editorMeaningLabel": {
+    "description": "Label for the meaning field"
+  },
   "editorMeaningPlaceholder": "Enter the meaning, with examples or notes",
-  "@editorMeaningPlaceholder": { "description": "Placeholder for the meaning field" },
+  "@editorMeaningPlaceholder": {
+    "description": "Placeholder for the meaning field"
+  },
   "editorMeaningRequired": "Meaning is required",
-  "@editorMeaningRequired": { "description": "Validation error for an empty meaning" },
+  "@editorMeaningRequired": {
+    "description": "Validation error for an empty meaning"
+  },
   "editorSecondaryLabel": "Secondary meaning",
-  "@editorSecondaryLabel": { "description": "Label for the secondary meaning field" },
+  "@editorSecondaryLabel": {
+    "description": "Label for the secondary meaning field"
+  },
   "editorSecondaryPlaceholder": "Enter a secondary meaning",
-  "@editorSecondaryPlaceholder": { "description": "Placeholder for the secondary meaning field" },
+  "@editorSecondaryPlaceholder": {
+    "description": "Placeholder for the secondary meaning field"
+  },
   "editorAddSecondary": "Add a secondary-language meaning",
-  "@editorAddSecondary": { "description": "Button to add a secondary meaning field" },
+  "@editorAddSecondary": {
+    "description": "Button to add a secondary meaning field"
+  },
   "editorGenderLabel": "Gender (optional)",
-  "@editorGenderLabel": { "description": "Label for the grammatical gender chips" },
+  "@editorGenderLabel": {
+    "description": "Label for the grammatical gender chips"
+  },
   "editorGenderNone": "None",
-  "@editorGenderNone": { "description": "Gender option: none" },
+  "@editorGenderNone": {
+    "description": "Gender option: none"
+  },
   "editorGenderMasc": "Masc",
-  "@editorGenderMasc": { "description": "Gender option: masculine" },
+  "@editorGenderMasc": {
+    "description": "Gender option: masculine"
+  },
   "editorGenderFem": "Fem",
-  "@editorGenderFem": { "description": "Gender option: feminine" },
+  "@editorGenderFem": {
+    "description": "Gender option: feminine"
+  },
   "editorGenderNeutral": "Neutral",
-  "@editorGenderNeutral": { "description": "Gender option: neutral" },
+  "@editorGenderNeutral": {
+    "description": "Gender option: neutral"
+  },
   "editorAudioLabel": "Audio",
-  "@editorAudioLabel": { "description": "Label for the audio field" },
+  "@editorAudioLabel": {
+    "description": "Label for the audio field"
+  },
   "editorAudioAuto": "Auto from term",
-  "@editorAudioAuto": { "description": "Audio field value: generated from the term" },
+  "@editorAudioAuto": {
+    "description": "Audio field value: generated from the term"
+  },
   "editorAudioPlay": "Play audio",
-  "@editorAudioPlay": { "description": "Accessible label for the play-audio button" },
+  "@editorAudioPlay": {
+    "description": "Accessible label for the play-audio button"
+  },
   "editorHideTitle": "Hide card",
-  "@editorHideTitle": { "description": "Title of the hide-card toggle" },
+  "@editorHideTitle": {
+    "description": "Title of the hide-card toggle"
+  },
   "editorHideSub": "Won''t show during study or review",
-  "@editorHideSub": { "description": "Subtitle of the hide-card toggle" },
+  "@editorHideSub": {
+    "description": "Subtitle of the hide-card toggle"
+  },
   "editorDupWarning": "A card with this term already exists in this deck.",
-  "@editorDupWarning": { "description": "Duplicate warning banner" },
+  "@editorDupWarning": {
+    "description": "Duplicate warning banner"
+  },
   "editorErrorTitle": "Couldn''t load this card",
-  "@editorErrorTitle": { "description": "Title of the editor load error" },
+  "@editorErrorTitle": {
+    "description": "Title of the editor load error"
+  },
   "editorErrorText": "Something went wrong loading this card. Try again.",
-  "@editorErrorText": { "description": "Body of the editor load error" },
-
+  "@editorErrorText": {
+    "description": "Body of the editor load error"
+  },
   "gamePickerTitle": "Single game",
-  "@gamePickerTitle": { "description": "Title of the game picker screen" },
+  "@gamePickerTitle": {
+    "description": "Title of the game picker screen"
+  },
   "gamePickerBack": "Back",
-  "@gamePickerBack": { "description": "Accessible label for the game picker back button" },
+  "@gamePickerBack": {
+    "description": "Accessible label for the game picker back button"
+  },
   "gamePickerSourceLabel": "Card source",
-  "@gamePickerSourceLabel": { "description": "Label of the card-source selector" },
+  "@gamePickerSourceLabel": {
+    "description": "Label of the card-source selector"
+  },
   "gamePickerSourceSchedule": "By schedule",
-  "@gamePickerSourceSchedule": { "description": "Card source: due cards" },
+  "@gamePickerSourceSchedule": {
+    "description": "Card source: due cards"
+  },
   "gamePickerSourceAll": "All cards",
-  "@gamePickerSourceAll": { "description": "Card source: all cards" },
+  "@gamePickerSourceAll": {
+    "description": "Card source: all cards"
+  },
   "gamePickerSourceUnlearned": "Unlearned only",
-  "@gamePickerSourceUnlearned": { "description": "Card source: new/unlearned cards" },
+  "@gamePickerSourceUnlearned": {
+    "description": "Card source: new/unlearned cards"
+  },
   "gamePickerNotEnough": "This set needs at least {min} words to play.",
-  "@gamePickerNotEnough": { "description": "Shown when the source has too few cards", "placeholders": { "min": { "type": "int" } } },
+  "@gamePickerNotEnough": {
+    "description": "Shown when the source has too few cards",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
   "gamePickerAddWords": "Add words",
-  "@gamePickerAddWords": { "description": "Action on the not-enough banner" },
+  "@gamePickerAddWords": {
+    "description": "Action on the not-enough banner"
+  },
   "gamePickerFooter": "{count, plural, =1{1 word per round} other{{count} words per round}} · change in Settings",
-  "@gamePickerFooter": { "description": "Footer showing the words-per-round setting", "placeholders": { "count": { "type": "int" } } },
+  "@gamePickerFooter": {
+    "description": "Footer showing the words-per-round setting",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gameMatching": "Matching",
-  "@gameMatching": { "description": "Matching game name" },
+  "@gameMatching": {
+    "description": "Matching game name"
+  },
   "gameMatchingDesc": "Match terms to meanings",
-  "@gameMatchingDesc": { "description": "Matching game description" },
+  "@gameMatchingDesc": {
+    "description": "Matching game description"
+  },
   "gameMc": "Multiple choice",
-  "@gameMc": { "description": "Multiple-choice game name" },
+  "@gameMc": {
+    "description": "Multiple-choice game name"
+  },
   "gameMcDesc": "Pick the right meaning",
-  "@gameMcDesc": { "description": "Multiple-choice game description" },
+  "@gameMcDesc": {
+    "description": "Multiple-choice game description"
+  },
   "gameRecall": "Recall",
-  "@gameRecall": { "description": "Recall game name" },
+  "@gameRecall": {
+    "description": "Recall game name"
+  },
   "gameRecallDesc": "Recall, then self-grade",
-  "@gameRecallDesc": { "description": "Recall game description" },
+  "@gameRecallDesc": {
+    "description": "Recall game description"
+  },
   "gameTyping": "Typing",
-  "@gameTyping": { "description": "Typing game name" },
+  "@gameTyping": {
+    "description": "Typing game name"
+  },
   "gameTypingDesc": "Type the term from its meaning",
-  "@gameTypingDesc": { "description": "Typing game description" },
+  "@gameTypingDesc": {
+    "description": "Typing game description"
+  },
   "gamePickerErrorTitle": "Couldn''t load games",
-  "@gamePickerErrorTitle": { "description": "Title of the game picker error state" },
+  "@gamePickerErrorTitle": {
+    "description": "Title of the game picker error state"
+  },
   "gamePickerErrorText": "Something went wrong loading your cards. Try again.",
-  "@gamePickerErrorText": { "description": "Body of the game picker error state" },
-
+  "@gamePickerErrorText": {
+    "description": "Body of the game picker error state"
+  },
   "matchingTitle": "Matching",
-  "@matchingTitle": { "description": "Title of the matching game" },
+  "@matchingTitle": {
+    "description": "Title of the matching game"
+  },
   "matchingBack": "Back",
-  "@matchingBack": { "description": "Accessible label for the matching back button" },
+  "@matchingBack": {
+    "description": "Accessible label for the matching back button"
+  },
   "matchingOptions": "Options",
-  "@matchingOptions": { "description": "Accessible label for the matching options button" },
+  "@matchingOptions": {
+    "description": "Accessible label for the matching options button"
+  },
   "matchingCompleteTitle": "Round complete!",
-  "@matchingCompleteTitle": { "description": "Title of the matching complete state" },
+  "@matchingCompleteTitle": {
+    "description": "Title of the matching complete state"
+  },
   "matchingCompleteText": "You matched {matched}/{total} pairs. Keep the momentum.",
-  "@matchingCompleteText": { "description": "Body of the matching complete state", "placeholders": { "matched": { "type": "int" }, "total": { "type": "int" } } },
+  "@matchingCompleteText": {
+    "description": "Body of the matching complete state",
+    "placeholders": {
+      "matched": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "matchingNext": "Next round",
-  "@matchingNext": { "description": "Action to start the next matching round" },
+  "@matchingNext": {
+    "description": "Action to start the next matching round"
+  },
   "matchingEmptyTitle": "No cards to play",
-  "@matchingEmptyTitle": { "description": "Title when there are no cards for the game" },
+  "@matchingEmptyTitle": {
+    "description": "Title when there are no cards for the game"
+  },
   "matchingEmptyText": "Add some cards to this set, then try again.",
-  "@matchingEmptyText": { "description": "Body when there are no cards for the game" },
+  "@matchingEmptyText": {
+    "description": "Body when there are no cards for the game"
+  },
   "matchingErrorTitle": "Couldn''t start the game",
-  "@matchingErrorTitle": { "description": "Title of the matching error state" },
+  "@matchingErrorTitle": {
+    "description": "Title of the matching error state"
+  },
   "matchingErrorText": "Something went wrong loading your cards. Try again.",
-  "@matchingErrorText": { "description": "Body of the matching error state" },
-
+  "@matchingErrorText": {
+    "description": "Body of the matching error state"
+  },
   "mcTitle": "Multiple choice",
-  "@mcTitle": { "description": "Title of the multiple-choice game" },
+  "@mcTitle": {
+    "description": "Title of the multiple-choice game"
+  },
   "mcBack": "Back",
-  "@mcBack": { "description": "Accessible label for the MC back button" },
+  "@mcBack": {
+    "description": "Accessible label for the MC back button"
+  },
   "mcAudio": "Play audio",
-  "@mcAudio": { "description": "Accessible label for the MC audio button" },
+  "@mcAudio": {
+    "description": "Accessible label for the MC audio button"
+  },
   "mcEdit": "Edit card",
-  "@mcEdit": { "description": "Accessible label for the MC edit button" },
+  "@mcEdit": {
+    "description": "Accessible label for the MC edit button"
+  },
   "mcNext": "Next",
-  "@mcNext": { "description": "Continue to the next question" },
+  "@mcNext": {
+    "description": "Continue to the next question"
+  },
   "mcCompleteTitle": "Round complete!",
-  "@mcCompleteTitle": { "description": "Title of the MC complete state" },
+  "@mcCompleteTitle": {
+    "description": "Title of the MC complete state"
+  },
   "mcCompleteText": "You answered {correct}/{total} correctly.",
-  "@mcCompleteText": { "description": "Body of the MC complete state", "placeholders": { "correct": { "type": "int" }, "total": { "type": "int" } } },
+  "@mcCompleteText": {
+    "description": "Body of the MC complete state",
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "mcNextRound": "Next round",
-  "@mcNextRound": { "description": "Start the next MC round" },
+  "@mcNextRound": {
+    "description": "Start the next MC round"
+  },
   "mcEmptyTitle": "No cards to play",
-  "@mcEmptyTitle": { "description": "Title when there are no cards for the game" },
+  "@mcEmptyTitle": {
+    "description": "Title when there are no cards for the game"
+  },
   "mcEmptyText": "Add some cards to this set, then try again.",
-  "@mcEmptyText": { "description": "Body when there are no cards for the game" },
+  "@mcEmptyText": {
+    "description": "Body when there are no cards for the game"
+  },
   "mcErrorTitle": "Couldn''t start the game",
-  "@mcErrorTitle": { "description": "Title of the MC error state" },
+  "@mcErrorTitle": {
+    "description": "Title of the MC error state"
+  },
   "mcErrorText": "Something went wrong loading your cards. Try again.",
-  "@mcErrorText": { "description": "Body of the MC error state" },
-
+  "@mcErrorText": {
+    "description": "Body of the MC error state"
+  },
   "recallTitle": "Recall",
-  "@recallTitle": { "description": "Title of the recall game" },
+  "@recallTitle": {
+    "description": "Title of the recall game"
+  },
   "recallBack": "Back",
-  "@recallBack": { "description": "Accessible label for the recall back button" },
+  "@recallBack": {
+    "description": "Accessible label for the recall back button"
+  },
   "recallAudio": "Play audio",
-  "@recallAudio": { "description": "Accessible label for the recall audio button" },
+  "@recallAudio": {
+    "description": "Accessible label for the recall audio button"
+  },
   "recallEdit": "Edit card",
-  "@recallEdit": { "description": "Accessible label for the recall edit button" },
+  "@recallEdit": {
+    "description": "Accessible label for the recall edit button"
+  },
   "recallHint": "Recall the meaning, then tap Show",
-  "@recallHint": { "description": "Hint on the hidden meaning panel" },
+  "@recallHint": {
+    "description": "Hint on the hidden meaning panel"
+  },
   "recallShow": "Show",
-  "@recallShow": { "description": "Reveal the meaning" },
+  "@recallShow": {
+    "description": "Reveal the meaning"
+  },
   "recallForgot": "Forgot",
-  "@recallForgot": { "description": "Self-grade: did not recall" },
+  "@recallForgot": {
+    "description": "Self-grade: did not recall"
+  },
   "recallGotIt": "Got it",
-  "@recallGotIt": { "description": "Self-grade: recalled" },
+  "@recallGotIt": {
+    "description": "Self-grade: recalled"
+  },
   "recallCompleteTitle": "Round complete!",
-  "@recallCompleteTitle": { "description": "Title of the recall complete state" },
+  "@recallCompleteTitle": {
+    "description": "Title of the recall complete state"
+  },
   "recallCompleteText": "You have reviewed the words in this round.",
-  "@recallCompleteText": { "description": "Body of the recall complete state" },
+  "@recallCompleteText": {
+    "description": "Body of the recall complete state"
+  },
   "recallNextRound": "Next round",
-  "@recallNextRound": { "description": "Start the next recall round" },
+  "@recallNextRound": {
+    "description": "Start the next recall round"
+  },
   "recallEmptyTitle": "No cards to play",
-  "@recallEmptyTitle": { "description": "Title when there are no cards for the game" },
+  "@recallEmptyTitle": {
+    "description": "Title when there are no cards for the game"
+  },
   "recallEmptyText": "Add some cards to this set, then try again.",
-  "@recallEmptyText": { "description": "Body when there are no cards for the game" },
+  "@recallEmptyText": {
+    "description": "Body when there are no cards for the game"
+  },
   "recallErrorTitle": "Couldn''t start the game",
-  "@recallErrorTitle": { "description": "Title of the recall error state" },
+  "@recallErrorTitle": {
+    "description": "Title of the recall error state"
+  },
   "recallErrorText": "Something went wrong loading your cards. Try again.",
-  "@recallErrorText": { "description": "Body of the recall error state" },
-
+  "@recallErrorText": {
+    "description": "Body of the recall error state"
+  },
   "typingTitle": "Typing",
-  "@typingTitle": { "description": "Typing game app-bar title" },
+  "@typingTitle": {
+    "description": "Typing game app-bar title"
+  },
   "typingBack": "Back",
-  "@typingBack": { "description": "Typing game back-button label" },
+  "@typingBack": {
+    "description": "Typing game back-button label"
+  },
   "typingMeaningLabel": "MEANING",
-  "@typingMeaningLabel": { "description": "Eyebrow above the prompted meaning" },
+  "@typingMeaningLabel": {
+    "description": "Eyebrow above the prompted meaning"
+  },
   "typingPrompt": "Type the term",
-  "@typingPrompt": { "description": "Label above the answer input" },
+  "@typingPrompt": {
+    "description": "Label above the answer input"
+  },
   "typingPlaceholder": "Type the word…",
-  "@typingPlaceholder": { "description": "Answer input placeholder" },
+  "@typingPlaceholder": {
+    "description": "Answer input placeholder"
+  },
   "typingHelp": "Help",
-  "@typingHelp": { "description": "Hint button label" },
+  "@typingHelp": {
+    "description": "Hint button label"
+  },
   "typingCheck": "Check",
-  "@typingCheck": { "description": "Check-answer button label" },
+  "@typingCheck": {
+    "description": "Check-answer button label"
+  },
   "typingHint": "Hint: {count} characters, starts with {first}",
-  "@typingHint": { "description": "Typing hint note", "placeholders": { "count": { "type": "int" }, "first": { "type": "String" } } },
+  "@typingHint": {
+    "description": "Typing hint note",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "first": {
+        "type": "String"
+      }
+    }
+  },
   "typingAnswerLabel": "Answer:",
-  "@typingAnswerLabel": { "description": "Label before the revealed correct answer" },
+  "@typingAnswerLabel": {
+    "description": "Label before the revealed correct answer"
+  },
   "typingCorrectAction": "Correct",
-  "@typingCorrectAction": { "description": "Accept a near-miss answer as correct" },
+  "@typingCorrectAction": {
+    "description": "Accept a near-miss answer as correct"
+  },
   "typingRetry": "Retry",
-  "@typingRetry": { "description": "Retry the current word" },
+  "@typingRetry": {
+    "description": "Retry the current word"
+  },
   "typingNext": "Next",
-  "@typingNext": { "description": "Advance to the next word after a correct answer" },
+  "@typingNext": {
+    "description": "Advance to the next word after a correct answer"
+  },
   "typingCompleteTitle": "Round complete!",
-  "@typingCompleteTitle": { "description": "Title of the typing complete state" },
+  "@typingCompleteTitle": {
+    "description": "Title of the typing complete state"
+  },
   "typingCompleteText": "You typed the words correctly.",
-  "@typingCompleteText": { "description": "Body of the typing complete state" },
+  "@typingCompleteText": {
+    "description": "Body of the typing complete state"
+  },
   "typingNextRound": "Next round",
-  "@typingNextRound": { "description": "Start another typing round" },
+  "@typingNextRound": {
+    "description": "Start another typing round"
+  },
   "typingEmptyTitle": "No cards to play",
-  "@typingEmptyTitle": { "description": "Title of the typing empty state" },
+  "@typingEmptyTitle": {
+    "description": "Title of the typing empty state"
+  },
   "typingEmptyText": "Add some cards to this set, then try again.",
-  "@typingEmptyText": { "description": "Body of the typing empty state" },
+  "@typingEmptyText": {
+    "description": "Body of the typing empty state"
+  },
   "typingErrorTitle": "Couldn''t start the game",
-  "@typingErrorTitle": { "description": "Title of the typing error state" },
+  "@typingErrorTitle": {
+    "description": "Title of the typing error state"
+  },
   "typingErrorText": "Something went wrong loading your cards. Try again.",
-  "@typingErrorText": { "description": "Body of the typing error state" },
-
+  "@typingErrorText": {
+    "description": "Body of the typing error state"
+  },
   "reviewTitle": "Review",
-  "@reviewTitle": { "description": "Review screen app-bar title" },
+  "@reviewTitle": {
+    "description": "Review screen app-bar title"
+  },
   "reviewBack": "Back",
-  "@reviewBack": { "description": "Review back-button label" },
+  "@reviewBack": {
+    "description": "Review back-button label"
+  },
   "reviewMeaningLabel": "MEANING",
-  "@reviewMeaningLabel": { "description": "Eyebrow above the card meaning" },
+  "@reviewMeaningLabel": {
+    "description": "Eyebrow above the card meaning"
+  },
   "reviewEdit": "Edit meaning",
-  "@reviewEdit": { "description": "Open the inline meaning editor" },
+  "@reviewEdit": {
+    "description": "Open the inline meaning editor"
+  },
   "reviewEditCancel": "Close editor",
-  "@reviewEditCancel": { "description": "Close the inline meaning editor (icon)" },
+  "@reviewEditCancel": {
+    "description": "Close the inline meaning editor (icon)"
+  },
   "reviewEditCancelAction": "Cancel",
-  "@reviewEditCancelAction": { "description": "Discard inline edit changes" },
+  "@reviewEditCancelAction": {
+    "description": "Discard inline edit changes"
+  },
   "reviewEditSave": "Save",
-  "@reviewEditSave": { "description": "Save the inline meaning edit" },
+  "@reviewEditSave": {
+    "description": "Save the inline meaning edit"
+  },
   "reviewAudio": "Play audio",
-  "@reviewAudio": { "description": "Play the term pronunciation" },
+  "@reviewAudio": {
+    "description": "Play the term pronunciation"
+  },
   "reviewPlaying": "Playing…",
-  "@reviewPlaying": { "description": "Shown while the term audio plays" },
-  "reviewPosition": "{position}/{total}",
-  "@reviewPosition": { "description": "Browse position, e.g. 7/20", "placeholders": { "position": { "type": "int" }, "total": { "type": "int" } } },
+  "@reviewPlaying": {
+    "description": "Shown while the term audio plays"
+  },
   "reviewPrev": "Previous card",
-  "@reviewPrev": { "description": "Go to the previous card" },
+  "@reviewPrev": {
+    "description": "Go to the previous card"
+  },
   "reviewNext": "Next card",
-  "@reviewNext": { "description": "Go to the next card" },
+  "@reviewNext": {
+    "description": "Go to the next card"
+  },
   "reviewSwipeHint": "Swipe to continue",
-  "@reviewSwipeHint": { "description": "Hint that a swipe advances the card" },
+  "@reviewSwipeHint": {
+    "description": "Hint that a swipe advances the card"
+  },
   "reviewEndTitle": "All reviewed",
-  "@reviewEndTitle": { "description": "Title of the review end state" },
+  "@reviewEndTitle": {
+    "description": "Title of the review end state"
+  },
   "reviewEndText": "You have gone through every card in this set.",
-  "@reviewEndText": { "description": "Body of the review end state" },
+  "@reviewEndText": {
+    "description": "Body of the review end state"
+  },
   "reviewStudyNow": "Study now",
-  "@reviewStudyNow": { "description": "Start a study session from the review end" },
+  "@reviewStudyNow": {
+    "description": "Start a study session from the review end"
+  },
   "reviewBackToDeck": "Back to set",
-  "@reviewBackToDeck": { "description": "Return to the set from the review end" },
+  "@reviewBackToDeck": {
+    "description": "Return to the set from the review end"
+  },
   "reviewEmptyTitle": "No cards to review",
-  "@reviewEmptyTitle": { "description": "Title of the review empty state" },
+  "@reviewEmptyTitle": {
+    "description": "Title of the review empty state"
+  },
   "reviewEmptyText": "Add some cards to this set, then try again.",
-  "@reviewEmptyText": { "description": "Body of the review empty state" },
+  "@reviewEmptyText": {
+    "description": "Body of the review empty state"
+  },
   "reviewErrorTitle": "Couldn''t open review",
-  "@reviewErrorTitle": { "description": "Title of the review error state" },
+  "@reviewErrorTitle": {
+    "description": "Title of the review error state"
+  },
   "reviewErrorText": "Something went wrong loading your cards. Try again.",
-  "@reviewErrorText": { "description": "Body of the review error state" },
-
+  "@reviewErrorText": {
+    "description": "Body of the review error state"
+  },
   "playerTitle": "Player",
-  "@playerTitle": { "description": "Player screen app-bar title" },
+  "@playerTitle": {
+    "description": "Player screen app-bar title"
+  },
   "playerBack": "Back",
-  "@playerBack": { "description": "Player back-button label" },
+  "@playerBack": {
+    "description": "Player back-button label"
+  },
   "playerPlay": "Play",
-  "@playerPlay": { "description": "Start playback" },
+  "@playerPlay": {
+    "description": "Start playback"
+  },
   "playerPause": "Pause",
-  "@playerPause": { "description": "Pause playback" },
+  "@playerPause": {
+    "description": "Pause playback"
+  },
   "playerPrev": "Previous card",
-  "@playerPrev": { "description": "Skip to the previous card" },
+  "@playerPrev": {
+    "description": "Skip to the previous card"
+  },
   "playerNext": "Next card",
-  "@playerNext": { "description": "Skip to the next card" },
+  "@playerNext": {
+    "description": "Skip to the next card"
+  },
   "playerSpeed": "Playback speed",
-  "@playerSpeed": { "description": "Open the playback-speed control" },
+  "@playerSpeed": {
+    "description": "Open the playback-speed control"
+  },
   "playerSpeedValue": "×{rate}",
-  "@playerSpeedValue": { "description": "A playback rate, e.g. x1", "placeholders": { "rate": { "type": "String" } } },
+  "@playerSpeedValue": {
+    "description": "A playback rate, e.g. x1",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "playerEndTitle": "All played",
-  "@playerEndTitle": { "description": "Title of the player end state" },
+  "@playerEndTitle": {
+    "description": "Title of the player end state"
+  },
   "playerEndText": "The player has read through every card in this set.",
-  "@playerEndText": { "description": "Body of the player end state" },
+  "@playerEndText": {
+    "description": "Body of the player end state"
+  },
   "playerReplay": "Replay",
-  "@playerReplay": { "description": "Restart playback from the first card" },
+  "@playerReplay": {
+    "description": "Restart playback from the first card"
+  },
   "playerClose": "Close",
-  "@playerClose": { "description": "Close the player" },
+  "@playerClose": {
+    "description": "Close the player"
+  },
   "playerEmptyTitle": "No cards to play",
-  "@playerEmptyTitle": { "description": "Title of the player empty state" },
+  "@playerEmptyTitle": {
+    "description": "Title of the player empty state"
+  },
   "playerEmptyText": "Add some cards to this set, then try again.",
-  "@playerEmptyText": { "description": "Body of the player empty state" },
+  "@playerEmptyText": {
+    "description": "Body of the player empty state"
+  },
   "playerErrorTitle": "Couldn''t open the player",
-  "@playerErrorTitle": { "description": "Title of the player error state" },
+  "@playerErrorTitle": {
+    "description": "Title of the player error state"
+  },
   "playerErrorText": "Something went wrong loading your cards. Try again.",
-  "@playerErrorText": { "description": "Body of the player error state" },
-
+  "@playerErrorText": {
+    "description": "Body of the player error state"
+  },
   "studyClose": "Close session",
-  "@studyClose": { "description": "Close the study session (icon)" },
+  "@studyClose": {
+    "description": "Close the study session (icon)"
+  },
   "studyOptions": "Session options",
-  "@studyOptions": { "description": "Study-session options (icon)" },
-  "studyPercent": "{pct}%",
-  "@studyPercent": { "description": "Session progress percent", "placeholders": { "pct": { "type": "int" } } },
+  "@studyOptions": {
+    "description": "Study-session options (icon)"
+  },
   "studyStageReview": "Stage 1 · Review",
-  "@studyStageReview": { "description": "Stage-1 label" },
+  "@studyStageReview": {
+    "description": "Stage-1 label"
+  },
   "studyStageMatching": "Stage 2 · Matching",
-  "@studyStageMatching": { "description": "Stage-2 label" },
+  "@studyStageMatching": {
+    "description": "Stage-2 label"
+  },
   "studyStageChoice": "Stage 3 · Multiple choice",
-  "@studyStageChoice": { "description": "Stage-3 label" },
+  "@studyStageChoice": {
+    "description": "Stage-3 label"
+  },
   "studyStageRecall": "Stage 4 · Recall",
-  "@studyStageRecall": { "description": "Stage-4 label" },
+  "@studyStageRecall": {
+    "description": "Stage-4 label"
+  },
   "studyStageTyping": "Stage 5 · Typing",
-  "@studyStageTyping": { "description": "Stage-5 label" },
+  "@studyStageTyping": {
+    "description": "Stage-5 label"
+  },
   "studyStageDue": "Review · due cards",
-  "@studyStageDue": { "description": "Due-review label" },
+  "@studyStageDue": {
+    "description": "Due-review label"
+  },
   "studyNext": "Next",
-  "@studyNext": { "description": "Advance to the next step" },
+  "@studyNext": {
+    "description": "Advance to the next step"
+  },
   "studyReveal": "Show",
-  "@studyReveal": { "description": "Reveal the meaning (recall stage)" },
+  "@studyReveal": {
+    "description": "Reveal the meaning (recall stage)"
+  },
   "studyRecallHint": "Recall the meaning, then tap Show",
-  "@studyRecallHint": { "description": "Recall stage placeholder" },
+  "@studyRecallHint": {
+    "description": "Recall stage placeholder"
+  },
   "studyRelearnNote": "Review this word — not counted toward progress.",
-  "@studyRelearnNote": { "description": "Relearn note" },
+  "@studyRelearnNote": {
+    "description": "Relearn note"
+  },
   "studyMeaningLabel": "MEANING",
-  "@studyMeaningLabel": { "description": "Sub-label above the prompted meaning" },
+  "@studyMeaningLabel": {
+    "description": "Sub-label above the prompted meaning"
+  },
   "studyTypePlaceholder": "Type the word…",
-  "@studyTypePlaceholder": { "description": "Typing answer placeholder" },
+  "@studyTypePlaceholder": {
+    "description": "Typing answer placeholder"
+  },
   "studyTypingHint": "Hint: {count} characters, starts with {first}",
-  "@studyTypingHint": { "description": "Typing hint", "placeholders": { "count": { "type": "int" }, "first": { "type": "String" } } },
+  "@studyTypingHint": {
+    "description": "Typing hint",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "first": {
+        "type": "String"
+      }
+    }
+  },
   "studyHelp": "Help",
-  "@studyHelp": { "description": "Reveal the typing hint" },
+  "@studyHelp": {
+    "description": "Reveal the typing hint"
+  },
   "studyCheck": "Check",
-  "@studyCheck": { "description": "Check the typed answer" },
+  "@studyCheck": {
+    "description": "Check the typed answer"
+  },
   "studyDueNote": "Reviewing due cards — results update the Leitner box.",
-  "@studyDueNote": { "description": "Due-review note" },
+  "@studyDueNote": {
+    "description": "Due-review note"
+  },
   "studyDueRelearn": "Relearn",
-  "@studyDueRelearn": { "description": "Grade the due card as failed" },
+  "@studyDueRelearn": {
+    "description": "Grade the due card as failed"
+  },
   "studyDueNext": "Next",
-  "@studyDueNext": { "description": "Grade the due card as passed" },
+  "@studyDueNext": {
+    "description": "Grade the due card as passed"
+  },
   "studyExitTitle": "Leave the session?",
-  "@studyExitTitle": { "description": "Exit dialog title" },
+  "@studyExitTitle": {
+    "description": "Exit dialog title"
+  },
   "studyExitText": "Cards that have not finished all 5 stages will stay New.",
-  "@studyExitText": { "description": "Exit dialog body" },
+  "@studyExitText": {
+    "description": "Exit dialog body"
+  },
   "studyExitStay": "Stay",
-  "@studyExitStay": { "description": "Exit dialog: stay in the session" },
+  "@studyExitStay": {
+    "description": "Exit dialog: stay in the session"
+  },
   "studyExitLeave": "Leave",
-  "@studyExitLeave": { "description": "Exit dialog: leave the session" },
+  "@studyExitLeave": {
+    "description": "Exit dialog: leave the session"
+  },
   "studySaveErrorTitle": "Couldn''t save your answer",
-  "@studySaveErrorTitle": { "description": "Save-error dialog title" },
+  "@studySaveErrorTitle": {
+    "description": "Save-error dialog title"
+  },
   "studySaveErrorText": "Your result for this card was not saved. Retry so your review schedule stays correct.",
-  "@studySaveErrorText": { "description": "Save-error dialog body" },
+  "@studySaveErrorText": {
+    "description": "Save-error dialog body"
+  },
   "studySaveErrorBack": "Back",
-  "@studySaveErrorBack": { "description": "Save-error dialog: dismiss" },
+  "@studySaveErrorBack": {
+    "description": "Save-error dialog: dismiss"
+  },
   "studySaveErrorRetry": "Retry",
-  "@studySaveErrorRetry": { "description": "Save-error dialog: retry the write" },
+  "@studySaveErrorRetry": {
+    "description": "Save-error dialog: retry the write"
+  },
   "studyResumeTitle": "Resume session",
-  "@studyResumeTitle": { "description": "Resume-error app-bar title" },
+  "@studyResumeTitle": {
+    "description": "Resume-error app-bar title"
+  },
   "studyResumeErrorTitle": "Couldn''t resume your session",
-  "@studyResumeErrorTitle": { "description": "Resume-error title" },
+  "@studyResumeErrorTitle": {
+    "description": "Resume-error title"
+  },
   "studyResumeErrorText": "We could not restore where you left off. Restart this session or go back.",
-  "@studyResumeErrorText": { "description": "Resume-error body" },
+  "@studyResumeErrorText": {
+    "description": "Resume-error body"
+  },
   "studyResumeRestart": "Restart session",
-  "@studyResumeRestart": { "description": "Resume-error: restart" },
+  "@studyResumeRestart": {
+    "description": "Resume-error: restart"
+  },
   "studyResumeBack": "Back to deck",
-  "@studyResumeBack": { "description": "Resume-error: go back" },
+  "@studyResumeBack": {
+    "description": "Resume-error: go back"
+  },
   "studyEmptyTitle": "Nothing to study",
-  "@studyEmptyTitle": { "description": "Empty-session title" },
+  "@studyEmptyTitle": {
+    "description": "Empty-session title"
+  },
   "studyEmptyText": "No cards are due and there are no new cards to learn right now.",
-  "@studyEmptyText": { "description": "Empty-session body" },
-
+  "@studyEmptyText": {
+    "description": "Empty-session body"
+  },
   "resultTitle": "Results",
-  "@resultTitle": { "description": "Study-result app-bar title" },
+  "@resultTitle": {
+    "description": "Study-result app-bar title"
+  },
   "resultClose": "Close",
-  "@resultClose": { "description": "Close the results screen" },
+  "@resultClose": {
+    "description": "Close the results screen"
+  },
   "resultStandardTitle": "Session complete",
-  "@resultStandardTitle": { "description": "Standard result title" },
+  "@resultStandardTitle": {
+    "description": "Standard result title"
+  },
   "resultStandardText": "Nice work — your session is saved.",
-  "@resultStandardText": { "description": "Standard result body" },
+  "@resultStandardText": {
+    "description": "Standard result body"
+  },
   "resultGoalMetTitle": "Daily goal reached!",
-  "@resultGoalMetTitle": { "description": "Goal-met title" },
+  "@resultGoalMetTitle": {
+    "description": "Goal-met title"
+  },
   "resultGoalMetText": "You hit today''s goal — your streak lives on.",
-  "@resultGoalMetText": { "description": "Goal-met body" },
+  "@resultGoalMetText": {
+    "description": "Goal-met body"
+  },
   "resultGoalMissedTitle": "Almost there!",
-  "@resultGoalMissedTitle": { "description": "Goal-missed title" },
+  "@resultGoalMissedTitle": {
+    "description": "Goal-missed title"
+  },
   "resultGoalMissedText": "A little more study today will hit your goal.",
-  "@resultGoalMissedText": { "description": "Goal-missed body" },
+  "@resultGoalMissedText": {
+    "description": "Goal-missed body"
+  },
   "resultManyWrongTitle": "A few shaky words",
-  "@resultManyWrongTitle": { "description": "Many-wrong result headline" },
+  "@resultManyWrongTitle": {
+    "description": "Many-wrong result headline"
+  },
   "resultManyWrongText": "You missed several cards this session. A quick review locks them in.",
-  "@resultManyWrongText": { "description": "Many-wrong result body" },
+  "@resultManyWrongText": {
+    "description": "Many-wrong result body"
+  },
   "resultReviewWrong": "{count, plural, =1{Review 1 card} other{Review {count} cards}}",
   "@resultReviewWrong": {
     "description": "Many-wrong primary CTA — review the missed cards",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "resultStatWords": "{count}",
-  "@resultStatWords": { "description": "Words-studied stat value", "placeholders": { "count": { "type": "int" } } },
+  "@resultStatWords": {
+    "description": "Words-studied stat value",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "resultStatWordsLabel": "words",
-  "@resultStatWordsLabel": { "description": "Words-studied stat label" },
+  "@resultStatWordsLabel": {
+    "description": "Words-studied stat label"
+  },
   "resultStatMinutes": "{count}",
-  "@resultStatMinutes": { "description": "Minutes stat value", "placeholders": { "count": { "type": "int" } } },
+  "@resultStatMinutes": {
+    "description": "Minutes stat value",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "resultStatMinutesLabel": "min",
-  "@resultStatMinutesLabel": { "description": "Minutes stat label" },
+  "@resultStatMinutesLabel": {
+    "description": "Minutes stat label"
+  },
   "resultStatGoalLabel": "of goal",
-  "@resultStatGoalLabel": { "description": "Goal-progress stat label" },
+  "@resultStatGoalLabel": {
+    "description": "Goal-progress stat label"
+  },
   "resultPercent": "{pct}%",
-  "@resultPercent": { "description": "A percentage value", "placeholders": { "pct": { "type": "int" } } },
+  "@resultPercent": {
+    "description": "A percentage value",
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "resultStreakDays": "{count, plural, =1{1 day} other{{count} days}}",
-  "@resultStreakDays": { "description": "Streak length", "placeholders": { "count": { "type": "int" } } },
+  "@resultStreakDays": {
+    "description": "Streak length",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "resultStreakCaption": "day streak",
-  "@resultStreakCaption": { "description": "Streak caption" },
+  "@resultStreakCaption": {
+    "description": "Streak caption"
+  },
   "resultStreakCaptionPlus": "day streak · +1 today",
-  "@resultStreakCaptionPlus": { "description": "Streak caption when advanced today" },
+  "@resultStreakCaptionPlus": {
+    "description": "Streak caption when advanced today"
+  },
   "resultGoalToday": "Today''s goal",
-  "@resultGoalToday": { "description": "Goal-progress row label" },
+  "@resultGoalToday": {
+    "description": "Goal-progress row label"
+  },
   "resultGoalMinutes": "{done}/{target} min",
-  "@resultGoalMinutes": { "description": "Goal minutes value", "placeholders": { "done": { "type": "int" }, "target": { "type": "int" } } },
+  "@resultGoalMinutes": {
+    "description": "Goal minutes value",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "resultGoalWords": "{done}/{target} words",
-  "@resultGoalWords": { "description": "Goal words value", "placeholders": { "done": { "type": "int" }, "target": { "type": "int" } } },
+  "@resultGoalWords": {
+    "description": "Goal words value",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "resultGoalNone": "No goal set",
-  "@resultGoalNone": { "description": "Goal row when no goal configured" },
+  "@resultGoalNone": {
+    "description": "Goal row when no goal configured"
+  },
   "resultKeepStudying": "Keep studying",
-  "@resultKeepStudying": { "description": "Primary CTA (standard/goal-met)" },
+  "@resultKeepStudying": {
+    "description": "Primary CTA (standard/goal-met)"
+  },
   "resultKeepGoing": "Keep going",
-  "@resultKeepGoing": { "description": "Primary CTA (goal-missed)" },
+  "@resultKeepGoing": {
+    "description": "Primary CTA (goal-missed)"
+  },
   "resultBackToLibrary": "Back to library",
-  "@resultBackToLibrary": { "description": "Secondary CTA" },
+  "@resultBackToLibrary": {
+    "description": "Secondary CTA"
+  },
   "resultLater": "Later",
-  "@resultLater": { "description": "Secondary CTA (goal-missed)" },
+  "@resultLater": {
+    "description": "Secondary CTA (goal-missed)"
+  },
   "resultSaving": "Saving your results…",
-  "@resultSaving": { "description": "Finalizing title" },
+  "@resultSaving": {
+    "description": "Finalizing title"
+  },
   "resultSavingText": "Updating your review schedule and streak.",
-  "@resultSavingText": { "description": "Finalizing body" },
+  "@resultSavingText": {
+    "description": "Finalizing body"
+  },
   "resultRetrying": "Retrying…",
-  "@resultRetrying": { "description": "Retry-finalize title" },
+  "@resultRetrying": {
+    "description": "Retry-finalize title"
+  },
   "resultRetryingText": "Trying again to update your review schedule and streak.",
-  "@resultRetryingText": { "description": "Retry-finalize body" },
+  "@resultRetryingText": {
+    "description": "Retry-finalize body"
+  },
   "resultErrorTitle": "Couldn''t save your results",
-  "@resultErrorTitle": { "description": "Finalize-error title" },
+  "@resultErrorTitle": {
+    "description": "Finalize-error title"
+  },
   "resultErrorText": "Your session finished, but we could not update your schedule. Retry so this session counts.",
-  "@resultErrorText": { "description": "Finalize-error body" },
+  "@resultErrorText": {
+    "description": "Finalize-error body"
+  },
   "resultErrorRetry": "Retry",
-  "@resultErrorRetry": { "description": "Finalize-error: retry" },
+  "@resultErrorRetry": {
+    "description": "Finalize-error: retry"
+  },
   "resultErrorLater": "Not now",
-  "@resultErrorLater": { "description": "Finalize-error: dismiss" }
+  "@resultErrorLater": {
+    "description": "Finalize-error: dismiss"
+  }
 }

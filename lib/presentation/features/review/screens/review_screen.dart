@@ -13,6 +13,7 @@ import 'package:memox_v4/presentation/features/review/widgets/term_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_progress_header.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
@@ -154,21 +155,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     return MxScaffold(
       appBar: appBar,
       children: [
-        Row(
-          children: [
-            Expanded(child: MxProgressBar(value: state.progress)),
-            const SizedBox(width: MxSpacing.space3),
-            Text(
-              l10n.reviewPosition(state.position, state.total),
-              style: TextStyle(
-                fontFamily: MxTypography.fontFamily,
-                fontSize: MxTypography.sizeSm,
-                fontWeight: MxTypography.bold,
-                color: MxTheme.of(context).textSecondary,
-              ),
-            ),
-          ],
-        ),
+        MxProgressHeader(done: state.position, total: state.total),
         GestureDetector(
           onHorizontalDragEnd: (details) {
             final velocity = details.primaryVelocity ?? 0;
