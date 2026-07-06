@@ -1,0 +1,7 @@
+# Test tags. See https://pub.dev/packages/test#tagging-tests.
+tags:
+  golden-parity:
+    # Screen goldens (docs/agent/golden-parity/WBS.md). Excluded from the default
+    # verify gate (`flutter test --exclude-tags golden-parity`) during build-out so
+    # fail-by-default fixture stubs don't block unrelated work; a dedicated CI job
+    # owns their baselines (generated on the canonical platform, WBS §0 S3).

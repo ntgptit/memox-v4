@@ -40,7 +40,7 @@ class StateFixture {
   void failIfUnimplemented() {
     if (sentinel != null) {
       fail(
-        'UNIMPLEMENTED golden-parity fixture "\$sentinel" — '
+        'UNIMPLEMENTED golden-parity fixture "$sentinel" — '
         'fill its StateFixture in test/fixtures/ (see docs/agent/golden-parity/WBS.md).',
       );
     }
