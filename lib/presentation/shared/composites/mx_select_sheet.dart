@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_menu_item.dart';
 
 /// One selectable option in a [MxSelectSheet]: its [value], a leading [icon], and a
 /// [label] (from ARB). The icon may encode selection (radio style) — the caller
@@ -18,8 +18,8 @@ class MxSelectOption<T> {
 
 /// The kit's `_shared/SelectSheet` as a reusable composite (`MxSelectSheet`): a
 /// single-select option
-/// list for a bottom sheet — a column of [MxListRow]s, each an icon + label, with a
-/// primary-tinted trailing check on the active one. Present it as the child of
+/// list for a bottom sheet — a column of [MxMenuItem]s, each an icon + label, with
+/// a primary-tinted trailing check on the active one. Present it as the child of
 /// [showMxSheet] (which supplies the surface + scrim). Each row pops the sheet, then
 /// reports its value via [onSelect]. Owns the pattern shared by game-picker
 /// (ScopeSheet), library (SortSheet) and settings (ValuePickerSheet). Copy is
@@ -41,11 +41,10 @@ class MxSelectSheet<T> extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        for (final (index, option) in options.indexed)
-          MxListRow(
+        for (final option in options)
+          MxMenuItem(
             icon: option.icon,
-            title: option.label,
-            last: index == options.length - 1,
+            label: option.label,
             selected: option.value == selected,
             onPressed: () {
               Navigator.of(context).pop();

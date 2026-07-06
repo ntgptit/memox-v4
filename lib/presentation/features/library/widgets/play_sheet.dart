@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/library/providers/library_providers.dart';
-import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_menu_item.dart';
 
 /// Library-local per-deck launcher (kit `library/play-sheet`) — the content of an
 /// [showMxSheet] whose title is the deck name. Learn · Review · Browse · Game ·
@@ -28,12 +28,10 @@ class PlaySheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    Widget item(IconData icon, String label, VoidCallback action,
-        {bool last = false}) {
-      return MxListRow(
+    Widget item(IconData icon, String label, VoidCallback action) {
+      return MxMenuItem(
         icon: icon,
-        title: label,
-        last: last,
+        label: label,
         onPressed: () {
           Navigator.of(context).pop();
           action();
@@ -48,7 +46,7 @@ class PlaySheet extends StatelessWidget {
         item(Icons.replay, l10n.librarySheetReview(node.due), onReview),
         item(Icons.visibility, l10n.librarySheetBrowse, onBrowse),
         item(Icons.sports_esports, l10n.librarySheetGame, onGame),
-        item(Icons.play_circle, l10n.librarySheetPlayer, onPlayer, last: true),
+        item(Icons.play_circle, l10n.librarySheetPlayer, onPlayer),
       ],
     );
   }

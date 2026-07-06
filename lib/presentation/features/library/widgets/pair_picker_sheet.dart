@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/language_pair.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
-import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
-import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_menu_item.dart';
 
 /// Library-local language-pair picker (kit `library/pair-sheet`) — the content of
 /// an [showMxSheet]. Lists the learner's pairs with a check on the active one,
@@ -31,20 +30,18 @@ class PairPickerSheet extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         for (final pair in pairs)
-          MxListRow(
+          MxMenuItem(
             icon: Icons.translate,
-            title: [pair.learningLanguage, pair.nativeLanguage].join(' → '),
+            label: [pair.learningLanguage, pair.nativeLanguage].join(' → '),
             selected: pair.id.value == selectedId?.value,
             onPressed: () {
               Navigator.of(context).pop();
               onSelect(pair.id);
             },
           ),
-        MxListRow(
+        MxMenuItem(
           icon: Icons.add,
-          tone: MxIconTileTone.accent,
-          title: l10n.librarySheetPairAdd,
-          last: true,
+          label: l10n.librarySheetPairAdd,
           onPressed: () {
             Navigator.of(context).pop();
             onAdd();
