@@ -16,7 +16,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_input_dialog.dart';
-import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_menu_item.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_search_dock.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_sheet.dart';
@@ -262,9 +262,9 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          MxListRow(
+          MxMenuItem(
             icon: Icons.home,
-            title: l10n.deckDetailMoveRoot,
+            label: l10n.deckDetailMoveRoot,
             onPressed: () {
               Navigator.of(context).pop();
               _controller.moveTo(null);
@@ -272,9 +272,9 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
           ),
           for (final root in roots)
             if (root.id.value != data.deckId.value)
-              MxListRow(
+              MxMenuItem(
                 icon: Icons.layers,
-                title: root.name,
+                label: root.name,
                 onPressed: () {
                   Navigator.of(context).pop();
                   _controller.moveTo(root.id);
@@ -294,32 +294,35 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
 
   void _openAddMenu() {
     final l10n = AppLocalizations.of(context);
+    final deckName =
+        ref.read(deckDetailControllerProvider(widget.deckId)).value?.deckName;
     showMxSheet<void>(
       context: context,
-      title: l10n.deckDetailAddTitle,
+      title: deckName == null
+          ? l10n.deckDetailAddTitle
+          : l10n.deckDetailAddToTitle(deckName),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          MxListRow(
+          MxMenuItem(
             icon: Icons.add,
-            title: l10n.deckDetailAddWord,
+            label: l10n.deckDetailAddWord,
             onPressed: () {
               Navigator.of(context).pop();
               context.push(Routes.add);
             },
           ),
-          MxListRow(
+          MxMenuItem(
             icon: Icons.library_add,
-            title: l10n.deckDetailAddSubdeck,
+            label: l10n.deckDetailAddSubdeck,
             onPressed: () {
               Navigator.of(context).pop();
               _openCreateSubDeck();
             },
           ),
-          MxListRow(
+          MxMenuItem(
             icon: Icons.upload_file,
-            title: l10n.deckDetailAddImport,
-            last: true,
+            label: l10n.deckDetailAddImport,
             onPressed: () {
               Navigator.of(context).pop();
               context.push(Routes.import_);
@@ -355,17 +358,17 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          MxListRow(
+          MxMenuItem(
             icon: Icons.edit,
-            title: l10n.deckDetailCardEdit,
+            label: l10n.deckDetailCardEdit,
             onPressed: () {
               Navigator.of(context).pop();
               context.push(Routes.editCard(card.id.value));
             },
           ),
-          MxListRow(
+          MxMenuItem(
             icon: card.hidden ? Icons.visibility : Icons.visibility_off,
-            title: card.hidden
+            label: card.hidden
                 ? l10n.deckDetailCardUnhide
                 : l10n.deckDetailCardHide,
             onPressed: () {
@@ -373,11 +376,10 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
               _controller.setCardHidden(card.id, hidden: !card.hidden);
             },
           ),
-          MxListRow(
+          MxMenuItem(
             icon: Icons.delete,
-            tone: MxIconTileTone.error,
-            title: l10n.deckDetailCardDelete,
-            last: true,
+            label: l10n.deckDetailCardDelete,
+            danger: true,
             onPressed: () {
               Navigator.of(context).pop();
               _confirmDeleteCard(card);
