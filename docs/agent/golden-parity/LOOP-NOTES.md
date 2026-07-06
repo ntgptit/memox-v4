@@ -62,3 +62,15 @@
 - **contentMask left empty for now:** exact mask rects (greeting-name, date,
   illustrative counts that diverge from kit) can only be measured against real
   shots — a G.2 task. Fixtures render correctly regardless; masks are diff-only.
+
+## 2026-07-06 · G.1 · export/exporting deferred (transient state)
+- **What:** filled drawer (3), game-picker (3), export config+done. Left
+  export/exporting UNIMPLEMENTED.
+- **Why:** "exporting" is a transient in-flight state; the fake file service
+  writes synchronously, so tapping Export goes straight to "done" — no
+  deterministic exporting frame. Rendering it needs a STUCK file-service override
+  (write future never completes, like the loading-skeleton pattern) so the
+  exporting UI persists; that's a small follow-up (needs the ImportExportFileService
+  interface + a stuck fake).
+- **Assumed/deferred:** left as a red worklist item; revisit with a stuck file
+  service. Same likely applies to import states that are mid-flight.
