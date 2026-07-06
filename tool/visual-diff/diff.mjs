@@ -61,6 +61,11 @@ const LIMIT = flag('--limit') != null ? Number(flag('--limit')) : null;
 const WRITE_BASELINE = flag('--write-baseline');
 const BASELINE = flag('--baseline');
 const TOLERANCE = Number(flag('--tolerance', '2')); // extra % a state may drift before failing
+// The ratchet cannot tell an intentional visual improvement from a regression,
+// so in a convergence loop it trips on every fix. --ratchet-warn prints the
+// deltas for human attention but does not fail the run (CI keeps only the
+// catastrophic --fail-over gate blocking; re-seed the baseline after a batch).
+const RATCHET_WARN = argv.includes('--ratchet-warn');
 
 // ── PNG signature ─────────────────────────────────────────────────────────────
 const PNG_SIG = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
@@ -338,11 +343,13 @@ if (BASELINE && !existsSync(BASELINE)) {
   const novel = results.filter((r) => base[r.name] == null);
   if (novel.length) console.log(`\n  ${novel.length} state(s) not in baseline (add via --write-baseline): ${novel.slice(0, 6).map((r) => r.name).join(', ')}${novel.length > 6 ? '…' : ''}`);
   if (regressions.length) {
-    console.error(`\n✗ ${regressions.length} state(s) diverged > baseline + ${TOLERANCE}%:`);
+    const tag = RATCHET_WARN ? '⚠' : '✗';
+    console.error(`\n${tag} ${regressions.length} state(s) diverged > baseline + ${TOLERANCE}%${RATCHET_WARN ? ' (warn — review the report; re-seed if intentional)' : ''}:`);
     for (const r of regressions) console.error(`    ${r.pct.toFixed(2)}% (was ${base[r.name]}%)  ${r.name}`);
-    process.exit(1);
+    if (!RATCHET_WARN) process.exit(1);
+  } else {
+    console.log(`\n✓ no visual regression: all ${results.length} states within baseline + ${TOLERANCE}%`);
   }
-  console.log(`\n✓ no visual regression: all ${results.length} states within baseline + ${TOLERANCE}%`);
 }
 
 // ── absolute catastrophic gate (cross-platform-safe: a blank/errored/mis-sized

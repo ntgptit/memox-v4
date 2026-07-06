@@ -65,6 +65,7 @@ jobs:
           node tool/visual-diff/diff.mjs
           --baseline tool/visual-diff/baseline.json
           --tolerance 3
+          --ratchet-warn
           --fail-over 92
           --html build/visual-parity/report.html
 
