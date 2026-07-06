@@ -13,24 +13,14 @@ import '../../support/screen_golden.dart';
 /// state fixtures. Tagged 'golden-parity' (excluded from the default gate;
 /// a dedicated CI job owns the baselines). Un-filled fixtures fail fast.
 void main() {
-  final themes = <String, ThemeData>{
-    'light': AppTheme.light,
-    'dark': AppTheme.dark,
-  };
+  final themes = <String, ThemeData>{'light': AppTheme.light, 'dark': AppTheme.dark};
   deckDetailFixtures.forEach((state, fixture) {
     themes.forEach((theme, data) {
       testWidgets('deck-detail--$state--$theme', (tester) async {
-        await pumpScreenGolden(
-          tester,
-          home: const DeckDetailScreen(deckId: 'deck-root'),
-          fixture: fixture,
-          theme: data,
-        );
+        await pumpScreenGolden(tester, home: const DeckDetailScreen(deckId: 'deck-food'), fixture: fixture, theme: data);
         await expectLater(
           find.byType(MaterialApp),
-          matchesGoldenFile(
-            '../../goldens/screens/deck-detail--$state--$theme.png',
-          ),
+          matchesGoldenFile('../../goldens/screens/deck-detail--$state--$theme.png'),
         );
       });
     });
