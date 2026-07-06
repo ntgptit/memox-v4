@@ -509,6 +509,13 @@
   "@deckDetailAddTitle": {
     "description": "Title of the add-to-deck sheet"
   },
+  "deckDetailAddToTitle": "Add to {deck}",
+  "@deckDetailAddToTitle": {
+    "description": "Title of the add-to-deck sheet, with the deck name (kit: 'Add to ‹deck›')",
+    "placeholders": {
+      "deck": { "type": "String" }
+    }
+  },
   "deckDetailAddWord": "Add word",
   "@deckDetailAddWord": {
     "description": "Add-word action in the add sheet"

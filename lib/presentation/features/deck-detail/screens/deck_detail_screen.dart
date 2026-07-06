@@ -294,9 +294,13 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
 
   void _openAddMenu() {
     final l10n = AppLocalizations.of(context);
+    final deckName =
+        ref.read(deckDetailControllerProvider(widget.deckId)).value?.deckName;
     showMxSheet<void>(
       context: context,
-      title: l10n.deckDetailAddTitle,
+      title: deckName == null
+          ? l10n.deckDetailAddTitle
+          : l10n.deckDetailAddToTitle(deckName),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
