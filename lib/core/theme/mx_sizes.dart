@@ -29,6 +29,7 @@ abstract final class MxIconSize {
   static const double sm = 18;
   static const double md = 22;
   static const double lg = 28;
+  static const double xl = 32;
 }
 
 /// Border / stroke widths (`--memox-stroke-*`).
@@ -38,4 +39,6 @@ abstract final class MxStroke {
   static const double hairline = 1;
   static const double emphasis = 2;
   static const double focus = 3;
+  static const double mid = 1.5;
+  static const double bold = 4;
 }

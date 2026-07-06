@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
@@ -25,7 +26,7 @@ class OnboardingHero extends StatelessWidget {
   final Widget? child;
 
   // Kit body copy renders at 90% opacity on the primary card.
-  static const double _bodyOpacity = 0.9;
+  static const double _bodyOpacity = MxOpacity.label;
 
   @override
   Widget build(BuildContext context) {

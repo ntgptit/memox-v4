@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
@@ -37,8 +38,8 @@ class MxSearchDock extends StatefulWidget {
   @override
   State<MxSearchDock> createState() => _MxSearchDockState();
 
-  /// Kit `.search-dock` height — raw px with no matching token.
-  static const double height = 52;
+  /// Kit `--memox-comp-search-dock-height` mirror.
+  static const double height = MxComponentSizes.searchDockHeight;
 }
 
 class _MxSearchDockState extends State<MxSearchDock> {

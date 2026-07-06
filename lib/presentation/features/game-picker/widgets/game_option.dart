@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -22,7 +23,7 @@ class GameOption extends StatelessWidget {
   final String description;
   final VoidCallback? onPressed;
 
-  static const double _disabledOpacity = 0.5;
+  static const double _disabledOpacity = MxOpacity.half;
 
   @override
   Widget build(BuildContext context) {

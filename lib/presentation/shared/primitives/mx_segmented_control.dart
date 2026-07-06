@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
@@ -35,7 +36,7 @@ class MxSegmentedControl extends StatelessWidget {
   final bool block;
 
   /// Kit `.segmented__seg` min-height — M3 segmented visual spec (M3-1).
-  static const double _segmentMinHeight = 40;
+  static const double _segmentMinHeight = MxComponentSizes.segmentedSegHeight;
 
   @override
   Widget build(BuildContext context) {

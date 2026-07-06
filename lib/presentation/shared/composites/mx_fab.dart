@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -33,7 +34,7 @@ class MxFab extends StatelessWidget {
   final String? semanticLabel;
 
   /// Kit `.fab .material-symbols-rounded` glyph = 26px, no matching token.
-  static const double _glyphSize = 26;
+  static const double _glyphSize = MxIconSize.lg; // Đ-K-1: 26 -> 28
 
   @override
   Widget build(BuildContext context) {

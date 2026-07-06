@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
@@ -27,8 +28,8 @@ class MxChip extends StatelessWidget {
   final bool selected;
   final MxChipVariant variant;
 
-  /// Kit `.chip` height — raw px with no matching token.
-  static const double _height = 34;
+  /// Kit `--memox-comp-chip-height` mirror.
+  static const double _height = MxComponentSizes.chipHeight;
 
   @override
   Widget build(BuildContext context) {

@@ -415,11 +415,32 @@ function emitMotion() {
     `abstract final class MxEasing {\n  const MxEasing._();\n\n${eases}\n}\n`;
 }
 
+function emitComponent() {
+  const dims = namesWith('--memox-comp-')
+    .map((n) => `  static const double ${camel(n.replace('--memox-comp-', ''))} = ${dbl(px(lightOf(n)))};`)
+    .join('\n');
+  const opacities = namesWith('--memox-opacity-')
+    .map((n) => `  static const double ${camel(n.replace('--memox-opacity-', ''))} = ${dbl(parseFloat(lightOf(n)))};`)
+    .join('\n');
+
+  if (!dims && !opacities) return; // all pruned -> no file
+  FILES['mx_component.dart'] =
+    GEN_HEADER('component.css / opacity.css') +
+    `/// Per-component intrinsic dimensions (\`--memox-comp-*\`) and the opacity\n` +
+    `/// scale (\`--memox-opacity-*\`). Theme-independent (K.1 full tokenization).\n` +
+    `library;\n\n` +
+    `/// Fixed control dimensions (\`--memox-comp-<component>-<prop>\`).\n` +
+    `abstract final class MxComponentSizes {\n  const MxComponentSizes._();\n\n${dims}\n}\n\n` +
+    `/// Opacity scale (\`--memox-opacity-*\`): disabled controls, muted rows,\n` +
+    `/// sub-labels on tinted surfaces.\n` +
+    `abstract final class MxOpacity {\n  const MxOpacity._();\n\n${opacities}\n}\n`;
+}
+
 // All filenames this generator can produce — used to delete stale outputs when
 // an emitter stops producing a file (e.g. every motion token pruned).
 const ALL_OUTPUTS = [
   'mx_colors.dart', 'mx_spacing.dart', 'mx_radius.dart', 'mx_typography.dart',
-  'mx_sizes.dart', 'mx_elevation.dart', 'mx_motion.dart',
+  'mx_sizes.dart', 'mx_elevation.dart', 'mx_motion.dart', 'mx_component.dart',
 ];
 
 // ── coverage guard ──────────────────────────────────────────────────────────
@@ -442,6 +463,7 @@ emitTypography();
 emitSizes();
 emitElevation();
 emitMotion();
+emitComponent();
 
 const unconsumed = [...TOK.keys()].filter((n) => !CONSUMED.has(n) && !SKIP.has(n));
 if (unconsumed.length) {

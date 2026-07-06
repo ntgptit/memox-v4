@@ -8,4 +8,6 @@
   --memox-stroke-hairline: 1px; /* default borders, dividers */
   --memox-stroke-emphasis: 2px; /* selected / state / active borders */
   --memox-stroke-focus: 3px;    /* focus & selection rings */
+  --memox-stroke-mid: 1.5px;    /* outline buttons / switch track inset (K.1) */
+  --memox-stroke-bold: 4px;     /* avatar ring outer band (K.1) */
 }

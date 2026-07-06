@@ -59,7 +59,7 @@ function DeckRow({ icon, tone, name, meta, due, progress, node, onClick }) {
 function ListRow({ icon, tone, title, sub, trailing, node, last, muted, onClick }) {
   const { MxIconTile } = NS;
   return (
-    <div data-mx-node={node} onClick={onClick} {...clickA11y(onClick, title)} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', opacity: muted ? .55 : 1, paddingBottom: last ? 0 : 'var(--memox-space-4)', marginBottom: last ? 0 : 'var(--memox-space-4)', borderBottom: last ? 'none' : 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+    <div data-mx-node={node} onClick={onClick} {...clickA11y(onClick, title)} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', opacity: muted ? 'var(--memox-opacity-muted)' : 1, paddingBottom: last ? 0 : 'var(--memox-space-4)', marginBottom: last ? 0 : 'var(--memox-space-4)', borderBottom: last ? 'none' : 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
       {icon ? <MxIconTile icon={icon} tone={tone} /> : null}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>

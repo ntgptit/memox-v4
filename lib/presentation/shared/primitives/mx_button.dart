@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
@@ -110,7 +111,7 @@ class MxButton extends StatelessWidget {
   WidgetStateProperty<Color> _stateColor(Color color) =>
       WidgetStateProperty.resolveWith(
         (states) => states.contains(WidgetState.disabled)
-            ? color.withValues(alpha: 0.45)
+            ? color.withValues(alpha: MxOpacity.disabled)
             : color,
       );
 

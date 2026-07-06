@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
@@ -21,7 +22,7 @@ class TodaySummary extends StatelessWidget {
   final Widget? action;
 
   // Kit sublabels render at 90% opacity on the primary card.
-  static const double _subLabelOpacity = 0.9;
+  static const double _subLabelOpacity = MxOpacity.label;
 
   @override
   Widget build(BuildContext context) {

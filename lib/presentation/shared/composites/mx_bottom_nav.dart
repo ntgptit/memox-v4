@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -37,7 +38,7 @@ class MxBottomNav extends StatelessWidget {
   // Kit `.bottom-nav` metrics — raw px with no matching token.
   static const double _iconPillWidth = 56;
   static const double _iconPillHeight = 30;
-  static const double _glyphSize = 26;
+  static const double _glyphSize = MxIconSize.lg; // Đ-K-1: 26 -> 28
   static const double _labelSize = 11;
   static const double _labelGap = 3;
   static const double _bottomInset = 4;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_motion.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 
@@ -35,7 +36,7 @@ class MxSkeleton extends StatefulWidget {
 
   // Kit `.mxg-skel` pulse: opacity .5 ↔ 1 over the `pulse` motion token
   // (1.3s), ease-in-out, infinite.
-  static const double _minOpacity = 0.5;
+  static const double _minOpacity = MxOpacity.half;
   static const Duration _period = MxDurations.pulse;
 
   @override
