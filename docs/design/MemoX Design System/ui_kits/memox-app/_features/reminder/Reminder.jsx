@@ -18,7 +18,7 @@ function Reminder({ state = 'on' }) {
           trailing={<MxSwitch checked={on} onChange={() => {}} node="reminder/toggle-switch" />} />
       </MxCard>
 
-      <MxCard interactive node="reminder/time" style={{ opacity: on ? 1 : .5 }}>
+      <MxCard interactive node="reminder/time" style={{ opacity: on ? 1 : 'var(--memox-opacity-half)' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>REMINDER TIME</div>
@@ -28,7 +28,7 @@ function Reminder({ state = 'on' }) {
         </div>
       </MxCard>
 
-      <div data-mx-node="reminder/days" style={{ opacity: on ? 1 : .5 }}>
+      <div data-mx-node="reminder/days" style={{ opacity: on ? 1 : 'var(--memox-opacity-half)' }}>
         <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: '0 0 var(--memox-space-2) var(--memox-space-1)' }}>REPEAT</div>
         <div style={{ display: 'flex', gap: 'var(--memox-space-2)', flexWrap: 'wrap' }}>
           {WEEKDAYS.map((d, i) => <MxChip key={d} label={d} selected={on} node={'reminder/day-' + i} />)}

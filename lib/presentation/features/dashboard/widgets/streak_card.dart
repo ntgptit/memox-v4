@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -14,7 +15,7 @@ class StreakCard extends StatelessWidget {
   final int streak;
 
   // Kit sublabel renders at 85% opacity on the primary-soft card.
-  static const double _labelOpacity = 0.85;
+  static const double _labelOpacity = MxOpacity.labelSoft;
 
   @override
   Widget build(BuildContext context) {

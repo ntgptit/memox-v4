@@ -6,6 +6,8 @@
 abstract final class MxSpacing {
   const MxSpacing._();
 
+  static const double space0 = 0;
+  static const double space05 = 2;
   static const double space1 = 4;
   static const double space2 = 8;
   static const double space3 = 12;

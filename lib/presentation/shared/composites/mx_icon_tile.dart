@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 
 /// Colour tone for [MxIconTile] (`primary` is the base soft tint).
@@ -28,10 +30,10 @@ class MxIconTile extends StatelessWidget {
   final bool solid;
 
   // Kit `.icon-tile` metrics — raw px with no matching token.
-  static const double _dimMedium = 48;
-  static const double _dimLarge = 60;
-  static const double _glyphMedium = 26;
-  static const double _glyphLarge = 32;
+  static const double _dimMedium = MxComponentSizes.iconTileMd;
+  static const double _dimLarge = MxComponentSizes.iconTileLg;
+  static const double _glyphMedium = MxIconSize.lg; // Đ-K-1: 26 -> 28
+  static const double _glyphLarge = MxIconSize.xl;
 
   @override
   Widget build(BuildContext context) {

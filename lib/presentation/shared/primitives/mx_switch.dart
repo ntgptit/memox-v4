@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 
 /// The kit's binary on/off toggle (`MxSwitch` · base class `.switch`). A
@@ -53,6 +54,6 @@ class MxSwitch extends StatelessWidget {
     final labeled = Semantics(label: semanticLabel, child: control);
     if (onChanged != null) return labeled;
     // Kit `.switch--disabled { opacity: 0.45 }`.
-    return Opacity(opacity: 0.45, child: labeled);
+    return Opacity(opacity: MxOpacity.disabled, child: labeled);
   }
 }

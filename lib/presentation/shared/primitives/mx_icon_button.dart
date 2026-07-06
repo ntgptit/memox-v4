@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 
@@ -38,7 +39,7 @@ class MxIconButton extends StatelessWidget {
   /// `MxIconSize` token (18/22/28), so the kit values are named here.
   static const double _glyphMedium = 24;
   static const double _glyphSmall = 20;
-  static const double _dimSmall = 36;
+  static const double _dimSmall = MxComponentSizes.iconBtnSm;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class MxIconButton extends StatelessWidget {
         backgroundColor: WidgetStatePropertyAll(palette.background),
         foregroundColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.disabled)
-              ? palette.foreground.withValues(alpha: 0.45)
+              ? palette.foreground.withValues(alpha: MxOpacity.disabled)
               : palette.foreground,
         ),
         overlayColor: WidgetStatePropertyAll(mx.stateHover),

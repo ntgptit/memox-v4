@@ -5,7 +5,7 @@ const { MxCard, MxIconTile } = NS;
 
 function GameOption({ g, disabled }) {
   return (
-    <MxCard interactive padding="sm" node={'game-picker/game-' + g.id} style={{ opacity: disabled ? .5 : 1 }}>
+    <MxCard interactive padding="sm" node={'game-picker/game-' + g.id} style={{ opacity: disabled ? 'var(--memox-opacity-half)' : 1 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
         <MxIconTile icon={g.icon} tone="accent" />
         <div style={{ flex: 1, minWidth: 0 }}>

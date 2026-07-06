@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 
@@ -33,9 +34,9 @@ class MxAvatar extends StatelessWidget {
   final bool ring;
 
   // Kit `.avatar` diameters — raw px with no matching MxSizes token.
-  static const double _dimMedium = 44;
-  static const double _dimSmall = 32;
-  static const double _dimLarge = 64;
+  static const double _dimMedium = MxComponentSizes.avatarMd;
+  static const double _dimSmall = MxComponentSizes.avatarSm;
+  static const double _dimLarge = MxComponentSizes.avatarLg;
 
   /// Two-letter uppercase initials from [name] (first letter of the first two
   /// words), matching the kit fallback.

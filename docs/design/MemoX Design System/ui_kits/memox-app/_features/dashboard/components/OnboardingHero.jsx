@@ -13,7 +13,7 @@ function OnboardingHero({ icon, title, text, children }) {
         <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)' }}>{icon}</span>
       </span>
       <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)', marginTop: 'var(--memox-space-3)' }}>{title}</div>
-      <div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: .9, lineHeight: 'var(--memox-line-height-normal)', marginTop: 'var(--memox-space-1)' }}>{text}</div>
+      <div style={{ fontSize: 'var(--memox-font-size-sm)', opacity: 'var(--memox-opacity-label)', lineHeight: 'var(--memox-line-height-normal)', marginTop: 'var(--memox-space-1)' }}>{text}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', marginTop: 'var(--memox-space-4)' }}>{children}</div>
     </MxCard>
   );

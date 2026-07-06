@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -22,7 +23,7 @@ import 'package:memox_v4/presentation/shared/primitives/mx_switch.dart';
 const List<int> _weekdayOrder = [1, 2, 3, 4, 5, 6, 7];
 
 /// Opacity applied to the time + repeat controls when reminders are off.
-const double _disabledOpacity = 0.5;
+const double _disabledOpacity = MxOpacity.half;
 
 /// The Reminders screen (S.07): a master toggle, the reminder time, and the
 /// weekday repeat chips. Reads/mutates the reminder config through

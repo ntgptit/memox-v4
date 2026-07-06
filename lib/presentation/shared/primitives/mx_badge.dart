@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -25,10 +26,10 @@ class MxBadge extends StatelessWidget {
   final bool dot;
 
   // Kit `.badge` metrics — raw px with no matching token.
-  static const double _height = 20;
-  static const double _minWidth = 20;
-  static const double _dotSize = 10;
-  static const double _paddingX = 6;
+  static const double _height = MxComponentSizes.badgeHeight;
+  static const double _minWidth = MxComponentSizes.badgeMinWidth;
+  static const double _dotSize = MxComponentSizes.badgeDot;
+  static const double _paddingX = MxComponentSizes.badgePadX;
   // 12px floor (M3-2 / audit G7) — mirrors kit `.badge` font-size-xs.
   static const double _fontSize = MxTypography.sizeXs;
 

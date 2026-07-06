@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
@@ -84,7 +85,7 @@ class MxListRow extends StatelessWidget {
       ],
     );
 
-    if (muted) row = Opacity(opacity: 0.55, child: row);
+    if (muted) row = Opacity(opacity: MxOpacity.muted, child: row);
     if (onPressed != null) {
       row = Semantics(
         button: true,
