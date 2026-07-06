@@ -105,6 +105,10 @@ M3: vùng chạm **≥ 48×48dp** (visual được phép nhỏ hơn, mở rộng
 
 ## 9. Backlog fix (thứ tự đề xuất)
 
+> **Trạng thái (2026-07-06):** M3-1…M3-6 **ĐÃ ĐÓNG** — PR #216 (M3-1), #215 (M3-2),
+> #223 (M3-3, M3-5), #222 (M3-4), #219 (M3-6). Đ-M3-2 (nav 80) đã áp dụng ở #215.
+> Guard chống tái phát: `tool/design/kit_guard.mjs` trong verify gate (K.6).
+
 | Mã | Việc | Nguồn | Tầng sửa |
 |---|---|---|---|
 | **M3-1** | Hit-area ≥48 cho 8 control (§6) — pseudo-element/padding, GIỮ visual | G2 | component (kit CSS + `Mx*` Flutter: `materialTapTargetSize`/`InkResponse` radius/padding) |

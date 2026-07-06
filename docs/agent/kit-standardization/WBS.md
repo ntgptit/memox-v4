@@ -51,6 +51,9 @@ list rows (DeckRow/StatusCardRow/ListRow ✓ trừ SubDeckCard).
 
 ## 2. Waves
 
+> **Trạng thái (2026-07-06):** K.1 #218 · K.2 #219 · K.3 #220 · K.4a #221 ·
+> K.4b #222 · K.5 #223 · K.6 (guard) — PR này. HOÀN THÀNH toàn bộ chương trình.
+
 ### K.1 — Token hoá kích thước + opacity *(1 PR)*
 - [ ] `tokens/component.css` MỚI (Layer 1, curated theo Đ-K-4): chip-height,
       switch-w/h, badge-h/minw/px/dot, avatar-sm/md/lg, icon-tile-md/lg,
