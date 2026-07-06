@@ -5,7 +5,7 @@ export function MxScaffold({ appBar, bottomNav, fab, children, flush = false, no
   return (
     <div className={['app', className].filter(Boolean).join(' ')} data-mx-node={node} style={style}>
       {appBar}
-      <div className={['app__body', flush ? 'app__body--flush' : ''].filter(Boolean).join(' ')}>
+      <div className={['app__body', flush ? 'app__body--flush' : '', fab ? 'app__body--with-fab' : ''].filter(Boolean).join(' ')}>
         {children}
       </div>
       {fab ? (

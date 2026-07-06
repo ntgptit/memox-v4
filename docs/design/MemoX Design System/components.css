@@ -44,6 +44,11 @@
 .app__body > * {
   flex-shrink: 0;
 }
+.app__body--with-fab {
+  /* M3-3: keep end-of-list content clear of the floating FAB band
+     (nav + fab + breathing room). */
+  padding-bottom: calc(var(--memox-bottom-nav-height) + var(--memox-fab-size) + var(--memox-space-4));
+}
 .app__body--flush {
   padding-left: 0;
   padding-right: 0;
