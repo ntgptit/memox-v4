@@ -38,11 +38,28 @@ Future<void> pumpScreenGolden(
       ),
     ),
   );
-  await tester.pumpAndSettle();
+  await _settle(tester);
 
   final drive = fixture.drive;
   if (drive != null) {
     await drive(tester);
-    await tester.pumpAndSettle();
+    await _settle(tester);
+  }
+}
+
+/// Flushes async work, then lands on a deterministic frame. A plain
+/// `pumpAndSettle` never returns for states with an infinite animation
+/// (loading skeleton shimmer, progress indicators), so we bound it and fall
+/// back to a fixed pump — the shimmer/indicator frame is deterministic given a
+/// fixed elapsed time.
+Future<void> _settle(WidgetTester tester) async {
+  try {
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 16),
+      EnginePhase.sendSemanticsUpdate,
+      const Duration(milliseconds: 800),
+    );
+  } catch (_) {
+    await tester.pump(const Duration(milliseconds: 250));
   }
 }

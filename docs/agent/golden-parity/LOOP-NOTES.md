@@ -43,3 +43,22 @@
 - **Confirmed:** running the golden-parity tag fails-fast with the UNIMPLEMENTED
   sentinel (mechanism proven). Fixed a `$sentinel` interpolation bug in _fixture.dart.
 - **Deferred to 2b:** filling Dashboard's 6 real fixtures + diff.mjs calibration.
+
+## 2026-07-06 · G.0 · chunk 2b = Dashboard fixtures filled; diff.mjs deferred
+- **What:** filled all 6 Dashboard fixtures (test/fixtures/dashboard/*) with real
+  StateFixtures via a shared _dashboard_harness.dart seed helper; all 12 goldens
+  (6 states × 2 themes) render green under `--update-goldens` (PNGs discarded, not
+  committed — CI owns baselines).
+- **Settle fix (helps all screens):** pumpScreenGolden now bounds pumpAndSettle
+  (800ms) and falls back to a fixed 250ms pump, so loading skeletons / progress
+  indicators (infinite animations) land on a deterministic frame instead of
+  hanging pumpAndSettle forever.
+- **diff.mjs DEFERRED (was slated for 2b):** decided NOT to write/calibrate the
+  kit↔Flutter pixel diff now. Why: the diff RUN is blocked on the exporter (G.2),
+  and calibrating thresholds against the STALE kit shots (which the exporter will
+  regenerate) is throwaway work — thresholds tuned to soon-obsolete images. Best
+  default: build+calibrate diff.mjs in the chunk right before G.2, once fresh
+  shots exist. No value lost; the Flutter-golden regression side is complete.
+- **contentMask left empty for now:** exact mask rects (greeting-name, date,
+  illustrative counts that diverge from kit) can only be measured against real
+  shots — a G.2 task. Fixtures render correctly regardless; masks are diff-only.
