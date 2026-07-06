@@ -135,3 +135,21 @@
 - **Deferred:** flashcard-editor/audio (needs a seeded card WITH audio) and
   /duplicate (needs entering a term that duplicates an existing card → soft-dup
   warning). Both a small seeded-card follow-up.
+
+## 2026-07-06 · G.1 · import (4/5) + study-session (3/11) + study-result (0/7 deferred)
+- import: source / mapping / preview / done filled (paste tab-separated cards →
+  Continue → Continue → Import). DEFERRED import/dup-warning (needs pasting a term
+  that duplicates a seeded card → soft-dup warning).
+- study-session: stage1-review (new store) / stage2-matching (Next once) /
+  due-review (due store) filled. DEFERRED stage3-choice / stage4-recall /
+  stage5-typing (each needs COMPLETING the prior stage's activity — matching,
+  choice, recall — to advance; a simple Next only crosses stage1→2), plus
+  relearn / resume / resume-error / answer-save-error / exit (need specific
+  mid-session controller states). These need a seeded-mid-session harness — the
+  single biggest deferred cluster.
+- study-result: ALL 7 states deferred (standard / goal-met / goal-missed /
+  many-wrong / finalizing / finalize-error / retry-finalize). The screen reads an
+  async studyResultControllerProvider derived from the session handoff; rendering a
+  specific result needs overriding that provider with a seeded StudyResultData (a
+  small harness with a fake controller). StateFixture.home won't help — the ctor
+  takes no arg; it's a provider override. A focused follow-up.
