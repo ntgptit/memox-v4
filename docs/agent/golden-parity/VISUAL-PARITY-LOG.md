@@ -25,8 +25,10 @@ Persist EVERY finding here so context survives across loop iterations.
 | 6 | study-session · stage3/5 | progress shown as n/N bar; kit shows a % header | ~~FIX~~ | **NON-BUG** — kit `ProgressHeader` = bar + "{done}/{total}", same as Flutter (agent misread bar-fill % as label) |
 | 7 | drawer · open | Flutter missing FAQ / Email us / Sync items + "Menu" label | DEFER-V1 | noted (Sync = no v1 backend; confirm FAQ/Email) |
 | 8 | import · mapping | Flutter has an extra "first row is header" toggle not in kit | DEFER-V1 | noted (Flutter-ahead — add to kit or drop) |
-| 9 | theme · accent | kit shows 6 accent swatches; Flutter shows 3 | DEFER-V1 | **confirmed** — domain `AccentColor` has 3 presets (brand/warm/cool); accent_picker.dart documents "the kit's six swatches" → 3. Data-model decision |
-| 15 | deck-detail · * (app bar) | kit app bar has a speaker/"play audio" icon; Flutter omits it | DEFER-V1 | **confirmed** — deck_header.dart: "kit's deck-level 'play audio' action is omitted in v1 (bulk deck TTS deferred)" |
+| 9 | theme · accent | kit shows 6 accent swatches; Flutter shows 3 | FIX | **DONE (loop-2)** — added violet/green/amber to AccentColor; picker shows 6 in kit order (re-theming still deferred) |
+| 15 | deck-detail · * (app bar) | kit app bar has a speaker/"play audio" icon; Flutter omits it | FIX | **DONE (loop-2)** — added the speaker + wired bulk TTS (playDeckAudio speaks each visible card); behavior test + golden verified |
+| 11 | dashboard · empty | kit shot = old not-studied; Flutter = new onboarding | DEFER-STALE | **BLOCKED (loop-2)** — the `ui_kit_shots` exporter was removed in the repo reset; no local way to regenerate the PNG. Needs a Claude Design re-export (or rebuild the exporter). Flutter is correct |
+| 12 | study-session · * | Korean term renders as tofu boxes in goldens | DEFER-CONTENT | **BLOCKED (loop-2)** — no CJK font asset available offline; a Windows system font (malgun) wouldn't work on ubuntu CI. Needs a bundled OFL font (e.g. Noto Sans KR subset) added to assets + the test loader |
 | 10 | review · browsing/editing | Flutter missing "TT"/format + menu top-bar controls | DEFER-V1 | noted (likely v1-simplified) |
 | 11 | dashboard · empty | kit shot = old not-studied; Flutter = new onboarding | DEFER-STALE | noted (re-export shot) |
 | 12 | study-session · * | Korean term renders as tofu boxes in goldens | DEFER-CONTENT | noted (Plus Jakarta lacks CJK; could add a CJK fallback font to the test loader) |
@@ -35,6 +37,26 @@ Persist EVERY finding here so context survives across loop iterations.
 
 ## Iteration notes
 (newest first — What / verified / fix / review result)
+
+### Loop-2 (2026-07-07) — the 4 user-approved items
+User approved the 4 DEFER items (they were v1-scope decisions, now decided). Ran
+them as a loop; 2 done, 2 blocked on missing tooling/assets (noted, not asked):
+- **item 1 — theme 6 accents · DONE**: added violet/green/amber to `AccentColor`
+  (brand/warm/cool kept = indigo/coral/cyan for back-compat + tests); picker shows
+  all 6 in the kit's swatch order. Golden verified. Live re-theming remains
+  deferred (single-accent token system).
+- **item 2 — deck-detail play-audio · DONE**: kit `DeckHeader` has volume_up +
+  more_vert; added the speaker + `DeckDetailController.playDeckAudio()` (speaks
+  each visible card's term via the audio service). Behavior test (tap → 개 spoken)
+  + golden + props-parity exception (onPlayAudio, fixture-parameterized) + kit
+  `.d.ts` doc updated.
+- **item 3 — re-export dashboard--empty shot · BLOCKED**: the `ui_kit_shots`
+  exporter was removed in the repo reset; can't regenerate the PNG locally. Needs
+  a Claude Design re-export (or rebuild the exporter). Flutter's onboarding is
+  correct — this is a stale asset, not a code bug.
+- **item 4 — CJK fallback font for goldens · BLOCKED**: no OFL CJK font available
+  offline; a Windows system font wouldn't render on ubuntu CI. Needs a bundled
+  Noto Sans KR (subset) asset + a loader line in flutter_test_config.dart.
 
 ### Iteration 2 (2026-07-07) — data-driven sweep → CONVERGED
 Regenerated all 228 goldens, re-ran the full diff worst-first, and examined every

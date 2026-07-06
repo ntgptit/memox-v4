@@ -509,6 +509,10 @@
   "@deckDetailAddTitle": {
     "description": "Title of the add-to-deck sheet"
   },
+  "deckDetailPlayAudio": "Play deck audio",
+  "@deckDetailPlayAudio": {
+    "description": "A11y label for the deck-detail app-bar play-audio (TTS) button"
+  },
   "deckDetailAddToTitle": "Add to {deck}",
   "@deckDetailAddToTitle": {
     "description": "Title of the add-to-deck sheet, with the deck name (kit: 'Add to ‹deck›')",
@@ -1040,6 +1044,18 @@
   "themeAccentCool": "Cool",
   "@themeAccentCool": {
     "description": "Accessible label for the cool accent"
+  },
+  "themeAccentViolet": "Violet",
+  "@themeAccentViolet": {
+    "description": "Accessible label for the violet accent"
+  },
+  "themeAccentGreen": "Green",
+  "@themeAccentGreen": {
+    "description": "Accessible label for the green accent"
+  },
+  "themeAccentAmber": "Amber",
+  "@themeAccentAmber": {
+    "description": "Accessible label for the amber accent"
   },
   "themeTextSize": "Text size",
   "@themeTextSize": {
