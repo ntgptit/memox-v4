@@ -29,10 +29,12 @@ class MxSheet extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Padding(
+          // Horizontal inset = the screen gutter (kit Sheet) so sheet content
+          // lines up with the guttered screen body behind it.
           padding: const EdgeInsets.only(
             top: MxSpacing.space5,
-            left: MxSpacing.space4,
-            right: MxSpacing.space4,
+            left: MxSpacing.gutter,
+            right: MxSpacing.gutter,
             bottom: MxSpacing.space6,
           ),
           child: Column(

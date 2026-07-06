@@ -92,7 +92,7 @@ function Scrim({ children, align = 'end', node }) {
 /* Bottom action sheet surface. */
 function Sheet({ title, children, node }) {
   return (
-    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-5) var(--memox-space-4) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
+    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-5) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
       <div style={{ width: 'var(--memox-size-sm)', height: 'var(--memox-size-3xs)', borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-divider)', margin: '0 auto var(--memox-space-4)' }} />
       {title ? <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-tertiary)', textTransform: 'uppercase', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</div> : null}
       {children}
