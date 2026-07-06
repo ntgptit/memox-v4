@@ -18,7 +18,7 @@ function GameRecall({ state = 'before-reveal' }) {
   if (state === 'complete') {
     return (
       <MxScaffold node="game-recall/screen" appBar={bar}>
-        <window.ProgressBar value={100} height={8} node="game-recall/progress" />
+        <window.ProgressHeader done={20} total={20} node="game-recall/progress" />
         <window.EmptyState node="game-recall/complete" icon="celebration" tone="success" title="Round complete!"
           text="You've reviewed the words in this round."
           action={<MxButton variant="primary" icon="arrow_forward" node="game-recall/next">Next round</MxButton>} />
@@ -28,7 +28,7 @@ function GameRecall({ state = 'before-reveal' }) {
 
   return (
     <MxScaffold node="game-recall/screen" appBar={bar}>
-      <window.ProgressBar value={60} height={8} node="game-recall/progress" />
+      <window.ProgressHeader done={12} total={20} node="game-recall/progress" />
 
       <TermCard />
 
@@ -42,7 +42,7 @@ function GameRecall({ state = 'before-reveal' }) {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
           <MxButton variant={state === 'forgot' ? 'primary' : 'ghost'} danger={state === 'forgot'} block node="game-recall/forgot">Forgot</MxButton>
-          <MxButton variant={state === 'remembered' ? 'primary' : 'outline'} block node="game-recall/remembered">Got it</MxButton>
+          <MxButton variant="primary" block node="game-recall/remembered">Got it</MxButton>
         </div>
       )}
     </MxScaffold>

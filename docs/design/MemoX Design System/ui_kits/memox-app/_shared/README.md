@@ -34,3 +34,16 @@ Same IIFE convention as screens: read `window.MemoXDesignSystem_2ffa54` + existi
 When promoting a component from a feature folder into `_shared/`, update its single
 source file, add the `<script>` tag to `index.html`, and keep `data-mx-node` ids
 unchanged.
+
+## Conventions (K.4 — one shape per concept)
+
+| Concept | THE convention |
+| --- | --- |
+| Progress (study/review/games) | `window.ProgressHeader` — 8px bar + "done/total" count (Đ-K-2). Player dots = autoplay only. |
+| Bottom action pair (in-flow) | grid `1fr 1fr`, ghost secondary LEFT, primary RIGHT, 48px+. Single action = full-width primary `block`. |
+| End-of-flow decisions | stacked column (primary on top, ghost below), width-capped via `--memox-size-3xl` when not full-width. |
+| Dialog actions | ghost Cancel + filled confirm (danger for destructive), layout owned by ConfirmDialog/Dialog. |
+| Grading (recall) | "Got it" is PRIMARY, "Forgot" ghost→danger on select — the core interaction carries the strongest weight (audit G4). |
+| Destructive risk | data loss (delete/remove/reset/leave-session) = `danger` (Đ-K-3); soft overrides (add-duplicate) = plain primary. |
+| Banner tiers | Note (transient, no action) → ActionCallout (feature-level, ≤1 action) → local component only when 2+ actions. |
+

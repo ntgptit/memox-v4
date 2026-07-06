@@ -19,7 +19,7 @@ function toneFor(state, side, i) {
   return undefined;
 }
 
-const PROGRESS = { playing: 0, selected: 0, correct: 20, wrong: 0, almost: 60, complete: 100 };
+const DONE = { playing: 0, selected: 0, correct: 4, wrong: 0, almost: 12, complete: 20 }; const TOTAL = 20;
 
 function GameMatching({ state = 'playing' }) {
   const bar = (
@@ -31,7 +31,7 @@ function GameMatching({ state = 'playing' }) {
   if (state === 'complete') {
     return (
       <MxScaffold node="game-matching/screen" appBar={bar}>
-        <window.ProgressBar value={100} height={8} node="game-matching/progress" />
+        <window.ProgressHeader done={20} total={20} node="game-matching/progress" />
         <window.EmptyState node="game-matching/complete" icon="celebration" tone="success" title="Round complete!"
           text="You matched 5/5 pairs. Keep the momentum."
           action={<MxButton variant="primary" icon="arrow_forward" node="game-matching/next">Next round</MxButton>} />
@@ -41,7 +41,7 @@ function GameMatching({ state = 'playing' }) {
 
   return (
     <MxScaffold node="game-matching/screen" appBar={bar}>
-      <window.ProgressBar value={PROGRESS[state] || 0} height={8} node="game-matching/progress" />
+      <window.ProgressHeader done={DONE[state] || 0} total={TOTAL} node="game-matching/progress" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)', marginTop: 'var(--memox-space-2)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
           {LEFT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'L', i)} node={'game-matching/left-' + i} />)}

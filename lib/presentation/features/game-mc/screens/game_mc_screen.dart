@@ -9,6 +9,7 @@ import 'package:memox_v4/presentation/features/game-mc/widgets/prompt_card.dart'
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_progress_header.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_choice_option.dart';
@@ -95,7 +96,7 @@ class GameMcScreen extends ConsumerWidget {
       return MxScaffold(
         appBar: appBar,
         children: [
-          const MxProgressBar(value: 1),
+          MxProgressHeader(done: state.total, total: state.total),
           _StateBox(
             child: MxEmptyState(
               icon: Icons.celebration,
@@ -119,7 +120,7 @@ class GameMcScreen extends ConsumerWidget {
     return MxScaffold(
       appBar: appBar,
       children: [
-        MxProgressBar(value: state.progress),
+        MxProgressHeader(done: state.index, total: state.total),
         PromptCard(
           term: question.prompt,
           onAudio: controller.playAudio,

@@ -31,10 +31,7 @@ function Review({ state = 'browsing' }) {
 
   return (
     <MxScaffold node="review/screen" appBar={bar}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
-        <div style={{ flex: 1 }}><window.ProgressBar value={35} height={6} node="review/progress" /></div>
-        <span style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>7/20</span>
-      </div>
+      <window.ProgressHeader done={7} total={20} node="review/progress" />
 
       <MeaningCard editing={editing} />
 

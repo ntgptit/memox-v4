@@ -7,15 +7,15 @@ const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton } = NS;
 
 const META = {
-  'stage1-review': { label: 'Stage 1 · Review', pct: 16 },
-  'stage2-matching': { label: 'Stage 2 · Matching', pct: 32 },
-  'stage3-choice': { label: 'Stage 3 · Multiple choice', pct: 48 },
-  'stage4-recall': { label: 'Stage 4 · Recall', pct: 64 },
-  'stage5-typing': { label: 'Stage 5 · Typing', pct: 84 },
-  'relearn': { label: 'Stage 3 · Multiple choice', pct: 48 },
-  'due-review': { label: 'Review · due cards', pct: 50 },
-  'exit': { label: 'Stage 1 · Review', pct: 16 },
-  'answer-save-error': { label: 'Stage 5 · Typing', pct: 84 },
+  'stage1-review': { label: 'Stage 1 · Review', done: 4, total: 25 },
+  'stage2-matching': { label: 'Stage 2 · Matching', done: 8, total: 25 },
+  'stage3-choice': { label: 'Stage 3 · Multiple choice', done: 12, total: 25 },
+  'stage4-recall': { label: 'Stage 4 · Recall', done: 16, total: 25 },
+  'stage5-typing': { label: 'Stage 5 · Typing', done: 21, total: 25 },
+  'relearn': { label: 'Stage 3 · Multiple choice', done: 12, total: 25 },
+  'due-review': { label: 'Review · due cards', done: 10, total: 20 },
+  'exit': { label: 'Stage 1 · Review', done: 4, total: 25 },
+  'answer-save-error': { label: 'Stage 5 · Typing', done: 21, total: 25 },
 };
 
 const Note = window.Note;
@@ -52,10 +52,7 @@ function StudySession({ state = 'stage1-review' }) {
   const bar = (
     <MxAppBar node="study-session/appbar"
       leading={<MxIconButton icon="close" node="study-session/close" />}
-      title={<div data-mx-node="study-session/progress" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
-        <window.ProgressBar value={m.pct} height={8} />
-        <span style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)', whiteSpace: 'nowrap' }}>{m.pct}%</span>
-      </div>}
+      title={<window.ProgressHeader done={m.done} total={m.total} node="study-session/progress" />}
       trailing={<MxIconButton icon="more_horiz" node="study-session/options" />} />
   );
 

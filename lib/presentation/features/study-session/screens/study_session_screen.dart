@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
-import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/domain/entities/review_grade.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
@@ -21,10 +20,10 @@ import 'package:memox_v4/presentation/shared/composites/mx_action_callout.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_app_bar.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_progress_header.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
-import 'package:memox_v4/presentation/shared/primitives/mx_progress_bar.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
 
 /// The Study session (S.20): the "Học" 5-stage NewLearn flow + "Lặp lại"
@@ -119,25 +118,10 @@ class _StudySessionScreenState extends ConsumerState<StudySessionScreen> {
     // Invariant: past the isEmpty / isComplete guards above the index is in
     // range, so StudySessionState.current is always present here.
     final step = state.current!;
-    final pct = (state.progress * 100).round();
     return MxScaffold(
       appBar: _bar(context, l10n),
       children: [
-        Row(
-          children: [
-            Expanded(child: MxProgressBar(value: state.progress)),
-            const SizedBox(width: MxSpacing.space3),
-            Text(
-              l10n.studyPercent(pct),
-              style: TextStyle(
-                fontFamily: MxTypography.fontFamily,
-                fontSize: MxTypography.sizeSm,
-                fontWeight: MxTypography.bold,
-                color: MxTheme.of(context).textSecondary,
-              ),
-            ),
-          ],
-        ),
+        MxProgressHeader(done: state.index, total: state.total),
         Center(
           child: Text(
             _stageLabel(l10n, step.kind),
