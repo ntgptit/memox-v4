@@ -15,6 +15,7 @@ class StateFixture {
     this.overrides = const [],
     this.drive,
     this.contentMask = const [],
+    this.home,
   }) : sentinel = null;
 
   /// Fail-by-default skeleton emitted by `tool/golden/scaffold.mjs`. A golden
@@ -24,11 +25,17 @@ class StateFixture {
     : overrides = const [],
       drive = null,
       contentMask = const [],
+      home = null,
       sentinel = id;
 
   final List<Override> overrides;
   final Future<void> Function(WidgetTester tester)? drive;
   final List<Rect> contentMask;
+
+  /// Optional per-state screen widget, overriding the golden test's default
+  /// (e.g. a different route arg: FlashcardEditorScreen(cardId: …) for edit
+  /// vs the default create form). Null → the golden uses its default widget.
+  final Widget? home;
 
   /// Non-null while this is still an un-filled scaffold stub.
   final String? sentinel;

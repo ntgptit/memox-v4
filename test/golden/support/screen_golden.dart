@@ -34,7 +34,9 @@ Future<void> pumpScreenGolden(
         theme: theme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: home,
+        // A fixture may override the screen widget per state (e.g. an edit-mode
+        // route arg); otherwise the golden test's default [home] is used.
+        home: fixture.home ?? home,
       ),
     ),
   );

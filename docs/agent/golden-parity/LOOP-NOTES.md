@@ -122,3 +122,16 @@
   fixture without reading controller state, so a correct-vs-wrong tap can't be
   targeted deterministically. Needs a harness that reads the seeded correct
   choice (a small follow-up), same shape as game-typing/correct.
+
+## 2026-07-06 · G.0/G.1 · StateFixture.home enhancement + flashcard-editor 4/6
+- **Enhancement:** StateFixture gained an optional `home` widget; screen_golden
+  uses `fixture.home ?? <golden default>`. Backward-compatible (existing fixtures
+  pass null → default). This lets a state override the screen's route arg without
+  a per-screen WIDGET_EXCEPTIONS — used here for editor edit-mode, and will unblock
+  study-result's seeded-handoff states.
+- flashcard-editor: create (default null cardId) / edit (home cardId 'card-1') /
+  validation (edit + clear the term field) / multi-meaning (edit + tap the add
+  button) filled and render green.
+- **Deferred:** flashcard-editor/audio (needs a seeded card WITH audio) and
+  /duplicate (needs entering a term that duplicates an existing card → soft-dup
+  warning). Both a small seeded-card follow-up.
