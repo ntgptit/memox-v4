@@ -19,8 +19,8 @@
 
   /* --- text (indigo-navy) --- */
   --memox-text: #1d2240;
-  --memox-text-secondary: rgba(29, 34, 64, 0.62);
-  --memox-text-tertiary: rgba(29, 34, 64, 0.40);
+  --memox-text-secondary: rgba(29, 34, 64, 0.66);
+  --memox-text-tertiary: rgba(29, 34, 64, 0.55);
 
   /* --- primary (brand · refined indigo) --- */
   --memox-primary: #4f46e5;
@@ -40,7 +40,7 @@
   --memox-divider: rgba(29, 34, 64, 0.08);
 
   /* --- semantic: success --- */
-  --memox-success: #2faa46;
+  --memox-success: #1a7d31;
   --memox-on-success: #ffffff;
   --memox-success-soft: #e0f4e2;
   --memox-on-success-soft: #1f7a33;
@@ -52,14 +52,14 @@
   --memox-on-warning-soft: #93570a;
 
   /* --- semantic: error --- */
-  --memox-error: #ef2950;
+  --memox-error: #d91e44;
   --memox-on-error: #ffffff;
   --memox-error-soft: #fce0e5;
   --memox-on-error-soft: #c20f32;
 
   /* --- semantic: info --- */
   --memox-info: #1fa9d6;
-  --memox-on-info: #ffffff;
+  --memox-on-info: #04303f;
   --memox-info-soft: #ddf2fa;
   --memox-on-info-soft: #0a6f93;
 
@@ -84,19 +84,19 @@
   /* --- text --- */
   --memox-text: #ecedf7;
   --memox-text-secondary: #a7abc6;
-  --memox-text-tertiary: rgba(167, 171, 198, 0.55);
+  --memox-text-tertiary: rgba(167, 171, 198, 0.70);
 
   /* --- primary (brand) · deep indigo surface, white text;
          'soft' = dark tonal container with light text (standard dark mode) --- */
   --memox-primary: #4b42b8;
-  --memox-primary-strong: #7d74f0;
+  --memox-primary-strong: #8b83f4;
   --memox-on-primary: #ffffff;
   --memox-primary-soft: #232452;
   --memox-on-primary-soft: #c7c4f8;
 
   /* --- accent (cyan) --- */
   --memox-accent: #33c2ff;
-  --memox-on-accent: #8fdcfb;
+  --memox-on-accent: #04303f;
   --memox-accent-soft: #123544;
 
   /* --- structural --- */
@@ -124,7 +124,7 @@
 
   /* --- semantic: info --- */
   --memox-info: #33c2ff;
-  --memox-on-info: #8fdcfb;
+  --memox-on-info: #04303f;
   --memox-info-soft: #123544;
   --memox-on-info-soft: #82d6fb;
 

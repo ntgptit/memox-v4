@@ -7,7 +7,7 @@ function MeaningCard({ editing }) {
   return (
     <MxCard node="review/meaning" style={{ gap: 'var(--memox-space-3)' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>MEANING</span>
+        <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>MEANING</span>
         <MxIconButton icon={editing ? 'close' : 'edit'} size="sm" node="review/edit" />
       </div>
       {editing ? (
