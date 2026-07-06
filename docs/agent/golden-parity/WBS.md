@@ -44,33 +44,56 @@ G.1 (golden Flutter, có giá trị ĐỘC LẬP làm regression) chạy ngay đ
 
 ## 1. Kiến trúc folder — tách theo MỤC ĐÍCH
 
+Quy ước quản lý (yêu cầu 2026-07-06): **folder theo màn, mỗi state = 1 file
+`.dart` riêng**. Thêm state = thêm 1 file (+1 dòng đăng ký), không sửa file chung
+→ diff PR gọn, không đụng độ, dễ maintain.
+
 ```
 test/
-  fixtures/                       ← MỚI · data thuần, KHÔNG widget, golden-only
-    _fixture.dart                    StateFixture: { overrides, drive?, contentMask? }
-    state_registry.dart              screen → { stateName → StateFixture }; nguồn chân lý
-    dashboard_fixtures.dart          seed khớp MOCK CONTENT kit (Linh/TOPIK I/…)
-    library_fixtures.dart
-    ...
+  fixtures/                          ← MỚI · data thuần, KHÔNG widget, golden-only
+    _fixture.dart                       StateFixture: { overrides, drive?, contentMask? }
+    state_registry.dart                 gộp mọi *_fixtures.dart → registry toàn cục
+    dashboard/                          ← 1 FOLDER / màn
+      dashboard_empty_fixture.dart      ← 1 FILE / state (seed khớp MOCK CONTENT kit)
+      dashboard_not_studied_fixture.dart
+      dashboard_loaded_fixture.dart
+      dashboard_goal_met_fixture.dart
+      dashboard_streak_reset_fixture.dart
+      dashboard_loading_fixture.dart
+      dashboard_fixtures.dart           barrel: {stateName → fixture} cho MÀN NÀY
+    library/
+      library_empty_fixture.dart
+      library_loaded_fixture.dart
+      ...  library_fixtures.dart
+    ...  (22 folder màn)
   golden/
     support/
-      screen_golden.dart          ← pump 390×780 @DPR1, (screen,state,theme) → golden
-    screens/                      ← MỚI · parity golden, 1 file/màn
-      dashboard_golden_test.dart     loop state×theme → goldens/screens/dashboard--*.png
+      screen_golden.dart             ← pump 390×780 @DPR1, (screen,state,theme) → golden
+    screens/                         ← MỚI · parity golden, 1 FOLDER / màn
+      dashboard/
+        dashboard_golden_test.dart      loop state×theme của MÀN NÀY từ registry
+      library/ library_golden_test.dart
       ...
     goldens/
-      screens/                    ← PNG commit, CHỈ sinh trên CI ubuntu
-      token_swatch_*.png          ← giữ (structural)
-    gallery/                      ← giữ (component structural)
-tool/visual-diff/                 ← MỚI (cạnh exporter) · bước SO kit↔Flutter
-  diff.mjs                           align theo filename → downscale → pixelmatch/SSIM
-  thresholds.json                    ngưỡng per-màn (ratchet baseline)
-  masks/<screen>--<state>.json       vùng mask content (S2)
+      screens/                       ← PNG commit, CHỈ sinh trên CI ubuntu
+        dashboard--empty--light.png … (tên khớp shot kit)
+      token_swatch_*.png             ← giữ (structural)
+    gallery/                         ← giữ (component structural)
+tool/visual-diff/                    ← MỚI (cạnh exporter) · bước SO kit↔Flutter
+  diff.mjs                              align theo filename → downscale → pixelmatch/SSIM
+  thresholds.json                       ngưỡng per-màn (ratchet baseline)
+  masks/<screen>--<state>.json          vùng mask content (S2)
 ```
 
-Nguyên tắc: `fixtures/` chỉ data (dùng lại được); `golden/screens/` chỉ pixel
-Flutter; `tool/visual-diff/` chỉ so hai phía. Behavior test (`presentation/
-features/…`) **giữ nguyên**, không refactor (quyết định #2).
+Nguyên tắc: `fixtures/<screen>/` chỉ data (mỗi state 1 file); `golden/screens/
+<screen>/` chỉ pixel Flutter; `tool/visual-diff/` chỉ so hai phía. Behavior test
+(`presentation/features/…`) **giữ nguyên**, không refactor (quyết định #2).
+
+**Vì sao file-per-state (không phải 1 file/màn gộp hết state):** state là đơn vị
+thay đổi (thêm/sửa/xoá theo kit) — 1 file/state ⇒ blast-radius = 1 file, review
+per-state rõ, không xung đột khi nhiều người sửa các state khác nhau cùng màn.
+Barrel `<screen>_fixtures.dart` là chỗ DUY NHẤT gộp — thêm state = `export` + 1
+entry map.
 
 ---
 
@@ -83,8 +106,10 @@ class StateFixture {
   final List<Rect> contentMask;                // vùng chữ/số bỏ qua khi diff (S2)
 }
 ```
-- `state_registry.dart`: `Map<String, Map<String, StateFixture>>` — key ngoài =
-  screen id, key trong = **tên state đúng theo screen-state-matrix.md**.
+- Mỗi state ở 1 file `<screen>_<state>_fixture.dart` → 1 `StateFixture` const/
+  factory. Barrel `<screen>_fixtures.dart` gom `{stateName → fixture}` cho màn đó.
+- `state_registry.dart`: `Map<String, Map<String, StateFixture>>` — gộp mọi barrel;
+  key ngoài = screen id, key trong = **tên state đúng theo screen-state-matrix.md**.
 - Fixture seed **mock content kit** khi có thể (S2 lối 1); khai báo `contentMask`
   cho phần cố ý khác (S2 lối 2).
 - Golden-only: KHÔNG đụng fake của behavior test (giữ 2 nguồn tách biệt theo QĐ#2;
@@ -110,7 +135,8 @@ Output: `visual-diff-report.md` + `diff/<screen>--<state>--<theme>.png` (heatmap
 ## 4. Phases
 
 ### G.0 — Spike + hiệu chuẩn trên Dashboard *(1 PR, KHÔNG chặn trên VP)*
-- [ ] `_fixture.dart` + `screen_golden.dart` + `dashboard_fixtures.dart` (6 state).
+- [ ] `_fixture.dart` + `screen_golden.dart` + `fixtures/dashboard/` (6 file state
+      + barrel) + `golden/screens/dashboard/dashboard_golden_test.dart`.
 - [ ] `diff.mjs` bản đầu + hiệu chuẩn ngưỡng trên 1 cặp ảnh THẬT (dùng shot kit
       dashboard hiện có — dù stale — chỉ để calibrate cơ chế, ghi rõ "calibration
       only").
@@ -119,8 +145,9 @@ Output: `visual-diff-report.md` + `diff/<screen>--<state>--<theme>.png` (heatmap
       lệch 8px / sai màu / thiếu element" (FAIL) trên dashboard. Docs cơ chế.
 
 ### G.1 — Golden Flutter (độc lập, có giá trị regression riêng) *(theo batch)*
-- [ ] `state_registry` phủ 22 màn theo matrix (126 state); fixture per màn.
-- [ ] `golden/screens/<screen>_golden_test.dart` sinh baseline trên CI ubuntu.
+- [ ] `fixtures/<screen>/` cho 22 màn theo matrix (126 state) — mỗi state 1 file +
+      barrel; `state_registry` gộp lại.
+- [ ] `golden/screens/<screen>/<screen>_golden_test.dart` sinh baseline trên CI ubuntu.
 - [ ] Gate coverage matrix↔fixture (§5).
 - **DoD:** mọi state matrix có 1 golden × 2 theme; `flutter test` xanh; baseline
       commit từ CI.
