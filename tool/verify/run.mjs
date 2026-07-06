@@ -107,6 +107,9 @@ const tokens = () => step('design tokens --check', 'node', ['tool/design/gen_tok
 // K.6: components.css must stay fully token-driven (raw px/hex/duration need a
 // `raw-ok:` annotation) — new magic values cannot silently re-enter the kit.
 const kitGuard = () => step('kit guard (no raw values)', 'node', ['tool/design/kit_guard.mjs']);
+// golden-parity coverage: every screen-state-matrix state must have a fixture
+// stub (scaffolder), and no orphans. Cheap; keeps the golden skeleton complete.
+const goldenScaffold = () => step('golden scaffold --check', 'node', ['tool/golden/scaffold.mjs', '--check']);
 // props parity: each kit component's .d.ts contract vs its Flutter constructor.
 // --strict exits non-zero on any undeclared drift (every intentional divergence
 // must be a typed exception in props-parity.exceptions.json). Blocking as of Z.0.
@@ -117,6 +120,7 @@ const test = () => step('flutter test', 'flutter', ['test']);
 if (mode === 'docs') {
   tokens();
   kitGuard();
+  goldenScaffold();
   propsParity();
 } else if (mode === 'quick') {
   analyze();
@@ -126,6 +130,7 @@ if (mode === 'docs') {
   l10n();
   tokens();
   kitGuard();
+  goldenScaffold();
   propsParity();
   analyze();
   guard();

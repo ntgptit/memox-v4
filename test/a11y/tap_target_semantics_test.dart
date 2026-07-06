@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:memox_v4/core/theme/app_theme.dart';
-import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/domain/entities/theme_settings.dart';
+import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/theme/widgets/accent_picker.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_fab.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_section_header.dart';
