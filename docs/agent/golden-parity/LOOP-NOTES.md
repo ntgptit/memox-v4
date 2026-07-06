@@ -203,3 +203,39 @@ Same public-notifier subclass. `StudySessionController` + `StudySessionState` /
   for the CHANGE, not the initial value).
 - exit = a fixed step + a drive that taps the close (X) → ExitDialog.
 study-session fully covered.
+
+## 2026-07-06 · G.1b · RESOLVED 3 home-override states (settings/group-expanded, library nav-aliases)
+Code comments confirm the exact mapping, so these render the real target screen
+via `StateFixture.home` (no fabrication):
+- settings/group-expanded → `SrsSettingsScreen` (the SRS detail SUB-PAGE; the
+  source comment literally reads "kit `settings/group-expanded`").
+- library/search-active → `SearchScreen` (library's search navigates here).
+- library/drawer → `DrawerScreen` (library's drawer navigates here).
+These are nav targets rather than in-screen states; the golden captures what the
+learner actually sees after the transition. All 6 (3×2) render green.
+
+## 2026-07-06 · G.1b · RESOLVED remaining seeded/stuck states — 30/31 closed
+- game-matching/almost — fixed `MatchingState` (3 of 4 pairs matched) via public
+  `MatchingController` subclass. → game-matching 6/6.
+- flashcard-editor/duplicate — edit card-1, retype a sibling's term (고양이) → the
+  DetectDuplicateTerm check trips the DupBanner (asserted present, not just
+  rendered). audio — the "Audio: Auto" TTS control is a PERMANENT part of the
+  editor form (not a data-gated state), so it renders the populated edit form;
+  documented that Flutter has no distinct audio state. → editor 6/6.
+- export/exporting — public `ExportController` subclass pinning step=exporting
+  (the fake file service writes synchronously, so no transient frame otherwise).
+- search/loading — override `searchResultsProvider` with a never-completing
+  future → the screen's loading body (stuck-future trick).
+- import/dup-warning — seed a deck holding "사과", paste it → preview shows the
+  soft-dup warning (asserted the warning icon is present). → import 5/5.
+- library/pair-picker — added an optional `languagePairService` param to
+  FakeHarness, seed two pairs (one selected), drive the pair-button tap → the
+  PairPickerSheet opens (asserted present). → library 10/10.
+
+## 2026-07-06 · G.1b · REMAINING GAP (1/31) — statistics/scope-switch
+NOT closable as a test fixture: the Flutter statistics screen has NO scope-switch
+control (deck/global toggle) — it's a kit-only feature not yet built in Flutter.
+Rendering it would require BUILDING the control (a real kit-first UI task, not a
+golden fixture). Left as the single deferred state; the fixture stays a stub and
+the golden job will show it red until the control lands. Needs a product/build
+decision, not more test wiring.
