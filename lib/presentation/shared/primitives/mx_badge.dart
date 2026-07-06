@@ -29,7 +29,8 @@ class MxBadge extends StatelessWidget {
   static const double _minWidth = 20;
   static const double _dotSize = 10;
   static const double _paddingX = 6;
-  static const double _fontSize = 11;
+  // 12px floor (M3-2 / audit G7) — mirrors kit `.badge` font-size-xs.
+  static const double _fontSize = MxTypography.sizeXs;
 
   @override
   Widget build(BuildContext context) {

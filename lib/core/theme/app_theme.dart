@@ -92,6 +92,18 @@ abstract final class AppTheme {
             color: states.contains(WidgetState.selected) ? c.primary : c.textTertiary,
           ),
         ),
+        // Kit `.bottom-nav__item`: 12px semibold, idle = secondary (AA at label
+        // size, M3-2), active = primary-strong.
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => TextStyle(
+            fontFamily: MxTypography.fontFamily,
+            fontSize: MxTypography.sizeXs,
+            fontWeight: MxTypography.semibold,
+            color: states.contains(WidgetState.selected)
+                ? c.primaryStrong
+                : c.textSecondary,
+          ),
+        ),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: c.surfaceMuted,

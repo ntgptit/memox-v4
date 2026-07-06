@@ -116,11 +116,11 @@ M3: vùng chạm **≥ 48×48dp** (visual được phép nhỏ hơn, mở rộng
 
 ## 10. Cần người quyết (không fix trước khi chốt)
 
-| Mã | Câu hỏi | Mặc định đề xuất |
+| Mã | Câu hỏi | **Quyết định (chốt 2026-07-06)** |
 |---|---|---|
-| Đ-M3-1 | State-layer nhạt hơn M3 (hover 4.5% vs 8%, pressed 9% vs 12%, disabled 26% vs 38%) — nâng theo M3 hay giữ bản sắc "mềm"? | GIỮ (mobile-first, ít hover); disabled đo thêm khi gặp case thực |
-| Đ-M3-2 | Nav bar 72 vs M3 80 — nâng hay giữ? | GIỮ 72 (đi cùng M3-2 label fix là đủ) |
-| Đ-M3-3 | Dialog radius 24 vs M3 28 | GIỮ 24 (scale DS nhất quán) |
+| Đ-M3-1 | State-layer nhạt hơn M3 (hover 4.5% vs 8%, pressed 9% vs 12%, disabled 26% vs 38%) — nâng theo M3 hay giữ bản sắc "mềm"? | **GIỮ** — bản sắc DS, mobile-first ít hover |
+| Đ-M3-2 | Nav bar 72 vs M3 80 — nâng hay giữ? | **NÂNG 80** — theo spec M3 (`--memox-bottom-nav-height` 72→80, gộp vào M3-2) |
+| Đ-M3-3 | Dialog radius 24 vs M3 28 | **GIỮ 24** — scale DS nhất quán |
 
 ## 11. Kết luận
 
