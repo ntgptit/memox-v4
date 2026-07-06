@@ -29,6 +29,45 @@ Local source of truth: `docs/design/MemoX Design System/` (hand-authored / off-s
 - No plan opened / no sentinel re-arm — zero writes/deletes, app card index already correct.
 - Advanced `lastSyncedCommit` 71e77fe → 913b4c3 (current HEAD) so the next sync diffs from here.
 
+## Sync of 2026-07-06 (HEAD 3632ceb) — bidirectional reconcile
+Prior 0-upload syncs (913b4c3, and lastSynced 8b4e8f6) advanced `lastSyncedCommit`
+on false confidence: they diffed the local *git* tree (byte-stable) and spot-checked
+only `MxButton`, so they **missed** that the remote was a genuinely OLD snapshot from
+the pre-repo-reset design-sync CLI. Full structural + content diff this run found the
+remote was on the **old fat-bundle CLI format** (261 KB `_ds_bundle.js` that embeds
+every feature component; 15× `McPromptCard`/`RecallTermCard`) plus the pre-reset
+per-feature `*.card.html` composites — while local uses the **new lean CLI**
+(51 KB core-only bundle, no composites) and the `McPromptCard→PromptCard` /
+`RecallTermCard→TermCard` rename. Sources/tokens/CSS/specs verified identical
+(`.source-hash` 5e856457 match; `MxButton` md5 bd797a06 match; styles/components/
+colors/kit-helpers/Dashboard all current). Drift was exactly the CLI-generated
+assembly + the rename blast radius.
+
+- **Uploaded 9** (the "5 local-newer" drifted same-path files + 4 renamed-new):
+  `_ds_bundle.js`, `_ds_manifest.json`, `ui_kits/memox-app/index.html`,
+  `_features/game-mc/GameMultipleChoice.jsx`, `_features/game-recall/GameRecall.jsx`,
+  `_features/game-mc/components/PromptCard.{d.ts,jsx}`,
+  `_features/game-recall/components/TermCard.{d.ts,jsx}`.
+  (index.html + the 2 screen importers referenced the deleted McPromptCard/
+  RecallTermCard — they MUST ship with the rename or the app breaks; that's why the
+  set is 9, not 5.)
+- **Deleted 27 stale orphans:** 23 `*.card.html` composites (22 feature + `_shared`)
+  + `McPromptCard.{d.ts,jsx}` + `RecallTermCard.{d.ts,jsx}`.
+- **Kept on remote (intentional):** `templates/memox-dashboard/.thumbnail`
+  (app-generated), `audit/**` (19), `uploads/Screenshot_20260706_113525_Chrome.jpg`.
+- **Pulled DOWN into localDir** (new design content the user wants local): `audit/`
+  = `UI-UX Audit.html` + `_dts_list.txt` + `_sheets/01,03..17` (15 PNGs). **3 files
+  could NOT be downloaded — `get_file` hard-caps at 256 KiB and these exceed it:**
+  `audit/_sheets/02-library.png`, `audit/_sheets/17-edge-b.png`,
+  `uploads/Screenshot_20260706_113525_Chrome.jpg`. They remain on the remote; fetch
+  them manually from the project if a local copy is needed (no range/offset on the tool).
+- Re-armed `_ds_needs_recompile` (before + after) so the app rebuilds its card index
+  and drops the 23 orphan composite cards. Advanced `lastSyncedCommit` 8b4e8f6 → 3632ceb.
+- **NEW standing fact:** never trust a git-only 0-upload verdict for this project — the
+  remote can silently lag the repo across a reset/restore. A real sync must diff the
+  remote `list_files` + content-hash the generated assembly (`_ds_bundle.js`,
+  `_ds_manifest.json`, `index.html`) against local, not just git.
+
 ## Sync triggers (both PUSH, repo kit → Claude Design)
 - **`.githooks/pre-push`** — on `git push` whose range touches `localDir`; runs
   `sync-design.mjs --no-record`.
