@@ -12,7 +12,7 @@ abstract final class ExitDialog {
     return showMxConfirmDialog<bool>(
       context: context,
       icon: Icons.logout,
-      tone: MxDialogTone.warning,
+      tone: MxDialogTone.error,
       title: l10n.studyExitTitle,
       text: l10n.studyExitText,
       barrierLabel: l10n.studyExitTitle,
@@ -25,6 +25,7 @@ abstract final class ExitDialog {
         ),
         MxButton(
           label: l10n.studyExitLeave,
+          danger: true,
           block: true,
           onPressed: () => Navigator.of(context).pop(true),
         ),

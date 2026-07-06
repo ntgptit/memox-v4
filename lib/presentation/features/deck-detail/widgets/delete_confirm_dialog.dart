@@ -72,7 +72,7 @@ Future<bool> showResetProgressDialog(BuildContext context) async {
   final confirmed = await showMxConfirmDialog<bool>(
     context: context,
     icon: Icons.restart_alt,
-    tone: MxDialogTone.warning,
+    tone: MxDialogTone.error,
     title: l10n.deckDetailResetProgressTitle,
     text: l10n.deckDetailResetProgressText,
     actions: [
@@ -84,6 +84,7 @@ Future<bool> showResetProgressDialog(BuildContext context) async {
       ),
       MxButton(
         label: l10n.actionReset,
+        danger: true,
         block: true,
         onPressed: () => Navigator.of(context).pop(true),
       ),
