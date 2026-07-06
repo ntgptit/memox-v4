@@ -90,7 +90,10 @@ class MxChip extends StatelessWidget {
           hoverColor: mx.stateHover,
           child: SizedBox(
             height: MxSpacing.minTouchTarget,
-            child: Center(child: pill),
+            // widthFactor: 1 keeps the tap surface as wide as the pill — without
+            // it, Center fills the bounded width it is handed (e.g. inside a
+            // Wrap), forcing chips full-width / one-per-row instead of inline.
+            child: Center(widthFactor: 1, child: pill),
           ),
         ),
       ),
