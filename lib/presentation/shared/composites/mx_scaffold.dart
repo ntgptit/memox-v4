@@ -39,9 +39,13 @@ class MxScaffold extends StatelessWidget {
       floatingActionButton: fab,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(
+        // Kit `.app__body--with-fab` (M3-3): keep end-of-list content clear
+        // of the floating FAB band.
+        padding: EdgeInsets.only(
           top: MxSpacing.space4,
-          bottom: MxSpacing.space6,
+          bottom: fab == null
+              ? MxSpacing.space6
+              : MxSpacing.fabSize + MxSpacing.space4 + MxSpacing.space6,
         ),
         child: Center(
           child: ConstrainedBox(

@@ -63,7 +63,7 @@ function DeckRow({ icon, tone, name, meta, due, progress, node, onClick }) {
         <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>{meta}</div>
         {progress != null ? <div style={{ marginTop: 'var(--memox-space-2)' }}><ProgressBar value={progress} height={6} /></div> : null}
       </div>
-      {due != null ? <MxBadge tone={due > 0 ? undefined : 'success'} soft>{due > 0 ? due : '✓'}</MxBadge> : null}
+      {due != null ? <MxBadge tone={due > 0 ? undefined : 'success'} soft>{due > 0 ? due : <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xs)' }}>check</span>}</MxBadge> : null}
     </div>
   );
 }
