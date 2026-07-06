@@ -99,3 +99,15 @@
   (the card's term) typed in; the round can't be finished without answering
   correctly. A per-round harness that reads the seeded term and types it would fill
   both — a small follow-up.
+
+## 2026-07-06 · G.1 · library — 3 states deferred (nav + one trigger)
+- Filled: loaded, empty, error (erroring deck repo), loading (stuck deck repo),
+  sort-menu (swap_vert), overflow-menu (more_vert), play-sheet (tap LibraryNodeCard).
+- **Deferred:**
+  - `library/search-active` and `library/drawer` — both NAVIGATE (context.push to
+    the Search / Drawer screens); a routerless golden can't reach them, and those
+    screens are goldened on their own (search/*, drawer/*). Best treated as
+    aliases, not re-rendered here.
+  - `library/pair-picker` — tapping the ContextBar swap_horiz icon did not open the
+    PairPickerSheet in the golden (likely needs seeded language pairs or a different
+    trigger). Deferred pending a closer look at the pair-picker trigger + seed.
