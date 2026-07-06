@@ -153,3 +153,25 @@
   specific result needs overriding that provider with a seeded StudyResultData (a
   small harness with a fake controller). StateFixture.home won't help — the ctor
   takes no arg; it's a provider override. A focused follow-up.
+
+---
+
+## 2026-07-06 · G.1b (post-loop, user-directed) · RESOLVED study-result 7/7
+User chose "close the deferred states" over building the exporter. Closing them
+in batches; recording resolutions below.
+- **study-result 0/7 → 7/7 CLOSED.** Harness `_study_result_harness.dart`
+  subclasses the PUBLIC notifier classes `StudyResultController` /
+  `FinalizeRetrying` (their generated `_$` bases are private, but the notifiers
+  are public) and overrides `build()`:
+  - data variants (standard / goal-met / goal-missed / many-wrong) — a
+    `_FixedResult` returning an explicit `StudyResultData`; `head` is derived
+    from the data (wrongCount≥5→manyWrong, goalMet→goalMet, configured→missed,
+    else standard), so each is just a data shape.
+  - finalizing — `_LoadingResult.build()` returns a never-completing future →
+    AsyncValue.loading → the FinalizingView.
+  - retry-finalize — same loading + `finalizeRetryingProvider` overridden true.
+  - finalize-error — `_ErrorResult.build()` throws a `PersistenceFailure` →
+    AsyncValue.error → the retry/later surface.
+  All 14 goldens (7×2 themes) render; gate green. This confirms the
+  subclass-the-public-notifier pattern for the remaining provider-driven
+  clusters (game correct-answer, study-session mid-session).
