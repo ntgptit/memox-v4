@@ -61,3 +61,8 @@ tool/hooks/.kit-acks/
 # code-verification-guard-v2 — a separate nested git repo (its own tooling),
 # not part of this project. Ignore so it is never embedded/tracked here.
 /code-verification-guard-v2/
+
+# Screen goldens are regenerated in CI (ubuntu) and diffed against the kit
+# shots (tool/visual-diff) — never committed. The token_swatch baselines beside
+# them ARE committed.
+/test/golden/goldens/screens/

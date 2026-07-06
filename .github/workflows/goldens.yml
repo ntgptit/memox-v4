@@ -1,0 +1,90 @@
+name: goldens
+
+# Golden-parity visual gate (golden-parity WBS G.3). Separate from `verify` (which
+# excludes the golden-parity–tagged tests): this job regenerates the screen
+# goldens on ubuntu — the canonical renderer — and diffs each against the frozen
+# KIT shot of the same name via tool/visual-diff/diff.mjs. Skia goldens are
+# platform-specific, so they are NOT committed; the kit shot is the baseline and
+# the per-state mismatch ratchet (baseline.json) is seeded from THIS platform.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      seed_baseline:
+        description: 'Regenerate + commit the visual-parity mismatch baseline (run on main)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: goldens-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  visual-parity:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # only exercised by the seed-baseline step below
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          # Pinned to the toolchain this repo builds with (matches verify.yml).
+          flutter-version: 3.41.7
+          channel: stable
+          cache: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # The golden tests read generated sources (*.g.dart / *.freezed.dart) and
+      # localizations, both gitignored — regenerate before rendering.
+      - name: Codegen
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          flutter gen-l10n
+
+      # --update-goldens writes the Flutter PNGs (ephemeral; never committed). The
+      # fail-by-default fixture stubs would fail here, but there are none left
+      # (114/114 filled), so this renders every state deterministically.
+      - name: Render screen goldens
+        run: flutter test --tags golden-parity --update-goldens
+
+      # Diff each golden against the committed kit shot. Ratchet gate (fails only
+      # when a state diverges > baseline + tolerance) + a cross-platform-safe
+      # catastrophic gate (a blank/errored/mis-sized screen is ~100% on any
+      # renderer). The ratchet is skipped (non-fatal) until baseline.json is seeded.
+      - name: Visual-parity diff (kit ↔ Flutter)
+        run: >
+          node tool/visual-diff/diff.mjs
+          --baseline tool/visual-diff/baseline.json
+          --tolerance 3
+          --fail-over 92
+          --html build/visual-parity/report.html
+
+      - name: Upload visual-parity report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-parity-report
+          path: build/visual-parity/report.html
+          if-no-files-found: warn
+
+      # On-demand (workflow_dispatch with seed_baseline): (re)write the per-state
+      # mismatch baseline from THIS ubuntu render and commit it, arming/refreshing
+      # the ratchet. Run this after an intentional, reviewed visual change.
+      - name: Seed / refresh baseline
+        if: github.event_name == 'workflow_dispatch' && inputs.seed_baseline
+        run: |
+          node tool/visual-diff/diff.mjs --write-baseline tool/visual-diff/baseline.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tool/visual-diff/baseline.json
+          git commit -m "chore(visual-parity): seed ubuntu mismatch baseline [skip ci]" || echo "baseline unchanged"
+          git push
