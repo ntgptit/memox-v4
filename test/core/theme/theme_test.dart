@@ -70,7 +70,11 @@ void main() {
       expect(t.appBarTheme.backgroundColor, MxColors.light.bg);
       expect(t.navigationBarTheme.backgroundColor, MxColors.light.surface);
       expect(t.navigationBarTheme.indicatorColor, MxColors.light.primarySoft);
-      expect(t.inputDecorationTheme.fillColor, MxColors.light.surfaceMuted);
+      // Kit `.field` contract: inputs are bare — no theme-level fill/borders
+      // (the visible box belongs to the surrounding MemoX container).
+      expect(t.inputDecorationTheme.filled, isFalse);
+      expect(t.inputDecorationTheme.enabledBorder, InputBorder.none);
+      expect(t.inputDecorationTheme.hintStyle!.color, MxColors.light.textTertiary);
     });
 
     test('Switch selected track uses primary; unselected uses a sunken surface', () {

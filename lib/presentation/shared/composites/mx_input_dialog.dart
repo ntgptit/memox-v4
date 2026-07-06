@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_radius.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_icon_tile.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
 /// The kit's naming dialog (`Dialog` + `DialogInput`): a centered dialog with a
 /// tinted header icon, a title, one labelled text field, and stacked Cancel /
@@ -41,10 +44,12 @@ class MxInputDialog extends StatefulWidget {
 class _MxInputDialogState extends State<MxInputDialog> {
   late final TextEditingController _controller =
       TextEditingController(text: widget.initialValue);
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void dispose() {
     _controller.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -92,12 +97,38 @@ class _MxInputDialogState extends State<MxInputDialog> {
               ),
             ),
             const SizedBox(height: MxSpacing.space2),
-            TextField(
-              controller: _controller,
-              autofocus: true,
-              textInputAction: TextInputAction.done,
-              onSubmitted: (_) => _submit(),
-              decoration: InputDecoration(hintText: widget.placeholder),
+            // Kit `DialogInput`: the container owns the single box (surface bg,
+            // hairline divider border, control radius, touch-min height) around
+            // a bare field; focus swaps the border for the ring color (one
+            // layer — same convention as the search dock's container ring).
+            ListenableBuilder(
+              listenable: _focusNode,
+              builder: (context, _) => Container(
+                constraints:
+                    const BoxConstraints(minHeight: MxSpacing.minTouchTarget),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: MxSpacing.space4,
+                  vertical: MxSpacing.space3,
+                ),
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                  color: mx.surface,
+                  borderRadius: MxRadius.controlRadius,
+                  border: Border.all(
+                    color: _focusNode.hasFocus ? mx.focusRing : mx.divider,
+                    width: _focusNode.hasFocus
+                        ? MxStroke.emphasis
+                        : MxStroke.hairline,
+                  ),
+                ),
+                child: MxTextField(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                  autofocus: true,
+                  hintText: widget.placeholder,
+                  onSubmitted: (_) => _submit(),
+                ),
+              ),
             ),
             const SizedBox(height: MxSpacing.space5),
             Row(
