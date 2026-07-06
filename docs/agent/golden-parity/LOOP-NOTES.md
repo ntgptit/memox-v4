@@ -111,3 +111,14 @@
   - `library/pair-picker` — tapping the ContextBar swap_horiz icon did not open the
     PairPickerSheet in the golden (likely needs seeded language pairs or a different
     trigger). Deferred pending a closer look at the pair-picker trigger + seed.
+
+## 2026-07-06 · G.1 · game-matching (5/6) + game-mc (1/4)
+- game-matching: playing / selected (tap a tile) / correct (means1↔term1) /
+  wrong (means1↔term2) / complete (match all 5 pairs) filled and render green.
+  DEFERRED: `game-matching/almost` — a near-miss feedback state with no obvious
+  drive path; needs controller inspection.
+- game-mc: waiting filled. DEFERRED `game-mc/correct`, `/wrong`, `/complete` —
+  the correct answer (the prompt term's meaning) isn't identifiable from the
+  fixture without reading controller state, so a correct-vs-wrong tap can't be
+  targeted deterministically. Needs a harness that reads the seeded correct
+  choice (a small follow-up), same shape as game-typing/correct.
