@@ -12,11 +12,28 @@ import 'package:flutter_test/flutter_test.dart';
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  // Text font (Plus Jakarta Sans) read straight off disk.
-  final bytes = File('assets/fonts/PlusJakartaSans.ttf').readAsBytesSync();
-  final loader = FontLoader('Plus Jakarta Sans')
-    ..addFont(Future<ByteData>.value(ByteData.sublistView(bytes)));
-  await loader.load();
+  // Text font (Plus Jakarta Sans). Plus Jakarta has no CJK glyphs, so seeded
+  // Korean terms (학교, 사과 …) would render as tofu boxes in goldens. Flutter test
+  // does NOT fall back across families for a widget's explicit `fontFamily`, so we
+  // load a per-weight font that MERGES Plus Jakarta's Latin with a tiny OFL Noto
+  // Sans KR subset (only the Hangul the fixtures use) — the glyphs live in the SAME
+  // family the widgets request, so both render at the right weight. Test-only
+  // assets (test/fonts/pjs-cjk-*.ttf), NOT bundled in the app; regenerate with
+  // `python tool/design/build_cjk_test_font.py` if new Korean fixtures appear.
+  // Falls back to the plain app font if the merged set is absent.
+  final pjs = FontLoader('Plus Jakarta Sans');
+  var loadedMerged = false;
+  for (final weight in [400, 500, 600, 700, 800]) {
+    final f = File('test/fonts/pjs-cjk-$weight.ttf');
+    if (!f.existsSync()) continue;
+    pjs.addFont(Future<ByteData>.value(ByteData.sublistView(f.readAsBytesSync())));
+    loadedMerged = true;
+  }
+  if (!loadedMerged) {
+    final bytes = File('assets/fonts/PlusJakartaSans.ttf').readAsBytesSync();
+    pjs.addFont(Future<ByteData>.value(ByteData.sublistView(bytes)));
+  }
+  await pjs.load();
 
   // Every font declared in the built asset manifest — crucially MaterialIcons
   // (bundled via `uses-material-design: true`). Without it, icon glyphs render as
