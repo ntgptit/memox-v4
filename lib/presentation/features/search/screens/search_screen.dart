@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
-import 'package:memox_v4/core/theme/mx_theme.dart';
-import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/search/providers/search_providers.dart';
 import 'package:memox_v4/presentation/features/search/widgets/result_row.dart';
@@ -18,6 +16,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_status_card_row.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
 
 /// Fixed height for the full-screen hint / no-results / error boxes.
@@ -197,19 +196,9 @@ class _Label extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mx = MxTheme.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: MxSpacing.space1),
-      child: Text(
-        text.toUpperCase(),
-        style: TextStyle(
-          fontFamily: MxTypography.fontFamily,
-          fontSize: MxTypography.sizeSm,
-          fontWeight: MxTypography.bold,
-          letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-          color: mx.textSecondary,
-        ),
-      ),
+      child: MxSectionLabel(text: text, uppercase: true),
     );
   }
 }

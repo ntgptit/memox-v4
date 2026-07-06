@@ -21,7 +21,7 @@ function DrawerPanel() {
     <div data-mx-node="drawer/overlay" style={{ position: 'absolute', inset: 0, zIndex: 60, display: 'flex' }}>
       <div data-mx-node="drawer/panel" style={{ width: '82%', maxWidth: 'var(--memox-size-5xl)', height: '100%', background: 'var(--memox-surface)', color: 'var(--memox-text)', display: 'flex', flexDirection: 'column', padding: 'var(--memox-space-5) var(--memox-gutter)', boxShadow: 'var(--memox-shadow-lg)' }}>
         <div style={{ padding: '0 var(--memox-space-2) var(--memox-space-4)', borderBottom: 'var(--memox-stroke-hairline) solid var(--memox-divider)', marginBottom: 'var(--memox-space-2)' }}>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>TODAY'S ACTIVITY</div>
+          <window.SectionLabel style={{ margin: 0 }}>TODAY'S ACTIVITY</window.SectionLabel>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-2)', marginTop: 'var(--memox-space-2)', fontWeight: 'var(--memox-font-weight-bold)' }}>
             <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-lg)', color: 'var(--memox-primary)' }}>schedule</span>
             <span style={{ fontSize: 'var(--memox-font-size-md)' }}>12:45</span>

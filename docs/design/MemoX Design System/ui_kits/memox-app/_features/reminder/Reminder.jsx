@@ -21,7 +21,7 @@ function Reminder({ state = 'on' }) {
       <MxCard interactive node="reminder/time" style={{ opacity: on ? 1 : 'var(--memox-opacity-half)' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>REMINDER TIME</div>
+            <window.SectionLabel style={{ margin: 0 }}>REMINDER TIME</window.SectionLabel>
             <div style={{ fontSize: 'var(--memox-font-size-3xl)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>13:00</div>
           </div>
           <MxIconButton icon="schedule" node="reminder/time-edit" />
@@ -29,7 +29,7 @@ function Reminder({ state = 'on' }) {
       </MxCard>
 
       <div data-mx-node="reminder/days" style={{ opacity: on ? 1 : 'var(--memox-opacity-half)' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: '0 0 var(--memox-space-2) var(--memox-space-1)' }}>REPEAT</div>
+        <window.SectionLabel style={{ margin: '0 0 var(--memox-space-2) var(--memox-space-1)' }}>REPEAT</window.SectionLabel>
         <div style={{ display: 'flex', gap: 'var(--memox-space-2)', flexWrap: 'wrap' }}>
           {WEEKDAYS.map((d, i) => <MxChip key={d} label={d} selected={on} node={'reminder/day-' + i} />)}
         </div>

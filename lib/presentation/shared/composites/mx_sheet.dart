@@ -3,7 +3,7 @@ import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
-import 'package:memox_v4/core/theme/mx_typography.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 
 /// The kit's `Sheet` helper as a reusable composite: a bottom sheet surface with a
 /// centered drag handle, an optional uppercase section title, and content.
@@ -60,16 +60,7 @@ class MxSheet extends StatelessWidget {
                     left: MxSpacing.space2,
                     bottom: MxSpacing.space2,
                   ),
-                  child: Text(
-                    title.toUpperCase(),
-                    style: TextStyle(
-                      fontFamily: MxTypography.fontFamily,
-                      fontSize: MxTypography.sizeSm,
-                      fontWeight: MxTypography.bold,
-                      letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-                      color: mx.textSecondary,
-                    ),
-                  ),
+                  child: MxSectionLabel(text: title, uppercase: true),
                 ),
               child,
             ],

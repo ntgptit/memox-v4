@@ -17,6 +17,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_progress_bar.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
@@ -309,22 +310,12 @@ class _MeaningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
 
     return MxCard(
       child: Column(
         children: [
-          Text(
-            l10n.typingMeaningLabel,
-            style: TextStyle(
-              fontFamily: MxTypography.fontFamily,
-              fontSize: MxTypography.sizeSm,
-              fontWeight: MxTypography.bold,
-              letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-              color: mx.textSecondary,
-            ),
-          ),
+          MxSectionLabel(text: l10n.typingMeaningLabel, uppercase: true),
           const SizedBox(height: MxSpacing.space2),
           Text(
             meaning,

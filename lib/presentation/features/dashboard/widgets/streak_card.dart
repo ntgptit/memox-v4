@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
-import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_stat.dart';
 
 /// Dashboard-local streak stat (kit `dashboard/streak`): a flame icon beside the
 /// current day-streak count on the primary-soft surface. Colours inherit the
@@ -14,8 +13,6 @@ class StreakCard extends StatelessWidget {
 
   final int streak;
 
-  // Kit sublabel renders at 85% opacity on the primary-soft card.
-  static const double _labelOpacity = MxOpacity.labelSoft;
 
   @override
   Widget build(BuildContext context) {
@@ -29,30 +26,11 @@ class StreakCard extends StatelessWidget {
         children: [
           const Icon(Icons.local_fire_department, size: MxIconSize.md),
           const SizedBox(width: MxSpacing.space3),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '$streak',
-                style: const TextStyle(
-                  fontFamily: MxTypography.fontFamily,
-                  fontSize: MxIconSize.md,
-                  fontWeight: MxTypography.extrabold,
-                  height: MxTypography.lineHeightNone,
-                ),
-              ),
-              Opacity(
-                opacity: _labelOpacity,
-                child: Text(
-                  l10n.dashboardStreakLabel,
-                  style: const TextStyle(
-                    fontFamily: MxTypography.fontFamily,
-                    fontSize: MxTypography.sizeXs,
-                  ),
-                ),
-              ),
-            ],
+          MxStat(
+            value: '$streak',
+            label: l10n.dashboardStreakLabel,
+            alignStart: true,
+            onTint: true,
           ),
         ],
       ),

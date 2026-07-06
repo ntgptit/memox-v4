@@ -29,6 +29,7 @@ import 'package:memox_v4/presentation/shared/primitives/mx_avatar.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_stat.dart';
 
 /// The Today screen (S.01) — the app's pilot feature screen. Reads DM.5 use-case
 /// state through [dashboardControllerProvider] and renders every kit state
@@ -337,7 +338,6 @@ class _MasteredCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final mx = MxTheme.of(context);
-    final scheme = Theme.of(context).colorScheme;
 
     return MxCard(
       variant: MxCardVariant.muted,
@@ -347,29 +347,10 @@ class _MasteredCard extends StatelessWidget {
         children: [
           Icon(Icons.verified, size: MxIconSize.md, color: mx.success),
           const SizedBox(width: MxSpacing.space3),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '${(percent * DashboardScreen._percentScale).round()}%',
-                style: TextStyle(
-                  fontFamily: MxTypography.fontFamily,
-                  fontSize: MxIconSize.md,
-                  fontWeight: MxTypography.extrabold,
-                  height: MxTypography.lineHeightNone,
-                  color: scheme.onSurface,
-                ),
-              ),
-              Text(
-                l10n.dashboardMasteredLabel,
-                style: TextStyle(
-                  fontFamily: MxTypography.fontFamily,
-                  fontSize: MxTypography.sizeXs,
-                  color: mx.textSecondary,
-                ),
-              ),
-            ],
+          MxStat(
+            value: '${(percent * DashboardScreen._percentScale).round()}%',
+            label: l10n.dashboardMasteredLabel,
+            alignStart: true,
           ),
         ],
       ),

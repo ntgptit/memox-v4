@@ -4,6 +4,7 @@ import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 
 /// Drawer-local menu panel (kit `DrawerPanel`): a today's-activity header above
 /// the nav [items]. Rendered as the full-screen drawer route body (the kit's
@@ -32,16 +33,7 @@ class DrawerPanel extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                l10n.drawerActivityLabel.toUpperCase(),
-                style: TextStyle(
-                  fontFamily: MxTypography.fontFamily,
-                  fontSize: MxTypography.sizeSm,
-                  fontWeight: MxTypography.bold,
-                  letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-                  color: mx.textSecondary,
-                ),
-              ),
+              MxSectionLabel(text: l10n.drawerActivityLabel, uppercase: true),
               const SizedBox(height: MxSpacing.space2),
               activity,
             ],

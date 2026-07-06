@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/core/theme/mx_component.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
-import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/domain/entities/reminder.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
@@ -17,6 +16,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_sheet.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_chip.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_switch.dart';
 
 /// Weekdays in display order (Mon..Sun), `DateTime.weekday` numbering.
@@ -169,16 +169,6 @@ class _Label extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mx = MxTheme.of(context);
-    return Text(
-      text.toUpperCase(),
-      style: TextStyle(
-        fontFamily: MxTypography.fontFamily,
-        fontSize: MxTypography.sizeSm,
-        fontWeight: MxTypography.bold,
-        letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-        color: mx.textSecondary,
-      ),
-    );
+    return MxSectionLabel(text: text, uppercase: true);
   }
 }

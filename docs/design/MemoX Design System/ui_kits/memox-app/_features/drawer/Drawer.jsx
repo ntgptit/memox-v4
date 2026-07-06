@@ -13,10 +13,10 @@ function Drawer({ state = 'open' }) {
   if (state === 'add-language') {
     return (
       <MxScaffold node="drawer/add-screen" appBar={<MxAppBar title="Add language" node="drawer/add-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/add-back" />} />}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>LEARNING</div>
+        <window.SectionLabel>LEARNING</window.SectionLabel>
         <LangCard icon="language" name="한국어" sub="Korean" node="drawer/learn-lang" />
         <div style={{ display: 'flex', justifyContent: 'center', color: 'var(--memox-text-tertiary)' }}><span className="material-symbols-rounded">arrow_downward</span></div>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: '0 0 0 var(--memox-space-1)' }}>NATIVE</div>
+        <window.SectionLabel style={{ margin: '0 0 0 var(--memox-space-1)' }}>NATIVE</window.SectionLabel>
         <LangCard icon="translate" name="English" sub="Meaning language" node="drawer/native-lang" />
         <MxButton variant="primary" icon="add" block node="drawer/add-confirm">Add language pair</MxButton>
       </MxScaffold>

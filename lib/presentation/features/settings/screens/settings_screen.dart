@@ -5,7 +5,6 @@ import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
-import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/settings/providers/settings_providers.dart';
 import 'package:memox_v4/presentation/features/settings/widgets/value_picker_sheet.dart';
@@ -18,6 +17,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_profile_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_sheet.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
 
 /// The Settings hub (S.05): a local-identity card + grouped setting rows. Reads
@@ -169,19 +169,9 @@ class _Label extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mx = MxTheme.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: MxSpacing.space1),
-      child: Text(
-        text.toUpperCase(),
-        style: TextStyle(
-          fontFamily: MxTypography.fontFamily,
-          fontSize: MxTypography.sizeSm,
-          fontWeight: MxTypography.bold,
-          letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-          color: mx.textSecondary,
-        ),
-      ),
+      child: MxSectionLabel(text: text, uppercase: true),
     );
   }
 }

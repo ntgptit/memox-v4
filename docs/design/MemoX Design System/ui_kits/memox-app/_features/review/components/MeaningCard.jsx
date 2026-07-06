@@ -7,7 +7,7 @@ function MeaningCard({ editing }) {
   return (
     <MxCard node="review/meaning" style={{ gap: 'var(--memox-space-3)' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>MEANING</span>
+        <window.SectionLabel style={{ flex: 1, margin: 0 }}>MEANING</window.SectionLabel>
         <MxIconButton icon={editing ? 'close' : 'edit'} size="sm" node="review/edit" />
       </div>
       {editing ? (

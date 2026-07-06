@@ -71,11 +71,21 @@ function ListRow({ icon, tone, title, sub, trailing, node, last, muted, onClick 
 }
 
 /* Compact stat cell — caller wraps in an MxCard. */
-function Stat({ n, l, tone, node }) {
+/* Stat block: big figure over a small label — THE component for every
+   number+label pair (K.3). size 'md' (default) | 'lg' (hero figures);
+   align 'center' (default) | 'start'; `onTint` = on a colored card (label
+   inherits at label opacity instead of text-secondary). */
+function Stat({ n, l, tone, size = 'md', align = 'center', onTint = false, node }) {
+  const num = size === 'lg'
+    ? { fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }
+    : { fontSize: 'var(--memox-icon-size-md)', fontWeight: 'var(--memox-font-weight-extrabold)', lineHeight: 'var(--memox-line-height-none)' };
+  const lbl = onTint
+    ? { fontSize: size === 'lg' ? 'var(--memox-font-size-sm)' : 'var(--memox-font-size-xs)', opacity: 'var(--memox-opacity-label)' }
+    : { fontSize: size === 'lg' ? 'var(--memox-font-size-sm)' : 'var(--memox-font-size-xs)', color: 'var(--memox-text-secondary)' };
   return (
-    <div data-mx-node={node} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--memox-space-1)' }}>
-      <div style={{ fontSize: 'var(--memox-icon-size-md)', fontWeight: 'var(--memox-font-weight-extrabold)', color: tone || 'inherit' }}>{n}</div>
-      <div style={{ fontSize: 'var(--memox-font-size-xs)', color: 'var(--memox-text-secondary)' }}>{l}</div>
+    <div data-mx-node={node} style={{ display: 'flex', flexDirection: 'column', alignItems: align === 'start' ? 'flex-start' : 'center', gap: 'var(--memox-space-1)' }}>
+      <div style={{ ...num, color: tone || 'inherit' }}>{n}</div>
+      <div style={lbl}>{l}</div>
     </div>
   );
 }
@@ -94,7 +104,7 @@ function Sheet({ title, children, node }) {
   return (
     <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-5) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
       <div style={{ width: 'var(--memox-size-sm)', height: 'var(--memox-size-3xs)', borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-divider)', margin: '0 auto var(--memox-space-4)' }} />
-      {title ? <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)', textTransform: 'uppercase', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</div> : null}
+      {title ? <SectionLabel uppercase style={{ margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</SectionLabel> : null}
       {children}
     </div>
   );
@@ -160,9 +170,13 @@ function Note({ icon, text, tone = 'accent' }) {
 }
 
 /* Small overline label above a group of rows/cards. text-secondary, not
-   tertiary — ALL-CAPS 13px labels need AA contrast (audit G1). */
-function SectionLabel({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)', letterSpacing: 'var(--memox-letter-spacing-wide)', margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)' }}>{children}</div>;
+   tertiary — ALL-CAPS 13px labels need AA contrast (audit G1). The ONE
+   component for every ALL-CAPS label (K.3 — no inline copies): `onTint`
+   renders on a colored card (inherit color at label opacity), `uppercase`
+   transforms mixed-case copy, `style` carries per-site margin/flex only. */
+function SectionLabel({ children, onTint = false, uppercase = false, style }) {
+  const color = onTint ? { color: 'inherit', opacity: 'var(--memox-opacity-label)' } : { color: 'var(--memox-text-secondary)' };
+  return <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', ...(uppercase ? { textTransform: 'uppercase' } : {}), ...color, margin: 'var(--memox-space-1) 0 0 var(--memox-space-1)', ...style }}>{children}</div>;
 }
 
 /* Conic-gradient progress ring with a centered surface punch-out (holds children). */

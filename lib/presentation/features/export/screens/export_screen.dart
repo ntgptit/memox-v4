@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
-import 'package:memox_v4/core/theme/mx_theme.dart';
-import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/export/providers/export_providers.dart';
 import 'package:memox_v4/presentation/features/export/widgets/exporting_card.dart';
@@ -18,6 +16,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_chip.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_segmented_control.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_switch.dart';
 
@@ -168,19 +167,9 @@ class _Label extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mx = MxTheme.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: MxSpacing.space1),
-      child: Text(
-        text.toUpperCase(),
-        style: TextStyle(
-          fontFamily: MxTypography.fontFamily,
-          fontSize: MxTypography.sizeSm,
-          fontWeight: MxTypography.bold,
-          letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-          color: mx.textSecondary,
-        ),
-      ),
+      child: MxSectionLabel(text: text, uppercase: true),
     );
   }
 }
