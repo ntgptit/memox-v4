@@ -36,43 +36,60 @@ class MxChip extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final resolved = _resolve(mx, scheme);
 
+    final pill = Material(
+      color: resolved.background,
+      shape: StadiumBorder(
+        side: resolved.bordered
+            ? BorderSide(color: mx.border, width: MxStroke.hairline)
+            : BorderSide.none,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: SizedBox(
+        height: _height,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: MxSpacing.space4),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null) ...[
+                Icon(icon, size: MxIconSize.sm, color: resolved.foreground),
+                const SizedBox(width: MxSpacing.space2),
+              ],
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: MxTypography.fontFamily,
+                  fontSize: MxTypography.sizeSm,
+                  fontWeight: MxTypography.semibold,
+                  color: resolved.foreground,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    // Non-interactive chips (separators, static tags) keep the bare 34px pill.
+    if (onPressed == null) {
+      return Semantics(selected: selected, child: pill);
+    }
+
+    // Interactive chips get a 48px-tall tap surface (M3-1, kit .chip::after);
+    // the 34px pill stays the only visible part, centered inside.
     return Semantics(
       button: true,
       selected: selected,
       child: Material(
-        color: resolved.background,
-        shape: StadiumBorder(
-          side: resolved.bordered
-              ? BorderSide(color: mx.border, width: MxStroke.hairline)
-              : BorderSide.none,
-        ),
+        color: Colors.transparent,
+        shape: const StadiumBorder(),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onPressed,
           hoverColor: mx.stateHover,
           child: SizedBox(
-            height: _height,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: MxSpacing.space4),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (icon != null) ...[
-                    Icon(icon, size: MxIconSize.sm, color: resolved.foreground),
-                    const SizedBox(width: MxSpacing.space2),
-                  ],
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontFamily: MxTypography.fontFamily,
-                      fontSize: MxTypography.sizeSm,
-                      fontWeight: MxTypography.semibold,
-                      color: resolved.foreground,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            height: MxSpacing.minTouchTarget,
+            child: Center(child: pill),
           ),
         ),
       ),

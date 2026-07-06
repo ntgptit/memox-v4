@@ -35,6 +35,9 @@ class MxSwitch extends StatelessWidget {
     final control = Switch(
       value: value,
       onChanged: onChanged,
+      // 48px tap target regardless of platform default (M3-1); the 52x32
+      // visual (kit .switch) is unchanged.
+      materialTapTargetSize: MaterialTapTargetSize.padded,
       thumbColor: WidgetStateProperty.resolveWith(
         (states) => onOff(states, scheme.onPrimary, mx.textTertiary),
       ),
