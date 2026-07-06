@@ -8,7 +8,7 @@ function StreakCard({ streak }) {
     <MxCard variant="primary-soft" padding="sm" node="dashboard/streak">
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
         <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xl)' }}>local_fire_department</span>
-        <div><div style={{ fontSize: 'var(--memox-icon-size-md)', fontWeight: 'var(--memox-font-weight-extrabold)', lineHeight: 'var(--memox-line-height-none)' }}>{streak}</div><div style={{ fontSize: 'var(--memox-font-size-xs)', opacity: 'var(--memox-opacity-label-soft)' }}>day streak</div></div>
+        <window.Stat align="start" onTint n={streak} l="day streak" />
       </div>
     </MxCard>
   );

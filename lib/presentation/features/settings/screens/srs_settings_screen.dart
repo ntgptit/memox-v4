@@ -13,6 +13,7 @@ import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_list_row.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_scaffold.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_skeleton.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_switch.dart';
 
@@ -98,19 +99,9 @@ class _Label extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mx = MxTheme.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: MxSpacing.space1),
-      child: Text(
-        text.toUpperCase(),
-        style: TextStyle(
-          fontFamily: MxTypography.fontFamily,
-          fontSize: MxTypography.sizeSm,
-          fontWeight: MxTypography.bold,
-          letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-          color: mx.textSecondary,
-        ),
-      ),
+      child: MxSectionLabel(text: text, uppercase: true),
     );
   }
 }

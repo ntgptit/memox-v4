@@ -6,7 +6,7 @@ const { MxCard } = NS;
 function PreviewCard({ termSize, accentColor }) {
   return (
     <MxCard node="theme/preview" style={{ gap: 'var(--memox-space-3)' }}>
-      <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)' }}>PREVIEW</div>
+      <window.SectionLabel style={{ margin: 0 }}>PREVIEW</window.SectionLabel>
       <div style={{ borderRadius: 'var(--memox-radius-control)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', padding: 'var(--memox-space-5)', textAlign: 'center' }}>
         <div style={{ fontSize: termSize, fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
         <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', marginTop: 'var(--memox-space-1)' }}>school</div>

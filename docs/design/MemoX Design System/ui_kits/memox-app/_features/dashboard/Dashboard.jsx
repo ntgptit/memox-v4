@@ -95,7 +95,7 @@ function Dashboard({ state = 'loaded' }) {
         <MxCard variant="muted" padding="sm" node="dashboard/mastered">
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
             <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xl)', color: 'var(--memox-success)' }}>verified</span>
-            <div><div style={{ fontSize: 'var(--memox-icon-size-md)', fontWeight: 'var(--memox-font-weight-extrabold)', lineHeight: 'var(--memox-line-height-none)' }}>55%</div><div style={{ fontSize: 'var(--memox-font-size-xs)', color: 'var(--memox-text-secondary)' }}>mastered</div></div>
+            <window.Stat align="start" n="55%" l="mastered" />
           </div>
         </MxCard>
       </div>

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:memox_v4/core/theme/mx_radius.dart';
 import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
-import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_button.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_icon_button.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 import 'package:memox_v4/presentation/shared/primitives/mx_text_field.dart';
 
 /// Review-local (kit `review/meaning`): the meaning with an inline edit
@@ -34,7 +34,6 @@ class MeaningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final mx = MxTheme.of(context);
     final scheme = Theme.of(context).colorScheme;
 
     return MxCard(
@@ -44,16 +43,9 @@ class MeaningCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(
-                  l10n.reviewMeaningLabel,
-                  style: TextStyle(
-                    fontFamily: MxTypography.fontFamily,
-                    fontSize: MxTypography.sizeSm,
-                    fontWeight: MxTypography.bold,
-                    letterSpacing:
-                        MxTypography.sizeSm * MxTypography.trackingWide,
-                    color: mx.textSecondary,
-                  ),
+                child: MxSectionLabel(
+                  text: l10n.reviewMeaningLabel,
+                  uppercase: true,
                 ),
               ),
               MxIconButton(

@@ -8,6 +8,7 @@ import 'package:memox_v4/domain/entities/theme_settings.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/theme/widgets/accent_picker.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
+import 'package:memox_v4/presentation/shared/primitives/mx_section_label.dart';
 
 /// Theme-local live preview (kit `PreviewCard`): a sample term/meaning/CTA that
 /// reflects the selected accent + text size, so choices are visible without
@@ -30,16 +31,7 @@ class PreviewCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            l10n.themePreviewLabel.toUpperCase(),
-            style: TextStyle(
-              fontFamily: MxTypography.fontFamily,
-              fontSize: MxTypography.sizeSm,
-              fontWeight: MxTypography.bold,
-              letterSpacing: MxTypography.sizeSm * MxTypography.trackingWide,
-              color: mx.textSecondary,
-            ),
-          ),
+          MxSectionLabel(text: l10n.themePreviewLabel, uppercase: true),
           const SizedBox(height: MxSpacing.space3),
           Container(
             width: double.infinity,
