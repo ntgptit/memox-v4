@@ -258,3 +258,33 @@ loaded + insufficient (not loading); `scope-switch` = the "All" segment selected
   test). All 8 statistics goldens render; full golden suite 228/228, 0 stubs.
 
 GOLDEN-PARITY COVERAGE COMPLETE: 114/114 states across 21 screens render green.
+
+## 2026-07-06 · G.2 + G.3 · DONE — visual diff + CI ratchet (exporter NOT needed)
+Key finding that unblocked G.2: the kit shots are ALREADY committed at
+`docs/design/MemoX Design System/ui_kits/memox-app/shots/<screen>--<state>--<theme>.png`,
+**390×780 — the exact size + naming the goldens render at** (234 shots, all 21
+screens present). So the "exporter" the WBS assumed was missing is not needed —
+the committed kit shot IS the visual-parity baseline. G.2/G.3 no longer block on
+VP.2.
+
+- **G.2 — `tool/visual-diff/diff.mjs`** (dependency-free; PNG decode/encode via
+  node:zlib; pixelmatch YIQ perceptual delta). Compares each Flutter golden to the
+  kit shot of the same name → worst-first ranking + HTML report (kit | flutter |
+  red-diff). Self-test: identical images → 0.00%. Calibration run: mean ~12.8%;
+  overlays/sheets 55–83% (scrim + different background), content screens 12–20%
+  (cross-renderer AA + intentionally different seeded content). So it's a TRIAGE
+  tool, not a strict pixel gate.
+- **G.3 — `.github/workflows/goldens.yml`** (ubuntu): render goldens → diff vs kit
+  → HTML artifact + gates. Strict pixel parity is impossible cross-renderer, so:
+  (a) RATCHET — fail only when a state diverges > baseline + tolerance (catches
+  regressions, accepts existing noise); (b) CATASTROPHIC — `--fail-over 92` fails a
+  blank/errored/mis-sized screen (~100% on any renderer). Ratchet baseline is
+  Skia-platform-specific → seeded from ubuntu via workflow_dispatch (seed_baseline),
+  non-fatal until seeded. Screen goldens are gitignored (ephemeral; kit shot is the
+  baseline); the token_swatch baselines beside them stay committed. NOT wired into
+  the dev-machine verify gate (Windows Skia ≠ ubuntu → noise).
+
+Follow-up (optional): trigger the goldens workflow's seed_baseline once on main to
+arm the ratchet; then triage the worst real divergences from the report (some may
+be genuine kit↔Flutter bugs vs pure content/AA noise — a contentMask export would
+sharpen the signal).
