@@ -153,7 +153,7 @@
 }
 .card--interactive {
   cursor: pointer;
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  transition: transform var(--memox-duration-fast) var(--memox-ease-standard), box-shadow var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .card--interactive:hover {
   box-shadow: var(--memox-shadow-lg);
@@ -235,8 +235,8 @@
   letter-spacing: 0;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.16s ease, box-shadow 0.16s ease, transform 0.12s ease,
-    color 0.16s ease, opacity 0.16s ease;
+  transition: background var(--memox-duration-fast) var(--memox-ease-standard), box-shadow var(--memox-duration-fast) var(--memox-ease-standard), transform var(--memox-duration-fast) var(--memox-ease-standard),
+    color var(--memox-duration-fast) var(--memox-ease-standard), opacity var(--memox-duration-fast) var(--memox-ease-standard);
   user-select: none;
 }
 .btn:active {
@@ -332,7 +332,7 @@
   background: transparent;
   color: var(--memox-text);
   cursor: pointer;
-  transition: background 0.16s ease, color 0.16s ease, transform 0.12s ease;
+  transition: background var(--memox-duration-fast) var(--memox-ease-standard), color var(--memox-duration-fast) var(--memox-ease-standard), transform var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .icon-btn:hover {
   background: var(--memox-state-hover);
@@ -429,7 +429,7 @@
   font-weight: var(--memox-font-weight-bold);
   box-shadow: var(--memox-shadow-fab);
   cursor: pointer;
-  transition: transform 0.14s ease, box-shadow 0.16s ease, background 0.16s ease;
+  transition: transform var(--memox-duration-fast) var(--memox-ease-standard), box-shadow var(--memox-duration-fast) var(--memox-ease-standard), background var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .fab:hover {
   background: var(--memox-primary-strong);
@@ -525,7 +525,7 @@
   font-size: var(--memox-font-size-xs); /* 12px floor (M3-2) */
   font-weight: var(--memox-font-weight-semibold);
   cursor: pointer;
-  transition: color 0.16s ease;
+  transition: color var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .bottom-nav__item .material-symbols-rounded {
   font-size: var(--memox-icon-size-lg);
@@ -537,7 +537,7 @@
   width: var(--memox-comp-nav-pill-width);
   height: var(--memox-comp-nav-pill-height);
   border-radius: var(--memox-radius-pill);
-  transition: background 0.16s ease;
+  transition: background var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .bottom-nav__item--active {
   color: var(--memox-primary-strong);
@@ -565,7 +565,7 @@
   font-weight: var(--memox-font-weight-semibold);
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+  transition: background var(--memox-duration-fast) var(--memox-ease-standard), color var(--memox-duration-fast) var(--memox-ease-standard), box-shadow var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .chip .material-symbols-rounded {
   font-size: var(--memox-icon-size-sm);
@@ -657,7 +657,7 @@
   background: var(--memox-surface-sunken);
   box-shadow: inset 0 0 0 var(--memox-stroke-mid) var(--memox-border);
   cursor: pointer;
-  transition: background 0.18s ease, box-shadow 0.18s ease;
+  transition: background var(--memox-duration-fast) var(--memox-ease-standard), box-shadow var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .switch__thumb {
   position: absolute;
@@ -666,8 +666,8 @@
   height: var(--memox-comp-switch-thumb);
   border-radius: var(--memox-radius-full);
   background: var(--memox-text-tertiary);
-  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), background 0.18s ease,
-    width 0.18s ease, height 0.18s ease;
+  transition: transform var(--memox-duration-fast) var(--memox-ease-standard), background var(--memox-duration-fast) var(--memox-ease-standard),
+    width var(--memox-duration-fast) var(--memox-ease-standard), height var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .switch--on {
   background: var(--memox-primary);
@@ -711,7 +711,7 @@
   font-size: var(--memox-font-size-sm);
   font-weight: var(--memox-font-weight-semibold);
   cursor: pointer;
-  transition: background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+  transition: background var(--memox-duration-fast) var(--memox-ease-standard), color var(--memox-duration-fast) var(--memox-ease-standard), box-shadow var(--memox-duration-fast) var(--memox-ease-standard);
 }
 .segmented__seg .material-symbols-rounded {
   font-size: var(--memox-icon-size-sm);

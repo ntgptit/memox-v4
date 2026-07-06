@@ -8,6 +8,7 @@ import 'package:flutter/animation.dart';
 abstract final class MxDurations {
   const MxDurations._();
 
+  static const Duration fast = Duration(milliseconds: 140);
   static const Duration flash = Duration(milliseconds: 300);
   static const Duration pulse = Duration(milliseconds: 1300);
 }
