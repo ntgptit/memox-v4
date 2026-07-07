@@ -39,10 +39,11 @@ void main() {
   });
 
   group('active vs inactive → tokens (light)', () {
-    testWidgets('active = primaryStrong + primarySoft icon pill; inactive = textTertiary', (tester) async {
+    testWidgets('active = primaryStrong + primarySoft icon pill; inactive = textSecondary', (tester) async {
       await _pump(tester, value: 'today');
       expect(_iconColor(tester, Icons.today), MxColors.light.primaryStrong);
-      expect(_iconColor(tester, Icons.folder), MxColors.light.textTertiary);
+      // Kit `.bottom-nav__item` idle = text-secondary (AA at label size, M3-2).
+      expect(_iconColor(tester, Icons.folder), MxColors.light.textSecondary);
 
       // exactly one active icon pill, tinted primarySoft
       expect(

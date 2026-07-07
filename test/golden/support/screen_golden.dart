@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:memox_v4/core/routes/app_bottom_nav.dart';
+import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 
 import '../../fixtures/_fixture.dart';
@@ -19,12 +21,23 @@ Future<void> pumpScreenGolden(
   required Widget home,
   required StateFixture fixture,
   required ThemeData theme,
+  AppTab? shellTab,
 }) async {
   fixture.failIfUnimplemented();
 
   tester.view.physicalSize = kScreenGoldenSize;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
+
+  // A fixture may override the screen widget per state (e.g. an edit-mode route
+  // arg); otherwise the golden test's default [home] is used.
+  final screen = fixture.home ?? home;
+  // Root tab screens render inside the app shell (persistent bottom nav), so
+  // the golden frames the exact kit shot (which includes the nav). Pushed
+  // screens (deck-detail, dialogs…) pass no [shellTab] and render bare.
+  final framed = shellTab == null
+      ? screen
+      : Scaffold(body: screen, bottomNavigationBar: AppBottomNav(active: shellTab));
 
   await tester.pumpWidget(
     ProviderScope(
@@ -34,9 +47,7 @@ Future<void> pumpScreenGolden(
         theme: theme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        // A fixture may override the screen widget per state (e.g. an edit-mode
-        // route arg); otherwise the golden test's default [home] is used.
-        home: fixture.home ?? home,
+        home: framed,
       ),
     ),
   );

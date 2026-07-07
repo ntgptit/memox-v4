@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:memox_v4/app/app.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_bottom_nav.dart';
 
 import '../harness/provider_harness.dart';
 
@@ -27,7 +28,7 @@ void main() {
       await _pumpApp(tester, width);
       expect(tester.takeException(), isNull);
       // The bottom nav is present at every width (the shell never collapses).
-      expect(find.byType(NavigationBar), findsOneWidget);
+      expect(find.byType(MxBottomNav), findsOneWidget);
     });
   }
 }
