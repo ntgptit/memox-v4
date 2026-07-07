@@ -67,6 +67,10 @@ FakeStore deckDetailKitStore() {
   store.decks['deck-kb'] = _deck('deck-kb', 'Korean Basics');
   store.decks['deck-bg'] = _deck('deck-bg', 'Beginner Grammar', parent: 'deck-kb');
   store.decks['deck-tf'] = _deck('deck-tf', 'Topic: Family', parent: 'deck-kb');
+  // A sibling root deck — the kit's "Move to" sheet lists it as a selectable
+  // destination (deck-detail/move-1). Root-level, so it never shows in deck-kb's
+  // own sub-deck list (loaded state is unchanged).
+  store.decks['deck-tp'] = _deck('deck-tp', 'TOPIK Prep');
 
   // Sub-deck rows mirror the kit's DeckRow numbers exactly via injected stats
   // (deckStats override) — the kit shows "412 words · 28 due · ~56%" and
