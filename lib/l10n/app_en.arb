@@ -601,6 +601,24 @@
   "@deckDetailMoveRoot": {
     "description": "Move destination representing the library root (no parent)"
   },
+  "deckDetailMoveCurrent": "{name} (current)",
+  "@deckDetailMoveCurrent": {
+    "description": "Move sheet: the deck being moved, shown disabled as context",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deckDetailMoveSubdeck": "— {name} (sub-deck)",
+  "@deckDetailMoveSubdeck": {
+    "description": "Move sheet: a sub-deck of the current deck, shown disabled (can't move into own descendant)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "searchBack": "Back",
   "@searchBack": {
     "description": "Accessible label for the search back button"

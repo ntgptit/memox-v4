@@ -10,6 +10,7 @@ import 'package:memox_v4/presentation/features/deck-detail/widgets/deck_header.d
 import 'package:memox_v4/presentation/features/deck-detail/widgets/deck_menu.dart';
 import 'package:memox_v4/presentation/features/deck-detail/widgets/delete_confirm_dialog.dart';
 import 'package:memox_v4/presentation/features/deck-detail/widgets/flashcard_row.dart';
+import 'package:memox_v4/presentation/features/deck-detail/widgets/move_sheet.dart';
 import 'package:memox_v4/presentation/features/deck-detail/widgets/sub_deck_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_card.dart';
 import 'package:memox_v4/presentation/shared/composites/mx_empty_state.dart';
@@ -70,6 +71,9 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(deckDetailControllerProvider(widget.deckId));
+    // Keep root decks warm so the "Move to" sheet's sibling destinations are
+    // resolved the moment it opens (a bare read would still be loading).
+    ref.watch(rootDecksProvider);
 
     return async.when(
       loading: () => MxScaffold(appBar: _header(''), children: _loadingBody()),
@@ -258,37 +262,12 @@ class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
     );
   }
 
-  void _openMove(DeckDetailData data) {
-    final l10n = AppLocalizations.of(context);
-    final roots = ref.read(rootDecksProvider).value ?? const [];
-    showMxSheet<void>(
-      context: context,
-      title: l10n.deckDetailMoveTitle,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          MxMenuItem(
-            icon: Icons.home,
-            label: l10n.deckDetailMoveRoot,
-            onPressed: () {
-              Navigator.of(context).pop();
-              _controller.moveTo(null);
-            },
-          ),
-          for (final root in roots)
-            if (root.id.value != data.deckId.value)
-              MxMenuItem(
-                icon: Icons.layers,
-                label: root.name,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _controller.moveTo(root.id);
-                },
-              ),
-        ],
-      ),
-    );
-  }
+  void _openMove(DeckDetailData data) => showMoveSheet(
+        context: context,
+        ref: ref,
+        data: data,
+        onMove: (targetId) => _controller.moveTo(targetId),
+      );
 
   Future<void> _confirmDeleteDeck() async {
     final ok = await showDeleteDeckDialog(context);

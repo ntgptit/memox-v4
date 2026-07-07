@@ -97,6 +97,17 @@ class DeckCardFilterState extends _$DeckCardFilterState {
 Stream<List<Deck>> rootDecks(Ref ref) =>
     ref.watch(deckRepositoryProvider).watchChildren(null);
 
+/// The move sheet's selected destination (index into its destination list,
+/// `null` = none picked). Transient view state — Riverpod owns it (no `setState`);
+/// autoDispose-by-default resets it each time the sheet reopens.
+@riverpod
+class MoveSelection extends _$MoveSelection {
+  @override
+  int? build() => null;
+
+  void select(int index) => state = index;
+}
+
 /// Assembles the deck-detail view-model for [deckId] and owns its mutations
 /// (hide/delete card, delete/move deck). An async family notifier rendered with
 /// `AsyncValue.when`. A failed read throws its [Failure] — surfaced localized by
