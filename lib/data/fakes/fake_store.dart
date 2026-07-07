@@ -8,6 +8,7 @@ import 'package:memox_v4/domain/entities/card.dart';
 import 'package:memox_v4/domain/entities/card_meaning.dart';
 import 'package:memox_v4/domain/entities/daily_goal.dart';
 import 'package:memox_v4/domain/entities/deck.dart';
+import 'package:memox_v4/domain/entities/deck_stats.dart';
 import 'package:memox_v4/domain/entities/ids.dart';
 import 'package:memox_v4/domain/entities/review_log.dart';
 import 'package:memox_v4/domain/entities/srs_state.dart';
@@ -20,6 +21,12 @@ class FakeStore {
   final Map<String, Card> cards = {};
   final Map<String, SrsState> srsByCard = {};
   final List<ReviewLog> reviewLogs = [];
+
+  /// Injected per-deck stats (deckId → [DeckStats]). When set, [FakeDeckRepository]
+  /// returns these verbatim instead of computing from seeded cards — lets golden
+  /// fixtures mirror the kit's exact numbers (e.g. "320 cards · 48 due · 72%")
+  /// without seeding hundreds of real cards. Empty by default (compute as before).
+  final Map<String, DeckStats> deckStats = {};
 
   DailyGoal dailyGoal = const DailyGoal(minutesTarget: 15, wordsTarget: 20);
   int newCardsPerDay = AppConstants.newCardsPerDayDefault;
