@@ -44,6 +44,9 @@ class FakeDeckRepository implements DeckRepository {
 
   @override
   Future<Result<DeckStats>> statsFor(DeckId id) async {
+    // Golden fixtures may inject exact stats (kit numbers) — return them verbatim.
+    final injected = _store.deckStats[id.value];
+    if (injected != null) return Ok(injected);
     final subtree = _subtreeIds(id);
     var stats = DeckStats.empty;
     for (final card in _store.cards.values) {

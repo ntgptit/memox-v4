@@ -68,18 +68,22 @@ FakeStore deckDetailKitStore() {
   store.decks['deck-bg'] = _deck('deck-bg', 'Beginner Grammar', parent: 'deck-kb');
   store.decks['deck-tf'] = _deck('deck-tf', 'Topic: Family', parent: 'deck-kb');
 
-  // Sub-deck cards exist only so the sub-deck rows show non-zero, ~kit progress
-  // (exact 412 words / 64% isn't seedable — stats are computed from real cards).
-  for (var i = 0; i < 8; i++) {
-    final id = 'bg-$i';
-    store.cards[id] = _card(id, 'deck-bg', 'g$i', 'grammar $i');
-    store.srsByCard[id] = i < 5 ? _mastered() : _due(); // ~62% mastered
-  }
-  for (var i = 0; i < 6; i++) {
-    final id = 'tf-$i';
-    store.cards[id] = _card(id, 'deck-tf', 'f$i', 'family $i');
-    store.srsByCard[id] = _mastered(); // 100% mastered
-  }
+  // Sub-deck rows mirror the kit's DeckRow numbers exactly via injected stats
+  // (deckStats override) — the kit shows "412 words · 28 due · ~56%" and
+  // "180 words · mastered · 100%". Real cards can't produce these counts, so we
+  // inject DeckStats directly (FakeDeckRepository returns them verbatim).
+  store.deckStats['deck-bg'] = const DeckStats(
+    totalCards: 412,
+    hiddenCount: 0,
+    dueCount: 28,
+    masteredCount: 231, // 231/412 ≈ 56% — matches the kit progress bar
+  );
+  store.deckStats['deck-tf'] = const DeckStats(
+    totalCards: 180,
+    hiddenCount: 0,
+    dueCount: 0,
+    masteredCount: 180, // 100% — mastered
+  );
 
   // The viewed deck's own cards (kit CARDS list).
   const rows = [
