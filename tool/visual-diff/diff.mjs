@@ -46,7 +46,13 @@ const flag = (name, fallback = null) => {
 };
 const KIT_DIR = flag('--kit', DEFAULT_KIT);
 const GOLDENS_DIR = flag('--goldens', DEFAULT_GOLDENS);
-const THRESHOLD = Number(flag('--threshold', '0.1')); // pixelmatch colour threshold
+// pixelmatch's colour threshold. Its 0.1 default is calibrated for SAME-renderer
+// diffs; kit shots are browser-rendered and goldens are Skia-rendered, so their
+// sub-pixel anti-aliasing never lines up — 0.1 counts that AA as mismatch and
+// caps text-heavy screens ~85% even when the content is identical. 0.2 absorbs
+// cross-renderer AA while still flagging real divergences (wrong layout/colour
+// produces deltas far above it). Override per-run with --threshold.
+const THRESHOLD = Number(flag('--threshold', '0.2'));
 const FAIL_OVER = flag('--fail-over') != null ? Number(flag('--fail-over')) : null;
 const HTML = flag('--html');
 const FILTER = flag('--filter');
