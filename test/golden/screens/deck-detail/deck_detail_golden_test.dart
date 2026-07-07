@@ -17,7 +17,7 @@ void main() {
   deckDetailFixtures.forEach((state, fixture) {
     themes.forEach((theme, data) {
       testWidgets('deck-detail--$state--$theme', (tester) async {
-        await pumpScreenGolden(tester, home: const DeckDetailScreen(deckId: 'deck-food'), fixture: fixture, theme: data);
+        await pumpScreenGolden(tester, home: const DeckDetailScreen(deckId: 'deck-kb'), fixture: fixture, theme: data);
         await expectLater(
           find.byType(MaterialApp),
           matchesGoldenFile('../../goldens/screens/deck-detail--$state--$theme.png'),
