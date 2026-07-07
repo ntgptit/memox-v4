@@ -8,6 +8,7 @@ import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/l10n/app_localizations.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_bottom_nav.dart';
 
 import '../harness/provider_harness.dart';
 
@@ -32,7 +33,7 @@ void main() {
 
     expect(tester.takeException(), isNull);
     // Booted into the tab shell (the architecture is wired, not just a bare frame).
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(MxBottomNav), findsOneWidget);
     expect(find.byType(DashboardScreen), findsOneWidget);
   });
 
@@ -42,7 +43,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final context = tester.element(find.byType(NavigationBar));
+    final context = tester.element(find.byType(MxBottomNav));
     // Throws if the theme was not assembled with the extension — a wiring bug.
     expect(MxTheme.of(context).surface, isA<Color>());
   });

@@ -43,18 +43,19 @@ abstract final class Routes {
   static String editCard(String cardId) => '/editor/$cardId';
 }
 
-/// The five bottom-nav destinations. Icons only for now — visible labels are
-/// deferred to T.4 (l10n) so no user-facing copy is hardcoded here.
+/// The five bottom-nav destinations. Glyphs mirror the kit `NAV` exactly
+/// (`today` · `style` · `add_circle` · `insights` · `person`) — the kit uses a
+/// single glyph per tab, recolored + lifted onto a pill when active (no
+/// filled/outlined swap), so there is no `selectedIcon`. Labels come from ARB.
 enum AppTab {
-  today(Routes.today, Icons.today_outlined, Icons.today),
-  library(Routes.library, Icons.folder_outlined, Icons.folder),
-  add(Routes.add, Icons.add_circle_outline, Icons.add_circle),
-  stats(Routes.stats, Icons.bar_chart_outlined, Icons.bar_chart),
-  profile(Routes.profile, Icons.person_outline, Icons.person);
+  today(Routes.today, Icons.today),
+  library(Routes.library, Icons.style),
+  add(Routes.add, Icons.add_circle),
+  stats(Routes.stats, Icons.insights),
+  profile(Routes.profile, Icons.person);
 
-  const AppTab(this.path, this.icon, this.selectedIcon);
+  const AppTab(this.path, this.icon);
 
   final String path;
   final IconData icon;
-  final IconData selectedIcon;
 }

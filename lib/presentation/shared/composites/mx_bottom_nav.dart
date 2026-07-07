@@ -39,7 +39,7 @@ class MxBottomNav extends StatelessWidget {
   static const double _iconPillWidth = 56;
   static const double _iconPillHeight = 30;
   static const double _glyphSize = MxIconSize.lg; // Đ-K-1: 26 -> 28
-  static const double _labelSize = 11;
+  static const double _labelSize = 12; // kit font-size-xs — 12px floor (M3-2)
   static const double _labelGap = 3;
   static const double _bottomInset = 4;
 
@@ -90,7 +90,9 @@ class _NavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mx = MxTheme.of(context);
-    final color = active ? mx.primaryStrong : mx.textTertiary;
+    // Kit `.bottom-nav__item`: idle uses text-secondary (AA at label size, M3-2),
+    // active recolors to primary-strong. (No glyph swap — pill + color only.)
+    final color = active ? mx.primaryStrong : mx.textSecondary;
 
     return Semantics(
       button: true,

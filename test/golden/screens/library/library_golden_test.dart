@@ -4,6 +4,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/presentation/features/library/screens/library_screen.dart';
 import '../../../fixtures/library/library_fixtures.dart';
@@ -25,6 +26,7 @@ void main() {
           home: const LibraryScreen(),
           fixture: fixture,
           theme: data,
+          shellTab: AppTab.library,
         );
         await expectLater(
           find.byType(MaterialApp),

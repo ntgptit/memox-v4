@@ -4,6 +4,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:memox_v4/core/routes/app_routes.dart';
 import 'package:memox_v4/core/theme/app_theme.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
 import '../../../fixtures/dashboard/dashboard_fixtures.dart';
@@ -25,6 +26,7 @@ void main() {
           home: const DashboardScreen(),
           fixture: fixture,
           theme: data,
+          shellTab: AppTab.today,
         );
         await expectLater(
           find.byType(MaterialApp),

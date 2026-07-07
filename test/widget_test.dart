@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:memox_v4/app/app.dart';
 import 'package:memox_v4/core/theme/mx_colors.dart';
 import 'package:memox_v4/presentation/features/dashboard/screens/dashboard_screen.dart';
+import 'package:memox_v4/presentation/shared/composites/mx_bottom_nav.dart';
 
 import 'harness/provider_harness.dart';
 
@@ -21,12 +22,12 @@ void main() {
     await tester.pumpAndSettle();
 
     // The bottom-nav shell is present and the Today dashboard is showing.
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(MxBottomNav), findsOneWidget);
     expect(find.byType(DashboardScreen), findsOneWidget);
 
     // Scaffold background comes from the light token value (system → light in the
     // test harness), proving the theme is assembled from the token mirrors.
-    final ctx = tester.element(find.byType(NavigationBar));
+    final ctx = tester.element(find.byType(MxBottomNav));
     expect(Theme.of(ctx).scaffoldBackgroundColor, MxColors.light.bg);
   });
 }

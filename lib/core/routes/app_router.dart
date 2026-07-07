@@ -25,6 +25,7 @@ import 'package:memox_v4/presentation/features/settings/screens/srs_settings_scr
 import 'package:memox_v4/presentation/features/statistics/screens/statistics_screen.dart';
 import 'package:memox_v4/presentation/features/study-result/screens/study_result_screen.dart';
 import 'package:memox_v4/presentation/features/study-session/screens/study_session_screen.dart';
+import 'package:memox_v4/core/routes/app_bottom_nav.dart';
 import 'package:memox_v4/presentation/features/theme/screens/theme_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -174,35 +175,20 @@ class _ShellScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
+      // The kit's `.bottom-nav` (MxBottomNav) — active pill + primary-strong
+      // label — replacing Material's NavigationBar for exact kit parity.
+      bottomNavigationBar: AppBottomNav(
+        active: AppTab.values[navigationShell.currentIndex],
+        onSelected: (tab) => navigationShell.goBranch(
+          tab.index,
           // Re-tapping the active tab returns it to its root.
-          initialLocation: index == navigationShell.currentIndex,
+          initialLocation: tab.index == navigationShell.currentIndex,
         ),
-        destinations: [
-          for (final tab in AppTab.values)
-            NavigationDestination(
-              icon: Icon(tab.icon),
-              selectedIcon: Icon(tab.selectedIcon),
-              label: _navLabel(tab, l10n),
-            ),
-        ],
       ),
     );
   }
-
-  static String _navLabel(AppTab tab, AppLocalizations l10n) => switch (tab) {
-        AppTab.today => l10n.navToday,
-        AppTab.library => l10n.navLibrary,
-        AppTab.add => l10n.navAdd,
-        AppTab.stats => l10n.navStats,
-        AppTab.profile => l10n.navProfile,
-      };
 }
 
 /// Fallback for an unknown or malformed location (go_router `errorBuilder`).
