@@ -50,7 +50,7 @@ const HEADER = `# Visual parity — matching & lệch theo từng state
 
 // Per-screen analysis line (shown under each table). Omit ⇒ auto heuristic note.
 const NOTES = {
-  drawer: '**Lệch:** `remove-language` scrim; `open`/`add-language` content. **Lý do:** kit có FAQ/Email/Sync mà v1 bỏ (không backend) + scrim + AA. **Phương án:** quyết định scope v1; nền overlay có thể mask.',
+  drawer: '**Lệch:** `remove-language` 28.8→87.2 (fixture seed 2 pair + mở confirm dialog; font CJK 日本語; nút dialog ngang theo kit). Trần ~87%: kit hiện "1240 cards"/pair nhưng deck/card **chưa link language-pair** trong domain v1 → count không tính được (cần feature). `open`/`add-language`: kit có FAQ/Email/Sync mà v1 bỏ (không backend). **Phương án:** feature card-count-per-pair để lên >90; v1-scope cho FAQ/Sync.',
   dashboard: '**Lệch:** khối nội dung (greeting/tên/ngày/streak/continue-deck). **Lý do:** seed khác kit ("Linh"/avatar/số). `empty` = onboarding hero. **Phương án:** contentMask greeting+ngày hoặc seed cố định.',
   'deck-detail': '**Lệch:** overlay confirm (`*-confirm` scrim); `loaded` = **`SubDeckCard` ≠ kit DeckRow** (meta/badge/icon). Move đã fix (#253). **Phương án:** kit-first rework `SubDeckCard` — đòn bẩy chính còn lại.',
   'study-session': '**Lệch:** `exit`/`answer-save-error` scrim; stage = content giữa phiên (từ Hàn đã render). **Phương án:** chấp nhận (content).',

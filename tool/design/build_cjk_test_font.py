@@ -30,8 +30,10 @@ NOTO_URL = "https://github.com/google/fonts/raw/main/ofl/notosanskr/NotoSansKR%5
 KEEP = {"glyf", "loca", "cmap", "hmtx", "head", "hhea", "maxp", "name", "OS/2", "post", "GlyphOrder"}
 
 
-def hangul_used():
-    """Every Hangul codepoint appearing in test/ + lib/ Dart sources."""
+def cjk_used():
+    """Every Hangul + CJK-ideograph (Hanja/Kanji, e.g. 日本語) codepoint appearing
+    in test/ + lib/ Dart sources. Noto Sans KR carries the Hanja, so ideographs a
+    fixture references (language-pair names, sample terms) render instead of tofu."""
     chars = set()
     for base in ("test", "lib"):
         for dp, _, files in os.walk(os.path.join(ROOT, base)):
@@ -43,7 +45,8 @@ def hangul_used():
                 except OSError:
                     continue
                 for ch in text:
-                    if "가" <= ch <= "힣" or "ᄀ" <= ch <= "ᇿ":
+                    if ("가" <= ch <= "힣" or "ᄀ" <= ch <= "ᇿ"
+                            or "一" <= ch <= "鿿"):
                         chars.add(ch)
     return "".join(sorted(chars))
 
@@ -56,11 +59,11 @@ def minimize(font):
 
 
 def main():
-    chars = hangul_used()
+    chars = cjk_used()
     if not chars:
-        print("no Hangul in fixtures — nothing to build")
+        print("no CJK in fixtures — nothing to build")
         return
-    print(f"Hangul used by fixtures ({len(chars)}): {chars}")
+    print(f"CJK used by fixtures ({len(chars)}): {chars}")
 
     cache = os.path.join(OUT_DIR, "_NotoSansKR-src.ttf")
     os.makedirs(OUT_DIR, exist_ok=True)

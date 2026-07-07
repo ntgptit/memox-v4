@@ -66,3 +66,4 @@ tool/hooks/.kit-acks/
 # shots (tool/visual-diff) — never committed. The token_swatch baselines beside
 # them ARE committed.
 /test/golden/goldens/screens/
+test/fonts/_NotoSansKR-src.ttf
