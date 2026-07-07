@@ -910,7 +910,7 @@
       }
     }
   },
-  "drawerRemovePairText": "All decks and cards for this pair will be deleted. This can''t be undone.",
+  "drawerRemovePairText": "All decks and cards for this pair will be deleted. This can't be undone.",
   "@drawerRemovePairText": {
     "description": "Body of the remove-pair confirm dialog"
   },

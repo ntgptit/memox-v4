@@ -29,7 +29,8 @@ class MxConfirmDialog extends StatelessWidget {
   final String title;
   final String text;
 
-  /// Full-width action buttons (typically `MxButton(block: true)`), stacked.
+  /// Action buttons (typically `MxButton(block: true)`), laid in an equal-width
+  /// horizontal row per the kit — Cancel (ghost) left, confirm (danger) right.
   final List<Widget> actions;
   final IconData? icon;
   final MxDialogTone tone;
@@ -58,8 +59,10 @@ class MxConfirmDialog extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: MxTypography.fontFamily,
-                fontSize: MxTypography.sizeXl,
-                fontWeight: MxTypography.bold,
+                // Kit `Dialog` title: font-size-lg + extrabold (not xl/bold — the
+                // larger size forced the title to wrap).
+                fontSize: MxTypography.sizeLg,
+                fontWeight: MxTypography.extrabold,
                 color: scheme.onSurface,
               ),
             ),
@@ -74,10 +77,16 @@ class MxConfirmDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(height: MxSpacing.space5),
-            for (var i = 0; i < actions.length; i++) ...[
-              if (i > 0) const SizedBox(height: MxSpacing.space2),
-              actions[i],
-            ],
+            // Kit `Dialog` actions: an equal-width horizontal row (Cancel ghost
+            // left, confirm danger/primary right), gap space-3 — not stacked.
+            Row(
+              children: [
+                for (var i = 0; i < actions.length; i++) ...[
+                  if (i > 0) const SizedBox(width: MxSpacing.space3),
+                  Expanded(child: actions[i]),
+                ],
+              ],
+            ),
           ],
         ),
       ),

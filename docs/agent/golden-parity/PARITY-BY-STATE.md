@@ -24,19 +24,9 @@
 3. **dashboard greeting**: tên "Linh"/avatar/ngày/streak seed khác (content).
 4. **statistics streak 12/28 + weekly-bars**: sample kit tự mâu thuẫn / có thể seed weekly như heatmap.
 
-**Tổng thể: mean 93.1% match** · 21 screens · 112 states (× light/dark).
+**Tổng thể: mean 93.6% match** · 21 screens · 112 states (× light/dark).
 
 ---
-
-## `drawer` — avg 81.9%
-
-| state | light | dark |
-|---|--:|--:|
-| `remove-language` | 28.8% | 93.7% |
-| `open` | 86.4% | 95.4% |
-| `add-language` | 90.9% | 96.0% |
-
-**Lệch:** `remove-language` scrim; `open`/`add-language` content. **Lý do:** kit có FAQ/Email/Sync mà v1 bỏ (không backend) + scrim + AA. **Phương án:** quyết định scope v1; nền overlay có thể mask.
 
 ## `dashboard` — avg 89.4%
 
@@ -49,23 +39,6 @@
 | `loading` | 96.4% | 97.3% |
 
 **Lệch:** khối nội dung (greeting/tên/ngày/streak/continue-deck). **Lý do:** seed khác kit ("Linh"/avatar/số). `empty` = onboarding hero. **Phương án:** contentMask greeting+ngày hoặc seed cố định.
-
-## `study-session` — avg 90.7%
-
-| state | light | dark |
-|---|--:|--:|
-| `exit` | 76.0% | 91.6% |
-| `answer-save-error` | 77.3% | 89.7% |
-| `stage4-recall` | 84.7% | 85.3% |
-| `stage1-review` | 84.8% | 85.1% |
-| `due-review` | 91.2% | 91.4% |
-| `stage5-typing` | 91.8% | 92.3% |
-| `resume-error` | 94.7% | 94.4% |
-| `relearn` | 95.7% | 96.2% |
-| `stage3-choice` | 97.0% | 97.7% |
-| `stage2-matching` | 98.4% | 98.7% |
-
-**Lệch:** `exit`/`answer-save-error` scrim; stage = content giữa phiên (từ Hàn đã render). **Phương án:** chấp nhận (content).
 
 ## `game-recall` — avg 90.9%
 
@@ -101,25 +74,32 @@
 
 **Lệch:** preview card content + AA (6 accent đã khớp). **Phương án:** chấp nhận.
 
-## `deck-detail` — avg 91.9%
+## `study-session` — avg 91.7%
 
 | state | light | dark |
 |---|--:|--:|
-| `reset-confirm` | 75.0% | 89.5% |
-| `deck-delete-confirm` | 75.4% | 89.9% |
-| `delete-confirm` | 77.5% | 91.0% |
-| `deck-menu` | 87.6% | 97.2% |
-| `move` | 88.2% | 95.6% |
-| `loaded` | 88.7% | 89.7% |
-| `empty` | 90.8% | 90.6% |
-| `card-actions` | 93.4% | 97.5% |
-| `add-menu` | 93.5% | 97.0% |
-| `error` | 96.2% | 96.4% |
-| `no-results` | 97.2% | 97.2% |
-| `search` | 97.5% | 97.7% |
-| `loading` | 99.1% | 99.4% |
+| `exit` | 81.1% | 95.1% |
+| `stage4-recall` | 84.7% | 85.3% |
+| `stage1-review` | 84.8% | 85.1% |
+| `answer-save-error` | 84.8% | 94.6% |
+| `due-review` | 91.2% | 91.4% |
+| `stage5-typing` | 91.8% | 92.3% |
+| `resume-error` | 94.7% | 94.4% |
+| `relearn` | 95.7% | 96.2% |
+| `stage3-choice` | 97.0% | 97.7% |
+| `stage2-matching` | 98.4% | 98.7% |
 
-**Lệch:** overlay confirm (`*-confirm` scrim); `loaded` = **`SubDeckCard` ≠ kit DeckRow** (meta/badge/icon). Move đã fix (#253). **Phương án:** kit-first rework `SubDeckCard` — đòn bẩy chính còn lại.
+**Lệch:** `exit`/`answer-save-error` scrim; stage = content giữa phiên (từ Hàn đã render). **Phương án:** chấp nhận (content).
+
+## `drawer` — avg 91.9%
+
+| state | light | dark |
+|---|--:|--:|
+| `open` | 86.4% | 95.4% |
+| `remove-language` | 87.2% | 95.2% |
+| `add-language` | 90.9% | 96.0% |
+
+**Lệch:** `remove-language` 28.8→87.2 (fixture seed 2 pair + mở confirm dialog; font CJK 日本語; nút dialog ngang theo kit). Trần ~87%: kit hiện "1240 cards"/pair nhưng deck/card **chưa link language-pair** trong domain v1 → count không tính được (cần feature). `open`/`add-language`: kit có FAQ/Email/Sync mà v1 bỏ (không backend). **Phương án:** feature card-count-per-pair để lên >90; v1-scope cho FAQ/Sync.
 
 ## `game-mc` — avg 92.5%
 
@@ -141,6 +121,26 @@
 | `exporting` | 98.2% | 98.7% |
 
 **Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
+
+## `deck-detail` — avg 93.2%
+
+| state | light | dark |
+|---|--:|--:|
+| `reset-confirm` | 83.0% | 93.0% |
+| `delete-confirm` | 83.2% | 95.3% |
+| `deck-delete-confirm` | 84.6% | 94.6% |
+| `deck-menu` | 87.6% | 97.2% |
+| `move` | 88.2% | 95.6% |
+| `loaded` | 88.7% | 89.7% |
+| `empty` | 90.8% | 90.6% |
+| `card-actions` | 93.4% | 97.5% |
+| `add-menu` | 93.5% | 97.0% |
+| `error` | 96.2% | 96.4% |
+| `no-results` | 97.2% | 97.2% |
+| `search` | 97.5% | 97.7% |
+| `loading` | 99.1% | 99.4% |
+
+**Lệch:** overlay confirm (`*-confirm` scrim); `loaded` = **`SubDeckCard` ≠ kit DeckRow** (meta/badge/icon). Move đã fix (#253). **Phương án:** kit-first rework `SubDeckCard` — đòn bẩy chính còn lại.
 
 ## `statistics` — avg 93.2%
 
@@ -258,7 +258,7 @@
 |---|--:|--:|
 | `complete` | 91.9% | 92.0% |
 | `wrong` | 96.6% | 96.6% |
-| `correct` | 97.0% | 97.0% |
+| `correct` | 97.0% | 97.1% |
 | `selected` | 97.2% | 97.3% |
 | `playing` | 97.7% | 97.6% |
 | `almost` | 97.8% | 98.2% |
