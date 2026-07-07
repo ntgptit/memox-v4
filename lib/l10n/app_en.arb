@@ -322,6 +322,18 @@
       }
     }
   },
+  "libraryNodeMetaDecks": "{decks, plural, =1{1 deck} other{{decks} decks}} · {words}",
+  "@libraryNodeMetaDecks": {
+    "description": "Deck node meta for a folder: sub-deck count and word count",
+    "placeholders": {
+      "decks": {
+        "type": "int"
+      },
+      "words": {
+        "type": "String"
+      }
+    }
+  },
   "libraryNodeMetaHidden": "{words} · {hidden} hidden",
   "@libraryNodeMetaHidden": {
     "description": "Deck node meta: word count and how many are hidden",

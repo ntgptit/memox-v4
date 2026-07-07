@@ -52,11 +52,12 @@ class DeckDetailScreen extends ConsumerStatefulWidget {
 class _DeckDetailScreenState extends ConsumerState<DeckDetailScreen> {
   final TextEditingController _search = TextEditingController();
 
+  // Kit sub-deck tiles cycle accent → primary(default) → … (DeckDetail SUBDECKS).
   static const List<MxIconTileTone> _tones = [
     MxIconTileTone.accent,
+    MxIconTileTone.primary,
     MxIconTileTone.success,
     MxIconTileTone.warning,
-    MxIconTileTone.primary,
   ];
 
   DeckDetailController get _controller =>
