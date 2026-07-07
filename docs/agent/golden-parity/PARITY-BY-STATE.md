@@ -126,15 +126,15 @@
 
 | state | light | dark |
 |---|--:|--:|
-| `reset-confirm` | 83.0% | 93.0% |
-| `delete-confirm` | 83.2% | 95.3% |
-| `deck-delete-confirm` | 84.6% | 94.6% |
+| `reset-confirm` | 82.9% | 92.9% |
+| `delete-confirm` | 83.0% | 95.2% |
+| `deck-delete-confirm` | 84.5% | 94.5% |
 | `deck-menu` | 87.6% | 97.2% |
 | `move` | 88.2% | 95.6% |
 | `loaded` | 88.7% | 89.7% |
 | `empty` | 90.8% | 90.6% |
-| `card-actions` | 93.4% | 97.5% |
-| `add-menu` | 93.5% | 97.0% |
+| `card-actions` | 93.3% | 97.4% |
+| `add-menu` | 93.4% | 97.0% |
 | `error` | 96.2% | 96.4% |
 | `no-results` | 97.2% | 97.2% |
 | `search` | 97.5% | 97.7% |

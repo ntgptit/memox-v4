@@ -26,6 +26,7 @@ class SubDeckInfo {
     required this.id,
     required this.name,
     required this.isFolder,
+    required this.deckCount,
     required this.words,
     required this.due,
     required this.progress,
@@ -34,6 +35,9 @@ class SubDeckInfo {
   final DeckId id;
   final String name;
   final bool isFolder;
+
+  /// Number of direct sub-decks. When > 0 the kit meta reads "N decks · N words".
+  final int deckCount;
   final int words;
   final int due;
   final double progress;
@@ -138,7 +142,6 @@ class DeckDetailController extends _$DeckDetailController {
     final decks = ref.watch(deckRepositoryProvider);
     final cardsRepo = ref.watch(cardRepositoryProvider);
     final reviews = ref.watch(reviewRepositoryProvider);
-    final now = ref.watch(clockProvider).now();
 
     final deck = _value(await decks.getById(id));
 
@@ -146,14 +149,16 @@ class DeckDetailController extends _$DeckDetailController {
     final subDecks = <SubDeckInfo>[];
     for (final child in children) {
       final stats = _value(await decks.statsFor(child.id));
-      final due = _value(await reviews.dueQueue(within: child.id, asOf: now));
       final grandChildren = await decks.watchChildren(child.id).first;
       subDecks.add(SubDeckInfo(
         id: child.id,
         name: child.name,
         isFolder: grandChildren.isNotEmpty,
+        deckCount: grandChildren.length,
         words: stats.visibleCount,
-        due: due.length,
+        // The sub-deck's own due count (from its stats) drives the row badge —
+        // consistent with the words/progress read from the same stats.
+        due: stats.dueCount,
         progress: stats.progress,
       ));
     }

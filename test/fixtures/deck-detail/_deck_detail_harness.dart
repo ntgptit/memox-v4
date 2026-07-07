@@ -71,16 +71,22 @@ FakeStore deckDetailKitStore() {
   // destination (deck-detail/move-1). Root-level, so it never shows in deck-kb's
   // own sub-deck list (loaded state is unchanged).
   store.decks['deck-tp'] = _deck('deck-tp', 'TOPIK Prep');
+  // Beginner Grammar is a FOLDER with 3 sub-decks — the kit meta "3 decks · 412
+  // words". The grandchildren only exist for the count (deck-bg's stats are
+  // injected below, so they don't need cards).
+  for (var i = 1; i <= 3; i++) {
+    store.decks['deck-bg-$i'] = _deck('deck-bg-$i', 'Unit $i', parent: 'deck-bg');
+  }
 
   // Sub-deck rows mirror the kit's DeckRow numbers exactly via injected stats
-  // (deckStats override) — the kit shows "412 words · 28 due · ~56%" and
+  // (deckStats override) — the kit shows "3 decks · 412 words · 28 due · 64%" and
   // "180 words · mastered · 100%". Real cards can't produce these counts, so we
   // inject DeckStats directly (FakeDeckRepository returns them verbatim).
   store.deckStats['deck-bg'] = const DeckStats(
     totalCards: 412,
     hiddenCount: 0,
     dueCount: 28,
-    masteredCount: 231, // 231/412 ≈ 56% — matches the kit progress bar
+    masteredCount: 264, // 264/412 ≈ 64% — matches the kit progress bar
   );
   store.deckStats['deck-tf'] = const DeckStats(
     totalCards: 180,

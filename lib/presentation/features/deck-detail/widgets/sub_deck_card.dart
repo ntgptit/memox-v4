@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:memox_v4/core/theme/mx_component.dart';
+import 'package:memox_v4/core/theme/mx_sizes.dart';
 import 'package:memox_v4/core/theme/mx_spacing.dart';
 import 'package:memox_v4/core/theme/mx_theme.dart';
 import 'package:memox_v4/core/theme/mx_typography.dart';
@@ -75,10 +77,22 @@ class SubDeckCard extends StatelessWidget {
               ],
             ),
           ),
-          if (info.due > 0) ...[
-            const SizedBox(width: MxSpacing.space3),
-            MxBadge(label: info.due.toString()),
-          ],
+          const SizedBox(width: MxSpacing.space3),
+          // Kit `DeckRow` trailing: a due-count pill when due > 0, otherwise a
+          // caught-up/mastered check in a success-soft badge.
+          info.due > 0
+              ? MxBadge(label: info.due.toString())
+              : Container(
+                  width: MxComponentSizes.badgeHeight,
+                  height: MxComponentSizes.badgeHeight,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: mx.successSoft,
+                    shape: BoxShape.circle,
+                  ),
+                  child:
+                      Icon(Icons.check, size: MxIconSize.sm, color: mx.success),
+                ),
         ],
       ),
     );
@@ -86,10 +100,15 @@ class SubDeckCard extends StatelessWidget {
 
   String _meta(AppLocalizations l10n) {
     final words = l10n.libraryNodeWords(info.words);
-    if (info.due > 0) return l10n.libraryNodeMetaDue(words, info.due);
+    // Kit meta priority: a folder shows "N decks · N words"; else a fully
+    // mastered leaf shows "N words · mastered"; else due; else just words.
+    if (info.deckCount > 0) {
+      return l10n.libraryNodeMetaDecks(info.deckCount, words);
+    }
     if (info.words > 0 && info.progress >= 1) {
       return l10n.libraryNodeMetaMastered(words);
     }
+    if (info.due > 0) return l10n.libraryNodeMetaDue(words, info.due);
     return words;
   }
 }
