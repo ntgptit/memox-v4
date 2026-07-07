@@ -1,40 +1,30 @@
 # Visual parity — matching & lệch theo từng state
 
-> **Nguồn:** regen goldens cục bộ (Windows) sau khi merge #250 + #251, diff qua
-> `tool/visual-diff/diff.mjs --threshold 0.2` vs kit shots đã commit. 112 states ×
-> light/dark = 224 so sánh. Số CI ubuntu sẽ lệch nhẹ (font/AA cross-renderer) — sẽ
-> chốt khi reseed `baseline.json`.
-> **% matching = 100 − mismatch** (perceptual YIQ). Ngưỡng đổi 0.1 → **0.2** để hấp
-> thụ AA cross-renderer (kit = Blink/CSS, golden = Skia — khác renderer là lệch bất
-> khả kháng, không phải bug).
-> **Tổng thể: mean 92.9% match** (21 screens).
-> Quy ước đọc: `light ≪ dark` ⇒ overlay/scrim phủ nền content khác; `light ≈ dark`
-> mà thấp ⇒ content/seed khác; `≥ 96%` ⇒ chỉ còn nhiễu AA.
+> **Tự động sinh** bởi `node tool/visual-diff/parity-table.mjs` từ diff kit↔golden
+> (`--threshold 0.2`). **KHÔNG sửa tay** phần bảng — sửa số ⇒ regen goldens
+> rồi chạy lại script; sửa prose ⇒ sửa HEADER/NOTES trong script.
+> Nguồn số: render cục bộ (Windows) — CI ubuntu lệch vài phần mười (AA cross-renderer),
+> chốt khi reseed `baseline.json`. % matching = 100 − mismatch (perceptual YIQ).
+> Quy ước: `light ≪ dark` ⇒ overlay/scrim; `light ≈ dark` mà thấp ⇒ content/seed;
+> `≥ 96%` ⇒ chỉ nhiễu AA cross-renderer (bất khả kháng).
 
-## Đã fix trong đợt này (#250, #251)
+## Đòn bẩy đã áp dụng
 
-- **Bottom nav (shell)** — 4 tab (dashboard/library/statistics/settings) trước render
-  trần (không nav) vs kit shot có nav. Đã wire kit `MxBottomNav` vào `_ShellScaffold`
-  (thay `NavigationBar`) + render golden tab trong shell. **Đây là đòn bẩy lớn nhất**:
-  statistics·loaded 82.6→88.0, kéo cả 4 tab lên cùng lúc (#251).
-- **Heatmap statistics** — seed hoạt động theo đúng công thức kit
-  `[0.08,0.25,0.45,0.7,1][(w*7+d*3)%5]` → lịch nhiệt khớp từng ô (#250).
-- **Hạ tầng inject stats** — `FakeStore.deckStats` override → golden seed đúng số kit
-  (chỉ giúp khi lệch là *con số*, không giúp khi lệch là *widget*).
-- Trước đó: chip/sheet-menu icons, add-title, icon font, Korean font, 6 accents,
-  play-audio, shot dashboard--empty cũ.
+- **Bottom nav (shell)** — kit `MxBottomNav` wired vào `_ShellScaffold`; golden 4 tab
+  render trong shell (#251). Đòn bẩy lớn nhất — kéo cả dashboard/library/statistics/settings.
+- **Heatmap statistics** — seed theo công thức kit `[0.08,0.25,0.45,0.7,1][(w*7+d*3)%5]` (#250).
+- **Move picker (deck-detail)** — kit `Move to` radio list + Move button; sibling/current/sub-deck
+  rows (#253) → move·light 47%→88%.
+- **Hạ tầng inject stats** `FakeStore.deckStats` — chỉ giúp khi lệch là *con số*.
 
 ## Gap còn lại đáng làm (kit-first UI, không seed được)
 
-1. **`SubDeckCard` ≠ kit DeckRow** (deck-detail): meta "N decks · N words" (Flutter
-   "N words · N due"), badge (kit pill due / ✓ mastered vs Flutter vòng đếm), icon
-   folder (`style`/layers), tiến độ. → gap chính của deck-detail·loaded.
-2. **drawer**: kit có FAQ / Email us / Sync — Flutter bỏ (v1 không backend). Quyết định
-   scope v1 (Sync defer; FAQ/Email có thể link tĩnh).
-3. **dashboard greeting/seed**: tên "Linh" + avatar "LT" + ngày + streak kit ≠ seed
-   Flutter → content, cân nhắc contentMask hoặc seed cố định.
-4. **statistics streak 12/28**: sample kit tự mâu thuẫn (heatmap không thể sinh streak
-   12) → không khớp đồng thời; đã ưu tiên heatmap (mảng lớn hơn).
+1. **`SubDeckCard` ≠ kit DeckRow**: meta "N decks · N words", badge pill due/✓, icon folder → gap chính deck-detail·loaded.
+2. **drawer**: kit có FAQ/Email/Sync — v1 không backend (quyết định scope).
+3. **dashboard greeting**: tên "Linh"/avatar/ngày/streak seed khác (content).
+4. **statistics streak 12/28 + weekly-bars**: sample kit tự mâu thuẫn / có thể seed weekly như heatmap.
+
+**Tổng thể: mean 93.1% match** · 21 screens · 112 states (× light/dark).
 
 ---
 
@@ -46,11 +36,9 @@
 | `open` | 86.4% | 95.4% |
 | `add-language` | 90.9% | 96.0% |
 
-- **Lệch:** `remove-language` light ≪ dark → sheet/scrim phủ nền; `open`/`add-language` là content.
-- **Lý do:** danh sách nav; kit có FAQ/Email us/Sync mà Flutter bỏ (v1 không backend) + scrim + AA.
-- **Phương án:** quyết định scope v1 (Sync cần backend → defer; FAQ/Email link tĩnh nếu muốn); nền overlay có thể contentMask.
+**Lệch:** `remove-language` scrim; `open`/`add-language` content. **Lý do:** kit có FAQ/Email/Sync mà v1 bỏ (không backend) + scrim + AA. **Phương án:** quyết định scope v1; nền overlay có thể mask.
 
-## `dashboard` — avg 89.4% *(nav ✓)*
+## `dashboard` — avg 89.4%
 
 | state | light | dark |
 |---|--:|--:|
@@ -60,31 +48,7 @@
 | `streak-reset` | 88.9% | 89.7% |
 | `loading` | 96.4% | 97.3% |
 
-- **Lệch:** khối nội dung chính (lời chào/tên/ngày/streak/continue-deck).
-- **Lý do:** seed khác kit ('Good morning · Fri 3 Jul' vs kit 'Good evening, Linh · Sat 27 Jun' + avatar "LT" + số continue-deck). `empty` thấp cả 2 theme = onboarding hero content nặng.
-- **Phương án:** contentMask vùng greeting+ngày, hoặc seed cố định trùng kit; phần dư là AA.
-
-## `deck-detail` — avg 90.1% *(màn push — KHÔNG có nav, đúng kit)*
-
-| state | light | dark |
-|---|--:|--:|
-| `move` | 47.2% | 91.2% |
-| `reset-confirm` | 75.0% | 89.5% |
-| `deck-delete-confirm` | 75.4% | 89.9% |
-| `delete-confirm` | 77.5% | 91.0% |
-| `deck-menu` | 87.6% | 97.2% |
-| `loaded` | 88.7% | 89.7% |
-| `empty` | 90.8% | 90.6% |
-| `card-actions` | 93.4% | 97.5% |
-| `add-menu` | 93.5% | 97.0% |
-| `error` | 96.2% | 96.4% |
-| `no-results` | 97.2% | 97.2% |
-| `search` | 97.5% | 97.7% |
-| `loading` | 99.1% | 99.4% |
-
-- **Lệch:** overlay (`move`/`*-confirm` light ≪ dark = scrim); `loaded`/`empty` = khối nội dung.
-- **Lý do:** **`SubDeckCard` diverge kit DeckRow** (meta "N decks · N words", badge pill due/✓, icon folder) — gap chính; store đã seed 'Korean Basics' 2 sub-deck khớp kit; số sub-deck inject đúng (412/28/56%, 180/100%) nhưng format widget còn lệch.
-- **Phương án:** **kit-first rework `SubDeckCard`** (meta/badge/icon/✓) — đòn bẩy lớn nhất còn lại; overlay nền chấp nhận scrim/AA.
+**Lệch:** khối nội dung (greeting/tên/ngày/streak/continue-deck). **Lý do:** seed khác kit ("Linh"/avatar/số). `empty` = onboarding hero. **Phương án:** contentMask greeting+ngày hoặc seed cố định.
 
 ## `study-session` — avg 90.7%
 
@@ -101,9 +65,7 @@
 | `stage3-choice` | 97.0% | 97.7% |
 | `stage2-matching` | 98.4% | 98.7% |
 
-- **Lệch:** `exit`/`answer-save-error` light ≪ dark = scrim; các stage = content giữa phiên.
-- **Lý do:** nội dung stage seed khác (từ Hàn 학교/사과… nay render đúng nhờ font CJK).
-- **Phương án:** chấp nhận (content); align seed nếu muốn nâng thêm.
+**Lệch:** `exit`/`answer-save-error` scrim; stage = content giữa phiên (từ Hàn đã render). **Phương án:** chấp nhận (content).
 
 ## `game-recall` — avg 90.9%
 
@@ -115,7 +77,7 @@
 | `complete` | 92.4% | 92.4% |
 | `revealed` | 94.1% | 94.4% |
 
-- **Lệch:** khối nội dung (prompt + feedback tone). **Lý do:** từ prompt seed khác. **Phương án:** chấp nhận (content).
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
 ## `import` — avg 91.2%
 
@@ -127,9 +89,9 @@
 | `done` | 92.8% | 92.6% |
 | `mapping` | 95.0% | 94.7% |
 
-- **Lệch:** khối nội dung dán/mapping/preview. **Lý do:** nội dung seed khác. **Phương án:** align seed hoặc chấp nhận.
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
-## `theme` — avg 91.4% *(6 accent ✓)*
+## `theme` — avg 91.4%
 
 | state | light | dark |
 |---|--:|--:|
@@ -137,7 +99,27 @@
 | `dark` | 91.5% | 92.0% |
 | `light` | 91.5% | 92.0% |
 
-- **Lệch:** preview card content + AA. **Lý do:** 6 accent đã khớp kit; nội dung card preview seed khác. **Phương án:** chấp nhận (content/AA).
+**Lệch:** preview card content + AA (6 accent đã khớp). **Phương án:** chấp nhận.
+
+## `deck-detail` — avg 91.9%
+
+| state | light | dark |
+|---|--:|--:|
+| `reset-confirm` | 75.0% | 89.5% |
+| `deck-delete-confirm` | 75.4% | 89.9% |
+| `delete-confirm` | 77.5% | 91.0% |
+| `deck-menu` | 87.6% | 97.2% |
+| `move` | 88.2% | 95.6% |
+| `loaded` | 88.7% | 89.7% |
+| `empty` | 90.8% | 90.6% |
+| `card-actions` | 93.4% | 97.5% |
+| `add-menu` | 93.5% | 97.0% |
+| `error` | 96.2% | 96.4% |
+| `no-results` | 97.2% | 97.2% |
+| `search` | 97.5% | 97.7% |
+| `loading` | 99.1% | 99.4% |
+
+**Lệch:** overlay confirm (`*-confirm` scrim); `loaded` = **`SubDeckCard` ≠ kit DeckRow** (meta/badge/icon). Move đã fix (#253). **Phương án:** kit-first rework `SubDeckCard` — đòn bẩy chính còn lại.
 
 ## `game-mc` — avg 92.5%
 
@@ -148,7 +130,7 @@
 | `complete` | 92.2% | 92.3% |
 | `waiting` | 96.9% | 97.1% |
 
-- **Lệch:** prompt + đáp án seed khác. **Phương án:** chấp nhận (content).
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
 ## `export` — avg 93.1%
 
@@ -158,9 +140,9 @@
 | `done` | 91.1% | 91.2% |
 | `exporting` | 98.2% | 98.7% |
 
-- **Lệch:** giá trị form/scope/format seed khác. **Phương án:** align seed hoặc chấp nhận (AA).
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
-## `statistics` — avg 93.2% *(nav ✓, heatmap ✓)*
+## `statistics` — avg 93.2%
 
 | state | light | dark |
 |---|--:|--:|
@@ -169,11 +151,9 @@
 | `insufficient` | 96.2% | 95.9% |
 | `loading` | 97.9% | 98.7% |
 
-- **Lệch:** `loaded`/`scope-switch` light 85.8 vs dark 92.8 → light còn lệch ở weekly-bars + streak + overview (dark hấp thụ tốt hơn).
-- **Lý do:** heatmap đã khớp; streak kit 12/28 không seed đồng thời được (sample kit mâu thuẫn); weekly-bars/overview số liệu seed khác.
-- **Phương án:** có thể seed weekly-bars theo pattern kit (như heatmap) để nâng light; streak chấp nhận.
+**Lệch:** `loaded`/`scope-switch` light < dark → weekly-bars + streak + overview. **Lý do:** heatmap đã khớp; streak 12/28 không seed đồng thời (sample kit mâu thuẫn). **Phương án:** seed weekly-bars theo pattern kit.
 
-## `library` — avg 93.8% *(nav ✓)*
+## `library` — avg 93.8%
 
 | state | light | dark |
 |---|--:|--:|
@@ -188,8 +168,7 @@
 | `search-active` | 95.5% | 95.5% |
 | `loading` | 98.4% | 98.7% |
 
-- **Lệch:** menu/sheet light ≪ dark = scrim; `loaded`/`empty` = danh sách deck + language pair seed khác.
-- **Phương án:** seed danh sách khớp kit / contentMask nền overlay.
+**Lệch:** menu/sheet scrim; `loaded`/`empty` = danh sách deck + language pair seed khác. **Phương án:** seed danh sách khớp / mask nền.
 
 ## `player` — avg 94.0%
 
@@ -200,9 +179,9 @@
 | `paused` | 94.6% | 95.1% |
 | `playing` | 94.6% | 95.1% |
 
-- **Lệch:** nội dung media/thẻ seed khác. **Phương án:** chấp nhận (content).
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
-## `settings` — avg 94.4% *(nav ✓)*
+## `settings` — avg 94.4%
 
 | state | light | dark |
 |---|--:|--:|
@@ -210,7 +189,7 @@
 | `loaded` | 94.2% | 93.9% |
 | `value-picker` | 94.6% | 96.7% |
 
-- **Lệch:** row seed + nhóm setting v1 khác kit vài mục + AA. **Phương án:** align seed / quyết định mục v1.
+**Lệch:** row seed + nhóm v1 khác kit + AA. **Phương án:** align seed / quyết định mục v1.
 
 ## `flashcard-editor` — avg 94.6%
 
@@ -223,7 +202,7 @@
 | `create` | 95.3% | 95.1% |
 | `multi-meaning` | 95.3% | 94.9% |
 
-- **Lệch:** giá trị field (term/meaning) seed khác + AA; gender chips đã fix inline. **Phương án:** align seed / chấp nhận AA.
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
 ## `study-result` — avg 94.8%
 
@@ -237,7 +216,7 @@
 | `finalizing` | 98.6% | 98.7% |
 | `retry-finalize` | 98.6% | 98.7% |
 
-- **Lệch:** số liệu kết quả (words/min/streak) seed khác. **Phương án:** chấp nhận (content số).
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
 ## `game-picker` — avg 95.1%
 
@@ -247,7 +226,7 @@
 | `default` | 94.4% | 94.4% |
 | `not-enough` | 95.7% | 95.3% |
 
-- **Lệch:** danh sách deck/scope seed khác + dropdown scrim. **Phương án:** seed danh sách khớp / chấp nhận.
+**Lệch:** dropdown scrim + danh sách deck/scope seed khác. **Phương án:** seed khớp / chấp nhận.
 
 ## `review` — avg 95.4%
 
@@ -258,7 +237,7 @@
 | `audio` | 96.8% | 97.3% |
 | `browsing` | 96.9% | 97.5% |
 
-- **Lệch:** nội dung thẻ seed khác + AA. **Phương án:** chấp nhận (content).
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
 ## `game-typing` — avg 95.4%
 
@@ -271,7 +250,7 @@
 | `correct` | 95.8% | 96.0% |
 | `typing` | 97.1% | 97.3% |
 
-- **Lệch:** từ prompt + input seed khác + AA. **Phương án:** chấp nhận (content).
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
 ## `game-matching` — avg 96.4%
 
@@ -284,9 +263,9 @@
 | `playing` | 97.7% | 97.6% |
 | `almost` | 97.8% | 98.2% |
 
-- **Lệch:** `complete` = summary content; còn lại chỉ AA. **Phương án:** chấp nhận.
+**Lệch:** content/seed khác kit + AA. **Phương án:** align seed hoặc chấp nhận (content).
 
-## `reminder` — avg 96.6% *(chips ngày ✓)*
+## `reminder` — avg 96.6%
 
 | state | light | dark |
 |---|--:|--:|
@@ -294,7 +273,7 @@
 | `on` | 96.0% | 96.4% |
 | `off` | 97.2% | 97.3% |
 
-- **Lệch:** nhãn giờ seed khác nhẹ + AA. **Phương án:** chấp nhận (đã rất khớp).
+**Lệch:** nhãn giờ seed khác nhẹ + AA (chips ngày đã fix). **Phương án:** chấp nhận.
 
 ## `search` — avg 97.4%
 
@@ -306,4 +285,4 @@
 | `loading` | 97.8% | 97.8% |
 | `filtered` | 97.9% | 98.2% |
 
-- **Lệch:** chỉ AA (query/kết quả seed khác nhẹ). **Phương án:** không cần — đã rất khớp.
+**Lệch:** chỉ AA (query/kết quả seed khác nhẹ). **Phương án:** không cần.

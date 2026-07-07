@@ -6,6 +6,12 @@ divergences kit-first, regenerate, re-review, repeat until a full sweep is dry.
 
 Persist EVERY finding here so context survives across loop iterations.
 
+**After any golden change, refresh the per-state matrix** — it's auto-generated,
+never hand-edited: `flutter test --tags golden-parity --update-goldens` then
+`node tool/visual-diff/parity-table.mjs` rewrites
+[PARITY-BY-STATE.md](PARITY-BY-STATE.md) with live numbers. Curated prose lives in
+the script's `HEADER`/`NOTES` (single source), so it survives regeneration.
+
 ## Disposition legend
 - **FIX** — visual/layout/styling bug, Flutter has the impl → fix to match kit.
 - **DEFER-STALE** — kit shot predates a Flutter change; Flutter is correct → needs a Claude Design re-export (design-side, not a Flutter fix).
