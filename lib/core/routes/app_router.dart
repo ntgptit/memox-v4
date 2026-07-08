@@ -50,20 +50,16 @@ GoRouter router(Ref ref) {
         builder: (context, state, navigationShell) =>
             _ShellScaffold(navigationShell: navigationShell),
         branches: [
-          // The Today tab hosts the real S.01 dashboard; deck-detail (S.03) stays
-          // a stub under it until built.
+          // The Today tab hosts the real S.01 dashboard. deck-detail (S.03) is a
+          // full-screen route (below), NOT a Today sub-route: a nested absolute
+          // path `/deck/:id` under `/` never matches (falls to errorBuilder), and
+          // deck-detail is chrome-less (own back button, no bottom nav) so it
+          // belongs above the shell like every other pushed screen.
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: Routes.today,
                 builder: (context, state) => const DashboardScreen(),
-                routes: [
-                  GoRoute(
-                    path: Routes.deckDetailPattern,
-                    builder: (context, state) => DeckDetailScreen(
-                        deckId: state.pathParameters['deckId'] ?? ''),
-                  ),
-                ],
               ),
             ],
           ),
@@ -163,6 +159,11 @@ final List<GoRoute> _fullScreenRoutes = [
     path: Routes.editCardPattern,
     builder: (context, state) =>
         FlashcardEditorScreen(cardId: state.pathParameters['cardId']),
+  ),
+  GoRoute(
+    path: Routes.deckDetailPattern,
+    builder: (context, state) =>
+        DeckDetailScreen(deckId: state.pathParameters['deckId'] ?? ''),
   ),
 ];
 
