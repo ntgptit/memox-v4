@@ -50,7 +50,7 @@ trên và pop về nút nguồn. Không deep-link ngoài v1.
 ```
 library (/) ─▶ deckDetail (lồng nhau) ─▶ flashcardEditor
    ├─▶ study | game | review | player   (mở từ menu Play tại 1 nút)
-   └─▶ search · settings (tile đồng bộ Google) · statistics
+   └─▶ search · settings (tile Backup/Restore cục bộ — Cloud sync hoãn v1) · statistics
 ```
 
 ## Rules
