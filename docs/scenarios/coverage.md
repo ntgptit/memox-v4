@@ -7,33 +7,34 @@ và mọi user-facing kit-state đến được qua ≥1 bước. Xem [README §
 
 `✅` = file scenario có bảng DoE 12/12 (✅ hoặc N/A-có-lý-do). Thứ tự MANIFEST.
 
-| # | Screen | File | DoE | Open-Q |
+| # | Screen | File | DoE | SC · Open-Q |
 |---|---|---|---|--:|
-| 1 | `dashboard` | [dashboard.md](dashboard.md) | ✅ 12/12 | 10 |
-| 2 | `library` | — | ⏳ | — |
-| 3 | `deck-detail` | — | ⏳ | — |
-| 4 | `flashcard-editor` | — | ⏳ | — |
-| 5 | `game-picker` | — | ⏳ | — |
-| 6 | `game-matching` | — | ⏳ | — |
-| 7 | `game-mc` | — | ⏳ | — |
-| 8 | `game-recall` | — | ⏳ | — |
-| 9 | `game-typing` | — | ⏳ | — |
-| 10 | `review` | — | ⏳ | — |
-| 11 | `player` | — | ⏳ | — |
-| 12 | `study-result` | — | ⏳ | — |
-| 13 | `search` | — | ⏳ | — |
-| 14 | `statistics` | — | ⏳ | — |
-| 15 | `reminder` | — | ⏳ | — |
+| 1 | `dashboard` | [dashboard.md](dashboard.md) | ✅ 12/12 | 39 SC · 10 ⚠ |
+| 2 | `library` | [library.md](library.md) | ✅ 12/12 | 76 SC · 14 ⚠ |
+| 3 | `deck-detail` | [deck-detail.md](deck-detail.md) | ✅ 12/12 | 93 SC · 13 ⚠ |
+| 4 | `flashcard-editor` | [flashcard-editor.md](flashcard-editor.md) | ✅ 12/12 | 64 SC · 10 ⚠ |
+| 5 | `game-picker` | [game-picker.md](game-picker.md) | ✅ 12/12 | 54 SC · 11 ⚠ |
+| 6 | `game-matching` | [game-matching.md](game-matching.md) | ✅ 12/12 | 48 SC · 16 ⚠ |
+| 7 | `game-mc` | [game-mc.md](game-mc.md) | ✅ 12/12 | 46 SC · 14 ⚠ |
+| 8 | `game-recall` | [game-recall.md](game-recall.md) | ✅ 12/12 | 48 SC · 17 ⚠ |
+| 9 | `game-typing` | [game-typing.md](game-typing.md) | ✅ 12/12 | 62 SC · 16 ⚠ |
+| 10 | `review` | [review.md](review.md) | ✅ 12/12 | 62 SC · 18 ⚠ |
+| 11 | `player` | [player.md](player.md) | ✅ 12/12 | 52 SC · 15 ⚠ |
+| 12 | `study-result` | [study-result.md](study-result.md) | ✅ 12/12 | 63 SC · 13 ⚠ |
+| 13 | `search` | [search.md](search.md) | ✅ 12/12 | 62 SC · 13 ⚠ |
+| 14 | `statistics` | [statistics.md](statistics.md) | ✅ 12/12 | 51 SC · 19 ⚠ |
+| 15 | `reminder` | [reminder.md](reminder.md) | ✅ 12/12 | 59 SC · 14 ⚠ |
 | 16 | `account-sync` | — | ⊘ HOÃN v1 | — |
-| 17 | `theme` | — | ⏳ | — |
-| 18 | `import` | — | ⏳ | — |
-| 19 | `export` | — | ⏳ | — |
-| 20 | `drawer` | — | ⏳ | — |
-| 21 | `study-session` | ~ (study-srs.md) | 🟡 journey | — |
-| 22 | `settings` | — | ⏳ | — |
+| 17 | `theme` | [theme.md](theme.md) | ✅ 12/12 | 46 SC · 8 ⚠ |
+| 18 | `import` | [import.md](import.md) | ✅ 12/12 | 65 SC · 17 ⚠ |
+| 19 | `export` | [export.md](export.md) | ✅ 12/12 | 50 SC · 15 ⚠ |
+| 20 | `drawer` | [drawer.md](drawer.md) | ✅ 12/12 | 66 SC · 14 ⚠ |
+| 21 | `study-session` | [study-session.md](study-session.md) (+ journey study-srs.md) | ✅ 12/12 | 87 SC · 15 ⚠ |
+| 22 | `settings` | [settings.md](settings.md) | ✅ 12/12 | 58 SC · 15 ⚠ |
 
-**Open-Q tồn đọng** (câu hỏi spec chưa chốt, phải hỏi BA): dashboard = 10 (xem cuối dashboard.md).
-Bộ scenario **CHƯA "đầy đủ 100%"** khi còn ⏳ hoặc còn Open-Q chưa trả lời.
+**Tổng: 21/21 màn (bỏ account-sync HOÃN) có DoE 12/12 · ~1251 scenario · ~297 Open-Q.**
+Bộ scenario ĐÃ phủ hết màn, nhưng **CHƯA "chốt 100%"** cho tới khi **297 Open-Q** (câu hỏi
+spec ⚠ ở cuối mỗi file) được BA trả lời — đó là hàng rào cuối trước khi sinh test.
 
 ## 1. Decision-table D-xxx → scenario
 
