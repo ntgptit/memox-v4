@@ -53,6 +53,10 @@ Quy ước:
 
 ## "Đầy đủ" nghĩa là gì (đo được)
 
+> **Chuẩn khắt khe — không bỏ sót:** mỗi màn phải tick đủ **12 chiều** trong
+> [`CHECKLIST.md`](CHECKLIST.md) (Definition of Exhaustive). Mục không áp dụng ⇒ ghi
+> `N/A + lý do`, KHÔNG để trống. Đây là bảo chứng "không quên chi tiết nào".
+
 Coverage được đo bằng [`coverage.md`](coverage.md):
 1. **Mọi dòng D-xxx** (trừ REMOVED/HOÃN) phải được ≥1 scenario E2E exercise.
 2. **Mọi user-facing state trong kit** phải **đến được** qua ≥1 bước scenario (117 state; trừ
