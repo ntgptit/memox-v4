@@ -114,28 +114,55 @@ Future<E2EHarness> pumpApp(
   Future<void> Function(E2EHarness h)? seed,
 }) async {
   final h = E2EHarness(now: now);
-  addTearDown(h.close);
   tester.view.physicalSize = const Size(390, 780);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
 
+  // Own the container ourselves (UncontrolledProviderScope) instead of letting
+  // ProviderScope dispose it at framework teardown. Reason: disposing the scope
+  // cancels the app's Drift watch-streams, and Drift schedules a 0-duration
+  // Timer to close them (StreamQueryStore.markAsClosed). Under testWidgets'
+  // FakeAsync that timer never fires ⇒ the end-of-test `!timersPending` check
+  // throws / the isolate hangs (every E2E test "kẹt"). Disposing the container
+  // + closing the DB inside `tester.runAsync` (REAL async) lets that close-timer
+  // fire for real. During the test body the streams are merely OPEN (a
+  // subscription, not a Timer), so the pending-timer check passes.
+  final container = ProviderContainer(overrides: h.overrides);
+  addTearDown(() async {
+    await tester.runAsync(() async {
+      container.dispose();
+      await Future<void>.delayed(Duration.zero); // let Drift's close-timer fire
+      await h.close();
+    });
+  });
+
   if (seed != null) await seed(h);
 
   await tester.pumpWidget(
-    ProviderScope(overrides: h.overrides, child: const MemoxApp()),
+    UncontrolledProviderScope(container: container, child: const MemoxApp()),
   );
-  await _settle(tester);
+  await settle(tester);
   return h;
 }
 
-Future<void> _settle(WidgetTester tester) async {
-  try {
-    await tester.pumpAndSettle(
-      const Duration(milliseconds: 16),
-      EnginePhase.sendSemanticsUpdate,
-      const Duration(seconds: 5),
+/// Settle for E2E — **luôn dùng cái này**, KHÔNG `tester.pumpAndSettle()` trần.
+///
+/// Hai vấn đề cần xử lý cùng lúc:
+///  1. **Drift cần REAL async.** `testWidgets` chạy trong FakeAsync; query Drift
+///     (in-memory) hoàn tất qua timer/microtask THẬT → dưới FakeAsync future không
+///     resolve → màn kẹt ở loading. Ta chèn cửa sổ `tester.runAsync` (real async)
+///     để query chạy xong rồi `pump` để rebuild với dữ liệu.
+///  2. **Animation lặp vô hạn** (shimmer skeleton `..repeat()`, chart) khiến
+///     `pumpAndSettle` không bao giờ settle → treo. Nên ta bounded vòng lặp và
+///     dừng khi hết frame theo lịch (`hasScheduledFrame == false`).
+Future<void> settle(WidgetTester tester, {int steps = 40}) async {
+  for (var i = 0; i < steps; i++) {
+    // Cho async THẬT (Drift query + stream close-timer) tiến triển.
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 20)),
     );
-  } catch (_) {
-    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump(const Duration(milliseconds: 16));
+    // Settled khi không còn frame theo lịch (đã rời loading, hết animation).
+    if (!tester.binding.hasScheduledFrame) return;
   }
 }
