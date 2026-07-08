@@ -32,9 +32,11 @@ và mọi user-facing kit-state đến được qua ≥1 bước. Xem [README §
 | 21 | `study-session` | [study-session.md](study-session.md) (+ journey study-srs.md) | ✅ 12/12 | 87 SC · 15 ⚠ |
 | 22 | `settings` | [settings.md](settings.md) | ✅ 12/12 | 58 SC · 15 ⚠ |
 
-**Tổng: 21/21 màn (bỏ account-sync HOÃN) có DoE 12/12 · ~1251 scenario · ~297 Open-Q.**
-Bộ scenario ĐÃ phủ hết màn, nhưng **CHƯA "chốt 100%"** cho tới khi **297 Open-Q** (câu hỏi
-spec ⚠ ở cuối mỗi file) được BA trả lời — đó là hàng rào cuối trước khi sinh test.
+**Tổng: 21/21 màn (bỏ account-sync HOÃN) có DoE 12/12 · ~1251 scenario · 329 OQ.**
+329 Open-Questions **đã chốt mặc định** trong [DECISIONS.md](DECISIONS.md) (chính sách chung
+`DEC-G-*` + quyết riêng theo màn; theo v1→kit→convention) → **sẵn sàng sinh test**. Sẽ revise
+khi có bug/đổi requirement. Vài giả định cần con người xác nhận sau (DECISIONS §C): field tên
+người dùng, bảng `recent_searches`, đếm thẻ/pair, audio.
 
 ## 1. Decision-table D-xxx → scenario
 

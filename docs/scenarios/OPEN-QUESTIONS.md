@@ -1,5 +1,11 @@
 # Open Questions — chốt spec trước khi sinh test
 
+> ## ✅ ĐÃ CHỐT MẶC ĐỊNH → xem [DECISIONS.md](DECISIONS.md)
+> Toàn bộ OQ được **quyết mặc định** (theo v1 → kit → convention) trong `DECISIONS.md` —
+> chính sách chung `DEC-G-*` (§A) phủ phần lớn, quyết riêng theo màn (§B). Ô "Trả lời" để
+> trống = **theo DECISIONS**; ô đã điền (vd dashboard) là chi tiết hoá cụ thể. **Sẽ revise khi
+> có bug thực tế / đổi requirement.** Không còn "chờ duyệt" — có thể sinh test.
+
 > Tổng hợp MỌI câu hỏi ⚠ (hành vi kit/business CHƯA định nghĩa) từ 21 file scenario.
 > Đây là **hàng rào cuối**: chưa trả lời thì chưa sinh test cho phần đó. Điền vào ô `Trả lời:`
 > (một câu là đủ). Xong mình sẽ **fold ngược** câu trả lời vào scenario tương ứng + xoá cờ ⚠.
