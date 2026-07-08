@@ -3,6 +3,38 @@
 Cập nhật tay khi thêm scenario. "Đầy đủ" ⇔ mọi D-xxx (trừ REMOVED/HOÃN) có ≥1 scenario,
 và mọi user-facing kit-state đến được qua ≥1 bước. Xem [README §Đầy đủ](README.md).
 
+## 0. Tiến độ DoE theo từng màn (22)
+
+`✅` = file scenario có bảng DoE 12/12 (✅ hoặc N/A-có-lý-do). Thứ tự MANIFEST.
+
+| # | Screen | File | DoE | Open-Q |
+|---|---|---|---|--:|
+| 1 | `dashboard` | [dashboard.md](dashboard.md) | ✅ 12/12 | 10 |
+| 2 | `library` | — | ⏳ | — |
+| 3 | `deck-detail` | — | ⏳ | — |
+| 4 | `flashcard-editor` | — | ⏳ | — |
+| 5 | `game-picker` | — | ⏳ | — |
+| 6 | `game-matching` | — | ⏳ | — |
+| 7 | `game-mc` | — | ⏳ | — |
+| 8 | `game-recall` | — | ⏳ | — |
+| 9 | `game-typing` | — | ⏳ | — |
+| 10 | `review` | — | ⏳ | — |
+| 11 | `player` | — | ⏳ | — |
+| 12 | `study-result` | — | ⏳ | — |
+| 13 | `search` | — | ⏳ | — |
+| 14 | `statistics` | — | ⏳ | — |
+| 15 | `reminder` | — | ⏳ | — |
+| 16 | `account-sync` | — | ⊘ HOÃN v1 | — |
+| 17 | `theme` | — | ⏳ | — |
+| 18 | `import` | — | ⏳ | — |
+| 19 | `export` | — | ⏳ | — |
+| 20 | `drawer` | — | ⏳ | — |
+| 21 | `study-session` | ~ (study-srs.md) | 🟡 journey | — |
+| 22 | `settings` | — | ⏳ | — |
+
+**Open-Q tồn đọng** (câu hỏi spec chưa chốt, phải hỏi BA): dashboard = 10 (xem cuối dashboard.md).
+Bộ scenario **CHƯA "đầy đủ 100%"** khi còn ⏳ hoặc còn Open-Q chưa trả lời.
+
 ## 1. Decision-table D-xxx → scenario
 
 | D-xxx | Hành vi | Scenario | Trạng thái |
