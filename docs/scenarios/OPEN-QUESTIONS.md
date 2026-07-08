@@ -35,34 +35,34 @@
 ## `dashboard` — 10 câu · [file](dashboard.md)
 
 **OQ-dashboard-1** — **Greeting**: ngưỡng buổi (sáng/chiều/tối) theo giờ nào? nguồn **tên** người dùng (profile/settings)? fallback khi rỗng?
-> Trả lời: 
+> Trả lời: ⟢ Đề xuất: buổi theo giờ máy (sáng 5–11h · chiều 12–17h · tối 18–4h); tên lấy từ hồ sơ người dùng (⚠ field tên chưa có trong spec Profile → cần chốt nguồn); tên rỗng → chỉ hiện lời chào, bỏ ", <tên>".
 
 **OQ-dashboard-2** — **Continue-decks**: tiêu chí chọn (học gần nhất / có due / ...)? thứ tự? tối đa mấy thẻ (N=3?)?
-> Trả lời: 
+> Trả lời: ⟢ Đề xuất: deck có due>0 ưu tiên, rồi deck học gần nhất; sort last-studied giảm dần; tối đa 3; "See all" → tab Library. [navigation-flow]
 
 **OQ-dashboard-3** — **Mastered %**: công thức + phạm vi (toàn app / theo cặp ngôn ngữ đang chọn)?
-> Trả lời: 
+> Trả lời: ⟢ Đề xuất: (thẻ box 8 / tổng thẻ visible) trong phạm vi cặp ngôn ngữ đang chọn (đồng nhất DeckStats.progress nhưng app-wide theo pair).
 
 **OQ-dashboard-4** — **Goal ring**: hiển thị theo phút, theo từ, hay max(tiến độ)?
-> Trả lời: 
+> Trả lời: ⟢ Đề xuất (bám BR-2): ring = max(minutes/goalMin, words/goalWords) clamp 100%; met khi ≥1 chỉ số đạt.
 
 **OQ-dashboard-5** — **Review FAB**: v1 là `comingSoon` (navigation-flow S0) hay ôn due thật (D-001)? — quyết định assert nào.
-> Trả lời: 
+> Trả lời: ✅ Docs: navigation-flow S0 = placeholder comingSoon; spec đích = ôn thẻ due toàn app (D-001). Test assert 2 tầng. [navigation-flow · D-001]
 
 **OQ-dashboard-6** — **Notifications / avatar**: đích khi tap?
-> Trả lời: 
+> Trả lời: ❓ Cần quyết: notifications KHÔNG có màn trong MANIFEST/kit → defer (no-op/coming-soon) hoặc bỏ. Avatar → tab Profile. Khuyến nghị: avatar→Profile, notifications defer.
 
 **OQ-dashboard-7** — **State empty**: gộp "chưa học hôm nay" và "chưa có deck" — cần tách?
-> Trả lời: 
+> Trả lời: ⟢ Đề xuất: TÁCH 2 — (a) chưa có deck = onboarding hero (kit empty); (b) có deck nhưng chưa học hôm nay = loaded + banner "haven't studied".
 
 **OQ-dashboard-8** — **State error**: dashboard không có `error` trong kit — hiện gì khi đọc DB lỗi?
-> Trả lời: 
+> Trả lời: ⟢ Đề xuất: v1 local-first, lỗi đọc DB hiếm; nếu lỗi → inline error + retry (đồng bộ convention màn khác), ARB "Không tải được — thử lại"; KHÔNG dùng copy "check connection".
 
 **OQ-dashboard-9** — **Initial route** + **Android back** tại tab gốc.
-> Trả lời: 
+> Trả lời: ✅ Docs (phần): initialLocation = Routes.today [app_router]. ⟢ Android back tại tab gốc: theo convention — thoát app (hoặc double-back-to-exit); chốt 1 trong 2.
 
 **OQ-dashboard-10** — **Nửa đêm**: chốt ngày realtime hay lazy khi mở lại?
-> Trả lời: 
+> Trả lời: ✅ Docs: engagement — "chưa có job chốt-ngày; streak tính trực tiếp từ lịch sử daily_activity" → LAZY (tính khi render/mở lại), không realtime. [dashboard-engagement]
 
 
 <a id="library"></a>
