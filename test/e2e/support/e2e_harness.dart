@@ -127,7 +127,15 @@ Future<E2EHarness> pumpApp(
   // + closing the DB inside `tester.runAsync` (REAL async) lets that close-timer
   // fire for real. During the test body the streams are merely OPEN (a
   // subscription, not a Timer), so the pending-timer check passes.
-  final container = ProviderContainer(overrides: h.overrides);
+  // retry:null ⇒ tắt auto-retry (exponential backoff) của Riverpod. Khi một
+  // provider lỗi (vd xoá deck hiện tại ⇒ deckDetailController.getById thất bại),
+  // Riverpod tự lên lịch retry backoff (0.8→1.6→3.2s…) — chuỗi tự-đặt-lại này
+  // KHÔNG thể drain bằng pump và treo '!timersPending' ở teardown. E2E không cần
+  // retry nền; lỗi được assert trực tiếp.
+  final container = ProviderContainer(
+    overrides: h.overrides,
+    retry: (_, _) => null,
+  );
   addTearDown(() async {
     await tester.runAsync(() async {
       container.dispose();
@@ -155,14 +163,19 @@ Future<E2EHarness> pumpApp(
 ///  2. **Animation lặp vô hạn** (shimmer skeleton `..repeat()`, chart) khiến
 ///     `pumpAndSettle` không bao giờ settle → treo. Nên ta bounded vòng lặp và
 ///     dừng khi hết frame theo lịch (`hasScheduledFrame == false`).
-Future<void> settle(WidgetTester tester, {int steps = 40}) async {
+Future<void> settle(WidgetTester tester, {int steps = 60}) async {
   for (var i = 0; i < steps; i++) {
     // Cho async THẬT (Drift query + stream close-timer) tiến triển.
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 20)),
     );
-    await tester.pump(const Duration(milliseconds: 16));
+    await tester.pump(const Duration(milliseconds: 32));
     // Settled khi không còn frame theo lịch (đã rời loading, hết animation).
-    if (!tester.binding.hasScheduledFrame) return;
+    if (!tester.binding.hasScheduledFrame) break;
   }
+  // Tiêu nốt Timer HỮU HẠN không-đẩy-frame còn treo (transition pop, snackbar
+  // auto-dismiss…): advance đồng hồ FAKE 3s (tức thời về real-time) để teardown
+  // không dính '!timersPending'. Animation vô hạn (shimmer) chỉ bị đẩy 3s rồi
+  // dừng — không treo.
+  await tester.pump(const Duration(seconds: 3));
 }
