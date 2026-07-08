@@ -27,9 +27,11 @@ dung — hoạt động tốt cả khi offline, đồng bộ đa thiết bị.
 ## 4. Phạm vi sản phẩm (v1)
 
 **Trong phạm vi:** quản lý nội dung; SRS 8 ô; các hình thức học & luyện; tìm kiếm;
-nhập/xuất; thống kê & gắn kết; đồng bộ Google (alpha); cài đặt & cá nhân hoá.
-**Ngoài phạm vi (v1):** Premium; chia sẻ nội dung giữa người dùng; media ngoài âm thanh;
-học chéo nhiều cặp ngôn ngữ trong một phiên.
+nhập/xuất; thống kê & gắn kết; cài đặt & cá nhân hoá.
+**Ngoài phạm vi (v1) — hoãn:** đồng bộ Google / Account & Sync (kit CÓ thiết kế, nhưng v1
+không backend từ xa — tile "Cloud sync" của kit render thành **Backup/Restore cục bộ** hoặc
+bỏ); Premium; chia sẻ nội dung giữa người dùng; media ngoài âm thanh; học chéo nhiều cặp
+ngôn ngữ trong một phiên.
 
 ## 5. Bản đồ năng lực & luồng tổng thể
 
@@ -60,7 +62,7 @@ học. (Premium hoãn v1.) Sơ đồ đầy đủ: `docs/business/system/system-
 | Nhập / Xuất | `docs/business/import-export/import-export.md` | Implemented | `test/domain/usecases/import_export/` |
 | Thống kê | `docs/business/statistics/statistics.md` | Implemented | `test/domain/usecases/statistics/get_statistics_test.dart` |
 | Hoạt động & streak | `docs/business/engagement/dashboard-engagement.md` | Implemented | `test/domain/usecases/engagement/compute_streak_test.dart` |
-| Tài khoản & Đồng bộ | `docs/business/account-sync/account-sync.md` | Implemented (alpha — cấu trúc + LWW mức snapshot; GCP/OAuth config = human gap) | TBD |
+| Tài khoản & Đồng bộ | `docs/business/account-sync/account-sync.md` | ⊘ Hoãn (v1) — kit thiết kế Account & Sync; v1 không backend từ xa (giữ spec để tham khảo) | TBD |
 | Cài đặt & sao lưu | `docs/business/settings/settings.md` | Implemented | `test/data/repositories/settings_repository_impl_test.dart` · `test/data/repositories/backup_repository_impl_test.dart` |
 | Cá nhân hoá (theme) | `docs/business/personalization/personalization.md` | Implemented | `test/presentation/features/personalization/personalization_notifier_test.dart` |
 

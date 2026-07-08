@@ -104,6 +104,9 @@ function guard() {
 }
 
 const tokens = () => step('design tokens --check', 'node', ['tool/design/gen_tokens.mjs', '--check']);
+// UI docs (MANIFEST.yaml + docs/wireframes|contracts) are generated FROM the kit —
+// they must stay fresh so the doc set never drifts from the source-of-truth kit.
+const uiDocs = () => step('ui docs --check', 'node', ['tool/design/gen_ui_docs.mjs', '--check']);
 // K.6: components.css must stay fully token-driven (raw px/hex/duration need a
 // `raw-ok:` annotation) — new magic values cannot silently re-enter the kit.
 const kitGuard = () => step('kit guard (no raw values)', 'node', ['tool/design/kit_guard.mjs']);
@@ -123,6 +126,7 @@ const test = () => step('flutter test', 'flutter', ['test', '--exclude-tags', 'g
 
 if (mode === 'docs') {
   tokens();
+  uiDocs();
   kitGuard();
   goldenScaffold();
   propsParity();
@@ -133,6 +137,7 @@ if (mode === 'docs') {
   codegen();
   l10n();
   tokens();
+  uiDocs();
   kitGuard();
   goldenScaffold();
   propsParity();

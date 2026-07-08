@@ -1,0 +1,147 @@
+# MemoX UI manifest — GENERATED from the UI kit (source of truth).
+# Regenerate: node tool/design/gen_ui_docs.mjs   (--check gates freshness)
+# Do NOT hand-edit — edit the kit + re-export specs, then re-run this.
+meta:
+  source: docs/design/MemoX Design System/ui_kits/memox-app
+  source_hash: 5e8564574cb932d0814ede71762e08b6a4518df82de367cb29c734e5fec4bac9
+  screens: 22
+  states: 117
+  v1_deferred: [account-sync]  # kit designs it; v1 has no remote backend
+screens:
+  - id: dashboard
+    name: "Today"
+    nav_tab: Today
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/dashboard.md"
+    wireframe: docs/wireframes/dashboard.md
+    contract: docs/contracts/dashboard.md
+    states: [empty, goal-met, loaded, loading, streak-reset]
+  - id: library
+    name: "Library"
+    nav_tab: Library
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/library.md"
+    wireframe: docs/wireframes/library.md
+    contract: docs/contracts/library.md
+    states: [drawer, empty, error, loaded, loading, overflow-menu, pair-picker, play-sheet, search-active, sort-menu]
+  - id: deck-detail
+    name: "Deck Detail (node)"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/deck-detail.md"
+    wireframe: docs/wireframes/deck-detail.md
+    contract: docs/contracts/deck-detail.md
+    states: [add-menu, card-actions, deck-delete-confirm, deck-menu, delete-confirm, empty, error, loaded, loading, move, no-results, reset-confirm, search]
+  - id: flashcard-editor
+    name: "Card Editor"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/flashcard-editor.md"
+    wireframe: docs/wireframes/flashcard-editor.md
+    contract: docs/contracts/flashcard-editor.md
+    states: [audio, create, duplicate, edit, multi-meaning, validation]
+  - id: game-picker
+    name: "Game Picker"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/game-picker.md"
+    wireframe: docs/wireframes/game-picker.md
+    contract: docs/contracts/game-picker.md
+    states: [default, not-enough, scope-dropdown]
+  - id: game-matching
+    name: "Matching"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/game-matching.md"
+    wireframe: docs/wireframes/game-matching.md
+    contract: docs/contracts/game-matching.md
+    states: [almost, complete, correct, playing, selected, wrong]
+  - id: game-mc
+    name: "Multiple Choice"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/game-mc.md"
+    wireframe: docs/wireframes/game-mc.md
+    contract: docs/contracts/game-mc.md
+    states: [complete, correct, waiting, wrong]
+  - id: game-recall
+    name: "Recall"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/game-recall.md"
+    wireframe: docs/wireframes/game-recall.md
+    contract: docs/contracts/game-recall.md
+    states: [before-reveal, complete, forgot, remembered, revealed]
+  - id: game-typing
+    name: "Typing"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/game-typing.md"
+    wireframe: docs/wireframes/game-typing.md
+    contract: docs/contracts/game-typing.md
+    states: [complete, correct, hint, typing, waiting, wrong]
+  - id: review
+    name: "Review"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/review.md"
+    wireframe: docs/wireframes/review.md
+    contract: docs/contracts/review.md
+    states: [audio, browsing, editing, end]
+  - id: player
+    name: "Player"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/player.md"
+    wireframe: docs/wireframes/player.md
+    contract: docs/contracts/player.md
+    states: [end, paused, playing, speed]
+  - id: study-result
+    name: "Study Result"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/study-result.md"
+    wireframe: docs/wireframes/study-result.md
+    contract: docs/contracts/study-result.md
+    states: [finalize-error, finalizing, goal-met, goal-missed, many-wrong, retry-finalize, standard]
+  - id: search
+    name: "Search"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/search.md"
+    wireframe: docs/wireframes/search.md
+    contract: docs/contracts/search.md
+    states: [empty-recent, filtered, loading, no-results, results]
+  - id: statistics
+    name: "Stats"
+    nav_tab: Stats
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/statistics.md"
+    wireframe: docs/wireframes/statistics.md
+    contract: docs/contracts/statistics.md
+    states: [insufficient, loaded, loading, scope-switch]
+  - id: reminder
+    name: "Reminders"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/reminder.md"
+    wireframe: docs/wireframes/reminder.md
+    contract: docs/contracts/reminder.md
+    states: [off, on, time-picker]
+  - id: account-sync
+    name: "Account & Sync"
+    v1: deferred
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/account-sync.md"
+    wireframe: docs/wireframes/account-sync.md
+    contract: docs/contracts/account-sync.md
+    states: [conflict, offline, signed-in, signed-out, syncing]
+  - id: theme
+    name: "Theme"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/theme.md"
+    wireframe: docs/wireframes/theme.md
+    contract: docs/contracts/theme.md
+    states: [accent-size, dark, light]
+  - id: import
+    name: "Import"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/import.md"
+    wireframe: docs/wireframes/import.md
+    contract: docs/contracts/import.md
+    states: [done, dup-warning, mapping, preview, source]
+  - id: export
+    name: "Export"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/export.md"
+    wireframe: docs/wireframes/export.md
+    contract: docs/contracts/export.md
+    states: [config, done, exporting]
+  - id: drawer
+    name: "Drawer & Languages"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/drawer.md"
+    wireframe: docs/wireframes/drawer.md
+    contract: docs/contracts/drawer.md
+    states: [add-language, open, remove-language]
+  - id: study-session
+    name: "Study Session (5 stages)"
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/study-session.md"
+    wireframe: docs/wireframes/study-session.md
+    contract: docs/contracts/study-session.md
+    states: [answer-save-error, due-review, exit, relearn, resume-error, stage1-review, stage2-matching, stage3-choice, stage4-recall, stage5-typing]
+  - id: settings
+    name: "Settings"
+    nav_tab: Profile
+    spec: "docs/design/MemoX Design System/ui_kits/memox-app/specs/settings.md"
+    wireframe: docs/wireframes/settings.md
+    contract: docs/contracts/settings.md
+    states: [group-expanded, loaded, value-picker]

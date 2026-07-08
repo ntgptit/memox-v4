@@ -11,6 +11,11 @@ tool/design/*.mjs        text eol=lf
 tool/verify/*.mjs        text eol=lf
 # Generated loop prompts + queue — LF (stops CRLF churn on every regeneration).
 docs/agent/build/**      text eol=lf
+# Generated UI docs (from the kit via tool/design/gen_ui_docs.mjs) — LF so the
+# `ui docs --check` gate doesn't false-positive on CRLF conversion on Windows.
+MANIFEST.yaml            text eol=lf
+docs/wireframes/**       text eol=lf
+docs/contracts/**        text eol=lf
 # Font/binary assets — never normalize line endings.
 *.ttf                    binary
 *.otf                    binary

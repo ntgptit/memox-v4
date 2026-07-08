@@ -12,6 +12,12 @@ tính năng. Mỗi tính năng có một đặc tả nghiệp vụ riêng theo c
 > hiện tại là [`docs/project-management/wbs.md`](../project-management/wbs.md) +
 > [`docs/agent/build/`](../agent/build/README.md). **Hoãn ở v1** (giữ đặc tả để tham
 > khảo, KHÔNG build): `account-sync` (đồng bộ Google) và Premium/kiếm tiền.
+>
+> **Nguồn chuẩn cho UI (màn/state/layout):** UI kit → sinh ra
+> [`MANIFEST.yaml`](../../MANIFEST.yaml) + [`docs/contracts/`](../contracts/index.md) +
+> [`docs/wireframes/`](../wireframes/index.md) qua `tool/design/gen_ui_docs.mjs`. Nghiệp
+> vụ ở đây định nghĩa *quy tắc*; kit định nghĩa *giao diện* — khi mô tả UI mà lệch kit thì
+> **kit thắng** (trừ phần v1 hoãn như `account-sync`).
 
 ## 1. Tầm nhìn & mục tiêu
 
